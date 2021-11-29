@@ -1,10 +1,6 @@
-//go:build ignore
-
 package main
 
 import (
-	"fmt"
-	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -14,17 +10,9 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 )
 
-const cldrVersion = "31.0.1"
-
-func main() {
-	// Find raw dir path in arguments
-	rawDir := "./raw_data"
-	if len(os.Args) > 1 {
-		rawDir = os.Args[1]
-	}
-
-	// Clean current raw dir
-	os.RemoveAll(rawDir)
+func downloadRawData() error {
+	// Clean current dst dir
+	os.RemoveAll(RAW_DIR)
 
 	// Fetch data from CLDR repository
 	repos := []string{
@@ -35,17 +23,18 @@ func main() {
 
 	for _, repo := range repos {
 		dirName := strings.TrimSuffix(path.Base(repo), ".git")
-		dstDir := filepath.Join(rawDir, dirName)
+		dstDir := filepath.Join(RAW_DIR, dirName)
 
-		log.Printf("cloning %s from %s", dirName, repo)
-		git.PlainClone(dstDir, false, &git.CloneOptions{
+		log.Info().Msgf("cloning %s from %s", dirName, repo)
+		_, err := git.PlainClone(dstDir, false, &git.CloneOptions{
 			URL:           repo,
 			Depth:         1,
 			SingleBranch:  true,
-			Progress:      os.Stdout,
-			ReferenceName: plumbing.NewTagReferenceName(cldrVersion),
-		})
-
-		fmt.Println()
+			ReferenceName: plumbing.NewTagReferenceName(CLDR_VERSION)})
+		if err != nil {
+			return err
+		}
 	}
+
+	return nil
 }
