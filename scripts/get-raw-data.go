@@ -17,13 +17,13 @@ import (
 const cldrVersion = "31.0.1"
 
 func main() {
-	// Find target dir in arguments
+	// Find raw dir path in arguments
 	rawDir := "./raw_data"
 	if len(os.Args) > 1 {
 		rawDir = os.Args[1]
 	}
 
-	// Clean current raw data
+	// Clean current raw dir
 	os.RemoveAll(rawDir)
 
 	// Fetch data from CLDR repository
