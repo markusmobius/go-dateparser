@@ -46,5 +46,11 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	// Generate map between a language and its descendant (if any)
 	createLanguageMap(languageOrder)
 
+	// Parse CLDR data
+	err = parseCldrData(languageLocalesMap)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
