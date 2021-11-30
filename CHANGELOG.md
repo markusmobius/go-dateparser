@@ -1,6 +1,7 @@
 ### 2021-11-30
 
 - Implement script for parsing CLDR gregorian data.
+- Implement script for parsing CLDR date fields data.
 
 ### 2021-11-29
 

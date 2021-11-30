@@ -73,3 +73,47 @@ type CldrGregorianDayPeriods struct {
 	AM string `json:"am"`
 	PM string `json:"pm"`
 }
+
+type CldrDateFieldsData struct {
+	Main map[string]struct {
+		Dates struct {
+			Fields struct {
+				Year         CldrDateFieldsPart `json:"year"`
+				YearShort    CldrDateFieldsPart `json:"year-short"`
+				YearNarrow   CldrDateFieldsPart `json:"year-narrow"`
+				Month        CldrDateFieldsPart `json:"month"`
+				MonthShort   CldrDateFieldsPart `json:"month-short"`
+				MonthNarrow  CldrDateFieldsPart `json:"month-narrow"`
+				Week         CldrDateFieldsPart `json:"week"`
+				WeekShort    CldrDateFieldsPart `json:"week-short"`
+				WeekNarrow   CldrDateFieldsPart `json:"week-narrow"`
+				Day          CldrDateFieldsPart `json:"day"`
+				DayShort     CldrDateFieldsPart `json:"day-short"`
+				DayNarrow    CldrDateFieldsPart `json:"day-narrow"`
+				Hour         CldrDateFieldsPart `json:"hour"`
+				HourShort    CldrDateFieldsPart `json:"hour-short"`
+				HourNarrow   CldrDateFieldsPart `json:"hour-narrow"`
+				Minute       CldrDateFieldsPart `json:"minute"`
+				MinuteShort  CldrDateFieldsPart `json:"minute-short"`
+				MinuteNarrow CldrDateFieldsPart `json:"minute-narrow"`
+				Second       CldrDateFieldsPart `json:"second"`
+				SecondShort  CldrDateFieldsPart `json:"second-short"`
+				SecondNarrow CldrDateFieldsPart `json:"second-narrow"`
+			} `json:"fields"`
+		} `json:"dates"`
+	} `json:"main"`
+}
+
+type CldrDateFieldsPart struct {
+	DisplayName            string                       `json:"displayName"`
+	RelativeTypeMin1       string                       `json:"relative-type--1"`
+	RelativeType0          string                       `json:"relative-type-0"`
+	RelativeType1          string                       `json:"relative-type-1"`
+	RelativeTimeTypeFuture CldrDateFieldsRelTimePattern `json:"relativeTime-type-future"`
+	RelativeTimeTypePast   CldrDateFieldsRelTimePattern `json:"relativeTime-type-past"`
+}
+
+type CldrDateFieldsRelTimePattern struct {
+	CountOne   string `json:"relativeTimePattern-count-one"`
+	CountOther string `json:"relativeTimePattern-count-other"`
+}
