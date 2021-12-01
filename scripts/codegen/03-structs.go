@@ -1,5 +1,41 @@
 package main
 
+type LocaleData struct {
+	Name              string                `json:"name,omitempty"`
+	DateOrder         string                `json:"date_order,omitempty"`
+	January           []string              `json:"january,omitempty"`
+	February          []string              `json:"february,omitempty"`
+	March             []string              `json:"march,omitempty"`
+	April             []string              `json:"april,omitempty"`
+	May               []string              `json:"may,omitempty"`
+	June              []string              `json:"june,omitempty"`
+	July              []string              `json:"july,omitempty"`
+	August            []string              `json:"august,omitempty"`
+	September         []string              `json:"september,omitempty"`
+	October           []string              `json:"october,omitempty"`
+	November          []string              `json:"november,omitempty"`
+	December          []string              `json:"december,omitempty"`
+	Monday            []string              `json:"monday,omitempty"`
+	Tuesday           []string              `json:"tuesday,omitempty"`
+	Wednesday         []string              `json:"wednesday,omitempty"`
+	Thursday          []string              `json:"thursday,omitempty"`
+	Friday            []string              `json:"friday,omitempty"`
+	Saturday          []string              `json:"saturday,omitempty"`
+	Sunday            []string              `json:"sunday,omitempty"`
+	AM                []string              `json:"am,omitempty"`
+	PM                []string              `json:"pm,omitempty"`
+	Year              []string              `json:"year,omitempty"`
+	Month             []string              `json:"month,omitempty"`
+	Week              []string              `json:"week,omitempty"`
+	Day               []string              `json:"day,omitempty"`
+	Hour              []string              `json:"hour,omitempty"`
+	Minute            []string              `json:"minute,omitempty"`
+	Second            []string              `json:"second,omitempty"`
+	RelativeType      map[string][]string   `json:"relative-type,omitempty"`
+	RelativeTypeRegex map[string][]string   `json:"relative-type-regex,omitempty"`
+	LocaleSpecific    map[string]LocaleData `json:"locale_specific,omitempty"`
+}
+
 type CldrTerritoryData struct {
 	Supplemental struct {
 		TerritoryInfo map[string]struct {
@@ -19,36 +55,9 @@ type CldrGregorianData struct {
 		Dates struct {
 			Calendars struct {
 				Gregorian struct {
-					Months struct {
-						Format struct {
-							Abbreviated map[int]string `json:"abbreviated"`
-							Wide        map[int]string `json:"wide"`
-						} `json:"format"`
-						StandAlone struct {
-							Abbreviated map[int]string `json:"abbreviated"`
-							Wide        map[int]string `json:"wide"`
-						} `json:"stand-alone"`
-					} `json:"months"`
-					Days struct {
-						Format struct {
-							Abbreviated CldrGregorianDayFormat `json:"abbreviated"`
-							Wide        CldrGregorianDayFormat `json:"wide"`
-						} `json:"format"`
-						StandAlone struct {
-							Abbreviated CldrGregorianDayFormat `json:"abbreviated"`
-							Wide        CldrGregorianDayFormat `json:"wide"`
-						} `json:"stand-alone"`
-					} `json:"days"`
-					DayPeriods struct {
-						Format struct {
-							Abbreviated CldrGregorianDayPeriods `json:"abbreviated"`
-							Wide        CldrGregorianDayPeriods `json:"wide"`
-						} `json:"format"`
-						StandAlone struct {
-							Abbreviated CldrGregorianDayPeriods `json:"abbreviated"`
-							Wide        CldrGregorianDayPeriods `json:"wide"`
-						} `json:"stand-alone"`
-					} `json:"dayPeriods"`
+					Months      CldrGregorianDataPart `json:"months"`
+					Days        CldrGregorianDataPart `json:"days"`
+					DayPeriods  CldrGregorianDataPart `json:"dayPeriods"`
 					DateFormats struct {
 						ShortItf interface{} `json:"short"`
 						Short    string      `json:"-"`
@@ -59,47 +68,21 @@ type CldrGregorianData struct {
 	} `json:"main"`
 }
 
-type CldrGregorianDayFormat struct {
-	Sun string `json:"sun"`
-	Mon string `json:"mon"`
-	Tue string `json:"tue"`
-	Wed string `json:"wed"`
-	Thu string `json:"thu"`
-	Fri string `json:"fri"`
-	Sat string `json:"sat"`
-}
-
-type CldrGregorianDayPeriods struct {
-	AM string `json:"am"`
-	PM string `json:"pm"`
+type CldrGregorianDataPart struct {
+	Format struct {
+		Abbreviated map[string]string `json:"abbreviated"`
+		Wide        map[string]string `json:"wide"`
+	} `json:"format"`
+	StandAlone struct {
+		Abbreviated map[string]string `json:"abbreviated"`
+		Wide        map[string]string `json:"wide"`
+	} `json:"stand-alone"`
 }
 
 type CldrDateFieldsData struct {
 	Main map[string]struct {
 		Dates struct {
-			Fields struct {
-				Year         CldrDateFieldsPart `json:"year"`
-				YearShort    CldrDateFieldsPart `json:"year-short"`
-				YearNarrow   CldrDateFieldsPart `json:"year-narrow"`
-				Month        CldrDateFieldsPart `json:"month"`
-				MonthShort   CldrDateFieldsPart `json:"month-short"`
-				MonthNarrow  CldrDateFieldsPart `json:"month-narrow"`
-				Week         CldrDateFieldsPart `json:"week"`
-				WeekShort    CldrDateFieldsPart `json:"week-short"`
-				WeekNarrow   CldrDateFieldsPart `json:"week-narrow"`
-				Day          CldrDateFieldsPart `json:"day"`
-				DayShort     CldrDateFieldsPart `json:"day-short"`
-				DayNarrow    CldrDateFieldsPart `json:"day-narrow"`
-				Hour         CldrDateFieldsPart `json:"hour"`
-				HourShort    CldrDateFieldsPart `json:"hour-short"`
-				HourNarrow   CldrDateFieldsPart `json:"hour-narrow"`
-				Minute       CldrDateFieldsPart `json:"minute"`
-				MinuteShort  CldrDateFieldsPart `json:"minute-short"`
-				MinuteNarrow CldrDateFieldsPart `json:"minute-narrow"`
-				Second       CldrDateFieldsPart `json:"second"`
-				SecondShort  CldrDateFieldsPart `json:"second-short"`
-				SecondNarrow CldrDateFieldsPart `json:"second-narrow"`
-			} `json:"fields"`
+			Fields map[string]CldrDateFieldsPart `json:"fields"`
 		} `json:"dates"`
 	} `json:"main"`
 }

@@ -1,6 +1,11 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+
 	"github.com/spf13/cobra"
 )
 
@@ -47,10 +52,31 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	createLanguageMap(languageOrder)
 
 	// Parse CLDR data
-	err = parseCldrData(languageLocalesMap)
+	listLocaleData, err := parseAllCldrData(languageLocalesMap)
 	if err != nil {
 		return err
 	}
 
+	// Render locale data to JSON
+	os.RemoveAll(CLDR_DIR)
+	os.MkdirAll(CLDR_DIR, os.ModePerm)
+
+	for language, localeData := range listLocaleData {
+		dstPath := filepath.Join(CLDR_DIR, language+".json")
+		err = renderJSON(&localeData, dstPath)
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
+}
+
+func renderJSON(v interface{}, dstPath string) error {
+	bt, err := json.MarshalIndent(v, "", "\t")
+	if err != nil {
+		return err
+	}
+
+	return ioutil.WriteFile(dstPath, bt, os.ModePerm)
 }

@@ -1,3 +1,7 @@
+### 2021-12-01
+
+- Implement script to generate simplified locale data from CLDR data.
+
 ### 2021-11-30
 
 - Implement script for parsing CLDR gregorian data.
