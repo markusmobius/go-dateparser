@@ -1,0 +1,48 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"om",
+		"|",
+		"，"
+	],
+	"sentence_splitter_group": 1,
+	"month": [
+		"maanden"
+	],
+	"week": [
+		"weken"
+	],
+	"day": [
+		"dagen"
+	],
+	"minute": [
+		"minuten"
+	],
+	"second": [
+		"seconden"
+	],
+	"in": [
+		"in"
+	],
+	"ago": [
+		"geleden"
+	],
+	"relative-type": {
+		"1 year ago": [
+			"vorige jaar"
+		],
+		"2 day ago": [
+			"eergisteren"
+		],
+		"in 2 day": [
+			"overmorgen"
+		]
+	}
+}

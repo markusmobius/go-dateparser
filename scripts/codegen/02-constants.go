@@ -6,10 +6,11 @@ import (
 )
 
 const (
-	CLDR_VERSION      = "31.0.1"
-	RAW_DIR           = "./raw-data"
-	CLDR_DIR          = "./data/cldr/date_translation_data"
-	SUPPLEMENTARY_DIR = "./data/supplementary/date_translation_data"
+	CLDR_VERSION            = "31.0.1"
+	RAW_DIR                 = "./raw-data"
+	CLDR_DIR                = "./data/cldr/date_translation_data"
+	SUPPLEMENTARY_DIR       = "./data/supplementary/date_translation_data"
+	SUPPLEMENTARY_BASE_PATH = "./data/supplementary/base_data.yaml"
 )
 
 var (

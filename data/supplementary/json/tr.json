@@ -1,0 +1,82 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"ve",
+		"yaklaşık",
+		"|",
+		"，"
+	],
+	"sentence_splitter_group": 1,
+	"january": [
+		"oc"
+	],
+	"february": [
+		"şu"
+	],
+	"april": [
+		"ni"
+	],
+	"june": [
+		"ha"
+	],
+	"july": [
+		"te"
+	],
+	"august": [
+		"ağ"
+	],
+	"september": [
+		"ey"
+	],
+	"october": [
+		"ek"
+	],
+	"november": [
+		"ka"
+	],
+	"december": [
+		"ar"
+	],
+	"wednesday": [
+		"çrs"
+	],
+	"thursday": [
+		"prs"
+	],
+	"year": [
+		"sene"
+	],
+	"in": [
+		"içerisinde",
+		"içinde",
+		"sonra"
+	],
+	"ago": [
+		"önce"
+	],
+	"relative-type": {
+		"1 day ago": [
+			"geçen gün"
+		],
+		"in 1 day": [
+			"önümüzdeki gün"
+		],
+		"in 1 month": [
+			"önümüzdeki ay"
+		],
+		"in 1 week": [
+			"haftaya",
+			"önümüzdeki hafta"
+		],
+		"in 1 year": [
+			"önümüzdeki yıl"
+		]
+	}
+}

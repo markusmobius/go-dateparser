@@ -1,0 +1,113 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		":n",
+		";",
+		"@",
+		"[",
+		"]",
+		"|",
+		"，"
+	],
+	"sentence_splitter_group": 1,
+	"january": [
+		"tammikuussa"
+	],
+	"february": [
+		"helmikuussa"
+	],
+	"march": [
+		"maaliskuussa"
+	],
+	"april": [
+		"huhtikuussa"
+	],
+	"may": [
+		"toukokuussa"
+	],
+	"june": [
+		"kesäkuussa"
+	],
+	"july": [
+		"heinäkuussa"
+	],
+	"august": [
+		"elokuussa"
+	],
+	"september": [
+		"syyskuussa"
+	],
+	"october": [
+		"lokakuussa"
+	],
+	"november": [
+		"marraskuussa"
+	],
+	"december": [
+		"joulukuussa"
+	],
+	"year": [
+		"vuoden",
+		"vuonna",
+		"vuotta",
+		"vv"
+	],
+	"month": [
+		"kuukauden",
+		"kuukautta"
+	],
+	"week": [
+		"viikkoa",
+		"viikon",
+		"vko"
+	],
+	"day": [
+		"p",
+		"pvä",
+		"pvää",
+		"päivän",
+		"päivää"
+	],
+	"hour": [
+		"tunnin",
+		"tuntia"
+	],
+	"minute": [
+		"minuutin",
+		"minuuttia"
+	],
+	"second": [
+		"sekunnin",
+		"sekuntia",
+		"sekuntin",
+		"sekuntti",
+		"sekunttia"
+	],
+	"in": [
+		"kuluttua",
+		"päästä"
+	],
+	"ago": [
+		"sitten"
+	],
+	"relative-type": {
+		"2 day ago": [
+			"toissa päivänä"
+		],
+		"2 month ago": [
+			"toissa kuussa"
+		],
+		"2 week ago": [
+			"toissa viikolla"
+		],
+		"2 year ago": [
+			"toissa vuonna"
+		]
+	},
+	"simplifications": {
+		"(\\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua)": "\\3 \\1 \\2"
+	}
+}

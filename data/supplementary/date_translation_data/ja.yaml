@@ -1,4 +1,4 @@
-no_word_spacing: "True"
+no_word_spacing: true
 
 sentence_splitter_group : 4
 

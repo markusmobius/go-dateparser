@@ -1,0 +1,137 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"-a",
+		"-ai",
+		"-akor",
+		"-e",
+		"-ei",
+		"-ekor",
+		"-es",
+		"-i",
+		"-ig",
+		"-je",
+		"-jei",
+		"-ji",
+		"-kor",
+		"-tól",
+		"-től",
+		"-áig",
+		"-án",
+		"-ától",
+		"-éig",
+		"-én",
+		"-étől",
+		"-ös",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"|",
+		"，"
+	],
+	"sentence_splitter_group": 1,
+	"january": [
+		"i"
+	],
+	"february": [
+		"feb",
+		"ii"
+	],
+	"march": [
+		"iii",
+		"már"
+	],
+	"april": [
+		"iv"
+	],
+	"may": [
+		"v"
+	],
+	"june": [
+		"vi"
+	],
+	"july": [
+		"vii"
+	],
+	"august": [
+		"viii"
+	],
+	"september": [
+		"ix"
+	],
+	"october": [
+		"x"
+	],
+	"november": [
+		"xi"
+	],
+	"december": [
+		"xii"
+	],
+	"sunday": [
+		"vas"
+	],
+	"year": [
+		"éve",
+		"évek",
+		"évvel"
+	],
+	"month": [
+		"hó",
+		"hónapja",
+		"hónapok",
+		"hónappal"
+	],
+	"week": [
+		"hete",
+		"hetek",
+		"héttel"
+	],
+	"day": [
+		"napja",
+		"napok",
+		"nappal"
+	],
+	"hour": [
+		"ó",
+		"óráig",
+		"órája",
+		"órák",
+		"órától",
+		"órával"
+	],
+	"minute": [
+		"p",
+		"perccel",
+		"perce",
+		"percek",
+		"percig",
+		"perctől"
+	],
+	"second": [
+		"mp",
+		"másodperccel",
+		"másodperce",
+		"másodpercek",
+		"másodpercig",
+		"másodperctől"
+	],
+	"in": [
+		"múlva"
+	],
+	"ago": [
+		"ezelőtt"
+	],
+	"relative-type": {
+		"2 day ago": [
+			"tegnapelőtt"
+		]
+	},
+	"simplifications": {
+		"egy": "1"
+	}
+}

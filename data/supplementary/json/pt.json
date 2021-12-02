@@ -1,0 +1,81 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"cerca",
+		"de",
+		"e",
+		"|",
+		"às",
+		"，"
+	],
+	"pertain": [
+		"de"
+	],
+	"sentence_splitter_group": 1,
+	"september": [
+		"septembro"
+	],
+	"monday": [
+		"segunda"
+	],
+	"tuesday": [
+		"terça"
+	],
+	"wednesday": [
+		"quarta"
+	],
+	"thursday": [
+		"quinta"
+	],
+	"friday": [
+		"sexta"
+	],
+	"saturday": [
+		"sab"
+	],
+	"year": [
+		"anos"
+	],
+	"month": [
+		"meses"
+	],
+	"week": [
+		"semanas"
+	],
+	"day": [
+		"dias"
+	],
+	"hour": [
+		"horas"
+	],
+	"minute": [
+		"minutos"
+	],
+	"second": [
+		"segundos"
+	],
+	"in": [
+		"em"
+	],
+	"ago": [
+		"atrás",
+		"há"
+	],
+	"relative-type": {
+		"2 day ago": [
+			"anteontem"
+		]
+	},
+	"simplifications": {
+		"alguns segundos": "44 segundos",
+		"um": "1",
+		"uma": "1"
+	}
+}

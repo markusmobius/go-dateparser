@@ -1,8 +1,6 @@
 package main
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -52,16 +50,22 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	createLanguageMap(languageOrder)
 
 	// Parse CLDR data
-	listLocaleData, err := parseAllCldrData(languageLocalesMap)
+	cldrLocaleData, err := parseAllCldrData(languageLocalesMap)
 	if err != nil {
 		return err
 	}
 
-	// Render locale data to JSON
+	// Parse supplementary data
+	supplementalLocaleData, err := parseAllSupplementaryData(languageLocalesMap)
+	if err != nil {
+		return err
+	}
+
+	// Render CLDR locale data to JSON
 	os.RemoveAll(CLDR_DIR)
 	os.MkdirAll(CLDR_DIR, os.ModePerm)
 
-	for language, localeData := range listLocaleData {
+	for language, localeData := range cldrLocaleData {
 		dstPath := filepath.Join(CLDR_DIR, language+".json")
 		err = renderJSON(&localeData, dstPath)
 		if err != nil {
@@ -69,14 +73,17 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	return nil
-}
+	// Render supplemental locale data to JSON
+	os.RemoveAll("data/supplementary/json")
+	os.MkdirAll("data/supplementary/json", os.ModePerm)
 
-func renderJSON(v interface{}, dstPath string) error {
-	bt, err := json.MarshalIndent(v, "", "\t")
-	if err != nil {
-		return err
+	for language, localeData := range supplementalLocaleData {
+		dstPath := filepath.Join("data/supplementary/json", language+".json")
+		err = renderJSON(&localeData, dstPath)
+		if err != nil {
+			return err
+		}
 	}
 
-	return ioutil.WriteFile(dstPath, bt, os.ModePerm)
+	return nil
 }

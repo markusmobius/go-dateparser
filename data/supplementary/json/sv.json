@@ -1,0 +1,98 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"den",
+		"på",
+		"|",
+		"，"
+	],
+	"sentence_splitter_group": 1,
+	"june": [
+		"jun"
+	],
+	"july": [
+		"jul"
+	],
+	"september": [
+		"sept"
+	],
+	"monday": [
+		"månd"
+	],
+	"tuesday": [
+		"tisd"
+	],
+	"wednesday": [
+		"onsd"
+	],
+	"thursday": [
+		"torsd"
+	],
+	"friday": [
+		"fred"
+	],
+	"saturday": [
+		"lörd"
+	],
+	"sunday": [
+		"sönd"
+	],
+	"year": [
+		"året"
+	],
+	"month": [
+		"månaden",
+		"månader"
+	],
+	"week": [
+		"veckor"
+	],
+	"day": [
+		"dagar"
+	],
+	"hour": [
+		"t",
+		"timmar"
+	],
+	"minute": [
+		"minuter"
+	],
+	"second": [
+		"sekunder"
+	],
+	"in": [
+		"från nu",
+		"om"
+	],
+	"ago": [
+		"sedan"
+	],
+	"relative-type": {
+		"0 day ago": [
+			"idag"
+		],
+		"1 day ago": [
+			"igår"
+		],
+		"1 year ago": [
+			"förra året"
+		],
+		"2 day ago": [
+			"förrgår"
+		],
+		"in 1 day": [
+			"imorgon"
+		]
+	},
+	"simplifications": {
+		"en": "1",
+		"två": "2"
+	}
+}

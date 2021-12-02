@@ -1,0 +1,34 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"|",
+		"，"
+	],
+	"week": [
+		"uker"
+	],
+	"day": [
+		"dager"
+	],
+	"hour": [
+		"timer"
+	],
+	"in": [
+		"om"
+	],
+	"ago": [
+		"siden"
+	],
+	"relative-type-regex": {
+		"\\1 day ago": [
+			"for (\\d+) dager siden"
+		]
+	}
+}

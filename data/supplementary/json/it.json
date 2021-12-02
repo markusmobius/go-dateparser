@@ -1,0 +1,52 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"circa",
+		"e",
+		"|",
+		"，"
+	],
+	"sentence_splitter_group": 1,
+	"year": [
+		"anni"
+	],
+	"month": [
+		"mesi"
+	],
+	"week": [
+		"settimane"
+	],
+	"day": [
+		"giorni"
+	],
+	"hour": [
+		"ore"
+	],
+	"minute": [
+		"minuti"
+	],
+	"second": [
+		"secondi"
+	],
+	"in": [
+		"in"
+	],
+	"ago": [
+		"fa"
+	],
+	"relative-type": {
+		"2 day ago": [
+			"altro ieri"
+		]
+	},
+	"simplifications": {
+		"(\\d+)\\s+ora": "\\1 ore"
+	}
+}

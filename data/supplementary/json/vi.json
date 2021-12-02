@@ -1,0 +1,107 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"|",
+		"，"
+	],
+	"pertain": [
+		"lúc"
+	],
+	"sentence_splitter_group": 1,
+	"january": [
+		"tháng một"
+	],
+	"february": [
+		"tháng hai"
+	],
+	"march": [
+		"tháng ba"
+	],
+	"april": [
+		"tháng tư"
+	],
+	"may": [
+		"tháng năm"
+	],
+	"june": [
+		"tháng sáu"
+	],
+	"july": [
+		"tháng bảy"
+	],
+	"august": [
+		"tháng tám"
+	],
+	"september": [
+		"tháng chín"
+	],
+	"october": [
+		"tháng mười"
+	],
+	"november": [
+		"tháng mười một"
+	],
+	"december": [
+		"tháng mười hai"
+	],
+	"monday": [
+		"thứ 2"
+	],
+	"tuesday": [
+		"thứ 3"
+	],
+	"wednesday": [
+		"thứ 4"
+	],
+	"thursday": [
+		"thứ 5"
+	],
+	"friday": [
+		"thứ 6"
+	],
+	"saturday": [
+		"thứ 7"
+	],
+	"sunday": [
+		"thứ 1"
+	],
+	"month": [
+		"thang",
+		"thg"
+	],
+	"week": [
+		"tuần lể"
+	],
+	"day": [
+		"ban ngày",
+		"buổi"
+	],
+	"minute": [
+		"chút",
+		"lát",
+		"nguyên bản"
+	],
+	"second": [
+		"giây đồng hồ",
+		"hạng nhì"
+	],
+	"in": [
+		"trong"
+	],
+	"ago": [
+		"cách đây",
+		"trước",
+		"trước đây",
+		"trước"
+	],
+	"simplifications": {
+		"(?:ngày|năm)\\s(\\d+)": "\\1"
+	}
+}

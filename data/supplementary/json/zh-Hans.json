@@ -1,0 +1,16 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"|",
+		"，"
+	],
+	"no_word_spacing": true,
+	"sentence_splitter_group": 4
+}

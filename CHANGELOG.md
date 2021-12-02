@@ -1,3 +1,7 @@
+### 2021-12-02
+
+- Implement script to generate locale data from supplementary data.
+
 ### 2021-12-01
 
 - Implement script to generate simplified locale data from CLDR data.

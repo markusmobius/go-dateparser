@@ -1,0 +1,60 @@
+{
+	"skip": [
+		"'",
+		",",
+		"-",
+		"/",
+		";",
+		"@",
+		"[",
+		"]",
+		"de",
+		"la",
+		"|",
+		"，"
+	],
+	"sentence_splitter_group": 1,
+	"february": [
+		"febr"
+	],
+	"march": [
+		"mart"
+	],
+	"september": [
+		"sep"
+	],
+	"november": [
+		"noiem"
+	],
+	"wednesday": [
+		"mi"
+	],
+	"year": [
+		"ani"
+	],
+	"month": [
+		"luna",
+		"luni"
+	],
+	"week": [
+		"săptămâni"
+	],
+	"day": [
+		"zile"
+	],
+	"hour": [
+		"ore"
+	],
+	"minute": [
+		"minute"
+	],
+	"second": [
+		"secunde"
+	],
+	"in": [
+		"în"
+	],
+	"ago": [
+		"în urmă"
+	]
+}
