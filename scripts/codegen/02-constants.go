@@ -44,6 +44,7 @@ var (
 	rxParenthesisPattern  = regexp.MustCompile(`[\(\)]`)
 	rxGoEmptyField        = regexp.MustCompile(`(?m)^.*\{\},?$\n*`)
 	rxGoZeroField         = regexp.MustCompile(`(?m)^.*(false|0),?$\n*`)
+	rxGoRegexImport       = regexp.MustCompile(`(?m)^import "regexp"\s*$\n*`)
 
 	// Languages with insufficient translation data are excluded
 	excludedLanguages = map[string]struct{}{
