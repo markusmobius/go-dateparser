@@ -1,0 +1,61 @@
+package data
+
+import "regexp"
+
+var boLocale = LocaleData{
+	Name:                  "bo",
+	DateOrder:             "YMD",
+	January:               []string{"ཟླ་༡", "ཟླ་བ་དང་པོ", "ཟླ་བ་དང་པོ་"},
+	February:              []string{"ཟླ་༢", "ཟླ་བ་གཉིས་པ", "ཟླ་བ་གཉིས་པ་"},
+	March:                 []string{"ཟླ་༣", "ཟླ་བ་གསུམ་པ", "ཟླ་བ་གསུམ་པ་"},
+	April:                 []string{"ཟླ་༤", "ཟླ་བ་བཞི་པ", "ཟླ་བ་བཞི་པ་"},
+	May:                   []string{"ཟླ་༥", "ཟླ་བ་ལྔ་པ", "ཟླ་བ་ལྔ་པ་"},
+	June:                  []string{"ཟླ་༦", "ཟླ་བ་དྲུག་པ", "ཟླ་བ་དྲུག་པ་"},
+	July:                  []string{"ཟླ་༧", "ཟླ་བ་བདུན་པ", "ཟླ་བ་བདུན་པ་"},
+	August:                []string{"ཟླ་༨", "ཟླ་བ་བརྒྱད་པ", "ཟླ་བ་བརྒྱད་པ་"},
+	September:             []string{"ཟླ་༩", "ཟླ་བ་དགུ་པ", "ཟླ་བ་དགུ་པ་"},
+	October:               []string{"ཟླ་༡༠", "ཟླ་བ་བཅུ་པ", "ཟླ་བ་བཅུ་པ་"},
+	November:              []string{"ཟླ་༡༡", "ཟླ་བ་བཅུ་གཅིག་པ", "ཟླ་བ་བཅུ་གཅིག་པ་"},
+	December:              []string{"ཟླ་༡༢", "ཟླ་བ་བཅུ་གཉིས་པ", "ཟླ་བ་བཅུ་གཉིས་པ་"},
+	Monday:                []string{"གཟའ་ཟླ་བ་", "ཟླ་བ་"},
+	Tuesday:               []string{"གཟའ་མིག་དམར་", "མིག་དམར་"},
+	Wednesday:             []string{"གཟའ་ལྷག་པ་", "ལྷག་པ་"},
+	Thursday:              []string{"གཟའ་ཕུར་བུ་", "ཕུར་བུ་"},
+	Friday:                []string{"གཟའ་པ་སངས་", "པ་སངས་"},
+	Saturday:              []string{"གཟའ་སྤེན་པ་", "སྤེན་པ་"},
+	Sunday:                []string{"གཟའ་ཉི་མ་", "ཉི་མ་"},
+	AM:                    []string{"སྔ་དྲོ་"},
+	PM:                    []string{"ཕྱི་དྲོ་"},
+	Year:                  []string{"ལོ།"},
+	Month:                 []string{"ཟླ་བ་"},
+	Week:                  []string{"week"},
+	Day:                   []string{"ཉིན།"},
+	Hour:                  []string{"ཆུ་ཚོད་"},
+	Minute:                []string{"སྐར་མ།"},
+	Second:                []string{"སྐར་ཆ།"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`དེ་རིང་`},
+		`0 hour ago`:   {`this hour`},
+		`0 minute ago`: {`this minute`},
+		`0 month ago`:  {`this month`},
+		`0 second ago`: {`now`},
+		`0 week ago`:   {`this week`},
+		`0 year ago`:   {`this year`},
+		`1 day ago`:    {`ཁས་ས་`},
+		`1 month ago`:  {`last month`},
+		`1 week ago`:   {`last week`},
+		`1 year ago`:   {`last year`},
+		`in 1 day`:     {`སང་ཉིན་`},
+		`in 1 month`:   {`next month`},
+		`in 1 week`:    {`next week`},
+		`in 1 year`:    {`next year`},
+	},
+	LocaleSpecific: map[string]LocaleData{
+		"bo-IN": boINLocale,
+	},
+}
+
+var boINLocale = LocaleData{
+	Name:                  "bo-IN",
+	DateOrder:             "",
+}

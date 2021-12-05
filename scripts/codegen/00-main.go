@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -47,7 +49,7 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	}
 
 	// Generate map between a language and its descendant (if any)
-	createLanguageMap(languageOrder)
+	languageMap := createLanguageMap(languageOrder)
 
 	// Parse CLDR data
 	cldrLocaleData, err := parseAllCldrData(languageLocalesMap)
@@ -59,6 +61,23 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	supplementalLocaleData, err := parseAllSupplementaryData(languageLocalesMap)
 	if err != nil {
 		return err
+	}
+
+	// Merge locale data
+	mergedData := map[string]LocaleData{}
+	for language := range languageLocalesMap {
+		cldrData, cldrExist := cldrLocaleData[language]
+		supplementalData, supplementalExist := supplementalLocaleData[language]
+		if !cldrExist && !supplementalExist {
+			continue
+		}
+
+		data := mergeLocaleData(cldrData, supplementalData)
+		if data.Name == "" {
+			data.Name = language
+		}
+
+		mergedData[language] = data
 	}
 
 	// Render CLDR locale data to JSON
@@ -82,6 +101,50 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		err = renderJSON(&localeData, dstPath)
 		if err != nil {
 			return err
+		}
+	}
+
+	// Generate code
+	os.RemoveAll(GO_CODE_DIR)
+	os.MkdirAll(GO_CODE_DIR, os.ModePerm)
+
+	path := filepath.Join(GO_CODE_DIR, "00-locale-data.go")
+	err = generateCode("locale-map", &mergedData, path)
+	if err != nil {
+		return err
+	}
+
+	path = filepath.Join(GO_CODE_DIR, "01-language-order.go")
+	err = generateCode("lang-order", &languageOrder, path)
+	if err != nil {
+		return err
+	}
+
+	path = filepath.Join(GO_CODE_DIR, "02-language-map.go")
+	err = generateCode("lang-map", &languageMap, path)
+	if err != nil {
+		return err
+	}
+
+	path = filepath.Join(GO_CODE_DIR, "03-language-locales-map.go")
+	err = generateCode("lang-loc-map", &languageLocalesMap, path)
+	if err != nil {
+		return err
+	}
+
+	path = filepath.Join(GO_CODE_DIR, "03-language-locales-map.go")
+	err = generateCode("lang-loc-map", &languageLocalesMap, path)
+	if err != nil {
+		return err
+	}
+
+	for language, localeData := range mergedData {
+		fName := strings.ToLower(language)
+		fName = strings.ReplaceAll(fName, " ", "")
+		path = filepath.Join(GO_CODE_DIR, fName+".go")
+		err = generateLocaleDataCode(localeData, path)
+		if err != nil {
+			return fmt.Errorf("error in %s: %v", language, err)
 		}
 	}
 

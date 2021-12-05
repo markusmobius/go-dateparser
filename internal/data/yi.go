@@ -1,0 +1,73 @@
+package data
+
+import "regexp"
+
+var yiLocale = LocaleData{
+	Name:                  "yi",
+	DateOrder:             "DMY",
+	January:               []string{"יאַנ", "יאַנואַר"},
+	February:              []string{"פֿעב", "פֿעברואַר"},
+	March:                 []string{"מערץ"},
+	April:                 []string{"אַפּר", "אַפּריל"},
+	May:                   []string{"מיי"},
+	June:                  []string{"יוני"},
+	July:                  []string{"יולי"},
+	August:                []string{"אויג", "אויגוסט"},
+	September:             []string{"סעפּ", "סעפּטעמבער"},
+	October:               []string{"אקט", "אקטאבער"},
+	November:              []string{"נאוו", "נאוועמבער"},
+	December:              []string{"דעצ", "דעצעמבער"},
+	Monday:                []string{"מאָנטיק"},
+	Tuesday:               []string{"דינסטיק"},
+	Wednesday:             []string{"מיטוואך"},
+	Thursday:              []string{"דאנערשטיק"},
+	Friday:                []string{"פֿרײַטיק"},
+	Saturday:              []string{"שבת"},
+	Sunday:                []string{"זונטיק"},
+	AM:                    []string{"פֿאַרמיטאָג"},
+	PM:                    []string{"נאָכמיטאָג"},
+	Year:                  []string{"יאָר"},
+	Month:                 []string{"מאנאַט"},
+	Week:                  []string{"וואך"},
+	Day:                   []string{"טאָג"},
+	Hour:                  []string{"שעה"},
+	Minute:                []string{"מינוט"},
+	Second:                []string{"סעקונדע"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`היינט`},
+		`0 hour ago`:   {`this hour`},
+		`0 minute ago`: {`this minute`},
+		`0 month ago`:  {`דעם חודש`},
+		`0 second ago`: {`now`},
+		`0 week ago`:   {`this week`},
+		`0 year ago`:   {`הײַ יאָר`},
+		`1 day ago`:    {`נעכטן`},
+		`1 month ago`:  {`פֿאַרגאנגענעם חודש`},
+		`1 week ago`:   {`last week`},
+		`1 year ago`:   {`פֿאַראַיאָר`},
+		`in 1 day`:     {`מארגן`},
+		`in 1 month`:   {`קומענדיקן חודש`},
+		`in 1 week`:    {`איבער אַכט טאָג`},
+		`in 1 year`:    {`איבער א יאָר`},
+	},
+	RelativeTypeRegex: map[string][]*regexp.Regexp{
+		`\1 month ago`: {
+			regexp.MustCompile(`(?i)פֿאַר (\d+) חדשים`),
+			regexp.MustCompile(`(?i)פֿאַר (\d+) חודש`),
+		},
+		`\1 year ago`: {
+			regexp.MustCompile(`(?i)פֿאַר (\d+) יאָר`),
+		},
+		`in \1 day`: {
+			regexp.MustCompile(`(?i)אין (\d+) טאָג אַרום`),
+			regexp.MustCompile(`(?i)אין (\d+) טעג אַרום`),
+		},
+		`in \1 month`: {
+			regexp.MustCompile(`(?i)איבער (\d+) חדשים`),
+			regexp.MustCompile(`(?i)איבער (\d+) חודש`),
+		},
+		`in \1 year`: {
+			regexp.MustCompile(`(?i)איבער (\d+) יאָר`),
+		},
+	},
+}

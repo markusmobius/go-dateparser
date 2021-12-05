@@ -1,0 +1,61 @@
+package data
+
+import "regexp"
+
+var tiLocale = LocaleData{
+	Name:                  "ti",
+	DateOrder:             "DMY",
+	January:               []string{"ጥሪ"},
+	February:              []string{"ለካ", "ለካቲት"},
+	March:                 []string{"መጋ", "መጋቢት"},
+	April:                 []string{"ሚያ", "ሚያዝያ"},
+	May:                   []string{"ግን", "ግንቦት"},
+	June:                  []string{"ሰነ"},
+	July:                  []string{"ሓም", "ሓምለ"},
+	August:                []string{"ነሓ", "ነሓሰ"},
+	September:             []string{"መስ", "መስከረም"},
+	October:               []string{"ጥቅ", "ጥቅምቲ"},
+	November:              []string{"ሕዳ", "ሕዳር"},
+	December:              []string{"ታሕ", "ታሕሳስ"},
+	Monday:                []string{"ሰኑ", "ሰኑይ"},
+	Tuesday:               []string{"ሠሉስ", "ሰሉ", "ሰሉስ"},
+	Wednesday:             []string{"ረቡ", "ረቡዕ"},
+	Thursday:              []string{"ሓሙ", "ሓሙስ", "ኃሙስ"},
+	Friday:                []string{"ዓር", "ዓርቢ"},
+	Saturday:              []string{"ቀዳ", "ቀዳም"},
+	Sunday:                []string{"ሰን", "ሰንበት"},
+	AM:                    []string{"ንጉሆ ሰዓተ"},
+	PM:                    []string{"ድሕር ሰዓት"},
+	Year:                  []string{"year"},
+	Month:                 []string{"month"},
+	Week:                  []string{"week"},
+	Day:                   []string{"day"},
+	Hour:                  []string{"hour"},
+	Minute:                []string{"minute"},
+	Second:                []string{"second"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`today`},
+		`0 hour ago`:   {`this hour`},
+		`0 minute ago`: {`this minute`},
+		`0 month ago`:  {`this month`},
+		`0 second ago`: {`now`},
+		`0 week ago`:   {`this week`},
+		`0 year ago`:   {`this year`},
+		`1 day ago`:    {`yesterday`},
+		`1 month ago`:  {`last month`},
+		`1 week ago`:   {`last week`},
+		`1 year ago`:   {`last year`},
+		`in 1 day`:     {`tomorrow`},
+		`in 1 month`:   {`next month`},
+		`in 1 week`:    {`next week`},
+		`in 1 year`:    {`next year`},
+	},
+	LocaleSpecific: map[string]LocaleData{
+		"ti-ER": tiERLocale,
+	},
+}
+
+var tiERLocale = LocaleData{
+	Name:                  "ti-ER",
+	DateOrder:             "",
+}

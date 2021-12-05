@@ -1,0 +1,115 @@
+package data
+
+import "regexp"
+
+var kyLocale = LocaleData{
+	Name:                  "ky",
+	DateOrder:             "DMY",
+	January:               []string{"янв", "январь"},
+	February:              []string{"фев", "февраль"},
+	March:                 []string{"мар", "март"},
+	April:                 []string{"апр", "апрель"},
+	May:                   []string{"май"},
+	June:                  []string{"июн", "июнь"},
+	July:                  []string{"июл", "июль"},
+	August:                []string{"авг", "август"},
+	September:             []string{"сен", "сентябрь"},
+	October:               []string{"окт", "октябрь"},
+	November:              []string{"ноя", "ноябрь"},
+	December:              []string{"дек", "декабрь"},
+	Monday:                []string{"дүй", "дүйшөмбү"},
+	Tuesday:               []string{"шейш", "шейшемби"},
+	Wednesday:             []string{"шарш", "шаршемби"},
+	Thursday:              []string{"бейш", "бейшемби"},
+	Friday:                []string{"жума"},
+	Saturday:              []string{"ишемби", "ишм"},
+	Sunday:                []string{"жек", "жекшемби"},
+	AM:                    []string{"таңкы", "тң"},
+	PM:                    []string{"тк", "түштөн кийинки"},
+	Year:                  []string{"ж", "жыл"},
+	Month:                 []string{"ай"},
+	Week:                  []string{"апт", "апта"},
+	Day:                   []string{"күн"},
+	Hour:                  []string{"саат", "ст"},
+	Minute:                []string{"м", "мүн", "мүнөт"},
+	Second:                []string{"сек", "секунд"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`бүгүн`},
+		`0 hour ago`:   {`ушул саатта`},
+		`0 minute ago`: {`ушул мүнөттө`},
+		`0 month ago`:  {`бул айда`},
+		`0 second ago`: {`азыр`},
+		`0 week ago`:   {`ушул апт`, `ушул аптада`},
+		`0 year ago`:   {`быйыл`},
+		`1 day ago`:    {`кечээ`},
+		`1 month ago`:  {`өткөн айда`},
+		`1 week ago`:   {`өткөн апт`, `өткөн аптада`},
+		`1 year ago`:   {`былтыр`},
+		`in 1 day`:     {`эртеӊ`},
+		`in 1 month`:   {`эмдиги айда`},
+		`in 1 week`:    {`келерки апт`, `келерки аптада`},
+		`in 1 year`:    {`эмдиги жылы`},
+	},
+	RelativeTypeRegex: map[string][]*regexp.Regexp{
+		`\1 day ago`: {
+			regexp.MustCompile(`(?i)(\d+) күн мурун`),
+		},
+		`\1 hour ago`: {
+			regexp.MustCompile(`(?i)(\d+) с мурн`),
+			regexp.MustCompile(`(?i)(\d+) саат мурун`),
+		},
+		`\1 minute ago`: {
+			regexp.MustCompile(`(?i)(\d+) мүн мурн`),
+			regexp.MustCompile(`(?i)(\d+) мүн мурун`),
+			regexp.MustCompile(`(?i)(\d+) мүнөт мурун`),
+		},
+		`\1 month ago`: {
+			regexp.MustCompile(`(?i)(\d+) ай мурн`),
+			regexp.MustCompile(`(?i)(\d+) ай мурун`),
+		},
+		`\1 second ago`: {
+			regexp.MustCompile(`(?i)(\d+) сек мурн`),
+			regexp.MustCompile(`(?i)(\d+) сек мурун`),
+			regexp.MustCompile(`(?i)(\d+) секунд мурун`),
+		},
+		`\1 week ago`: {
+			regexp.MustCompile(`(?i)(\d+) апт мурун`),
+			regexp.MustCompile(`(?i)(\d+) апта мурун`),
+		},
+		`\1 year ago`: {
+			regexp.MustCompile(`(?i)(\d+) жыл мурун`),
+		},
+		`in \1 day`: {
+			regexp.MustCompile(`(?i)(\d+) күн кийин`),
+			regexp.MustCompile(`(?i)(\d+) күндөн кийин`),
+		},
+		`in \1 hour`: {
+			regexp.MustCompile(`(?i)(\d+) с кийн`),
+			regexp.MustCompile(`(?i)(\d+) саат кийин`),
+			regexp.MustCompile(`(?i)(\d+) сааттан кийин`),
+		},
+		`in \1 minute`: {
+			regexp.MustCompile(`(?i)(\d+) мүн кийин`),
+			regexp.MustCompile(`(?i)(\d+) мүн кийн`),
+			regexp.MustCompile(`(?i)(\d+) мүнөттөн кийин`),
+		},
+		`in \1 month`: {
+			regexp.MustCompile(`(?i)(\d+) айд кийин`),
+			regexp.MustCompile(`(?i)(\d+) айд кийн`),
+			regexp.MustCompile(`(?i)(\d+) айдан кийин`),
+		},
+		`in \1 second`: {
+			regexp.MustCompile(`(?i)(\d+) сек кийин`),
+			regexp.MustCompile(`(?i)(\d+) сек кийн`),
+			regexp.MustCompile(`(?i)(\d+) секунддан кийин`),
+		},
+		`in \1 week`: {
+			regexp.MustCompile(`(?i)(\d+) апт кийин`),
+			regexp.MustCompile(`(?i)(\d+) аптадан кийин`),
+		},
+		`in \1 year`: {
+			regexp.MustCompile(`(?i)(\d+) жыл кийин`),
+			regexp.MustCompile(`(?i)(\d+) жылдан кийин`),
+		},
+	},
+}

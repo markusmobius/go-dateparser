@@ -11,6 +11,7 @@ const (
 	CLDR_DIR                = "./data/cldr/date_translation_data"
 	SUPPLEMENTARY_DIR       = "./data/supplementary/date_translation_data"
 	SUPPLEMENTARY_BASE_PATH = "./data/supplementary/base_data.yaml"
+	GO_CODE_DIR             = "./internal/data"
 )
 
 var (
@@ -41,6 +42,8 @@ var (
 	rxSanitizeAposthrope  = regexp.MustCompile(strings.Join(apostropheLookAlikeChars, "|"))
 	rxAmPmPattern         = regexp.MustCompile(`^\s*[AaPp]\s*\.?\s*[Mm]\s*\.?\s*$`)
 	rxParenthesisPattern  = regexp.MustCompile(`[\(\)]`)
+	rxGoEmptyField        = regexp.MustCompile(`(?m)^.*\{\},?$\n*`)
+	rxGoZeroField         = regexp.MustCompile(`(?m)^.*(false|0),?$\n*`)
 
 	// Languages with insufficient translation data are excluded
 	excludedLanguages = map[string]struct{}{

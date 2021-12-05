@@ -1,0 +1,61 @@
+package data
+
+import "regexp"
+
+var teoLocale = LocaleData{
+	Name:                  "teo",
+	DateOrder:             "DMY",
+	January:               []string{"orara", "rar"},
+	February:              []string{"muk", "omuk"},
+	March:                 []string{"kwa", "okwamg'"},
+	April:                 []string{"dun", "odung'el"},
+	May:                   []string{"mar", "omaruk"},
+	June:                  []string{"mod", "omodok'king'ol"},
+	July:                  []string{"jol", "ojola"},
+	August:                []string{"opedel", "ped"},
+	September:             []string{"osokosokoma", "sok"},
+	October:               []string{"otibar", "tib"},
+	November:              []string{"lab", "olabor"},
+	December:              []string{"opoo", "poo"},
+	Monday:                []string{"bar", "nakaebarasa"},
+	Tuesday:               []string{"aar", "nakaare"},
+	Wednesday:             []string{"nakauni", "uni"},
+	Thursday:              []string{"nakaung'on", "ung"},
+	Friday:                []string{"kan", "nakakany"},
+	Saturday:              []string{"nakasabiti", "sab"},
+	Sunday:                []string{"jum", "nakaejuma"},
+	AM:                    []string{"taparachu"},
+	PM:                    []string{"ebongi"},
+	Year:                  []string{"ekan"},
+	Month:                 []string{"elap"},
+	Week:                  []string{"ewiki"},
+	Day:                   []string{"aparan"},
+	Hour:                  []string{"esaa"},
+	Minute:                []string{"idakika"},
+	Second:                []string{"isekonde"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`lolo`},
+		`0 hour ago`:   {`this hour`},
+		`0 minute ago`: {`this minute`},
+		`0 month ago`:  {`this month`},
+		`0 second ago`: {`now`},
+		`0 week ago`:   {`this week`},
+		`0 year ago`:   {`this year`},
+		`1 day ago`:    {`jaan`},
+		`1 month ago`:  {`last month`},
+		`1 week ago`:   {`last week`},
+		`1 year ago`:   {`last year`},
+		`in 1 day`:     {`moi`},
+		`in 1 month`:   {`next month`},
+		`in 1 week`:    {`next week`},
+		`in 1 year`:    {`next year`},
+	},
+	LocaleSpecific: map[string]LocaleData{
+		"teo-KE": teoKELocale,
+	},
+}
+
+var teoKELocale = LocaleData{
+	Name:                  "teo-KE",
+	DateOrder:             "",
+}

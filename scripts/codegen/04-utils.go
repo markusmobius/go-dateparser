@@ -193,14 +193,14 @@ func mergeList(a, b []string) []string {
 	return cleanList(nil, nil, append(a, b...)...)
 }
 
-func mergeStringMap(mapA, mapB map[string]string) map[string]string {
+func mergeStringMap(base, input map[string]string) map[string]string {
 	mergedMap := map[string]string{}
 
-	for key, value := range mapA {
+	for key, value := range input {
 		mergedMap[key] = value
 	}
 
-	for key, value := range mapB {
+	for key, value := range base {
 		if _, exist := mergedMap[key]; !exist {
 			mergedMap[key] = value
 		}
@@ -209,14 +209,14 @@ func mergeStringMap(mapA, mapB map[string]string) map[string]string {
 	return mergedMap
 }
 
-func mergeStringListMap(mapA, mapB map[string][]string) map[string][]string {
+func mergeStringListMap(base, input map[string][]string) map[string][]string {
 	mergedMap := map[string][]string{}
 
-	for key, value := range mapA {
+	for key, value := range input {
 		mergedMap[key] = value
 	}
 
-	for key, value := range mapB {
+	for key, value := range base {
 		if existingValue, exist := mergedMap[key]; !exist {
 			mergedMap[key] = value
 		} else {
@@ -227,14 +227,45 @@ func mergeStringListMap(mapA, mapB map[string][]string) map[string][]string {
 	return mergedMap
 }
 
+func mergeLocaleMap(base, input map[string]LocaleData) map[string]LocaleData {
+	mergedMap := map[string]LocaleData{}
+
+	for key, locale := range input {
+		mergedMap[key] = locale
+	}
+
+	for key, locale := range base {
+		if _, exist := mergedMap[key]; !exist {
+			mergedMap[key] = locale
+		}
+	}
+
+	return mergedMap
+}
+
 func mergeLocaleData(base, input LocaleData) LocaleData {
+	name := input.Name
+	if name == "" {
+		name = base.Name
+	}
+
+	dateOrder := input.DateOrder
+	if dateOrder == "" {
+		dateOrder = base.DateOrder
+	}
+
+	sentenceSplitterGroup := input.SentenceSplitterGroup
+	if sentenceSplitterGroup == 0 {
+		sentenceSplitterGroup = base.SentenceSplitterGroup
+	}
+
 	return LocaleData{
-		Name:                  base.Name,
-		DateOrder:             base.DateOrder,
+		Name:                  name,
+		DateOrder:             dateOrder,
 		SkipWords:             mergeList(base.SkipWords, input.SkipWords),
 		PertainWords:          mergeList(base.PertainWords, input.PertainWords),
-		NoWordSpacing:         base.NoWordSpacing,
-		SentenceSplitterGroup: base.SentenceSplitterGroup,
+		NoWordSpacing:         base.NoWordSpacing || input.NoWordSpacing,
+		SentenceSplitterGroup: sentenceSplitterGroup,
 		January:               mergeList(base.January, input.January),
 		February:              mergeList(base.February, input.February),
 		March:                 mergeList(base.March, input.March),
@@ -270,5 +301,6 @@ func mergeLocaleData(base, input LocaleData) LocaleData {
 		RelativeType:      mergeStringListMap(base.RelativeType, input.RelativeType),
 		RelativeTypeRegex: mergeStringListMap(base.RelativeTypeRegex, input.RelativeTypeRegex),
 		Simplifications:   mergeStringMap(base.Simplifications, input.Simplifications),
+		LocaleSpecific:    mergeLocaleMap(base.LocaleSpecific, input.LocaleSpecific),
 	}
 }

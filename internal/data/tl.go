@@ -1,0 +1,43 @@
+package data
+
+import "regexp"
+
+var tlLocale = LocaleData{
+	Name:                  "tl",
+	DateOrder:             "",
+	SentenceSplitterGroup: 1,
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|", "，"},
+	January:               []string{"ene", "enero"},
+	February:              []string{"peb", "pebrero"},
+	March:                 []string{"mar", "marso"},
+	April:                 []string{"abr", "abril"},
+	May:                   []string{"may", "mayo"},
+	June:                  []string{"hun", "hunyo"},
+	July:                  []string{"hul", "hulyo"},
+	August:                []string{"ago", "agosto"},
+	September:             []string{"set", "setyembre"},
+	October:               []string{"okt", "oktubre"},
+	November:              []string{"nob", "nobyembre"},
+	December:              []string{"dis", "disyembre"},
+	Monday:                []string{"lun", "lunes"},
+	Tuesday:               []string{"martes"},
+	Wednesday:             []string{"miy", "miyerkules"},
+	Thursday:              []string{"huw", "huwebes"},
+	Friday:                []string{"biy", "biyernes"},
+	Saturday:              []string{"sab", "sabado"},
+	Sunday:                []string{"lin", "linggo"},
+	Year:                  []string{"taon"},
+	Month:                 []string{"buwan"},
+	Week:                  []string{"linggo"},
+	Day:                   []string{"araw"},
+	Hour:                  []string{"oras"},
+	Minute:                []string{"minuto"},
+	Second:                []string{"segundo"},
+	In:                    []string{"sa"},
+	Ago:                   []string{"nakalipas", "nakaraan"},
+	Simplifications: map[string]string{
+		`isang araw`: `2 araw`,
+		`kahapon`:    `1 araw nakaraan`,
+		`ngayon`:     `0 segundo nakalipas`,
+	},
+}

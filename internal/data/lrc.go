@@ -1,0 +1,61 @@
+package data
+
+import "regexp"
+
+var lrcLocale = LocaleData{
+	Name:                  "lrc",
+	DateOrder:             "YMD",
+	January:               []string{"جانڤیە"},
+	February:              []string{"فئڤریە"},
+	March:                 []string{"مارس"},
+	April:                 []string{"آڤریل"},
+	May:                   []string{"مئی"},
+	June:                  []string{"جوٙأن"},
+	July:                  []string{"جوٙلا"},
+	August:                []string{"آگوست"},
+	September:             []string{"سئپتامر"},
+	October:               []string{"ئوکتوڤر"},
+	November:              []string{"نوڤامر"},
+	December:              []string{"دئسامر"},
+	Monday:                []string{"mon"},
+	Tuesday:               []string{"tue"},
+	Wednesday:             []string{"wed"},
+	Thursday:              []string{"thu"},
+	Friday:                []string{"fri"},
+	Saturday:              []string{"sat"},
+	Sunday:                []string{"sun"},
+	AM:                    []string{"am"},
+	PM:                    []string{"pm"},
+	Year:                  []string{"سال"},
+	Month:                 []string{"ما"},
+	Week:                  []string{"ھأفتە"},
+	Day:                   []string{"روٙز"},
+	Hour:                  []string{"ساأت"},
+	Minute:                []string{"دئیقە"},
+	Second:                []string{"ثانیە"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`أمروٙ`},
+		`0 hour ago`:   {`this hour`},
+		`0 minute ago`: {`this minute`},
+		`0 month ago`:  {`this month`},
+		`0 second ago`: {`now`},
+		`0 week ago`:   {`this week`},
+		`0 year ago`:   {`this year`},
+		`1 day ago`:    {`دیروٙز`},
+		`1 month ago`:  {`last month`},
+		`1 week ago`:   {`last week`},
+		`1 year ago`:   {`last year`},
+		`in 1 day`:     {`شوٙصوٙ`},
+		`in 1 month`:   {`next month`},
+		`in 1 week`:    {`next week`},
+		`in 1 year`:    {`next year`},
+	},
+	LocaleSpecific: map[string]LocaleData{
+		"lrc-IQ": lrcIQLocale,
+	},
+}
+
+var lrcIQLocale = LocaleData{
+	Name:                  "lrc-IQ",
+	DateOrder:             "",
+}

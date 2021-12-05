@@ -1,0 +1,200 @@
+package data
+
+import "regexp"
+
+var ruLocale = LocaleData{
+	Name:                  "ru",
+	DateOrder:             "DMY",
+	SentenceSplitterGroup: 1,
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "в", "во", "и", "около", "примерно", "，"},
+	January:               []string{"янв", "январь", "января"},
+	February:              []string{"фев", "февр", "февраль", "февраля"},
+	March:                 []string{"мар", "март", "марта"},
+	April:                 []string{"апр", "апрель", "апреля"},
+	May:                   []string{"май", "мая"},
+	June:                  []string{"июн", "июнь", "июня"},
+	July:                  []string{"июл", "июль", "июля"},
+	August:                []string{"авг", "август", "августа"},
+	September:             []string{"сен", "сент", "сентябрь", "сентября"},
+	October:               []string{"окт", "октябрь", "октября"},
+	November:              []string{"ноя", "нояб", "ноябрь", "ноября"},
+	December:              []string{"дек", "декабрь", "декабря"},
+	Monday:                []string{"пн", "понедельник"},
+	Tuesday:               []string{"вт", "вторник"},
+	Wednesday:             []string{"ср", "среда", "среду"},
+	Thursday:              []string{"четверг", "чт"},
+	Friday:                []string{"пт", "пятница", "пятницу"},
+	Saturday:              []string{"сб", "суббота", "субботу"},
+	Sunday:                []string{"воскресение", "воскресенье", "вс"},
+	AM:                    []string{"дп"},
+	PM:                    []string{"пп"},
+	Year:                  []string{"г", "год", "года", "лет"},
+	Month:                 []string{"мес", "месяц", "месяца", "месяцев"},
+	Week:                  []string{"нед", "недели", "недель", "неделю", "неделя"},
+	Day:                   []string{"день", "дн", "дней", "дня", "сутки", "суток"},
+	Hour:                  []string{"ч", "час", "часа", "часов"},
+	Minute:                []string{"мин", "минут", "минута", "минуту", "минуты"},
+	Second:                []string{"с", "сек", "секунд", "секунда", "секунду", "секунды"},
+	In:                    []string{"в течение", "спустя", "через"},
+	Ago:                   []string{"назад"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`сегодня`},
+		`0 hour ago`:   {`в этом часе`},
+		`0 minute ago`: {`в эту минуту`},
+		`0 month ago`:  {`в этом месяце`},
+		`0 second ago`: {`сейчас`},
+		`0 week ago`:   {`на этой неделе`},
+		`0 year ago`:   {`в этом году`},
+		`1 day ago`:    {`вчера`},
+		`1 month ago`:  {`в прошлом месяце`},
+		`1 week ago`:   {`на прошлой неделе`},
+		`1 year ago`:   {`в прошлом году`},
+		`2 day ago`:    {`позавчера`},
+		`in 1 day`:     {`завтра`},
+		`in 1 month`:   {`в следующем месяце`},
+		`in 1 week`:    {`на следующей неделе`},
+		`in 1 year`:    {`в следующем году`},
+		`in 2 day`:     {`послезавтра`},
+	},
+	RelativeTypeRegex: map[string][]*regexp.Regexp{
+		`\1 day ago`: {
+			regexp.MustCompile(`(?i)(\d+) д назад`),
+			regexp.MustCompile(`(?i)(\d+) день назад`),
+			regexp.MustCompile(`(?i)(\d+) дн назад`),
+			regexp.MustCompile(`(?i)(\d+) дня назад`),
+		},
+		`\1 hour ago`: {
+			regexp.MustCompile(`(?i)(\d+) ч назад`),
+			regexp.MustCompile(`(?i)(\d+) час назад`),
+			regexp.MustCompile(`(?i)(\d+) часа назад`),
+		},
+		`\1 minute ago`: {
+			regexp.MustCompile(`(?i)(\d+) мин назад`),
+			regexp.MustCompile(`(?i)(\d+) минуту назад`),
+			regexp.MustCompile(`(?i)(\d+) минуты назад`),
+		},
+		`\1 month ago`: {
+			regexp.MustCompile(`(?i)(\d+) мес назад`),
+			regexp.MustCompile(`(?i)(\d+) месяц назад`),
+			regexp.MustCompile(`(?i)(\d+) месяца назад`),
+		},
+		`\1 second ago`: {
+			regexp.MustCompile(`(?i)(\d+) сек назад`),
+			regexp.MustCompile(`(?i)(\d+) секунду назад`),
+			regexp.MustCompile(`(?i)(\d+) секунды назад`),
+		},
+		`\1 week ago`: {
+			regexp.MustCompile(`(?i)(\d+) нед назад`),
+			regexp.MustCompile(`(?i)(\d+) недели назад`),
+			regexp.MustCompile(`(?i)(\d+) неделю назад`),
+		},
+		`\1 year ago`: {
+			regexp.MustCompile(`(?i)(\d+) г назад`),
+			regexp.MustCompile(`(?i)(\d+) год назад`),
+			regexp.MustCompile(`(?i)(\d+) года назад`),
+		},
+		`in \1 day`: {
+			regexp.MustCompile(`(?i)через (\d+) д`),
+			regexp.MustCompile(`(?i)через (\d+) день`),
+			regexp.MustCompile(`(?i)через (\d+) дн`),
+			regexp.MustCompile(`(?i)через (\d+) дня`),
+		},
+		`in \1 hour`: {
+			regexp.MustCompile(`(?i)через (\d+) ч`),
+			regexp.MustCompile(`(?i)через (\d+) час`),
+			regexp.MustCompile(`(?i)через (\d+) часа`),
+		},
+		`in \1 minute`: {
+			regexp.MustCompile(`(?i)через (\d+) мин`),
+			regexp.MustCompile(`(?i)через (\d+) минуту`),
+			regexp.MustCompile(`(?i)через (\d+) минуты`),
+		},
+		`in \1 month`: {
+			regexp.MustCompile(`(?i)через (\d+) мес`),
+			regexp.MustCompile(`(?i)через (\d+) месяц`),
+			regexp.MustCompile(`(?i)через (\d+) месяца`),
+		},
+		`in \1 second`: {
+			regexp.MustCompile(`(?i)через (\d+) сек`),
+			regexp.MustCompile(`(?i)через (\d+) секунду`),
+			regexp.MustCompile(`(?i)через (\d+) секунды`),
+		},
+		`in \1 week`: {
+			regexp.MustCompile(`(?i)через (\d+) нед`),
+			regexp.MustCompile(`(?i)через (\d+) недели`),
+			regexp.MustCompile(`(?i)через (\d+) неделю`),
+		},
+		`in \1 year`: {
+			regexp.MustCompile(`(?i)через (\d+) г`),
+			regexp.MustCompile(`(?i)через (\d+) год`),
+			regexp.MustCompile(`(?i)через (\d+) года`),
+		},
+	},
+	Simplifications: map[string]string{
+		`((?<=(через|спустя|в течение)\s+)(день|дня)|(?<=[^\d]\s+|^)день(?=(\s+назад)))`:    `1 день`,
+		`((?<=(через|спустя|в течение)\s+)года?|(?<=[^\d]\s+|^)год(?=(\s+назад)))`:          `1 год`,
+		`((?<=(через|спустя|в течение)\s+)месяца?|(?<=[^\d]\s+|^)месяц(?=(\s+назад)))`:      `1 месяц`,
+		`((?<=(через|спустя|в течение)\s+)минут[уы]|(?<=[^\d]\s+|^)минуту(?=(\s+назад)))`:   `1 минуту`,
+		`((?<=(через|спустя|в течение)\s+)недел[юи]|(?<=[^\d]\s+|^)неделю(?=(\s+назад)))`:   `1 неделю`,
+		`((?<=(через|спустя|в течение)\s+)секунд[уы]|(?<=[^\d]\s+|^)секунду(?=(\s+назад)))`: `1 секунду`,
+		`((?<=(через|спустя|в течение)\s+)сут(ки|ок)|(?<=[^\d]\s+|^)сутки(?=(\s+назад)))`:   `1 сутки`,
+		`((?<=(через|спустя|в течение)\s+)часа?|(?<=[^\d]\s+|^)час(?=(\s+назад)))`:          `1 час`,
+		`восемь`:              `8`,
+		`дв(а|е|ое|ух)`:       `2`,
+		`двадцать`:            `20`,
+		`двенадцать`:          `12`,
+		`девять`:              `9`,
+		`десять`:              `10`,
+		`несколько секунд`:    `44 секунды`,
+		`од(на|ну|ни|ной|ин)`: `1`,
+		`одиннадцать`:         `11`,
+		`пар[ауы]`:            `2`,
+		`полгода`:             `6 месяцев`,
+		`полтора года`:        `18 месяцев`,
+		`полтора часа`:        `90 минут`,
+		`полчаса`:             `30 минут`,
+		`пятнадцать`:          `15`,
+		`пять`:                `5`,
+		`пятьдесят`:           `50`,
+		`семь`:                `7`,
+		`сорок`:               `40`,
+		`три`:                 `3`,
+		`тридцать`:            `30`,
+		`четыре`:              `4`,
+		`шесть`:               `6`,
+	},
+	LocaleSpecific: map[string]LocaleData{
+		"ru-BY": ruBYLocale,
+		"ru-KG": ruKGLocale,
+		"ru-KZ": ruKZLocale,
+		"ru-MD": ruMDLocale,
+		"ru-UA": ruUALocale,
+	},
+}
+
+var ruMDLocale = LocaleData{
+	Name:                  "ru-MD",
+	DateOrder:             "",
+}
+
+var ruUALocale = LocaleData{
+	Name:                  "ru-UA",
+	DateOrder:             "",
+	AM:                    []string{"am"},
+	PM:                    []string{"pm"},
+}
+
+var ruBYLocale = LocaleData{
+	Name:                  "ru-BY",
+	DateOrder:             "",
+}
+
+var ruKGLocale = LocaleData{
+	Name:                  "ru-KG",
+	DateOrder:             "",
+}
+
+var ruKZLocale = LocaleData{
+	Name:                  "ru-KZ",
+	DateOrder:             "",
+}

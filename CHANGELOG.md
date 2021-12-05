@@ -1,3 +1,15 @@
+### 2021-12-05
+
+- Implement script to generate Go code. At this point all Python script is ported.
+
+### 2021-12-04
+
+No commit today as well, back to home.
+
+### 2021-12-03
+
+No commit today, going to meet family.
+
 ### 2021-12-02
 
 - Implement script to generate locale data from supplementary data.
