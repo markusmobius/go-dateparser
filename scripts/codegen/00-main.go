@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -80,30 +79,6 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		mergedData[language] = data
 	}
 
-	// Render CLDR locale data to JSON
-	os.RemoveAll(CLDR_DIR)
-	os.MkdirAll(CLDR_DIR, os.ModePerm)
-
-	for language, localeData := range cldrLocaleData {
-		dstPath := filepath.Join(CLDR_DIR, language+".json")
-		err = renderJSON(&localeData, dstPath)
-		if err != nil {
-			return err
-		}
-	}
-
-	// Render supplemental locale data to JSON
-	os.RemoveAll("data/supplementary/json")
-	os.MkdirAll("data/supplementary/json", os.ModePerm)
-
-	for language, localeData := range supplementalLocaleData {
-		dstPath := filepath.Join("data/supplementary/json", language+".json")
-		err = renderJSON(&localeData, dstPath)
-		if err != nil {
-			return err
-		}
-	}
-
 	// Generate code
 	os.RemoveAll(GO_CODE_DIR)
 	os.MkdirAll(GO_CODE_DIR, os.ModePerm)
@@ -144,7 +119,27 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		path = filepath.Join(GO_CODE_DIR, fName+".go")
 		err = generateLocaleDataCode(localeData, path)
 		if err != nil {
-			return fmt.Errorf("error in %s: %v", language, err)
+			return err
+		}
+	}
+
+	// Render JSON (not used by code, just for debugging)
+	os.RemoveAll(JSON_DIR)
+	jsonDirs := map[string]map[string]LocaleData{
+		filepath.Join(JSON_DIR, "cldr"):          cldrLocaleData,
+		filepath.Join(JSON_DIR, "supplementary"): supplementalLocaleData,
+		filepath.Join(JSON_DIR, "final"):         mergedData,
+	}
+
+	for dir, locales := range jsonDirs {
+		os.MkdirAll(dir, os.ModePerm)
+
+		for language, data := range locales {
+			dstPath := filepath.Join(dir, language+".json")
+			err = renderJSON(&data, dstPath)
+			if err != nil {
+				return err
+			}
 		}
 	}
 

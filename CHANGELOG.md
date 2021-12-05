@@ -1,6 +1,7 @@
 ### 2021-12-05
 
 - Implement script to generate Go code. At this point all Python script is ported.
+- Restructure directories layout.
 
 ### 2021-12-04
 
