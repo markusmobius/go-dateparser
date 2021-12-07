@@ -1,3 +1,7 @@
+### 2021-12-07
+
+- Implement timezone parser and its unit tests.
+
 ### 2021-12-05
 
 - Implement script to generate Go code. At this point all Python script is ported.
