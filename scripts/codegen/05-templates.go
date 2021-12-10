@@ -21,9 +21,9 @@ var (
 )
 
 func localeName(language string) string {
-	language = strings.ReplaceAll(language, "-", "")
+	language = strings.ReplaceAll(language, "-", "_")
 	language = strings.ReplaceAll(language, " ", "")
-	return language + "Locale"
+	return language + "_Locale"
 }
 
 func regexPattern(pattern string) string {
@@ -188,11 +188,6 @@ var {{localeName .Name}} = LocaleData {
 	Simplifications: map[string]string {
 		{{range $key, $value := .Simplifications -}}
 		` + "`{{regex $key}}`" + `: ` + "`{{$value}}`" + `,
-		{{end -}}
-	},
-	LocaleSpecific: map[string]LocaleData {
-		{{range $key, $data := .LocaleSpecific -}}
-		"{{$key}}": {{localeName $data.Name}},
 		{{end -}}
 	},
 }

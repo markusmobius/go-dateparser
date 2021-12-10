@@ -2,7 +2,7 @@
 
 package data
 
-var azCyrlLocale = LocaleData{
+var az_Cyrl_Locale = LocaleData{
 	Name:                  "az-Cyrl",
 	DateOrder:             "DMY",
 	January:               []string{"јан", "јанвар"},

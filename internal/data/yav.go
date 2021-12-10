@@ -2,7 +2,7 @@
 
 package data
 
-var yavLocale = LocaleData{
+var yav_Locale = LocaleData{
 	Name:                  "yav",
 	DateOrder:             "DMY",
 	January:               []string{"o1", "pikítíkítie, oólí ú kutúan"},

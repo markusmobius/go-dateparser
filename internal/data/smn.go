@@ -2,7 +2,7 @@
 
 package data
 
-var smnLocale = LocaleData{
+var smn_Locale = LocaleData{
 	Name:                  "smn",
 	DateOrder:             "DMY",
 	January:               []string{"uđiv", "uđđâivemáánu"},

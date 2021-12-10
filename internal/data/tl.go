@@ -2,7 +2,7 @@
 
 package data
 
-var tlLocale = LocaleData{
+var tl_Locale = LocaleData{
 	Name:                  "tl",
 	DateOrder:             "",
 	SentenceSplitterGroup: 1,

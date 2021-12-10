@@ -105,90 +105,6 @@ func cleanEmptyStringListMap(m map[string][]string) map[string][]string {
 	return m
 }
 
-func removeStringMapDuplicate(parent, child map[string]string) map[string]string {
-	for key, value := range child {
-		if value == parent[key] {
-			delete(child, key)
-		}
-	}
-
-	if len(child) == 0 {
-		return nil
-	}
-
-	return child
-}
-
-func removeStringListMapDuplicate(parent, child map[string][]string) map[string][]string {
-	for key, list := range child {
-		parentList := parent[key]
-		cleanedList := cleanList(parentList, nil, list...)
-
-		if len(cleanedList) == 0 {
-			delete(child, key)
-		} else {
-			child[key] = cleanedList
-		}
-	}
-
-	if len(child) == 0 {
-		return nil
-	}
-
-	return child
-}
-
-func removeLocaleDataDuplicate(parent, child LocaleData) LocaleData {
-	var cleanedDateOrder string
-	if child.DateOrder != parent.DateOrder {
-		cleanedDateOrder = child.DateOrder
-	}
-
-	return LocaleData{
-		Name:                  child.Name,
-		DateOrder:             cleanedDateOrder,
-		SkipWords:             cleanList(parent.SkipWords, nil, child.SkipWords...),
-		PertainWords:          cleanList(parent.PertainWords, nil, child.PertainWords...),
-		NoWordSpacing:         child.NoWordSpacing,
-		SentenceSplitterGroup: child.SentenceSplitterGroup,
-		January:               cleanList(parent.January, nil, child.January...),
-		February:              cleanList(parent.February, nil, child.February...),
-		March:                 cleanList(parent.March, nil, child.March...),
-		April:                 cleanList(parent.April, nil, child.April...),
-		May:                   cleanList(parent.May, nil, child.May...),
-		June:                  cleanList(parent.June, nil, child.June...),
-		July:                  cleanList(parent.July, nil, child.July...),
-		August:                cleanList(parent.August, nil, child.August...),
-		September:             cleanList(parent.September, nil, child.September...),
-		October:               cleanList(parent.October, nil, child.October...),
-		November:              cleanList(parent.November, nil, child.November...),
-		December:              cleanList(parent.December, nil, child.December...),
-		Monday:                cleanList(parent.Monday, nil, child.Monday...),
-		Tuesday:               cleanList(parent.Tuesday, nil, child.Tuesday...),
-		Wednesday:             cleanList(parent.Wednesday, nil, child.Wednesday...),
-		Thursday:              cleanList(parent.Thursday, nil, child.Thursday...),
-		Friday:                cleanList(parent.Friday, nil, child.Friday...),
-		Saturday:              cleanList(parent.Saturday, nil, child.Saturday...),
-		Sunday:                cleanList(parent.Sunday, nil, child.Sunday...),
-		AM:                    cleanList(parent.AM, nil, child.AM...),
-		PM:                    cleanList(parent.PM, nil, child.PM...),
-		Decade:                cleanList(parent.Decade, nil, child.Decade...),
-		Year:                  cleanList(parent.Year, nil, child.Year...),
-		Month:                 cleanList(parent.Month, nil, child.Month...),
-		Week:                  cleanList(parent.Week, nil, child.Week...),
-		Day:                   cleanList(parent.Day, nil, child.Day...),
-		Hour:                  cleanList(parent.Hour, nil, child.Hour...),
-		Minute:                cleanList(parent.Minute, nil, child.Minute...),
-		Second:                cleanList(parent.Second, nil, child.Second...),
-		In:                    cleanList(parent.In, nil, child.In...),
-		Ago:                   cleanList(parent.Ago, nil, child.Ago...),
-
-		RelativeType:      removeStringListMapDuplicate(parent.RelativeType, child.RelativeType),
-		RelativeTypeRegex: removeStringListMapDuplicate(parent.RelativeTypeRegex, child.RelativeTypeRegex),
-		Simplifications:   removeStringMapDuplicate(parent.Simplifications, child.Simplifications),
-	}
-}
-
 func mergeList(a, b []string) []string {
 	return cleanList(nil, nil, append(a, b...)...)
 }
@@ -221,22 +137,6 @@ func mergeStringListMap(base, input map[string][]string) map[string][]string {
 			mergedMap[key] = value
 		} else {
 			mergedMap[key] = mergeList(existingValue, value)
-		}
-	}
-
-	return mergedMap
-}
-
-func mergeLocaleMap(base, input map[string]LocaleData) map[string]LocaleData {
-	mergedMap := map[string]LocaleData{}
-
-	for key, locale := range input {
-		mergedMap[key] = locale
-	}
-
-	for key, locale := range base {
-		if _, exist := mergedMap[key]; !exist {
-			mergedMap[key] = locale
 		}
 	}
 
@@ -301,6 +201,5 @@ func mergeLocaleData(base, input LocaleData) LocaleData {
 		RelativeType:      mergeStringListMap(base.RelativeType, input.RelativeType),
 		RelativeTypeRegex: mergeStringListMap(base.RelativeTypeRegex, input.RelativeTypeRegex),
 		Simplifications:   mergeStringMap(base.Simplifications, input.Simplifications),
-		LocaleSpecific:    mergeLocaleMap(base.LocaleSpecific, input.LocaleSpecific),
 	}
 }

@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var chrLocale = LocaleData{
+var chr_Locale = LocaleData{
 	Name:                  "chr",
 	DateOrder:             "MDY",
 	January:               []string{"ꭴꮓ", "ꭴꮓꮈꮤꮕ"},

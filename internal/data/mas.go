@@ -2,7 +2,7 @@
 
 package data
 
-var masLocale = LocaleData{
+var mas_Locale = LocaleData{
 	Name:                  "mas",
 	DateOrder:             "DMY",
 	January:               []string{"dal", "oladalʉ́"},
@@ -50,12 +50,54 @@ var masLocale = LocaleData{
 		`in 1 week`:    {`next week`},
 		`in 1 year`:    {`next year`},
 	},
-	LocaleSpecific: map[string]LocaleData{
-		"mas-TZ": masTZLocale,
-	},
 }
 
-var masTZLocale = LocaleData{
+var mas_TZ_Locale = LocaleData{
 	Name:                  "mas-TZ",
-	DateOrder:             "",
+	DateOrder:             "DMY",
+	January:               []string{"dal", "oladalʉ́"},
+	February:              []string{"ará", "arát"},
+	March:                 []string{"ɔɛn", "ɔɛnɨ́ɔɨŋɔk"},
+	April:                 []string{"doy", "olodoyíóríê inkókúâ"},
+	May:                   []string{"lép", "oloilépūnyīē inkókúâ"},
+	June:                  []string{"kújúɔrɔk", "rok"},
+	July:                  []string{"mórusásin", "sás"},
+	August:                []string{"bɔ́r", "ɔlɔ́ɨ́bɔ́rárɛ"},
+	September:             []string{"kús", "kúshîn"},
+	October:               []string{"gís", "olgísan"},
+	November:              []string{"pʉshʉ́ka", "shʉ́"},
+	December:              []string{"ntʉ́", "ntʉ́ŋʉ́s"},
+	Monday:                []string{"jtt", "jumatátu"},
+	Tuesday:               []string{"jnn", "jumane"},
+	Wednesday:             []string{"jtn", "jumatánɔ"},
+	Thursday:              []string{"alaámisi", "alh"},
+	Friday:                []string{"iju", "jumáa"},
+	Saturday:              []string{"jmo", "jumamósi"},
+	Sunday:                []string{"jpi", "jumapílí"},
+	AM:                    []string{"ɛnkakɛnyá"},
+	PM:                    []string{"ɛndámâ"},
+	Year:                  []string{"ɔlárì"},
+	Month:                 []string{"ɔlápà"},
+	Week:                  []string{"ewíkî"},
+	Day:                   []string{"ɛnkɔlɔ́ŋ"},
+	Hour:                  []string{"ɛ́sáâ"},
+	Minute:                []string{"oldákikaè"},
+	Second:                []string{"sekunde"},
+	RelativeType: map[string][]string{
+		`0 day ago`:    {`táatá`},
+		`0 hour ago`:   {`this hour`},
+		`0 minute ago`: {`this minute`},
+		`0 month ago`:  {`this month`},
+		`0 second ago`: {`now`},
+		`0 week ago`:   {`this week`},
+		`0 year ago`:   {`this year`},
+		`1 day ago`:    {`ŋolé`},
+		`1 month ago`:  {`last month`},
+		`1 week ago`:   {`last week`},
+		`1 year ago`:   {`last year`},
+		`in 1 day`:     {`tááisérè`},
+		`in 1 month`:   {`next month`},
+		`in 1 week`:    {`next week`},
+		`in 1 year`:    {`next year`},
+	},
 }

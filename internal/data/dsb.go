@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var dsbLocale = LocaleData{
+var dsb_Locale = LocaleData{
 	Name:                  "dsb",
 	DateOrder:             "DMY",
 	January:               []string{"jan", "januar", "januara"},

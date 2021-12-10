@@ -2,7 +2,7 @@
 
 package data
 
-var paArabLocale = LocaleData{
+var pa_Arab_Locale = LocaleData{
 	Name:                  "pa-Arab",
 	DateOrder:             "DMY",
 	January:               []string{"جنوری"},

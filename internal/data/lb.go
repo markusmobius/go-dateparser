@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var lbLocale = LocaleData{
+var lb_Locale = LocaleData{
 	Name:                  "lb",
 	DateOrder:             "DMY",
 	January:               []string{"jan", "januar"},

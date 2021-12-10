@@ -2,7 +2,7 @@
 
 package data
 
-var nusLocale = LocaleData{
+var nus_Locale = LocaleData{
 	Name:                  "nus",
 	DateOrder:             "DMY",
 	January:               []string{"tiop", "tiop thar pɛt"},

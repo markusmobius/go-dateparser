@@ -2,7 +2,7 @@
 
 package data
 
-var tzmLocale = LocaleData{
+var tzm_Locale = LocaleData{
 	Name:                  "tzm",
 	DateOrder:             "DMY",
 	January:               []string{"yen", "yennayer"},

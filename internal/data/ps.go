@@ -2,7 +2,7 @@
 
 package data
 
-var psLocale = LocaleData{
+var ps_Locale = LocaleData{
 	Name:                  "ps",
 	DateOrder:             "YMD",
 	January:               []string{"جنوري"},

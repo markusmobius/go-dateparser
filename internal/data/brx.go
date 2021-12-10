@@ -2,7 +2,7 @@
 
 package data
 
-var brxLocale = LocaleData{
+var brx_Locale = LocaleData{
 	Name:                  "brx",
 	DateOrder:             "MDY",
 	January:               []string{"जानुवारी"},

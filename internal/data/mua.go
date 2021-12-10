@@ -2,7 +2,7 @@
 
 package data
 
-var muaLocale = LocaleData{
+var mua_Locale = LocaleData{
 	Name:                  "mua",
 	DateOrder:             "DMY",
 	January:               []string{"flo", "fĩi loo"},

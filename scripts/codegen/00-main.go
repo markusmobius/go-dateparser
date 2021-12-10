@@ -63,20 +63,24 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	}
 
 	// Merge locale data
-	mergedData := map[string]LocaleData{}
-	for language := range languageLocalesMap {
-		cldrData, cldrExist := cldrLocaleData[language]
+	finalLocaleData := map[string]LocaleData{}
+	for language, locales := range languageLocalesMap {
 		supplementalData, supplementalExist := supplementalLocaleData[language]
-		if !cldrExist && !supplementalExist {
-			continue
-		}
 
-		data := mergeLocaleData(cldrData, supplementalData)
-		if data.Name == "" {
-			data.Name = language
-		}
+		locales = append([]string{language}, locales...)
+		for _, locale := range locales {
+			cldrData, cldrExist := cldrLocaleData[locale]
+			if !cldrExist && !supplementalExist {
+				continue
+			}
 
-		mergedData[language] = data
+			data := mergeLocaleData(cldrData, supplementalData)
+			if data.Name == "" {
+				data.Name = language
+			}
+
+			finalLocaleData[locale] = data
+		}
 	}
 
 	// Generate code
@@ -84,7 +88,7 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	os.MkdirAll(GO_CODE_DIR, os.ModePerm)
 
 	path := filepath.Join(GO_CODE_DIR, "00-locale-data.go")
-	err = generateCode("locale-map", &mergedData, path)
+	err = generateCode("locale-map", &finalLocaleData, path)
 	if err != nil {
 		return err
 	}
@@ -107,17 +111,20 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	path = filepath.Join(GO_CODE_DIR, "03-language-locales-map.go")
-	err = generateCode("lang-loc-map", &languageLocalesMap, path)
-	if err != nil {
-		return err
-	}
+	for language, locales := range languageLocalesMap {
+		var listLocaleData []LocaleData
 
-	for language, localeData := range mergedData {
+		locales = append([]string{language}, locales...)
+		for _, locale := range locales {
+			if data, exist := finalLocaleData[locale]; exist {
+				listLocaleData = append(listLocaleData, data)
+			}
+		}
+
 		fName := strings.ToLower(language)
 		fName = strings.ReplaceAll(fName, " ", "")
 		path = filepath.Join(GO_CODE_DIR, fName+".go")
-		err = generateLocaleDataCode(localeData, path)
+		err = generateLocaleDataCode(path, listLocaleData)
 		if err != nil {
 			return err
 		}
@@ -128,7 +135,7 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	jsonDirs := map[string]map[string]LocaleData{
 		filepath.Join(JSON_DIR, "cldr"):          cldrLocaleData,
 		filepath.Join(JSON_DIR, "supplementary"): supplementalLocaleData,
-		filepath.Join(JSON_DIR, "final"):         mergedData,
+		filepath.Join(JSON_DIR, "final"):         finalLocaleData,
 	}
 
 	for dir, locales := range jsonDirs {

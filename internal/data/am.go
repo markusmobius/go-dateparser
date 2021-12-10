@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var amLocale = LocaleData{
+var am_Locale = LocaleData{
 	Name:                  "am",
 	DateOrder:             "DMY",
 	January:               []string{"ጃንዩ", "ጃንዩወሪ"},

@@ -2,7 +2,7 @@
 
 package data
 
-var uzArabLocale = LocaleData{
+var uz_Arab_Locale = LocaleData{
 	Name:                  "uz-Arab",
 	DateOrder:             "YMD",
 	January:               []string{"جنو", "جنوری"},

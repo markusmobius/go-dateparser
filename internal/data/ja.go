@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var jaLocale = LocaleData{
+var ja_Locale = LocaleData{
 	Name:                  "ja",
 	DateOrder:             "YMD",
 	NoWordSpacing:         true,

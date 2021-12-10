@@ -2,7 +2,7 @@
 
 package data
 
-var igLocale = LocaleData{
+var ig_Locale = LocaleData{
 	Name:                  "ig",
 	DateOrder:             "DMY",
 	January:               []string{"jen", "jenụwarị"},

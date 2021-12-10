@@ -2,7 +2,7 @@
 
 package data
 
-var kamLocale = LocaleData{
+var kam_Locale = LocaleData{
 	Name:                  "kam",
 	DateOrder:             "DMY",
 	January:               []string{"mbe", "mwai wa mbee"},

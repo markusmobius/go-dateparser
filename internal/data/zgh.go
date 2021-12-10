@@ -2,7 +2,7 @@
 
 package data
 
-var zghLocale = LocaleData{
+var zgh_Locale = LocaleData{
 	Name:                  "zgh",
 	DateOrder:             "DMY",
 	January:               []string{"ⵉⵏⵏ", "ⵉⵏⵏⴰⵢⵔ"},

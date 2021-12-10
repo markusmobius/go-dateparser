@@ -11,21 +11,24 @@ func parseAllCldrData(languageLocalesMap map[string][]string) (map[string]Locale
 	result := map[string]LocaleData{}
 
 	for language, locales := range languageLocalesMap {
-		localeData, err := parseCldrData(language, locales...)
-		if os.IsNotExist(err) {
-			continue
-		} else if err != nil {
-			return nil, err
-		}
+		locales = append([]string{language}, locales...)
+		for _, locale := range locales {
+			localeData, err := parseCldrData(locale)
+			if os.IsNotExist(err) {
+				continue
+			} else if err != nil {
+				return nil, err
+			}
 
-		log.Info().Msgf("parsed cldr %s", language)
-		result[language] = *localeData
+			log.Info().Msgf("parsed cldr for %s", locale)
+			result[locale] = *localeData
+		}
 	}
 
 	return result, nil
 }
 
-func parseCldrData(locale string, sublocales ...string) (*LocaleData, error) {
+func parseCldrData(locale string) (*LocaleData, error) {
 	// Parse data
 	cldrGregorian, err := parseCldrGregorianData(locale)
 	if err != nil {
@@ -187,21 +190,6 @@ func parseCldrData(locale string, sublocales ...string) (*LocaleData, error) {
 			"in \\1 second":  setLocaleRegexes("second", "future"),
 			"\\1 second ago": setLocaleRegexes("second", "past"),
 		}),
-	}
-
-	// Process sublocales
-	if len(sublocales) > 0 {
-		data.LocaleSpecific = map[string]LocaleData{}
-
-		for _, sublocale := range sublocales {
-			subData, err := parseCldrData(sublocale)
-			if err != nil {
-				return nil, err
-			}
-
-			cleanedData := removeLocaleDataDuplicate(data, *subData)
-			data.LocaleSpecific[sublocale] = cleanedData
-		}
 	}
 
 	return &data, nil

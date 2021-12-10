@@ -2,7 +2,7 @@
 
 package data
 
-var vunLocale = LocaleData{
+var vun_Locale = LocaleData{
 	Name:                  "vun",
 	DateOrder:             "DMY",
 	January:               []string{"jan", "januari"},

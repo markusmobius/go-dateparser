@@ -2,7 +2,7 @@
 
 package data
 
-var duaLocale = LocaleData{
+var dua_Locale = LocaleData{
 	Name:                  "dua",
 	DateOrder:             "DMY",
 	January:               []string{"di", "dimɔ́di"},

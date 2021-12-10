@@ -2,7 +2,7 @@
 
 package data
 
-var sbpLocale = LocaleData{
+var sbp_Locale = LocaleData{
 	Name:                  "sbp",
 	DateOrder:             "DMY",
 	January:               []string{"mup", "mupalangulwa"},

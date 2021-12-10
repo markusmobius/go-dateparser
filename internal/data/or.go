@@ -2,7 +2,7 @@
 
 package data
 
-var orLocale = LocaleData{
+var or_Locale = LocaleData{
 	Name:                  "or",
 	DateOrder:             "DMY",
 	January:               []string{"ଜାନୁଆରୀ"},

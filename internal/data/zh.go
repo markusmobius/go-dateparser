@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var zhLocale = LocaleData{
+var zh_Locale = LocaleData{
 	Name:                  "zh",
 	DateOrder:             "YMD",
 	NoWordSpacing:         true,

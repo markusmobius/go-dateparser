@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var plLocale = LocaleData{
+var pl_Locale = LocaleData{
 	Name:                  "pl",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,

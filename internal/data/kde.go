@@ -2,7 +2,7 @@
 
 package data
 
-var kdeLocale = LocaleData{
+var kde_Locale = LocaleData{
 	Name:                  "kde",
 	DateOrder:             "DMY",
 	January:               []string{"jan", "mwedi ntandi"},

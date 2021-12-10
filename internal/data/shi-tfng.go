@@ -2,7 +2,7 @@
 
 package data
 
-var shiTfngLocale = LocaleData{
+var shi_Tfng_Locale = LocaleData{
 	Name:                  "shi-Tfng",
 	DateOrder:             "DMY",
 	January:               []string{"ⵉⵏⵏ", "ⵉⵏⵏⴰⵢⵔ"},

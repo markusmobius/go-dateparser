@@ -2,7 +2,7 @@
 
 package data
 
-var rofLocale = LocaleData{
+var rof_Locale = LocaleData{
 	Name:                  "rof",
 	DateOrder:             "DMY",
 	January:               []string{"mweri wa kwanza"},

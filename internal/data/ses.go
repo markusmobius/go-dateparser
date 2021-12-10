@@ -2,7 +2,7 @@
 
 package data
 
-var sesLocale = LocaleData{
+var ses_Locale = LocaleData{
 	Name:                  "ses",
 	DateOrder:             "DMY",
 	January:               []string{"žan", "žanwiye"},

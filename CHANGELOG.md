@@ -1,3 +1,7 @@
+### 2021-12-10
+
+- Implement locale data loader and its unit tests.
+
 ### 2021-12-07
 
 - Implement timezone parser and its unit tests.

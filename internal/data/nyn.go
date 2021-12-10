@@ -2,7 +2,7 @@
 
 package data
 
-var nynLocale = LocaleData{
+var nyn_Locale = LocaleData{
 	Name:                  "nyn",
 	DateOrder:             "DMY",
 	January:               []string{"kbz", "okwokubanza"},

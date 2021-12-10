@@ -5,8 +5,6 @@ import (
 	"go/format"
 	"io/ioutil"
 	"os"
-	"sort"
-	"strings"
 )
 
 func generateCode(tplName string, data interface{}, dstPath string) error {
@@ -27,7 +25,7 @@ func generateCode(tplName string, data interface{}, dstPath string) error {
 	return ioutil.WriteFile(dstPath, code, os.ModePerm)
 }
 
-func generateLocaleDataCode(data LocaleData, dstPath string) error {
+func generateLocaleDataCode(dstPath string, listData []LocaleData) error {
 	// Generate code
 	b := bytes.NewBuffer(nil)
 	b.WriteString(`
@@ -38,25 +36,8 @@ func generateLocaleDataCode(data LocaleData, dstPath string) error {
 	`)
 
 	// Generate locale data
-	err := templates["locale-data"].Execute(b, &data)
-	if err != nil {
-		return err
-	}
-
-	// Generate sublocale data
-	var sublocaleList []LocaleData
-	for _, locale := range data.LocaleSpecific {
-		sublocaleList = append(sublocaleList, locale)
-	}
-
-	sort.Slice(sublocaleList, func(i, j int) bool {
-		nameI := strings.ToLower(sublocaleList[i].Name)
-		nameJ := strings.ToLower(sublocaleList[j].Name)
-		return nameI < nameJ
-	})
-
-	for _, locale := range sublocaleList {
-		err = templates["locale-data"].Execute(b, &locale)
+	for _, data := range listData {
+		err := templates["locale-data"].Execute(b, &data)
 		if err != nil {
 			return err
 		}

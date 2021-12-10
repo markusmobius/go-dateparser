@@ -2,7 +2,7 @@
 
 package data
 
-var iiLocale = LocaleData{
+var ii_Locale = LocaleData{
 	Name:                  "ii",
 	DateOrder:             "YMD",
 	January:               []string{"ꋍꆪ"},

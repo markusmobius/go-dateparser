@@ -2,7 +2,7 @@
 
 package data
 
-var dyoLocale = LocaleData{
+var dyo_Locale = LocaleData{
 	Name:                  "dyo",
 	DateOrder:             "DMY",
 	January:               []string{"sa", "sanvie"},

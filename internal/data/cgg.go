@@ -2,7 +2,7 @@
 
 package data
 
-var cggLocale = LocaleData{
+var cgg_Locale = LocaleData{
 	Name:                  "cgg",
 	DateOrder:             "DMY",
 	January:               []string{"kbz", "okwokubanza"},

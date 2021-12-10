@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var glLocale = LocaleData{
+var gl_Locale = LocaleData{
 	Name:                  "gl",
 	DateOrder:             "DMY",
 	January:               []string{"xan", "xaneiro"},

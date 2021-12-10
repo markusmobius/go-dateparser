@@ -2,7 +2,7 @@
 
 package data
 
-var naqLocale = LocaleData{
+var naq_Locale = LocaleData{
 	Name:                  "naq",
 	DateOrder:             "DMY",
 	January:               []string{"jan", "ǃkhanni"},

@@ -4,7 +4,7 @@ package data
 
 import "regexp"
 
-var paLocale = LocaleData{
+var pa_Locale = LocaleData{
 	Name:                  "pa",
 	DateOrder:             "DMY",
 	January:               []string{"ਜਨ", "ਜਨਵਰੀ"},

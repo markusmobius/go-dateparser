@@ -2,7 +2,7 @@
 
 package data
 
-var davLocale = LocaleData{
+var dav_Locale = LocaleData{
 	Name:                  "dav",
 	DateOrder:             "DMY",
 	January:               []string{"imb", "mori ghwa imbiri"},

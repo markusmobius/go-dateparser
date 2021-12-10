@@ -2,7 +2,7 @@
 
 package data
 
-var lagLocale = LocaleData{
+var lag_Locale = LocaleData{
 	Name:                  "lag",
 	DateOrder:             "DMY",
 	January:               []string{"fúngatɨ", "kʉfúngatɨ"},
