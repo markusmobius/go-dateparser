@@ -129,6 +129,10 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 		listLocaleData[i] = data.LocaleDataMap[locale]
 	}
 
+	if len(locales) == 0 {
+		return nil, ErrNotFound
+	}
+
 	return listLocaleData, nil
 }
 
@@ -136,10 +140,6 @@ func GetLocale(shortname string) (*data.LocaleData, error) {
 	locales, err := GetLocales(nil, []string{shortname}, "", false, false)
 	if err != nil {
 		return nil, err
-	}
-
-	if len(locales) == 0 {
-		return nil, ErrNotFound
 	}
 
 	return &locales[0], nil
