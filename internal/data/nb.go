@@ -7,7 +7,7 @@ import "regexp"
 var nb_Locale = LocaleData{
 	Name:                  "nb",
 	DateOrder:             "DMY",
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|"},
 	January:               []string{"jan", "januar"},
 	February:              []string{"feb", "februar"},
 	March:                 []string{"mar", "mars"},
@@ -128,7 +128,7 @@ var nb_Locale = LocaleData{
 var nb_SJ_Locale = LocaleData{
 	Name:                  "nb-SJ",
 	DateOrder:             "DMY",
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|"},
 	January:               []string{"jan", "januar"},
 	February:              []string{"feb", "februar"},
 	March:                 []string{"mar", "mars"},

@@ -6,7 +6,7 @@ var tl_Locale = LocaleData{
 	Name:                  "tl",
 	DateOrder:             "",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|"},
 	January:               []string{"ene", "enero"},
 	February:              []string{"peb", "pebrero"},
 	March:                 []string{"mar", "marso"},

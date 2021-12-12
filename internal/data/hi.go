@@ -8,7 +8,7 @@ var hi_Locale = LocaleData{
 	Name:                  "hi",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 3,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "के", "को", "बजे", "सन्", "से", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "के", "को", "बजे", "सन्", "से"},
 	January:               []string{"जनवरी", "जन॰"},
 	February:              []string{"फ़रवरी", "फ़र॰"},
 	March:                 []string{"मार्च"},

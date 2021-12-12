@@ -47,7 +47,7 @@ func parseCldrData(locale string) (*LocaleData, error) {
 	// Generate locale data
 	setLocaleMonthData := func(month int) []string {
 		strMonth := strconv.Itoa(month)
-		return cleanList(nil, localeMonthFilter,
+		return cleanList(true, localeMonthFilter,
 			gregorianData.Months.Format.Wide[strMonth],
 			gregorianData.Months.Format.Abbreviated[strMonth],
 			gregorianData.Months.StandAlone.Wide[strMonth],
@@ -55,7 +55,7 @@ func parseCldrData(locale string) (*LocaleData, error) {
 	}
 
 	setLocaleWeekDays := func(weekDays string) []string {
-		return cleanList(nil, nil,
+		return cleanList(true, nil,
 			gregorianData.Days.Format.Wide[weekDays],
 			gregorianData.Days.Format.Abbreviated[weekDays],
 			gregorianData.Days.StandAlone.Wide[weekDays],
@@ -74,7 +74,7 @@ func parseCldrData(locale string) (*LocaleData, error) {
 			periodList[i] = rxAmPmPattern.ReplaceAllString(p, period)
 		}
 
-		return cleanList(nil, nil, periodList...)
+		return cleanList(true, nil, periodList...)
 	}
 
 	setLocaleDateFields := func(fieldName string, attr string) []string {
@@ -98,11 +98,11 @@ func parseCldrData(locale string) (*LocaleData, error) {
 			}
 		}
 
-		return cleanList(nil, nil, finalList...)
+		return cleanList(true, nil, finalList...)
 	}
 
 	setLocaleRegexes := func(fieldName string, relativeType string) []string {
-		var finalList []string
+		var list []string
 		keys := []string{
 			fieldName,
 			fieldName + "-short",
@@ -111,19 +111,19 @@ func parseCldrData(locale string) (*LocaleData, error) {
 
 		if relativeType == "future" {
 			for _, key := range keys {
-				finalList = append(finalList,
+				list = append(list,
 					dateFieldsData[key].RelativeTimeTypeFuture.CountOne,
 					dateFieldsData[key].RelativeTimeTypeFuture.CountOther)
 			}
 		} else {
 			for _, key := range keys {
-				finalList = append(finalList,
+				list = append(list,
 					dateFieldsData[key].RelativeTimeTypePast.CountOne,
 					dateFieldsData[key].RelativeTimeTypePast.CountOther)
 			}
 		}
 
-		return cleanList(nil, regexFilter, finalList...)
+		return cleanList(true, regexFilter, list...)
 	}
 
 	data := LocaleData{

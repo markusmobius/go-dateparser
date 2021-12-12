@@ -8,7 +8,7 @@ var bg_Locale = LocaleData{
 	Name:                  "bg",
 	DateOrder:             "DMY 'Г'.",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "върху", "до", "на", "около", "от", "под", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "върху", "до", "на", "около", "от", "под"},
 	January:               []string{"ян", "яну", "януари"},
 	February:              []string{"фв", "фев", "февруари"},
 	March:                 []string{"март"},

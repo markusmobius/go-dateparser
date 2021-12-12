@@ -8,7 +8,7 @@ var fi_Locale = LocaleData{
 	Name:                  "fi",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ":n", ";", "@", "[", "]", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ":n", ";", "@", "[", "]", "|"},
 	January:               []string{"tammi", "tammik", "tammikuu", "tammikuussa", "tammikuuta"},
 	February:              []string{"helmi", "helmik", "helmikuu", "helmikuussa", "helmikuuta"},
 	March:                 []string{"maalis", "maalisk", "maaliskuu", "maaliskuussa", "maaliskuuta"},

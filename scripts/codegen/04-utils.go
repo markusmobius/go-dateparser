@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strings"
 
+	"golang.org/x/text/unicode/norm"
 	"gopkg.in/yaml.v2"
 )
 
@@ -39,7 +40,12 @@ func renderJSON(v interface{}, dstPath string) error {
 	return ioutil.WriteFile(dstPath, bt, os.ModePerm)
 }
 
+func normalizeUnicode(str string) string {
+	return norm.NFKC.String(str)
+}
+
 func cleanString(str string) string {
+	str = normalizeUnicode(str)
 	str = rxSanitizeAposthrope.ReplaceAllString(str, "'")
 	str = strings.ReplaceAll(str, ".", "")
 	str = strings.ToLower(str)
@@ -47,19 +53,18 @@ func cleanString(str string) string {
 	return str
 }
 
-func cleanList(initialItems []string, fnFilter func(string) bool, items ...string) []string {
+func cleanList(useStringCleaner bool, fnFilter func(string) bool, items ...string) []string {
 	// Prepare tracker
 	tracker := map[string]struct{}{}
-	if initialItems != nil && len(initialItems) > 0 {
-		for _, item := range initialItems {
-			tracker[item] = struct{}{}
-		}
-	}
 
 	// Create final list
 	var finalList []string
 	for _, item := range items {
-		item = cleanString(item)
+		if useStringCleaner {
+			item = cleanString(item)
+		} else {
+			item = normalizeUnicode(item)
+		}
 
 		// Make sure item not empty
 		if item == "" {
@@ -105,20 +110,22 @@ func cleanEmptyStringListMap(m map[string][]string) map[string][]string {
 	return m
 }
 
-func mergeList(a, b []string) []string {
-	return cleanList(nil, nil, append(a, b...)...)
+func mergeList(cleanString bool, a, b []string) []string {
+	return cleanList(cleanString, nil, append(a, b...)...)
 }
 
 func mergeStringMap(base, input map[string]string) map[string]string {
 	mergedMap := map[string]string{}
 
 	for key, value := range input {
-		mergedMap[key] = value
+		key = normalizeUnicode(key)
+		mergedMap[key] = normalizeUnicode(value)
 	}
 
 	for key, value := range base {
+		key = normalizeUnicode(key)
 		if _, exist := mergedMap[key]; !exist {
-			mergedMap[key] = value
+			mergedMap[key] = normalizeUnicode(value)
 		}
 	}
 
@@ -128,15 +135,18 @@ func mergeStringMap(base, input map[string]string) map[string]string {
 func mergeStringListMap(base, input map[string][]string) map[string][]string {
 	mergedMap := map[string][]string{}
 
-	for key, value := range input {
-		mergedMap[key] = value
+	for key, items := range input {
+		key = normalizeUnicode(key)
+		mergedMap[key] = cleanList(false, nil, items...)
 	}
 
-	for key, value := range base {
+	for key, items := range base {
+		key = normalizeUnicode(key)
+
 		if existingValue, exist := mergedMap[key]; !exist {
-			mergedMap[key] = value
+			mergedMap[key] = cleanList(false, nil, items...)
 		} else {
-			mergedMap[key] = mergeList(existingValue, value)
+			mergedMap[key] = mergeList(false, existingValue, items)
 		}
 	}
 
@@ -162,41 +172,41 @@ func mergeLocaleData(base, input LocaleData) LocaleData {
 	return LocaleData{
 		Name:                  name,
 		DateOrder:             dateOrder,
-		SkipWords:             mergeList(base.SkipWords, input.SkipWords),
-		PertainWords:          mergeList(base.PertainWords, input.PertainWords),
+		SkipWords:             mergeList(true, base.SkipWords, input.SkipWords),
+		PertainWords:          mergeList(true, base.PertainWords, input.PertainWords),
 		NoWordSpacing:         base.NoWordSpacing || input.NoWordSpacing,
 		SentenceSplitterGroup: sentenceSplitterGroup,
-		January:               mergeList(base.January, input.January),
-		February:              mergeList(base.February, input.February),
-		March:                 mergeList(base.March, input.March),
-		April:                 mergeList(base.April, input.April),
-		May:                   mergeList(base.May, input.May),
-		June:                  mergeList(base.June, input.June),
-		July:                  mergeList(base.July, input.July),
-		August:                mergeList(base.August, input.August),
-		September:             mergeList(base.September, input.September),
-		October:               mergeList(base.October, input.October),
-		November:              mergeList(base.November, input.November),
-		December:              mergeList(base.December, input.December),
-		Monday:                mergeList(base.Monday, input.Monday),
-		Tuesday:               mergeList(base.Tuesday, input.Tuesday),
-		Wednesday:             mergeList(base.Wednesday, input.Wednesday),
-		Thursday:              mergeList(base.Thursday, input.Thursday),
-		Friday:                mergeList(base.Friday, input.Friday),
-		Saturday:              mergeList(base.Saturday, input.Saturday),
-		Sunday:                mergeList(base.Sunday, input.Sunday),
-		AM:                    mergeList(base.AM, input.AM),
-		PM:                    mergeList(base.PM, input.PM),
-		Decade:                mergeList(base.Decade, input.Decade),
-		Year:                  mergeList(base.Year, input.Year),
-		Month:                 mergeList(base.Month, input.Month),
-		Week:                  mergeList(base.Week, input.Week),
-		Day:                   mergeList(base.Day, input.Day),
-		Hour:                  mergeList(base.Hour, input.Hour),
-		Minute:                mergeList(base.Minute, input.Minute),
-		Second:                mergeList(base.Second, input.Second),
-		In:                    mergeList(base.In, input.In),
-		Ago:                   mergeList(base.Ago, input.Ago),
+		January:               mergeList(true, base.January, input.January),
+		February:              mergeList(true, base.February, input.February),
+		March:                 mergeList(true, base.March, input.March),
+		April:                 mergeList(true, base.April, input.April),
+		May:                   mergeList(true, base.May, input.May),
+		June:                  mergeList(true, base.June, input.June),
+		July:                  mergeList(true, base.July, input.July),
+		August:                mergeList(true, base.August, input.August),
+		September:             mergeList(true, base.September, input.September),
+		October:               mergeList(true, base.October, input.October),
+		November:              mergeList(true, base.November, input.November),
+		December:              mergeList(true, base.December, input.December),
+		Monday:                mergeList(true, base.Monday, input.Monday),
+		Tuesday:               mergeList(true, base.Tuesday, input.Tuesday),
+		Wednesday:             mergeList(true, base.Wednesday, input.Wednesday),
+		Thursday:              mergeList(true, base.Thursday, input.Thursday),
+		Friday:                mergeList(true, base.Friday, input.Friday),
+		Saturday:              mergeList(true, base.Saturday, input.Saturday),
+		Sunday:                mergeList(true, base.Sunday, input.Sunday),
+		AM:                    mergeList(true, base.AM, input.AM),
+		PM:                    mergeList(true, base.PM, input.PM),
+		Decade:                mergeList(true, base.Decade, input.Decade),
+		Year:                  mergeList(true, base.Year, input.Year),
+		Month:                 mergeList(true, base.Month, input.Month),
+		Week:                  mergeList(true, base.Week, input.Week),
+		Day:                   mergeList(true, base.Day, input.Day),
+		Hour:                  mergeList(true, base.Hour, input.Hour),
+		Minute:                mergeList(true, base.Minute, input.Minute),
+		Second:                mergeList(true, base.Second, input.Second),
+		In:                    mergeList(true, base.In, input.In),
+		Ago:                   mergeList(true, base.Ago, input.Ago),
 
 		RelativeType:      mergeStringListMap(base.RelativeType, input.RelativeType),
 		RelativeTypeRegex: mergeStringListMap(base.RelativeTypeRegex, input.RelativeTypeRegex),

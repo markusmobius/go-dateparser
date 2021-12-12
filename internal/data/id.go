@@ -8,7 +8,7 @@ var id_Locale = LocaleData{
 	Name:                  "id",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "pukul", "tanggal", "yang", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "pukul", "tanggal", "yang", "|"},
 	January:               []string{"jan", "januari"},
 	February:              []string{"feb", "februari"},
 	March:                 []string{"mar", "maret"},

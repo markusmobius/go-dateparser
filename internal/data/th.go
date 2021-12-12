@@ -8,7 +8,7 @@ var th_Locale = LocaleData{
 	Name:                  "th",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 5,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "น", "เมื่อ", "เวลา", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "น", "เมื่อ", "เวลา"},
 	January:               []string{"มกรา", "มกราคม", "มค", "เดือนมกราคม"},
 	February:              []string{"กพ", "กุมภา", "กุมภาพันธ์", "เดือนกุมภาพันธ์"},
 	March:                 []string{"มีค", "มีนา", "มีนาคม", "เดือนมีนาคม"},

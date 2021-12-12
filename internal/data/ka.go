@@ -8,7 +8,7 @@ var ka_Locale = LocaleData{
 	Name:                  "ka",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "და", "დაახლოებით", "ზე", "ის", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "და", "დაახლოებით", "ზე", "ის"},
 	January:               []string{"იან", "იანვარი"},
 	February:              []string{"თებ", "თებერვალი"},
 	March:                 []string{"მარ", "მარტი"},

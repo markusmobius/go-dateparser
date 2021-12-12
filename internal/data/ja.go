@@ -9,7 +9,7 @@ var ja_Locale = LocaleData{
 	DateOrder:             "YMD",
 	NoWordSpacing:         true,
 	SentenceSplitterGroup: 4,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "約", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "約"},
 	January:               []string{"1月", "一月"},
 	February:              []string{"2月", "二月"},
 	March:                 []string{"3月", "三月"},

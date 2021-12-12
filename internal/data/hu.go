@@ -8,7 +8,7 @@ var hu_Locale = LocaleData{
 	Name:                  "hu",
 	DateOrder:             "YMD.",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "-a", "-ai", "-akor", "-e", "-ei", "-ekor", "-es", "-i", "-ig", "-je", "-jei", "-ji", "-kor", "-tól", "-től", "-áig", "-án", "-ától", "-éig", "-én", "-étől", "-ös", "/", ";", "@", "[", "]", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "-a", "-ai", "-akor", "-e", "-ei", "-ekor", "-es", "-i", "-ig", "-je", "-jei", "-ji", "-kor", "-tól", "-től", "-áig", "-án", "-ától", "-éig", "-én", "-étől", "-ös", "/", ";", "@", "[", "]", "|"},
 	January:               []string{"i", "jan", "január"},
 	February:              []string{"feb", "febr", "február", "ii"},
 	March:                 []string{"iii", "már", "márc", "március"},

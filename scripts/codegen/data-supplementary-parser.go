@@ -44,9 +44,13 @@ func parseSupplementaryData(language string) (*LocaleData, error) {
 	data.Simplifications = map[string]string{}
 	for _, simplification := range data.SimplificationList {
 		for key, value := range simplification {
-			if value != "" {
-				data.Simplifications[key] = value
+			if value == "" {
+				continue
 			}
+
+			key = normalizeUnicode(key)
+			value = normalizeUnicode(value)
+			data.Simplifications[key] = value
 		}
 	}
 

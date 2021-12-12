@@ -8,7 +8,7 @@ var vi_Locale = LocaleData{
 	Name:                  "vi",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|"},
 	PertainWords:          []string{"lúc"},
 	January:               []string{"thg 1", "tháng 1", "tháng một"},
 	February:              []string{"thg 2", "tháng 2", "tháng hai"},
@@ -39,7 +39,7 @@ var vi_Locale = LocaleData{
 	Minute:                []string{"chút", "lát", "nguyên bản", "phút"},
 	Second:                []string{"giây", "giây đồng hồ", "hạng nhì"},
 	In:                    []string{"trong"},
-	Ago:                   []string{"cách đây", "trước", "trước đây", "trước"},
+	Ago:                   []string{"cách đây", "trước", "trước đây"},
 	RelativeType: map[string][]string{
 		`0 day ago`:    {`hôm nay`},
 		`0 hour ago`:   {`giờ này`},

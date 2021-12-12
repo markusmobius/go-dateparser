@@ -8,7 +8,7 @@ var pl_Locale = LocaleData{
 	Name:                  "pl",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "i", "o", "r", "roku", "w", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "i", "o", "r", "roku", "w", "|"},
 	January:               []string{"sty", "styczen", "styczeń", "stycznia", "styczniu"},
 	February:              []string{"lut", "lutego", "luty", "lutym"},
 	March:                 []string{"mar", "marca", "marcu", "marzec"},

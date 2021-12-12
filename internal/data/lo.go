@@ -48,9 +48,9 @@ var lo_Locale = LocaleData{
 		`1 week ago`:   {`ອາທິດແລ້ວ`},
 		`1 year ago`:   {`ປີກາຍ`},
 		`in 1 day`:     {`ມື້ອື່ນ`},
-		`in 1 month`:   {`ເດືອນໜ້າ`},
-		`in 1 week`:    {`ອາທິດໜ້າ`},
-		`in 1 year`:    {`ປີໜ້າ`},
+		`in 1 month`:   {`ເດືອນຫນ້າ`},
+		`in 1 week`:    {`ອາທິດຫນ້າ`},
+		`in 1 year`:    {`ປີຫນ້າ`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
 		`\1 day ago`: {

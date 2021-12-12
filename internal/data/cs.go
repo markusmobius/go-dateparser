@@ -8,7 +8,7 @@ var cs_Locale = LocaleData{
 	Name:                  "cs",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "přibližně", "v", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "přibližně", "v", "|"},
 	January:               []string{"led", "leden", "ledna"},
 	February:              []string{"úno", "únor", "února"},
 	March:                 []string{"bře", "březen", "března"},

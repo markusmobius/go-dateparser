@@ -8,7 +8,7 @@ var be_Locale = LocaleData{
 	Name:                  "be",
 	DateOrder:             "DMY",
 	SentenceSplitterGroup: 1,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "каля", "у", "і", "ў", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "каля", "у", "і", "ў"},
 	January:               []string{"стд", "сту", "студзень", "студзеня"},
 	February:              []string{"лют", "лютага", "люты"},
 	March:                 []string{"сак", "сакавік", "сакавіка"},

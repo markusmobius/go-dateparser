@@ -9,7 +9,7 @@ var yue_Locale = LocaleData{
 	DateOrder:             "YMD",
 	NoWordSpacing:         true,
 	SentenceSplitterGroup: 4,
-	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|", "，"},
+	SkipWords:             []string{"'", ",", "-", "/", ";", "@", "[", "]", "|"},
 	January:               []string{"1月"},
 	February:              []string{"2月"},
 	March:                 []string{"3月"},
