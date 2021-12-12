@@ -53,60 +53,60 @@ var kn_Locale = LocaleData{
 		`in 1 year`:    {`ಮುಂದಿನ ವರ್ಷ`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ದಿನಗಳ ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ದಿನದ ಹಿಂದೆ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ಗಂಟೆ ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ಗಂಟೆಗಳ ಹಿಂದೆ`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) ನಿಮಿಷಗಳ ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ನಿಮಿಷದ ಹಿಂದೆ`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ತಿಂಗಳ ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ತಿಂಗಳು ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ತಿಂಗಳುಗಳ ಹಿಂದೆ`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) ಸೆಕೆಂಡುಗಳ ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ಸೆಕೆಂಡ್ ಹಿಂದೆ`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) ವಾರಗಳ ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ವಾರದ ಹಿಂದೆ`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ವರ್ಷಗಳ ಹಿಂದೆ`),
 			regexp.MustCompile(`(?i)(\d+) ವರ್ಷದ ಹಿಂದೆ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) ದಿನಗಳಲ್ಲಿ`),
 			regexp.MustCompile(`(?i)(\d+) ದಿನದಲ್ಲಿ`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) ಗಂಟೆಗಳಲ್ಲಿ`),
 			regexp.MustCompile(`(?i)(\d+) ಗಂಟೆಯಲ್ಲಿ`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) ನಿಮಿಷಗಳಲ್ಲಿ`),
 			regexp.MustCompile(`(?i)(\d+) ನಿಮಿಷದಲ್ಲಿ`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) ತಿಂಗಳಲ್ಲಿ`),
 			regexp.MustCompile(`(?i)(\d+) ತಿಂಗಳುಗಳಲ್ಲಿ`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) ಸೆಕೆಂಡ್‌ಗಳಲ್ಲಿ`),
 			regexp.MustCompile(`(?i)(\d+) ಸೆಕೆಂಡ್‌ನಲ್ಲಿ`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) ವಾರಗಳಲ್ಲಿ`),
 			regexp.MustCompile(`(?i)(\d+) ವಾರದಲ್ಲಿ`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ವರ್ಷಗಳಲ್ಲಿ`),
 			regexp.MustCompile(`(?i)(\d+) ವರ್ಷದಲ್ಲಿ`),
 		},

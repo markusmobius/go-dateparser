@@ -53,58 +53,58 @@ var hy_Locale = LocaleData{
 		`in 1 year`:    {`հաջորդ տարի`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) օր առաջ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ժ առաջ`),
 			regexp.MustCompile(`(?i)(\d+) ժամ առաջ`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) ր առաջ`),
 			regexp.MustCompile(`(?i)(\d+) րոպե առաջ`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ամիս առաջ`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) վ առաջ`),
 			regexp.MustCompile(`(?i)(\d+) վայրկյան առաջ`),
 			regexp.MustCompile(`(?i)(\d+) վրկ առաջ`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) շաբ առաջ`),
 			regexp.MustCompile(`(?i)(\d+) շաբաթ առաջ`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) տ առաջ`),
 			regexp.MustCompile(`(?i)(\d+) տարի առաջ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) օրից`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) ժ-ից`),
 			regexp.MustCompile(`(?i)(\d+) ժամից`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) ր-ից`),
 			regexp.MustCompile(`(?i)(\d+) րոպեից`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) ամսից`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) վ-ից`),
 			regexp.MustCompile(`(?i)(\d+) վայրկյանից`),
 			regexp.MustCompile(`(?i)(\d+) վրկ-ից`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) շաբ անց`),
 			regexp.MustCompile(`(?i)(\d+) շաբ-ից`),
 			regexp.MustCompile(`(?i)(\d+) շաբաթից`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) տարուց`),
 		},
 	},

@@ -53,59 +53,59 @@ var lb_Locale = LocaleData{
 		`in 1 year`:    {`nächst joer`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)virun (\d+) d`),
 			regexp.MustCompile(`(?i)virun (\d+) dag`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)virun (\d+) st`),
 			regexp.MustCompile(`(?i)virun (\d+) stonn`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)virun (\d+) min`),
 			regexp.MustCompile(`(?i)virun (\d+) minutt`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)virun (\d+) m`),
 			regexp.MustCompile(`(?i)virun (\d+) mount`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)virun (\d+) sek`),
 			regexp.MustCompile(`(?i)virun (\d+) sekonn`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)virun (\d+) w`),
 			regexp.MustCompile(`(?i)virun (\d+) woch`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)virun (\d+) j`),
 			regexp.MustCompile(`(?i)virun (\d+) joer`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)an (\d+) d`),
 			regexp.MustCompile(`(?i)an (\d+) dag`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)an (\d+) st`),
 			regexp.MustCompile(`(?i)an (\d+) stonn`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)an (\d+) min`),
 			regexp.MustCompile(`(?i)an (\d+) minutt`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)an (\d+) m`),
 			regexp.MustCompile(`(?i)an (\d+) mount`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)an (\d+) sek`),
 			regexp.MustCompile(`(?i)an (\d+) sekonn`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)an (\d+) w`),
 			regexp.MustCompile(`(?i)an (\d+) woch`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)an (\d+) j`),
 			regexp.MustCompile(`(?i)an (\d+) joer`),
 		},

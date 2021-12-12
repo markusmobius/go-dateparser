@@ -58,79 +58,79 @@ var uk_Locale = LocaleData{
 		`in 1 year`:    {`наступного року`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) д тому`),
 			regexp.MustCompile(`(?i)(\d+) день тому`),
 			regexp.MustCompile(`(?i)(\d+) дн тому`),
 			regexp.MustCompile(`(?i)(\d+) дня тому`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) год тому`),
 			regexp.MustCompile(`(?i)(\d+) години тому`),
 			regexp.MustCompile(`(?i)(\d+) годину тому`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) хв тому`),
 			regexp.MustCompile(`(?i)(\d+) хвилини тому`),
 			regexp.MustCompile(`(?i)(\d+) хвилину тому`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) міс тому`),
 			regexp.MustCompile(`(?i)(\d+) місяць тому`),
 			regexp.MustCompile(`(?i)(\d+) місяця тому`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) с тому`),
 			regexp.MustCompile(`(?i)(\d+) секунди тому`),
 			regexp.MustCompile(`(?i)(\d+) секунду тому`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) тиж тому`),
 			regexp.MustCompile(`(?i)(\d+) тиждень тому`),
 			regexp.MustCompile(`(?i)(\d+) тижня тому`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) р тому`),
 			regexp.MustCompile(`(?i)(\d+) року тому`),
 			regexp.MustCompile(`(?i)(\d+) рік тому`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)за (\d+) д`),
 			regexp.MustCompile(`(?i)через (\d+) день`),
 			regexp.MustCompile(`(?i)через (\d+) дн`),
 			regexp.MustCompile(`(?i)через (\d+) дня`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)за (\d+) год`),
 			regexp.MustCompile(`(?i)через (\d+) год`),
 			regexp.MustCompile(`(?i)через (\d+) години`),
 			regexp.MustCompile(`(?i)через (\d+) годину`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)за (\d+) хв`),
 			regexp.MustCompile(`(?i)через (\d+) хв`),
 			regexp.MustCompile(`(?i)через (\d+) хвилини`),
 			regexp.MustCompile(`(?i)через (\d+) хвилину`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)за (\d+) міс`),
 			regexp.MustCompile(`(?i)через (\d+) міс`),
 			regexp.MustCompile(`(?i)через (\d+) місяць`),
 			regexp.MustCompile(`(?i)через (\d+) місяця`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)за (\d+) с`),
 			regexp.MustCompile(`(?i)через (\d+) с`),
 			regexp.MustCompile(`(?i)через (\d+) секунди`),
 			regexp.MustCompile(`(?i)через (\d+) секунду`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)за (\d+) тиж`),
 			regexp.MustCompile(`(?i)через (\d+) тиж`),
 			regexp.MustCompile(`(?i)через (\d+) тиждень`),
 			regexp.MustCompile(`(?i)через (\d+) тижня`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)за (\d+) р`),
 			regexp.MustCompile(`(?i)через (\d+) р`),
 			regexp.MustCompile(`(?i)через (\d+) року`),

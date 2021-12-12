@@ -53,74 +53,74 @@ var lt_Locale = LocaleData{
 		`in 1 year`:    {`kitais metais`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)prieš (\d+) d`),
 			regexp.MustCompile(`(?i)prieš (\d+) dieną`),
 			regexp.MustCompile(`(?i)prieš (\d+) dienų`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)prieš (\d+) val`),
 			regexp.MustCompile(`(?i)prieš (\d+) valandą`),
 			regexp.MustCompile(`(?i)prieš (\d+) valandų`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)prieš (\d+) min`),
 			regexp.MustCompile(`(?i)prieš (\d+) minutę`),
 			regexp.MustCompile(`(?i)prieš (\d+) minučių`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)prieš (\d+) mėn`),
 			regexp.MustCompile(`(?i)prieš (\d+) mėnesių`),
 			regexp.MustCompile(`(?i)prieš (\d+) mėnesį`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)prieš (\d+) s`),
 			regexp.MustCompile(`(?i)prieš (\d+) sek`),
 			regexp.MustCompile(`(?i)prieš (\d+) sekundę`),
 			regexp.MustCompile(`(?i)prieš (\d+) sekundžių`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)prieš (\d+) sav`),
 			regexp.MustCompile(`(?i)prieš (\d+) savaitę`),
 			regexp.MustCompile(`(?i)prieš (\d+) savaičių`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)prieš (\d+) m`),
 			regexp.MustCompile(`(?i)prieš (\d+) metus`),
 			regexp.MustCompile(`(?i)prieš (\d+) metų`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)po (\d+) d`),
 			regexp.MustCompile(`(?i)po (\d+) dienos`),
 			regexp.MustCompile(`(?i)po (\d+) dienų`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)po (\d+) val`),
 			regexp.MustCompile(`(?i)po (\d+) valandos`),
 			regexp.MustCompile(`(?i)po (\d+) valandų`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)po (\d+) min`),
 			regexp.MustCompile(`(?i)po (\d+) minutės`),
 			regexp.MustCompile(`(?i)po (\d+) minučių`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)po (\d+) mėn`),
 			regexp.MustCompile(`(?i)po (\d+) mėnesio`),
 			regexp.MustCompile(`(?i)po (\d+) mėnesių`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)po (\d+) s`),
 			regexp.MustCompile(`(?i)po (\d+) sek`),
 			regexp.MustCompile(`(?i)po (\d+) sekundės`),
 			regexp.MustCompile(`(?i)po (\d+) sekundžių`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)po (\d+) sav`),
 			regexp.MustCompile(`(?i)po (\d+) savaitės`),
 			regexp.MustCompile(`(?i)po (\d+) savaičių`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)po (\d+) m`),
 			regexp.MustCompile(`(?i)po (\d+) metų`),
 		},

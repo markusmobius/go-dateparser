@@ -48,8 +48,8 @@ func parseSupplementaryData(language string) (*LocaleData, error) {
 				continue
 			}
 
-			key = normalizeUnicode(key)
-			value = normalizeUnicode(value)
+			key = normalizeString(key)
+			value = normalizeString(value)
 			data.Simplifications[key] = value
 		}
 	}

@@ -57,76 +57,76 @@ var pl_Locale = LocaleData{
 		`in 1 year`:    {`w przyszłym roku`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) dnia temu`),
 			regexp.MustCompile(`(?i)(\d+) dzień temu`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) g temu`),
 			regexp.MustCompile(`(?i)(\d+) godz temu`),
 			regexp.MustCompile(`(?i)(\d+) godziny temu`),
 			regexp.MustCompile(`(?i)(\d+) godzinę temu`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) min temu`),
 			regexp.MustCompile(`(?i)(\d+) minuty temu`),
 			regexp.MustCompile(`(?i)(\d+) minutę temu`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) mies temu`),
 			regexp.MustCompile(`(?i)(\d+) miesiąc temu`),
 			regexp.MustCompile(`(?i)(\d+) miesiąca temu`),
 			regexp.MustCompile(`(?i)–(\d+) mies`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) s temu`),
 			regexp.MustCompile(`(?i)(\d+) sek temu`),
 			regexp.MustCompile(`(?i)(\d+) sekundy temu`),
 			regexp.MustCompile(`(?i)(\d+) sekundę temu`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) tydz temu`),
 			regexp.MustCompile(`(?i)(\d+) tydzień temu`),
 			regexp.MustCompile(`(?i)(\d+) tyg temu`),
 			regexp.MustCompile(`(?i)(\d+) tygodnia temu`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) rok temu`),
 			regexp.MustCompile(`(?i)(\d+) roku temu`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)za (\d+) dnia`),
 			regexp.MustCompile(`(?i)za (\d+) dzień`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)za (\d+) g`),
 			regexp.MustCompile(`(?i)za (\d+) godz`),
 			regexp.MustCompile(`(?i)za (\d+) godziny`),
 			regexp.MustCompile(`(?i)za (\d+) godzinę`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)za (\d+) min`),
 			regexp.MustCompile(`(?i)za (\d+) minuty`),
 			regexp.MustCompile(`(?i)za (\d+) minutę`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)za (\d+) mies`),
 			regexp.MustCompile(`(?i)za (\d+) miesiąc`),
 			regexp.MustCompile(`(?i)za (\d+) miesiąca`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)za (\d+) s`),
 			regexp.MustCompile(`(?i)za (\d+) sek`),
 			regexp.MustCompile(`(?i)za (\d+) sekundy`),
 			regexp.MustCompile(`(?i)za (\d+) sekundę`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)za (\d+) tydz`),
 			regexp.MustCompile(`(?i)za (\d+) tydzień`),
 			regexp.MustCompile(`(?i)za (\d+) tyg`),
 			regexp.MustCompile(`(?i)za (\d+) tygodnia`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)za (\d+) rok`),
 			regexp.MustCompile(`(?i)za (\d+) roku`),
 		},

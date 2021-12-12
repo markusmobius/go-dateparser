@@ -53,63 +53,63 @@ var ky_Locale = LocaleData{
 		`in 1 year`:    {`эмдиги жылы`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) күн мурун`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) с мурн`),
 			regexp.MustCompile(`(?i)(\d+) саат мурун`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) мүн мурн`),
 			regexp.MustCompile(`(?i)(\d+) мүн мурун`),
 			regexp.MustCompile(`(?i)(\d+) мүнөт мурун`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ай мурн`),
 			regexp.MustCompile(`(?i)(\d+) ай мурун`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) сек мурн`),
 			regexp.MustCompile(`(?i)(\d+) сек мурун`),
 			regexp.MustCompile(`(?i)(\d+) секунд мурун`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) апт мурун`),
 			regexp.MustCompile(`(?i)(\d+) апта мурун`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) жыл мурун`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) күн кийин`),
 			regexp.MustCompile(`(?i)(\d+) күндөн кийин`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) с кийн`),
 			regexp.MustCompile(`(?i)(\d+) саат кийин`),
 			regexp.MustCompile(`(?i)(\d+) сааттан кийин`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) мүн кийин`),
 			regexp.MustCompile(`(?i)(\d+) мүн кийн`),
 			regexp.MustCompile(`(?i)(\d+) мүнөттөн кийин`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) айд кийин`),
 			regexp.MustCompile(`(?i)(\d+) айд кийн`),
 			regexp.MustCompile(`(?i)(\d+) айдан кийин`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) сек кийин`),
 			regexp.MustCompile(`(?i)(\d+) сек кийн`),
 			regexp.MustCompile(`(?i)(\d+) секунддан кийин`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) апт кийин`),
 			regexp.MustCompile(`(?i)(\d+) аптадан кийин`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) жыл кийин`),
 			regexp.MustCompile(`(?i)(\d+) жылдан кийин`),
 		},

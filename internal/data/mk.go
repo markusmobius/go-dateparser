@@ -53,59 +53,59 @@ var mk_Locale = LocaleData{
 		`in 1 year`:    {`следната година`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)пред (\d+) ден`),
 			regexp.MustCompile(`(?i)пред (\d+) дена`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)пред (\d+) час`),
 			regexp.MustCompile(`(?i)пред (\d+) часа`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)пред (\d+) минута`),
 			regexp.MustCompile(`(?i)пред (\d+) минути`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)пред (\d+) месец`),
 			regexp.MustCompile(`(?i)пред (\d+) месеци`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)пред (\d+) секунда`),
 			regexp.MustCompile(`(?i)пред (\d+) секунди`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)пред (\d+) седмица`),
 			regexp.MustCompile(`(?i)пред (\d+) седмици`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)пред (\d+) година`),
 			regexp.MustCompile(`(?i)пред (\d+) години`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)за (\d+) ден`),
 			regexp.MustCompile(`(?i)за (\d+) дена`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)за (\d+) час`),
 			regexp.MustCompile(`(?i)за (\d+) часа`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)за (\d+) минута`),
 			regexp.MustCompile(`(?i)за (\d+) минути`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)за (\d+) месец`),
 			regexp.MustCompile(`(?i)за (\d+) месеци`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)за (\d+) секунда`),
 			regexp.MustCompile(`(?i)за (\d+) секунди`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)за (\d+) седмица`),
 			regexp.MustCompile(`(?i)за (\d+) седмици`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)за (\d+) година`),
 			regexp.MustCompile(`(?i)за (\d+) години`),
 		},

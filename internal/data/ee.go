@@ -53,61 +53,61 @@ var ee_Locale = LocaleData{
 		`in 1 year`:    {`ƒe si gbɔ na`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)ŋkeke (\d+) si va yi`),
 			regexp.MustCompile(`(?i)ŋkeke (\d+) si wo va yi`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)gaƒoƒo (\d+) si va yi`),
 			regexp.MustCompile(`(?i)gaƒoƒo (\d+) si wo va yi`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)aɖabaƒoƒo (\d+) si va yi`),
 			regexp.MustCompile(`(?i)aɖabaƒoƒo (\d+) si wo va yi`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)ɣleti (\d+) si va yi`),
 			regexp.MustCompile(`(?i)ɣleti (\d+) si wo va yi`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)sekend (\d+) si va yi`),
 			regexp.MustCompile(`(?i)sekend (\d+) si wo va yi`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)kɔsiɖa (\d+) si va yi`),
 			regexp.MustCompile(`(?i)kɔsiɖa (\d+) si wo va yi`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)le ƒe (\d+) si va yi me`),
 			regexp.MustCompile(`(?i)ƒe (\d+) si va yi`),
 			regexp.MustCompile(`(?i)ƒe (\d+) si va yi me`),
 			regexp.MustCompile(`(?i)ƒe (\d+) si wo va yi`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)le ŋkeke (\d+) me`),
 			regexp.MustCompile(`(?i)le ŋkeke (\d+) wo me`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)le gaƒoƒo (\d+) me`),
 			regexp.MustCompile(`(?i)le gaƒoƒo (\d+) wo me`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)le aɖabaƒoƒo (\d+) me`),
 			regexp.MustCompile(`(?i)le aɖabaƒoƒo (\d+) wo me`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)le ɣleti (\d+) me`),
 			regexp.MustCompile(`(?i)le ɣleti (\d+) wo me`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)le sekend (\d+) me`),
 			regexp.MustCompile(`(?i)le sekend (\d+) wo me`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)le kɔsiɖa (\d+) me`),
 			regexp.MustCompile(`(?i)le kɔsiɖa (\d+) wo me`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)le ƒe (\d+) me`),
 			regexp.MustCompile(`(?i)le ƒe (\d+) si gbɔna me`),
 		},
@@ -163,61 +163,61 @@ var ee_TG_Locale = LocaleData{
 		`in 1 year`:    {`ƒe si gbɔ na`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)ŋkeke (\d+) si va yi`),
 			regexp.MustCompile(`(?i)ŋkeke (\d+) si wo va yi`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)gaƒoƒo (\d+) si va yi`),
 			regexp.MustCompile(`(?i)gaƒoƒo (\d+) si wo va yi`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)aɖabaƒoƒo (\d+) si va yi`),
 			regexp.MustCompile(`(?i)aɖabaƒoƒo (\d+) si wo va yi`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)ɣleti (\d+) si va yi`),
 			regexp.MustCompile(`(?i)ɣleti (\d+) si wo va yi`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)sekend (\d+) si va yi`),
 			regexp.MustCompile(`(?i)sekend (\d+) si wo va yi`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)kɔsiɖa (\d+) si va yi`),
 			regexp.MustCompile(`(?i)kɔsiɖa (\d+) si wo va yi`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)le ƒe (\d+) si va yi me`),
 			regexp.MustCompile(`(?i)ƒe (\d+) si va yi`),
 			regexp.MustCompile(`(?i)ƒe (\d+) si va yi me`),
 			regexp.MustCompile(`(?i)ƒe (\d+) si wo va yi`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)le ŋkeke (\d+) me`),
 			regexp.MustCompile(`(?i)le ŋkeke (\d+) wo me`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)le gaƒoƒo (\d+) me`),
 			regexp.MustCompile(`(?i)le gaƒoƒo (\d+) wo me`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)le aɖabaƒoƒo (\d+) me`),
 			regexp.MustCompile(`(?i)le aɖabaƒoƒo (\d+) wo me`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)le ɣleti (\d+) me`),
 			regexp.MustCompile(`(?i)le ɣleti (\d+) wo me`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)le sekend (\d+) me`),
 			regexp.MustCompile(`(?i)le sekend (\d+) wo me`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)le kɔsiɖa (\d+) me`),
 			regexp.MustCompile(`(?i)le kɔsiɖa (\d+) wo me`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)le ƒe (\d+) me`),
 			regexp.MustCompile(`(?i)le ƒe (\d+) si gbɔna me`),
 		},

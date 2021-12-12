@@ -53,46 +53,46 @@ var my_Locale = LocaleData{
 		`in 1 year`:    {`လာမည့်နှစ်`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)ပြီးခဲ့သည့် (\d+) ရက်`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)ပြီးခဲ့သည့် (\d+) နာရီ`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)ပြီးခဲ့သည့် (\d+) မိနစ်`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)ပြီးခဲ့သည့် (\d+) လ`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)ပြီးခဲ့သည့် (\d+) စက္ကန့်`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)ပြီးခဲ့သည့် (\d+) ပတ်`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)ပြီးခဲ့သည့် (\d+) နှစ်`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) ရက်အတွင်း`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) နာရီအတွင်း`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) မိနစ်အတွင်း`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) လအတွင်း`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) စက္ကန့်အတွင်း`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) ပတ်အတွင်း`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) နှစ်အတွင်း`),
 		},
 	},

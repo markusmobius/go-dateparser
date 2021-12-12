@@ -53,57 +53,57 @@ var wae_Locale = LocaleData{
 		`in 1 year`:    {`next year`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)vor (\d+) tag`),
 			regexp.MustCompile(`(?i)vor (\d+) täg`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)vor (\d+) stund`),
 			regexp.MustCompile(`(?i)vor (\d+) stunde`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)vor (\d+) minüta`),
 			regexp.MustCompile(`(?i)vor (\d+) minüte`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)vor (\d+) mánet`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)vor (\d+) sekund`),
 			regexp.MustCompile(`(?i)vor (\d+) sekunde`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)cor (\d+) wučä`),
 			regexp.MustCompile(`(?i)vor (\d+) wuča`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)cor (\d+) jár`),
 			regexp.MustCompile(`(?i)vor (\d+) jár`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)i (\d+) tag`),
 			regexp.MustCompile(`(?i)i (\d+) täg`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)i (\d+) stund`),
 			regexp.MustCompile(`(?i)i (\d+) stunde`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)i (\d+) minüta`),
 			regexp.MustCompile(`(?i)i (\d+) minüte`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)i (\d+) mánet`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)i (\d+) sekund`),
 			regexp.MustCompile(`(?i)i (\d+) sekunde`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)i (\d+) wuča`),
 			regexp.MustCompile(`(?i)i (\d+) wučä`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)i (\d+) jár`),
 		},
 	},

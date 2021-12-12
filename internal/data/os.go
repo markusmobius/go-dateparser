@@ -53,17 +53,17 @@ var os_Locale = LocaleData{
 		`in 1 year`:    {`next year`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) бон раздӕр`),
 			regexp.MustCompile(`(?i)(\d+) боны размӕ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) сахаты размӕ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) боны фӕстӕ`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) сахаты фӕстӕ`),
 		},
 	},
@@ -118,17 +118,17 @@ var os_RU_Locale = LocaleData{
 		`in 1 year`:    {`next year`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) бон раздӕр`),
 			regexp.MustCompile(`(?i)(\d+) боны размӕ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) сахаты размӕ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) боны фӕстӕ`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) сахаты фӕстӕ`),
 		},
 	},

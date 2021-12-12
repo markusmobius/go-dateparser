@@ -53,52 +53,52 @@ var fil_Locale = LocaleData{
 		`in 1 year`:    {`susunod na taon`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) araw ang nakalipas`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) oras ang nakalipas`),
 			regexp.MustCompile(`(?i)(\d+) oras nakalipas`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) min ang nakalipas`),
 			regexp.MustCompile(`(?i)(\d+) minuto ang nakalipas`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) buwan ang nakalipas`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) seg ang nakalipas`),
 			regexp.MustCompile(`(?i)(\d+) seg nakalipas`),
 			regexp.MustCompile(`(?i)(\d+) segundo ang nakalipas`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) linggo ang nakalipas`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) taon ang nakalipas`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)sa (\d+) araw`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)sa (\d+) oras`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)sa (\d+) min`),
 			regexp.MustCompile(`(?i)sa (\d+) minuto`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)sa (\d+) buwan`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)sa (\d+) seg`),
 			regexp.MustCompile(`(?i)sa (\d+) segundo`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)sa (\d+) linggo`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)sa (\d+) taon`),
 		},
 	},

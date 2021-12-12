@@ -62,58 +62,58 @@ var id_Locale = LocaleData{
 		`in 1 year`:    {`tahun depan`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) h lalu`),
 			regexp.MustCompile(`(?i)(\d+) hari yang lalu`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) jam lalu`),
 			regexp.MustCompile(`(?i)(\d+) jam yang lalu`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) menit yang lalu`),
 			regexp.MustCompile(`(?i)(\d+) mnt lalu`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) bln lalu`),
 			regexp.MustCompile(`(?i)(\d+) bulan yang lalu`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) detik yang lalu`),
 			regexp.MustCompile(`(?i)(\d+) dtk lalu`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) mgg lalu`),
 			regexp.MustCompile(`(?i)(\d+) minggu yang lalu`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) tahun yang lalu`),
 			regexp.MustCompile(`(?i)(\d+) thn lalu`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)dalam (\d+) h`),
 			regexp.MustCompile(`(?i)dalam (\d+) hari`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)dalam (\d+) jam`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)dalam (\d+) menit`),
 			regexp.MustCompile(`(?i)dlm (\d+) mnt`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)dalam (\d+) bulan`),
 			regexp.MustCompile(`(?i)dlm (\d+) bln`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)dalam (\d+) detik`),
 			regexp.MustCompile(`(?i)dlm (\d+) dtk`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)dalam (\d+) minggu`),
 			regexp.MustCompile(`(?i)dlm (\d+) mgg`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)dalam (\d+) tahun`),
 			regexp.MustCompile(`(?i)dlm (\d+) thn`),
 		},

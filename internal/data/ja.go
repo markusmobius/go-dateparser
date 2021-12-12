@@ -60,68 +60,68 @@ var ja_Locale = LocaleData{
 		`in 1 year`:    {`翌年`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) 日前`),
 			regexp.MustCompile(`(?i)(\d+)日前`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) 時間前`),
 			regexp.MustCompile(`(?i)(\d+)時間前`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) 分前`),
 			regexp.MustCompile(`(?i)(\d+)分前`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) か月前`),
 			regexp.MustCompile(`(?i)(\d+)か月前`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) 秒前`),
 			regexp.MustCompile(`(?i)(\d+)秒前`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) 週間前`),
 			regexp.MustCompile(`(?i)(\d+)週間前`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) 年前`),
 			regexp.MustCompile(`(?i)(\d+)年前`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) 日後`),
 			regexp.MustCompile(`(?i)(\d+)日後`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) 時間後`),
 			regexp.MustCompile(`(?i)(\d+)時間後`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) 分後`),
 			regexp.MustCompile(`(?i)(\d+)分後`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) か月後`),
 			regexp.MustCompile(`(?i)(\d+)か月後`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) 秒後`),
 			regexp.MustCompile(`(?i)(\d+)秒後`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) 週間後`),
 			regexp.MustCompile(`(?i)(\d+)週間後`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) 年後`),
 			regexp.MustCompile(`(?i)(\d+)年後`),
 		},
 	},
 	Simplifications: map[string]string{
-		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日`: `\1-\2-\3`,
-		`(\d+)時$`:                            `\1:00`,
-		`(\d+)時(?:\s+)?(\d+)分`:               `\1:\2`,
-		`(\d+)時(?:\s+)?(\d+)分(?:\s+)?(\d+)秒`: `\1:\2:\3`,
-		`(\d+)月(?:\s+)?(\d+)日`:               `\1-\2`,
+		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日`: `$1-$2-$3`,
+		`(\d+)時$`:                            `$1:00`,
+		`(\d+)時(?:\s+)?(\d+)分`:               `$1:$2`,
+		`(\d+)時(?:\s+)?(\d+)分(?:\s+)?(\d+)秒`: `$1:$2:$3`,
+		`(\d+)月(?:\s+)?(\d+)日`:               `$1-$2`,
 	},
 }

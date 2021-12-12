@@ -53,61 +53,61 @@ var et_Locale = LocaleData{
 		`in 1 year`:    {`järgmine aasta`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) p eest`),
 			regexp.MustCompile(`(?i)(\d+) päeva eest`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) t eest`),
 			regexp.MustCompile(`(?i)(\d+) tunni eest`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) min eest`),
 			regexp.MustCompile(`(?i)(\d+) minuti eest`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) k eest`),
 			regexp.MustCompile(`(?i)(\d+) kuu eest`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) s eest`),
 			regexp.MustCompile(`(?i)(\d+) sek eest`),
 			regexp.MustCompile(`(?i)(\d+) sekundi eest`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) näd eest`),
 			regexp.MustCompile(`(?i)(\d+) nädala eest`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) a eest`),
 			regexp.MustCompile(`(?i)(\d+) aasta eest`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) p pärast`),
 			regexp.MustCompile(`(?i)(\d+) päeva pärast`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) t pärast`),
 			regexp.MustCompile(`(?i)(\d+) tunni pärast`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) min pärast`),
 			regexp.MustCompile(`(?i)(\d+) minuti pärast`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) k pärast`),
 			regexp.MustCompile(`(?i)(\d+) kuu pärast`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) s pärast`),
 			regexp.MustCompile(`(?i)(\d+) sek pärast`),
 			regexp.MustCompile(`(?i)(\d+) sekundi pärast`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) näd pärast`),
 			regexp.MustCompile(`(?i)(\d+) nädala pärast`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) a pärast`),
 			regexp.MustCompile(`(?i)(\d+) aasta pärast`),
 		},

@@ -53,57 +53,57 @@ var se_Locale = LocaleData{
 		`in 1 year`:    {`next year`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) jándor árat`),
 			regexp.MustCompile(`(?i)(\d+) jándora árat`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) diibmu árat`),
 			regexp.MustCompile(`(?i)(\d+) diibmur árat`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) minuhta árat`),
 			regexp.MustCompile(`(?i)(\d+) minuhtta árat`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) mánotbadji árat`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) sekunda árat`),
 			regexp.MustCompile(`(?i)(\d+) sekundda árat`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) vahkku árat`),
 			regexp.MustCompile(`(?i)(\d+) vahku árat`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) jahki árat`),
 			regexp.MustCompile(`(?i)(\d+) jahkki árat`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) jándor maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) jándora maŋŋilit`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) diibmu maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) diibmur maŋŋilit`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) minuhta maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) minuhtta maŋŋilit`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) mánotbadji maŋŋilit`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) sekunda maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) sekundda maŋŋilit`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) vahkku maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) vahku maŋŋilit`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) jahki maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) jahkki maŋŋilit`),
 		},
@@ -159,56 +159,56 @@ var se_FI_Locale = LocaleData{
 		`in 1 year`:    {`boahtte jagi`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) jándor árat`),
 			regexp.MustCompile(`(?i)(\d+) jándora árat`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) diibmu árat`),
 			regexp.MustCompile(`(?i)(\d+) diibmur árat`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) minuhta árat`),
 			regexp.MustCompile(`(?i)(\d+) minuhtta árat`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) mánotbadji árat`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) sekunda árat`),
 			regexp.MustCompile(`(?i)(\d+) sekundda árat`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) vahkku árat`),
 			regexp.MustCompile(`(?i)(\d+) vahku árat`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) jagi árat`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) jándor maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) jándora maŋŋilit`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) diibmu maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) diibmur maŋŋilit`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) minuhta maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) minuhtta maŋŋilit`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) mánotbadji maŋŋilit`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) sekunda maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) sekundda maŋŋilit`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) vahkku maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) vahku maŋŋilit`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) jagi siste`),
 		},
 	},
@@ -263,57 +263,57 @@ var se_SE_Locale = LocaleData{
 		`in 1 year`:    {`next year`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) jándor árat`),
 			regexp.MustCompile(`(?i)(\d+) jándora árat`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) diibmu árat`),
 			regexp.MustCompile(`(?i)(\d+) diibmur árat`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) minuhta árat`),
 			regexp.MustCompile(`(?i)(\d+) minuhtta árat`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) mánotbadji árat`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) sekunda árat`),
 			regexp.MustCompile(`(?i)(\d+) sekundda árat`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) vahkku árat`),
 			regexp.MustCompile(`(?i)(\d+) vahku árat`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) jahki árat`),
 			regexp.MustCompile(`(?i)(\d+) jahkki árat`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) jándor maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) jándora maŋŋilit`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) diibmu maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) diibmur maŋŋilit`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) minuhta maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) minuhtta maŋŋilit`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) mánotbadji maŋŋilit`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) sekunda maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) sekundda maŋŋilit`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) vahkku maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) vahku maŋŋilit`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) jahki maŋŋilit`),
 			regexp.MustCompile(`(?i)(\d+) jahkki maŋŋilit`),
 		},

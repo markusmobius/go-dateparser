@@ -53,55 +53,55 @@ var kk_Locale = LocaleData{
 		`in 1 year`:    {`келесі жыл`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) күн бұрын`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) сағ бұрын`),
 			regexp.MustCompile(`(?i)(\d+) сағат бұрын`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) мин бұрын`),
 			regexp.MustCompile(`(?i)(\d+) минут бұрын`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ай бұрын`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) сек бұрын`),
 			regexp.MustCompile(`(?i)(\d+) секунд бұрын`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) ап бұрын`),
 			regexp.MustCompile(`(?i)(\d+) апта бұрын`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ж бұрын`),
 			regexp.MustCompile(`(?i)(\d+) жыл бұрын`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) күннен кейін`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) сағ кейін`),
 			regexp.MustCompile(`(?i)(\d+) сағаттан кейін`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) мин кейін`),
 			regexp.MustCompile(`(?i)(\d+) минуттан кейін`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) айдан кейін`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) сек кейін`),
 			regexp.MustCompile(`(?i)(\d+) секундтан кейін`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) ап кейін`),
 			regexp.MustCompile(`(?i)(\d+) аптадан кейін`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ж кейін`),
 			regexp.MustCompile(`(?i)(\d+) жылдан кейін`),
 		},

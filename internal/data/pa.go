@@ -53,55 +53,55 @@ var pa_Locale = LocaleData{
 		`in 1 year`:    {`ਅਗਲਾ ਸਾਲ`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ਦਿਨ ਪਹਿਲਾਂ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ਘੰਟਾ ਪਹਿਲਾਂ`),
 			regexp.MustCompile(`(?i)(\d+) ਘੰਟੇ ਪਹਿਲਾਂ`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) ਮਿੰਟ ਪਹਿਲਾਂ`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ਮਹੀਨਾ ਪਹਿਲਾਂ`),
 			regexp.MustCompile(`(?i)(\d+) ਮਹੀਨੇ ਪਹਿਲਾਂ`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) ਸਕਿੰਟ ਪਹਿਲਾਂ`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) ਹਫ਼ਤਾ ਪਹਿਲਾਂ`),
 			regexp.MustCompile(`(?i)(\d+) ਹਫ਼ਤੇ ਪਹਿਲਾਂ`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ਸਾਲ ਪਹਿਲਾਂ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) ਦਿਨ ਵਿੱਚ`),
 			regexp.MustCompile(`(?i)(\d+) ਦਿਨਾਂ ਵਿੱਚ`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) ਘੰਟਿਆਂ ਵਿੱਚ`),
 			regexp.MustCompile(`(?i)(\d+) ਘੰਟੇ ਵਿੱਚ`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) ਮਿੰਟ ਵਿੱਚ`),
 			regexp.MustCompile(`(?i)(\d+) ਮਿੰਟਾਂ ਵਿੱਚ`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) ਮਹੀਨਿਆਂ ਵਿੱਚ`),
 			regexp.MustCompile(`(?i)(\d+) ਮਹੀਨੇ ਵਿੱਚ`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) ਸਕਿੰਟ ਵਿੱਚ`),
 			regexp.MustCompile(`(?i)(\d+) ਸਕਿੰਟਾਂ ਵਿੱਚ`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) ਹਫ਼ਤਿਆਂ ਵਿੱਚ`),
 			regexp.MustCompile(`(?i)(\d+) ਹਫ਼ਤੇ ਵਿੱਚ`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ਸਾਲ ਵਿੱਚ`),
 			regexp.MustCompile(`(?i)(\d+) ਸਾਲਾਂ ਵਿੱਚ`),
 		},

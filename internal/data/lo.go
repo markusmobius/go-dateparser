@@ -53,56 +53,56 @@ var lo_Locale = LocaleData{
 		`in 1 year`:    {`ປີຫນ້າ`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ມື້ກ່ອນ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ຊມ ກ່ອນ`),
 			regexp.MustCompile(`(?i)(\d+) ຊົ່ວໂມງກ່ອນ`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) ນທ ກ່ອນ`),
 			regexp.MustCompile(`(?i)(\d+) ນາທີກ່ອນ`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ດ ກ່ອນ`),
 			regexp.MustCompile(`(?i)(\d+) ເດືອນກ່ອນ`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) ວິ ກ່ອນ`),
 			regexp.MustCompile(`(?i)(\d+) ວິນາທີກ່ອນ`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) ອທ ກ່ອນ`),
 			regexp.MustCompile(`(?i)(\d+) ອາທິດກ່ອນ`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ປີກ່ອນ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ມື້`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ຊມ`),
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ຊົ່ວໂມງ`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) ໃນອີກ 0 ນາທີ`),
 			regexp.MustCompile(`(?i)ໃນ (\d+) ນທ`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ດ`),
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ເດືອນ`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)ໃນ (\d+) ວິ`),
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ວິນາທີ`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ອທ`),
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ອາທິດ`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)ໃນອີກ (\d+) ປີ`),
 		},
 	},

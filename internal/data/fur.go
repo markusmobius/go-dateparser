@@ -53,57 +53,57 @@ var fur_Locale = LocaleData{
 		`in 1 year`:    {`next year`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) zornade indaûr`),
 			regexp.MustCompile(`(?i)(\d+) zornadis indaûr`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ore indaûr`),
 			regexp.MustCompile(`(?i)(\d+) oris indaûr`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) minût indaûr`),
 			regexp.MustCompile(`(?i)(\d+) minûts indaûr`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) mês indaûr`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) secont indaûr`),
 			regexp.MustCompile(`(?i)(\d+) seconts indaûr`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) setemane indaûr`),
 			regexp.MustCompile(`(?i)(\d+) setemanis indaûr`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) agns indaûr`),
 			regexp.MustCompile(`(?i)(\d+) an indaûr`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)ca di (\d+) zornade`),
 			regexp.MustCompile(`(?i)ca di (\d+) zornadis`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)ca di (\d+) ore`),
 			regexp.MustCompile(`(?i)ca di (\d+) oris`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)ca di (\d+) minût`),
 			regexp.MustCompile(`(?i)ca di (\d+) minûts`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)ca di (\d+) mês`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)ca di (\d+) secont`),
 			regexp.MustCompile(`(?i)ca di (\d+) seconts`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)ca di (\d+) setemane`),
 			regexp.MustCompile(`(?i)ca di (\d+) setemanis`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)ca di (\d+) agns`),
 			regexp.MustCompile(`(?i)ca di (\d+) an`),
 		},

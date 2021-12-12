@@ -53,66 +53,66 @@ var chr_Locale = LocaleData{
 		`in 1 year`:    {`ꭱꮨᏼꭲ`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ꭲꭶ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)(\d+) ꭿꮈꮝꭹ ꮷꮢꭿꮫ ꮵꭸꮢ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ꭲᏻꮯꮆꮣ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)(\d+) ꮡꮯꮆꮣ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮡꮯ ꮵꭸꮢ`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲꮿꮤ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲꮿꮤꮼꮝꮤꮕ ꮵꭸꮢ`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭷꮈ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭷꮈꭲ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮧꭷꮈꭲ ꮵꭸꮢ`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) ꭰꮞꮲ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)(\d+) ꮣꮣꮎꮹꮝꭼ ꮵꭸꮢ`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲᏻꮎꮩꮣꮖꮝꮧ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮢꮎ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮢꮎꮩꮣꮖꮝꮧ ꮵꭸꮢ`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ꭲꮷꮥꮨᏼꮜꮧꮢꭲ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)(\d+) ꭴꮥꮨᏼꮜꮧꮢꭲ ꮵꭸꮢ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭴꮥ ꮵꭸꮢ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲꭶ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭿꮈꮝꭹ ꮷꮢꭿꮫ`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲᏻꮯꮆꮣ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮡꮯ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮡꮯꮆꮣ`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲꮿꮤ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲꮿꮤꮼꮝꮤꮕ`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭷꮈ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭷꮈꭲ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮧꭷꮈꭲ`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭰꮞꮲ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮣꮣꮎꮹꮝꭼ ꮵꭸꮢ`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲᏻꮎꮩꮣꮖꮝꮧ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮢꮎ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꮢꮎꮩꮣꮖꮝꮧ`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭲꮷꮥꮨᏼꮜꮧꮢꭲ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭴꮥ`),
 			regexp.MustCompile(`(?i)ꮎꮏ (\d+) ꭴꮥꮨᏼꮜꮧꮢꭲ`),

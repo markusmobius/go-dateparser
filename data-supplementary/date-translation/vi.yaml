@@ -1,70 +1,70 @@
 pertain: ['lúc']
 
-sentence_splitter_group : 1
+sentence_splitter_group: 1
 
 monday:
-    - Thứ 2
+  - Thứ 2
 tuesday:
-    - Thứ 3
+  - Thứ 3
 wednesday:
-    - Thứ 4
+  - Thứ 4
 thursday:
-    - Thứ 5
+  - Thứ 5
 friday:
-    - Thứ 6
+  - Thứ 6
 saturday:
-    - Thứ 7
+  - Thứ 7
 sunday:
-    - Thứ 1
+  - Thứ 1
 
 january:
-    - Tháng một
+  - Tháng một
 february:
-    - Tháng hai
+  - Tháng hai
 march:
-    - Tháng ba
+  - Tháng ba
 april:
-    - Tháng tư
+  - Tháng tư
 may:
-    - Tháng năm
+  - Tháng năm
 june:
-    - Tháng sáu
+  - Tháng sáu
 july:
-    - Tháng bảy
+  - Tháng bảy
 august:
-    - Tháng tám
+  - Tháng tám
 september:
-    - Tháng chín
+  - Tháng chín
 october:
-    - Tháng mười
+  - Tháng mười
 november:
-    - Tháng mười một
+  - Tháng mười một
 december:
-    - Tháng mười hai
+  - Tháng mười hai
 
 month:
-    - thang
-    - Thg
+  - thang
+  - Thg
 week:
-    - tuần lể
+  - tuần lể
 day:
-    - ban ngày
-    - buổi
+  - ban ngày
+  - buổi
 minute:
-    - chút
-    - lát
-    - nguyên bản
+  - chút
+  - lát
+  - nguyên bản
 second:
-    - giây đồng hồ
-    - hạng nhì
+  - giây đồng hồ
+  - hạng nhì
 
 ago:
-    - cách đây
-    - trước đây
-    - trước
-    - trước
+  - cách đây
+  - trước đây
+  - trước
+  - trước
 in:
-    - trong
+  - trong
 
 simplifications:
-    - (?:ngày|năm)\s(\d+): \1
+  - (?:ngày|năm)\s(\d+): $1

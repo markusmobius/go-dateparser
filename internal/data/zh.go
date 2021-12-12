@@ -59,58 +59,58 @@ var zh_Locale = LocaleData{
 		`in 1 year`:    {`明年`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+)天前`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+)小时前`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+)分钟前`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+)个月前`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+)秒前`),
 			regexp.MustCompile(`(?i)(\d+)秒钟前`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+)周前`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+)年前`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+)天后`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+)小时后`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+)分钟后`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+)个月后`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+)秒后`),
 			regexp.MustCompile(`(?i)(\d+)秒钟后`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+)周后`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+)年后`),
 		},
 	},
 	Simplifications: map[string]string{
-		`(?:上午|早上|凌晨)(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`:                              `\1:\2 am`,
-		`(?:中午|下午|(?:晚上?))(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`:                         `\1:\2 pm`,
-		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日(?:\s+)?(\d+)时(?:\s+)?(\d+)分`:               `\1-\2-\3 \4:\5`,
-		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?`:                                  `\1-\2-\3`,
-		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?(?:\s+)?(\d{1,2})(?:点|:)(\d{1,2})`: `\1-\2-\3 \4:\5`,
-		`(\d+)月(?=.*[前后])`: `\1 月`,
+		`(?:上午|早上|凌晨)(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`:                              `$1:$2 am`,
+		`(?:中午|下午|(?:晚上?))(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`:                         `$1:$2 pm`,
+		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日(?:\s+)?(\d+)时(?:\s+)?(\d+)分`:               `$1-$2-$3 $4:$5`,
+		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?`:                                  `$1-$2-$3`,
+		`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?(?:\s+)?(\d{1,2})(?:点|:)(\d{1,2})`: `$1-$2-$3 $4:$5`,
+		`(\d+)月(?=.*[前后])`: `$1 月`,
 		`中午`:               `12:00`,
 		`半小时前`:             `30分前`,
 	},

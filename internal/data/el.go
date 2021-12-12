@@ -53,80 +53,80 @@ var el_Locale = LocaleData{
 		`in 1 year`:    {`επόμενο έτος`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ημ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ημέρα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ημέρες`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ώ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ώρ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ώρα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ώρες`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) λ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) λεπ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) λεπτά`),
 			regexp.MustCompile(`(?i)πριν από (\d+) λεπτό`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) μ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) μήνα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) μήνες`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) δ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) δευτ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) δευτερόλεπτα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) δευτερόλεπτο`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) εβδ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) εβδ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) εβδομάδα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) εβδομάδες`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) έτη πριν`),
 			regexp.MustCompile(`(?i)(\d+) έτος πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) έτη`),
 			regexp.MustCompile(`(?i)πριν από (\d+) έτος`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)σε (\d+) ημ`),
 			regexp.MustCompile(`(?i)σε (\d+) ημέρα`),
 			regexp.MustCompile(`(?i)σε (\d+) ημέρες`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)σε (\d+) ώ`),
 			regexp.MustCompile(`(?i)σε (\d+) ώρ`),
 			regexp.MustCompile(`(?i)σε (\d+) ώρα`),
 			regexp.MustCompile(`(?i)σε (\d+) ώρες`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)σε (\d+) λ`),
 			regexp.MustCompile(`(?i)σε (\d+) λεπ`),
 			regexp.MustCompile(`(?i)σε (\d+) λεπτά`),
 			regexp.MustCompile(`(?i)σε (\d+) λεπτό`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)σε (\d+) μ`),
 			regexp.MustCompile(`(?i)σε (\d+) μήνα`),
 			regexp.MustCompile(`(?i)σε (\d+) μήνες`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)σε (\d+) δ`),
 			regexp.MustCompile(`(?i)σε (\d+) δευτ`),
 			regexp.MustCompile(`(?i)σε (\d+) δευτερόλεπτα`),
 			regexp.MustCompile(`(?i)σε (\d+) δευτερόλεπτο`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)σε (\d+) εβδ`),
 			regexp.MustCompile(`(?i)σε (\d+) εβδομάδα`),
 			regexp.MustCompile(`(?i)σε (\d+) εβδομάδες`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)σε (\d+) έτη`),
 			regexp.MustCompile(`(?i)σε (\d+) έτος`),
 		},
@@ -182,80 +182,80 @@ var el_CY_Locale = LocaleData{
 		`in 1 year`:    {`επόμενο έτος`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ημ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ημέρα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ημέρες`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ώ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ώρ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ώρα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) ώρες`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) λ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) λεπ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) λεπτά`),
 			regexp.MustCompile(`(?i)πριν από (\d+) λεπτό`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) μ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) μήνα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) μήνες`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) δ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) δευτ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) δευτερόλεπτα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) δευτερόλεπτο`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) εβδ πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) εβδ`),
 			regexp.MustCompile(`(?i)πριν από (\d+) εβδομάδα`),
 			regexp.MustCompile(`(?i)πριν από (\d+) εβδομάδες`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) έτη πριν`),
 			regexp.MustCompile(`(?i)(\d+) έτος πριν`),
 			regexp.MustCompile(`(?i)πριν από (\d+) έτη`),
 			regexp.MustCompile(`(?i)πριν από (\d+) έτος`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)σε (\d+) ημ`),
 			regexp.MustCompile(`(?i)σε (\d+) ημέρα`),
 			regexp.MustCompile(`(?i)σε (\d+) ημέρες`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)σε (\d+) ώ`),
 			regexp.MustCompile(`(?i)σε (\d+) ώρ`),
 			regexp.MustCompile(`(?i)σε (\d+) ώρα`),
 			regexp.MustCompile(`(?i)σε (\d+) ώρες`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)σε (\d+) λ`),
 			regexp.MustCompile(`(?i)σε (\d+) λεπ`),
 			regexp.MustCompile(`(?i)σε (\d+) λεπτά`),
 			regexp.MustCompile(`(?i)σε (\d+) λεπτό`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)σε (\d+) μ`),
 			regexp.MustCompile(`(?i)σε (\d+) μήνα`),
 			regexp.MustCompile(`(?i)σε (\d+) μήνες`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)σε (\d+) δ`),
 			regexp.MustCompile(`(?i)σε (\d+) δευτ`),
 			regexp.MustCompile(`(?i)σε (\d+) δευτερόλεπτα`),
 			regexp.MustCompile(`(?i)σε (\d+) δευτερόλεπτο`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)σε (\d+) εβδ`),
 			regexp.MustCompile(`(?i)σε (\d+) εβδομάδα`),
 			regexp.MustCompile(`(?i)σε (\d+) εβδομάδες`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)σε (\d+) έτη`),
 			regexp.MustCompile(`(?i)σε (\d+) έτος`),
 		},

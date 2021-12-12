@@ -53,58 +53,58 @@ var ur_Locale = LocaleData{
 		`in 1 year`:    {`اگلے سال`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) دن پہلے`),
 			regexp.MustCompile(`(?i)(\d+) دنوں پہلے`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) گھنٹہ پہلے`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹے پہلے`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) منٹ پہلے`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ماہ قبل`),
 			regexp.MustCompile(`(?i)(\d+) ماہ پہلے`),
 			regexp.MustCompile(`(?i)(\d+) مہینہ پہلے`),
 			regexp.MustCompile(`(?i)(\d+) مہینے پہلے`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) سیکنڈ پہلے`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) ہفتہ پہلے`),
 			regexp.MustCompile(`(?i)(\d+) ہفتے پہلے`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) سال پہلے`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) دن میں`),
 			regexp.MustCompile(`(?i)(\d+) دنوں میں`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) گھنٹوں میں`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹہ میں`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹے میں`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) منٹ میں`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) ماہ میں`),
 			regexp.MustCompile(`(?i)(\d+) مہینہ میں`),
 			regexp.MustCompile(`(?i)(\d+) مہینے میں`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) سیکنڈ میں`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) ہفتہ میں`),
 			regexp.MustCompile(`(?i)(\d+) ہفتے میں`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) سال میں`),
 		},
 	},
@@ -159,58 +159,58 @@ var ur_IN_Locale = LocaleData{
 		`in 1 year`:    {`اگلے سال`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) دن قبل`),
 			regexp.MustCompile(`(?i)(\d+) دن پہلے`),
 			regexp.MustCompile(`(?i)(\d+) دنوں پہلے`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) گھنٹہ قبل`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹہ پہلے`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹے قبل`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹے پہلے`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) منٹ قبل`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ماہ قبل`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) سیکنڈ قبل`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) ہفتہ قبل`),
 			regexp.MustCompile(`(?i)(\d+) ہفتے قبل`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) سال پہلے`),
 			regexp.MustCompile(`(?i)(\d+) سالوں پہلے`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) دن میں`),
 			regexp.MustCompile(`(?i)(\d+) دنوں میں`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) گھنٹوں میں`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹہ میں`),
 			regexp.MustCompile(`(?i)(\d+) گھنٹے میں`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) منٹ میں`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) ماہ میں`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) سیکنڈ میں`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) ہفتوں میں`),
 			regexp.MustCompile(`(?i)(\d+) ہفتہ میں`),
 			regexp.MustCompile(`(?i)(\d+) ہفتے میں`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) سال میں`),
 			regexp.MustCompile(`(?i)(\d+) سالوں میں`),
 		},

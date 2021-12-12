@@ -53,62 +53,62 @@ var am_Locale = LocaleData{
 		`in 1 year`:    {`የሚቀጥለው ዓመት`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)ከ (\d+) ቀን በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ቀናት በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ቀን በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ቀኖች በፊት`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)ከ(\d+) ሰዓት በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ሰዓቶች በፊት`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)ከ(\d+) ደቂቃ በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ደቂቃዎች በፊት`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)ከ(\d+) ወራት በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ወር በፊት`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)ከ(\d+) ሰከንድ በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ሰከንዶች በፊት`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)ከ(\d+) ሳምንታት በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ሳምንት በፊት`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)ከ(\d+) ዓመታት በፊት`),
 			regexp.MustCompile(`(?i)ከ(\d+) ዓመት በፊት`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)በ(\d+) ቀናት ውስጥ`),
 			regexp.MustCompile(`(?i)በ(\d+) ቀን ውስጥ`),
 			regexp.MustCompile(`(?i)በ(\d+) ቀኖች ውስጥ`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)በ(\d+) ሰዓት ውስጥ`),
 			regexp.MustCompile(`(?i)በ(\d+) ሰዓቶች ውስጥ`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)በ(\d+) ደቂቃ ውስጥ`),
 			regexp.MustCompile(`(?i)በ(\d+) ደቂቃዎች ውስጥ`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)በ(\d+) ወራት ውስጥ`),
 			regexp.MustCompile(`(?i)በ(\d+) ወር ውስጥ`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)በ(\d+) ሰከንድ ውስጥ`),
 			regexp.MustCompile(`(?i)በ(\d+) ሰከንዶች ውስጥ`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)በ(\d+) ሳምንታት ውስጥ`),
 			regexp.MustCompile(`(?i)በ(\d+) ሳምንት ውስጥ`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)በ(\d+) ዓመታት ውስጥ`),
 		},
 	},

@@ -1,78 +1,78 @@
-skip: [":n"]
+skip: [':n']
 
-sentence_splitter_group : 1
+sentence_splitter_group: 1
 
 january:
-    - tammikuussa
+  - tammikuussa
 february:
-    - helmikuussa
+  - helmikuussa
 march:
-    - maaliskuussa
+  - maaliskuussa
 april:
-    - huhtikuussa
+  - huhtikuussa
 may:
-    - toukokuussa
+  - toukokuussa
 june:
-    - kesäkuussa
+  - kesäkuussa
 july:
-    - heinäkuussa
+  - heinäkuussa
 august:
-    - elokuussa
+  - elokuussa
 september:
-    - Syyskuussa
+  - Syyskuussa
 october:
-    - Lokakuussa
+  - Lokakuussa
 november:
-    - Marraskuussa
+  - Marraskuussa
 december:
-    - Joulukuussa
+  - Joulukuussa
 
 year:
-    - vuotta
-    - vv
-    - vuonna
-    - vuoden
+  - vuotta
+  - vv
+  - vuonna
+  - vuoden
 month:
-    - kuukautta
-    - kuukauden
+  - kuukautta
+  - kuukauden
 week:
-    - viikkoa
-    - vko
-    - viikon
+  - viikkoa
+  - vko
+  - viikon
 day:
-    - päivää
-    - p
-    - pvä
-    - pvää
-    - päivän
+  - päivää
+  - p
+  - pvä
+  - pvää
+  - päivän
 hour:
-    - tuntia
-    - tunnin
+  - tuntia
+  - tunnin
 minute:
-    - minuuttia
-    - minuutin
+  - minuuttia
+  - minuutin
 second:
-    - sekuntia
-    - sekuntti
-    - sekunttia
-    - sekuntin
-    - sekunnin
+  - sekuntia
+  - sekuntti
+  - sekunttia
+  - sekuntin
+  - sekunnin
 
 ago:
-    - sitten
+  - sitten
 in:
-    - kuluttua
-    - päästä
+  - kuluttua
+  - päästä
 
 relative-type:
-    2 year ago:
-        - toissa vuonna
-    2 month ago:
-        - toissa kuussa
-    2 week ago:
-        - toissa viikolla
-    2 day ago:
-        - toissa päivänä
+  2 year ago:
+    - toissa vuonna
+  2 month ago:
+    - toissa kuussa
+  2 week ago:
+    - toissa viikolla
+  2 day ago:
+    - toissa päivänä
 
 simplifications:
-    - (\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua): \3 \1 \2
+  - (\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua): $3 $1 $2

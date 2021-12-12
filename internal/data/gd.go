@@ -53,71 +53,71 @@ var gd_Locale = LocaleData{
 		`in 1 year`:    {`an ath-bhl`, `an ath-bhliadhna`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)o (\d+) là`),
 			regexp.MustCompile(`(?i)(\d+) latha air ais`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)o (\d+) uair`),
 			regexp.MustCompile(`(?i)(\d+) uair a thìde air ais`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)o (\d+) mhion`),
 			regexp.MustCompile(`(?i)o (\d+) mion`),
 			regexp.MustCompile(`(?i)(\d+) mhionaid air ais`),
 			regexp.MustCompile(`(?i)(\d+) mionaid air ais`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)o (\d+) mhìos`),
 			regexp.MustCompile(`(?i)o (\d+) mìos`),
 			regexp.MustCompile(`(?i)(\d+) mhìos air ais`),
 			regexp.MustCompile(`(?i)(\d+) mìos air ais`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)o (\d+) diog`),
 			regexp.MustCompile(`(?i)(\d+) diog air ais`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)o (\d+) seachd`),
 			regexp.MustCompile(`(?i)o (\d+) sheachd`),
 			regexp.MustCompile(`(?i)(\d+) seachdain air ais`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)o (\d+) bhlia`),
 			regexp.MustCompile(`(?i)o (\d+) blia`),
 			regexp.MustCompile(`(?i)(\d+) bhliadhna air ais`),
 			regexp.MustCompile(`(?i)(\d+) bliadhna air ais`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)an ceann (\d+) latha`),
 			regexp.MustCompile(`(?i)an (\d+) là`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)an ceann (\d+) uair a thìde`),
 			regexp.MustCompile(`(?i)an (\d+) uair`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)an ceann (\d+) mhionaid`),
 			regexp.MustCompile(`(?i)an ceann (\d+) mionaid`),
 			regexp.MustCompile(`(?i)an (\d+) mhion`),
 			regexp.MustCompile(`(?i)an (\d+) mion`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)an ceann (\d+) mhìosa`),
 			regexp.MustCompile(`(?i)an ceann (\d+) mìosa`),
 			regexp.MustCompile(`(?i)an (\d+) mhìos`),
 			regexp.MustCompile(`(?i)an (\d+) mìos`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)an ceann (\d+) diog`),
 			regexp.MustCompile(`(?i)an (\d+) diog`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)an ceann (\d+) seachdain`),
 			regexp.MustCompile(`(?i)an (\d+) seachd`),
 			regexp.MustCompile(`(?i)an (\d+) sheachd`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)an ceann (\d+) bhliadhna`),
 			regexp.MustCompile(`(?i)an ceann (\d+) bliadhna`),
 			regexp.MustCompile(`(?i)an (\d+) bhlia`),

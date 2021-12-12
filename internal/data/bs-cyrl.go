@@ -53,59 +53,59 @@ var bs_Cyrl_Locale = LocaleData{
 		`in 1 year`:    {`следеће године`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)пре (\d+) дан`),
 			regexp.MustCompile(`(?i)пре (\d+) дана`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)пре (\d+) сат`),
 			regexp.MustCompile(`(?i)пре (\d+) сати`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)пре (\d+) минут`),
 			regexp.MustCompile(`(?i)пре (\d+) минута`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)пре (\d+) месец`),
 			regexp.MustCompile(`(?i)пре (\d+) месеци`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)пре (\d+) секунд`),
 			regexp.MustCompile(`(?i)пре (\d+) секунди`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)пре (\d+) недеља`),
 			regexp.MustCompile(`(?i)пре (\d+) недељу`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)пре (\d+) година`),
 			regexp.MustCompile(`(?i)пре (\d+) годину`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)за (\d+) дан`),
 			regexp.MustCompile(`(?i)за (\d+) дана`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)за (\d+) сат`),
 			regexp.MustCompile(`(?i)за (\d+) сати`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)за (\d+) минут`),
 			regexp.MustCompile(`(?i)за (\d+) минута`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)за (\d+) месец`),
 			regexp.MustCompile(`(?i)за (\d+) месеци`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)за (\d+) секунд`),
 			regexp.MustCompile(`(?i)за (\d+) секунди`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)за (\d+) недеља`),
 			regexp.MustCompile(`(?i)за (\d+) недељу`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)за (\d+) година`),
 			regexp.MustCompile(`(?i)за (\d+) годину`),
 		},

@@ -57,71 +57,71 @@ var ro_Locale = LocaleData{
 		`in 1 year`:    {`anul viitor`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de zile`),
 			regexp.MustCompile(`(?i)acum (\d+) zi`),
 			regexp.MustCompile(`(?i)acum (\d+) zile`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de ore`),
 			regexp.MustCompile(`(?i)acum (\d+) h`),
 			regexp.MustCompile(`(?i)acum (\d+) oră`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de minute`),
 			regexp.MustCompile(`(?i)acum (\d+) min`),
 			regexp.MustCompile(`(?i)acum (\d+) minut`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de luni`),
 			regexp.MustCompile(`(?i)acum (\d+) luni`),
 			regexp.MustCompile(`(?i)acum (\d+) lună`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de secunde`),
 			regexp.MustCompile(`(?i)acum (\d+) sec`),
 			regexp.MustCompile(`(?i)acum (\d+) secundă`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de săptămâni`),
 			regexp.MustCompile(`(?i)acum (\d+) săpt`),
 			regexp.MustCompile(`(?i)acum (\d+) săptămână`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) an`),
 			regexp.MustCompile(`(?i)acum (\d+) de ani`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)peste (\d+) de zile`),
 			regexp.MustCompile(`(?i)peste (\d+) zi`),
 			regexp.MustCompile(`(?i)peste (\d+) zile`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)peste (\d+) de ore`),
 			regexp.MustCompile(`(?i)peste (\d+) h`),
 			regexp.MustCompile(`(?i)peste (\d+) oră`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)peste (\d+) de minute`),
 			regexp.MustCompile(`(?i)peste (\d+) min`),
 			regexp.MustCompile(`(?i)peste (\d+) minut`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)peste (\d+) de luni`),
 			regexp.MustCompile(`(?i)peste (\d+) luni`),
 			regexp.MustCompile(`(?i)peste (\d+) lună`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)peste (\d+) de secunde`),
 			regexp.MustCompile(`(?i)peste (\d+) sec`),
 			regexp.MustCompile(`(?i)peste (\d+) secundă`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)peste (\d+) de săptămâni`),
 			regexp.MustCompile(`(?i)peste (\d+) săpt`),
 			regexp.MustCompile(`(?i)peste (\d+) săptămână`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)peste (\d+) an`),
 			regexp.MustCompile(`(?i)peste (\d+) ani`),
 			regexp.MustCompile(`(?i)peste (\d+) de ani`),
@@ -182,71 +182,71 @@ var ro_MD_Locale = LocaleData{
 		`in 1 year`:    {`anul viitor`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de zile`),
 			regexp.MustCompile(`(?i)acum (\d+) zi`),
 			regexp.MustCompile(`(?i)acum (\d+) zile`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de ore`),
 			regexp.MustCompile(`(?i)acum (\d+) h`),
 			regexp.MustCompile(`(?i)acum (\d+) oră`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de minute`),
 			regexp.MustCompile(`(?i)acum (\d+) min`),
 			regexp.MustCompile(`(?i)acum (\d+) minut`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de luni`),
 			regexp.MustCompile(`(?i)acum (\d+) luni`),
 			regexp.MustCompile(`(?i)acum (\d+) lună`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de secunde`),
 			regexp.MustCompile(`(?i)acum (\d+) sec`),
 			regexp.MustCompile(`(?i)acum (\d+) secundă`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) de săptămâni`),
 			regexp.MustCompile(`(?i)acum (\d+) săpt`),
 			regexp.MustCompile(`(?i)acum (\d+) săptămână`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)acum (\d+) an`),
 			regexp.MustCompile(`(?i)acum (\d+) de ani`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)peste (\d+) de zile`),
 			regexp.MustCompile(`(?i)peste (\d+) zi`),
 			regexp.MustCompile(`(?i)peste (\d+) zile`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)peste (\d+) de ore`),
 			regexp.MustCompile(`(?i)peste (\d+) h`),
 			regexp.MustCompile(`(?i)peste (\d+) oră`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)peste (\d+) de minute`),
 			regexp.MustCompile(`(?i)peste (\d+) min`),
 			regexp.MustCompile(`(?i)peste (\d+) minut`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)peste (\d+) de luni`),
 			regexp.MustCompile(`(?i)peste (\d+) luni`),
 			regexp.MustCompile(`(?i)peste (\d+) lună`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)peste (\d+) de secunde`),
 			regexp.MustCompile(`(?i)peste (\d+) sec`),
 			regexp.MustCompile(`(?i)peste (\d+) secundă`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)peste (\d+) de săptămâni`),
 			regexp.MustCompile(`(?i)peste (\d+) săpt`),
 			regexp.MustCompile(`(?i)peste (\d+) săptămână`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)peste (\d+) an`),
 			regexp.MustCompile(`(?i)peste (\d+) ani`),
 			regexp.MustCompile(`(?i)peste (\d+) de ani`),

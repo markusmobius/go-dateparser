@@ -53,80 +53,80 @@ var ta_Locale = LocaleData{
 		`in 1 year`:    {`அடுத்த ஆண்டு`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) நா முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாளுக்கு முன்`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ம முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணி முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரம் முன்`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) நி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்திற்கு முன்`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) மா முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாத முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்துக்கு முன்`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) வி முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநா முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிக்கு முன்`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) வா முன்`),
 			regexp.MustCompile(`(?i)(\d+) வார முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்திற்கு முன்பு`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டிற்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளுக்கு முன்`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) நா`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நாளில்`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) ம`),
 			regexp.MustCompile(`(?i)(\d+) மணி`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரத்தில்`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) நி`),
 			regexp.MustCompile(`(?i)(\d+) நிமி`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்தில்`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) மா`),
 			regexp.MustCompile(`(?i)(\d+) மாத`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்தில்`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) வி`),
 			regexp.MustCompile(`(?i)(\d+) விநா`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளில்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடியில்`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) வா`),
 			regexp.MustCompile(`(?i)(\d+) வார`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்தில்`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டில்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளில்`),
@@ -183,80 +183,80 @@ var ta_LK_Locale = LocaleData{
 		`in 1 year`:    {`அடுத்த ஆண்டு`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) நா முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாளுக்கு முன்`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ம முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணி முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரம் முன்`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) நி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்திற்கு முன்`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) மா முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாத முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்துக்கு முன்`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) வி முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநா முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிக்கு முன்`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) வா முன்`),
 			regexp.MustCompile(`(?i)(\d+) வார முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்திற்கு முன்பு`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டிற்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளுக்கு முன்`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) நா`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நாளில்`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) ம`),
 			regexp.MustCompile(`(?i)(\d+) மணி`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரத்தில்`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) நி`),
 			regexp.MustCompile(`(?i)(\d+) நிமி`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்தில்`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) மா`),
 			regexp.MustCompile(`(?i)(\d+) மாத`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்தில்`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) வி`),
 			regexp.MustCompile(`(?i)(\d+) விநா`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளில்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடியில்`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) வா`),
 			regexp.MustCompile(`(?i)(\d+) வார`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்தில்`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டில்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளில்`),
@@ -313,80 +313,80 @@ var ta_MY_Locale = LocaleData{
 		`in 1 year`:    {`அடுத்த ஆண்டு`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) நா முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாளுக்கு முன்`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ம முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணி முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரம் முன்`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) நி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்திற்கு முன்`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) மா முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாத முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்துக்கு முன்`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) வி முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநா முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிக்கு முன்`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) வா முன்`),
 			regexp.MustCompile(`(?i)(\d+) வார முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்திற்கு முன்பு`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டிற்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளுக்கு முன்`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) நா`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நாளில்`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) ம`),
 			regexp.MustCompile(`(?i)(\d+) மணி`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரத்தில்`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) நி`),
 			regexp.MustCompile(`(?i)(\d+) நிமி`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்தில்`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) மா`),
 			regexp.MustCompile(`(?i)(\d+) மாத`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்தில்`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) வி`),
 			regexp.MustCompile(`(?i)(\d+) விநா`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளில்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடியில்`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) வா`),
 			regexp.MustCompile(`(?i)(\d+) வார`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்தில்`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டில்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளில்`),
@@ -443,80 +443,80 @@ var ta_SG_Locale = LocaleData{
 		`in 1 year`:    {`அடுத்த ஆண்டு`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) நா முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நாளுக்கு முன்`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ம முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணி முன்`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரம் முன்`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) நி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமி முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்திற்கு முன்`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) மா முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாத முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்துக்கு முன்`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) வி முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநா முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிக்கு முன்`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) வா முன்`),
 			regexp.MustCompile(`(?i)(\d+) வார முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களுக்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்திற்கு முன்பு`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டிற்கு முன்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளுக்கு முன்`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) நா`),
 			regexp.MustCompile(`(?i)(\d+) நாட்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நாளில்`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) ம`),
 			regexp.MustCompile(`(?i)(\d+) மணி`),
 			regexp.MustCompile(`(?i)(\d+) மணிநேரத்தில்`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) நி`),
 			regexp.MustCompile(`(?i)(\d+) நிமி`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) நிமிடத்தில்`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) மா`),
 			regexp.MustCompile(`(?i)(\d+) மாத`),
 			regexp.MustCompile(`(?i)(\d+) மாதங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) மாதத்தில்`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) வி`),
 			regexp.MustCompile(`(?i)(\d+) விநா`),
 			regexp.MustCompile(`(?i)(\d+) விநாடிகளில்`),
 			regexp.MustCompile(`(?i)(\d+) விநாடியில்`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) வா`),
 			regexp.MustCompile(`(?i)(\d+) வார`),
 			regexp.MustCompile(`(?i)(\d+) வாரங்களில்`),
 			regexp.MustCompile(`(?i)(\d+) வாரத்தில்`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ஆ`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டில்`),
 			regexp.MustCompile(`(?i)(\d+) ஆண்டுகளில்`),

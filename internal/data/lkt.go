@@ -53,46 +53,46 @@ var lkt_Locale = LocaleData{
 		`in 1 year`:    {`tȟokáta ómakȟa kiŋháŋ`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)hékta (\d+)-čháŋ k'uŋ héhaŋ`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)hékta owápȟe (\d+) k'uŋ héhaŋ`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)hékta oȟ'áŋkȟo (\d+) k'uŋ héhaŋ`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)hékta wíyawapi (\d+) k'uŋ héhaŋ`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)hékta okpí (\d+) k'uŋ héhaŋ`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)hékta okó (\d+) k'uŋ héhaŋ`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)hékta ómakȟa (\d+) k'uŋ héhaŋ`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)letáŋhaŋ (\d+)-čháŋ kiŋháŋ`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)letáŋhaŋ owápȟe (\d+) kiŋháŋ`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)letáŋhaŋ oȟ'áŋkȟo (\d+) kiŋháŋ`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)letáŋhaŋ wíyawapi (\d+) kiŋháŋ`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)letáŋhaŋ okpí (\d+) kiŋháŋ`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)letáŋhaŋ okó (\d+) kiŋháŋ`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)letáŋhaŋ ómakȟa (\d+) kiŋháŋ`),
 		},
 	},

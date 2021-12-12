@@ -57,58 +57,58 @@ var th_Locale = LocaleData{
 		`in 1 year`:    {`ปีหน้า`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) วันที่ผ่านมา`),
 			regexp.MustCompile(`(?i)(\d+) วันที่แล้ว`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) ชม ที่แล้ว`),
 			regexp.MustCompile(`(?i)(\d+) ชั่วโมงที่ผ่านมา`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) นาทีที่ผ่านมา`),
 			regexp.MustCompile(`(?i)(\d+) นาทีที่แล้ว`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) เดือนที่ผ่านมา`),
 			regexp.MustCompile(`(?i)(\d+) เดือนที่แล้ว`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) วินาทีที่ผ่านมา`),
 			regexp.MustCompile(`(?i)(\d+) วินาทีที่แล้ว`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) สัปดาห์ที่ผ่านมา`),
 			regexp.MustCompile(`(?i)(\d+) สัปดาห์ที่แล้ว`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ปีที่แล้ว`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)ใน (\d+) วัน`),
 			regexp.MustCompile(`(?i)ในอีก (\d+) วัน`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)ใน (\d+) ชม`),
 			regexp.MustCompile(`(?i)ในอีก (\d+) ชั่วโมง`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)ใน (\d+) นาที`),
 			regexp.MustCompile(`(?i)ในอีก (\d+) นาที`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)ใน (\d+) เดือน`),
 			regexp.MustCompile(`(?i)ในอีก (\d+) เดือน`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)ใน (\d+) วินาที`),
 			regexp.MustCompile(`(?i)ในอีก (\d+) วินาที`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)ใน (\d+) สัปดาห์`),
 			regexp.MustCompile(`(?i)ในอีก (\d+) สัปดาห์`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)ใน (\d+) ปี`),
 			regexp.MustCompile(`(?i)ในอีก (\d+) ปี`),
 		},

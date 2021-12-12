@@ -53,80 +53,80 @@ var hsb_Locale = LocaleData{
 		`in 1 year`:    {`klětu`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)před (\d+) d`),
 			regexp.MustCompile(`(?i)před (\d+) dnj`),
 			regexp.MustCompile(`(?i)před (\d+) dnjemi`),
 			regexp.MustCompile(`(?i)před (\d+) dnjom`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)před (\d+) h`),
 			regexp.MustCompile(`(?i)před (\d+) hodź`),
 			regexp.MustCompile(`(?i)před (\d+) hodźinami`),
 			regexp.MustCompile(`(?i)před (\d+) hodźinu`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)před (\d+) m`),
 			regexp.MustCompile(`(?i)před (\d+) min`),
 			regexp.MustCompile(`(?i)před (\d+) minutami`),
 			regexp.MustCompile(`(?i)před (\d+) minutu`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)před (\d+) měs`),
 			regexp.MustCompile(`(?i)před (\d+) měsacami`),
 			regexp.MustCompile(`(?i)před (\d+) měsacom`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)před (\d+) s`),
 			regexp.MustCompile(`(?i)před (\d+) sek`),
 			regexp.MustCompile(`(?i)před (\d+) sekundami`),
 			regexp.MustCompile(`(?i)před (\d+) sekundu`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)před (\d+) tydź`),
 			regexp.MustCompile(`(?i)před (\d+) tydźenjemi`),
 			regexp.MustCompile(`(?i)před (\d+) tydźenjom`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)před (\d+) l`),
 			regexp.MustCompile(`(?i)před (\d+) lětami`),
 			regexp.MustCompile(`(?i)před (\d+) lětom`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)za (\d+) d`),
 			regexp.MustCompile(`(?i)za (\d+) dnj`),
 			regexp.MustCompile(`(?i)za (\d+) dnjow`),
 			regexp.MustCompile(`(?i)za (\d+) dźeń`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)za (\d+) h`),
 			regexp.MustCompile(`(?i)za (\d+) hodź`),
 			regexp.MustCompile(`(?i)za (\d+) hodźin`),
 			regexp.MustCompile(`(?i)za (\d+) hodźinu`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)za (\d+) m`),
 			regexp.MustCompile(`(?i)za (\d+) min`),
 			regexp.MustCompile(`(?i)za (\d+) minutow`),
 			regexp.MustCompile(`(?i)za (\d+) minutu`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)za (\d+) měs`),
 			regexp.MustCompile(`(?i)za (\d+) měsac`),
 			regexp.MustCompile(`(?i)za (\d+) měsacow`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)za (\d+) s`),
 			regexp.MustCompile(`(?i)za (\d+) sek`),
 			regexp.MustCompile(`(?i)za (\d+) sekundow`),
 			regexp.MustCompile(`(?i)za (\d+) sekundu`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)za (\d+) tydź`),
 			regexp.MustCompile(`(?i)za (\d+) tydźenjow`),
 			regexp.MustCompile(`(?i)za (\d+) tydźeń`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)za (\d+) l`),
 			regexp.MustCompile(`(?i)za (\d+) lět`),
 			regexp.MustCompile(`(?i)za (\d+) lěto`),

@@ -53,27 +53,27 @@ var zu_Locale = LocaleData{
 		`in 1 year`:    {`unyaka ozayo`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) izinsuku ezedlule`),
 			regexp.MustCompile(`(?i)(\d+) usuku olwedlule`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) amahora edlule`),
 			regexp.MustCompile(`(?i)(\d+) ihora eledlule`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) amaminithi edlule`),
 			regexp.MustCompile(`(?i)(\d+) iminithi eledlule`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) inyanga edlule`),
 			regexp.MustCompile(`(?i)(\d+) izinyanga ezedlule`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) amasekhondi edlule`),
 			regexp.MustCompile(`(?i)(\d+) isekhondi eledlule`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) iminyaka edlule`),
 			regexp.MustCompile(`(?i)(\d+) unyaka odlule`),
 		},

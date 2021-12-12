@@ -53,59 +53,59 @@ var ce_Locale = LocaleData{
 		`in 1 year`:    {`рогӏерчу шарахь`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) д хьалха`),
 			regexp.MustCompile(`(?i)(\d+) де хьалха`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) сахь хьалха`),
 			regexp.MustCompile(`(?i)(\d+) сахьт хьалха`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) мин хьалха`),
 			regexp.MustCompile(`(?i)(\d+) минот хьалха`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) б хьалха`),
 			regexp.MustCompile(`(?i)(\d+) бутт хьалха`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) сек хьалха`),
 			regexp.MustCompile(`(?i)(\d+) секунд хьалха`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) кӏир хьалха`),
 			regexp.MustCompile(`(?i)(\d+) кӏира хьалха`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) ш хьалха`),
 			regexp.MustCompile(`(?i)(\d+) шо хьалха`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) д даьлча`),
 			regexp.MustCompile(`(?i)(\d+) де даьлча`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) сахь даьлча`),
 			regexp.MustCompile(`(?i)(\d+) сахьт даьлча`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) мин яьлча`),
 			regexp.MustCompile(`(?i)(\d+) минот яьлча`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) б баьлча`),
 			regexp.MustCompile(`(?i)(\d+) бутт баьлча`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) сек яьлча`),
 			regexp.MustCompile(`(?i)(\d+) секунд яьлча`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) кӏир даьлча`),
 			regexp.MustCompile(`(?i)(\d+) кӏира даьлча`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) ш даьлча`),
 			regexp.MustCompile(`(?i)(\d+) шо даьлча`),
 		},

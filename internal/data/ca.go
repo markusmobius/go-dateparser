@@ -59,68 +59,68 @@ var ca_Locale = LocaleData{
 		`in 3 day`:     {`endemà passat`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) dia`),
 			regexp.MustCompile(`(?i)fa (\d+) dies`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) h`),
 			regexp.MustCompile(`(?i)fa (\d+) hora`),
 			regexp.MustCompile(`(?i)fa (\d+) hores`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) min`),
 			regexp.MustCompile(`(?i)fa (\d+) minut`),
 			regexp.MustCompile(`(?i)fa (\d+) minuts`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) mes`),
 			regexp.MustCompile(`(?i)fa (\d+) mesos`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) s`),
 			regexp.MustCompile(`(?i)fa (\d+) segon`),
 			regexp.MustCompile(`(?i)fa (\d+) segons`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) setm`),
 			regexp.MustCompile(`(?i)fa (\d+) setmana`),
 			regexp.MustCompile(`(?i)fa (\d+) setmanes`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) any`),
 			regexp.MustCompile(`(?i)fa (\d+) anys`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dia`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dies`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) h`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hora`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hores`),
 			regexp.MustCompile(`(?i)d‘aquí a (\d+) h`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) min`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minut`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minuts`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mes`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mesos`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) s`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segon`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segons`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setm`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmana`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmanes`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) any`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) anys`),
 		},
@@ -186,68 +186,68 @@ var ca_AD_Locale = LocaleData{
 		`in 3 day`:     {`endemà passat`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) dia`),
 			regexp.MustCompile(`(?i)fa (\d+) dies`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) h`),
 			regexp.MustCompile(`(?i)fa (\d+) hora`),
 			regexp.MustCompile(`(?i)fa (\d+) hores`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) min`),
 			regexp.MustCompile(`(?i)fa (\d+) minut`),
 			regexp.MustCompile(`(?i)fa (\d+) minuts`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) mes`),
 			regexp.MustCompile(`(?i)fa (\d+) mesos`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) s`),
 			regexp.MustCompile(`(?i)fa (\d+) segon`),
 			regexp.MustCompile(`(?i)fa (\d+) segons`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) setm`),
 			regexp.MustCompile(`(?i)fa (\d+) setmana`),
 			regexp.MustCompile(`(?i)fa (\d+) setmanes`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) any`),
 			regexp.MustCompile(`(?i)fa (\d+) anys`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dia`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dies`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) h`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hora`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hores`),
 			regexp.MustCompile(`(?i)d‘aquí a (\d+) h`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) min`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minut`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minuts`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mes`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mesos`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) s`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segon`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segons`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setm`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmana`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmanes`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) any`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) anys`),
 		},
@@ -313,68 +313,68 @@ var ca_FR_Locale = LocaleData{
 		`in 3 day`:     {`endemà passat`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) dia`),
 			regexp.MustCompile(`(?i)fa (\d+) dies`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) h`),
 			regexp.MustCompile(`(?i)fa (\d+) hora`),
 			regexp.MustCompile(`(?i)fa (\d+) hores`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) min`),
 			regexp.MustCompile(`(?i)fa (\d+) minut`),
 			regexp.MustCompile(`(?i)fa (\d+) minuts`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) mes`),
 			regexp.MustCompile(`(?i)fa (\d+) mesos`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) s`),
 			regexp.MustCompile(`(?i)fa (\d+) segon`),
 			regexp.MustCompile(`(?i)fa (\d+) segons`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) setm`),
 			regexp.MustCompile(`(?i)fa (\d+) setmana`),
 			regexp.MustCompile(`(?i)fa (\d+) setmanes`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) any`),
 			regexp.MustCompile(`(?i)fa (\d+) anys`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dia`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dies`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) h`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hora`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hores`),
 			regexp.MustCompile(`(?i)d‘aquí a (\d+) h`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) min`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minut`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minuts`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mes`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mesos`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) s`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segon`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segons`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setm`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmana`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmanes`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) any`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) anys`),
 		},
@@ -440,68 +440,68 @@ var ca_IT_Locale = LocaleData{
 		`in 3 day`:     {`endemà passat`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) dia`),
 			regexp.MustCompile(`(?i)fa (\d+) dies`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) h`),
 			regexp.MustCompile(`(?i)fa (\d+) hora`),
 			regexp.MustCompile(`(?i)fa (\d+) hores`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) min`),
 			regexp.MustCompile(`(?i)fa (\d+) minut`),
 			regexp.MustCompile(`(?i)fa (\d+) minuts`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) mes`),
 			regexp.MustCompile(`(?i)fa (\d+) mesos`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) s`),
 			regexp.MustCompile(`(?i)fa (\d+) segon`),
 			regexp.MustCompile(`(?i)fa (\d+) segons`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) setm`),
 			regexp.MustCompile(`(?i)fa (\d+) setmana`),
 			regexp.MustCompile(`(?i)fa (\d+) setmanes`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)fa (\d+) any`),
 			regexp.MustCompile(`(?i)fa (\d+) anys`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dia`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) dies`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) h`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hora`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) hores`),
 			regexp.MustCompile(`(?i)d‘aquí a (\d+) h`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) min`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minut`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) minuts`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mes`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) mesos`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) s`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segon`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) segons`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setm`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmana`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) setmanes`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)d'aquí a (\d+) any`),
 			regexp.MustCompile(`(?i)d'aquí a (\d+) anys`),
 		},

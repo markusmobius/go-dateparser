@@ -53,7 +53,7 @@ var mt_Locale = LocaleData{
 		`in 1 year`:    {`is-sena d-dieħla`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) sena ilu`),
 			regexp.MustCompile(`(?i)(\d+) snin ilu`),
 		},

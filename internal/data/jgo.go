@@ -53,40 +53,40 @@ var jgo_Locale = LocaleData{
 		`in 1 year`:    {`next year`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)ɛ́ gɛ́ mɔ́ lɛ́ꞌ (\d+)`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)ɛ́ gɛ mɔ́ (\d+) háwa`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)ɛ́ gɛ́ mɔ́ minút (\d+)`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)ɛ́ gɛ́ mɔ́ pɛsaŋ (\d+)`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)ɛ́ gɛ́ mɔ (\d+) ŋgap-mbi`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)ɛ́gɛ́ mɔ́ ŋguꞌ (\d+)`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)nǔu lɛ́ꞌ (\d+)`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)nǔu háwa (\d+)`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)nǔu (\d+) minút`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)nǔu (\d+) saŋ`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)nǔu ŋgap-mbi (\d+)`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)nǔu ŋguꞌ (\d+)`),
 		},
 	},

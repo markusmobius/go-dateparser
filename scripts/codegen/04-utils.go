@@ -40,12 +40,17 @@ func renderJSON(v interface{}, dstPath string) error {
 	return ioutil.WriteFile(dstPath, bt, os.ModePerm)
 }
 
-func normalizeUnicode(str string) string {
-	return norm.NFKC.String(str)
+func normalizeString(str string) string {
+	// Normalize unicode
+	str = norm.NFKC.String(str)
+
+	// Replace Python capture group
+	str = rxPythonCaptureGroup.ReplaceAllString(str, "$$$1")
+	return str
 }
 
 func cleanString(str string) string {
-	str = normalizeUnicode(str)
+	str = normalizeString(str)
 	str = rxSanitizeAposthrope.ReplaceAllString(str, "'")
 	str = strings.ReplaceAll(str, ".", "")
 	str = strings.ToLower(str)
@@ -63,7 +68,7 @@ func cleanList(useStringCleaner bool, fnFilter func(string) bool, items ...strin
 		if useStringCleaner {
 			item = cleanString(item)
 		} else {
-			item = normalizeUnicode(item)
+			item = normalizeString(item)
 		}
 
 		// Make sure item not empty
@@ -118,14 +123,14 @@ func mergeStringMap(base, input map[string]string) map[string]string {
 	mergedMap := map[string]string{}
 
 	for key, value := range input {
-		key = normalizeUnicode(key)
-		mergedMap[key] = normalizeUnicode(value)
+		key = normalizeString(key)
+		mergedMap[key] = normalizeString(value)
 	}
 
 	for key, value := range base {
-		key = normalizeUnicode(key)
+		key = normalizeString(key)
 		if _, exist := mergedMap[key]; !exist {
-			mergedMap[key] = normalizeUnicode(value)
+			mergedMap[key] = normalizeString(value)
 		}
 	}
 
@@ -136,12 +141,12 @@ func mergeStringListMap(base, input map[string][]string) map[string][]string {
 	mergedMap := map[string][]string{}
 
 	for key, items := range input {
-		key = normalizeUnicode(key)
+		key = normalizeString(key)
 		mergedMap[key] = cleanList(false, nil, items...)
 	}
 
 	for key, items := range base {
-		key = normalizeUnicode(key)
+		key = normalizeString(key)
 
 		if existingValue, exist := mergedMap[key]; !exist {
 			mergedMap[key] = cleanList(false, nil, items...)

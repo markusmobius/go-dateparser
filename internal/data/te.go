@@ -53,66 +53,66 @@ var te_Locale = LocaleData{
 		`in 1 year`:    {`తదుపరి సంవత్సరం`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) రోజు క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) రోజుల క్రితం`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) గం క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) గంట క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) గంటల క్రితం`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) నిమి క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) నిమిషం క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) నిమిషాల క్రితం`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) నెల క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) నెలల క్రితం`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) సెక క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) సెకను క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) సెకన్ల క్రితం`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) వారం క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) వారాల క్రితం`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) సం క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) సంవత్సరం క్రితం`),
 			regexp.MustCompile(`(?i)(\d+) సంవత్సరాల క్రితం`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) రోజులో`),
 			regexp.MustCompile(`(?i)(\d+) రోజుల్లో`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) గంటలో`),
 			regexp.MustCompile(`(?i)(\d+) గంటల్లో`),
 			regexp.MustCompile(`(?i)(\d+) గంలో`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) నిమిలో`),
 			regexp.MustCompile(`(?i)(\d+) నిమిషంలో`),
 			regexp.MustCompile(`(?i)(\d+) నిమిషాల్లో`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) నెలలో`),
 			regexp.MustCompile(`(?i)(\d+) నెలల్లో`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) సెక లో`),
 			regexp.MustCompile(`(?i)(\d+) సెకనులో`),
 			regexp.MustCompile(`(?i)(\d+) సెకన్లలో`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) వారంలో`),
 			regexp.MustCompile(`(?i)(\d+) వారాల్లో`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) సంలో`),
 			regexp.MustCompile(`(?i)(\d+) సంవత్సరంలో`),
 			regexp.MustCompile(`(?i)(\d+) సంవత్సరాల్లో`),

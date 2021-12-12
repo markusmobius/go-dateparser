@@ -53,22 +53,22 @@ var yi_Locale = LocaleData{
 		`in 1 year`:    {`איבער א יאָר`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)פֿאַר (\d+) חדשים`),
 			regexp.MustCompile(`(?i)פֿאַר (\d+) חודש`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)פֿאַר (\d+) יאָר`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)אין (\d+) טאָג אַרום`),
 			regexp.MustCompile(`(?i)אין (\d+) טעג אַרום`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)איבער (\d+) חדשים`),
 			regexp.MustCompile(`(?i)איבער (\d+) חודש`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)איבער (\d+) יאָר`),
 		},
 	},

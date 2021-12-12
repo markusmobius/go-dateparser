@@ -57,60 +57,60 @@ var he_Locale = LocaleData{
 		`in 1 year`:    {`השנה הבאה`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)לפני (\d+) ימים`),
 			regexp.MustCompile(`(?i)לפני (\d+) ימ׳`),
 			regexp.MustCompile(`(?i)לפני יום (\d+)`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)לפני (\d+) שעות`),
 			regexp.MustCompile(`(?i)לפני (\d+) שע׳`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)לפני (\d+) דקות`),
 			regexp.MustCompile(`(?i)לפני (\d+) דק׳`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)לפני (\d+) חודשים`),
 			regexp.MustCompile(`(?i)לפני (\d+) חו׳`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)לפני (\d+) שניות`),
 			regexp.MustCompile(`(?i)לפני (\d+) שנ׳`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)לפני (\d+) שבועות`),
 			regexp.MustCompile(`(?i)לפני (\d+) שב׳`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)לפני (\d+) שנים`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)בעוד (\d+) ימים`),
 			regexp.MustCompile(`(?i)בעוד (\d+) ימ׳`),
 			regexp.MustCompile(`(?i)בעוד יום (\d+)`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)בעוד (\d+) שעות`),
 			regexp.MustCompile(`(?i)בעוד (\d+) שע׳`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)בעוד (\d+) דקות`),
 			regexp.MustCompile(`(?i)בעוד (\d+) דק׳`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)בעוד (\d+) חודשים`),
 			regexp.MustCompile(`(?i)בעוד (\d+) חו׳`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)בעוד (\d+) שניות`),
 			regexp.MustCompile(`(?i)בעוד (\d+) שנ׳`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)בעוד (\d+) שבועות`),
 			regexp.MustCompile(`(?i)בעוד (\d+) שב׳`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)בעוד (\d+) שנים`),
 		},
 	},
@@ -121,7 +121,7 @@ var he_Locale = LocaleData{
 		`בבוקר`:          `am`,
 		`בערב`:           `pm`,
 		`בצהריי?ם`:       `pm`,
-		`ו(\w+)`:         `\1`,
+		`ו(\w+)`:         `$1`,
 		`וחודש`:          `1 חודש`,
 		`ויום`:           `1 יום`,
 		`ושבוע`:          `1 שבוע`,

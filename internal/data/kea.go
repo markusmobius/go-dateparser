@@ -53,56 +53,56 @@ var kea_Locale = LocaleData{
 		`in 1 year`:    {`prósimu anu`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)a ten (\d+) dia`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)a ten (\d+) ora`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)a ten (\d+) m`),
 			regexp.MustCompile(`(?i)a ten (\d+) min`),
 			regexp.MustCompile(`(?i)a ten (\d+) minutu`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)a ten (\d+) mes`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)a ten (\d+) s`),
 			regexp.MustCompile(`(?i)a ten (\d+) sig`),
 			regexp.MustCompile(`(?i)a ten (\d+) sigundu`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)a ten (\d+) sim`),
 			regexp.MustCompile(`(?i)a ten (\d+) simana`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)a ten (\d+) anu`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)di li (\d+) dia`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)di li (\d+) ora`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)di li (\d+) m`),
 			regexp.MustCompile(`(?i)di li (\d+) min`),
 			regexp.MustCompile(`(?i)di li (\d+) minutu`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)di li (\d+) mes`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)di li (\d+) s`),
 			regexp.MustCompile(`(?i)di li (\d+) sig`),
 			regexp.MustCompile(`(?i)di li (\d+) sigundu`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)di li (\d+) sim`),
 			regexp.MustCompile(`(?i)di li (\d+) simana`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)di li (\d+) anu`),
 		},
 	},

@@ -61,71 +61,71 @@ var fi_Locale = LocaleData{
 		`in 1 year`:    {`ensi v`, `ensi vuonna`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) pv sitten`),
 			regexp.MustCompile(`(?i)(\d+) päivä sitten`),
 			regexp.MustCompile(`(?i)(\d+) päivää sitten`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) t sitten`),
 			regexp.MustCompile(`(?i)(\d+) tunti sitten`),
 			regexp.MustCompile(`(?i)(\d+) tuntia sitten`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) min sitten`),
 			regexp.MustCompile(`(?i)(\d+) minuutti sitten`),
 			regexp.MustCompile(`(?i)(\d+) minuuttia sitten`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) kk sitten`),
 			regexp.MustCompile(`(?i)(\d+) kuukausi sitten`),
 			regexp.MustCompile(`(?i)(\d+) kuukautta sitten`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) s sitten`),
 			regexp.MustCompile(`(?i)(\d+) sekunti sitten`),
 			regexp.MustCompile(`(?i)(\d+) sekuntia sitten`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) viikko sitten`),
 			regexp.MustCompile(`(?i)(\d+) viikkoa sitten`),
 			regexp.MustCompile(`(?i)(\d+) vk sitten`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) v sitten`),
 			regexp.MustCompile(`(?i)(\d+) vuosi sitten`),
 			regexp.MustCompile(`(?i)(\d+) vuotta sitten`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) pv päästä`),
 			regexp.MustCompile(`(?i)(\d+) päivän päästä`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) t päästä`),
 			regexp.MustCompile(`(?i)(\d+) tunnin päästä`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) min päästä`),
 			regexp.MustCompile(`(?i)(\d+) minuutin päästä`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) kk päästä`),
 			regexp.MustCompile(`(?i)(\d+) kuukauden päästä`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) s päästä`),
 			regexp.MustCompile(`(?i)(\d+) sekunnin päästä`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) viikon päästä`),
 			regexp.MustCompile(`(?i)(\d+) vk päästä`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) v päästä`),
 			regexp.MustCompile(`(?i)(\d+) vuoden päästä`),
 		},
 	},
 	Simplifications: map[string]string{
-		`(\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua)`: `\3 \1 \2`,
+		`(\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua)`: `$3 $1 $2`,
 	},
 }

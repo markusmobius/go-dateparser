@@ -53,59 +53,59 @@ var sq_Locale = LocaleData{
 		`in 1 year`:    {`vitin e ardhshëm`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ditë më parë`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) orë më parë`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) min më parë`),
 			regexp.MustCompile(`(?i)(\d+) minuta më parë`),
 			regexp.MustCompile(`(?i)(\d+) minutë më parë`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) muaj më parë`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) sek më parë`),
 			regexp.MustCompile(`(?i)(\d+) sekonda më parë`),
 			regexp.MustCompile(`(?i)(\d+) sekondë më parë`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) javë më parë`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) vit më parë`),
 			regexp.MustCompile(`(?i)(\d+) vjet më parë`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)pas (\d+) dite`),
 			regexp.MustCompile(`(?i)pas (\d+) ditësh`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)pas (\d+) ore`),
 			regexp.MustCompile(`(?i)pas (\d+) orësh`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)pas (\d+) min`),
 			regexp.MustCompile(`(?i)pas (\d+) minutash`),
 			regexp.MustCompile(`(?i)pas (\d+) minute`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)pas (\d+) muaji`),
 			regexp.MustCompile(`(?i)pas (\d+) muajsh`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)pas (\d+) sek`),
 			regexp.MustCompile(`(?i)pas (\d+) sekondash`),
 			regexp.MustCompile(`(?i)pas (\d+) sekonde`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)pas (\d+) jave`),
 			regexp.MustCompile(`(?i)pas (\d+) javësh`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)pas (\d+) viti`),
 			regexp.MustCompile(`(?i)pas (\d+) vjetësh`),
 		},
@@ -161,59 +161,59 @@ var sq_MK_Locale = LocaleData{
 		`in 1 year`:    {`vitin e ardhshëm`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ditë më parë`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) orë më parë`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) min më parë`),
 			regexp.MustCompile(`(?i)(\d+) minuta më parë`),
 			regexp.MustCompile(`(?i)(\d+) minutë më parë`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) muaj më parë`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) sek më parë`),
 			regexp.MustCompile(`(?i)(\d+) sekonda më parë`),
 			regexp.MustCompile(`(?i)(\d+) sekondë më parë`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) javë më parë`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) vit më parë`),
 			regexp.MustCompile(`(?i)(\d+) vjet më parë`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)pas (\d+) dite`),
 			regexp.MustCompile(`(?i)pas (\d+) ditësh`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)pas (\d+) ore`),
 			regexp.MustCompile(`(?i)pas (\d+) orësh`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)pas (\d+) min`),
 			regexp.MustCompile(`(?i)pas (\d+) minutash`),
 			regexp.MustCompile(`(?i)pas (\d+) minute`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)pas (\d+) muaji`),
 			regexp.MustCompile(`(?i)pas (\d+) muajsh`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)pas (\d+) sek`),
 			regexp.MustCompile(`(?i)pas (\d+) sekondash`),
 			regexp.MustCompile(`(?i)pas (\d+) sekonde`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)pas (\d+) jave`),
 			regexp.MustCompile(`(?i)pas (\d+) javësh`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)pas (\d+) viti`),
 			regexp.MustCompile(`(?i)pas (\d+) vjetësh`),
 		},
@@ -269,59 +269,59 @@ var sq_XK_Locale = LocaleData{
 		`in 1 year`:    {`vitin e ardhshëm`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) ditë më parë`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) orë më parë`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) min më parë`),
 			regexp.MustCompile(`(?i)(\d+) minuta më parë`),
 			regexp.MustCompile(`(?i)(\d+) minutë më parë`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) muaj më parë`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) sek më parë`),
 			regexp.MustCompile(`(?i)(\d+) sekonda më parë`),
 			regexp.MustCompile(`(?i)(\d+) sekondë më parë`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) javë më parë`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) vit më parë`),
 			regexp.MustCompile(`(?i)(\d+) vjet më parë`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)pas (\d+) dite`),
 			regexp.MustCompile(`(?i)pas (\d+) ditësh`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)pas (\d+) ore`),
 			regexp.MustCompile(`(?i)pas (\d+) orësh`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)pas (\d+) min`),
 			regexp.MustCompile(`(?i)pas (\d+) minutash`),
 			regexp.MustCompile(`(?i)pas (\d+) minute`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)pas (\d+) muaji`),
 			regexp.MustCompile(`(?i)pas (\d+) muajsh`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)pas (\d+) sek`),
 			regexp.MustCompile(`(?i)pas (\d+) sekondash`),
 			regexp.MustCompile(`(?i)pas (\d+) sekonde`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)pas (\d+) jave`),
 			regexp.MustCompile(`(?i)pas (\d+) javësh`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)pas (\d+) viti`),
 			regexp.MustCompile(`(?i)pas (\d+) vjetësh`),
 		},

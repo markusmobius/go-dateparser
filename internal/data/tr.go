@@ -57,54 +57,54 @@ var tr_Locale = LocaleData{
 		`in 1 year`:    {`gelecek yıl`, `önümüzdeki yıl`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) gün önce`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) sa önce`),
 			regexp.MustCompile(`(?i)(\d+) saat önce`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) dakika önce`),
 			regexp.MustCompile(`(?i)(\d+) dk önce`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ay önce`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) saniye önce`),
 			regexp.MustCompile(`(?i)(\d+) sn önce`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) hafta önce`),
 			regexp.MustCompile(`(?i)(\d+) hf önce`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) yıl önce`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) gün sonra`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) sa sonra`),
 			regexp.MustCompile(`(?i)(\d+) saat sonra`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) dakika sonra`),
 			regexp.MustCompile(`(?i)(\d+) dk sonra`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) ay sonra`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) saniye sonra`),
 			regexp.MustCompile(`(?i)(\d+) sn sonra`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) hafta sonra`),
 			regexp.MustCompile(`(?i)(\d+) hf sonra`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) yıl sonra`),
 		},
 	},
@@ -163,54 +163,54 @@ var tr_CY_Locale = LocaleData{
 		`in 1 year`:    {`gelecek yıl`, `önümüzdeki yıl`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) gün önce`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) sa önce`),
 			regexp.MustCompile(`(?i)(\d+) saat önce`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) dakika önce`),
 			regexp.MustCompile(`(?i)(\d+) dk önce`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) ay önce`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) saniye önce`),
 			regexp.MustCompile(`(?i)(\d+) sn önce`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) hafta önce`),
 			regexp.MustCompile(`(?i)(\d+) hf önce`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) yıl önce`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)(\d+) gün sonra`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)(\d+) sa sonra`),
 			regexp.MustCompile(`(?i)(\d+) saat sonra`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)(\d+) dakika sonra`),
 			regexp.MustCompile(`(?i)(\d+) dk sonra`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)(\d+) ay sonra`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)(\d+) saniye sonra`),
 			regexp.MustCompile(`(?i)(\d+) sn sonra`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)(\d+) hafta sonra`),
 			regexp.MustCompile(`(?i)(\d+) hf sonra`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)(\d+) yıl sonra`),
 		},
 	},

@@ -53,77 +53,77 @@ var sr_Latn_Locale = LocaleData{
 		`in 1 year`:    {`sledeće godine`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) d`),
 			regexp.MustCompile(`(?i)pre (\d+) dana`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) sata`),
 			regexp.MustCompile(`(?i)pre (\d+) sati`),
 			regexp.MustCompile(`(?i)pre (\d+) č`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) min`),
 			regexp.MustCompile(`(?i)pre (\d+) minuta`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) m`),
 			regexp.MustCompile(`(?i)pre (\d+) mes`),
 			regexp.MustCompile(`(?i)pre (\d+) meseca`),
 			regexp.MustCompile(`(?i)pre (\d+) meseci`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) s`),
 			regexp.MustCompile(`(?i)pre (\d+) sek`),
 			regexp.MustCompile(`(?i)pre (\d+) sekunde`),
 			regexp.MustCompile(`(?i)pre (\d+) sekundi`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) n`),
 			regexp.MustCompile(`(?i)pre (\d+) ned`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelja`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelje`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) g`),
 			regexp.MustCompile(`(?i)pre (\d+) god`),
 			regexp.MustCompile(`(?i)pre (\d+) godina`),
 			regexp.MustCompile(`(?i)pre (\d+) godine`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)za (\d+) d`),
 			regexp.MustCompile(`(?i)za (\d+) dan`),
 			regexp.MustCompile(`(?i)za (\d+) dana`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)za (\d+) sat`),
 			regexp.MustCompile(`(?i)za (\d+) sati`),
 			regexp.MustCompile(`(?i)za (\d+) č`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)za (\d+) min`),
 			regexp.MustCompile(`(?i)za (\d+) minut`),
 			regexp.MustCompile(`(?i)za (\d+) minuta`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)za (\d+) m`),
 			regexp.MustCompile(`(?i)za (\d+) mes`),
 			regexp.MustCompile(`(?i)za (\d+) mesec`),
 			regexp.MustCompile(`(?i)za (\d+) meseci`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)za (\d+) s`),
 			regexp.MustCompile(`(?i)za (\d+) sek`),
 			regexp.MustCompile(`(?i)za (\d+) sekundi`),
 			regexp.MustCompile(`(?i)za (\d+) sekundu`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)za (\d+) n`),
 			regexp.MustCompile(`(?i)za (\d+) ned`),
 			regexp.MustCompile(`(?i)za (\d+) nedelja`),
 			regexp.MustCompile(`(?i)za (\d+) nedelju`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)za (\d+) g`),
 			regexp.MustCompile(`(?i)za (\d+) god`),
 			regexp.MustCompile(`(?i)za (\d+) godina`),
@@ -181,77 +181,77 @@ var sr_Latn_BA_Locale = LocaleData{
 		`in 1 year`:    {`sledeće godine`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) d`),
 			regexp.MustCompile(`(?i)pre (\d+) dana`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) sata`),
 			regexp.MustCompile(`(?i)pre (\d+) sati`),
 			regexp.MustCompile(`(?i)pre (\d+) č`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) min`),
 			regexp.MustCompile(`(?i)pre (\d+) minuta`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) m`),
 			regexp.MustCompile(`(?i)pre (\d+) mes`),
 			regexp.MustCompile(`(?i)pre (\d+) meseca`),
 			regexp.MustCompile(`(?i)pre (\d+) meseci`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) s`),
 			regexp.MustCompile(`(?i)pre (\d+) sek`),
 			regexp.MustCompile(`(?i)pre (\d+) sekunde`),
 			regexp.MustCompile(`(?i)pre (\d+) sekundi`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) n`),
 			regexp.MustCompile(`(?i)pre (\d+) ned`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelja`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelje`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) g`),
 			regexp.MustCompile(`(?i)pre (\d+) god`),
 			regexp.MustCompile(`(?i)pre (\d+) godina`),
 			regexp.MustCompile(`(?i)pre (\d+) godine`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)za (\d+) d`),
 			regexp.MustCompile(`(?i)za (\d+) dan`),
 			regexp.MustCompile(`(?i)za (\d+) dana`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)za (\d+) sat`),
 			regexp.MustCompile(`(?i)za (\d+) sati`),
 			regexp.MustCompile(`(?i)za (\d+) č`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)za (\d+) min`),
 			regexp.MustCompile(`(?i)za (\d+) minut`),
 			regexp.MustCompile(`(?i)za (\d+) minuta`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)za (\d+) m`),
 			regexp.MustCompile(`(?i)za (\d+) mes`),
 			regexp.MustCompile(`(?i)za (\d+) mesec`),
 			regexp.MustCompile(`(?i)za (\d+) meseci`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)za (\d+) s`),
 			regexp.MustCompile(`(?i)za (\d+) sek`),
 			regexp.MustCompile(`(?i)za (\d+) sekundi`),
 			regexp.MustCompile(`(?i)za (\d+) sekundu`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)za (\d+) n`),
 			regexp.MustCompile(`(?i)za (\d+) ned`),
 			regexp.MustCompile(`(?i)za (\d+) nedelja`),
 			regexp.MustCompile(`(?i)za (\d+) nedelju`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)za (\d+) g`),
 			regexp.MustCompile(`(?i)za (\d+) god`),
 			regexp.MustCompile(`(?i)za (\d+) godina`),
@@ -309,77 +309,77 @@ var sr_Latn_ME_Locale = LocaleData{
 		`in 1 year`:    {`sledeće godine`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) d`),
 			regexp.MustCompile(`(?i)pre (\d+) dana`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) sata`),
 			regexp.MustCompile(`(?i)pre (\d+) sati`),
 			regexp.MustCompile(`(?i)pre (\d+) č`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) min`),
 			regexp.MustCompile(`(?i)pre (\d+) minuta`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) m`),
 			regexp.MustCompile(`(?i)pre (\d+) mes`),
 			regexp.MustCompile(`(?i)pre (\d+) meseca`),
 			regexp.MustCompile(`(?i)pre (\d+) meseci`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) s`),
 			regexp.MustCompile(`(?i)pre (\d+) sek`),
 			regexp.MustCompile(`(?i)pre (\d+) sekunde`),
 			regexp.MustCompile(`(?i)pre (\d+) sekundi`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) n`),
 			regexp.MustCompile(`(?i)pre (\d+) ned`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelja`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelje`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) g`),
 			regexp.MustCompile(`(?i)pre (\d+) god`),
 			regexp.MustCompile(`(?i)pre (\d+) godina`),
 			regexp.MustCompile(`(?i)pre (\d+) godine`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)za (\d+) d`),
 			regexp.MustCompile(`(?i)za (\d+) dan`),
 			regexp.MustCompile(`(?i)za (\d+) dana`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)za (\d+) sat`),
 			regexp.MustCompile(`(?i)za (\d+) sati`),
 			regexp.MustCompile(`(?i)za (\d+) č`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)za (\d+) min`),
 			regexp.MustCompile(`(?i)za (\d+) minut`),
 			regexp.MustCompile(`(?i)za (\d+) minuta`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)za (\d+) m`),
 			regexp.MustCompile(`(?i)za (\d+) mes`),
 			regexp.MustCompile(`(?i)za (\d+) mesec`),
 			regexp.MustCompile(`(?i)za (\d+) meseci`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)za (\d+) s`),
 			regexp.MustCompile(`(?i)za (\d+) sek`),
 			regexp.MustCompile(`(?i)za (\d+) sekundi`),
 			regexp.MustCompile(`(?i)za (\d+) sekundu`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)za (\d+) n`),
 			regexp.MustCompile(`(?i)za (\d+) ned`),
 			regexp.MustCompile(`(?i)za (\d+) nedelja`),
 			regexp.MustCompile(`(?i)za (\d+) nedelju`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)za (\d+) g`),
 			regexp.MustCompile(`(?i)za (\d+) god`),
 			regexp.MustCompile(`(?i)za (\d+) godina`),
@@ -437,77 +437,77 @@ var sr_Latn_XK_Locale = LocaleData{
 		`in 1 year`:    {`sledeće godine`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) d`),
 			regexp.MustCompile(`(?i)pre (\d+) dana`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) sata`),
 			regexp.MustCompile(`(?i)pre (\d+) sati`),
 			regexp.MustCompile(`(?i)pre (\d+) č`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) min`),
 			regexp.MustCompile(`(?i)pre (\d+) minuta`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) m`),
 			regexp.MustCompile(`(?i)pre (\d+) mes`),
 			regexp.MustCompile(`(?i)pre (\d+) meseca`),
 			regexp.MustCompile(`(?i)pre (\d+) meseci`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) s`),
 			regexp.MustCompile(`(?i)pre (\d+) sek`),
 			regexp.MustCompile(`(?i)pre (\d+) sekunde`),
 			regexp.MustCompile(`(?i)pre (\d+) sekundi`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) n`),
 			regexp.MustCompile(`(?i)pre (\d+) ned`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelja`),
 			regexp.MustCompile(`(?i)pre (\d+) nedelje`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)pre (\d+) g`),
 			regexp.MustCompile(`(?i)pre (\d+) god`),
 			regexp.MustCompile(`(?i)pre (\d+) godina`),
 			regexp.MustCompile(`(?i)pre (\d+) godine`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)za (\d+) d`),
 			regexp.MustCompile(`(?i)za (\d+) dan`),
 			regexp.MustCompile(`(?i)za (\d+) dana`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)za (\d+) sat`),
 			regexp.MustCompile(`(?i)za (\d+) sati`),
 			regexp.MustCompile(`(?i)za (\d+) č`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)za (\d+) min`),
 			regexp.MustCompile(`(?i)za (\d+) minut`),
 			regexp.MustCompile(`(?i)za (\d+) minuta`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)za (\d+) m`),
 			regexp.MustCompile(`(?i)za (\d+) mes`),
 			regexp.MustCompile(`(?i)za (\d+) mesec`),
 			regexp.MustCompile(`(?i)za (\d+) meseci`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)za (\d+) s`),
 			regexp.MustCompile(`(?i)za (\d+) sek`),
 			regexp.MustCompile(`(?i)za (\d+) sekundi`),
 			regexp.MustCompile(`(?i)za (\d+) sekundu`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)za (\d+) n`),
 			regexp.MustCompile(`(?i)za (\d+) ned`),
 			regexp.MustCompile(`(?i)za (\d+) nedelja`),
 			regexp.MustCompile(`(?i)za (\d+) nedelju`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)za (\d+) g`),
 			regexp.MustCompile(`(?i)za (\d+) god`),
 			regexp.MustCompile(`(?i)za (\d+) godina`),

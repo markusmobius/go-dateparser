@@ -58,77 +58,77 @@ var sv_Locale = LocaleData{
 		`in 1 year`:    {`nästa år`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)för (\d+) d sedan`),
 			regexp.MustCompile(`(?i)för (\d+) dag sedan`),
 			regexp.MustCompile(`(?i)för (\d+) dagar sedan`),
 			regexp.MustCompile(`(?i)−(\d+) d`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)för (\d+) tim sedan`),
 			regexp.MustCompile(`(?i)för (\d+) timmar sedan`),
 			regexp.MustCompile(`(?i)för (\d+) timme sedan`),
 			regexp.MustCompile(`(?i)−(\d+) h`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)för (\d+) min sedan`),
 			regexp.MustCompile(`(?i)för (\d+) minut sedan`),
 			regexp.MustCompile(`(?i)för (\d+) minuter sedan`),
 			regexp.MustCompile(`(?i)−(\d+) min`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)för (\d+) mån sedan`),
 			regexp.MustCompile(`(?i)för (\d+) månad sedan`),
 			regexp.MustCompile(`(?i)för (\d+) månader sedan`),
 			regexp.MustCompile(`(?i)−(\d+) mån`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)för (\d+) sek sedan`),
 			regexp.MustCompile(`(?i)för (\d+) sekund sedan`),
 			regexp.MustCompile(`(?i)för (\d+) sekunder sedan`),
 			regexp.MustCompile(`(?i)−(\d+) s`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)för (\d+) v sedan`),
 			regexp.MustCompile(`(?i)för (\d+) vecka sedan`),
 			regexp.MustCompile(`(?i)för (\d+) veckor sedan`),
 			regexp.MustCompile(`(?i)−(\d+) v`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)för (\d+) år sedan`),
 			regexp.MustCompile(`(?i)−(\d+) år`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)om (\d+) d`),
 			regexp.MustCompile(`(?i)om (\d+) dag`),
 			regexp.MustCompile(`(?i)om (\d+) dagar`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)om (\d+) tim`),
 			regexp.MustCompile(`(?i)om (\d+) timmar`),
 			regexp.MustCompile(`(?i)om (\d+) timme`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)om (\d+) min`),
 			regexp.MustCompile(`(?i)om (\d+) minut`),
 			regexp.MustCompile(`(?i)om (\d+) minuter`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)om (\d+) mån`),
 			regexp.MustCompile(`(?i)om (\d+) månad`),
 			regexp.MustCompile(`(?i)om (\d+) månader`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)om (\d+) sek`),
 			regexp.MustCompile(`(?i)om (\d+) sekund`),
 			regexp.MustCompile(`(?i)om (\d+) sekunder`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)om (\d+) v`),
 			regexp.MustCompile(`(?i)om (\d+) vecka`),
 			regexp.MustCompile(`(?i)om (\d+) veckor`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)om (\d+) år`),
 		},
 	},
@@ -192,77 +192,77 @@ var sv_AX_Locale = LocaleData{
 		`in 1 year`:    {`nästa år`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)för (\d+) d sedan`),
 			regexp.MustCompile(`(?i)för (\d+) dag sedan`),
 			regexp.MustCompile(`(?i)för (\d+) dagar sedan`),
 			regexp.MustCompile(`(?i)−(\d+) d`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)för (\d+) tim sedan`),
 			regexp.MustCompile(`(?i)för (\d+) timmar sedan`),
 			regexp.MustCompile(`(?i)för (\d+) timme sedan`),
 			regexp.MustCompile(`(?i)−(\d+) h`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)för (\d+) min sedan`),
 			regexp.MustCompile(`(?i)för (\d+) minut sedan`),
 			regexp.MustCompile(`(?i)för (\d+) minuter sedan`),
 			regexp.MustCompile(`(?i)−(\d+) min`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)för (\d+) mån sedan`),
 			regexp.MustCompile(`(?i)för (\d+) månad sedan`),
 			regexp.MustCompile(`(?i)för (\d+) månader sedan`),
 			regexp.MustCompile(`(?i)−(\d+) mån`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)för (\d+) sek sedan`),
 			regexp.MustCompile(`(?i)för (\d+) sekund sedan`),
 			regexp.MustCompile(`(?i)för (\d+) sekunder sedan`),
 			regexp.MustCompile(`(?i)−(\d+) s`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)för (\d+) v sedan`),
 			regexp.MustCompile(`(?i)för (\d+) vecka sedan`),
 			regexp.MustCompile(`(?i)för (\d+) veckor sedan`),
 			regexp.MustCompile(`(?i)−(\d+) v`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)för (\d+) år sedan`),
 			regexp.MustCompile(`(?i)−(\d+) år`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)om (\d+) d`),
 			regexp.MustCompile(`(?i)om (\d+) dag`),
 			regexp.MustCompile(`(?i)om (\d+) dagar`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)om (\d+) tim`),
 			regexp.MustCompile(`(?i)om (\d+) timmar`),
 			regexp.MustCompile(`(?i)om (\d+) timme`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)om (\d+) min`),
 			regexp.MustCompile(`(?i)om (\d+) minut`),
 			regexp.MustCompile(`(?i)om (\d+) minuter`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)om (\d+) mån`),
 			regexp.MustCompile(`(?i)om (\d+) månad`),
 			regexp.MustCompile(`(?i)om (\d+) månader`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)om (\d+) sek`),
 			regexp.MustCompile(`(?i)om (\d+) sekund`),
 			regexp.MustCompile(`(?i)om (\d+) sekunder`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)om (\d+) v`),
 			regexp.MustCompile(`(?i)om (\d+) vecka`),
 			regexp.MustCompile(`(?i)om (\d+) veckor`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)om (\d+) år`),
 		},
 	},
@@ -326,77 +326,77 @@ var sv_FI_Locale = LocaleData{
 		`in 1 year`:    {`nästa år`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)för (\d+) d sedan`),
 			regexp.MustCompile(`(?i)för (\d+) dag sedan`),
 			regexp.MustCompile(`(?i)för (\d+) dagar sedan`),
 			regexp.MustCompile(`(?i)−(\d+) d`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)för (\d+) tim sedan`),
 			regexp.MustCompile(`(?i)för (\d+) timmar sedan`),
 			regexp.MustCompile(`(?i)för (\d+) timme sedan`),
 			regexp.MustCompile(`(?i)−(\d+) h`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)för (\d+) min sedan`),
 			regexp.MustCompile(`(?i)för (\d+) minut sedan`),
 			regexp.MustCompile(`(?i)för (\d+) minuter sedan`),
 			regexp.MustCompile(`(?i)−(\d+) min`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)för (\d+) mån sedan`),
 			regexp.MustCompile(`(?i)för (\d+) månad sedan`),
 			regexp.MustCompile(`(?i)för (\d+) månader sedan`),
 			regexp.MustCompile(`(?i)−(\d+) mån`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)för (\d+) sek sedan`),
 			regexp.MustCompile(`(?i)för (\d+) sekund sedan`),
 			regexp.MustCompile(`(?i)för (\d+) sekunder sedan`),
 			regexp.MustCompile(`(?i)−(\d+) s`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)för (\d+) v sedan`),
 			regexp.MustCompile(`(?i)för (\d+) vecka sedan`),
 			regexp.MustCompile(`(?i)för (\d+) veckor sedan`),
 			regexp.MustCompile(`(?i)−(\d+) v`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)för (\d+) år sedan`),
 			regexp.MustCompile(`(?i)−(\d+) år`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)om (\d+) d`),
 			regexp.MustCompile(`(?i)om (\d+) dag`),
 			regexp.MustCompile(`(?i)om (\d+) dagar`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)om (\d+) tim`),
 			regexp.MustCompile(`(?i)om (\d+) timmar`),
 			regexp.MustCompile(`(?i)om (\d+) timme`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)om (\d+) min`),
 			regexp.MustCompile(`(?i)om (\d+) minut`),
 			regexp.MustCompile(`(?i)om (\d+) minuter`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)om (\d+) mån`),
 			regexp.MustCompile(`(?i)om (\d+) månad`),
 			regexp.MustCompile(`(?i)om (\d+) månader`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)om (\d+) sek`),
 			regexp.MustCompile(`(?i)om (\d+) sekund`),
 			regexp.MustCompile(`(?i)om (\d+) sekunder`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)om (\d+) v`),
 			regexp.MustCompile(`(?i)om (\d+) vecka`),
 			regexp.MustCompile(`(?i)om (\d+) veckor`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)om (\d+) år`),
 		},
 	},

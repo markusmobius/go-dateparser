@@ -53,59 +53,59 @@ var ga_Locale = LocaleData{
 		`in 1 year`:    {`an bhl seo chugainn`, `an bhliain seo chugainn`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)(\d+) lá ó shin`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)(\d+) uair an chloig ó shin`),
 			regexp.MustCompile(`(?i)(\d+) uair ó shin`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)(\d+) nóim ó shin`),
 			regexp.MustCompile(`(?i)(\d+) nóiméad ó shin`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)(\d+) mhí ó shin`),
 			regexp.MustCompile(`(?i)(\d+) mí ó shin`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)(\d+) soic ó shin`),
 			regexp.MustCompile(`(?i)(\d+) soicind ó shin`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)(\d+) scht ó shin`),
 			regexp.MustCompile(`(?i)(\d+) seachtain ó shin`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)(\d+) bhl ó shin`),
 			regexp.MustCompile(`(?i)(\d+) bhliain ó shin`),
 			regexp.MustCompile(`(?i)(\d+) bl ó shin`),
 			regexp.MustCompile(`(?i)(\d+) bliain ó shin`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)i gceann (\d+) lá`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)i gceann (\d+) uair`),
 			regexp.MustCompile(`(?i)i gceann (\d+) uair an chloig`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)i gceann (\d+) nóim`),
 			regexp.MustCompile(`(?i)i gceann (\d+) nóiméad`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)i gceann (\d+) mhí`),
 			regexp.MustCompile(`(?i)i gceann (\d+) mí`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)i gceann (\d+) soic`),
 			regexp.MustCompile(`(?i)i gceann (\d+) soicind`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)i gceann (\d+) scht`),
 			regexp.MustCompile(`(?i)i gceann (\d+) seachtain`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)i gceann (\d+) bhliain`),
 			regexp.MustCompile(`(?i)i gceann (\d+) bl`),
 			regexp.MustCompile(`(?i)i gceann (\d+) bliain`),

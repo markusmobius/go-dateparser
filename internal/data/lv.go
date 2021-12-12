@@ -53,76 +53,76 @@ var lv_Locale = LocaleData{
 		`in 1 year`:    {`nākamajā gadā`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)pirms (\d+) d`),
 			regexp.MustCompile(`(?i)pirms (\d+) dienas`),
 			regexp.MustCompile(`(?i)pirms (\d+) dienām`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)pirms (\d+) h`),
 			regexp.MustCompile(`(?i)pirms (\d+) st`),
 			regexp.MustCompile(`(?i)pirms (\d+) stundas`),
 			regexp.MustCompile(`(?i)pirms (\d+) stundām`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)pirms (\d+) min`),
 			regexp.MustCompile(`(?i)pirms (\d+) minūtes`),
 			regexp.MustCompile(`(?i)pirms (\d+) minūtēm`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)pirms (\d+) mēn`),
 			regexp.MustCompile(`(?i)pirms (\d+) mēneša`),
 			regexp.MustCompile(`(?i)pirms (\d+) mēnešiem`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)pirms (\d+) s`),
 			regexp.MustCompile(`(?i)pirms (\d+) sek`),
 			regexp.MustCompile(`(?i)pirms (\d+) sekundes`),
 			regexp.MustCompile(`(?i)pirms (\d+) sekundēm`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)pirms (\d+) ned`),
 			regexp.MustCompile(`(?i)pirms (\d+) nedēļas`),
 			regexp.MustCompile(`(?i)pirms (\d+) nedēļām`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)pirms (\d+) g`),
 			regexp.MustCompile(`(?i)pirms (\d+) gada`),
 			regexp.MustCompile(`(?i)pirms (\d+) gadiem`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)pēc (\d+) d`),
 			regexp.MustCompile(`(?i)pēc (\d+) dienas`),
 			regexp.MustCompile(`(?i)pēc (\d+) dienām`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)pēc (\d+) h`),
 			regexp.MustCompile(`(?i)pēc (\d+) st`),
 			regexp.MustCompile(`(?i)pēc (\d+) stundas`),
 			regexp.MustCompile(`(?i)pēc (\d+) stundām`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)pēc (\d+) min`),
 			regexp.MustCompile(`(?i)pēc (\d+) minūtes`),
 			regexp.MustCompile(`(?i)pēc (\d+) minūtēm`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)pēc (\d+) mēn`),
 			regexp.MustCompile(`(?i)pēc (\d+) mēneša`),
 			regexp.MustCompile(`(?i)pēc (\d+) mēnešiem`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)pēc (\d+) s`),
 			regexp.MustCompile(`(?i)pēc (\d+) sek`),
 			regexp.MustCompile(`(?i)pēc (\d+) sekundes`),
 			regexp.MustCompile(`(?i)pēc (\d+) sekundēm`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)pēc (\d+) ned`),
 			regexp.MustCompile(`(?i)pēc (\d+) nedēļas`),
 			regexp.MustCompile(`(?i)pēc (\d+) nedēļām`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)pēc (\d+) g`),
 			regexp.MustCompile(`(?i)pēc (\d+) gada`),
 			regexp.MustCompile(`(?i)pēc (\d+) gadiem`),

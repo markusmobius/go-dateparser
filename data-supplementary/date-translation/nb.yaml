@@ -1,15 +1,15 @@
 week:
-    - uker
+  - uker
 day:
-    - dager
+  - dager
 hour:
-    - timer
+  - timer
 
 ago:
-    - siden
+  - siden
 in:
-    - om
+  - om
 
 relative-type-regex:
-  \1 day ago:
-      - for (\d+) dager siden
+  $1 day ago:
+    - for (\d+) dager siden

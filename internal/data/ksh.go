@@ -53,11 +53,11 @@ var ksh_Locale = LocaleData{
 		`in 1 year`:    {`näx johr`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)vör (\d+) johr`),
 			regexp.MustCompile(`(?i)vör (\d+) johre`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)en (\d+) johr`),
 			regexp.MustCompile(`(?i)en (\d+) johre`),
 		},

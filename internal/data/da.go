@@ -57,80 +57,80 @@ var da_Locale = LocaleData{
 		`in 1 year`:    {`næste år`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)for (\d+) dag siden`),
 			regexp.MustCompile(`(?i)for (\d+) dage siden`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)for (\d+) timer`),
 			regexp.MustCompile(`(?i)for (\d+)\s*h`),
 			regexp.MustCompile(`(?i)for (\d+) time siden`),
 			regexp.MustCompile(`(?i)for (\d+) timer siden`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)for (\d+) minutter`),
 			regexp.MustCompile(`(?i)for (\d+)\s*m`),
 			regexp.MustCompile(`(?i)for (\d+) min siden`),
 			regexp.MustCompile(`(?i)for (\d+) minut siden`),
 			regexp.MustCompile(`(?i)for (\d+) minutter siden`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)for (\d+) md siden`),
 			regexp.MustCompile(`(?i)for (\d+) mdr siden`),
 			regexp.MustCompile(`(?i)for (\d+) måned siden`),
 			regexp.MustCompile(`(?i)for (\d+) måneder siden`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)for (\d+) sekunder`),
 			regexp.MustCompile(`(?i)for (\d+)\s*s`),
 			regexp.MustCompile(`(?i)for (\d+) sek siden`),
 			regexp.MustCompile(`(?i)for (\d+) sekund siden`),
 			regexp.MustCompile(`(?i)for (\d+) sekunder siden`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)for (\d+) uge siden`),
 			regexp.MustCompile(`(?i)for (\d+) uger siden`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)for (\d+) år siden`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)om (\d+) dag`),
 			regexp.MustCompile(`(?i)om (\d+) dage`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)om (\d+) time`),
 			regexp.MustCompile(`(?i)om (\d+) timer`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)om (\d+) min`),
 			regexp.MustCompile(`(?i)om (\d+) minut`),
 			regexp.MustCompile(`(?i)om (\d+) minutter`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)om (\d+) md`),
 			regexp.MustCompile(`(?i)om (\d+) mdr`),
 			regexp.MustCompile(`(?i)om (\d+) måned`),
 			regexp.MustCompile(`(?i)om (\d+) måneder`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)om (\d+) sek`),
 			regexp.MustCompile(`(?i)om (\d+) sekund`),
 			regexp.MustCompile(`(?i)om (\d+) sekunder`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)om (\d+) uge`),
 			regexp.MustCompile(`(?i)om (\d+) uger`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)om (\d+) år`),
 		},
 	},
 	Simplifications: map[string]string{
-		`(\d+)\s*hr(s?)`:           `\1 time\2`,
-		`(\d+)\s*min(s?)`:          `\1 minut\2`,
-		`(\d+)\s*sec(s?)`:          `\1 sekund\2`,
-		`(\d+)h(\d+)m?`:            `\1:\2`,
+		`(\d+)\s*hr(s?)`:           `$1 time$2`,
+		`(\d+)\s*min(s?)`:          `$1 minut$2`,
+		`(\d+)\s*sec(s?)`:          `$1 sekund$2`,
+		`(\d+)h(\d+)m?`:            `$1:$2`,
 		`en`:                       `1`,
 		`et`:                       `1`,
 		`middag`:                   `12:00`,
@@ -192,80 +192,80 @@ var da_GL_Locale = LocaleData{
 		`in 1 year`:    {`næste år`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)for (\d+) dag siden`),
 			regexp.MustCompile(`(?i)for (\d+) dage siden`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)for (\d+) timer`),
 			regexp.MustCompile(`(?i)for (\d+)\s*h`),
 			regexp.MustCompile(`(?i)for (\d+) time siden`),
 			regexp.MustCompile(`(?i)for (\d+) timer siden`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)for (\d+) minutter`),
 			regexp.MustCompile(`(?i)for (\d+)\s*m`),
 			regexp.MustCompile(`(?i)for (\d+) min siden`),
 			regexp.MustCompile(`(?i)for (\d+) minut siden`),
 			regexp.MustCompile(`(?i)for (\d+) minutter siden`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)for (\d+) md siden`),
 			regexp.MustCompile(`(?i)for (\d+) mdr siden`),
 			regexp.MustCompile(`(?i)for (\d+) måned siden`),
 			regexp.MustCompile(`(?i)for (\d+) måneder siden`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)for (\d+) sekunder`),
 			regexp.MustCompile(`(?i)for (\d+)\s*s`),
 			regexp.MustCompile(`(?i)for (\d+) sek siden`),
 			regexp.MustCompile(`(?i)for (\d+) sekund siden`),
 			regexp.MustCompile(`(?i)for (\d+) sekunder siden`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)for (\d+) uge siden`),
 			regexp.MustCompile(`(?i)for (\d+) uger siden`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)for (\d+) år siden`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)om (\d+) dag`),
 			regexp.MustCompile(`(?i)om (\d+) dage`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)om (\d+) time`),
 			regexp.MustCompile(`(?i)om (\d+) timer`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)om (\d+) min`),
 			regexp.MustCompile(`(?i)om (\d+) minut`),
 			regexp.MustCompile(`(?i)om (\d+) minutter`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)om (\d+) md`),
 			regexp.MustCompile(`(?i)om (\d+) mdr`),
 			regexp.MustCompile(`(?i)om (\d+) måned`),
 			regexp.MustCompile(`(?i)om (\d+) måneder`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)om (\d+) sek`),
 			regexp.MustCompile(`(?i)om (\d+) sekund`),
 			regexp.MustCompile(`(?i)om (\d+) sekunder`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)om (\d+) uge`),
 			regexp.MustCompile(`(?i)om (\d+) uger`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)om (\d+) år`),
 		},
 	},
 	Simplifications: map[string]string{
-		`(\d+)\s*hr(s?)`:           `\1 time\2`,
-		`(\d+)\s*min(s?)`:          `\1 minut\2`,
-		`(\d+)\s*sec(s?)`:          `\1 sekund\2`,
-		`(\d+)h(\d+)m?`:            `\1:\2`,
+		`(\d+)\s*hr(s?)`:           `$1 time$2`,
+		`(\d+)\s*min(s?)`:          `$1 minut$2`,
+		`(\d+)\s*sec(s?)`:          `$1 sekund$2`,
+		`(\d+)h(\d+)m?`:            `$1:$2`,
 		`en`:                       `1`,
 		`et`:                       `1`,
 		`middag`:                   `12:00`,

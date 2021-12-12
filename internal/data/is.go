@@ -53,67 +53,67 @@ var is_Locale = LocaleData{
 		`in 1 year`:    {`á næsta ári`},
 	},
 	RelativeTypeRegex: map[string][]*regexp.Regexp{
-		`\1 day ago`: {
+		`$1 day ago`: {
 			regexp.MustCompile(`(?i)fyrir (\d+) degi`),
 			regexp.MustCompile(`(?i)fyrir (\d+) dögum`),
 		},
-		`\1 hour ago`: {
+		`$1 hour ago`: {
 			regexp.MustCompile(`(?i)fyrir (\d+) klst`),
 			regexp.MustCompile(`(?i)fyrir (\d+) klukkustund`),
 			regexp.MustCompile(`(?i)fyrir (\d+) klukkustundum`),
 		},
-		`\1 minute ago`: {
+		`$1 minute ago`: {
 			regexp.MustCompile(`(?i)fyrir (\d+) mín`),
 			regexp.MustCompile(`(?i)fyrir (\d+) mínútu`),
 			regexp.MustCompile(`(?i)fyrir (\d+) mínútum`),
 		},
-		`\1 month ago`: {
+		`$1 month ago`: {
 			regexp.MustCompile(`(?i)fyrir (\d+) mán`),
 			regexp.MustCompile(`(?i)fyrir (\d+) mánuði`),
 			regexp.MustCompile(`(?i)fyrir (\d+) mánuðum`),
 		},
-		`\1 second ago`: {
+		`$1 second ago`: {
 			regexp.MustCompile(`(?i)fyrir (\d+) sek`),
 			regexp.MustCompile(`(?i)fyrir (\d+) sekúndu`),
 			regexp.MustCompile(`(?i)fyrir (\d+) sekúndum`),
 		},
-		`\1 week ago`: {
+		`$1 week ago`: {
 			regexp.MustCompile(`(?i)fyrir (\d+) viku`),
 			regexp.MustCompile(`(?i)fyrir (\d+) vikum`),
 		},
-		`\1 year ago`: {
+		`$1 year ago`: {
 			regexp.MustCompile(`(?i)fyrir (\d+) ári`),
 			regexp.MustCompile(`(?i)fyrir (\d+) árum`),
 		},
-		`in \1 day`: {
+		`in $1 day`: {
 			regexp.MustCompile(`(?i)eftir (\d+) dag`),
 			regexp.MustCompile(`(?i)eftir (\d+) daga`),
 		},
-		`in \1 hour`: {
+		`in $1 hour`: {
 			regexp.MustCompile(`(?i)eftir (\d+) klst`),
 			regexp.MustCompile(`(?i)eftir (\d+) klukkustund`),
 			regexp.MustCompile(`(?i)eftir (\d+) klukkustundir`),
 		},
-		`in \1 minute`: {
+		`in $1 minute`: {
 			regexp.MustCompile(`(?i)eftir (\d+) mín`),
 			regexp.MustCompile(`(?i)eftir (\d+) mínútu`),
 			regexp.MustCompile(`(?i)eftir (\d+) mínútur`),
 		},
-		`in \1 month`: {
+		`in $1 month`: {
 			regexp.MustCompile(`(?i)eftir (\d+) mán`),
 			regexp.MustCompile(`(?i)eftir (\d+) mánuð`),
 			regexp.MustCompile(`(?i)eftir (\d+) mánuði`),
 		},
-		`in \1 second`: {
+		`in $1 second`: {
 			regexp.MustCompile(`(?i)eftir (\d+) sek`),
 			regexp.MustCompile(`(?i)eftir (\d+) sekúndu`),
 			regexp.MustCompile(`(?i)eftir (\d+) sekúndur`),
 		},
-		`in \1 week`: {
+		`in $1 week`: {
 			regexp.MustCompile(`(?i)eftir (\d+) viku`),
 			regexp.MustCompile(`(?i)eftir (\d+) vikur`),
 		},
-		`in \1 year`: {
+		`in $1 year`: {
 			regexp.MustCompile(`(?i)eftir (\d+) ár`),
 		},
 	},
