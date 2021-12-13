@@ -103,11 +103,11 @@ var id_Locale = LocaleData{
 		`(\A|\W|_)ahad(\z|\W|_)`:                   "${1}sunday${2}",
 		`(\A|\W|_)dalam(\z|\W|_)`:                  "${1}in${2}",
 		`(\A|\W|_)lalu(\z|\W|_)`:                   "${1}ago${2}",
+		`(\A|\W|_)setahun(\z|\W|_)`:                "${1}1 year${2}",
+		`(\A|\W|_)sebulan(\z|\W|_)`:                "${1}1 month${2}",
 		`(\A|\W|_)seminggu(\z|\W|_)`:               "${1}1 week${2}",
 		`(\A|\W|_)kemarin lusa(\z|\W|_)`:           "${1}2 day ago${2}",
 		`(\A|\W|_)sehari(\z|\W|_)`:                 "${1}1 day${2}",
 		`(\A|\W|_)baru saja(\z|\W|_)`:              "${1}0 second ago${2}",
-		`(\A|\W|_)setahun(\z|\W|_)`:                "${1}1 year${2}",
-		`(\A|\W|_)sebulan(\z|\W|_)`:                "${1}1 month${2}",
 	},
 }

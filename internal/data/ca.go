@@ -8,8 +8,8 @@ var ca_Locale = LocaleData{
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "de", "del", "i", "l'", "|"},
 	PertainWords: []string{"de", "del"},
 	Simplifications: map[string]string{
-		`un`:  "1",
-		`una`: "1",
+		`(\A|\W|_)un(\z|\W|_)`:  "${1}1${2}",
+		`(\A|\W|_)una(\z|\W|_)`: "${1}1${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)de gener(\z|\W|_)`:                "${1}january${2}",
@@ -136,6 +136,9 @@ var ca_Locale = LocaleData{
 		`(\A|\W|_)fa (\d+) segons(\z|\W|_)`:         "${1}$2 second ago${3}",
 		`(\A|\W|_)fa (\d+) s(\z|\W|_)`:              "${1}$2 second ago${3}",
 		`(\A|\W|_)en(\z|\W|_)`:                      "${1}in${2}",
+		`(\A|\W|_)la setmana vinent(\z|\W|_)`:       "${1}in 1 week${2}",
+		`(\A|\W|_)la pròxima setmana(\z|\W|_)`:      "${1}in 1 week${2}",
+		`(\A|\W|_)la propera setmana(\z|\W|_)`:      "${1}in 1 week${2}",
 		`(\A|\W|_)hui(\z|\W|_)`:                     "${1}0 day ago${2}",
 		`(\A|\W|_)despús-ahir(\z|\W|_)`:             "${1}2 day ago${2}",
 		`(\A|\W|_)abans-d’ahir(\z|\W|_)`:            "${1}2 day ago${2}",
@@ -146,9 +149,6 @@ var ca_Locale = LocaleData{
 		`(\A|\W|_)demà passat(\z|\W|_)`:             "${1}in 2 day${2}",
 		`(\A|\W|_)passat demà(\z|\W|_)`:             "${1}in 2 day${2}",
 		`(\A|\W|_)endemà passat(\z|\W|_)`:           "${1}in 3 day${2}",
-		`(\A|\W|_)la setmana vinent(\z|\W|_)`:       "${1}in 1 week${2}",
-		`(\A|\W|_)la pròxima setmana(\z|\W|_)`:      "${1}in 1 week${2}",
-		`(\A|\W|_)la propera setmana(\z|\W|_)`:      "${1}in 1 week${2}",
 	},
 }
 

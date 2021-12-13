@@ -7,12 +7,12 @@ var pl_Locale = LocaleData{
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "i", "o", "r.", "roku", "w", "|"},
 	Simplifications: map[string]string{
-		`dzisiaj`:      "0 dnia",
-		`dziś`:         "0 dnia",
-		`jutro`:        "za 1 dnia",
-		`onegdaj`:      "2 dnia",
-		`pojutrze`:     "za 2 dnia",
-		`przedwczoraj`: "2 dnia temu",
+		`(\A|\W|_)dzisiaj(\z|\W|_)`:      "${1}0 dnia${2}",
+		`(\A|\W|_)dziś(\z|\W|_)`:         "${1}0 dnia${2}",
+		`(\A|\W|_)jutro(\z|\W|_)`:        "${1}za 1 dnia${2}",
+		`(\A|\W|_)onegdaj(\z|\W|_)`:      "${1}2 dnia${2}",
+		`(\A|\W|_)pojutrze(\z|\W|_)`:     "${1}za 2 dnia${2}",
+		`(\A|\W|_)przedwczoraj(\z|\W|_)`: "${1}2 dnia temu${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)stycznia(\z|\W|_)`:             "${1}january${2}",

@@ -8,8 +8,8 @@ var es_Locale = LocaleData{
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "a las", "cerca", "de", "del", "en", "y", "|"},
 	PertainWords: []string{"de", "del"},
 	Simplifications: map[string]string{
-		`un`:  "1",
-		`una`: "1",
+		`(\A|\W|_)un(\z|\W|_)`:  "${1}1${2}",
+		`(\A|\W|_)una(\z|\W|_)`: "${1}1${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)enero(\z|\W|_)`:                    "${1}january${2}",

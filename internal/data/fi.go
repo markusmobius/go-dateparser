@@ -7,7 +7,7 @@ var fi_Locale = LocaleData{
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ":n", ";", "@", "[", "]", "|"},
 	Simplifications: map[string]string{
-		`(\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua)`: "$3 $1 $2",
+		`(\A|\W|_)(\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua)(\z|\W|_)`: "${1}$4 $2 $3${5}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)tammikuuta(\z|\W|_)`:             "${1}january${2}",

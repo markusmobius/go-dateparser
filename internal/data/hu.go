@@ -7,7 +7,7 @@ var hu_Locale = LocaleData{
 	DateOrder: "YMD.",
 	SkipWords: []string{"'", ",", "-", "-a", "-ai", "-akor", "-e", "-ei", "-ekor", "-es", "-i", "-ig", "-je", "-jei", "-ji", "-kor", "-tól", "-től", "-áig", "-án", "-ától", "-éig", "-én", "-étől", "-ös", ".", "/", ";", "@", "[", "]", "|"},
 	Simplifications: map[string]string{
-		`egy`: "1",
+		`(\A|\W|_)egy(\z|\W|_)`: "${1}1${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)január(\z|\W|_)`:                     "${1}january${2}",

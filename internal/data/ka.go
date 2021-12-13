@@ -7,7 +7,7 @@ var ka_Locale = LocaleData{
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "და", "დაახლოებით", "ზე", "ის"},
 	Simplifications: map[string]string{
-		`ერთ`: "1",
+		`(\A|\W|_)ერთ(\z|\W|_)`: "${1}1${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)იანვარი(\z|\W|_)`:          "${1}january${2}",

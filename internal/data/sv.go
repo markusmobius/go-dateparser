@@ -7,8 +7,8 @@ var sv_Locale = LocaleData{
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "den", "på", "|"},
 	Simplifications: map[string]string{
-		`en`:  "1",
-		`två`: "2",
+		`(\A|\W|_)en(\z|\W|_)`:  "${1}1${2}",
+		`(\A|\W|_)två(\z|\W|_)`: "${1}2${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)januari(\z|\W|_)`:                  "${1}january${2}",

@@ -7,7 +7,7 @@ var it_Locale = LocaleData{
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "circa", "e", "|"},
 	Simplifications: map[string]string{
-		`(\d+)\s+ora`: "$1 ore",
+		`(\A|\W|_)(\d+)\s+ora(\z|\W|_)`: "${1}$2 ore${3}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)gennaio(\z|\W|_)`:             "${1}january${2}",

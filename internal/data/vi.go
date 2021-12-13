@@ -8,7 +8,7 @@ var vi_Locale = LocaleData{
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
 	PertainWords: []string{"lúc"},
 	Simplifications: map[string]string{
-		`(?:ngày|năm)\s(\d+)`: "$1",
+		`(\A|\W|_)(?:ngày|năm)\s(\d+)(\z|\W|_)`: "${1}$2${3}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)tháng 1(\z|\W|_)`:             "${1}january${2}",

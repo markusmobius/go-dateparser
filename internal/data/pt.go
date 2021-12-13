@@ -8,9 +8,9 @@ var pt_Locale = LocaleData{
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "cerca", "de", "e", "|", "às"},
 	PertainWords: []string{"de"},
 	Simplifications: map[string]string{
-		`alguns segundos`: "44 segundos",
-		`um`:              "1",
-		`uma`:             "1",
+		`(\A|\W|_)alguns segundos(\z|\W|_)`: "${1}44 segundos${2}",
+		`(\A|\W|_)um(\z|\W|_)`:              "${1}1${2}",
+		`(\A|\W|_)uma(\z|\W|_)`:             "${1}1${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)janeiro(\z|\W|_)`:           "${1}january${2}",

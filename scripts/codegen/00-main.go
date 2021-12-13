@@ -93,11 +93,12 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	}
 
 	// Validate locale regex patterns
-	for _, data := range finalLocaleData {
+	for i, data := range finalLocaleData {
 		err = data.ValidateRegexes()
 		if err != nil {
 			return err
 		}
+		finalLocaleData[i] = data
 	}
 
 	// Generate code

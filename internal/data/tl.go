@@ -7,9 +7,9 @@ var _Locale = LocaleData{
 	DateOrder: "",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|"},
 	Simplifications: map[string]string{
-		`isang araw`: "2 araw",
-		`kahapon`:    "1 araw nakaraan",
-		`ngayon`:     "0 segundo nakalipas",
+		`(\A|\W|_)isang araw(\z|\W|_)`: "${1}2 araw${2}",
+		`(\A|\W|_)kahapon(\z|\W|_)`:    "${1}1 araw nakaraan${2}",
+		`(\A|\W|_)ngayon(\z|\W|_)`:     "${1}0 segundo nakalipas${2}",
 	},
 	Translations: map[string]string{
 		`(\A|\W|_)enero(\z|\W|_)`:      "${1}january${2}",
