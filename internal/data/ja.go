@@ -118,9 +118,9 @@ var ja_Locale = LocaleData{
 		`今から`:       "in",
 		`で`:         "in",
 		`前`:         "ago",
+		`去年`:        "1 year ago",
 		`現在`:        "0 second ago",
 		`一昨日`:       "2 day ago",
 		`先々週`:       "2 week ago",
-		`去年`:        "1 year ago",
 	},
 }

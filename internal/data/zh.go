@@ -109,7 +109,7 @@ var zh_Locale = LocaleData{
 		`天`:         "day",
 		`在`:         "in",
 		`前`:         "ago",
-		`刚刚`:        "0 second ago",
 		`前天`:        "2 day ago",
+		`刚刚`:        "0 second ago",
 	},
 }

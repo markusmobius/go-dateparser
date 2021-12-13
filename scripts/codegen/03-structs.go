@@ -81,10 +81,15 @@ func (ld LocaleData) Clone() LocaleData {
 		PertainWords:          append([]string{}, ld.PertainWords...),
 		Translations:          append([]TranslationData{}, ld.Translations...),
 		Simplifications:       map[string]string{},
+		patternTrackers:       map[string]struct{}{},
 	}
 
 	for pattern, replacement := range ld.Simplifications {
 		clone.Simplifications[pattern] = replacement
+	}
+
+	for pattern := range ld.patternTrackers {
+		clone.patternTrackers[pattern] = struct{}{}
 	}
 
 	return clone

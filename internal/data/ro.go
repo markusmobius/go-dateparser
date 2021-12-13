@@ -114,7 +114,6 @@ var ro_Locale = LocaleData{
 		`(\A|\W|_)mi(\z|\W|_)`:                       "${1}wednesday${2}",
 		`(\A|\W|_)ani(\z|\W|_)`:                      "${1}year${2}",
 		`(\A|\W|_)luna(\z|\W|_)`:                     "${1}month${2}",
-		`(\A|\W|_)luni(\z|\W|_)`:                     "${1}month${2}",
 		`(\A|\W|_)săptămâni(\z|\W|_)`:                "${1}week${2}",
 		`(\A|\W|_)zile(\z|\W|_)`:                     "${1}day${2}",
 		`(\A|\W|_)ore(\z|\W|_)`:                      "${1}hour${2}",

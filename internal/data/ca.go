@@ -136,6 +136,10 @@ var ca_Locale = LocaleData{
 		`(\A|\W|_)fa (\d+) segons(\z|\W|_)`:         "${1}$2 second ago${3}",
 		`(\A|\W|_)fa (\d+) s(\z|\W|_)`:              "${1}$2 second ago${3}",
 		`(\A|\W|_)en(\z|\W|_)`:                      "${1}in${2}",
+		`(\A|\W|_)hui(\z|\W|_)`:                     "${1}0 day ago${2}",
+		`(\A|\W|_)despús-ahir(\z|\W|_)`:             "${1}2 day ago${2}",
+		`(\A|\W|_)abans-d’ahir(\z|\W|_)`:            "${1}2 day ago${2}",
+		`(\A|\W|_)dellà-ahir(\z|\W|_)`:              "${1}2 day ago${2}",
 		`(\A|\W|_)endemà(\z|\W|_)`:                  "${1}in 2 day${2}",
 		`(\A|\W|_)sendemà(\z|\W|_)`:                 "${1}in 2 day${2}",
 		`(\A|\W|_)despús-demà(\z|\W|_)`:             "${1}in 2 day${2}",
@@ -145,10 +149,6 @@ var ca_Locale = LocaleData{
 		`(\A|\W|_)la setmana vinent(\z|\W|_)`:       "${1}in 1 week${2}",
 		`(\A|\W|_)la pròxima setmana(\z|\W|_)`:      "${1}in 1 week${2}",
 		`(\A|\W|_)la propera setmana(\z|\W|_)`:      "${1}in 1 week${2}",
-		`(\A|\W|_)hui(\z|\W|_)`:                     "${1}0 day ago${2}",
-		`(\A|\W|_)despús-ahir(\z|\W|_)`:             "${1}2 day ago${2}",
-		`(\A|\W|_)abans-d’ahir(\z|\W|_)`:            "${1}2 day ago${2}",
-		`(\A|\W|_)dellà-ahir(\z|\W|_)`:              "${1}2 day ago${2}",
 	},
 }
 
