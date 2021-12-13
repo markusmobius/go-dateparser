@@ -10,8 +10,8 @@ var en_Locale = LocaleData{
 	Simplifications: map[string]string{
 		`(?:12\s+)?midnight`:     "00:00",
 		`(?:12\s+)?noon`:         "12:00",
-		`(?<=from\s+)now`:        "in",
 		`(\d+)h(\d+)m?`:          "$1:$2",
+		`(from\s+)now`:           "$1in",
 		`a`:                      "1",
 		`an`:                     "1",
 		`eight`:                  "8",

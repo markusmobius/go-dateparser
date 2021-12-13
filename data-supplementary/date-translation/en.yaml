@@ -76,7 +76,7 @@ simplifications:
   - (?:12\s+)?noon: '12:00'
   - (?:12\s+)?midnight: '00:00'
   - (\d+)h(\d+)m?: $1:$2
-  - (?<=from\s+)now: in
+  - (from\s+)now: $1in
   - less than 1 minute ago: 45 second ago
   - one: '1'
   - two: '2'

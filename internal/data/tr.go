@@ -108,12 +108,12 @@ var tr_Locale = LocaleData{
 		`(\A|\W|_)içinde(\z|\W|_)`:             "$1in$2",
 		`(\A|\W|_)sonra(\z|\W|_)`:              "$1in$2",
 		`(\A|\W|_)önce(\z|\W|_)`:               "$1ago$2",
-		`(\A|\W|_)önümüzdeki yıl(\z|\W|_)`:     "$1in 1 year$2",
 		`(\A|\W|_)önümüzdeki ay(\z|\W|_)`:      "$1in 1 month$2",
 		`(\A|\W|_)haftaya(\z|\W|_)`:            "$1in 1 week$2",
 		`(\A|\W|_)önümüzdeki hafta(\z|\W|_)`:   "$1in 1 week$2",
 		`(\A|\W|_)geçen gün(\z|\W|_)`:          "$11 day ago$2",
 		`(\A|\W|_)önümüzdeki gün(\z|\W|_)`:     "$1in 1 day$2",
+		`(\A|\W|_)önümüzdeki yıl(\z|\W|_)`:     "$1in 1 year$2",
 	},
 }
 

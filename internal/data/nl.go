@@ -106,9 +106,9 @@ var nl_Locale = LocaleData{
 		`(\A|\W|_)seconden(\z|\W|_)`:               "$1second$2",
 		`(\A|\W|_)in(\z|\W|_)`:                     "$1in$2",
 		`(\A|\W|_)geleden(\z|\W|_)`:                "$1ago$2",
+		`(\A|\W|_)overmorgen(\z|\W|_)`:             "$1in 2 day$2",
 		`(\A|\W|_)vorige jaar(\z|\W|_)`:            "$11 year ago$2",
 		`(\A|\W|_)eergisteren(\z|\W|_)`:            "$12 day ago$2",
-		`(\A|\W|_)overmorgen(\z|\W|_)`:             "$1in 2 day$2",
 	},
 }
 

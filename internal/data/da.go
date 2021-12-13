@@ -124,12 +124,12 @@ var da_Locale = LocaleData{
 		`(\A|\W|_)sekunder(\z|\W|_)`:                 "$1second$2",
 		`(\A|\W|_)i(\z|\W|_)`:                        "$1in$2",
 		`(\A|\W|_)siden(\z|\W|_)`:                    "$1ago$2",
-		`(\A|\W|_)for (\d+)\s*s(\z|\W|_)`:            "$1$2 second ago$3",
-		`(\A|\W|_)for (\d+) sekunder(\z|\W|_)`:       "$1$2 second ago$3",
 		`(\A|\W|_)for (\d+)\s*h(\z|\W|_)`:            "$1$2 hour ago$3",
 		`(\A|\W|_)for (\d+) timer(\z|\W|_)`:          "$1$2 hour ago$3",
 		`(\A|\W|_)for (\d+)\s*m(\z|\W|_)`:            "$1$2 minute ago$3",
 		`(\A|\W|_)for (\d+) minutter(\z|\W|_)`:       "$1$2 minute ago$3",
+		`(\A|\W|_)for (\d+)\s*s(\z|\W|_)`:            "$1$2 second ago$3",
+		`(\A|\W|_)for (\d+) sekunder(\z|\W|_)`:       "$1$2 second ago$3",
 	},
 }
 

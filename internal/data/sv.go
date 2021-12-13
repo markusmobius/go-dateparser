@@ -145,11 +145,11 @@ var sv_Locale = LocaleData{
 		`(\A|\W|_)om(\z|\W|_)`:                       "$1in$2",
 		`(\A|\W|_)från nu(\z|\W|_)`:                  "$1in$2",
 		`(\A|\W|_)sedan(\z|\W|_)`:                    "$1ago$2",
-		`(\A|\W|_)förra året(\z|\W|_)`:               "$11 year ago$2",
-		`(\A|\W|_)förrgår(\z|\W|_)`:                  "$12 day ago$2",
 		`(\A|\W|_)igår(\z|\W|_)`:                     "$11 day ago$2",
 		`(\A|\W|_)idag(\z|\W|_)`:                     "$10 day ago$2",
 		`(\A|\W|_)imorgon(\z|\W|_)`:                  "$1in 1 day$2",
+		`(\A|\W|_)förra året(\z|\W|_)`:               "$11 year ago$2",
+		`(\A|\W|_)förrgår(\z|\W|_)`:                  "$12 day ago$2",
 	},
 }
 

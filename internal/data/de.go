@@ -149,9 +149,9 @@ var de_Locale = LocaleData{
 		`(\A|\W|_)vor(\z|\W|_)`:                "$1ago$2",
 		`(\A|\W|_)vorgestern(\z|\W|_)`:         "$12 day ago$2",
 		`(\A|\W|_)übermorgen(\z|\W|_)`:         "$1in 2 day$2",
-		`(\A|\W|_)vor (\d+)\s*h(\z|\W|_)`:      "$1$2 hour ago$3",
 		`(\A|\W|_)vor (\d+)\s*m(\z|\W|_)`:      "$1$2 minute ago$3",
 		`(\A|\W|_)vor (\d+)\s*s(\z|\W|_)`:      "$1$2 second ago$3",
+		`(\A|\W|_)vor (\d+)\s*h(\z|\W|_)`:      "$1$2 hour ago$3",
 	},
 }
 
