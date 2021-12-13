@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -162,7 +163,7 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	return clone
 }
 
-func (ld *LocaleData) ValidateRegexes() error {
+func (ld *LocaleData) Validate() error {
 	// If this locale use word spacing, change the patterns and its replacement
 	if !ld.NoWordSpacing {
 		// Helper functions
@@ -207,9 +208,8 @@ func (ld *LocaleData) ValidateRegexes() error {
 		}
 	}
 
-	// Validate regex patterns
+	// Validate patterns
 	var err error
-
 	for pattern := range ld.Simplifications {
 		_, err = regexp.Compile(pattern)
 		if err != nil {
@@ -223,6 +223,30 @@ func (ld *LocaleData) ValidateRegexes() error {
 			return fmt.Errorf("translation pattern error for %s: %w", ld.Name, err)
 		}
 	}
+
+	// Sort translations
+	sort.Slice(ld.Translations, func(a, b int) bool {
+		translationA := ld.Translations[a].Translation
+		translationB := ld.Translations[b].Translation
+
+		if translationA == translationB {
+			patternA := ld.Translations[a].Pattern
+			patternB := ld.Translations[b].Pattern
+			return patternA < patternB
+		}
+
+		aHasRegex := strings.Contains(translationA, "$")
+		bHasRegex := strings.Contains(translationB, "$")
+
+		switch {
+		case aHasRegex && !bHasRegex:
+			return false
+		case !aHasRegex && bHasRegex:
+			return true
+		default:
+			return translationA < translationB
+		}
+	})
 
 	return nil
 }
