@@ -2,7 +2,7 @@
 
 package data
 
-import _ "regexp"
+import "regexp"
 
 type LocaleData struct {
 	Name                  string
@@ -12,8 +12,8 @@ type LocaleData struct {
 	SentenceSplitterGroup int
 	SkipWords             []string
 	PertainWords          []string
-	Simplifications       map[string]string
-	Translations          map[string]string
+	Simplifications       map[*regexp.Regexp]string
+	Translations          map[*regexp.Regexp]string
 }
 
 var LocaleDataMap = map[string]LocaleData{

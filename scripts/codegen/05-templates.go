@@ -83,7 +83,7 @@ const localeDataMapTemplate = `
 
 package data
 
-import _ "regexp"
+import "regexp"
 
 type LocaleData struct {
 	Name                  string
@@ -93,8 +93,8 @@ type LocaleData struct {
 	SentenceSplitterGroup int
 	SkipWords             []string
 	PertainWords          []string
-	Simplifications       map[string]string
-	Translations          map[string]string
+	Simplifications       map[*regexp.Regexp]string
+	Translations          map[*regexp.Regexp]string
 }
 
 var LocaleDataMap = map[string]LocaleData {
@@ -113,14 +113,14 @@ var {{localeName .Name}} = LocaleData {
 	SentenceSplitterGroup: {{.SentenceSplitterGroup}},
 	SkipWords:    []string{ {{range $v := .SkipWords}}"{{$v}}", {{end}} },
 	PertainWords: []string{ {{range $v := .PertainWords}}"{{$v}}", {{end}} },
-	Simplifications: map[string]string{
+	Simplifications: map[*regexp.Regexp]string{
 		{{range $pattern, $replacement := .Simplifications -}}
-		` + "`{{$pattern}}`" + `: "{{$replacement}}",
+		` + "regexp.MustCompile(`{{$pattern}}`)" + `: "{{$replacement}}",
 		{{end}}
 	},
-	Translations: map[string]string{
+	Translations: map[*regexp.Regexp]string{
 		{{range $entry := .Translations -}}
-		` + "`{{$entry.Pattern}}`" + `: "{{$entry.Translation}}",
+		` + "regexp.MustCompile(`{{$entry.Pattern}}`)" + `: "{{$entry.Translation}}",
 		{{end}}
 	},
 }
