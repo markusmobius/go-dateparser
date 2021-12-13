@@ -92,6 +92,11 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		}
 	}
 
+	// Validate locale regex patterns
+	for _, data := range finalLocaleData {
+		data.ValidateRegexes()
+	}
+
 	// Generate code
 	os.RemoveAll(GO_CODE_DIR)
 	os.MkdirAll(GO_CODE_DIR, os.ModePerm)

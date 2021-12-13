@@ -1,6 +1,11 @@
 package main
 
-import "strings"
+import (
+	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+)
 
 type LocaleData struct {
 	Name                  string            `json:",omitempty"`
@@ -150,6 +155,71 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	}
 
 	return clone
+}
+
+func (ld *LocaleData) ValidateRegexes() error {
+	// If this locale use word spacing, change the patterns and its replacement
+	if !ld.NoWordSpacing {
+		// Helper functions
+		patternChanger := func(pattern string) string {
+			return `(\A|\W|_)` + pattern + `(\z|\W|_)`
+		}
+
+		replacementChanger := func(replacement string) string {
+			maxNumber := 1
+			replacement = rxGoCaptureGroup.ReplaceAllStringFunc(replacement, func(s string) string {
+				parts := rxGoCaptureGroup.FindStringSubmatch(s)
+				number, _ := strconv.Atoi(parts[1])
+				number++
+
+				if number > maxNumber {
+					maxNumber = number
+				}
+
+				return fmt.Sprintf("$%d", number)
+			})
+
+			return fmt.Sprintf("$1%s$%d", replacement, maxNumber+1)
+		}
+
+		// Replace simplifications
+		newSimplifications := map[string]string{}
+		for pattern, replacement := range ld.Simplifications {
+			pattern = patternChanger(pattern)
+			replacement = replacementChanger(replacement)
+			newSimplifications[pattern] = replacement
+		}
+		ld.Simplifications = newSimplifications
+
+		// Replace translations
+		ld.patternTrackers = map[string]struct{}{}
+		for i, trans := range ld.Translations {
+			newPattern := patternChanger(trans.Pattern)
+			newTranslation := replacementChanger(trans.Translation)
+
+			ld.patternTrackers[newPattern] = struct{}{}
+			ld.Translations[i] = TranslationData{newPattern, newTranslation}
+		}
+	}
+
+	// Validate regex patterns
+	var err error
+
+	for pattern := range ld.Simplifications {
+		_, err = regexp.Compile(pattern)
+		if err != nil {
+			return fmt.Errorf("simplification pattern error for %s: %w", ld.Name, err)
+		}
+	}
+
+	for _, trans := range ld.Translations {
+		_, err = regexp.Compile(trans.Pattern)
+		if err != nil {
+			return fmt.Errorf("translation pattern error for %s: %w", ld.Name, err)
+		}
+	}
+
+	return nil
 }
 
 type CldrTerritoryData struct {
