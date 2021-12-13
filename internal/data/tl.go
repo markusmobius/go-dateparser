@@ -2,8 +2,8 @@
 
 package data
 
-var _Locale = LocaleData{
-	Name:      "",
+var tl_Locale = LocaleData{
+	Name:      "tl",
 	DateOrder: "",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|"},
 	Simplifications: map[string]string{

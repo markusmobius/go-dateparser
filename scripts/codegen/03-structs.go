@@ -98,6 +98,15 @@ func (ld LocaleData) Clone() LocaleData {
 
 func (ld LocaleData) Merge(input LocaleData) LocaleData {
 	clone := ld.Clone()
+
+	if clone.Name == "" {
+		clone.Name = input.Name
+	}
+
+	if clone.DateOrder == "" {
+		clone.DateOrder = input.DateOrder
+	}
+
 	clone.NoWordSpacing = clone.NoWordSpacing || input.NoWordSpacing
 	clone.SentenceSplitterGroup = input.SentenceSplitterGroup
 	clone.SkipWords = cleanList(false, append(clone.SkipWords, input.SkipWords...)...)

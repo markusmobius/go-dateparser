@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -67,6 +68,9 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	for language, locales := range languageLocalesMap {
 		// Fetch suplemental data
 		supplementalData, supplementalExist := supplementalLocaleData[language]
+		if language == "tl" {
+			fmt.Println(supplementalData)
+		}
 
 		// Process language data
 		languageData, languageExist := cldrLocaleData[language]

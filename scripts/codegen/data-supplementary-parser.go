@@ -16,17 +16,20 @@ func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[stri
 	result := map[string]LocaleData{}
 
 	for language := range languageLocalesMap {
+		baseClone := baseData.Clone()
+		baseClone.Name = language
+
 		fPath := filepath.Join(SUPPLEMENTARY_DIR, language+".yaml")
 		localeData, err := parseSupplementaryFile(fPath)
 		if os.IsNotExist(err) {
-			result[language] = *baseData
+			result[language] = baseClone
 			continue
 		} else if err != nil {
 			return nil, err
 		}
 
 		log.Info().Msgf("parsed supplementary %s", language)
-		result[language] = localeData.Merge(*baseData)
+		result[language] = localeData.Merge(baseClone)
 	}
 
 	return result, nil
