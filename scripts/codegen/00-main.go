@@ -65,21 +65,30 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	// Merge locale data
 	finalLocaleData := map[string]LocaleData{}
 	for language, locales := range languageLocalesMap {
+		// Fetch suplemental data
 		supplementalData, supplementalExist := supplementalLocaleData[language]
 
-		locales = append([]string{language}, locales...)
+		// Process language data
+		languageData, languageExist := cldrLocaleData[language]
+		if !languageExist && !supplementalExist {
+			continue
+		} else {
+			languageData = languageData.Merge(supplementalData)
+			finalLocaleData[language] = languageData
+		}
+
+		// Process sub locales data
 		for _, locale := range locales {
-			cldrData, cldrExist := cldrLocaleData[locale]
-			if !cldrExist && !supplementalExist {
+			localeData, localeExist := cldrLocaleData[locale]
+			if !localeExist && !supplementalExist {
 				continue
 			}
 
-			data := mergeLocaleData(cldrData, supplementalData)
-			if data.Name == "" {
-				data.Name = language
-			}
+			localeData = localeData.Merge(supplementalData)
+			localeData = localeData.Reduce(languageData)
+			localeData.Parent = language
 
-			finalLocaleData[locale] = data
+			finalLocaleData[locale] = localeData
 		}
 	}
 

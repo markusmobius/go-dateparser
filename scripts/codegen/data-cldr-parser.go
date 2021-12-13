@@ -44,152 +44,125 @@ func parseCldrData(locale string) (*LocaleData, error) {
 	gregorianData := cldrGregorian.Main[locale].Dates.Calendars.Gregorian
 	dateFieldsData := cldrDateFields.Main[locale].Dates.Fields
 
-	// Generate locale data
-	setLocaleMonthData := func(month int) []string {
-		strMonth := strconv.Itoa(month)
-		return cleanList(true, localeMonthFilter,
-			gregorianData.Months.Format.Wide[strMonth],
-			gregorianData.Months.Format.Abbreviated[strMonth],
-			gregorianData.Months.StandAlone.Wide[strMonth],
-			gregorianData.Months.StandAlone.Abbreviated[strMonth])
+	// Prepare helper function
+	addMonthTranslations := func(data *LocaleData, monthNumber int) {
+		strMonthNumber := strconv.Itoa(monthNumber)
+		localNames := filterList(localeMonthFilter,
+			gregorianData.Months.Format.Wide[strMonthNumber],
+			gregorianData.Months.Format.Abbreviated[strMonthNumber],
+			gregorianData.Months.StandAlone.Wide[strMonthNumber],
+			gregorianData.Months.StandAlone.Abbreviated[strMonthNumber])
+
+		enMonthName := enMonthNames[monthNumber]
+		for _, localName := range localNames {
+			data.AddTranslation(localName, enMonthName, true)
+		}
 	}
 
-	setLocaleWeekDays := func(weekDays string) []string {
-		return cleanList(true, nil,
-			gregorianData.Days.Format.Wide[weekDays],
-			gregorianData.Days.Format.Abbreviated[weekDays],
-			gregorianData.Days.StandAlone.Wide[weekDays],
-			gregorianData.Days.StandAlone.Abbreviated[weekDays])
+	addWeekDayTranslations := func(data *LocaleData, weekDayNumber int) {
+		enDayName := enDayNames[weekDayNumber]
+		enShortDayName := enDayName[:3]
+		localNames := []string{
+			gregorianData.Days.Format.Wide[enShortDayName],
+			gregorianData.Days.Format.Abbreviated[enShortDayName],
+			gregorianData.Days.StandAlone.Wide[enShortDayName],
+			gregorianData.Days.StandAlone.Abbreviated[enShortDayName]}
+
+		for _, localName := range localNames {
+			data.AddTranslation(localName, enDayName, true)
+		}
 	}
 
-	setLocaleDayPeriods := func(period string) []string {
-		periodList := []string{
+	addDayPeriodTranslations := func(data *LocaleData, period string) {
+		localNames := []string{
 			gregorianData.DayPeriods.Format.Wide[period],
 			gregorianData.DayPeriods.Format.Abbreviated[period],
 			gregorianData.DayPeriods.StandAlone.Wide[period],
 			gregorianData.DayPeriods.StandAlone.Abbreviated[period],
 		}
 
-		for i, p := range periodList {
-			periodList[i] = rxAmPmPattern.ReplaceAllString(p, period)
+		for _, localName := range localNames {
+			localName = rxAmPmPattern.ReplaceAllString(localName, period)
+			data.AddTranslation(localName, period, true)
 		}
-
-		return cleanList(true, nil, periodList...)
 	}
 
-	setLocaleDateFields := func(fieldName string, attr string) []string {
-		finalList := make([]string, 3)
+	addDateFieldTranslations := func(data *LocaleData, fieldName string) {
+		// Create dateField keys
+		cleanFieldName := rxSanitizeDateField.ReplaceAllString(fieldName, "")
+		cleanFieldName = strings.TrimSpace(cleanFieldName)
+
 		keys := []string{
-			fieldName,
-			fieldName + "-short",
-			fieldName + "-narrow",
+			cleanFieldName,
+			cleanFieldName + "-short",
+			cleanFieldName + "-narrow",
 		}
 
-		for i, key := range keys {
-			switch attr {
-			case "display":
-				finalList[i] = dateFieldsData[key].DisplayName
-			case "relative-past":
-				finalList[i] = dateFieldsData[key].RelativeTypeMin1
-			case "relative-now":
-				finalList[i] = dateFieldsData[key].RelativeType0
-			case "relative-future":
-				finalList[i] = dateFieldsData[key].RelativeType1
+		// Fetch patterns
+		var localPatterns []string
+		var filter func(str string) bool
+
+		if strings.Contains(fieldName, "$") { // Regex field
+			filter = regexFilter
+
+			if strings.Contains(fieldName, "in") { // Is future time
+				for _, key := range keys {
+					localPatterns = append(localPatterns,
+						dateFieldsData[key].RelativeTimeTypeFuture.CountOne,
+						dateFieldsData[key].RelativeTimeTypeFuture.CountOther)
+				}
+			} else if strings.Contains(fieldName, "ago") { // Is past time
+				for _, key := range keys {
+					localPatterns = append(localPatterns,
+						dateFieldsData[key].RelativeTimeTypePast.CountOne,
+						dateFieldsData[key].RelativeTimeTypePast.CountOther)
+				}
+			}
+		} else { // Handle normal fields
+			localPatterns = make([]string, len(keys))
+
+			for i, key := range keys {
+				switch {
+				case strings.Contains(fieldName, "0"): // Is current time
+					localPatterns[i] = dateFieldsData[key].RelativeType0
+				case strings.Contains(fieldName, "ago"): // Is past time
+					localPatterns[i] = dateFieldsData[key].RelativeTypeMin1
+				case strings.Contains(fieldName, "in"): // Is future time
+					localPatterns[i] = dateFieldsData[key].RelativeType1
+				default: // Is display
+					localPatterns[i] = dateFieldsData[key].DisplayName
+				}
 			}
 		}
 
-		return cleanList(true, nil, finalList...)
+		// Save the translations
+		localPatterns = filterList(filter, localPatterns...)
+
+		for _, localPattern := range localPatterns {
+			data.AddTranslation(localPattern, fieldName, true)
+		}
 	}
 
-	setLocaleRegexes := func(fieldName string, relativeType string) []string {
-		var list []string
-		keys := []string{
-			fieldName,
-			fieldName + "-short",
-			fieldName + "-narrow",
-		}
-
-		if relativeType == "future" {
-			for _, key := range keys {
-				list = append(list,
-					dateFieldsData[key].RelativeTimeTypeFuture.CountOne,
-					dateFieldsData[key].RelativeTimeTypeFuture.CountOther)
-			}
-		} else {
-			for _, key := range keys {
-				list = append(list,
-					dateFieldsData[key].RelativeTimeTypePast.CountOne,
-					dateFieldsData[key].RelativeTimeTypePast.CountOther)
-			}
-		}
-
-		return cleanList(true, regexFilter, list...)
-	}
-
+	// Generate locale data
 	data := LocaleData{
 		Name:      locale,
 		DateOrder: rxDateOrderPattern.ReplaceAllString(gregorianData.DateFormats.Short, "$1$2$3"),
-		January:   setLocaleMonthData(1),
-		February:  setLocaleMonthData(2),
-		March:     setLocaleMonthData(3),
-		April:     setLocaleMonthData(4),
-		May:       setLocaleMonthData(5),
-		June:      setLocaleMonthData(6),
-		July:      setLocaleMonthData(7),
-		August:    setLocaleMonthData(8),
-		September: setLocaleMonthData(9),
-		October:   setLocaleMonthData(10),
-		November:  setLocaleMonthData(11),
-		December:  setLocaleMonthData(12),
-		Monday:    setLocaleWeekDays("mon"),
-		Tuesday:   setLocaleWeekDays("tue"),
-		Wednesday: setLocaleWeekDays("wed"),
-		Thursday:  setLocaleWeekDays("thu"),
-		Friday:    setLocaleWeekDays("fri"),
-		Saturday:  setLocaleWeekDays("sat"),
-		Sunday:    setLocaleWeekDays("sun"),
-		AM:        setLocaleDayPeriods("am"),
-		PM:        setLocaleDayPeriods("pm"),
-		Year:      setLocaleDateFields("year", "display"),
-		Month:     setLocaleDateFields("month", "display"),
-		Week:      setLocaleDateFields("week", "display"),
-		Day:       setLocaleDateFields("day", "display"),
-		Hour:      setLocaleDateFields("hour", "display"),
-		Minute:    setLocaleDateFields("minute", "display"),
-		Second:    setLocaleDateFields("second", "display"),
-		RelativeType: cleanEmptyStringListMap(map[string][]string{
-			"1 year ago":   setLocaleDateFields("year", "relative-past"),
-			"0 year ago":   setLocaleDateFields("year", "relative-now"),
-			"in 1 year":    setLocaleDateFields("year", "relative-future"),
-			"1 month ago":  setLocaleDateFields("month", "relative-past"),
-			"0 month ago":  setLocaleDateFields("month", "relative-now"),
-			"in 1 month":   setLocaleDateFields("month", "relative-future"),
-			"1 week ago":   setLocaleDateFields("week", "relative-past"),
-			"0 week ago":   setLocaleDateFields("week", "relative-now"),
-			"in 1 week":    setLocaleDateFields("week", "relative-future"),
-			"1 day ago":    setLocaleDateFields("day", "relative-past"),
-			"0 day ago":    setLocaleDateFields("day", "relative-now"),
-			"in 1 day":     setLocaleDateFields("day", "relative-future"),
-			"0 hour ago":   setLocaleDateFields("hour", "relative-now"),
-			"0 minute ago": setLocaleDateFields("minute", "relative-now"),
-			"0 second ago": setLocaleDateFields("second", "relative-now"),
-		}),
-		RelativeTypeRegex: cleanEmptyStringListMap(map[string][]string{
-			"in $1 year":    setLocaleRegexes("year", "future"),
-			"$1 year ago":   setLocaleRegexes("year", "past"),
-			"in $1 month":   setLocaleRegexes("month", "future"),
-			"$1 month ago":  setLocaleRegexes("month", "past"),
-			"in $1 week":    setLocaleRegexes("week", "future"),
-			"$1 week ago":   setLocaleRegexes("week", "past"),
-			"in $1 day":     setLocaleRegexes("day", "future"),
-			"$1 day ago":    setLocaleRegexes("day", "past"),
-			"in $1 hour":    setLocaleRegexes("hour", "future"),
-			"$1 hour ago":   setLocaleRegexes("hour", "past"),
-			"in $1 minute":  setLocaleRegexes("minute", "future"),
-			"$1 minute ago": setLocaleRegexes("minute", "past"),
-			"in $1 second":  setLocaleRegexes("second", "future"),
-			"$1 second ago": setLocaleRegexes("second", "past"),
-		}),
+	}
+
+	for month := 1; month <= 12; month++ {
+		addMonthTranslations(&data, month)
+	}
+
+	for day := 1; day <= 7; day++ {
+		addWeekDayTranslations(&data, day)
+	}
+
+	for _, period := range enDayPeriods {
+		addDayPeriodTranslations(&data, period)
+	}
+
+	for _, dateField := range enDateFields {
+		addDateFieldTranslations(&data, dateField)
 	}
 
 	return &data, nil

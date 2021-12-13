@@ -7,8 +7,7 @@ import (
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
 	// Parse base data
-	var baseData LocaleData
-	err := parseYamlFile(&baseData, SUPPLEMENTARY_BASE_PATH)
+	baseData, err := parseSupplementaryFile(SUPPLEMENTARY_BASE_PATH)
 	if err != nil {
 		return nil, err
 	}
@@ -17,46 +16,92 @@ func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[stri
 	result := map[string]LocaleData{}
 
 	for language := range languageLocalesMap {
-		localeData, err := parseSupplementaryData(language)
+		fPath := filepath.Join(SUPPLEMENTARY_DIR, language+".yaml")
+		localeData, err := parseSupplementaryFile(fPath)
 		if os.IsNotExist(err) {
+			result[language] = *baseData
 			continue
 		} else if err != nil {
 			return nil, err
 		}
 
 		log.Info().Msgf("parsed supplementary %s", language)
-		result[language] = mergeLocaleData(*localeData, baseData)
+		result[language] = localeData.Merge(*baseData)
 	}
 
 	return result, nil
 }
 
-func parseSupplementaryData(language string) (*LocaleData, error) {
+func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	// Parse YAML
-	var data LocaleData
-	fPath := filepath.Join(SUPPLEMENTARY_DIR, language+".yaml")
-	err := parseYamlFile(&data, fPath)
+	var yamlData SupplementaryData
+	err := parseYamlFile(&yamlData, fPath)
 	if err != nil {
 		return nil, err
 	}
 
-	// Convert list of simplication to map
-	data.Simplifications = map[string]string{}
-	for _, simplification := range data.SimplificationList {
-		for key, value := range simplification {
-			if value == "" {
-				continue
-			}
-
-			key = normalizeString(key)
-			value = normalizeString(value)
-			data.Simplifications[key] = value
+	// Prepare helper function
+	addTranslationFromStrings := func(data *LocaleData, translation string, entries []string) {
+		for _, entry := range entries {
+			data.AddTranslation(entry, translation, false)
 		}
 	}
 
-	data.SimplificationList = nil
-	if len(data.Simplifications) == 0 {
-		data.Simplifications = nil
+	addTranslationFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
+		for translation, entries := range mapStrings {
+			for _, entry := range entries {
+				data.AddTranslation(entry, translation, false)
+			}
+		}
+	}
+
+	// Generate locale data
+	data := LocaleData{
+		SkipWords:             cleanList(false, yamlData.SkipWords...),
+		PertainWords:          cleanList(false, yamlData.PertainWords...),
+		NoWordSpacing:         yamlData.NoWordSpacing,
+		SentenceSplitterGroup: yamlData.SentenceSplitterGroup,
+		Simplifications:       map[string]string{},
+	}
+
+	addTranslationFromStrings(&data, "january", yamlData.January)
+	addTranslationFromStrings(&data, "february", yamlData.February)
+	addTranslationFromStrings(&data, "march", yamlData.March)
+	addTranslationFromStrings(&data, "april", yamlData.April)
+	addTranslationFromStrings(&data, "may", yamlData.May)
+	addTranslationFromStrings(&data, "june", yamlData.June)
+	addTranslationFromStrings(&data, "july", yamlData.July)
+	addTranslationFromStrings(&data, "august", yamlData.August)
+	addTranslationFromStrings(&data, "september", yamlData.September)
+	addTranslationFromStrings(&data, "october", yamlData.October)
+	addTranslationFromStrings(&data, "november", yamlData.November)
+	addTranslationFromStrings(&data, "december", yamlData.December)
+	addTranslationFromStrings(&data, "monday", yamlData.Monday)
+	addTranslationFromStrings(&data, "tuesday", yamlData.Tuesday)
+	addTranslationFromStrings(&data, "wednesday", yamlData.Wednesday)
+	addTranslationFromStrings(&data, "thursday", yamlData.Thursday)
+	addTranslationFromStrings(&data, "friday", yamlData.Friday)
+	addTranslationFromStrings(&data, "saturday", yamlData.Saturday)
+	addTranslationFromStrings(&data, "sunday", yamlData.Sunday)
+	addTranslationFromStrings(&data, "am", yamlData.AM)
+	addTranslationFromStrings(&data, "pm", yamlData.PM)
+	addTranslationFromStrings(&data, "decade", yamlData.Decade)
+	addTranslationFromStrings(&data, "year", yamlData.Year)
+	addTranslationFromStrings(&data, "month", yamlData.Month)
+	addTranslationFromStrings(&data, "week", yamlData.Week)
+	addTranslationFromStrings(&data, "day", yamlData.Day)
+	addTranslationFromStrings(&data, "hour", yamlData.Hour)
+	addTranslationFromStrings(&data, "minute", yamlData.Minute)
+	addTranslationFromStrings(&data, "second", yamlData.Second)
+	addTranslationFromStrings(&data, "in", yamlData.In)
+	addTranslationFromStrings(&data, "ago", yamlData.Ago)
+	addTranslationFromMapStrings(&data, yamlData.RelativeType)
+	addTranslationFromMapStrings(&data, yamlData.RelativeTypeRegex)
+
+	for _, simplification := range yamlData.Simplifications {
+		for pattern, replacement := range simplification {
+			data.AddSimplification(pattern, replacement)
+		}
 	}
 
 	return &data, nil

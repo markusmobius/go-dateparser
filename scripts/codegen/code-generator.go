@@ -43,15 +43,16 @@ func generateLocaleDataCode(dstPath string, listData []LocaleData) error {
 		}
 	}
 
+	// Remove empty fields
+	code := b.Bytes()
+	code = rxGoEmptyField.ReplaceAll(code, []byte(""))
+	code = rxGoZeroField.ReplaceAll(code, []byte(""))
+
 	// Format code
-	code, err := format.Source(b.Bytes())
+	code, err := format.Source(code)
 	if err != nil {
 		return err
 	}
-
-	// Remove empty fields
-	code = rxGoEmptyField.ReplaceAll(code, []byte(""))
-	code = rxGoZeroField.ReplaceAll(code, []byte(""))
 
 	nRegex := bytes.Count(code, []byte("regexp"))
 	if nRegex <= 1 {

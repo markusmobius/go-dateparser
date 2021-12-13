@@ -37,14 +37,14 @@ var (
 	rxLocaleCleaner       = regexp.MustCompile(`-\w+`)
 	rxDateOrderPattern    = regexp.MustCompile(`([DMY])+\x{200f}*[-/. \t]*([DMY])+\x{200f}*[-/. \t]*([DMY])+`)
 	rxNotRelativePattern  = regexp.MustCompile(`[\+\-]\s*\{0\}`)
-	rxPlusMinus           = regexp.MustCompile(`[\+\-]`)
 	rxDefaultMonthPattern = regexp.MustCompile(`^m?[` + strings.Join(numberChars, "") + `]+$`)
 	rxSanitizeAposthrope  = regexp.MustCompile(strings.Join(apostropheLookAlikeChars, "|"))
+	rxSanitizeDateField   = regexp.MustCompile(`\$?\d+|^in|ago$`)
 	rxAmPmPattern         = regexp.MustCompile(`^\s*[AaPp]\s*\.?\s*[Mm]\s*\.?\s*$`)
 	rxParenthesisPattern  = regexp.MustCompile(`[\(\)]`)
-	rxGoEmptyField        = regexp.MustCompile(`(?m)^.*\{\},?$\n*`)
-	rxGoZeroField         = regexp.MustCompile(`(?m)^.*(false|0),?$\n*`)
-	rxGoRegexImport       = regexp.MustCompile(`(?m)^import "regexp"\s*$\n*`)
+	rxGoEmptyField        = regexp.MustCompile(`(?m)^.*\{\s*\},?$\n*`)
+	rxGoZeroField         = regexp.MustCompile(`(?m)^.*(false|0|nil),?$\n*`)
+	rxGoRegexImport       = regexp.MustCompile(`(?m)^\s*import "regexp"\s*$`)
 	rxPythonCaptureGroup  = regexp.MustCompile(`\\(\d+)`)
 
 	// Languages with insufficient translation data are excluded
@@ -101,5 +101,71 @@ var (
 		"nn": 36,
 		"et": 37,
 		"lv": 38,
+	}
+
+	enMonthNames = map[int]string{
+		1:  "january",
+		2:  "february",
+		3:  "march",
+		4:  "april",
+		5:  "may",
+		6:  "june",
+		7:  "july",
+		8:  "august",
+		9:  "september",
+		10: "october",
+		11: "november",
+		12: "december",
+	}
+
+	enDayNames = map[int]string{
+		1: "monday",
+		2: "tuesday",
+		3: "wednesday",
+		4: "thursday",
+		5: "friday",
+		6: "saturday",
+		7: "sunday",
+	}
+
+	enDayPeriods = []string{"am", "pm"}
+
+	enDateFields = []string{
+		"year",
+		"month",
+		"week",
+		"day",
+		"hour",
+		"minute",
+		"second",
+		"1 year ago",
+		"0 year ago",
+		"in 1 year",
+		"1 month ago",
+		"0 month ago",
+		"in 1 month",
+		"1 week ago",
+		"0 week ago",
+		"in 1 week",
+		"1 day ago",
+		"0 day ago",
+		"in 1 day",
+		"0 hour ago",
+		"0 minute ago",
+		"0 second ago",
+		"in $1 year",
+		"$1 year ago",
+		"in $1 month",
+		"$1 month ago",
+		"in $1 week",
+		"$1 week ago",
+		"in $1 day",
+		"$1 day ago",
+		"in $1 hour",
+		"$1 hour ago",
+		"in $1 minute",
+		"$1 minute ago",
+		"in $1 second",
+		"$1 second ago",
 	}
 )

@@ -2,50 +2,18 @@
 
 package data
 
-import "regexp"
+import _ "regexp"
 
 type LocaleData struct {
 	Name                  string
+	Parent                *LocaleData
 	DateOrder             string
-	SkipWords             []string
-	PertainWords          []string
 	NoWordSpacing         bool
 	SentenceSplitterGroup int
-	January               []string
-	February              []string
-	March                 []string
-	April                 []string
-	May                   []string
-	June                  []string
-	July                  []string
-	August                []string
-	September             []string
-	October               []string
-	November              []string
-	December              []string
-	Monday                []string
-	Tuesday               []string
-	Wednesday             []string
-	Thursday              []string
-	Friday                []string
-	Saturday              []string
-	Sunday                []string
-	AM                    []string
-	PM                    []string
-	Decade                []string
-	Year                  []string
-	Month                 []string
-	Week                  []string
-	Day                   []string
-	Hour                  []string
-	Minute                []string
-	Second                []string
-	In                    []string
-	Ago                   []string
-	RelativeType          map[string][]string
-	RelativeTypeRegex     map[string][]*regexp.Regexp
+	SkipWords             []string
+	PertainWords          []string
 	Simplifications       map[string]string
-	LocaleSpecific        map[string]LocaleData
+	Translations          map[string]string
 }
 
 var LocaleDataMap = map[string]LocaleData{
