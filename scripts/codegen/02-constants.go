@@ -46,7 +46,7 @@ var (
 	rxGoZeroField         = regexp.MustCompile(`(?m)^.*(false|0|nil),?$\n*`)
 	rxGoRegexImport       = regexp.MustCompile(`(?m)^\s*import "regexp"\s*$`)
 	rxPythonCaptureGroup  = regexp.MustCompile(`\\(\d+)`)
-	rxGoCaptureGroup      = regexp.MustCompile(`\$(\d+)`)
+	rxGoCaptureGroup      = regexp.MustCompile(`\$\{?(\d+)\}?`)
 
 	// Languages with insufficient translation data are excluded
 	excludedLanguages = map[string]struct{}{

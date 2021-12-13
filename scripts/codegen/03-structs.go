@@ -179,7 +179,7 @@ func (ld *LocaleData) ValidateRegexes() error {
 				return fmt.Sprintf("$%d", number)
 			})
 
-			return fmt.Sprintf("$1%s$%d", replacement, maxNumber+1)
+			return fmt.Sprintf("${1}%s${%d}", replacement, maxNumber+1)
 		}
 
 		// Replace simplifications
