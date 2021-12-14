@@ -129,7 +129,7 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 		listLocaleData[i] = data.LocaleDataMap[locale]
 	}
 
-	if len(locales) == 0 {
+	if len(listLocaleData) == 0 {
 		return nil, ErrNotFound
 	}
 
