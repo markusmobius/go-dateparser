@@ -8,7 +8,7 @@ var naq_Locale = LocaleData{
 	Name:      "naq",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)taraǀkhuumûǁkhâb(\z|\W|_)`), "${1}september${2}"},
 		{regexp.MustCompile(`(\A|\W|_)aoǁkhuumûǁkhâb(\z|\W|_)`), "${1}august${2}"},
 		{regexp.MustCompile(`(\A|\W|_)dondertaxtsees(\z|\W|_)`), "${1}thursday${2}"},

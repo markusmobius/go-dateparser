@@ -8,7 +8,7 @@ var bas_Locale = LocaleData{
 	Name:      "bas",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ŋgwà njaŋgumba(\z|\W|_)`), "${1}monday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)lìbuy li ńyèe(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},

@@ -8,7 +8,7 @@ var ky_Locale = LocaleData{
 	Name:      "ky",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) секунддан кийин(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) мүнөттөн кийин(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) аптадан кийин(\z|\W|_)`), "${1}in ${2} week${3}"},

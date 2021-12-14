@@ -8,7 +8,7 @@ var dz_Locale = LocaleData{
 	Name:      "dz",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)བངུན་ཕྲག་ (\d+) ཧེ་མ་(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ལོ་འཁོར་ (\d+) ཧེ་མ་(\z|\W|_)`), "${1}${2} year ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ཆུ་ཚོད་ (\d+) ཧེ་མ་(\z|\W|_)`), "${1}${2} hour ago${3}"},

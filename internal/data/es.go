@@ -9,11 +9,11 @@ var es_Locale = LocaleData{
 	DateOrder:    "DMY",
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "a las", "cerca", "de", "del", "en", "y", "|"},
 	PertainWords: []string{"de", "del"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)un(\z|\W|_)`):  "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)una(\z|\W|_)`): "${1}1${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)una(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)un(\z|\W|_)`), "${1}1${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -149,7 +149,7 @@ var es_AR_Locale = LocaleData{
 	Name:      "es-AR",
 	Parent:    &es_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) seg(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)hace (\d+) seg(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)seg(\z|\W|_)`), "${1}second${2}"},
@@ -244,7 +244,7 @@ var es_MX_Locale = LocaleData{
 	Name:      "es-MX",
 	Parent:    &es_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)la semana próxima(\z|\W|_)`), "${1}in 1 week${2}"},
 		{regexp.MustCompile(`(\A|\W|_)el año próximo(\z|\W|_)`), "${1}in 1 year${2}"},
 		{regexp.MustCompile(`(\A|\W|_)el mes próximo(\z|\W|_)`), "${1}in 1 month${2}"},
@@ -296,7 +296,7 @@ var es_PY_Locale = LocaleData{
 	Name:      "es-PY",
 	Parent:    &es_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) seg(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)hace (\d+) seg(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)seg(\z|\W|_)`), "${1}second${2}"},

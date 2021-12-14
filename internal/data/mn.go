@@ -8,7 +8,7 @@ var mn_Locale = LocaleData{
 	Name:      "mn",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) секундын дараа(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)арван хоёрдугаар сар(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)өнгөрсөн долоо хоног(\z|\W|_)`), "${1}1 week ago${2}"},

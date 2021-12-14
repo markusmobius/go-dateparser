@@ -8,7 +8,7 @@ var ar_Locale = LocaleData{
 	Name:      "ar",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "الساعة", "في", "مساءً", "هـ"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)خلال (\d+) أسبوع(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)خلال (\d+) ثانية(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)خلال (\d+) دقيقة(\z|\W|_)`), "${1}in ${2} minute${3}"},
@@ -92,7 +92,7 @@ var ar_AE_Locale = LocaleData{
 	Name:      "ar-AE",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)السنة التالية(\z|\W|_)`), "${1}in 1 year${2}"},
 		{regexp.MustCompile(`(\A|\W|_)هذه السنة(\z|\W|_)`), "${1}0 year ago${2}"},
 	},
@@ -114,7 +114,7 @@ var ar_DZ_Locale = LocaleData{
 	Name:      "ar-DZ",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)جويلية(\z|\W|_)`), "${1}july${2}"},
 		{regexp.MustCompile(`(\A|\W|_)أفريل(\z|\W|_)`), "${1}april${2}"},
 		{regexp.MustCompile(`(\A|\W|_)جانفي(\z|\W|_)`), "${1}january${2}"},
@@ -153,7 +153,7 @@ var ar_IQ_Locale = LocaleData{
 	Name:      "ar-IQ",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)تشرين الثاني(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)كانون الثاني(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)تشرين الأول(\z|\W|_)`), "${1}october${2}"},
@@ -174,7 +174,7 @@ var ar_JO_Locale = LocaleData{
 	Name:      "ar-JO",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)تشرين الثاني(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)كانون الثاني(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)تشرين الأول(\z|\W|_)`), "${1}october${2}"},
@@ -206,7 +206,7 @@ var ar_LB_Locale = LocaleData{
 	Name:      "ar-LB",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)تشرين الثاني(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)كانون الثاني(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)تشرين الأول(\z|\W|_)`), "${1}october${2}"},
@@ -232,7 +232,7 @@ var ar_MA_Locale = LocaleData{
 	Name:      "ar-MA",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)يوليوز(\z|\W|_)`), "${1}july${2}"},
 		{regexp.MustCompile(`(\A|\W|_)دجنبر(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)شتنبر(\z|\W|_)`), "${1}september${2}"},
@@ -246,7 +246,7 @@ var ar_MR_Locale = LocaleData{
 	Name:      "ar-MR",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)إبريل(\z|\W|_)`), "${1}april${2}"},
 		{regexp.MustCompile(`(\A|\W|_)دجمبر(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)شتمبر(\z|\W|_)`), "${1}september${2}"},
@@ -264,7 +264,7 @@ var ar_PS_Locale = LocaleData{
 	Name:      "ar-PS",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)تشرين الثاني(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)كانون الثاني(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)تشرين الأول(\z|\W|_)`), "${1}october${2}"},
@@ -314,7 +314,7 @@ var ar_SY_Locale = LocaleData{
 	Name:      "ar-SY",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)تشرين الثاني(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)كانون الثاني(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)تشرين الأول(\z|\W|_)`), "${1}october${2}"},
@@ -340,7 +340,7 @@ var ar_TN_Locale = LocaleData{
 	Name:      "ar-TN",
 	Parent:    &ar_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)جويلية(\z|\W|_)`), "${1}july${2}"},
 		{regexp.MustCompile(`(\A|\W|_)أفريل(\z|\W|_)`), "${1}april${2}"},
 		{regexp.MustCompile(`(\A|\W|_)جانفي(\z|\W|_)`), "${1}january${2}"},

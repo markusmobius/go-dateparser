@@ -8,7 +8,7 @@ var qu_Locale = LocaleData{
 	Name:      "qu",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)pauqar waray(\z|\W|_)`), "${1}march${2}"},
 		{regexp.MustCompile(`(\A|\W|_)qhapaq sitwa(\z|\W|_)`), "${1}august${2}"},
 		{regexp.MustCompile(`(\A|\W|_)hatun puquy(\z|\W|_)`), "${1}february${2}"},

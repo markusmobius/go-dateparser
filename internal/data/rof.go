@@ -8,7 +8,7 @@ var rof_Locale = LocaleData{
 	Name:      "rof",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mweri wa ikumi na mbili(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mweri wa ikumi na moja(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mweri wa katatu(\z|\W|_)`), "${1}march${2}"},

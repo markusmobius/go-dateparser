@@ -8,7 +8,7 @@ var bem_Locale = LocaleData{
 	Name:      "bem",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)pachibelushi(\z|\W|_)`), "${1}saturday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)palichibuli(\z|\W|_)`), "${1}tuesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)palichisano(\z|\W|_)`), "${1}friday${2}"},

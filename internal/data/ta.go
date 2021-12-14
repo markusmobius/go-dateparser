@@ -8,7 +8,7 @@ var ta_Locale = LocaleData{
 	Name:      "ta",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) வாரத்திற்கு முன்பு(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) விநாடிகளுக்கு முன்(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ஆண்டுகளுக்கு முன்(\z|\W|_)`), "${1}${2} year ago${3}"},

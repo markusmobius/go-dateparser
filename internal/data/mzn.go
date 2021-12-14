@@ -8,7 +8,7 @@ var mzn_Locale = LocaleData{
 	Name:      "mzn",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ثانیه دله(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ثانیه پیش(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) دقیقه دله(\z|\W|_)`), "${1}in ${2} minute${3}"},

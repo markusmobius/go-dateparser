@@ -8,7 +8,7 @@ var kde_Locale = LocaleData{
 	Name:      "kde",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mwedi wa nnyano na nnyano na m(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mwedi wa nnyano na nnyano na u(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)liduva lyannyano na mavili(\z|\W|_)`), "${1}friday${2}"},

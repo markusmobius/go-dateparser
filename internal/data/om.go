@@ -8,7 +8,7 @@ var om_Locale = LocaleData{
 	Name:      "om",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)onkololeessa(\z|\W|_)`), "${1}october${2}"},
 		{regexp.MustCompile(`(\A|\W|_)bitooteessa(\z|\W|_)`), "${1}march${2}"},
 		{regexp.MustCompile(`(\A|\W|_)guraandhala(\z|\W|_)`), "${1}february${2}"},

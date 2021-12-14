@@ -8,7 +8,7 @@ var sg_Locale = LocaleData{
 	Name:      "sg",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)nzîna ngbonga(\z|\W|_)`), "${1}second${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)bïkua-usïö(\z|\W|_)`), "${1}wednesday${2}"},

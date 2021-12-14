@@ -8,7 +8,7 @@ var kn_Locale = LocaleData{
 	Name:      "kn",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ಸೆಕೆಂಡುಗಳ ಹಿಂದೆ(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ತಿಂಗಳುಗಳ ಹಿಂದೆ(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ಸೆಕೆಂಡ್‌ಗಳಲ್ಲಿ(\z|\W|_)`), "${1}in ${2} second${3}"},

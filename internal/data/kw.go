@@ -8,7 +8,7 @@ var kw_Locale = LocaleData{
 	Name:      "kw",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mis gortheren(\z|\W|_)`), "${1}july${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mis gwynngala(\z|\W|_)`), "${1}september${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mis kevardhu(\z|\W|_)`), "${1}december${2}"},

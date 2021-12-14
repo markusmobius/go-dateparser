@@ -8,7 +8,7 @@ var ki_Locale = LocaleData{
 	Name:      "ki",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mwere wa ikũmi na ũmwe(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mwere wa gatandatũ(\z|\W|_)`), "${1}june${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mwere wa mũgwanja(\z|\W|_)`), "${1}july${2}"},

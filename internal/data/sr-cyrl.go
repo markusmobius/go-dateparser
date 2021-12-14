@@ -8,7 +8,7 @@ var sr_Cyrl_Locale = LocaleData{
 	Name:      "sr-Cyrl",
 	DateOrder: "DMY.",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)пре (\d+) секунде(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)пре (\d+) секунди(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)за (\d+) секунди(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -128,7 +128,7 @@ var sr_Cyrl_BA_Locale = LocaleData{
 	Name:      "sr-Cyrl-BA",
 	Parent:    &sr_Cyrl_Locale,
 	DateOrder: "DMY.",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)прије подне(\z|\W|_)`), "${1}am${2}"},
 		{regexp.MustCompile(`(\A|\W|_)недјеља(\z|\W|_)`), "${1}sunday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)сриједа(\z|\W|_)`), "${1}wednesday${2}"},
@@ -142,7 +142,7 @@ var sr_Cyrl_ME_Locale = LocaleData{
 	Name:      "sr-Cyrl-ME",
 	Parent:    &sr_Cyrl_Locale,
 	DateOrder: "DMY.",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)прије подне(\z|\W|_)`), "${1}am${2}"},
 		{regexp.MustCompile(`(\A|\W|_)недјеља(\z|\W|_)`), "${1}sunday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)сриједа(\z|\W|_)`), "${1}wednesday${2}"},
@@ -156,7 +156,7 @@ var sr_Cyrl_XK_Locale = LocaleData{
 	Name:      "sr-Cyrl-XK",
 	Parent:    &sr_Cyrl_Locale,
 	DateOrder: "DMY.",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)септ(\z|\W|_)`), "${1}september${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ср(\z|\W|_)`), "${1}wednesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ут(\z|\W|_)`), "${1}tuesday${2}"},

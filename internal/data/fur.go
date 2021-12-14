@@ -8,7 +8,7 @@ var fur_Locale = LocaleData{
 	Name:      "fur",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) setemanis indaûr(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) setemane indaûr(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) zornadis indaûr(\z|\W|_)`), "${1}${2} day ago${3}"},

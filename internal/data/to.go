@@ -8,7 +8,7 @@ var to_Locale = LocaleData{
 	Name:      "to",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)māhina 'e (\d+) kuo'osi(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)sekoni 'e (\d+) kuo'osi(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)'aho 'e (\d+) kuo'osi(\z|\W|_)`), "${1}${2} day ago${3}"},

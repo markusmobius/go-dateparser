@@ -8,7 +8,7 @@ var is_Locale = LocaleData{
 	Name:      "is",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)eftir (\d+) klukkustundir(\z|\W|_)`), "${1}in ${2} hour${3}"},
 		{regexp.MustCompile(`(\A|\W|_)fyrir (\d+) klukkustundum(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)eftir (\d+) klukkustund(\z|\W|_)`), "${1}in ${2} hour${3}"},

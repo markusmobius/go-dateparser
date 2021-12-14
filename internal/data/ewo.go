@@ -8,7 +8,7 @@ var ewo_Locale = LocaleData{
 	Name:      "ewo",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)sɔ́ndɔ məlú mə́bɛ̌(\z|\W|_)`), "${1}tuesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)sɔ́ndɔ məlú mə́lɛ́(\z|\W|_)`), "${1}wednesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)sɔ́ndɔ məlú mə́nyi(\z|\W|_)`), "${1}thursday${2}"},

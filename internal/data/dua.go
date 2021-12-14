@@ -8,7 +8,7 @@ var dua_Locale = LocaleData{
 	Name:      "dua",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)kíɛlɛ nítómb́í(\z|\W|_)`), "${1}1 day ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)madiɓɛ́díɓɛ́(\z|\W|_)`), "${1}july${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},

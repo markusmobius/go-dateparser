@@ -8,7 +8,7 @@ var mr_Locale = LocaleData{
 	Name:      "mr",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) आठवड्यांपूर्वी(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) महिन्यांपूर्वी(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) आठवड्यांमध्ये(\z|\W|_)`), "${1}in ${2} week${3}"},

@@ -8,7 +8,7 @@ var id_Locale = LocaleData{
 	Name:      "id",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "pukul", "tanggal", "yang", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) minggu yang lalu(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) bulan yang lalu(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) detik yang lalu(\z|\W|_)`), "${1}${2} second ago${3}"},

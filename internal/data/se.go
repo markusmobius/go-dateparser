@@ -8,7 +8,7 @@ var se_Locale = LocaleData{
 	Name:      "se",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) mánotbadji maŋŋilit(\z|\W|_)`), "${1}in ${2} month${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) minuhtta maŋŋilit(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) sekundda maŋŋilit(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -105,7 +105,7 @@ var se_FI_Locale = LocaleData{
 	Name:      "se-FI",
 	Parent:    &se_Locale,
 	DateOrder: "YMD",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) jagi siste(\z|\W|_)`), "${1}in ${2} year${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) jagi árat(\z|\W|_)`), "${1}${2} year ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)boahtte jagi(\z|\W|_)`), "${1}in 1 year${2}"},

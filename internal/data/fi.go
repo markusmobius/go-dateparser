@@ -8,10 +8,10 @@ var fi_Locale = LocaleData{
 	Name:      "fi",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ":n", ";", "@", "[", "]", "|"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)(\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua)(\z|\W|_)`): "${1}${4} ${2} ${3}${5}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)(\d+) (sekunnin|sekuntin|minuutin|tunnin|päivän|viikon|kuukauden|vuoden) (päästä|kuluttua)(\z|\W|_)`), "${1}${4} ${2} ${3}${5}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) kuukauden päästä(\z|\W|_)`), "${1}in ${2} month${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) kuukautta sitten(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) kuukausi sitten(\z|\W|_)`), "${1}${2} month ago${3}"},

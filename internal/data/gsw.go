@@ -8,7 +8,7 @@ var gsw_Locale = LocaleData{
 	Name:      "gsw",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)am vormittag(\z|\W|_)`), "${1}am${2}"},
 		{regexp.MustCompile(`(\A|\W|_)am namittag(\z|\W|_)`), "${1}pm${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},

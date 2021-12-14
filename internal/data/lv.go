@@ -8,7 +8,7 @@ var lv_Locale = LocaleData{
 	Name:      "lv",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)pirms (\d+) mēnešiem(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)pirms (\d+) sekundes(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)pirms (\d+) sekundēm(\z|\W|_)`), "${1}${2} second ago${3}"},

@@ -8,7 +8,7 @@ var nb_Locale = LocaleData{
 	Name:      "nb",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)for (\d+) sekunder siden(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)for (\d+) måneder siden(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)for (\d+) sekund siden(\z|\W|_)`), "${1}${2} second ago${3}"},

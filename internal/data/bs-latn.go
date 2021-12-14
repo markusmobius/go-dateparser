@@ -8,7 +8,7 @@ var bs_Latn_Locale = LocaleData{
 	Name:      "bs-Latn",
 	DateOrder: "DMY.",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)prije (\d+) mjeseci(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)prije (\d+) sedmica(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)prije (\d+) sedmicu(\z|\W|_)`), "${1}${2} week ago${3}"},

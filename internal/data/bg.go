@@ -8,12 +8,12 @@ var bg_Locale = LocaleData{
 	Name:      "bg",
 	DateOrder: "DMY 'Г'.",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "върху", "до", "на", "около", "от", "под"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)два(\z|\W|_)`):  "${1}2${2}",
-		regexp.MustCompile(`(\A|\W|_)един(\z|\W|_)`): "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)три(\z|\W|_)`):  "${1}3${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)един(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)два(\z|\W|_)`), "${1}2${2}"},
+		{regexp.MustCompile(`(\A|\W|_)три(\z|\W|_)`), "${1}3${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)преди (\d+) седмица(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)преди (\d+) седмици(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)преди (\d+) секунда(\z|\W|_)`), "${1}${2} second ago${3}"},

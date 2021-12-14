@@ -8,7 +8,7 @@ var ro_Locale = LocaleData{
 	Name:      "ro",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "de", "la", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)peste (\d+) de săptămâni(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)acum (\d+) de săptămâni(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)peste (\d+) de secunde(\z|\W|_)`), "${1}in ${2} second${3}"},

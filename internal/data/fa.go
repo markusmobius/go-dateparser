@@ -8,7 +8,7 @@ var fa_Locale = LocaleData{
 	Name:      "fa",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ثانیه بعد(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ثانیه پیش(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) دقیقه بعد(\z|\W|_)`), "${1}in ${2} minute${3}"},
@@ -99,7 +99,7 @@ var fa_AF_Locale = LocaleData{
 	Name:      "fa-AF",
 	Parent:    &fa_Locale,
 	DateOrder: "YMD",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)اگست(\z|\W|_)`), "${1}august${2}"},
 		{regexp.MustCompile(`(\A|\W|_)جنو(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)جول(\z|\W|_)`), "${1}july${2}"},

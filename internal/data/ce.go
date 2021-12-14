@@ -8,7 +8,7 @@ var ce_Locale = LocaleData{
 	Name:      "ce",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) секунд хьалха(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) кӏира даьлча(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) кӏира хьалха(\z|\W|_)`), "${1}${2} week ago${3}"},

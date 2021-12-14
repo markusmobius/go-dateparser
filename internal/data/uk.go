@@ -8,17 +8,17 @@ var uk_Locale = LocaleData{
 	Name:      "uk",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "близько", "о", "об", "і"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)^година(\z|\W|_)`):       "${1}1 година${2}",
-		regexp.MustCompile(`(\A|\W|_)^годину(\z|\W|_)`):       "${1}1 годину${2}",
-		regexp.MustCompile(`(\A|\W|_)^секунду(\z|\W|_)`):      "${1}1 секунду${2}",
-		regexp.MustCompile(`(\A|\W|_)^хвилину(\z|\W|_)`):      "${1}1 хвилину${2}",
-		regexp.MustCompile(`(\A|\W|_)за чверть(\z|\W|_)`):     "${1}15 хвилин${2}",
-		regexp.MustCompile(`(\A|\W|_)кілька секунд(\z|\W|_)`): "${1}44 секунди${2}",
-		regexp.MustCompile(`(\A|\W|_)кілька хвилин(\z|\W|_)`): "${1}2 хвилини${2}",
-		regexp.MustCompile(`(\A|\W|_)опів на(\z|\W|_)`):       "${1}30 хвилин${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)кілька секунд(\z|\W|_)`), "${1}44 секунди${2}"},
+		{regexp.MustCompile(`(\A|\W|_)кілька хвилин(\z|\W|_)`), "${1}2 хвилини${2}"},
+		{regexp.MustCompile(`(\A|\W|_)за чверть(\z|\W|_)`), "${1}15 хвилин${2}"},
+		{regexp.MustCompile(`(\A|\W|_)^секунду(\z|\W|_)`), "${1}1 секунду${2}"},
+		{regexp.MustCompile(`(\A|\W|_)^хвилину(\z|\W|_)`), "${1}1 хвилину${2}"},
+		{regexp.MustCompile(`(\A|\W|_)^година(\z|\W|_)`), "${1}1 година${2}"},
+		{regexp.MustCompile(`(\A|\W|_)^годину(\z|\W|_)`), "${1}1 годину${2}"},
+		{regexp.MustCompile(`(\A|\W|_)опів на(\z|\W|_)`), "${1}30 хвилин${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)через (\d+) секунди(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)через (\d+) секунду(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)через (\d+) тиждень(\z|\W|_)`), "${1}in ${2} week${3}"},

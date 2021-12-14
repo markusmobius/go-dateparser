@@ -64,7 +64,6 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		PertainWords:          cleanList(false, yamlData.PertainWords...),
 		NoWordSpacing:         yamlData.NoWordSpacing,
 		SentenceSplitterGroup: yamlData.SentenceSplitterGroup,
-		Simplifications:       map[string]string{},
 	}
 
 	addTranslationFromStrings(&data, "january", yamlData.January)

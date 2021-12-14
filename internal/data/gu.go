@@ -8,7 +8,7 @@ var gu_Locale = LocaleData{
 	Name:      "gu",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) અઠવાડિયા પહેલાં(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) મહિના પહેલાં(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) સેકંડ પહેલાં(\z|\W|_)`), "${1}${2} second ago${3}"},

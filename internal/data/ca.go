@@ -9,11 +9,11 @@ var ca_Locale = LocaleData{
 	DateOrder:    "DMY",
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "de", "del", "i", "l'", "|"},
 	PertainWords: []string{"de", "del"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)un(\z|\W|_)`):  "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)una(\z|\W|_)`): "${1}1${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)una(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)un(\z|\W|_)`), "${1}1${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)d'aquí a (\d+) setmanes(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)d'aquí a (\d+) setmana(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)d'aquí a (\d+) minuts(\z|\W|_)`), "${1}in ${2} minute${3}"},

@@ -9,14 +9,14 @@ var ja_Locale = LocaleData{
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
 	SkipWords:     []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "約"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日`): " $1-$2-$3 ",
-		regexp.MustCompile(`(\d+)時$`):                            " $1:00 ",
-		regexp.MustCompile(`(\d+)時(?:\s+)?(\d+)分`):               " $1:$2 ",
-		regexp.MustCompile(`(\d+)時(?:\s+)?(\d+)分(?:\s+)?(\d+)秒`): " $1:$2:$3 ",
-		regexp.MustCompile(`(\d+)月(?:\s+)?(\d+)日`):               " $1-$2 ",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日`), " $1-$2-$3 "},
+		{regexp.MustCompile(`(\d+)時(?:\s+)?(\d+)分(?:\s+)?(\d+)秒`), " $1:$2:$3 "},
+		{regexp.MustCompile(`(\d+)時(?:\s+)?(\d+)分`), " $1:$2 "},
+		{regexp.MustCompile(`(\d+)月(?:\s+)?(\d+)日`), " $1-$2 "},
+		{regexp.MustCompile(`(\d+)時$`), " $1:00 "},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\d+) か月前`), " $1 month ago "},
 		{regexp.MustCompile(`(\d+) か月後`), " in $1 month "},
 		{regexp.MustCompile(`(\d+) 時間前`), " $1 hour ago "},

@@ -8,7 +8,7 @@ var sw_Locale = LocaleData{
 	Name:      "sw",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)sekunde (\d+) zilizopita(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)sekunde (\d+) iliyopita(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)baada ya sekunde (\d+)(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -93,7 +93,7 @@ var sw_CD_Locale = LocaleData{
 	Name:      "sw-CD",
 	Parent:    &sw_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)juma(\z|\W|_)`), "${1}week${2}"},
 	},
 }

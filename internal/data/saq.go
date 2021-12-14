@@ -8,7 +8,7 @@ var saq_Locale = LocaleData{
 	Name:      "saq",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)lapa le tomon waare(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)lapa le tomon obo(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mderot ee ong'wan(\z|\W|_)`), "${1}tuesday${2}"},

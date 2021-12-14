@@ -8,7 +8,7 @@ var so_Locale = LocaleData{
 	Name:      "so",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)bisha laba iyo tobnaad(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)bisha kow iyo tobnaad(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)bisha saddexaad(\z|\W|_)`), "${1}march${2}"},

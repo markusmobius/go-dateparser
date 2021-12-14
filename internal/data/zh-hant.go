@@ -9,7 +9,7 @@ var zh_Hant_Locale = LocaleData{
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
 	SkipWords:     []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\d+) 個月前`), " $1 month ago "},
 		{regexp.MustCompile(`(\d+) 個月後`), " in $1 month "},
 		{regexp.MustCompile(`(\d+) 分鐘後`), " in $1 minute "},
@@ -80,7 +80,7 @@ var zh_Hant_HK_Locale = LocaleData{
 	Parent:        &zh_Hant_Locale,
 	DateOrder:     "DMY",
 	NoWordSpacing: true,
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\d+) 星期前`), " $1 week ago "},
 		{regexp.MustCompile(`(\d+) 星期後`), " in $1 week "},
 		{regexp.MustCompile(`(\d+) 日前`), " $1 day ago "},
@@ -120,7 +120,7 @@ var zh_Hant_MO_Locale = LocaleData{
 	Parent:        &zh_Hant_Locale,
 	DateOrder:     "DMY",
 	NoWordSpacing: true,
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\d+) 星期前`), " $1 week ago "},
 		{regexp.MustCompile(`(\d+) 星期後`), " in $1 week "},
 		{regexp.MustCompile(`(\d+) 日前`), " $1 day ago "},

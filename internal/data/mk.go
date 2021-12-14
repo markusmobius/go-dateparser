@@ -8,7 +8,7 @@ var mk_Locale = LocaleData{
 	Name:      "mk",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)пред (\d+) седмица(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)пред (\d+) седмици(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)пред (\d+) секунда(\z|\W|_)`), "${1}${2} second ago${3}"},

@@ -8,7 +8,7 @@ var lb_Locale = LocaleData{
 	Name:      "lb",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)virun (\d+) sekonn(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)virun (\d+) mount(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)virun (\d+) stonn(\z|\W|_)`), "${1}${2} hour ago${3}"},

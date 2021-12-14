@@ -8,7 +8,7 @@ var smn_Locale = LocaleData{
 	Name:      "smn",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)roovvâdmáánu(\z|\W|_)`), "${1}october${2}"},
 		{regexp.MustCompile(`(\A|\W|_)uđđâivemáánu(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)vástuppeeivi(\z|\W|_)`), "${1}friday${2}"},

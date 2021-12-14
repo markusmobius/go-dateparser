@@ -8,7 +8,7 @@ var nnh_Locale = LocaleData{
 	Name:      "nnh",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mbɔ́ɔntè tsetsɛ̀ɛ lyɛ̌'(\z|\W|_)`), "${1}thursday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ(\z|\W|_)`), "${1}july${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mbɔ́ɔntè mvfò lyɛ̌'(\z|\W|_)`), "${1}tuesday${2}"},

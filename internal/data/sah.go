@@ -8,7 +8,7 @@ var sah_Locale = LocaleData{
 	Name:      "sah",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) сөкүүндэ ынараа өттүгэр(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) нэдиэлэ анараа өттүгэр(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) чаас ынараа өттүгэр(\z|\W|_)`), "${1}${2} hour ago${3}"},

@@ -8,7 +8,7 @@ var zu_Locale = LocaleData{
 	Name:      "zu",
 	DateOrder: "MDY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) amasekhondi edlule(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) isekhondi eledlule(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) izinyanga ezedlule(\z|\W|_)`), "${1}${2} month ago${3}"},

@@ -8,7 +8,7 @@ var lkt_Locale = LocaleData{
 	Name:      "lkt",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)hékta wíyawapi (\d+) k'uŋ héhaŋ(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)letáŋhaŋ oȟ'áŋkȟo (\d+) kiŋháŋ(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)letáŋhaŋ wíyawapi (\d+) kiŋháŋ(\z|\W|_)`), "${1}in ${2} month${3}"},

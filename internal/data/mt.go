@@ -8,7 +8,7 @@ var mt_Locale = LocaleData{
 	Name:      "mt",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)il-ġimgħa li għaddiet(\z|\W|_)`), "${1}1 week ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)is-sena li għaddiet(\z|\W|_)`), "${1}1 year ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)il-ġimgħa d-dieħla(\z|\W|_)`), "${1}in 1 week${2}"},

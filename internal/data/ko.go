@@ -8,7 +8,7 @@ var ko_Locale = LocaleData{
 	Name:      "ko",
 	DateOrder: "YMD.",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+)개월 전(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+)개월 후(\z|\W|_)`), "${1}in ${2} month${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+)시간 전(\z|\W|_)`), "${1}${2} hour ago${3}"},

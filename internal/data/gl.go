@@ -8,7 +8,7 @@ var gl_Locale = LocaleData{
 	Name:      "gl",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)hai (\d+) segundos(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)en (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)hai (\d+) segundo(\z|\W|_)`), "${1}${2} second ago${3}"},

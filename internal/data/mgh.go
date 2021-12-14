@@ -8,7 +8,7 @@ var mgh_Locale = LocaleData{
 	Name:      "mgh",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mweri wo kumi na yel'li(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mweri wo thanu na mocha(\z|\W|_)`), "${1}june${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mweri wo kumi na moja(\z|\W|_)`), "${1}november${2}"},

@@ -8,7 +8,7 @@ var mua_Locale = LocaleData{
 	Name:      "mua",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)cok comme ma laŋ tǝ biŋ(\z|\W|_)`), "${1}second${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mamǝŋgwãafahbii(\z|\W|_)`), "${1}june${2}"},
 		{regexp.MustCompile(`(\A|\W|_)zah'nane/ comme(\z|\W|_)`), "${1}day${2}"},

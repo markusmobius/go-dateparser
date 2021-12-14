@@ -8,7 +8,7 @@ var mg_Locale = LocaleData{
 	Name:      "mg",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)alatsinainy(\z|\W|_)`), "${1}monday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)herinandro(\z|\W|_)`), "${1}week${2}"},

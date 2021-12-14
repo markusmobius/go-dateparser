@@ -8,7 +8,7 @@ var tr_Locale = LocaleData{
 	Name:      "tr",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "ve", "yaklaşık", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) dakika sonra(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) saniye sonra(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) hafta sonra(\z|\W|_)`), "${1}in ${2} week${3}"},

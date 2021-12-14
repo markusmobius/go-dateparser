@@ -8,7 +8,7 @@ var kl_Locale = LocaleData{
 	Name:      "kl",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)for (\d+) nalunaaquttap-akunnera siden(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)for (\d+) sapaatip-akunnera siden(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)om (\d+) nalunaaquttap-akunnera(\z|\W|_)`), "${1}in ${2} hour${3}"},

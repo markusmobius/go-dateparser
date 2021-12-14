@@ -8,7 +8,7 @@ var haw_Locale = LocaleData{
 	Name:      "haw",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)kepakemapa(\z|\W|_)`), "${1}september${2}"},
 		{regexp.MustCompile(`(\A|\W|_)last month(\z|\W|_)`), "${1}1 month ago${2}"},

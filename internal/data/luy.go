@@ -8,7 +8,7 @@ var luy_Locale = LocaleData{
 	Name:      "luy",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)murwa wa katano(\z|\W|_)`), "${1}friday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)murwa wa kanne(\z|\W|_)`), "${1}thursday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},

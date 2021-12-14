@@ -8,7 +8,7 @@ var sn_Locale = LocaleData{
 	Name:      "sn",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)nyamavhuvhu(\z|\W|_)`), "${1}august${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)chikunguru(\z|\W|_)`), "${1}july${2}"},

@@ -8,7 +8,7 @@ var sbp_Locale = LocaleData{
 	Name:      "sbp",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mushende magali(\z|\W|_)`), "${1}may${2}"},
 		{regexp.MustCompile(`(\A|\W|_)musongandembwe(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mupalangulwa(\z|\W|_)`), "${1}january${2}"},

@@ -8,7 +8,7 @@ var el_Locale = LocaleData{
 	Name:      "el",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)πριν από (\d+) δευτερόλεπτα(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)πριν από (\d+) δευτερόλεπτο(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)πριν από (\d+) εβδομάδες(\z|\W|_)`), "${1}${2} week ago${3}"},

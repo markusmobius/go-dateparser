@@ -8,7 +8,7 @@ var kam_Locale = LocaleData{
 	Name:      "kam",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mwai wa ĩkumi na ĩmwe(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mwai wa ĩkumi na ilĩ(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mwai wa thanthatũ(\z|\W|_)`), "${1}june${2}"},

@@ -8,16 +8,16 @@ var be_Locale = LocaleData{
 	Name:      "be",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "каля", "у", "і", "ў"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)(\d+)\s*гадзін\s(\d+)\s*хвілін(\z|\W|_)`): "${1}${2}:${3}${4}",
-		regexp.MustCompile(`(\A|\W|_)^гадзіна(\z|\W|_)`):                       "${1}1 гадзіна${2}",
-		regexp.MustCompile(`(\A|\W|_)^секунду(\z|\W|_)`):                       "${1}1 секунду${2}",
-		regexp.MustCompile(`(\A|\W|_)^хвіліну(\z|\W|_)`):                       "${1}1 хвіліну${2}",
-		regexp.MustCompile(`(\A|\W|_)гадзіну(\z|\W|_)`):                        "${1}1 гадзіну${2}",
-		regexp.MustCompile(`(\A|\W|_)некалькі секунд(\z|\W|_)`):                "${1}44 секунды${2}",
-		regexp.MustCompile(`(\A|\W|_)некалькі хвілін(\z|\W|_)`):                "${1}2 хвіліны${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)(\d+)\s*гадзін\s(\d+)\s*хвілін(\z|\W|_)`), "${1}${2}:${3}${4}"},
+		{regexp.MustCompile(`(\A|\W|_)некалькі секунд(\z|\W|_)`), "${1}44 секунды${2}"},
+		{regexp.MustCompile(`(\A|\W|_)некалькі хвілін(\z|\W|_)`), "${1}2 хвіліны${2}"},
+		{regexp.MustCompile(`(\A|\W|_)^гадзіна(\z|\W|_)`), "${1}1 гадзіна${2}"},
+		{regexp.MustCompile(`(\A|\W|_)^секунду(\z|\W|_)`), "${1}1 секунду${2}"},
+		{regexp.MustCompile(`(\A|\W|_)^хвіліну(\z|\W|_)`), "${1}1 хвіліну${2}"},
+		{regexp.MustCompile(`(\A|\W|_)гадзіну(\z|\W|_)`), "${1}1 гадзіну${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) гадзіну таму(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) гадзіны таму(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) секунду таму(\z|\W|_)`), "${1}${2} second ago${3}"},

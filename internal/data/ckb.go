@@ -8,7 +8,7 @@ var ckb_Locale = LocaleData{
 	Name:      "ckb",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)کانوونی دووەم(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)تشرینی دووەم(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)تشرینی یەکەم(\z|\W|_)`), "${1}october${2}"},

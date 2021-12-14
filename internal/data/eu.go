@@ -8,7 +8,7 @@ var eu_Locale = LocaleData{
 	Name:      "eu",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) hilabete barru(\z|\W|_)`), "${1}in ${2} month${3}"},
 		{regexp.MustCompile(`(\A|\W|_)duela (\d+) hilabete(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) segundo barru(\z|\W|_)`), "${1}in ${2} second${3}"},

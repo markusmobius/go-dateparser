@@ -8,7 +8,7 @@ var ak_Locale = LocaleData{
 	Name:      "ak",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)esusow aketseaba-kɔtɔnimba(\z|\W|_)`), "${1}may${2}"},
 		{regexp.MustCompile(`(\A|\W|_)obirade-ayɛwohomumu(\z|\W|_)`), "${1}june${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ayɛwoho-kitawonsa(\z|\W|_)`), "${1}july${2}"},

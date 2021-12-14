@@ -8,7 +8,7 @@ var agq_Locale = LocaleData{
 	Name:      "agq",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ndzɔ̀ŋɔ̀tɨ̀fʉ̀ghàdzughù(\z|\W|_)`), "${1}september${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ndzɔ̀ŋɔ̀chwaʔàkaa wo(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ndzɔ̀ŋɔ̀ghǔuwelɔ̀m(\z|\W|_)`), "${1}october${2}"},

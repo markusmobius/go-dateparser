@@ -8,15 +8,15 @@ var pl_Locale = LocaleData{
 	Name:      "pl",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "i", "o", "r.", "roku", "w", "|"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)dzisiaj(\z|\W|_)`):      "${1}0 dnia${2}",
-		regexp.MustCompile(`(\A|\W|_)dziś(\z|\W|_)`):         "${1}0 dnia${2}",
-		regexp.MustCompile(`(\A|\W|_)jutro(\z|\W|_)`):        "${1}za 1 dnia${2}",
-		regexp.MustCompile(`(\A|\W|_)onegdaj(\z|\W|_)`):      "${1}2 dnia${2}",
-		regexp.MustCompile(`(\A|\W|_)pojutrze(\z|\W|_)`):     "${1}za 2 dnia${2}",
-		regexp.MustCompile(`(\A|\W|_)przedwczoraj(\z|\W|_)`): "${1}2 dnia temu${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)przedwczoraj(\z|\W|_)`), "${1}2 dnia temu${2}"},
+		{regexp.MustCompile(`(\A|\W|_)pojutrze(\z|\W|_)`), "${1}za 2 dnia${2}"},
+		{regexp.MustCompile(`(\A|\W|_)dzisiaj(\z|\W|_)`), "${1}0 dnia${2}"},
+		{regexp.MustCompile(`(\A|\W|_)onegdaj(\z|\W|_)`), "${1}2 dnia${2}"},
+		{regexp.MustCompile(`(\A|\W|_)jutro(\z|\W|_)`), "${1}za 1 dnia${2}"},
+		{regexp.MustCompile(`(\A|\W|_)dziś(\z|\W|_)`), "${1}0 dnia${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)w przyszłym miesiącu(\z|\W|_)`), "${1}in 1 month${2}"},
 		{regexp.MustCompile(`(\A|\W|_)w przyszłym tygodniu(\z|\W|_)`), "${1}in 1 week${2}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) miesiąca temu(\z|\W|_)`), "${1}${2} month ago${3}"},

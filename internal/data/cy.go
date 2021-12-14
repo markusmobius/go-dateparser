@@ -8,7 +8,7 @@ var cy_Locale = LocaleData{
 	Name:      "cy",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) o flynyddoedd yn ôl(\z|\W|_)`), "${1}${2} year ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) diwrnod yn ôl(\z|\W|_)`), "${1}${2} day ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) wythnos yn ôl(\z|\W|_)`), "${1}${2} week ago${3}"},

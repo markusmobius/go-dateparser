@@ -8,7 +8,7 @@ var os_Locale = LocaleData{
 	Name:      "os",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) сахаты размӕ(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) сахаты фӕстӕ(\z|\W|_)`), "${1}in ${2} hour${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) бон раздӕр(\z|\W|_)`), "${1}${2} day ago${3}"},

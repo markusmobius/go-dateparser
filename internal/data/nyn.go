@@ -8,7 +8,7 @@ var nyn_Locale = LocaleData{
 	Name:      "nyn",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)okwaikumi na ibiri(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)okwaikumi na kumwe(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)obucweka/esekendi(\z|\W|_)`), "${1}second${2}"},

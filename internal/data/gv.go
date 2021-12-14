@@ -8,7 +8,7 @@ var gv_Locale = LocaleData{
 	Name:      "gv",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)toshiaght-arree(\z|\W|_)`), "${1}february${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mee ny nollick(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)jerrey-fouyir(\z|\W|_)`), "${1}october${2}"},

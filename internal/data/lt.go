@@ -8,7 +8,7 @@ var lt_Locale = LocaleData{
 	Name:      "lt",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)prieš (\d+) sekundžių(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)prieš (\d+) savaičių(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)prieš (\d+) mėnesių(\z|\W|_)`), "${1}${2} month ago${3}"},

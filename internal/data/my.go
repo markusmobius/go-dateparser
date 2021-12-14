@@ -8,7 +8,7 @@ var my_Locale = LocaleData{
 	Name:      "my",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ပြီးခဲ့သည့် (\d+) စက္ကန့်(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ပြီးခဲ့သည့် (\d+) နာရီ(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ပြီးခဲ့သည့် (\d+) နှစ်(\z|\W|_)`), "${1}${2} year ago${3}"},

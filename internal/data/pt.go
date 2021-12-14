@@ -9,12 +9,12 @@ var pt_Locale = LocaleData{
 	DateOrder:    "DMY",
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "cerca", "de", "e", "|", "às"},
 	PertainWords: []string{"de"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)alguns segundos(\z|\W|_)`): "${1}44 segundos${2}",
-		regexp.MustCompile(`(\A|\W|_)um(\z|\W|_)`):              "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)uma(\z|\W|_)`):             "${1}1${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)alguns segundos(\z|\W|_)`), "${1}44 segundos${2}"},
+		{regexp.MustCompile(`(\A|\W|_)uma(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)um(\z|\W|_)`), "${1}1${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)em (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)há (\d+) segundos(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)em (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
@@ -139,7 +139,7 @@ var pt_AO_Locale = LocaleData{
 	Name:      "pt-AO",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -170,7 +170,7 @@ var pt_CH_Locale = LocaleData{
 	Name:      "pt-CH",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -201,7 +201,7 @@ var pt_CV_Locale = LocaleData{
 	Name:      "pt-CV",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -232,7 +232,7 @@ var pt_GQ_Locale = LocaleData{
 	Name:      "pt-GQ",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -263,7 +263,7 @@ var pt_GW_Locale = LocaleData{
 	Name:      "pt-GW",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -294,7 +294,7 @@ var pt_LU_Locale = LocaleData{
 	Name:      "pt-LU",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -325,7 +325,7 @@ var pt_MO_Locale = LocaleData{
 	Name:      "pt-MO",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -356,7 +356,7 @@ var pt_MZ_Locale = LocaleData{
 	Name:      "pt-MZ",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -387,7 +387,7 @@ var pt_PT_Locale = LocaleData{
 	Name:      "pt-PT",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -418,7 +418,7 @@ var pt_ST_Locale = LocaleData{
 	Name:      "pt-ST",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},
@@ -449,7 +449,7 @@ var pt_TL_Locale = LocaleData{
 	Name:      "pt-TL",
 	Parent:    &pt_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundos(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) minutos(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)dentro de (\d+) segundo(\z|\W|_)`), "${1}in ${2} second${3}"},

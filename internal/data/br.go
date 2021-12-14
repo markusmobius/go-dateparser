@@ -8,7 +8,7 @@ var br_Locale = LocaleData{
 	Name:      "br",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)a-benn (\d+) eilenn(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)a-benn (\d+) sizhun(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)a-benn (\d+) bloaz(\z|\W|_)`), "${1}in ${2} year${3}"},

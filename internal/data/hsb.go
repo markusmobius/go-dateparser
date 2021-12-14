@@ -8,7 +8,7 @@ var hsb_Locale = LocaleData{
 	Name:      "hsb",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)před (\d+) tydźenjemi(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)před (\d+) hodźinami(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)před (\d+) sekundami(\z|\W|_)`), "${1}${2} second ago${3}"},

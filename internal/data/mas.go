@@ -8,7 +8,7 @@ var mas_Locale = LocaleData{
 	Name:      "mas",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)oloilépūnyīē inkókúâ(\z|\W|_)`), "${1}may${2}"},
 		{regexp.MustCompile(`(\A|\W|_)olodoyíóríê inkókúâ(\z|\W|_)`), "${1}april${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ɔlɔ́ɨ́bɔ́rárɛ(\z|\W|_)`), "${1}august${2}"},

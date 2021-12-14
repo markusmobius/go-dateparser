@@ -8,7 +8,7 @@ var ga_Locale = LocaleData{
 	Name:      "ga",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)i gceann (\d+) uair an chloig(\z|\W|_)`), "${1}in ${2} hour${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) uair an chloig ó shin(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)an tseachtain seo chugainn(\z|\W|_)`), "${1}in 1 week${2}"},

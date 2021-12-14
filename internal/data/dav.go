@@ -8,7 +8,7 @@ var dav_Locale = LocaleData{
 	Name:      "dav",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mori ghwa ikumi na imweri(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mori ghwa ikumi na iwi(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mori ghwa karandadu(\z|\W|_)`), "${1}june${2}"},

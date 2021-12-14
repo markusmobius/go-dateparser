@@ -8,7 +8,7 @@ var az_Locale = LocaleData{
 	Name:      "az",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) dəqiqə ərzində(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) saniyə ərzində(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) həftə ərzində(\z|\W|_)`), "${1}in ${2} week${3}"},

@@ -8,7 +8,7 @@ var yo_Locale = LocaleData{
 	Name:      "yo",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ọjọ́ àbámẹ́ta(\z|\W|_)`), "${1}saturday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ọjọ́ ìsẹ́gun(\z|\W|_)`), "${1}tuesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},
@@ -75,7 +75,7 @@ var yo_BJ_Locale = LocaleData{
 	Name:      "yo-BJ",
 	Parent:    &yo_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ɔjɔ́ àbámɛ́ta(\z|\W|_)`), "${1}saturday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)oshù shɛ́rɛ́(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ɔjɔ́ ìsɛ́gun(\z|\W|_)`), "${1}tuesday${2}"},

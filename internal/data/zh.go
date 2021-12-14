@@ -9,17 +9,17 @@ var zh_Locale = LocaleData{
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
 	SkipWords:     []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "约"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(?:上午|早上|凌晨)(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`):                              " $1:$2 am ",
-		regexp.MustCompile(`(?:中午|下午|(?:晚上?))(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`):                         " $1:$2 pm ",
-		regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日(?:\s+)?(\d+)时(?:\s+)?(\d+)分`):               " $1-$2-$3 $4:$5 ",
-		regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?`):                                  " $1-$2-$3 ",
-		regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?(?:\s+)?(\d{1,2})(?:点|:)(\d{1,2})`): " $1-$2-$3 $4:$5 ",
-		regexp.MustCompile(`(\d+)月(.*[前后])`):                                                               " $1 月$2 ",
-		regexp.MustCompile(`中午`):   " 12:00 ",
-		regexp.MustCompile(`半小时前`): " 30分前 ",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?(?:\s+)?(\d{1,2})(?:点|:)(\d{1,2})`), " $1-$2-$3 $4:$5 "},
+		{regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日(?:\s+)?(\d+)时(?:\s+)?(\d+)分`), " $1-$2-$3 $4:$5 "},
+		{regexp.MustCompile(`(?:中午|下午|(?:晚上?))(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`), " $1:$2 pm "},
+		{regexp.MustCompile(`(?:上午|早上|凌晨)(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`), " $1:$2 am "},
+		{regexp.MustCompile(`(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d{1,2})(?:日)?`), " $1-$2-$3 "},
+		{regexp.MustCompile(`(\d+)月(.*[前后])`), " $1 月$2 "},
+		{regexp.MustCompile(`半小时前`), " 30分前 "},
+		{regexp.MustCompile(`中午`), " 12:00 "},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`这一时间 / 此时`), " 0 hour ago "},
 		{regexp.MustCompile(`(\d+)个月前`), " $1 month ago "},
 		{regexp.MustCompile(`(\d+)个月后`), " in $1 month "},

@@ -12,13 +12,13 @@ type LocaleData struct {
 	SentenceSplitterGroup int
 	SkipWords             []string
 	PertainWords          []string
-	Simplifications       map[*regexp.Regexp]string
-	Translations          []TranslationData
+	Simplifications       []ReplacementData
+	Translations          []ReplacementData
 }
 
-type TranslationData struct {
+type ReplacementData struct {
 	Pattern     *regexp.Regexp
-	Translation string
+	Replacement string
 }
 
 var LocaleDataMap = map[string]LocaleData{

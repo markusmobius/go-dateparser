@@ -8,7 +8,7 @@ var jgo_Locale = LocaleData{
 	Name:      "jgo",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ɛ́ gɛ́ mɔ (\d+) ŋgap-mbi(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ɛ́ gɛ́ mɔ́ pɛsaŋ (\d+)(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ɛ́ gɛ́ mɔ́ lɛ́ꞌ (\d+)(\z|\W|_)`), "${1}${2} day ago${3}"},

@@ -8,7 +8,7 @@ var teo_Locale = LocaleData{
 	Name:      "teo",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)omodok'king'ol(\z|\W|_)`), "${1}june${2}"},
 		{regexp.MustCompile(`(\A|\W|_)nakaebarasa(\z|\W|_)`), "${1}monday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)osokosokoma(\z|\W|_)`), "${1}september${2}"},

@@ -8,7 +8,7 @@ var yi_Locale = LocaleData{
 	Name:      "yi",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)אין (\d+) טאָג אַרום(\z|\W|_)`), "${1}in ${2} day${3}"},
 		{regexp.MustCompile(`(\A|\W|_)אין (\d+) טעג אַרום(\z|\W|_)`), "${1}in ${2} day${3}"},
 		{regexp.MustCompile(`(\A|\W|_)פֿאַרגאנגענעם חודש(\z|\W|_)`), "${1}1 month ago${2}"},

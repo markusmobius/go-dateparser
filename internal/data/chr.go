@@ -8,7 +8,7 @@ var chr_Locale = LocaleData{
 	Name:      "chr",
 	DateOrder: "MDY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ꮎꮏ (\d+) ꭲᏻꮎꮩꮣꮖꮝꮧ ꮵꭸꮢ(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ꮎꮏ (\d+) ꮢꮎꮩꮣꮖꮝꮧ ꮵꭸꮢ(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ꭲꮷꮥꮨᏼꮜꮧꮢꭲ ꮵꭸꮢ(\z|\W|_)`), "${1}${2} year ago${3}"},

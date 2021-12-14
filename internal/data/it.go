@@ -8,10 +8,10 @@ var it_Locale = LocaleData{
 	Name:      "it",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "circa", "e", "|"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)(\d+)\s+ora(\z|\W|_)`): "${1}${2} ore${3}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)(\d+)\s+ora(\z|\W|_)`), "${1}${2} ore${3}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)tra (\d+) settimana(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)tra (\d+) settimane(\z|\W|_)`), "${1}in ${2} week${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) settimana fa(\z|\W|_)`), "${1}${2} week ago${3}"},

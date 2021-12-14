@@ -8,7 +8,7 @@ var rw_Locale = LocaleData{
 	Name:      "rw",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)kuwa gatandatu(\z|\W|_)`), "${1}saturday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)gashyantare(\z|\W|_)`), "${1}february${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ku cyumweru(\z|\W|_)`), "${1}sunday${2}"},

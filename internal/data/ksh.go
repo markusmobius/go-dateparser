@@ -8,7 +8,7 @@ var ksh_Locale = LocaleData{
 	Name:      "ksh",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)uhr nommendaachs(\z|\W|_)`), "${1}pm${2}"},
 		{regexp.MustCompile(`(\A|\W|_)uhr vörmiddaachs(\z|\W|_)`), "${1}am${2}"},
 		{regexp.MustCompile(`(\A|\W|_)vör (\d+) johre(\z|\W|_)`), "${1}${2} year ago${3}"},

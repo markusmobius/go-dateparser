@@ -8,12 +8,12 @@ var tl_Locale = LocaleData{
 	Name:      "tl",
 	DateOrder: "",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)isang araw(\z|\W|_)`): "${1}2 araw${2}",
-		regexp.MustCompile(`(\A|\W|_)kahapon(\z|\W|_)`):    "${1}1 araw nakaraan${2}",
-		regexp.MustCompile(`(\A|\W|_)ngayon(\z|\W|_)`):     "${1}0 segundo nakalipas${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)isang araw(\z|\W|_)`), "${1}2 araw${2}"},
+		{regexp.MustCompile(`(\A|\W|_)kahapon(\z|\W|_)`), "${1}1 araw nakaraan${2}"},
+		{regexp.MustCompile(`(\A|\W|_)ngayon(\z|\W|_)`), "${1}0 segundo nakalipas${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)miyerkules(\z|\W|_)`), "${1}wednesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)disyembre(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)nakalipas(\z|\W|_)`), "${1}ago${2}"},

@@ -8,7 +8,7 @@ var ast_Locale = LocaleData{
 	Name:      "ast",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)la selmana viniente(\z|\W|_)`), "${1}in 1 week${2}"},
 		{regexp.MustCompile(`(\A|\W|_)hai (\d+) segundos(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)hai (\d+) selmanes(\z|\W|_)`), "${1}${2} week ago${3}"},

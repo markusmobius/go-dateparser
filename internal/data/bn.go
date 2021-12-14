@@ -8,11 +8,11 @@ var bn_Locale = LocaleData{
 	Name:      "bn",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "ই", "এবং", "টা", "প্রায়", "লা", "শে"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)মধ্যরাত(\z|\W|_)`):  "${1}00:00${2}",
-		regexp.MustCompile(`(\A|\W|_)মধ্যাহ্ন(\z|\W|_)`): "${1}12:00${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)মধ্যাহ্ন(\z|\W|_)`), "${1}12:00${2}"},
+		{regexp.MustCompile(`(\A|\W|_)মধ্যরাত(\z|\W|_)`), "${1}00:00${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) সেকেন্ড পূর্বে(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) দিনের মধ্যে(\z|\W|_)`), "${1}in ${2} day${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) সেকেন্ড আগে(\z|\W|_)`), "${1}${2} second ago${3}"},

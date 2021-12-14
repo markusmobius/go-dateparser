@@ -8,7 +8,7 @@ var cs_Locale = LocaleData{
 	Name:      "cs",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "přibližně", "v", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)před (\d+) sekundami(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)před (\d+) hodinami(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)před (\d+) sekundou(\z|\W|_)`), "${1}${2} second ago${3}"},

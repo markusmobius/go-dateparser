@@ -8,7 +8,7 @@ var uz_Latn_Locale = LocaleData{
 	Name:      "uz-Latn",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) daqiqadan keyin(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) soniyadan keyin(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) haftadan keyin(\z|\W|_)`), "${1}in ${2} week${3}"},

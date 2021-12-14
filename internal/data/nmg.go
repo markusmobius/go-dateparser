@@ -8,7 +8,7 @@ var nmg_Locale = LocaleData{
 	Name:      "nmg",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)sɔ́ndɔ mafú málal(\z|\W|_)`), "${1}wednesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)sɔ́ndɔ mafú mába(\z|\W|_)`), "${1}tuesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)sɔ́ndɔ mafú mána(\z|\W|_)`), "${1}thursday${2}"},

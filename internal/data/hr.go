@@ -8,7 +8,7 @@ var hr_Locale = LocaleData{
 	Name:      "hr",
 	DateOrder: "DMY.",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)prije (\d+) mjeseci(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)prije (\d+) sekundi(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)prije (\d+) sekundu(\z|\W|_)`), "${1}${2} second ago${3}"},

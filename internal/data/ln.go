@@ -8,7 +8,7 @@ var ln_Locale = LocaleData{
 	Name:      "ln",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)sánzá ya zómi na míbalé(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)sánzá ya zómi na mɔ̌kɔ́(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mokɔlɔ mwa míbalé(\z|\W|_)`), "${1}tuesday${2}"},

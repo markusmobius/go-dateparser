@@ -8,7 +8,7 @@ var sr_Latn_Locale = LocaleData{
 	Name:      "sr-Latn",
 	DateOrder: "DMY.",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)pre (\d+) nedelja(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)pre (\d+) nedelje(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)pre (\d+) sekunde(\z|\W|_)`), "${1}${2} second ago${3}"},
@@ -128,7 +128,7 @@ var sr_Latn_BA_Locale = LocaleData{
 	Name:      "sr-Latn-BA",
 	Parent:    &sr_Latn_Locale,
 	DateOrder: "DMY.",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)prije podne(\z|\W|_)`), "${1}am${2}"},
 		{regexp.MustCompile(`(\A|\W|_)nedjelja(\z|\W|_)`), "${1}sunday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)srijeda(\z|\W|_)`), "${1}wednesday${2}"},
@@ -142,7 +142,7 @@ var sr_Latn_ME_Locale = LocaleData{
 	Name:      "sr-Latn-ME",
 	Parent:    &sr_Latn_Locale,
 	DateOrder: "DMY.",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)prije podne(\z|\W|_)`), "${1}am${2}"},
 		{regexp.MustCompile(`(\A|\W|_)nedjelja(\z|\W|_)`), "${1}sunday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)srijeda(\z|\W|_)`), "${1}wednesday${2}"},
@@ -156,7 +156,7 @@ var sr_Latn_XK_Locale = LocaleData{
 	Name:      "sr-Latn-XK",
 	Parent:    &sr_Latn_Locale,
 	DateOrder: "DMY.",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)sept(\z|\W|_)`), "${1}september${2}"},
 		{regexp.MustCompile(`(\A|\W|_)sr(\z|\W|_)`), "${1}wednesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ut(\z|\W|_)`), "${1}tuesday${2}"},

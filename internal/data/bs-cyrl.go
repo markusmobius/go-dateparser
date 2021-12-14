@@ -8,7 +8,7 @@ var bs_Cyrl_Locale = LocaleData{
 	Name:      "bs-Cyrl",
 	DateOrder: "DMY.",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)пре (\d+) секунди(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)за (\d+) секунди(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)пре (\d+) година(\z|\W|_)`), "${1}${2} year ago${3}"},

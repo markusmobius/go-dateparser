@@ -8,10 +8,10 @@ var ka_Locale = LocaleData{
 	Name:      "ka",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "და", "დაახლოებით", "ზე", "ის"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)ერთ(\z|\W|_)`): "${1}1${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)ერთ(\z|\W|_)`), "${1}1${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) კვირის წინ(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) საათის წინ(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) წამის წინ(\z|\W|_)`), "${1}${2} second ago${3}"},

@@ -8,7 +8,7 @@ var lo_Locale = LocaleData{
 	Name:      "lo",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ໃນອີກ (\d+) ຊົ່ວໂມງ(\z|\W|_)`), "${1}in ${2} hour${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ໃນອີກ 0 ນາທີ(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)ໃນອີກ (\d+) ວິນາທີ(\z|\W|_)`), "${1}in ${2} second${3}"},

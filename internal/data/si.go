@@ -8,7 +8,7 @@ var si_Locale = LocaleData{
 	Name:      "si",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)මිනිත්තු (\d+)කින්(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)තත්පර (\d+)කට පෙර(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)තත්පර (\d+)කින්(\z|\W|_)`), "${1}in ${2} second${3}"},

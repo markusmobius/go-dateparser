@@ -8,7 +8,7 @@ var xog_Locale = LocaleData{
 	Name:      "xog",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)olwaleelo (leelo)(\z|\W|_)`), "${1}0 day ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)obutikitiki(\z|\W|_)`), "${1}second${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},

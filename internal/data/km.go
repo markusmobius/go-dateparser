@@ -8,7 +8,7 @@ var km_Locale = LocaleData{
 	Name:      "km",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ក្នុង​រយៈ​ពេល (\d+) ម៉ោង(\z|\W|_)`), "${1}in ${2} hour${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) សប្ដាហ៍​មុន(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) វិនាទី​មុន(\z|\W|_)`), "${1}${2} second ago${3}"},

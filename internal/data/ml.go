@@ -8,7 +8,7 @@ var ml_Locale = LocaleData{
 	Name:      "ml",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) മണിക്കൂർ മുമ്പ്(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) സെക്കൻഡ് മുമ്പ്(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ദിവസം മുമ്പ്(\z|\W|_)`), "${1}${2} day ago${3}"},

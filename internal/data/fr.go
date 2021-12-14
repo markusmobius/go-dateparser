@@ -8,30 +8,30 @@ var fr_Locale = LocaleData{
 	Name:      "fr",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "environ", "er", "et", "le", "|", "à"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)(\d+)\s+h\s+(\d+)\s+min(\z|\W|_)`):                        "${1}${2}h${3}m${4}",
-		regexp.MustCompile(`(\A|\W|_)(\d+)h(\d+)m?(\z|\W|_)`):                                  "${1}${2}:${3}${4}",
-		regexp.MustCompile(`(\A|\W|_)cinq(\z|\W|_)`):                                           "${1}5${2}",
-		regexp.MustCompile(`(\A|\W|_)d'un(\z|\W|_)`):                                           "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)d'une(\z|\W|_)`):                                          "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)deux(\z|\W|_)`):                                           "${1}2${2}",
-		regexp.MustCompile(`(\A|\W|_)dix(\z|\W|_)`):                                            "${1}10${2}",
-		regexp.MustCompile(`(\A|\W|_)douze(\z|\W|_)`):                                          "${1}12${2}",
-		regexp.MustCompile(`(\A|\W|_)huit(\z|\W|_)`):                                           "${1}8${2}",
-		regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?(minute|seconde|heure)(\z|\W|_)`): "${1}${2} ${3}${4}",
-		regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?h(\z|\W|_)`):                      "${1}${2} heure${3}",
-		regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?m(\z|\W|_)`):                      "${1}${2} minute${3}",
-		regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?s(\z|\W|_)`):                      "${1}${2} seconde${3}",
-		regexp.MustCompile(`(\A|\W|_)neuf(\z|\W|_)`):                                           "${1}9${2}",
-		regexp.MustCompile(`(\A|\W|_)onze(\z|\W|_)`):                                           "${1}11${2}",
-		regexp.MustCompile(`(\A|\W|_)quatre(\z|\W|_)`):                                         "${1}4${2}",
-		regexp.MustCompile(`(\A|\W|_)sept(\z|\W|_)`):                                           "${1}7${2}",
-		regexp.MustCompile(`(\A|\W|_)six(\z|\W|_)`):                                            "${1}6${2}",
-		regexp.MustCompile(`(\A|\W|_)trois(\z|\W|_)`):                                          "${1}3${2}",
-		regexp.MustCompile(`(\A|\W|_)un(\z|\W|_)`):                                             "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)une(\z|\W|_)`):                                            "${1}1${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?(minute|seconde|heure)(\z|\W|_)`), "${1}${2} ${3}${4}"},
+		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?h(\z|\W|_)`), "${1}${2} heure${3}"},
+		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?m(\z|\W|_)`), "${1}${2} minute${3}"},
+		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?s(\z|\W|_)`), "${1}${2} seconde${3}"},
+		{regexp.MustCompile(`(\A|\W|_)(\d+)\s+h\s+(\d+)\s+min(\z|\W|_)`), "${1}${2}h${3}m${4}"},
+		{regexp.MustCompile(`(\A|\W|_)(\d+)h(\d+)m?(\z|\W|_)`), "${1}${2}:${3}${4}"},
+		{regexp.MustCompile(`(\A|\W|_)quatre(\z|\W|_)`), "${1}4${2}"},
+		{regexp.MustCompile(`(\A|\W|_)d'une(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)douze(\z|\W|_)`), "${1}12${2}"},
+		{regexp.MustCompile(`(\A|\W|_)trois(\z|\W|_)`), "${1}3${2}"},
+		{regexp.MustCompile(`(\A|\W|_)cinq(\z|\W|_)`), "${1}5${2}"},
+		{regexp.MustCompile(`(\A|\W|_)d'un(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)deux(\z|\W|_)`), "${1}2${2}"},
+		{regexp.MustCompile(`(\A|\W|_)huit(\z|\W|_)`), "${1}8${2}"},
+		{regexp.MustCompile(`(\A|\W|_)neuf(\z|\W|_)`), "${1}9${2}"},
+		{regexp.MustCompile(`(\A|\W|_)onze(\z|\W|_)`), "${1}11${2}"},
+		{regexp.MustCompile(`(\A|\W|_)sept(\z|\W|_)`), "${1}7${2}"},
+		{regexp.MustCompile(`(\A|\W|_)dix(\z|\W|_)`), "${1}10${2}"},
+		{regexp.MustCompile(`(\A|\W|_)six(\z|\W|_)`), "${1}6${2}"},
+		{regexp.MustCompile(`(\A|\W|_)une(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)un(\z|\W|_)`), "${1}1${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) secondes(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) semaines(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) seconde(\z|\W|_)`), "${1}${2} second ago${3}"},
@@ -199,7 +199,7 @@ var fr_CA_Locale = LocaleData{
 	Name:      "fr-CA",
 	Parent:    &fr_Locale,
 	DateOrder: "YMD",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)juill(\z|\W|_)`), "${1}july${2}"},
 	},
 }
@@ -238,7 +238,7 @@ var fr_CM_Locale = LocaleData{
 	Name:      "fr-CM",
 	Parent:    &fr_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)matin(\z|\W|_)`), "${1}am${2}"},
 		{regexp.MustCompile(`(\A|\W|_)soir(\z|\W|_)`), "${1}pm${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mat(\z|\W|_)`), "${1}am${2}"},
@@ -291,7 +291,7 @@ var fr_HT_Locale = LocaleData{
 	Name:      "fr-HT",
 	Parent:    &fr_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)sec(\z|\W|_)`), "${1}second${2}"},
 		{regexp.MustCompile(`(\A|\W|_)hr(\z|\W|_)`), "${1}hour${2}"},
 		{regexp.MustCompile(`(\A|\W|_)jr(\z|\W|_)`), "${1}day${2}"},
@@ -314,7 +314,7 @@ var fr_MA_Locale = LocaleData{
 	Name:      "fr-MA",
 	Parent:    &fr_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)jui(\z|\W|_)`), "${1}june${2}"},
 	},
 }

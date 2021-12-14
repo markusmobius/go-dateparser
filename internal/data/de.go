@@ -8,23 +8,23 @@ var de_Locale = LocaleData{
 	Name:      "de",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "etwa", "uhr", "um", "und", "|"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)acht(\z|\W|_)`):   "${1}8${2}",
-		regexp.MustCompile(`(\A|\W|_)drei(\z|\W|_)`):   "${1}3${2}",
-		regexp.MustCompile(`(\A|\W|_)ein(\z|\W|_)`):    "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)einem(\z|\W|_)`):  "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)einer(\z|\W|_)`):  "${1}1${2}",
-		regexp.MustCompile(`(\A|\W|_)elf(\z|\W|_)`):    "${1}11${2}",
-		regexp.MustCompile(`(\A|\W|_)fünf(\z|\W|_)`):   "${1}5${2}",
-		regexp.MustCompile(`(\A|\W|_)neun(\z|\W|_)`):   "${1}9${2}",
-		regexp.MustCompile(`(\A|\W|_)sechs(\z|\W|_)`):  "${1}6${2}",
-		regexp.MustCompile(`(\A|\W|_)sieben(\z|\W|_)`): "${1}7${2}",
-		regexp.MustCompile(`(\A|\W|_)vier(\z|\W|_)`):   "${1}4${2}",
-		regexp.MustCompile(`(\A|\W|_)zehn(\z|\W|_)`):   "${1}10${2}",
-		regexp.MustCompile(`(\A|\W|_)zwei(\z|\W|_)`):   "${1}2${2}",
-		regexp.MustCompile(`(\A|\W|_)zwölf(\z|\W|_)`):  "${1}12${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)sieben(\z|\W|_)`), "${1}7${2}"},
+		{regexp.MustCompile(`(\A|\W|_)einem(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)einer(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)sechs(\z|\W|_)`), "${1}6${2}"},
+		{regexp.MustCompile(`(\A|\W|_)zwölf(\z|\W|_)`), "${1}12${2}"},
+		{regexp.MustCompile(`(\A|\W|_)acht(\z|\W|_)`), "${1}8${2}"},
+		{regexp.MustCompile(`(\A|\W|_)drei(\z|\W|_)`), "${1}3${2}"},
+		{regexp.MustCompile(`(\A|\W|_)fünf(\z|\W|_)`), "${1}5${2}"},
+		{regexp.MustCompile(`(\A|\W|_)neun(\z|\W|_)`), "${1}9${2}"},
+		{regexp.MustCompile(`(\A|\W|_)vier(\z|\W|_)`), "${1}4${2}"},
+		{regexp.MustCompile(`(\A|\W|_)zehn(\z|\W|_)`), "${1}10${2}"},
+		{regexp.MustCompile(`(\A|\W|_)zwei(\z|\W|_)`), "${1}2${2}"},
+		{regexp.MustCompile(`(\A|\W|_)ein(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(\A|\W|_)elf(\z|\W|_)`), "${1}11${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)vor (\d+) sekunden(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)in (\d+) sekunden(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)vor (\d+) monaten(\z|\W|_)`), "${1}${2} month ago${3}"},
@@ -161,7 +161,7 @@ var de_AT_Locale = LocaleData{
 	Name:      "de-AT",
 	Parent:    &de_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)jän(\z|\W|_)`), "${1}january${2}"},
 	},
 }
@@ -182,7 +182,7 @@ var de_IT_Locale = LocaleData{
 	Name:      "de-IT",
 	Parent:    &de_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)jän(\z|\W|_)`), "${1}january${2}"},
 	},
 }

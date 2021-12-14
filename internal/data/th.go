@@ -8,15 +8,15 @@ var th_Locale = LocaleData{
 	Name:      "th",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "น.", "เมื่อ", "เวลา"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)1 วันที่แล้ว(\z|\W|_)`):    "${1}1 วัน${2}",
-		regexp.MustCompile(`(\A|\W|_)2 วันที่แล้ว(\z|\W|_)`):    "${1}2 วัน${2}",
-		regexp.MustCompile(`(\A|\W|_)วันนี้(\z|\W|_)`):          "${1}0 วัน${2}",
-		regexp.MustCompile(`(\A|\W|_)เมื่อวานซืน(\z|\W|_)`):     "${1}2 วัน${2}",
-		regexp.MustCompile(`(\A|\W|_)เมื่อวานนี้(\z|\W|_)`):     "${1}1 วัน${2}",
-		regexp.MustCompile(`(\A|\W|_)เมื่อสักครู่นี้(\z|\W|_)`): "${1}0 วินาที${2}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)เมื่อสักครู่นี้(\z|\W|_)`), "${1}0 วินาที${2}"},
+		{regexp.MustCompile(`(\A|\W|_)1 วันที่แล้ว(\z|\W|_)`), "${1}1 วัน${2}"},
+		{regexp.MustCompile(`(\A|\W|_)2 วันที่แล้ว(\z|\W|_)`), "${1}2 วัน${2}"},
+		{regexp.MustCompile(`(\A|\W|_)เมื่อวานซืน(\z|\W|_)`), "${1}2 วัน${2}"},
+		{regexp.MustCompile(`(\A|\W|_)เมื่อวานนี้(\z|\W|_)`), "${1}1 วัน${2}"},
+		{regexp.MustCompile(`(\A|\W|_)วันนี้(\z|\W|_)`), "${1}0 วัน${2}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ชั่วโมงที่ผ่านมา(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) สัปดาห์ที่ผ่านมา(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) วินาทีที่ผ่านมา(\z|\W|_)`), "${1}${2} second ago${3}"},

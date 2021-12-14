@@ -8,7 +8,7 @@ var ur_Locale = LocaleData{
 	Name:      "ur",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) سیکنڈ پہلے(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) مہینہ پہلے(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) مہینے پہلے(\z|\W|_)`), "${1}${2} month ago${3}"},
@@ -83,7 +83,7 @@ var ur_IN_Locale = LocaleData{
 	Name:      "ur-IN",
 	Parent:    &ur_Locale,
 	DateOrder: "DMY",
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) سالوں پہلے(\z|\W|_)`), "${1}${2} year ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) سالوں میں(\z|\W|_)`), "${1}in ${2} year${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) سیکنڈ قبل(\z|\W|_)`), "${1}${2} second ago${3}"},

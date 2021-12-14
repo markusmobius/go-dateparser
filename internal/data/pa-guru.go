@@ -8,7 +8,7 @@ var pa_Guru_Locale = LocaleData{
 	Name:      "pa-Guru",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ਮਹੀਨਾ ਪਹਿਲਾਂ(\z|\W|_)`), "${1}${2} month ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ਮਹੀਨਿਆਂ ਵਿੱਚ(\z|\W|_)`), "${1}in ${2} month${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ਮਹੀਨੇ ਪਹਿਲਾਂ(\z|\W|_)`), "${1}${2} month ago${3}"},

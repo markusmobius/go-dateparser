@@ -8,7 +8,7 @@ var te_Locale = LocaleData{
 	Name:      "te",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) సంవత్సరాల క్రితం(\z|\W|_)`), "${1}${2} year ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) సంవత్సరం క్రితం(\z|\W|_)`), "${1}${2} year ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) సెకన్ల క్రితం(\z|\W|_)`), "${1}${2} second ago${3}"},

@@ -9,10 +9,10 @@ var vi_Locale = LocaleData{
 	DateOrder:    "DMY",
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
 	PertainWords: []string{"lúc"},
-	Simplifications: map[*regexp.Regexp]string{
-		regexp.MustCompile(`(\A|\W|_)(?:ngày|năm)\s(\d+)(\z|\W|_)`): "${1}${2}${3}",
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(\A|\W|_)(?:ngày|năm)\s(\d+)(\z|\W|_)`), "${1}${2}${3}"},
 	},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)sau (\d+) tháng nữa(\z|\W|_)`), "${1}in ${2} month${3}"},
 		{regexp.MustCompile(`(\A|\W|_)sau (\d+) giây nữa(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)sau (\d+) ngày nữa(\z|\W|_)`), "${1}in ${2} day${3}"},

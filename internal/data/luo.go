@@ -8,7 +8,7 @@ var luo_Locale = LocaleData{
 	Name:      "luo",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)dwe mar apar gi ariyo(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)dwe mar gi achiel(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)dwe mar abiriyo(\z|\W|_)`), "${1}july${2}"},

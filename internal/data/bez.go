@@ -8,7 +8,7 @@ var bez_Locale = LocaleData{
 	Name:      "bez",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)pa mwedzi gwa kumi na mbili(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)pa mwedzi gwa kumi na moja(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)pa mwedzi gwa hutala(\z|\W|_)`), "${1}january${2}"},

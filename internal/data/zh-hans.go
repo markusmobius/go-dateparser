@@ -9,7 +9,7 @@ var zh_Hans_Locale = LocaleData{
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
 	SkipWords:     []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`这一时间 / 此时`), " 0 hour ago "},
 		{regexp.MustCompile(`(\d+)个月前`), " $1 month ago "},
 		{regexp.MustCompile(`(\d+)个月后`), " in $1 month "},

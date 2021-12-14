@@ -8,7 +8,7 @@ var ee_Locale = LocaleData{
 	Name:      "ee",
 	DateOrder: "MDY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)gaƒoƒo (\d+) si wo va yi(\z|\W|_)`), "${1}${2} hour ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)kɔsiɖa (\d+) si wo va yi(\z|\W|_)`), "${1}${2} week ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)le aɖabaƒoƒo (\d+) wo me(\z|\W|_)`), "${1}in ${2} minute${3}"},

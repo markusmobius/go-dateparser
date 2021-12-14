@@ -8,7 +8,7 @@ var wae_Locale = LocaleData{
 	Name:      "wae",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)vor (\d+) sekunde(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)vor (\d+) sekund(\z|\W|_)`), "${1}${2} second ago${3}"},
 		{regexp.MustCompile(`(\A|\W|_)vor (\d+) stunde(\z|\W|_)`), "${1}${2} hour ago${3}"},

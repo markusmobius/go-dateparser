@@ -93,13 +93,13 @@ type LocaleData struct {
 	SentenceSplitterGroup int
 	SkipWords             []string
 	PertainWords          []string
-	Simplifications       map[*regexp.Regexp]string
-	Translations          []TranslationData
+	Simplifications       []ReplacementData
+	Translations          []ReplacementData
 }
 
-type TranslationData struct {
+type ReplacementData struct {
 	Pattern     *regexp.Regexp
-	Translation string
+	Replacement string
 }
 
 var LocaleDataMap = map[string]LocaleData {
@@ -118,14 +118,14 @@ var {{localeName .Name}} = LocaleData {
 	SentenceSplitterGroup: {{.SentenceSplitterGroup}},
 	SkipWords:    []string{ {{range $v := .SkipWords}}"{{$v}}", {{end}} },
 	PertainWords: []string{ {{range $v := .PertainWords}}"{{$v}}", {{end}} },
-	Simplifications: map[*regexp.Regexp]string{
-		{{range $pattern, $replacement := .Simplifications -}}
-		` + "regexp.MustCompile(`{{$pattern}}`)" + `: "{{$replacement}}",
+	Simplifications: []ReplacementData{
+		{{range $data := .Simplifications -}}
+		{` + "regexp.MustCompile(`{{$data.Pattern}}`)" + `, "{{$data.Replacement}}"},
 		{{end}}
 	},
-	Translations: []TranslationData{
-		{{range $trans := .Translations -}}
-		{` + "regexp.MustCompile(`{{$trans.Pattern}}`)" + `, "{{$trans.Translation}}"},
+	Translations: []ReplacementData{
+		{{range $data := .Translations -}}
+		{` + "regexp.MustCompile(`{{$data.Pattern}}`)" + `, "{{$data.Replacement}}"},
 		{{end}}
 	},
 }

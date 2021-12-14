@@ -8,7 +8,7 @@ var yav_Locale = LocaleData{
 	Name:      "yav",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)pikítíkítie, oólí ú kutúan(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)imɛŋ i putúk,oóli ú kátíɛ(\z|\W|_)`), "${1}october${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ɔnsúmbɔl, oóli ú kátátúɛ(\z|\W|_)`), "${1}march${2}"},

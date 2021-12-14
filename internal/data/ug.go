@@ -8,7 +8,7 @@ var ug_Locale = LocaleData{
 	Name:      "ug",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) سېكۇنتتىن كېيىن(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) سائەتتىن كېيىن(\z|\W|_)`), "${1}in ${2} hour${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) سېكۇنت ئىلگىرى(\z|\W|_)`), "${1}${2} second ago${3}"},

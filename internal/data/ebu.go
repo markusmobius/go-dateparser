@@ -8,7 +8,7 @@ var ebu_Locale = LocaleData{
 	Name:      "ebu",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)mweri wa ikũmi na kaĩrĩ(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mweri wa ikũmi na ũmwe(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)mweri wa gatantatũ(\z|\W|_)`), "${1}june${2}"},

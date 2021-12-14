@@ -8,7 +8,7 @@ var az_Cyrl_Locale = LocaleData{
 	Name:      "az-Cyrl",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)чәршәнбә ахшамы(\z|\W|_)`), "${1}tuesday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)базар ертәси(\z|\W|_)`), "${1}monday${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},

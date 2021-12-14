@@ -8,7 +8,7 @@ var ksf_Locale = LocaleData{
 	Name:      "ksf",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ŋwíí akǝ ntɛk di bɔ́k(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ŋwíí akǝ ntɛk di bɛ́ɛ(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ŋwíí akǝ táabɛɛ(\z|\W|_)`), "${1}july${2}"},

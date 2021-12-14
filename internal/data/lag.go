@@ -8,7 +8,7 @@ var lag_Locale = LocaleData{
 	Name:      "lag",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)kwiinyambála(\z|\W|_)`), "${1}may${2}"},
 		{regexp.MustCompile(`(\A|\W|_)this minute(\z|\W|_)`), "${1}0 minute ago${2}"},
 		{regexp.MustCompile(`(\A|\W|_)kwiidwaata(\z|\W|_)`), "${1}june${2}"},

@@ -8,7 +8,7 @@ var nus_Locale = LocaleData{
 	Name:      "nus",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)tio̱p in di̱i̱t(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)tiop thar pɛt(\z|\W|_)`), "${1}january${2}"},
 		{regexp.MustCompile(`(\A|\W|_)dhieec lätni(\z|\W|_)`), "${1}friday${2}"},

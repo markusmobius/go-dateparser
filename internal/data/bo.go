@@ -8,7 +8,7 @@ var bo_Locale = LocaleData{
 	Name:      "bo",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)ཟླ་བ་བཅུ་གཅིག་པ་(\z|\W|_)`), "${1}november${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ཟླ་བ་བཅུ་གཉིས་པ་(\z|\W|_)`), "${1}december${2}"},
 		{regexp.MustCompile(`(\A|\W|_)ཟླ་བ་བཅུ་གཅིག་པ(\z|\W|_)`), "${1}november${2}"},

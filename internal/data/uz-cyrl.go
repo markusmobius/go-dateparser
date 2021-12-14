@@ -8,7 +8,7 @@ var uz_Cyrl_Locale = LocaleData{
 	Name:      "uz-Cyrl",
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)(\d+) дақиқадан сўнг(\z|\W|_)`), "${1}in ${2} minute${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) сониядан сўнг(\z|\W|_)`), "${1}in ${2} second${3}"},
 		{regexp.MustCompile(`(\A|\W|_)(\d+) ҳафтадан сўнг(\z|\W|_)`), "${1}in ${2} week${3}"},

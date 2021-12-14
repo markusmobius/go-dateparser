@@ -9,7 +9,7 @@ var yue_Locale = LocaleData{
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
 	SkipWords:     []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\d+) 個星期前`), " $1 week ago "},
 		{regexp.MustCompile(`(\d+) 個星期後`), " in $1 week "},
 		{regexp.MustCompile(`(\d+) 個月前`), " $1 month ago "},

@@ -8,7 +8,7 @@ var mgo_Locale = LocaleData{
 	Name:      "mgo",
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
-	Translations: []TranslationData{
+	Translations: []ReplacementData{
 		{regexp.MustCompile(`(\A|\W|_)imeg mbəŋchubi(\z|\W|_)`), "${1}march${2}"},
 		{regexp.MustCompile(`(\A|\W|_)iməg ichiibɔd(\z|\W|_)`), "${1}june${2}"},
 		{regexp.MustCompile(`(\A|\W|_)iməg àdùmbə̀ŋ(\z|\W|_)`), "${1}july${2}"},
