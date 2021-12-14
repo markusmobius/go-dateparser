@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
 type LocaleData struct {
@@ -244,26 +245,16 @@ func (ld *LocaleData) Validate() error {
 
 	// Sort translations
 	sort.Slice(ld.Translations, func(a, b int) bool {
-		translationA := ld.Translations[a].Translation
-		translationB := ld.Translations[b].Translation
+		patternA := ld.Translations[a].Pattern
+		patternB := ld.Translations[b].Pattern
+		lenA := utf8.RuneCountInString(patternA)
+		lenB := utf8.RuneCountInString(patternB)
 
-		if translationA == translationB {
-			patternA := ld.Translations[a].Pattern
-			patternB := ld.Translations[b].Pattern
-			return patternA < patternB
+		if lenA != lenB {
+			return lenA > lenB
 		}
 
-		aHasRegex := strings.Contains(translationA, "$")
-		bHasRegex := strings.Contains(translationB, "$")
-
-		switch {
-		case aHasRegex && !bHasRegex:
-			return false
-		case !aHasRegex && bHasRegex:
-			return true
-		default:
-			return translationA < translationB
-		}
+		return patternA < patternB
 	})
 
 	return nil

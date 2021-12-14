@@ -13,7 +13,12 @@ type LocaleData struct {
 	SkipWords             []string
 	PertainWords          []string
 	Simplifications       map[*regexp.Regexp]string
-	Translations          map[*regexp.Regexp]string
+	Translations          []TranslationData
+}
+
+type TranslationData struct {
+	Pattern     *regexp.Regexp
+	Translation string
 }
 
 var LocaleDataMap = map[string]LocaleData{

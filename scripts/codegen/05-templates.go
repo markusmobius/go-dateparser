@@ -94,7 +94,12 @@ type LocaleData struct {
 	SkipWords             []string
 	PertainWords          []string
 	Simplifications       map[*regexp.Regexp]string
-	Translations          map[*regexp.Regexp]string
+	Translations          []TranslationData
+}
+
+type TranslationData struct {
+	Pattern     *regexp.Regexp
+	Translation string
 }
 
 var LocaleDataMap = map[string]LocaleData {
@@ -118,9 +123,9 @@ var {{localeName .Name}} = LocaleData {
 		` + "regexp.MustCompile(`{{$pattern}}`)" + `: "{{$replacement}}",
 		{{end}}
 	},
-	Translations: map[*regexp.Regexp]string{
-		{{range $entry := .Translations -}}
-		` + "regexp.MustCompile(`{{$entry.Pattern}}`)" + `: "{{$entry.Translation}}",
+	Translations: []TranslationData{
+		{{range $trans := .Translations -}}
+		{` + "regexp.MustCompile(`{{$trans.Pattern}}`)" + `, "{{$trans.Translation}}"},
 		{{end}}
 	},
 }
