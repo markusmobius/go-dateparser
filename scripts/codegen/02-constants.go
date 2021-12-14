@@ -3,6 +3,11 @@ package main
 import (
 	"regexp"
 	"strings"
+	"unicode"
+
+	"golang.org/x/text/runes"
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
 )
 
 const (
@@ -15,6 +20,8 @@ const (
 )
 
 var (
+	unicodeTransformer = transform.Chain(norm.NFKC, runes.Remove(runes.In(unicode.Mn)))
+
 	apostropheLookAlikeChars = []string{
 		`\x{2019}`, // right single quotation mark
 		`\x{02bc}`, // modifier letter apostrophe

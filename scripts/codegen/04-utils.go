@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"golang.org/x/text/unicode/norm"
+	"golang.org/x/text/transform"
 	"gopkg.in/yaml.v2"
 )
 
@@ -40,8 +40,17 @@ func renderJSON(v interface{}, dstPath string) error {
 	return ioutil.WriteFile(dstPath, bt, os.ModePerm)
 }
 
+func normalizeUnicode(str string) string {
+	normalized, _, err := transform.String(unicodeTransformer, str)
+	if err != nil {
+		return str
+	}
+
+	return normalized
+}
+
 func cleanString(str string) string {
-	str = norm.NFKC.String(str)
+	str = normalizeUnicode(str)
 	str = rxSanitizeAposthrope.ReplaceAllString(str, "'")
 	str = strings.ReplaceAll(str, ".", "")
 	str = strings.ToLower(str)
@@ -50,7 +59,7 @@ func cleanString(str string) string {
 }
 
 func normalizeString(str string) string {
-	str = norm.NFKC.String(str)
+	str = normalizeUnicode(str)
 	str = strings.ToLower(str)
 	str = strings.Join(strings.Fields(str), " ")
 	return str
