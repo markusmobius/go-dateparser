@@ -53,7 +53,7 @@ func (ld *LocaleData) AddTranslation(pattern string, translation string, cleanPa
 	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
 
 	// Sanitize translation
-	translation = rxPythonCaptureGroup.ReplaceAllString(translation, "$$$1")
+	translation = rxPythonCaptureGroup.ReplaceAllString(translation, "$${$1}")
 
 	// Make sure pattern not empty
 	if pattern == "" {
@@ -203,7 +203,7 @@ func (ld *LocaleData) Validate() error {
 					maxNumber = number
 				}
 
-				return fmt.Sprintf("$%d", number)
+				return fmt.Sprintf("${%d}", number)
 			})
 
 			return fmt.Sprintf("${1}%s${%d}", replacement, maxNumber+1)
