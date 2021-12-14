@@ -173,14 +173,25 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 }
 
 func (ld *LocaleData) Validate() error {
-	// If this locale use word spacing, change the patterns and its replacement
-	if !ld.NoWordSpacing {
-		// Helper functions
-		patternChanger := func(pattern string) string {
+	// Change patterns and its replacement depending on if the language uses
+	// white space between words or not
+	var patternChanger func(string) string
+	var replacementChanger func(string) string
+
+	if ld.NoWordSpacing {
+		patternChanger = func(s string) string {
+			return s
+		}
+
+		replacementChanger = func(s string) string {
+			return " " + s + " "
+		}
+	} else {
+		patternChanger = func(pattern string) string {
 			return `(\A|\W|_)` + pattern + `(\z|\W|_)`
 		}
 
-		replacementChanger := func(replacement string) string {
+		replacementChanger = func(replacement string) string {
 			maxNumber := 1
 			replacement = rxGoCaptureGroup.ReplaceAllStringFunc(replacement, func(s string) string {
 				parts := rxGoCaptureGroup.FindStringSubmatch(s)
@@ -196,25 +207,23 @@ func (ld *LocaleData) Validate() error {
 
 			return fmt.Sprintf("${1}%s${%d}", replacement, maxNumber+1)
 		}
+	}
 
-		// Replace simplifications
-		newSimplifications := map[string]string{}
-		for pattern, replacement := range ld.Simplifications {
-			pattern = patternChanger(pattern)
-			replacement = replacementChanger(replacement)
-			newSimplifications[pattern] = replacement
-		}
-		ld.Simplifications = newSimplifications
+	newSimplifications := map[string]string{}
+	for pattern, replacement := range ld.Simplifications {
+		pattern = patternChanger(pattern)
+		replacement = replacementChanger(replacement)
+		newSimplifications[pattern] = replacement
+	}
+	ld.Simplifications = newSimplifications
 
-		// Replace translations
-		ld.patternTrackers = map[string]struct{}{}
-		for i, trans := range ld.Translations {
-			newPattern := patternChanger(trans.Pattern)
-			newTranslation := replacementChanger(trans.Translation)
+	ld.patternTrackers = map[string]struct{}{}
+	for i, trans := range ld.Translations {
+		newPattern := patternChanger(trans.Pattern)
+		newTranslation := replacementChanger(trans.Translation)
 
-			ld.patternTrackers[newPattern] = struct{}{}
-			ld.Translations[i] = TranslationData{newPattern, newTranslation}
-		}
+		ld.patternTrackers[newPattern] = struct{}{}
+		ld.Translations[i] = TranslationData{newPattern, newTranslation}
 	}
 
 	// Validate patterns
