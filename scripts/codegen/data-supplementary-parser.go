@@ -72,10 +72,6 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		SentenceSplitterGroup: yamlData.SentenceSplitterGroup,
 	}
 
-	skipWords := cleanList(false, yamlData.SkipWords...)
-	pertainWords := cleanList(false, yamlData.PertainWords...)
-	addTranslationFromStrings(&data, "", skipWords)
-	addTranslationFromStrings(&data, "", pertainWords)
 	addTranslationFromStrings(&data, "january", yamlData.January)
 	addTranslationFromStrings(&data, "february", yamlData.February)
 	addTranslationFromStrings(&data, "march", yamlData.March)
@@ -109,6 +105,11 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	addTranslationFromStrings(&data, "ago", yamlData.Ago)
 	addTranslationFromMapStrings(&data, yamlData.RelativeType)
 	addTranslationFromMapStrings(&data, yamlData.RelativeTypeRegex)
+
+	skipWords := cleanList(false, yamlData.SkipWords...)
+	pertainWords := cleanList(false, yamlData.PertainWords...)
+	addTranslationFromStrings(&data, "", skipWords)
+	addTranslationFromStrings(&data, "", pertainWords)
 
 	for _, simplification := range yamlData.Simplifications {
 		for pattern, replacement := range simplification {

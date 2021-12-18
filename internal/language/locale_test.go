@@ -636,9 +636,9 @@ func TestTranslate(t *testing.T) {
 		{"zu", "son 23 umasingana 1996", "sunday 23 january 1996"},
 	}
 
-	tests = []testScenario{
-		{"ar", "6 يناير، 2015، الساعة 05:16 مساءً", "6 january 2015 05:16 pm"},
-	}
+	// tests = []testScenario{
+	// 	{"ar", "6 يناير، 2015، الساعة 05:16 مساءً", "6 january 2015 05:16 pm"},
+	// }
 
 	nFailed := 0
 	for _, test := range tests {
