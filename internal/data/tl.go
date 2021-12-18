@@ -83,7 +83,5 @@ var tl_Locale = merge(nil, LocaleData{
 		":":          ":",
 		"z":          "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(miyerkules|disyembre|nakalipas|nobyembre|setyembre|biyernes|nakaraan|huwebes|oktubre|pebrero|segundo|agosto|linggo|martes|minuto|sabado|abril|buwan|enero|ganap|hulyo|hunyo|lunes|marso|noong|araw|mayo|noon|oras|taon|abr|ago|biy|dis|ene|gmt|hul|hun|huw|lin|lun|mar|may|miy|nob|okt|peb|sab|set|utc|\+|\.|\[|\]|\||am|na|pm|sa| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(miyerkules|disyembre|nakalipas|nobyembre|setyembre|biyernes|nakaraan|huwebes|oktubre|pebrero|segundo|agosto|linggo|martes|minuto|sabado|abril|buwan|enero|ganap|hulyo|hunyo|lunes|marso|noong|araw|mayo|noon|oras|taon|abr|ago|biy|dis|ene|gmt|hul|hun|huw|lin|lun|mar|may|miy|nob|okt|peb|sab|set|utc|\+|\.|\[|\]|\||am|na|pm|sa| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

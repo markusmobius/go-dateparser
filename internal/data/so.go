@@ -90,31 +90,20 @@ var so_Locale = merge(nil, LocaleData{
 		":":                      ":",
 		"z":                      "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(bisha laba iyo tobnaad|bisha kow iyo tobnaad|bisha saddexaad|bisha sagaalaad|bisha sideedaad|bisha todobaad|bisha koobaad|bisha shanaad|bisha tobnaad|bisha afraad|bisha labaad|bisha lixaad|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|khamiis|talaado|arbaco|isniin|maanta|minute|second|shalay|berri|jimco|month|sabti|axad|hour|week|year|afr|arb|axd|day|gmt|isn|jim|kha|kit|kob|lab|lit|lix|now|sab|sad|sag|sha|sid|tal|tob|tod|utc|\+|\.|\[|\]|\||am|gn|pm|sn| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(bisha laba iyo tobnaad|bisha kow iyo tobnaad|bisha saddexaad|bisha sagaalaad|bisha sideedaad|bisha todobaad|bisha koobaad|bisha shanaad|bisha tobnaad|bisha afraad|bisha labaad|bisha lixaad|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|khamiis|talaado|arbaco|isniin|maanta|minute|second|shalay|berri|jimco|month|sabti|axad|hour|week|year|afr|arb|axd|day|gmt|isn|jim|kha|kit|kob|lab|lit|lix|now|sab|sad|sag|sha|sid|tal|tob|tod|utc|\+|\.|\[|\]|\||am|gn|pm|sn| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var so_DJ_Locale = merge(&so_Locale, LocaleData{
-	Name:            "so-DJ",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "so-DJ",
+	DateOrder: "DMY",
 })
 
 var so_ET_Locale = merge(&so_Locale, LocaleData{
-	Name:            "so-ET",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "so-ET",
+	DateOrder: "DMY",
 })
 
 var so_KE_Locale = merge(&so_Locale, LocaleData{
-	Name:            "so-KE",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "so-KE",
+	DateOrder: "DMY",
 })

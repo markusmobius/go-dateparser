@@ -90,7 +90,5 @@ var luo_Locale = merge(nil, LocaleData{
 		":":                     ":",
 		"z":                     "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(dwe mar apar gi ariyo|dwe mar gi achiel|dwe mar abiriyo|dwe mar ang'wen|dwe mar auchiel|nyiriri mar saa|dwe mar achiel|dwe mar ochiko|dwe mar abich|dwe mar aboro|dwe mar ariyo|dwe mar adek|dwe mar apar|tich ang'wen|this minute|last month|next month|this month|tich abich|tich ariyo|last week|last year|next week|next year|this hour|this week|this year|tich adek|wuok tich|chieng'|jumapil|kawuono|dakika|ngeso|nyoro|higa|juma|kiny|dab|dac|dad|dag|dah|dan|dao|dap|dar|dau|dgi|doc|dwe|gmt|jmp|ngs|now|saa|tab|tad|tan|tar|utc|wut|\+|\.|\[|\]|\||am|od|ot|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(dwe mar apar gi ariyo|dwe mar gi achiel|dwe mar abiriyo|dwe mar ang'wen|dwe mar auchiel|nyiriri mar saa|dwe mar achiel|dwe mar ochiko|dwe mar abich|dwe mar aboro|dwe mar ariyo|dwe mar adek|dwe mar apar|tich ang'wen|this minute|last month|next month|this month|tich abich|tich ariyo|last week|last year|next week|next year|this hour|this week|this year|tich adek|wuok tich|chieng'|jumapil|kawuono|dakika|ngeso|nyoro|higa|juma|kiny|dab|dac|dad|dag|dah|dan|dao|dap|dar|dau|dgi|doc|dwe|gmt|jmp|ngs|now|saa|tab|tad|tan|tar|utc|wut|\+|\.|\[|\]|\||am|od|ot|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

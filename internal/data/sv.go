@@ -187,17 +187,11 @@ var sv_Locale = merge(nil, LocaleData{
 })
 
 var sv_AX_Locale = merge(&sv_Locale, LocaleData{
-	Name:            "sv-AX",
-	DateOrder:       "YMD",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "sv-AX",
+	DateOrder: "YMD",
 })
 
 var sv_FI_Locale = merge(&sv_Locale, LocaleData{
-	Name:            "sv-FI",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "sv-FI",
+	DateOrder: "DMY",
 })

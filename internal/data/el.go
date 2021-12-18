@@ -168,9 +168,6 @@ var el_Locale = merge(nil, LocaleData{
 })
 
 var el_CY_Locale = merge(&el_Locale, LocaleData{
-	Name:            "el-CY",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "el-CY",
+	DateOrder: "DMY",
 })

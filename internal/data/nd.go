@@ -88,7 +88,5 @@ var nd_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(inyangacale|this minute|last month|ncwabakazi|next month|nkwenkwezi|this month|zibandlela|last week|last year|mbimbitho|mpalakazi|next week|next year|nhlangula|nhlolanja|ntulikazi|this hour|this week|this year|isekendi|mgqibelo|mpandula|sithathu|lamuhla|sihlanu|umnyaka|umuzuzu|ilanga|kusasa|mabasa|mfumfu|sibili|ihola|iviki|izolo|lwezi|mvulo|sonto|mpal|mpan|nhla|nhlo|sine|gmt|lwe|mab|mbi|mfu|mgq|mvu|ncw|nkw|now|ntu|sib|sih|sin|sit|son|utc|zib|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(inyangacale|this minute|last month|ncwabakazi|next month|nkwenkwezi|this month|zibandlela|last week|last year|mbimbitho|mpalakazi|next week|next year|nhlangula|nhlolanja|ntulikazi|this hour|this week|this year|isekendi|mgqibelo|mpandula|sithathu|lamuhla|sihlanu|umnyaka|umuzuzu|ilanga|kusasa|mabasa|mfumfu|sibili|ihola|iviki|izolo|lwezi|mvulo|sonto|mpal|mpan|nhla|nhlo|sine|gmt|lwe|mab|mbi|mfu|mgq|mvu|ncw|nkw|now|ntu|sib|sih|sin|sit|son|utc|zib|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

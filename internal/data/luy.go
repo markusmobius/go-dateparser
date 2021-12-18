@@ -87,7 +87,5 @@ var luy_Locale = merge(nil, LocaleData{
 		":":               ":",
 		"z":               "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(murwa wa katano|murwa wa kanne|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|februari|jumamosi|jumapiri|jumatano|jumatatu|septemba|desemba|idagika|januari|jumanne|mgorova|novemba|sekunde|agosti|aprili|mgamba|muhiga|oktoba|ridiku|risiza|julai|machi|mweri|isaa|juni|lero|ago|apr|des|feb|gmt|jan|jul|jun|mar|mei|nov|now|okt|sep|utc|\+|\.|\[|\]|\||al|am|ij|j1|j2|j3|j4|j5|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(murwa wa katano|murwa wa kanne|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|februari|jumamosi|jumapiri|jumatano|jumatatu|septemba|desemba|idagika|januari|jumanne|mgorova|novemba|sekunde|agosti|aprili|mgamba|muhiga|oktoba|ridiku|risiza|julai|machi|mweri|isaa|juni|lero|ago|apr|des|feb|gmt|jan|jul|jun|mar|mei|nov|now|okt|sep|utc|\+|\.|\[|\]|\||al|am|ij|j1|j2|j3|j4|j5|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

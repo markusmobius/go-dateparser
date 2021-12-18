@@ -135,7 +135,5 @@ var fa_AF_Locale = merge(&fa_Locale, LocaleData{
 		":":   ":",
 		"z":   "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(gmt|utc|جنو|جول|دسم|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(gmt|utc|جنو|جول|دسم|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })

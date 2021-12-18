@@ -70,7 +70,5 @@ var ks_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|ژندرروار|برٮسوار|ژندروار|اتھوار|اکتوبر|بودوار|بوموار|جولایی|اپریل|بٹوار|جنوری|دسمبر|ستمبر|سٮکنڑ|فروری|نومبر|گٲنٹہ|اگست|راتھ|رٮتھ|مارچ|پگاہ|ہفتہ|gmt|now|utc|جمہ|جون|دۄہ|منٹ|وری|\+|\.|\[|\]|\||am|pm|از|می| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|ژندرروار|برٮسوار|ژندروار|اتھوار|اکتوبر|بودوار|بوموار|جولایی|اپریل|بٹوار|جنوری|دسمبر|ستمبر|سٮکنڑ|فروری|نومبر|گٲنٹہ|اگست|راتھ|رٮتھ|مارچ|پگاہ|ہفتہ|gmt|now|utc|جمہ|جون|دۄہ|منٹ|وری|\+|\.|\[|\]|\||am|pm|از|می| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

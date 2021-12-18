@@ -131,23 +131,15 @@ var sw_CD_Locale = merge(&sw_Locale, LocaleData{
 		":":    ":",
 		"z":    "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(juma|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(juma|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var sw_KE_Locale = merge(&sw_Locale, LocaleData{
-	Name:            "sw-KE",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "sw-KE",
+	DateOrder: "DMY",
 })
 
 var sw_UG_Locale = merge(&sw_Locale, LocaleData{
-	Name:            "sw-UG",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "sw-UG",
+	DateOrder: "DMY",
 })

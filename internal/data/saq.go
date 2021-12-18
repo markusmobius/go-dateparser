@@ -87,7 +87,5 @@ var saq_Locale = merge(nil, LocaleData{
 		":":                   ":",
 		"z":                   "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(lapa le tomon waare|lapa le tomon obo|mderot ee ong'wan|lapa le ong'wan|mderot ee inet|mderot ee kuni|mderot ee sapa|lapa le isiet|lapa le okuni|lapa le tomon|lapa le waare|mderot ee are|mderot ee ile|mderot ee kwe|lapa le imet|lapa le saal|lapa le sapa|lapa le ile|lapa le obo|this minute|last month|next month|saipa napo|this month|last week|last year|next week|next year|this hour|this week|this year|isekondi|idakika|taisere|tesiran|ng'ole|mpari|teipa|lapa|lari|saai|are|duo|gmt|ile|ime|ine|isi|kun|kwe|now|obo|oku|ong|saa|sap|tob|tom|tow|utc|waa|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(lapa le tomon waare|lapa le tomon obo|mderot ee ong'wan|lapa le ong'wan|mderot ee inet|mderot ee kuni|mderot ee sapa|lapa le isiet|lapa le okuni|lapa le tomon|lapa le waare|mderot ee are|mderot ee ile|mderot ee kwe|lapa le imet|lapa le saal|lapa le sapa|lapa le ile|lapa le obo|this minute|last month|next month|saipa napo|this month|last week|last year|next week|next year|this hour|this week|this year|isekondi|idakika|taisere|tesiran|ng'ole|mpari|teipa|lapa|lari|saai|are|duo|gmt|ile|ime|ine|isi|kun|kwe|now|obo|oku|ong|saa|sap|tob|tom|tow|utc|waa|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

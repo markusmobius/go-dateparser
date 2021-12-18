@@ -92,7 +92,5 @@ var kln_Locale = merge(nil, LocaleData{
 		":":                    ":",
 		"z":                    "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(kipsuunde nebo aeng'|kipsuunde ne taai|this minute|kooskoliny|last month|next month|ng'atyaato|this month|iwootkuut|koang'wan|last week|last year|next week|next year|ng'eiyeet|this hour|this week|this year|kiptaamo|sekondit|koaeng'|kosomok|kotisap|minitit|rooptui|arawet|bureet|epeeso|karoon|kenyit|komuut|kotaai|mamuut|mulgul|betut|koosk|mutai|paagi|raini|wikit|amut|kolo|ngat|sait|bur|epe|gmt|iwo|koa|kol|kom|koo|kos|kot|kpa|kpt|krn|kts|mam|mul|nge|now|paa|roo|taa|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(kipsuunde nebo aeng'|kipsuunde ne taai|this minute|kooskoliny|last month|next month|ng'atyaato|this month|iwootkuut|koang'wan|last week|last year|next week|next year|ng'eiyeet|this hour|this week|this year|kiptaamo|sekondit|koaeng'|kosomok|kotisap|minitit|rooptui|arawet|bureet|epeeso|karoon|kenyit|komuut|kotaai|mamuut|mulgul|betut|koosk|mutai|paagi|raini|wikit|amut|kolo|ngat|sait|bur|epe|gmt|iwo|koa|kol|kom|koo|kos|kot|kpa|kpt|krn|kts|mam|mul|nge|now|paa|roo|taa|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

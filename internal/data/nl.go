@@ -142,49 +142,31 @@ var nl_Locale = merge(nil, LocaleData{
 })
 
 var nl_AW_Locale = merge(&nl_Locale, LocaleData{
-	Name:            "nl-AW",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "nl-AW",
+	DateOrder: "DMY",
 })
 
 var nl_BE_Locale = merge(&nl_Locale, LocaleData{
-	Name:            "nl-BE",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "nl-BE",
+	DateOrder: "DMY",
 })
 
 var nl_BQ_Locale = merge(&nl_Locale, LocaleData{
-	Name:            "nl-BQ",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "nl-BQ",
+	DateOrder: "DMY",
 })
 
 var nl_CW_Locale = merge(&nl_Locale, LocaleData{
-	Name:            "nl-CW",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "nl-CW",
+	DateOrder: "DMY",
 })
 
 var nl_SR_Locale = merge(&nl_Locale, LocaleData{
-	Name:            "nl-SR",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "nl-SR",
+	DateOrder: "DMY",
 })
 
 var nl_SX_Locale = merge(&nl_Locale, LocaleData{
-	Name:            "nl-SX",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "nl-SX",
+	DateOrder: "DMY",
 })

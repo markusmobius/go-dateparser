@@ -116,28 +116,19 @@ var zh_Hans_Locale = merge(nil, LocaleData{
 })
 
 var zh_Hans_HK_Locale = merge(&zh_Hans_Locale, LocaleData{
-	Name:            "zh-Hans-HK",
-	DateOrder:       "DMY",
-	NoWordSpacing:   true,
-	RxCombined:      regexp.MustCompile(`(?i)()`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?)()(.*)$`),
+	Name:          "zh-Hans-HK",
+	DateOrder:     "DMY",
+	NoWordSpacing: true,
 })
 
 var zh_Hans_MO_Locale = merge(&zh_Hans_Locale, LocaleData{
-	Name:            "zh-Hans-MO",
-	DateOrder:       "DMY",
-	NoWordSpacing:   true,
-	RxCombined:      regexp.MustCompile(`(?i)()`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?)()(.*)$`),
+	Name:          "zh-Hans-MO",
+	DateOrder:     "DMY",
+	NoWordSpacing: true,
 })
 
 var zh_Hans_SG_Locale = merge(&zh_Hans_Locale, LocaleData{
-	Name:            "zh-Hans-SG",
-	DateOrder:       "DMY",
-	NoWordSpacing:   true,
-	RxCombined:      regexp.MustCompile(`(?i)()`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?)()(.*)$`),
+	Name:          "zh-Hans-SG",
+	DateOrder:     "DMY",
+	NoWordSpacing: true,
 })

@@ -56,13 +56,13 @@ var ar_Locale = merge(nil, LocaleData{
 		"الاحد":          "sunday",
 		"اسبوع":          "week",
 		"السنة":          "year",
-		"مساء":           "",
 		"الان":           "0 second ago",
 		"ايام":           "day",
 		"ساعة":           "hour",
 		"خلال":           "in",
 		"مارس":           "march",
 		"مايو":           "may",
+		"مساء":           "pm",
 		"امس":            "1 day ago",
 		"منذ":            "ago",
 		"يوم":            "day",
@@ -132,25 +132,17 @@ var ar_AE_Locale = merge(&ar_Locale, LocaleData{
 		":":             ":",
 		"z":             "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(السنة التالية|هذه السنة|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(السنة التالية|هذه السنة|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_BH_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-BH",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-BH",
+	DateOrder: "DMY",
 })
 
 var ar_DJ_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-DJ",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-DJ",
+	DateOrder: "DMY",
 })
 
 var ar_DZ_Locale = merge(&ar_Locale, LocaleData{
@@ -176,41 +168,27 @@ var ar_DZ_Locale = merge(&ar_Locale, LocaleData{
 		":":      ":",
 		"z":      "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_EG_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-EG",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-EG",
+	DateOrder: "DMY",
 })
 
 var ar_EH_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-EH",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-EH",
+	DateOrder: "DMY",
 })
 
 var ar_ER_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-ER",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-ER",
+	DateOrder: "DMY",
 })
 
 var ar_IL_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-IL",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-IL",
+	DateOrder: "DMY",
 })
 
 var ar_IQ_Locale = merge(&ar_Locale, LocaleData{
@@ -242,9 +220,7 @@ var ar_IQ_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|تشرین الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|تشرین الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_JO_Locale = merge(&ar_Locale, LocaleData{
@@ -275,25 +251,17 @@ var ar_JO_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_KM_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-KM",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-KM",
+	DateOrder: "DMY",
 })
 
 var ar_KW_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-KW",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-KW",
+	DateOrder: "DMY",
 })
 
 var ar_LB_Locale = merge(&ar_Locale, LocaleData{
@@ -324,17 +292,12 @@ var ar_LB_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_LY_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-LY",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-LY",
+	DateOrder: "DMY",
 })
 
 var ar_MA_Locale = merge(&ar_Locale, LocaleData{
@@ -359,9 +322,7 @@ var ar_MA_Locale = merge(&ar_Locale, LocaleData{
 		":":      ":",
 		"z":      "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(يوليوز|دجنبر|شتنبر|نونبر|gmt|utc|غشت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(يوليوز|دجنبر|شتنبر|نونبر|gmt|utc|غشت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_MR_Locale = merge(&ar_Locale, LocaleData{
@@ -383,17 +344,12 @@ var ar_MR_Locale = merge(&ar_Locale, LocaleData{
 		":":     ":",
 		"z":     "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(دجمبر|شتمبر|اغشت|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(دجمبر|شتمبر|اغشت|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_OM_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-OM",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-OM",
+	DateOrder: "DMY",
 })
 
 var ar_PS_Locale = merge(&ar_Locale, LocaleData{
@@ -424,49 +380,32 @@ var ar_PS_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_QA_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-QA",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-QA",
+	DateOrder: "DMY",
 })
 
 var ar_SA_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-SA",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-SA",
+	DateOrder: "DMY",
 })
 
 var ar_SD_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-SD",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-SD",
+	DateOrder: "DMY",
 })
 
 var ar_SO_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-SO",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-SO",
+	DateOrder: "DMY",
 })
 
 var ar_SS_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-SS",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-SS",
+	DateOrder: "DMY",
 })
 
 var ar_SY_Locale = merge(&ar_Locale, LocaleData{
@@ -497,17 +436,12 @@ var ar_SY_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_TD_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-TD",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-TD",
+	DateOrder: "DMY",
 })
 
 var ar_TN_Locale = merge(&ar_Locale, LocaleData{
@@ -533,15 +467,10 @@ var ar_TN_Locale = merge(&ar_Locale, LocaleData{
 		":":      ":",
 		"z":      "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ar_YE_Locale = merge(&ar_Locale, LocaleData{
-	Name:            "ar-YE",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ar-YE",
+	DateOrder: "DMY",
 })

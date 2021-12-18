@@ -90,15 +90,10 @@ var mas_Locale = merge(nil, LocaleData{
 		":":                    ":",
 		"z":                    "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(oloilepunyie inkokua|olodoyiorie inkokua|this minute|last month|next month|this month|ɔlɔɨbɔrarɛ|last week|last year|morusasin|next week|next year|oldakikae|this hour|this week|this year|ɔɛnɨɔɨŋɔk|ɛnkakɛnya|alaamisi|jumamosi|jumapili|jumatanɔ|jumatatu|kujuɔrɔk|taaisere|oladalʉ|olgisan|pʉshʉka|sekunde|ɛnkɔlɔŋ|jumane|kushin|ntʉŋʉs|ɛndama|ewiki|jumaa|taata|ɔlapa|ɔlari|arat|ŋole|ɛsaa|alh|ara|bɔr|dal|doy|gis|gmt|iju|jmo|jnn|jpi|jtn|jtt|kus|lep|now|ntʉ|rok|sas|shʉ|utc|ɔɛn|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(oloilepunyie inkokua|olodoyiorie inkokua|this minute|last month|next month|this month|ɔlɔɨbɔrarɛ|last week|last year|morusasin|next week|next year|oldakikae|this hour|this week|this year|ɔɛnɨɔɨŋɔk|ɛnkakɛnya|alaamisi|jumamosi|jumapili|jumatanɔ|jumatatu|kujuɔrɔk|taaisere|oladalʉ|olgisan|pʉshʉka|sekunde|ɛnkɔlɔŋ|jumane|kushin|ntʉŋʉs|ɛndama|ewiki|jumaa|taata|ɔlapa|ɔlari|arat|ŋole|ɛsaa|alh|ara|bɔr|dal|doy|gis|gmt|iju|jmo|jnn|jpi|jtn|jtt|kus|lep|now|ntʉ|rok|sas|shʉ|utc|ɔɛn|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var mas_TZ_Locale = merge(&mas_Locale, LocaleData{
-	Name:            "mas-TZ",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "mas-TZ",
+	DateOrder: "DMY",
 })

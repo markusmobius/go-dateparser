@@ -86,7 +86,5 @@ var uz_Arab_Locale = merge(nil, LocaleData{
 		"چ":           "wednesday",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|چهارشنبه|سه‌شنبه|پنجشنبه|minute|second|اکتوبر|دوشنبه|سپتمبر|فبروری|یکشنبه|month|today|اپریل|جنوری|جولای|دسمبر|نومبر|hour|week|year|اگست|جمعه|شنبه|مارچ|day|gmt|now|utc|اپر|اکت|اگس|جنو|جول|جون|دسم|سپت|فبر|مار|نوم|\+|\.|\[|\]|\||am|pm|می| |'|,|-|/|:|;|@|z|ج|د|س|ش|پ|چ|ی)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|چهارشنبه|سه‌شنبه|پنجشنبه|minute|second|اکتوبر|دوشنبه|سپتمبر|فبروری|یکشنبه|month|today|اپریل|جنوری|جولای|دسمبر|نومبر|hour|week|year|اگست|جمعه|شنبه|مارچ|day|gmt|now|utc|اپر|اکت|اگس|جنو|جول|جون|دسم|سپت|فبر|مار|نوم|\+|\.|\[|\]|\||am|pm|می| |'|,|-|/|:|;|@|z|ج|د|س|ش|پ|چ|ی)((?:\z|\W|_|\d).*)$`),
 })

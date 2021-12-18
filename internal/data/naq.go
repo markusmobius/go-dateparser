@@ -90,7 +90,5 @@ var naq_Locale = merge(nil, LocaleData{
 		":":                ":",
 		"z":                "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(taraǀkhuumuǁkhab|aoǁkhuumuǁkhab|dondertaxtsees|satertaxtsees|denstaxtsees|fraitaxtsees|hoasoreǁkhab|wunstaxtsees|mantaxtsees|sontaxtsees|this minute|last month|next month|this month|ǀkhuuǁkhab|ǂnuǁnaiseb|ǃhoaǂkhaib|ǃkhanǀgoab|last week|last year|next week|next year|this hour|this week|this year|yesterday|ǀhooǂgaeb|ǂkhoesaob|ǃkhaitsab|gamaǀaeb|tomorrow|neetsee|ǁgoagas|ǃkhanni|wekheb|kurib|tsees|ǀgaub|ǁkhab|ǃuias|haib|iiri|apr|aug|dec|feb|gmt|jan|jul|jun|mar|may|nov|now|oct|sat|sep|son|utc|\+|\.|\[|\]|\||am|de|do|fr|ma|pm|wu| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(taraǀkhuumuǁkhab|aoǁkhuumuǁkhab|dondertaxtsees|satertaxtsees|denstaxtsees|fraitaxtsees|hoasoreǁkhab|wunstaxtsees|mantaxtsees|sontaxtsees|this minute|last month|next month|this month|ǀkhuuǁkhab|ǂnuǁnaiseb|ǃhoaǂkhaib|ǃkhanǀgoab|last week|last year|next week|next year|this hour|this week|this year|yesterday|ǀhooǂgaeb|ǂkhoesaob|ǃkhaitsab|gamaǀaeb|tomorrow|neetsee|ǁgoagas|ǃkhanni|wekheb|kurib|tsees|ǀgaub|ǁkhab|ǃuias|haib|iiri|apr|aug|dec|feb|gmt|jan|jul|jun|mar|may|nov|now|oct|sat|sep|son|utc|\+|\.|\[|\]|\||am|de|do|fr|ma|pm|wu| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

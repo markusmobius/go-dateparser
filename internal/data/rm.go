@@ -85,7 +85,5 @@ var rm_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|glindesdi|last week|last year|next week|next year|settember|this hour|this week|this year|zercladur|december|dumengia|november|venderdi|fanadur|gievgia|mesemna|october|schaner|secunda|avrigl|damaun|favrer|minuta|avust|mardi|schan|sonda|zercl|emna|favr|mais|mars|matg|sett|avr|dec|fan|gie|gli|gmt|ier|nov|now|oct|onn|tag|ura|utc|\+|\.|\[|\]|\||am|du|ma|me|oz|pm|so|ve| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|glindesdi|last week|last year|next week|next year|settember|this hour|this week|this year|zercladur|december|dumengia|november|venderdi|fanadur|gievgia|mesemna|october|schaner|secunda|avrigl|damaun|favrer|minuta|avust|mardi|schan|sonda|zercl|emna|favr|mais|mars|matg|sett|avr|dec|fan|gie|gli|gmt|ier|nov|now|oct|onn|tag|ura|utc|\+|\.|\[|\]|\||am|du|ma|me|oz|pm|so|ve| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

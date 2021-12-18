@@ -88,7 +88,5 @@ var lu_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(kabalashipu|kasunsukusu|this minute|last month|next month|this month|kaswekese|last week|last year|lumungulu|lutongolo|next week|next year|this hour|this week|this year|makelela|tshidimu|kasunsu|lubingu|lufuimi|lumingu|lungudi|lushika|ciongo|dilolo|dituku|luishi|lusolo|malaba|ndaaya|ndangu|ngondo|ngovya|nkodya|ciswa|dinda|muuya|njowa|diba|lelu|lush|cio|cis|gmt|kab|kas|lub|luf|lui|lum|lun|lus|lut|muu|ndg|ndy|ngv|njw|nko|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(kabalashipu|kasunsukusu|this minute|last month|next month|this month|kaswekese|last week|last year|lumungulu|lutongolo|next week|next year|this hour|this week|this year|makelela|tshidimu|kasunsu|lubingu|lufuimi|lumingu|lungudi|lushika|ciongo|dilolo|dituku|luishi|lusolo|malaba|ndaaya|ndangu|ngondo|ngovya|nkodya|ciswa|dinda|muuya|njowa|diba|lelu|lush|cio|cis|gmt|kab|kas|lub|luf|lui|lum|lun|lus|lut|muu|ndg|ndy|ngv|njw|nko|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

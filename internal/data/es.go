@@ -171,11 +171,8 @@ var es_Locale = merge(nil, LocaleData{
 })
 
 var es_419_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-419",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-419",
+	DateOrder: "DMY",
 })
 
 var es_AR_Locale = merge(&es_Locale, LocaleData{
@@ -205,115 +202,73 @@ var es_AR_Locale = merge(&es_Locale, LocaleData{
 })
 
 var es_BO_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-BO",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-BO",
+	DateOrder: "DMY",
 })
 
 var es_BR_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-BR",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-BR",
+	DateOrder: "DMY",
 })
 
 var es_BZ_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-BZ",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-BZ",
+	DateOrder: "DMY",
 })
 
 var es_CL_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-CL",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-CL",
+	DateOrder: "DMY",
 })
 
 var es_CO_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-CO",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-CO",
+	DateOrder: "DMY",
 })
 
 var es_CR_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-CR",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-CR",
+	DateOrder: "DMY",
 })
 
 var es_CU_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-CU",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-CU",
+	DateOrder: "DMY",
 })
 
 var es_DO_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-DO",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-DO",
+	DateOrder: "DMY",
 })
 
 var es_EA_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-EA",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-EA",
+	DateOrder: "DMY",
 })
 
 var es_EC_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-EC",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-EC",
+	DateOrder: "DMY",
 })
 
 var es_GQ_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-GQ",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-GQ",
+	DateOrder: "DMY",
 })
 
 var es_GT_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-GT",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-GT",
+	DateOrder: "DMY",
 })
 
 var es_HN_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-HN",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-HN",
+	DateOrder: "DMY",
 })
 
 var es_IC_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-IC",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-IC",
+	DateOrder: "DMY",
 })
 
 var es_MX_Locale = merge(&es_Locale, LocaleData{
@@ -354,43 +309,28 @@ var es_MX_Locale = merge(&es_Locale, LocaleData{
 })
 
 var es_NI_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-NI",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-NI",
+	DateOrder: "DMY",
 })
 
 var es_PA_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-PA",
-	DateOrder:       "MDY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-PA",
+	DateOrder: "MDY",
 })
 
 var es_PE_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-PE",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-PE",
+	DateOrder: "DMY",
 })
 
 var es_PH_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-PH",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-PH",
+	DateOrder: "DMY",
 })
 
 var es_PR_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-PR",
-	DateOrder:       "MDY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-PR",
+	DateOrder: "MDY",
 })
 
 var es_PY_Locale = merge(&es_Locale, LocaleData{
@@ -420,33 +360,21 @@ var es_PY_Locale = merge(&es_Locale, LocaleData{
 })
 
 var es_SV_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-SV",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-SV",
+	DateOrder: "DMY",
 })
 
 var es_US_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-US",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-US",
+	DateOrder: "DMY",
 })
 
 var es_UY_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-UY",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-UY",
+	DateOrder: "DMY",
 })
 
 var es_VE_Locale = merge(&es_Locale, LocaleData{
-	Name:            "es-VE",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "es-VE",
+	DateOrder: "DMY",
 })

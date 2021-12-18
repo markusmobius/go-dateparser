@@ -90,7 +90,5 @@ var lag_Locale = merge(nil, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(kwiinyambala|this minute|kwiidwaata|lamʉtoondo|last month|next month|this month|inyambala|jumamoosi|jumapiiri|jumataano|kʉfungatɨ|kʉmʉʉnchɨ|last week|last year|next week|next year|this hour|this week|this year|alamiisi|jumatatu|kwiikumi|kʉkeenda|kʉsasatʉ|sekuunde|fungatɨ|idwaata|jumaine|kwiinyi|kʉnaanɨ|kʉsaano|kʉsaatʉ|kʉvɨɨrɨ|mʉʉnchɨ|dakika|ijumaa|keenda|mwaaka|mweeri|sasatʉ|ikumi|isikʉ|moosi|naanɨ|niijo|piili|saano|saatʉ|taano|taatu|vɨɨrɨ|wiiki|inyi|sikʉ|alh|gmt|ijm|ine|muu|now|saa|too|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(kwiinyambala|this minute|kwiidwaata|lamʉtoondo|last month|next month|this month|inyambala|jumamoosi|jumapiiri|jumataano|kʉfungatɨ|kʉmʉʉnchɨ|last week|last year|next week|next year|this hour|this week|this year|alamiisi|jumatatu|kwiikumi|kʉkeenda|kʉsasatʉ|sekuunde|fungatɨ|idwaata|jumaine|kwiinyi|kʉnaanɨ|kʉsaano|kʉsaatʉ|kʉvɨɨrɨ|mʉʉnchɨ|dakika|ijumaa|keenda|mwaaka|mweeri|sasatʉ|ikumi|isikʉ|moosi|naanɨ|niijo|piili|saano|saatʉ|taano|taatu|vɨɨrɨ|wiiki|inyi|sikʉ|alh|gmt|ijm|ine|muu|now|saa|too|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

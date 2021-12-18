@@ -88,23 +88,15 @@ var ha_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|faburairu|last week|last year|next week|next year|this hour|this week|this year|afirilu|alhamis|disamba|janairu|jumma'a|litinin|nuwamba|satumba|shekara|agusta|asabar|daƙiƙa|lahadi|laraba|oktoba|talata|kwana|maris|minti|gobe|jiya|mako|mayu|wata|yuli|yuni|afi|agu|alh|asa|awa|dis|fab|gmt|jan|jum|lah|lar|lit|mar|may|now|nuw|okt|sat|tal|utc|yau|yul|yun|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|faburairu|last week|last year|next week|next year|this hour|this week|this year|afirilu|alhamis|disamba|janairu|jumma'a|litinin|nuwamba|satumba|shekara|agusta|asabar|daƙiƙa|lahadi|laraba|oktoba|talata|kwana|maris|minti|gobe|jiya|mako|mayu|wata|yuli|yuni|afi|agu|alh|asa|awa|dis|fab|gmt|jan|jum|lah|lar|lit|mar|may|now|nuw|okt|sat|tal|utc|yau|yul|yun|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var ha_GH_Locale = merge(&ha_Locale, LocaleData{
-	Name:            "ha-GH",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ha-GH",
+	DateOrder: "DMY",
 })
 
 var ha_NE_Locale = merge(&ha_Locale, LocaleData{
-	Name:            "ha-NE",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ha-NE",
+	DateOrder: "DMY",
 })

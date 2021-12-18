@@ -127,15 +127,20 @@ func (ld *LocaleData) CombineRegexPatterns() {
 	})
 
 	// Combine the patterns
-	combined := strings.Join(regexPatterns, "|")
+	ld.CombinedRegexPattern = ``
+	ld.ExactCombinedRegexPattern = ``
 
-	if ld.NoWordSpacing {
-		ld.CombinedRegexPattern = `(` + combined + `)`
-	} else {
-		ld.CombinedRegexPattern = `(\A|\W|_)(` + combined + `)(\z|\W|_)`
+	if len(regexPatterns) > 0 {
+		combined := strings.Join(regexPatterns, "|")
+
+		if ld.NoWordSpacing {
+			ld.CombinedRegexPattern = `(` + combined + `)`
+		} else {
+			ld.CombinedRegexPattern = `(\A|\W|_)(` + combined + `)(\z|\W|_)`
+		}
+
+		ld.ExactCombinedRegexPattern = "^(" + combined + ")$"
 	}
-
-	ld.ExactCombinedRegexPattern = "^(" + combined + ")$"
 }
 
 func (ld *LocaleData) GenerateKnownWordPattern() {
@@ -146,11 +151,6 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 		text = regexp.QuoteMeta(text)
 		texts = append(texts, text)
 	}
-
-	// for _, word := range append(ld.SkipWords, ld.PertainWords...) {
-	// 	word = regexp.QuoteMeta(word)
-	// 	texts = append(texts, word)
-	// }
 
 	// Sort texts by the longest
 	sort.Slice(texts, func(a, b int) bool {
@@ -164,12 +164,16 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 	})
 
 	// Combine the texts
-	combined := strings.Join(texts, "|")
+	ld.KnownWordsPattern = ""
 
-	if ld.NoWordSpacing {
-		ld.KnownWordsPattern = `^(.*?)(` + combined + `)(.*)$`
-	} else {
-		ld.KnownWordsPattern = `^(.*?(?:\A|\W|_|\d))(` + combined + `)((?:\z|\W|_|\d).*)$`
+	if len(texts) > 0 {
+		combined := strings.Join(texts, "|")
+
+		if ld.NoWordSpacing {
+			ld.KnownWordsPattern = `^(.*?)(` + combined + `)(.*)$`
+		} else {
+			ld.KnownWordsPattern = `^(.*?(?:\A|\W|_|\d))(` + combined + `)((?:\z|\W|_|\d).*)$`
+		}
 	}
 }
 

@@ -173,9 +173,7 @@ var sr_Cyrl_BA_Locale = merge(&sr_Cyrl_Locale, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(прије подне|недјеља|сриједа|септ|gmt|utc|\+|\.|am|pm|ср|ут| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(прије подне|недјеља|сриједа|септ|gmt|utc|\+|\.|am|pm|ср|ут| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var sr_Cyrl_ME_Locale = merge(&sr_Cyrl_Locale, LocaleData{
@@ -200,9 +198,7 @@ var sr_Cyrl_ME_Locale = merge(&sr_Cyrl_Locale, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(прије подне|недјеља|сриједа|септ|gmt|utc|\+|\.|am|pm|ср|ут| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(прије подне|недјеља|сриједа|септ|gmt|utc|\+|\.|am|pm|ср|ут| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var sr_Cyrl_XK_Locale = merge(&sr_Cyrl_Locale, LocaleData{
@@ -224,7 +220,5 @@ var sr_Cyrl_XK_Locale = merge(&sr_Cyrl_Locale, LocaleData{
 		":":    ":",
 		"z":    "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(септ|gmt|utc|\+|\.|am|pm|ср|ут| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(септ|gmt|utc|\+|\.|am|pm|ср|ут| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
 })

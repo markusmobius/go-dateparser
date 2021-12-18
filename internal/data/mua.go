@@ -89,7 +89,5 @@ var mua_Locale = merge(nil, LocaleData{
 		":":                       ":",
 		"z":                       "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(cok comme ma laŋ tǝ biŋ|cok comme ma laŋne|mamǝŋgwaafahbii|zah'nane/ comme|madǝǝuutǝbijaŋ|cokcwaklaŋne|comkaldǝɓlii|mamǝŋgwaalii|fii gwahlle|this minute|cokcwaklii|comzyeɓsuu|comzyiiɗii|fii dǝɓlii|fii marfoo|fii mundaŋ|last month|next month|this month|cok comme|com'yakke|comgaisuu|comlaaɗii|last week|last year|next week|next year|this hour|this week|this year|comkolle|fii yuru|madǝmbii|tǝ'nahko|fii loo|tǝ'nane|comme|lilli|tǝsoo|luma|syii|cga|cka|cki|cko|cla|cya|cze|czi|fde|fgw|fii|flo|fmf|fmu|fyu|gmt|mad|mam|mbi|mli|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(cok comme ma laŋ tǝ biŋ|cok comme ma laŋne|mamǝŋgwaafahbii|zah'nane/ comme|madǝǝuutǝbijaŋ|cokcwaklaŋne|comkaldǝɓlii|mamǝŋgwaalii|fii gwahlle|this minute|cokcwaklii|comzyeɓsuu|comzyiiɗii|fii dǝɓlii|fii marfoo|fii mundaŋ|last month|next month|this month|cok comme|com'yakke|comgaisuu|comlaaɗii|last week|last year|next week|next year|this hour|this week|this year|comkolle|fii yuru|madǝmbii|tǝ'nahko|fii loo|tǝ'nane|comme|lilli|tǝsoo|luma|syii|cga|cka|cki|cko|cla|cya|cze|czi|fde|fgw|fii|flo|fmf|fmu|fyu|gmt|mad|mam|mbi|mli|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

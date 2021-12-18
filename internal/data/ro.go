@@ -155,9 +155,6 @@ var ro_Locale = merge(nil, LocaleData{
 })
 
 var ro_MD_Locale = merge(&ro_Locale, LocaleData{
-	Name:            "ro-MD",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ro-MD",
+	DateOrder: "DMY",
 })

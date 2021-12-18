@@ -90,7 +90,5 @@ var shi_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|ⴷⵓⵊⴰⵏⴱⵉⵔ|ⵏⵓⵡⴰⵏⴱⵉⵔ|ⵛⵓⵜⴰⵏⴱⵉⵔ|ⵜⴰⴷⴳⴳⵡⴰⵜ|ⴰⵙⴳⴳⵡⴰⵙ|ⴰⵙⵉⴹⵢⴰⵙ|ⵉⵎⴰⵍⴰⵙⵙ|ⵜⴰⵙⵔⴰⴳⵜ|ⵜⵓⵙⴷⵉⴷⵜ|ⴰⵙⴰⵎⴰⵙ|ⴰⵙⵉⵏⴰⵙ|ⵉⵏⵏⴰⵢⵔ|ⵙⵉⵎⵡⴰⵙ|ⵜⴰⵙⵉⵏⵜ|ⵜⵉⴼⴰⵡⵜ|ⵢⵓⵍⵢⵓⵣ|ⴰⴽⵕⴰⵙ|ⴰⴽⵡⴰⵙ|ⴰⵙⴽⴽⴰ|ⴰⵢⵏⴰⵙ|ⴰⵢⵢⵓⵔ|ⴱⵕⴰⵢⵕ|ⴽⵜⵓⴱⵔ|ⵉⴱⵔⵉⵔ|ⵉⴹⵍⵍⵉ|ⵎⴰⵢⵢⵓ|ⵢⵓⵏⵢⵓ|ⴰⵙⵉⴹ|ⴰⵙⵉⵎ|ⴰⵙⵙⴰ|ⵎⴰⵕⵚ|ⵖⵓⵛⵜ|gmt|now|utc|ⴰⴽⵕ|ⴰⴽⵡ|ⴰⵙⴰ|ⴰⵙⵉ|ⴰⵙⵙ|ⴰⵢⵏ|ⴱⵕⴰ|ⴷⵓⵊ|ⴽⵜⵓ|ⵉⴱⵔ|ⵉⵏⵏ|ⵎⴰⵕ|ⵎⴰⵢ|ⵏⵓⵡ|ⵖⵓⵛ|ⵛⵓⵜ|ⵢⵓⵍ|ⵢⵓⵏ|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|ⴷⵓⵊⴰⵏⴱⵉⵔ|ⵏⵓⵡⴰⵏⴱⵉⵔ|ⵛⵓⵜⴰⵏⴱⵉⵔ|ⵜⴰⴷⴳⴳⵡⴰⵜ|ⴰⵙⴳⴳⵡⴰⵙ|ⴰⵙⵉⴹⵢⴰⵙ|ⵉⵎⴰⵍⴰⵙⵙ|ⵜⴰⵙⵔⴰⴳⵜ|ⵜⵓⵙⴷⵉⴷⵜ|ⴰⵙⴰⵎⴰⵙ|ⴰⵙⵉⵏⴰⵙ|ⵉⵏⵏⴰⵢⵔ|ⵙⵉⵎⵡⴰⵙ|ⵜⴰⵙⵉⵏⵜ|ⵜⵉⴼⴰⵡⵜ|ⵢⵓⵍⵢⵓⵣ|ⴰⴽⵕⴰⵙ|ⴰⴽⵡⴰⵙ|ⴰⵙⴽⴽⴰ|ⴰⵢⵏⴰⵙ|ⴰⵢⵢⵓⵔ|ⴱⵕⴰⵢⵕ|ⴽⵜⵓⴱⵔ|ⵉⴱⵔⵉⵔ|ⵉⴹⵍⵍⵉ|ⵎⴰⵢⵢⵓ|ⵢⵓⵏⵢⵓ|ⴰⵙⵉⴹ|ⴰⵙⵉⵎ|ⴰⵙⵙⴰ|ⵎⴰⵕⵚ|ⵖⵓⵛⵜ|gmt|now|utc|ⴰⴽⵕ|ⴰⴽⵡ|ⴰⵙⴰ|ⴰⵙⵉ|ⴰⵙⵙ|ⴰⵢⵏ|ⴱⵕⴰ|ⴷⵓⵊ|ⴽⵜⵓ|ⵉⴱⵔ|ⵉⵏⵏ|ⵎⴰⵕ|ⵎⴰⵢ|ⵏⵓⵡ|ⵖⵓⵛ|ⵛⵓⵜ|ⵢⵓⵍ|ⵢⵓⵏ|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

@@ -98,9 +98,6 @@ var ko_Locale = merge(nil, LocaleData{
 })
 
 var ko_KP_Locale = merge(&ko_Locale, LocaleData{
-	Name:            "ko-KP",
-	DateOrder:       "YMD.",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ko-KP",
+	DateOrder: "YMD.",
 })

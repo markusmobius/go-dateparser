@@ -93,23 +93,15 @@ var gsw_Locale = merge(nil, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(am vormittag|am namittag|this minute|last month|next month|this month|dunschtig|last week|last year|next week|next year|samschtig|septamber|this hour|this week|this year|vormittag|ziischtig|auguscht|dezamber|geschter|mittwuch|namittag|novamber|oktoober|februar|friitig|maantig|minuute|schtund|sekunde|sunntig|januar|april|monet|moorn|wuche|jaar|juli|juni|marz|vorm|apr|aug|dez|feb|gmt|hut|jan|jul|jun|mai|mar|nam|nov|now|okt|sep|tag|utc|\+|\.|\[|\]|\||am|du|fr|ma|mi|pm|sa|su|zi| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(am vormittag|am namittag|this minute|last month|next month|this month|dunschtig|last week|last year|next week|next year|samschtig|septamber|this hour|this week|this year|vormittag|ziischtig|auguscht|dezamber|geschter|mittwuch|namittag|novamber|oktoober|februar|friitig|maantig|minuute|schtund|sekunde|sunntig|januar|april|monet|moorn|wuche|jaar|juli|juni|marz|vorm|apr|aug|dez|feb|gmt|hut|jan|jul|jun|mai|mar|nam|nov|now|okt|sep|tag|utc|\+|\.|\[|\]|\||am|du|fr|ma|mi|pm|sa|su|zi| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })
 
 var gsw_FR_Locale = merge(&gsw_Locale, LocaleData{
-	Name:            "gsw-FR",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "gsw-FR",
+	DateOrder: "DMY",
 })
 
 var gsw_LI_Locale = merge(&gsw_Locale, LocaleData{
-	Name:            "gsw-LI",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "gsw-LI",
+	DateOrder: "DMY",
 })

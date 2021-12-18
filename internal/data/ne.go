@@ -102,9 +102,6 @@ var ne_Locale = merge(nil, LocaleData{
 })
 
 var ne_IN_Locale = merge(&ne_Locale, LocaleData{
-	Name:            "ne-IN",
-	DateOrder:       "YMD",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ne-IN",
+	DateOrder: "YMD",
 })

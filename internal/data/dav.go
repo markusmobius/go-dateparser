@@ -86,7 +86,5 @@ var dav_Locale = merge(nil, LocaleData{
 		":":                         ":",
 		"z":                         "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(mori ghwa ikumi na imweri|mori ghwa ikumi na iwi|mori ghwa karandadu|mori ghwa mfungade|mori ghwa wunyanya|kuramuka jimweri|mori ghwa ikenda|mori ghwa imbiri|mori ghwa kadadu|mori ghwa kasanu|kuramuka kadadu|kuramuka kasanu|mori ghwa ikumi|ituku ja jumwa|mori ghwa kana|mori ghwa kawi|kuramuka kana|kuramuka kawi|kifula nguwo|this minute|last month|luma lwa k|luma lwa p|next month|this month|last week|last year|next week|next year|this hour|this week|this year|sekunde|dakika|idime|ituku|kesho|mwaka|iguo|juma|mori|gmt|ike|iku|imb|imw|iwi|jim|jum|kad|kan|kar|kas|kaw|mfu|ngu|now|saa|utc|wun|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(mori ghwa ikumi na imweri|mori ghwa ikumi na iwi|mori ghwa karandadu|mori ghwa mfungade|mori ghwa wunyanya|kuramuka jimweri|mori ghwa ikenda|mori ghwa imbiri|mori ghwa kadadu|mori ghwa kasanu|kuramuka kadadu|kuramuka kasanu|mori ghwa ikumi|ituku ja jumwa|mori ghwa kana|mori ghwa kawi|kuramuka kana|kuramuka kawi|kifula nguwo|this minute|last month|luma lwa k|luma lwa p|next month|this month|last week|last year|next week|next year|this hour|this week|this year|sekunde|dakika|idime|ituku|kesho|mwaka|iguo|juma|mori|gmt|ike|iku|imb|imw|iwi|jim|jum|kad|kan|kar|kas|kaw|mfu|ngu|now|saa|utc|wun|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

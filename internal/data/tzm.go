@@ -90,7 +90,5 @@ var tzm_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|deffir aza|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|zdat azal|asseggas|cutanbir|dujanbir|yebrayer|yennayer|asidyas|asimwas|assenat|imalass|nwanbir|tasragt|asamas|asekka|asinas|ktuber|tusdat|tusnat|yulyuz|akras|akwas|aynas|ibrir|mayyu|yunyu|assa|ayur|mars|ɣuct|akr|akw|asa|asd|asm|asn|ass|ayn|cut|duj|gmt|ibr|ktu|mar|may|now|nwa|utc|yeb|yen|yul|yun|ɣuc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|deffir aza|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|zdat azal|asseggas|cutanbir|dujanbir|yebrayer|yennayer|asidyas|asimwas|assenat|imalass|nwanbir|tasragt|asamas|asekka|asinas|ktuber|tusdat|tusnat|yulyuz|akras|akwas|aynas|ibrir|mayyu|yunyu|assa|ayur|mars|ɣuct|akr|akw|asa|asd|asm|asn|ass|ayn|cut|duj|gmt|ibr|ktu|mar|may|now|nwa|utc|yeb|yen|yul|yun|ɣuc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
 })

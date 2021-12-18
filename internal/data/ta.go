@@ -153,25 +153,16 @@ var ta_Locale = merge(nil, LocaleData{
 })
 
 var ta_LK_Locale = merge(&ta_Locale, LocaleData{
-	Name:            "ta-LK",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ta-LK",
+	DateOrder: "DMY",
 })
 
 var ta_MY_Locale = merge(&ta_Locale, LocaleData{
-	Name:            "ta-MY",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ta-MY",
+	DateOrder: "DMY",
 })
 
 var ta_SG_Locale = merge(&ta_Locale, LocaleData{
-	Name:            "ta-SG",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "ta-SG",
+	DateOrder: "DMY",
 })

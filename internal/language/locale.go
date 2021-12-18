@@ -39,7 +39,6 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
 
 	// Handle future words
 	// fmt.Println("IN IN TOKENS:", inInTokens)
-
 	// fmt.Println("FIRST TRANSLATION:", strJson(tokens))
 
 	if inInTokens {
@@ -67,33 +66,35 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
 func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 	// fmt.Println("INITIAL STR:", str)
 	// Split the strings
-	str = ld.RxCombined.ReplaceAllStringFunc(str, func(s string) string {
-		parts := ld.RxCombined.FindStringSubmatch(s)
-		switch len(parts) {
-		case 2:
-			return fmt.Sprintf("%s%s%s",
-				splitSeparator,
-				parts[1],
-				splitSeparator,
-			)
+	if ld.RxCombined != nil {
+		str = ld.RxCombined.ReplaceAllStringFunc(str, func(s string) string {
+			parts := ld.RxCombined.FindStringSubmatch(s)
+			switch len(parts) {
+			case 2:
+				return fmt.Sprintf("%s%s%s",
+					splitSeparator,
+					parts[1],
+					splitSeparator,
+				)
 
-		case 4:
-			return fmt.Sprintf("%s%s%s%s%s",
-				parts[1],
-				splitSeparator,
-				parts[2],
-				splitSeparator,
-				parts[3],
-			)
+			case 4:
+				return fmt.Sprintf("%s%s%s%s%s",
+					parts[1],
+					splitSeparator,
+					parts[2],
+					splitSeparator,
+					parts[3],
+				)
 
-		default:
-			return fmt.Sprintf("%s%s%s",
-				splitSeparator,
-				s,
-				splitSeparator,
-			)
-		}
-	})
+			default:
+				return fmt.Sprintf("%s%s%s",
+					splitSeparator,
+					s,
+					splitSeparator,
+				)
+			}
+		})
+	}
 
 	// str = strings.Trim(str, splitSeparator)
 
@@ -104,7 +105,7 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 
 	var tokens []string
 	for _, token := range strings.Split(str, splitSeparator) {
-		if ld.RxExactCombined.MatchString(token) {
+		if ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(token) {
 			tokens = append(tokens, token)
 		} else {
 			tokens = append(tokens, splitByKnownWords(ld, token, keepFormatting)...)
@@ -117,7 +118,11 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 }
 
 func splitByKnownWords(ld data.LocaleData, str string, keepFormatting bool) []string {
-	matches := ld.RxKnownWords.FindStringSubmatch(str)
+	var matches []string
+	if ld.RxKnownWords != nil {
+		matches = ld.RxKnownWords.FindStringSubmatch(str)
+	}
+
 	if len(matches) == 0 {
 		if tokenShouldBeCaptured(str, keepFormatting) {
 			return splitByNumerals(str, keepFormatting)

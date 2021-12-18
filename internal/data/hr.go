@@ -170,9 +170,6 @@ var hr_Locale = merge(nil, LocaleData{
 })
 
 var hr_BA_Locale = merge(&hr_Locale, LocaleData{
-	Name:            "hr-BA",
-	DateOrder:       "DMY.",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "hr-BA",
+	DateOrder: "DMY.",
 })

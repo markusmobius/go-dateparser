@@ -127,17 +127,11 @@ var sq_Locale = merge(nil, LocaleData{
 })
 
 var sq_MK_Locale = merge(&sq_Locale, LocaleData{
-	Name:            "sq-MK",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "sq-MK",
+	DateOrder: "DMY",
 })
 
 var sq_XK_Locale = merge(&sq_Locale, LocaleData{
-	Name:            "sq-XK",
-	DateOrder:       "DMY",
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+	Name:      "sq-XK",
+	DateOrder: "DMY",
 })
