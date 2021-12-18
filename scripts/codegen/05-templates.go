@@ -1,14 +1,18 @@
 package main
 
 import (
+	"sort"
 	"strings"
 	"text/template"
+	"unicode/utf8"
 )
 
 var (
 	fnMap = template.FuncMap{
+		"regex":        regex,
 		"localeName":   localeName,
 		"parentLocale": parentLocale,
+		"sortMap":      sortMap,
 	}
 
 	templates = map[string]*template.Template{
@@ -19,6 +23,14 @@ var (
 		"lang-loc-map": template.Must(template.New("").Parse(languageLocalesMapTemplate)),
 	}
 )
+
+func regex(pattern string) string {
+	if pattern == "" {
+		return "nil"
+	}
+
+	return "regexp.MustCompile(`(?i)" + pattern + "`)"
+}
 
 func localeName(language string) string {
 	language = strings.ReplaceAll(language, "-", "_")
@@ -32,6 +44,31 @@ func parentLocale(data LocaleData) string {
 	}
 
 	return "&" + localeName(data.Parent)
+}
+
+func sortMap(m map[string]string) []MapEntry {
+	var entries []MapEntry
+	for k, v := range m {
+		entries = append(entries, MapEntry{Key: k, Value: v})
+	}
+
+	sort.Slice(entries, func(a, b int) bool {
+		eA, eB := entries[a], entries[b]
+		lenKeyA := utf8.RuneCountInString(eA.Key)
+		lenKeyB := utf8.RuneCountInString(eB.Key)
+
+		if lenKeyA != lenKeyB {
+			return lenKeyA > lenKeyB
+		}
+
+		if eA.Value != eB.Value {
+			return eA.Value < eB.Value
+		}
+
+		return eA.Key < eB.Key
+	})
+
+	return entries
 }
 
 const languageOrderTemplate = `
@@ -87,19 +124,67 @@ import "regexp"
 
 type LocaleData struct {
 	Name                  string
-	Parent                *LocaleData
 	DateOrder             string
 	NoWordSpacing         bool
 	SentenceSplitterGroup int
 	SkipWords             []string
 	PertainWords          []string
 	Simplifications       []ReplacementData
-	Translations          []ReplacementData
+	Translations          map[string]string
+	TranslationRegexes    []ReplacementData
+	RxCombined            *regexp.Regexp
+	RxExactCombined       *regexp.Regexp
+	RxKnownWords          *regexp.Regexp
 }
 
 type ReplacementData struct {
-	Pattern     *regexp.Regexp
+	Rx          *regexp.Regexp
 	Replacement string
+}
+
+func merge(parent *LocaleData, child LocaleData) LocaleData {
+	if parent == nil {
+		return child
+	}
+
+	// Merge list
+	child.SkipWords = append(child.SkipWords, parent.SkipWords...)
+	child.PertainWords = append(child.PertainWords, parent.PertainWords...)
+	child.Simplifications = append(child.Simplifications, parent.Simplifications...)
+	child.TranslationRegexes = append(child.TranslationRegexes, parent.TranslationRegexes...)
+
+	// Prepare maps
+	if len(child.Translations) == 0 {
+		child.Translations = map[string]string{}
+	}
+
+	// Merge maps
+	for pattern, replacement := range parent.Simplifications {
+		child.Simplifications[pattern] = replacement
+	}
+
+	for word, translation := range parent.Translations {
+		child.Translations[word] = translation
+	}
+
+	for pattern, translation := range parent.TranslationRegexes {
+		child.TranslationRegexes[pattern] = translation
+	}
+
+	// Replace regexes
+	if child.RxCombined == nil {
+		child.RxCombined = parent.RxCombined
+	}
+
+	if child.RxExactCombined == nil {
+		child.RxExactCombined = parent.RxExactCombined
+	}
+
+	if child.RxKnownWords == nil {
+		child.RxKnownWords = parent.RxKnownWords
+	}
+
+	return child
 }
 
 var LocaleDataMap = map[string]LocaleData {
@@ -110,23 +195,30 @@ var LocaleDataMap = map[string]LocaleData {
 `
 
 const localeDataTemplate = `
-var {{localeName .Name}} = LocaleData {
+var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
 	Name:                  "{{.Name}}",
-	Parent:                {{parentLocale .}},
 	DateOrder:             "{{.DateOrder}}",
 	NoWordSpacing:         {{.NoWordSpacing}},
 	SentenceSplitterGroup: {{.SentenceSplitterGroup}},
 	SkipWords:    []string{ {{range $v := .SkipWords}}"{{$v}}", {{end}} },
 	PertainWords: []string{ {{range $v := .PertainWords}}"{{$v}}", {{end}} },
 	Simplifications: []ReplacementData{
-		{{range $data := .Simplifications -}}
-		{` + "regexp.MustCompile(`{{$data.Pattern}}`)" + `, "{{$data.Replacement}}"},
+		{{range $e := (sortMap .Simplifications) -}}
+		{ {{regex $e.Key}}, "{{$e.Value}}" },
 		{{end}}
 	},
-	Translations: []ReplacementData{
-		{{range $data := .Translations -}}
-		{` + "regexp.MustCompile(`{{$data.Pattern}}`)" + `, "{{$data.Replacement}}"},
+	Translations: map[string]string{
+		{{range $e := (sortMap .Translations) -}}
+		"{{$e.Key}}": "{{$e.Value}}",
 		{{end}}
 	},
-}
+	TranslationRegexes: []ReplacementData{
+		{{range $e := (sortMap .TranslationRegexes) -}}
+		{ {{regex $e.Key}}, "{{$e.Value}}" },
+		{{end}}
+	},
+	RxCombined: {{regex .CombinedRegexPattern}},
+	RxExactCombined: {{regex .ExactCombinedRegexPattern}},
+	RxKnownWords: {{regex .KnownWordsPattern}},
+})
 `

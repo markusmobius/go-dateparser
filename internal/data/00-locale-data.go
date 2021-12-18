@@ -6,19 +6,67 @@ import "regexp"
 
 type LocaleData struct {
 	Name                  string
-	Parent                *LocaleData
 	DateOrder             string
 	NoWordSpacing         bool
 	SentenceSplitterGroup int
 	SkipWords             []string
 	PertainWords          []string
 	Simplifications       []ReplacementData
-	Translations          []ReplacementData
+	Translations          map[string]string
+	TranslationRegexes    []ReplacementData
+	RxCombined            *regexp.Regexp
+	RxExactCombined       *regexp.Regexp
+	RxKnownWords          *regexp.Regexp
 }
 
 type ReplacementData struct {
-	Pattern     *regexp.Regexp
+	Rx          *regexp.Regexp
 	Replacement string
+}
+
+func merge(parent *LocaleData, child LocaleData) LocaleData {
+	if parent == nil {
+		return child
+	}
+
+	// Merge list
+	child.SkipWords = append(child.SkipWords, parent.SkipWords...)
+	child.PertainWords = append(child.PertainWords, parent.PertainWords...)
+	child.Simplifications = append(child.Simplifications, parent.Simplifications...)
+	child.TranslationRegexes = append(child.TranslationRegexes, parent.TranslationRegexes...)
+
+	// Prepare maps
+	if len(child.Translations) == 0 {
+		child.Translations = map[string]string{}
+	}
+
+	// Merge maps
+	for pattern, replacement := range parent.Simplifications {
+		child.Simplifications[pattern] = replacement
+	}
+
+	for word, translation := range parent.Translations {
+		child.Translations[word] = translation
+	}
+
+	for pattern, translation := range parent.TranslationRegexes {
+		child.TranslationRegexes[pattern] = translation
+	}
+
+	// Replace regexes
+	if child.RxCombined == nil {
+		child.RxCombined = parent.RxCombined
+	}
+
+	if child.RxExactCombined == nil {
+		child.RxExactCombined = parent.RxExactCombined
+	}
+
+	if child.RxKnownWords == nil {
+		child.RxKnownWords = parent.RxKnownWords
+	}
+
+	return child
 }
 
 var LocaleDataMap = map[string]LocaleData{

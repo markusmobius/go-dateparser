@@ -20,7 +20,7 @@ const (
 )
 
 var (
-	unicodeTransformer = transform.Chain(norm.NFKC, runes.Remove(runes.In(unicode.Mn)))
+	unicodeTransformer = transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
 
 	apostropheLookAlikeChars = []string{
 		`\x{2019}`, // right single quotation mark
@@ -54,6 +54,9 @@ var (
 	rxGoRegexImport       = regexp.MustCompile(`(?m)^\s*import "regexp"\s*$`)
 	rxPythonCaptureGroup  = regexp.MustCompile(`\\(\d+)`)
 	rxGoCaptureGroup      = regexp.MustCompile(`\$\{?(\d+)\}?`)
+	rxParentheses         = regexp.MustCompile(`[\(\)]`)
+
+	importantTokens = []string{"+", ":", ".", " ", "-", "/", "am", "pm", "utc", "gmt", "z"}
 
 	// Languages with insufficient translation data are excluded
 	excludedLanguages = map[string]struct{}{

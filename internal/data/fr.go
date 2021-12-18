@@ -4,449 +4,614 @@ package data
 
 import "regexp"
 
-var fr_Locale = LocaleData{
+var fr_Locale = merge(nil, LocaleData{
 	Name:      "fr",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "environ", "er", "et", "le", "|", "à"},
+	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "a", "environ", "er", "et", "le", "|"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?(minute|seconde|heure)(\z|\W|_)`), "${1}${2} ${3}${4}"},
-		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?h(\z|\W|_)`), "${1}${2} heure${3}"},
-		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?m(\z|\W|_)`), "${1}${2} minute${3}"},
-		{regexp.MustCompile(`(\A|\W|_)moins\s(?:de\s)?(\d+)\s?s(\z|\W|_)`), "${1}${2} seconde${3}"},
-		{regexp.MustCompile(`(\A|\W|_)(\d+)\s+h\s+(\d+)\s+min(\z|\W|_)`), "${1}${2}h${3}m${4}"},
-		{regexp.MustCompile(`(\A|\W|_)(\d+)h(\d+)m?(\z|\W|_)`), "${1}${2}:${3}${4}"},
-		{regexp.MustCompile(`(\A|\W|_)quatre(\z|\W|_)`), "${1}4${2}"},
-		{regexp.MustCompile(`(\A|\W|_)d'une(\z|\W|_)`), "${1}1${2}"},
-		{regexp.MustCompile(`(\A|\W|_)douze(\z|\W|_)`), "${1}12${2}"},
-		{regexp.MustCompile(`(\A|\W|_)trois(\z|\W|_)`), "${1}3${2}"},
-		{regexp.MustCompile(`(\A|\W|_)cinq(\z|\W|_)`), "${1}5${2}"},
-		{regexp.MustCompile(`(\A|\W|_)d'un(\z|\W|_)`), "${1}1${2}"},
-		{regexp.MustCompile(`(\A|\W|_)deux(\z|\W|_)`), "${1}2${2}"},
-		{regexp.MustCompile(`(\A|\W|_)huit(\z|\W|_)`), "${1}8${2}"},
-		{regexp.MustCompile(`(\A|\W|_)neuf(\z|\W|_)`), "${1}9${2}"},
-		{regexp.MustCompile(`(\A|\W|_)onze(\z|\W|_)`), "${1}11${2}"},
-		{regexp.MustCompile(`(\A|\W|_)sept(\z|\W|_)`), "${1}7${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dix(\z|\W|_)`), "${1}10${2}"},
-		{regexp.MustCompile(`(\A|\W|_)six(\z|\W|_)`), "${1}6${2}"},
-		{regexp.MustCompile(`(\A|\W|_)une(\z|\W|_)`), "${1}1${2}"},
-		{regexp.MustCompile(`(\A|\W|_)un(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)moins\s(?:de\s)?(\d+)\s?(minute|seconde|heure)(\z|\W|_)`), "${1}${2} ${3}${4}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)moins\s(?:de\s)?(\d+)\s?h(\z|\W|_)`), "${1}${2} heure${3}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)moins\s(?:de\s)?(\d+)\s?m(\z|\W|_)`), "${1}${2} minute${3}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)moins\s(?:de\s)?(\d+)\s?s(\z|\W|_)`), "${1}${2} seconde${3}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)(\d+)\s+h\s+(\d+)\s+min(\z|\W|_)`), "${1}${2}h${3}m${4}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)(\d+)h(\d+)m?(\z|\W|_)`), "${1}${2}:${3}${4}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)quatre(\z|\W|_)`), "${1}4${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)d'une(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)douze(\z|\W|_)`), "${1}12${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)trois(\z|\W|_)`), "${1}3${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)d'un(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)onze(\z|\W|_)`), "${1}11${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)deux(\z|\W|_)`), "${1}2${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)cinq(\z|\W|_)`), "${1}5${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)sept(\z|\W|_)`), "${1}7${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)huit(\z|\W|_)`), "${1}8${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)neuf(\z|\W|_)`), "${1}9${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)une(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)dix(\z|\W|_)`), "${1}10${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)six(\z|\W|_)`), "${1}6${2}"},
+		{regexp.MustCompile(`(?i)(\A|\W|_)un(\z|\W|_)`), "${1}1${2}"},
 	},
-	Translations: []ReplacementData{
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) secondes(\z|\W|_)`), "${1}${2} second ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) semaines(\z|\W|_)`), "${1}${2} week ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) seconde(\z|\W|_)`), "${1}${2} second ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) semaine(\z|\W|_)`), "${1}${2} week ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)la semaine prochaine(\z|\W|_)`), "${1}in 1 week${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) secondes(\z|\W|_)`), "${1}in ${2} second${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) semaines(\z|\W|_)`), "${1}in ${2} week${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) heures(\z|\W|_)`), "${1}${2} hour ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)la semaine dernière(\z|\W|_)`), "${1}1 week ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) minutes(\z|\W|_)`), "${1}in ${2} minute${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) seconde(\z|\W|_)`), "${1}in ${2} second${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) semaine(\z|\W|_)`), "${1}in ${2} week${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) heure(\z|\W|_)`), "${1}${2} hour ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) jours(\z|\W|_)`), "${1}${2} day ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) heures(\z|\W|_)`), "${1}in ${2} hour${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) minute(\z|\W|_)`), "${1}in ${2} minute${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) jour(\z|\W|_)`), "${1}${2} day ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) mois(\z|\W|_)`), "${1}${2} month ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)l'année prochaine(\z|\W|_)`), "${1}in 1 year${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) heure(\z|\W|_)`), "${1}in ${2} hour${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) jours(\z|\W|_)`), "${1}in ${2} day${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) ans(\z|\W|_)`), "${1}${2} year ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) sem(\z|\W|_)`), "${1}${2} week ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)l'année dernière(\z|\W|_)`), "${1}1 year ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)le mois prochain(\z|\W|_)`), "${1}in 1 month${2}"},
-		{regexp.MustCompile(`(\A|\W|_)cette minute-ci(\z|\W|_)`), "${1}0 minute ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) jour(\z|\W|_)`), "${1}in ${2} day${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) mois(\z|\W|_)`), "${1}in ${2} month${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) an(\z|\W|_)`), "${1}${2} year ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)le mois dernier(\z|\W|_)`), "${1}1 month ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)cette heure-ci(\z|\W|_)`), "${1}0 hour ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) ans(\z|\W|_)`), "${1}in ${2} year${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) min(\z|\W|_)`), "${1}in ${2} minute${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) sem(\z|\W|_)`), "${1}in ${2} week${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) a(\z|\W|_)`), "${1}${2} year ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) h(\z|\W|_)`), "${1}${2} hour ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) j(\z|\W|_)`), "${1}${2} day ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) m(\z|\W|_)`), "${1}${2} month ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+) s(\z|\W|_)`), "${1}${2} second ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)cette semaine(\z|\W|_)`), "${1}0 week ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) an(\z|\W|_)`), "${1}in ${2} year${3}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a (\d+)h(\z|\W|_)`), "${1}${2} hour ago${3}"},
-		{regexp.MustCompile(`(\A|\W|_)après-demain(\z|\W|_)`), "${1}in 2 day${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) a(\z|\W|_)`), "${1}in ${2} year${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) h(\z|\W|_)`), "${1}in ${2} hour${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) j(\z|\W|_)`), "${1}in ${2} day${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) m(\z|\W|_)`), "${1}in ${2} month${3}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+) s(\z|\W|_)`), "${1}in ${2} second${3}"},
-		{regexp.MustCompile(`(\A|\W|_)aujourd'hui(\z|\W|_)`), "${1}0 day ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)cette année(\z|\W|_)`), "${1}0 year ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans (\d+)h(\z|\W|_)`), "${1}in ${2} hour${3}"},
-		{regexp.MustCompile(`(\A|\W|_)avant-hier(\z|\W|_)`), "${1}2 day ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)ce mois-ci(\z|\W|_)`), "${1}0 month ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)maintenant(\z|\W|_)`), "${1}0 second ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)septembre(\z|\W|_)`), "${1}september${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dimanche(\z|\W|_)`), "${1}sunday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)décembre(\z|\W|_)`), "${1}december${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mercredi(\z|\W|_)`), "${1}wednesday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)novembre(\z|\W|_)`), "${1}november${2}"},
-		{regexp.MustCompile(`(\A|\W|_)secondes(\z|\W|_)`), "${1}second${2}"},
-		{regexp.MustCompile(`(\A|\W|_)semaines(\z|\W|_)`), "${1}week${2}"},
-		{regexp.MustCompile(`(\A|\W|_)vendredi(\z|\W|_)`), "${1}friday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)février(\z|\W|_)`), "${1}february${2}"},
-		{regexp.MustCompile(`(\A|\W|_)janvier(\z|\W|_)`), "${1}january${2}"},
-		{regexp.MustCompile(`(\A|\W|_)juillet(\z|\W|_)`), "${1}july${2}"},
-		{regexp.MustCompile(`(\A|\W|_)minutes(\z|\W|_)`), "${1}minute${2}"},
-		{regexp.MustCompile(`(\A|\W|_)octobre(\z|\W|_)`), "${1}october${2}"},
-		{regexp.MustCompile(`(\A|\W|_)seconde(\z|\W|_)`), "${1}second${2}"},
-		{regexp.MustCompile(`(\A|\W|_)semaine(\z|\W|_)`), "${1}week${2}"},
-		{regexp.MustCompile(`(\A|\W|_)années(\z|\W|_)`), "${1}year${2}"},
-		{regexp.MustCompile(`(\A|\W|_)demain(\z|\W|_)`), "${1}in 1 day${2}"},
-		{regexp.MustCompile(`(\A|\W|_)heures(\z|\W|_)`), "${1}hour${2}"},
-		{regexp.MustCompile(`(\A|\W|_)il y a(\z|\W|_)`), "${1}ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)samedi(\z|\W|_)`), "${1}saturday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)année(\z|\W|_)`), "${1}year${2}"},
-		{regexp.MustCompile(`(\A|\W|_)après(\z|\W|_)`), "${1}in${2}"},
-		{regexp.MustCompile(`(\A|\W|_)avril(\z|\W|_)`), "${1}april${2}"},
-		{regexp.MustCompile(`(\A|\W|_)heure(\z|\W|_)`), "${1}hour${2}"},
-		{regexp.MustCompile(`(\A|\W|_)il ya(\z|\W|_)`), "${1}ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jeudi(\z|\W|_)`), "${1}thursday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jours(\z|\W|_)`), "${1}day${2}"},
-		{regexp.MustCompile(`(\A|\W|_)lundi(\z|\W|_)`), "${1}monday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mardi(\z|\W|_)`), "${1}tuesday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)août(\z|\W|_)`), "${1}august${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dans(\z|\W|_)`), "${1}in${2}"},
-		{regexp.MustCompile(`(\A|\W|_)févr(\z|\W|_)`), "${1}february${2}"},
-		{regexp.MustCompile(`(\A|\W|_)hier(\z|\W|_)`), "${1}1 day ago${2}"},
-		{regexp.MustCompile(`(\A|\W|_)janv(\z|\W|_)`), "${1}january${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jour(\z|\W|_)`), "${1}day${2}"},
-		{regexp.MustCompile(`(\A|\W|_)juil(\z|\W|_)`), "${1}july${2}"},
-		{regexp.MustCompile(`(\A|\W|_)juin(\z|\W|_)`), "${1}june${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mars(\z|\W|_)`), "${1}march${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mois(\z|\W|_)`), "${1}month${2}"},
-		{regexp.MustCompile(`(\A|\W|_)sept(\z|\W|_)`), "${1}september${2}"},
-		{regexp.MustCompile(`(\A|\W|_)ans(\z|\W|_)`), "${1}year${2}"},
-		{regexp.MustCompile(`(\A|\W|_)aoû(\z|\W|_)`), "${1}august${2}"},
-		{regexp.MustCompile(`(\A|\W|_)avr(\z|\W|_)`), "${1}april${2}"},
-		{regexp.MustCompile(`(\A|\W|_)dim(\z|\W|_)`), "${1}sunday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)déc(\z|\W|_)`), "${1}december${2}"},
-		{regexp.MustCompile(`(\A|\W|_)fév(\z|\W|_)`), "${1}february${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jan(\z|\W|_)`), "${1}january${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jeu(\z|\W|_)`), "${1}thursday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jul(\z|\W|_)`), "${1}july${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jun(\z|\W|_)`), "${1}june${2}"},
-		{regexp.MustCompile(`(\A|\W|_)lun(\z|\W|_)`), "${1}monday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mai(\z|\W|_)`), "${1}may${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mar(\z|\W|_)`), "${1}tuesday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mer(\z|\W|_)`), "${1}wednesday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)nov(\z|\W|_)`), "${1}november${2}"},
-		{regexp.MustCompile(`(\A|\W|_)oct(\z|\W|_)`), "${1}october${2}"},
-		{regexp.MustCompile(`(\A|\W|_)sam(\z|\W|_)`), "${1}saturday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)sem(\z|\W|_)`), "${1}week${2}"},
-		{regexp.MustCompile(`(\A|\W|_)sep(\z|\W|_)`), "${1}september${2}"},
-		{regexp.MustCompile(`(\A|\W|_)ven(\z|\W|_)`), "${1}friday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)am(\z|\W|_)`), "${1}am${2}"},
-		{regexp.MustCompile(`(\A|\W|_)an(\z|\W|_)`), "${1}year${2}"},
-		{regexp.MustCompile(`(\A|\W|_)di(\z|\W|_)`), "${1}sunday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)en(\z|\W|_)`), "${1}in${2}"},
-		{regexp.MustCompile(`(\A|\W|_)je(\z|\W|_)`), "${1}thursday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)lu(\z|\W|_)`), "${1}monday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)ma(\z|\W|_)`), "${1}tuesday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)me(\z|\W|_)`), "${1}wednesday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)pm(\z|\W|_)`), "${1}pm${2}"},
-		{regexp.MustCompile(`(\A|\W|_)sa(\z|\W|_)`), "${1}saturday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)ve(\z|\W|_)`), "${1}friday${2}"},
-		{regexp.MustCompile(`(\A|\W|_)a(\z|\W|_)`), "${1}year${2}"},
-		{regexp.MustCompile(`(\A|\W|_)h(\z|\W|_)`), "${1}hour${2}"},
-		{regexp.MustCompile(`(\A|\W|_)j(\z|\W|_)`), "${1}day${2}"},
-		{regexp.MustCompile(`(\A|\W|_)m(\z|\W|_)`), "${1}month${2}"},
-		{regexp.MustCompile(`(\A|\W|_)s(\z|\W|_)`), "${1}second${2}"},
+	Translations: map[string]string{
+		"la semaine prochaine": "in 1 week",
+		"la semaine derniere":  "1 week ago",
+		"l'annee prochaine":    "in 1 year",
+		"l'annee derniere":     "1 year ago",
+		"le mois prochain":     "in 1 month",
+		"cette minute-ci":      "0 minute ago",
+		"le mois dernier":      "1 month ago",
+		"cette heure-ci":       "0 hour ago",
+		"cette semaine":        "0 week ago",
+		"apres-demain":         "in 2 day",
+		"aujourd'hui":          "0 day ago",
+		"cette annee":          "0 year ago",
+		"ce mois-ci":           "0 month ago",
+		"maintenant":           "0 second ago",
+		"avant-hier":           "2 day ago",
+		"septembre":            "september",
+		"decembre":             "december",
+		"vendredi":             "friday",
+		"novembre":             "november",
+		"secondes":             "second",
+		"dimanche":             "sunday",
+		"mercredi":             "wednesday",
+		"semaines":             "week",
+		"environ":              "",
+		"fevrier":              "february",
+		"janvier":              "january",
+		"juillet":              "july",
+		"minutes":              "minute",
+		"octobre":              "october",
+		"seconde":              "second",
+		"semaine":              "week",
+		"il y a":               "ago",
+		"heures":               "hour",
+		"demain":               "in 1 day",
+		"minute":               "minute",
+		"samedi":               "saturday",
+		"annees":               "year",
+		"il ya":                "ago",
+		"avril":                "april",
+		"jours":                "day",
+		"heure":                "hour",
+		"apres":                "in",
+		"lundi":                "monday",
+		"jeudi":                "thursday",
+		"mardi":                "tuesday",
+		"annee":                "year",
+		"hier":                 "1 day ago",
+		"aout":                 "august",
+		"jour":                 "day",
+		"fevr":                 "february",
+		"dans":                 "in",
+		"janv":                 "january",
+		"juil":                 "july",
+		"juin":                 "june",
+		"mars":                 "march",
+		"mois":                 "month",
+		"sept":                 "september",
+		"avr":                  "april",
+		"aou":                  "august",
+		"dec":                  "december",
+		"fev":                  "february",
+		"ven":                  "friday",
+		"gmt":                  "gmt",
+		"jan":                  "january",
+		"jul":                  "july",
+		"jun":                  "june",
+		"mai":                  "may",
+		"min":                  "minute",
+		"lun":                  "monday",
+		"nov":                  "november",
+		"oct":                  "october",
+		"sam":                  "saturday",
+		"sep":                  "september",
+		"dim":                  "sunday",
+		"jeu":                  "thursday",
+		"mar":                  "tuesday",
+		"utc":                  "utc",
+		"mer":                  "wednesday",
+		"sem":                  "week",
+		"ans":                  "year",
+		"er":                   "",
+		"et":                   "",
+		"le":                   "",
+		"am":                   "am",
+		"ve":                   "friday",
+		"en":                   "in",
+		"lu":                   "monday",
+		"pm":                   "pm",
+		"sa":                   "saturday",
+		"di":                   "sunday",
+		"je":                   "thursday",
+		"ma":                   "tuesday",
+		"me":                   "wednesday",
+		"an":                   "year",
+		"'":                    "",
+		",":                    "",
+		";":                    "",
+		"@":                    "",
+		"[":                    "",
+		"]":                    "",
+		"a":                    "",
+		"|":                    "",
+		" ":                    " ",
+		"+":                    "+",
+		"-":                    "-",
+		".":                    ".",
+		"/":                    "/",
+		":":                    ":",
+		"j":                    "day",
+		"h":                    "hour",
+		"m":                    "month",
+		"s":                    "second",
+		"z":                    "z",
 	},
-}
+	TranslationRegexes: []ReplacementData{
+		{regexp.MustCompile(`(?i)il y a (\d+) secondes`), "$1 second ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) semaines`), "$1 week ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) minutes`), "$1 minute ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) seconde`), "$1 second ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) semaine`), "$1 week ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) heures`), "$1 hour ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) minute`), "$1 minute ago"},
+		{regexp.MustCompile(`(?i)dans (\d+) secondes`), "in $1 second"},
+		{regexp.MustCompile(`(?i)dans (\d+) semaines`), "in $1 week"},
+		{regexp.MustCompile(`(?i)il y a (\d+) jours`), "$1 day ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) heure`), "$1 hour ago"},
+		{regexp.MustCompile(`(?i)dans (\d+) minutes`), "in $1 minute"},
+		{regexp.MustCompile(`(?i)dans (\d+) seconde`), "in $1 second"},
+		{regexp.MustCompile(`(?i)dans (\d+) semaine`), "in $1 week"},
+		{regexp.MustCompile(`(?i)il y a (\d+) jour`), "$1 day ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) mois`), "$1 month ago"},
+		{regexp.MustCompile(`(?i)dans (\d+) heures`), "in $1 hour"},
+		{regexp.MustCompile(`(?i)dans (\d+) minute`), "in $1 minute"},
+		{regexp.MustCompile(`(?i)il y a (\d+) min`), "$1 minute ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) sem`), "$1 week ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) ans`), "$1 year ago"},
+		{regexp.MustCompile(`(?i)dans (\d+) jours`), "in $1 day"},
+		{regexp.MustCompile(`(?i)dans (\d+) heure`), "in $1 hour"},
+		{regexp.MustCompile(`(?i)il y a (\d+)min`), "$1 minute ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) an`), "$1 year ago"},
+		{regexp.MustCompile(`(?i)dans (\d+) jour`), "in $1 day"},
+		{regexp.MustCompile(`(?i)dans (\d+) mois`), "in $1 month"},
+		{regexp.MustCompile(`(?i)il y a (\d+) j`), "$1 day ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) h`), "$1 hour ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) m`), "$1 month ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) s`), "$1 second ago"},
+		{regexp.MustCompile(`(?i)il y a (\d+) a`), "$1 year ago"},
+		{regexp.MustCompile(`(?i)dans (\d+) min`), "in $1 minute"},
+		{regexp.MustCompile(`(?i)dans (\d+) sem`), "in $1 week"},
+		{regexp.MustCompile(`(?i)dans (\d+) ans`), "in $1 year"},
+		{regexp.MustCompile(`(?i)il y a (\d+)h`), "$1 hour ago"},
+		{regexp.MustCompile(`(?i)dans (\d+) an`), "in $1 year"},
+		{regexp.MustCompile(`(?i)dans (\d+) j`), "in $1 day"},
+		{regexp.MustCompile(`(?i)dans (\d+) h`), "in $1 hour"},
+		{regexp.MustCompile(`(?i)dans (\d+) m`), "in $1 month"},
+		{regexp.MustCompile(`(?i)dans (\d+) s`), "in $1 second"},
+		{regexp.MustCompile(`(?i)dans (\d+) a`), "in $1 year"},
+		{regexp.MustCompile(`(?i)dans (\d+)h`), "in $1 hour"},
+	},
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(il y a \d+ secondes|il y a \d+ semaines|il y a \d+ minutes|il y a \d+ seconde|il y a \d+ semaine|dans \d+ secondes|dans \d+ semaines|il y a \d+ heures|il y a \d+ minute|dans \d+ minutes|dans \d+ seconde|dans \d+ semaine|il y a \d+ heure|il y a \d+ jours|dans \d+ heures|dans \d+ minute|il y a \d+ jour|il y a \d+ mois|dans \d+ heure|dans \d+ jours|il y a \d+ ans|il y a \d+ min|il y a \d+ sem|dans \d+ jour|dans \d+ mois|il y a \d+ an|il y a \d+min|dans \d+ ans|dans \d+ min|dans \d+ sem|il y a \d+ a|il y a \d+ h|il y a \d+ j|il y a \d+ m|il y a \d+ s|dans \d+ an|il y a \d+h|dans \d+ a|dans \d+ h|dans \d+ j|dans \d+ m|dans \d+ s|dans \d+h)(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(il y a \d+ secondes|il y a \d+ semaines|il y a \d+ minutes|il y a \d+ seconde|il y a \d+ semaine|dans \d+ secondes|dans \d+ semaines|il y a \d+ heures|il y a \d+ minute|dans \d+ minutes|dans \d+ seconde|dans \d+ semaine|il y a \d+ heure|il y a \d+ jours|dans \d+ heures|dans \d+ minute|il y a \d+ jour|il y a \d+ mois|dans \d+ heure|dans \d+ jours|il y a \d+ ans|il y a \d+ min|il y a \d+ sem|dans \d+ jour|dans \d+ mois|il y a \d+ an|il y a \d+min|dans \d+ ans|dans \d+ min|dans \d+ sem|il y a \d+ a|il y a \d+ h|il y a \d+ j|il y a \d+ m|il y a \d+ s|dans \d+ an|il y a \d+h|dans \d+ a|dans \d+ h|dans \d+ j|dans \d+ m|dans \d+ s|dans \d+h)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(la semaine prochaine|la semaine derniere|l'annee prochaine|l'annee derniere|le mois prochain|cette minute-ci|le mois dernier|cette heure-ci|cette semaine|apres-demain|aujourd'hui|cette annee|avant-hier|ce mois-ci|maintenant|septembre|decembre|dimanche|mercredi|novembre|secondes|semaines|vendredi|environ|fevrier|janvier|juillet|minutes|octobre|seconde|semaine|annees|demain|heures|il y a|minute|samedi|annee|apres|avril|heure|il ya|jeudi|jours|lundi|mardi|aout|dans|fevr|hier|janv|jour|juil|juin|mars|mois|sept|ans|aou|avr|dec|dim|fev|gmt|jan|jeu|jul|jun|lun|mai|mar|mer|min|nov|oct|sam|sem|sep|utc|ven|\+|\.|\[|\]|\||am|an|di|en|er|et|je|le|lu|ma|me|pm|sa|ve| |'|,|-|/|:|;|@|a|h|j|m|s|z)((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_BE_Locale = LocaleData{
-	Name:      "fr-BE",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_BE_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-BE",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_BF_Locale = LocaleData{
-	Name:      "fr-BF",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_BF_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-BF",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_BI_Locale = LocaleData{
-	Name:      "fr-BI",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_BI_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-BI",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_BJ_Locale = LocaleData{
-	Name:      "fr-BJ",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_BJ_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-BJ",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_BL_Locale = LocaleData{
-	Name:      "fr-BL",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_BL_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-BL",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_CA_Locale = LocaleData{
+var fr_CA_Locale = merge(&fr_Locale, LocaleData{
 	Name:      "fr-CA",
-	Parent:    &fr_Locale,
 	DateOrder: "YMD",
-	Translations: []ReplacementData{
-		{regexp.MustCompile(`(\A|\W|_)juill(\z|\W|_)`), "${1}july${2}"},
+	Translations: map[string]string{
+		"juill": "july",
+		"gmt":   "gmt",
+		"utc":   "utc",
+		"am":    "am",
+		"pm":    "pm",
+		" ":     " ",
+		"+":     "+",
+		"-":     "-",
+		".":     ".",
+		"/":     "/",
+		":":     ":",
+		"z":     "z",
 	},
-}
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(juill|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_CD_Locale = LocaleData{
-	Name:      "fr-CD",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_CD_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-CD",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_CF_Locale = LocaleData{
-	Name:      "fr-CF",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_CF_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-CF",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_CG_Locale = LocaleData{
-	Name:      "fr-CG",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_CG_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-CG",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_CH_Locale = LocaleData{
-	Name:      "fr-CH",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_CH_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-CH",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_CI_Locale = LocaleData{
-	Name:      "fr-CI",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_CI_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-CI",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_CM_Locale = LocaleData{
+var fr_CM_Locale = merge(&fr_Locale, LocaleData{
 	Name:      "fr-CM",
-	Parent:    &fr_Locale,
 	DateOrder: "DMY",
-	Translations: []ReplacementData{
-		{regexp.MustCompile(`(\A|\W|_)matin(\z|\W|_)`), "${1}am${2}"},
-		{regexp.MustCompile(`(\A|\W|_)soir(\z|\W|_)`), "${1}pm${2}"},
-		{regexp.MustCompile(`(\A|\W|_)mat(\z|\W|_)`), "${1}am${2}"},
+	Translations: map[string]string{
+		"matin": "am",
+		"soir":  "pm",
+		"mat":   "am",
+		"gmt":   "gmt",
+		"utc":   "utc",
+		"am":    "am",
+		"pm":    "pm",
+		" ":     " ",
+		"+":     "+",
+		"-":     "-",
+		".":     ".",
+		"/":     "/",
+		":":     ":",
+		"z":     "z",
 	},
-}
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(matin|soir|gmt|mat|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_DJ_Locale = LocaleData{
-	Name:      "fr-DJ",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_DJ_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-DJ",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_DZ_Locale = LocaleData{
-	Name:      "fr-DZ",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_DZ_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-DZ",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_GA_Locale = LocaleData{
-	Name:      "fr-GA",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_GA_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-GA",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_GF_Locale = LocaleData{
-	Name:      "fr-GF",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_GF_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-GF",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_GN_Locale = LocaleData{
-	Name:      "fr-GN",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_GN_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-GN",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_GP_Locale = LocaleData{
-	Name:      "fr-GP",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_GP_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-GP",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_GQ_Locale = LocaleData{
-	Name:      "fr-GQ",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_GQ_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-GQ",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_HT_Locale = LocaleData{
+var fr_HT_Locale = merge(&fr_Locale, LocaleData{
 	Name:      "fr-HT",
-	Parent:    &fr_Locale,
 	DateOrder: "DMY",
-	Translations: []ReplacementData{
-		{regexp.MustCompile(`(\A|\W|_)sec(\z|\W|_)`), "${1}second${2}"},
-		{regexp.MustCompile(`(\A|\W|_)hr(\z|\W|_)`), "${1}hour${2}"},
-		{regexp.MustCompile(`(\A|\W|_)jr(\z|\W|_)`), "${1}day${2}"},
+	Translations: map[string]string{
+		"gmt": "gmt",
+		"sec": "second",
+		"utc": "utc",
+		"am":  "am",
+		"jr":  "day",
+		"hr":  "hour",
+		"pm":  "pm",
+		" ":   " ",
+		"+":   "+",
+		"-":   "-",
+		".":   ".",
+		"/":   "/",
+		":":   ":",
+		"z":   "z",
 	},
-}
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(gmt|sec|utc|\+|\.|am|hr|jr|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_KM_Locale = LocaleData{
-	Name:      "fr-KM",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_KM_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-KM",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_LU_Locale = LocaleData{
-	Name:      "fr-LU",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_LU_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-LU",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_MA_Locale = LocaleData{
+var fr_MA_Locale = merge(&fr_Locale, LocaleData{
 	Name:      "fr-MA",
-	Parent:    &fr_Locale,
 	DateOrder: "DMY",
-	Translations: []ReplacementData{
-		{regexp.MustCompile(`(\A|\W|_)jui(\z|\W|_)`), "${1}june${2}"},
+	Translations: map[string]string{
+		"gmt": "gmt",
+		"jui": "june",
+		"utc": "utc",
+		"am":  "am",
+		"pm":  "pm",
+		" ":   " ",
+		"+":   "+",
+		"-":   "-",
+		".":   ".",
+		"/":   "/",
+		":":   ":",
+		"z":   "z",
 	},
-}
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(gmt|jui|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_MC_Locale = LocaleData{
-	Name:      "fr-MC",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_MC_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-MC",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_MF_Locale = LocaleData{
-	Name:      "fr-MF",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_MF_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-MF",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_MG_Locale = LocaleData{
-	Name:      "fr-MG",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_MG_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-MG",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_ML_Locale = LocaleData{
-	Name:      "fr-ML",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_ML_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-ML",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_MQ_Locale = LocaleData{
-	Name:      "fr-MQ",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_MQ_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-MQ",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_MR_Locale = LocaleData{
-	Name:      "fr-MR",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_MR_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-MR",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_MU_Locale = LocaleData{
-	Name:      "fr-MU",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_MU_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-MU",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_NC_Locale = LocaleData{
-	Name:      "fr-NC",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_NC_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-NC",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_NE_Locale = LocaleData{
-	Name:      "fr-NE",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_NE_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-NE",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_PF_Locale = LocaleData{
-	Name:      "fr-PF",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_PF_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-PF",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_PM_Locale = LocaleData{
-	Name:      "fr-PM",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_PM_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-PM",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_RE_Locale = LocaleData{
-	Name:      "fr-RE",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_RE_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-RE",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_RW_Locale = LocaleData{
-	Name:      "fr-RW",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_RW_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-RW",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_SC_Locale = LocaleData{
-	Name:      "fr-SC",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_SC_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-SC",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_SN_Locale = LocaleData{
-	Name:      "fr-SN",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_SN_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-SN",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_SY_Locale = LocaleData{
-	Name:      "fr-SY",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_SY_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-SY",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_TD_Locale = LocaleData{
-	Name:      "fr-TD",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_TD_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-TD",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_TG_Locale = LocaleData{
-	Name:      "fr-TG",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_TG_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-TG",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_TN_Locale = LocaleData{
-	Name:      "fr-TN",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_TN_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-TN",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_VU_Locale = LocaleData{
-	Name:      "fr-VU",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_VU_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-VU",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_WF_Locale = LocaleData{
-	Name:      "fr-WF",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_WF_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-WF",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})
 
-var fr_YT_Locale = LocaleData{
-	Name:      "fr-YT",
-	Parent:    &fr_Locale,
-	DateOrder: "DMY",
-}
+var fr_YT_Locale = merge(&fr_Locale, LocaleData{
+	Name:            "fr-YT",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)()(\z|\W|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^()$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))()((?:\z|\W|_|\d).*)$`),
+})

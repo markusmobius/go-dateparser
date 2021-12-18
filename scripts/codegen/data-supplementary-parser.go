@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -52,8 +53,13 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 
 	addTranslationFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
 		for translation, entries := range mapStrings {
+			fnAdder := data.AddTranslation
+			if strings.Contains(translation, "$") {
+				fnAdder = data.AddTranslationRegex
+			}
+
 			for _, entry := range entries {
-				data.AddTranslation(entry, translation, false)
+				fnAdder(entry, translation, false)
 			}
 		}
 	}
@@ -66,6 +72,10 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		SentenceSplitterGroup: yamlData.SentenceSplitterGroup,
 	}
 
+	skipWords := cleanList(false, yamlData.SkipWords...)
+	pertainWords := cleanList(false, yamlData.PertainWords...)
+	addTranslationFromStrings(&data, "", skipWords)
+	addTranslationFromStrings(&data, "", pertainWords)
 	addTranslationFromStrings(&data, "january", yamlData.January)
 	addTranslationFromStrings(&data, "february", yamlData.February)
 	addTranslationFromStrings(&data, "march", yamlData.March)

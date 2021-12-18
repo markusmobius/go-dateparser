@@ -85,6 +85,7 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 			}
 
 			localeData = localeData.Merge(supplementalData)
+			localeData = localeData.Merge(languageData)
 			localeData = localeData.Reduce(languageData)
 			localeData.Parent = language
 
@@ -92,12 +93,25 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	// Validate locale data
+	// Validate locale data and create pattern
 	for i, data := range finalLocaleData {
+		// Validate regex patterns
 		err = data.Validate()
 		if err != nil {
 			return err
 		}
+
+		// Save words that is known or always kept no matter what the language is
+		if len(data.Translations) > 0 {
+			for _, token := range importantTokens {
+				data.Translations[token] = token
+			}
+		}
+
+		// Generate combined patterns
+		data.CombineRegexPatterns()
+		data.GenerateKnownWordPattern()
+
 		finalLocaleData[i] = data
 	}
 

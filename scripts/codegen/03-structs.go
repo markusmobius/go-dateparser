@@ -10,57 +10,83 @@ import (
 )
 
 type LocaleData struct {
-	Name                  string            `json:",omitempty"`
-	Parent                string            `json:",omitempty"`
-	DateOrder             string            `json:",omitempty"`
-	NoWordSpacing         bool              `json:",omitempty"`
-	SentenceSplitterGroup int               `json:",omitempty"`
-	SkipWords             []string          `json:",omitempty"`
-	PertainWords          []string          `json:",omitempty"`
-	Translations          []ReplacementData `json:",omitempty"`
-	Simplifications       []ReplacementData `json:",omitempty"`
-
-	translationTrackers    map[string]struct{}
-	simplificationTrackers map[string]struct{}
-}
-
-type ReplacementData struct {
-	Pattern     string
-	Replacement string
+	Name                      string            `json:",omitempty"`
+	Parent                    string            `json:",omitempty"`
+	DateOrder                 string            `json:",omitempty"`
+	NoWordSpacing             bool              `json:",omitempty"`
+	SentenceSplitterGroup     int               `json:",omitempty"`
+	SkipWords                 []string          `json:",omitempty"`
+	PertainWords              []string          `json:",omitempty"`
+	Simplifications           map[string]string `json:",omitempty"`
+	Translations              map[string]string `json:",omitempty"`
+	TranslationRegexes        map[string]string `json:",omitempty"`
+	CombinedRegexPattern      string            `json:",omitempty"`
+	ExactCombinedRegexPattern string            `json:",omitempty"`
+	KnownWordsPattern         string            `json:",omitempty"`
 }
 
 func (ld *LocaleData) AddSimplification(pattern string, replacement string) {
-	// Prepare tracker
-	if ld.simplificationTrackers == nil {
-		ld.simplificationTrackers = make(map[string]struct{})
+	// Prepare map
+	if ld.Simplifications == nil {
+		ld.Simplifications = map[string]string{}
 	}
 
 	// Sanitize pattern
 	pattern = normalizeString(pattern)
 	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
+	if !ld.NoWordSpacing {
+		pattern = `(\A|\W|_)` + pattern + `(\z|\W|_)`
+	}
 
 	// Sanitize replacement
 	replacement = normalizeString(replacement)
 	replacement = rxPythonCaptureGroup.ReplaceAllString(replacement, "$${$1}")
+	if !ld.NoWordSpacing {
+		maxNumber := 1
+		replacement = rxGoCaptureGroup.ReplaceAllStringFunc(replacement, func(s string) string {
+			parts := rxGoCaptureGroup.FindStringSubmatch(s)
+			number, _ := strconv.Atoi(parts[1])
+			number++
 
-	// Make sure pattern not empty and never used
-	_, tracked := ld.simplificationTrackers[pattern]
-	if pattern == "" || tracked {
-		return
+			if number > maxNumber {
+				maxNumber = number
+			}
+
+			return fmt.Sprintf("${%d}", number)
+		})
+		replacement = fmt.Sprintf("${1}%s${%d}", replacement, maxNumber+1)
 	}
 
-	// Save simplification
-	ld.simplificationTrackers[pattern] = struct{}{}
-	ld.Simplifications = append(ld.Simplifications, ReplacementData{
-		Pattern:     pattern,
-		Replacement: replacement,
-	})
+	// Save simplification if pattern not empty
+	if pattern != "" {
+		ld.Simplifications[pattern] = replacement
+	}
 }
 
-func (ld *LocaleData) AddTranslation(pattern string, translation string, cleanPattern bool) {
-	// Prepare tracker
-	if ld.translationTrackers == nil {
-		ld.translationTrackers = make(map[string]struct{})
+func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord bool) {
+	// Prepare map
+	if ld.Translations == nil {
+		ld.Translations = map[string]string{}
+	}
+
+	// Sanitize word
+	if cleanWord {
+		word = cleanString(word)
+	} else {
+		word = normalizeString(word)
+	}
+
+	// Save translation if word not empty
+	translation = normalizeString(translation)
+	if word != "" {
+		ld.Translations[word] = translation
+	}
+}
+
+func (ld *LocaleData) AddTranslationRegex(pattern string, translation string, cleanPattern bool) {
+	// Prepare map
+	if ld.TranslationRegexes == nil {
+		ld.TranslationRegexes = map[string]string{}
 	}
 
 	// Sanitize pattern
@@ -75,43 +101,101 @@ func (ld *LocaleData) AddTranslation(pattern string, translation string, cleanPa
 	translation = normalizeString(translation)
 	translation = rxPythonCaptureGroup.ReplaceAllString(translation, "$${$1}")
 
-	// Make sure pattern not empty and never used
-	_, tracked := ld.translationTrackers[pattern]
-	if pattern == "" || tracked {
-		return
+	// Save if pattern not empty
+	if pattern != "" {
+		ld.TranslationRegexes[pattern] = translation
+	}
+}
+
+func (ld *LocaleData) CombineRegexPatterns() {
+	// Fetch all regex patterns
+	var regexPatterns []string
+	for pattern := range ld.TranslationRegexes {
+		pattern = rxParentheses.ReplaceAllString(pattern, "")
+		regexPatterns = append(regexPatterns, pattern)
 	}
 
-	// Save translation
-	ld.translationTrackers[pattern] = struct{}{}
-	ld.Translations = append(ld.Translations, ReplacementData{
-		Pattern:     pattern,
-		Replacement: translation,
+	// Sort patterns by the longest
+	sort.Slice(regexPatterns, func(a, b int) bool {
+		patternA, patternB := regexPatterns[a], regexPatterns[b]
+		lenA := utf8.RuneCountInString(patternA)
+		lenB := utf8.RuneCountInString(patternB)
+		if lenA != lenB {
+			return lenA > lenB
+		}
+		return patternA < patternB
 	})
+
+	// Combine the patterns
+	combined := strings.Join(regexPatterns, "|")
+
+	if ld.NoWordSpacing {
+		ld.CombinedRegexPattern = `(` + combined + `)`
+	} else {
+		ld.CombinedRegexPattern = `(\A|\W|_)(` + combined + `)(\z|\W|_)`
+	}
+
+	ld.ExactCombinedRegexPattern = "^(" + combined + ")$"
+}
+
+func (ld *LocaleData) GenerateKnownWordPattern() {
+	// Fetch all texts
+	var texts []string
+
+	for text := range ld.Translations {
+		text = regexp.QuoteMeta(text)
+		texts = append(texts, text)
+	}
+
+	// for _, word := range append(ld.SkipWords, ld.PertainWords...) {
+	// 	word = regexp.QuoteMeta(word)
+	// 	texts = append(texts, word)
+	// }
+
+	// Sort texts by the longest
+	sort.Slice(texts, func(a, b int) bool {
+		textA, textB := texts[a], texts[b]
+		lenA := utf8.RuneCountInString(textA)
+		lenB := utf8.RuneCountInString(textB)
+		if lenA != lenB {
+			return lenA > lenB
+		}
+		return textA < textB
+	})
+
+	// Combine the texts
+	combined := strings.Join(texts, "|")
+
+	if ld.NoWordSpacing {
+		ld.KnownWordsPattern = `^(.*?)(` + combined + `)(.*)$`
+	} else {
+		ld.KnownWordsPattern = `^(.*?(?:\A|\W|_|\d))(` + combined + `)((?:\z|\W|_|\d).*)$`
+	}
 }
 
 func (ld LocaleData) Clone() LocaleData {
-	clone := LocaleData{
-		Name:                   ld.Name,
-		DateOrder:              ld.DateOrder,
-		NoWordSpacing:          ld.NoWordSpacing,
-		SentenceSplitterGroup:  ld.SentenceSplitterGroup,
-		SkipWords:              append([]string{}, ld.SkipWords...),
-		PertainWords:           append([]string{}, ld.PertainWords...),
-		Translations:           append([]ReplacementData{}, ld.Translations...),
-		Simplifications:        append([]ReplacementData{}, ld.Simplifications...),
-		translationTrackers:    map[string]struct{}{},
-		simplificationTrackers: map[string]struct{}{},
+	cloneMap := func(m map[string]string) map[string]string {
+		newMap := map[string]string{}
+		for k, v := range m {
+			newMap[k] = v
+		}
+		return newMap
 	}
 
-	for pattern := range ld.translationTrackers {
-		clone.translationTrackers[pattern] = struct{}{}
+	return LocaleData{
+		Name:                      ld.Name,
+		DateOrder:                 ld.DateOrder,
+		NoWordSpacing:             ld.NoWordSpacing,
+		SentenceSplitterGroup:     ld.SentenceSplitterGroup,
+		SkipWords:                 append([]string{}, ld.SkipWords...),
+		PertainWords:              append([]string{}, ld.PertainWords...),
+		Simplifications:           cloneMap(ld.Simplifications),
+		Translations:              cloneMap(ld.Translations),
+		TranslationRegexes:        cloneMap(ld.TranslationRegexes),
+		CombinedRegexPattern:      ld.CombinedRegexPattern,
+		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
+		KnownWordsPattern:         ld.KnownWordsPattern,
 	}
-
-	for pattern := range ld.simplificationTrackers {
-		clone.simplificationTrackers[pattern] = struct{}{}
-	}
-
-	return clone
 }
 
 func (ld LocaleData) Merge(input LocaleData) LocaleData {
@@ -130,12 +214,16 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 	clone.SkipWords = cleanList(false, append(clone.SkipWords, input.SkipWords...)...)
 	clone.PertainWords = cleanList(false, append(clone.PertainWords, input.PertainWords...)...)
 
-	for _, entry := range input.Translations {
-		clone.AddTranslation(entry.Pattern, entry.Replacement, false)
+	for pattern, replacement := range input.Simplifications {
+		clone.Simplifications[pattern] = replacement
 	}
 
-	for _, entry := range input.Simplifications {
-		clone.AddSimplification(entry.Pattern, entry.Replacement)
+	for word, translation := range input.Translations {
+		clone.Translations[word] = translation
+	}
+
+	for pattern, translation := range input.TranslationRegexes {
+		clone.TranslationRegexes[pattern] = translation
 	}
 
 	return clone
@@ -159,125 +247,44 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 		return reducedStrings
 	}
 
-	reduceReplacementData := func(base, input []ReplacementData) []ReplacementData {
-		tracker := map[string]struct{}{}
-		for _, trans := range input {
-			tracker[trans.Pattern] = struct{}{}
-		}
-
-		var reducedTranslations []ReplacementData
-		for _, trans := range base {
-			if _, exist := tracker[trans.Pattern]; !exist {
-				reducedTranslations = append(reducedTranslations, trans)
+	reduceMap := func(base, input map[string]string) map[string]string {
+		newMap := map[string]string{}
+		for k, v := range base {
+			if _, exist := input[k]; !exist {
+				newMap[k] = v
 			}
 		}
-
-		return reducedTranslations
+		return newMap
 	}
 
 	// Reduce data
 	clone := ld.Clone()
 	clone.SkipWords = reduceStrings(clone.SkipWords, input.SkipWords)
 	clone.PertainWords = reduceStrings(clone.PertainWords, input.PertainWords)
-	clone.Translations = reduceReplacementData(clone.Translations, input.Translations)
-	clone.Simplifications = reduceReplacementData(clone.Simplifications, input.Simplifications)
+	clone.Simplifications = reduceMap(clone.Simplifications, input.Simplifications)
+	clone.Translations = reduceMap(clone.Translations, input.Translations)
+	clone.TranslationRegexes = reduceMap(clone.TranslationRegexes, input.TranslationRegexes)
 
 	return clone
 }
 
 func (ld *LocaleData) Validate() error {
-	// Change patterns and its replacement depending on if the
-	// language uses white space between words or not.
-
-	// Prepare changer functions
-	var patternChanger func(string) string
-	var replacementChanger func(string) string
-
-	if ld.NoWordSpacing {
-		patternChanger = func(s string) string {
-			return s
-		}
-
-		replacementChanger = func(s string) string {
-			return " " + s + " "
-		}
-	} else {
-		patternChanger = func(pattern string) string {
-			return `(\A|\W|_)` + pattern + `(\z|\W|_)`
-		}
-
-		replacementChanger = func(replacement string) string {
-			maxNumber := 1
-			replacement = rxGoCaptureGroup.ReplaceAllStringFunc(replacement, func(s string) string {
-				parts := rxGoCaptureGroup.FindStringSubmatch(s)
-				number, _ := strconv.Atoi(parts[1])
-				number++
-
-				if number > maxNumber {
-					maxNumber = number
-				}
-
-				return fmt.Sprintf("${%d}", number)
-			})
-
-			return fmt.Sprintf("${1}%s${%d}", replacement, maxNumber+1)
-		}
-	}
-
-	// Change replacement data
-	changeReplacementData := func(dataset []ReplacementData) (map[string]struct{}, []ReplacementData) {
-		tracker := map[string]struct{}{}
-		for i, entry := range dataset {
-			pattern := patternChanger(entry.Pattern)
-			replacement := replacementChanger(entry.Replacement)
-
-			tracker[pattern] = struct{}{}
-			dataset[i] = ReplacementData{pattern, replacement}
-		}
-		return tracker, dataset
-	}
-
-	ld.translationTrackers, ld.Translations = changeReplacementData(ld.Translations)
-	ld.simplificationTrackers, ld.Simplifications = changeReplacementData(ld.Simplifications)
-
 	// Validate patterns
 	var err error
 
-	for _, entry := range ld.Simplifications {
-		_, err = regexp.Compile(entry.Pattern)
+	for pattern := range ld.Simplifications {
+		_, err = regexp.Compile(pattern)
 		if err != nil {
 			return fmt.Errorf("simplification pattern error for %s: %w", ld.Name, err)
 		}
 	}
 
-	for _, entry := range ld.Translations {
-		_, err = regexp.Compile(entry.Pattern)
+	for pattern := range ld.TranslationRegexes {
+		_, err = regexp.Compile(pattern)
 		if err != nil {
 			return fmt.Errorf("translation pattern error for %s: %w", ld.Name, err)
 		}
 	}
-
-	// Sort translations
-	fnCompare := func(entryA, entryB ReplacementData) bool {
-		patternA := entryA.Pattern
-		patternB := entryB.Pattern
-		lenA := utf8.RuneCountInString(patternA)
-		lenB := utf8.RuneCountInString(patternB)
-
-		if lenA != lenB {
-			return lenA > lenB
-		}
-
-		return patternA < patternB
-	}
-
-	sort.Slice(ld.Translations, func(a, b int) bool {
-		return fnCompare(ld.Translations[a], ld.Translations[b])
-	})
-
-	sort.Slice(ld.Simplifications, func(a, b int) bool {
-		return fnCompare(ld.Simplifications[a], ld.Simplifications[b])
-	})
 
 	return nil
 }
@@ -386,4 +393,9 @@ type SupplementaryData struct {
 	RelativeType          map[string][]string `json:"relative-type,omitempty"           yaml:"relative-type,omitempty"`
 	RelativeTypeRegex     map[string][]string `json:"relative-type-regex,omitempty"     yaml:"relative-type-regex,omitempty"`
 	Simplifications       []map[string]string `json:"simplifications,omitempty"         yaml:"simplifications,omitempty"`
+}
+
+type MapEntry struct {
+	Key   string
+	Value string
 }

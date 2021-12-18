@@ -105,13 +105,13 @@ func parseCldrData(locale string) (*LocaleData, error) {
 		if strings.Contains(fieldName, "$") { // Regex field
 			filter = regexFilter
 
-			if strings.Contains(fieldName, "in") { // Is future time
+			if strings.HasPrefix(fieldName, "in ") { // Is future time
 				for _, key := range keys {
 					localPatterns = append(localPatterns,
 						dateFieldsData[key].RelativeTimeTypeFuture.CountOne,
 						dateFieldsData[key].RelativeTimeTypeFuture.CountOther)
 				}
-			} else if strings.Contains(fieldName, "ago") { // Is past time
+			} else if strings.HasSuffix(fieldName, " ago") { // Is past time
 				for _, key := range keys {
 					localPatterns = append(localPatterns,
 						dateFieldsData[key].RelativeTimeTypePast.CountOne,
@@ -123,11 +123,11 @@ func parseCldrData(locale string) (*LocaleData, error) {
 
 			for i, key := range keys {
 				switch {
-				case strings.Contains(fieldName, "0"): // Is current time
+				case strings.HasPrefix(fieldName, "0 "): // Is current time
 					localPatterns[i] = dateFieldsData[key].RelativeType0
-				case strings.Contains(fieldName, "ago"): // Is past time
+				case strings.HasSuffix(fieldName, " ago"): // Is past time
 					localPatterns[i] = dateFieldsData[key].RelativeTypeMin1
-				case strings.Contains(fieldName, "in"): // Is future time
+				case strings.HasPrefix(fieldName, "in "): // Is future time
 					localPatterns[i] = dateFieldsData[key].RelativeType1
 				default: // Is display
 					localPatterns[i] = dateFieldsData[key].DisplayName
@@ -138,8 +138,13 @@ func parseCldrData(locale string) (*LocaleData, error) {
 		// Save the translations
 		localPatterns = filterList(filter, localPatterns...)
 
+		fnAdder := data.AddTranslation
+		if strings.Contains(fieldName, "$") {
+			fnAdder = data.AddTranslationRegex
+		}
+
 		for _, localPattern := range localPatterns {
-			data.AddTranslation(localPattern, fieldName, true)
+			fnAdder(localPattern, fieldName, true)
 		}
 	}
 
