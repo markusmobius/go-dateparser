@@ -1,9 +1,9 @@
 package setting
 
-type Settings struct {
+type Configuration struct {
 	SkipTokens []string
 }
 
-var DefaultSettings = Settings{
+var DefaultConfig = Configuration{
 	SkipTokens: []string{"t"},
 }

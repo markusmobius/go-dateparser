@@ -644,8 +644,8 @@ func TestTranslate(t *testing.T) {
 		ld, err := GetLocale(test.Locale)
 		assert.Nil(t, err, message)
 
-		stg := &setting.DefaultSettings
-		translation := Translate(*ld, test.String, false, stg)
+		cfg := &setting.DefaultConfig
+		translation := Translate(*ld, test.String, false, cfg)
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++

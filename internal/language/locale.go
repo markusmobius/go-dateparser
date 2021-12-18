@@ -9,7 +9,7 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/setting"
 )
 
-func Translate(ld data.LocaleData, str string, keepFormatting bool, settings *setting.Settings) string {
+func Translate(ld data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
 	// str = "2 months ago, friday, in 10 days, 03 september 2014"
 	str = normalizeString(str)
 
@@ -24,8 +24,8 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, settings *se
 
 	// Translate
 	skippedTokens := map[string]struct{}{}
-	if settings != nil {
-		for _, token := range settings.SkipTokens {
+	if config != nil {
+		for _, token := range config.SkipTokens {
 			skippedTokens[token] = struct{}{}
 		}
 	}
