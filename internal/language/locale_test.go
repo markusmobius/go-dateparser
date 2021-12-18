@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTranslate(t *testing.T) {
+func TestTranslation(t *testing.T) {
 	type testScenario struct {
 		Locale   string
 		String   string
@@ -639,12 +639,893 @@ func TestTranslate(t *testing.T) {
 
 	nFailed := 0
 	for _, test := range tests {
+		// Prepare log message
 		message := fmt.Sprintf("%s, \"%s\"", test.Locale, test.String)
 
+		// Load locale
 		ld, err := GetLocale(test.Locale)
 		assert.Nil(t, err, message)
 
+		// Translate string
 		cfg := &setting.DefaultConfig
+		translation := Translate(*ld, test.String, false, cfg)
+		passed := assert.Equal(t, test.Expected, translation, message)
+		if !passed {
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestFreshnessTranslation(t *testing.T) {
+	type testScenario struct {
+		Locale   string
+		String   string
+		Expected string
+	}
+
+	tests := []testScenario{
+		// English
+		{"en", "yesterday", "1 day ago"},
+		{"en", "today", "0 day ago"},
+		{"en", "day before yesterday", "2 day ago"},
+		{"en", "last month", "1 month ago"},
+		{"en", "less than a minute ago", "45 second ago"},
+		// German
+		{"de", "vorgestern", "2 day ago"},
+		{"de", "heute", "0 day ago"},
+		{"de", "vor 3 Stunden", "3 hour ago"},
+		{"de", "vor 2 Monaten", "2 month ago"},
+		{"de", "vor 2 Monaten, 2 Wochen", "2 month ago 2 week"},
+		// French
+		{"fr", "avant-hier", "2 day ago"},
+		{"fr", "hier", "1 day ago"},
+		{"fr", "aujourd'hui", "0 day ago"},
+		{"fr", "après dix ans", "in 10 year"},
+		// Spanish
+		{"es", "anteayer", "2 day ago"},
+		{"es", "ayer", "1 day ago"},
+		{"es", "ayer a las", "1 day ago "},
+		{"es", "hoy", "0 day ago"},
+		{"es", "hace un horas", "1 hour ago"},
+		{"es", "2 semanas", "2 week"},
+		{"es", "2 año", "2 year"},
+		// Italian
+		{"it", "altro ieri", "2 day ago"},
+		{"it", "ieri", "1 day ago"},
+		{"it", "oggi", "0 day ago"},
+		{"it", "2 settimana fa", "2 week ago"},
+		{"it", "2 anno fa", "2 year ago"},
+		// Portuguese
+		{"pt", "anteontem", "2 day ago"},
+		{"pt", "ontem", "1 day ago"},
+		{"pt", "hoje", "0 day ago"},
+		{"pt", "56 minutos", "56 minute"},
+		{"pt", "12 dias", "12 day"},
+		{"pt", "há 14 min.", "14 minute ago."},
+		{"pt", "1 segundo atrás", "1 second ago"},
+		// Russian
+		{"ru", "9 месяцев", "9 month"},
+		{"ru", "8 недель", "8 week"},
+		{"ru", "7 лет", "7 year"},
+		{"ru", "позавчера", "2 day ago"},
+		{"ru", "сейчас", "0 second ago"},
+		{"ru", "спустя 2 дня", "in 2 day"},
+		{"ru", "вчера", "1 day ago"},
+		{"ru", "сегодня", "0 day ago"},
+		{"ru", "завтра", "in 1 day"},
+		{"ru", "послезавтра", "in 2 day"},
+		{"ru", "во вторник", " tuesday"},
+		{"ru", "в воскресенье", " sunday"},
+		{"ru", "несколько секунд", "44 second"},
+		{"ru", "через пару секунд", "in 2 second"},
+		{"ru", "одну минуту назад", "1 minute ago"},
+		{"ru", "через полчаса", "in 30 minute"},
+		{"ru", "сорок минут назад", "40 minute ago"},
+		{"ru", "в течение пары часов", "in 2 hour"},
+		{"ru", "через четыре часа", "in 4 hour"},
+		{"ru", "в течение суток", "in 1 day"},
+		{"ru", "двое суток назад", "2 day ago"},
+		{"ru", "неделю назад", "1 week ago"},
+		{"ru", "две недели назад", "2 week ago"},
+		{"ru", "три месяца назад", "3 month ago"},
+		{"ru", "спустя полгода", "in 6 month"},
+		{"ru", "через год", "in 1 year"},
+		{"ru", "через полтора года", "in 18 month"},
+		// Turkish
+		{"tr", "dün", "1 day ago"},
+		{"tr", "22 dakika", "22 minute"},
+		{"tr", "12 hafta", "12 week"},
+		{"tr", "13 yıl", "13 year"},
+		// Czech
+		{"cs", "40 sekunda", "40 second"},
+		{"cs", "4 týden", "4 week"},
+		{"cs", "14 roků", "14 year"},
+		// Chinese
+		{"zh", "昨天", "1 day ago"},
+		{"zh", "前天", "2 day ago"},
+		{"zh", "50 秒", "50 second"},
+		{"zh", "7 周", "7 week"},
+		{"zh", "12 年", "12 year"},
+		{"zh", "半小时前", "30 minute ago"},
+		// Danish
+		{"da", "i går", "1 day ago"},
+		{"da", "i dag", "0 day ago"},
+		{"da", "sidste måned", "1 month ago"},
+		{"da", "mindre end et minut siden", "45  seconds"},
+		// Dutch
+		{"nl", "17 uur geleden", "17 hour ago"},
+		{"nl", "27 jaar geleden", "27 year ago"},
+		{"nl", "45 minuten", "45 minute"},
+		{"nl", "nu", "0 second ago"},
+		{"nl", "eergisteren", "2 day ago"},
+		{"nl", "volgende maand", "in 1 month"},
+		// Romanian
+		{"ro", "23 săptămâni în urmă", "23 week ago"},
+		{"ro", "23 săptămâni", "23 week"},
+		{"ro", "13 oră", "13 hour"},
+		// Arabic
+		{"ar", "يومين", "2 day"},
+		{"ar", "أمس", "1 day ago"},
+		{"ar", "4 عام", "4 year"},
+		{"ar", "منذ 2 ساعات", "ago 2 hour"},
+		{"ar", "منذ ساعتين", "ago 2 hour"},
+		{"ar", "اليوم السابق", "1 day ago"},
+		{"ar", "اليوم", "0 day ago"},
+		// Polish
+		{"pl", "2 godz.", "2 hour."},
+		{"pl", "Wczoraj o 07:40", "1 day ago  07:40"},
+		// Vietnamese
+		{"vi", "2 tuần 3 ngày", "2 week 3 day"},
+		{"vi", "21 giờ trước", "21 hour ago"},
+		{"vi", "Hôm qua 08:16", "1 day ago 08:16"},
+		{"vi", "Hôm nay 15:39", "0 day ago 15:39"},
+		// French
+		{"fr", "maintenant", "0 second ago"},
+		{"fr", "demain", "in 1 day"},
+		{"fr", "Il y a moins d'une minute", "1 minute ago"},
+		{"fr", "Il y a moins de 30s", "30 second ago"},
+		// Tagalog
+		{"tl", "kahapon", "1 day ago"},
+		{"tl", "ngayon", "0 second ago"},
+		// Ukrainian
+		{"uk", "позавчора", "2 day ago"},
+		// Belarusian
+		{"be", "9 месяцаў", "9 month"},
+		{"be", "8 тыдняў", "8 week"},
+		{"be", "1 тыдзень", "1 week"},
+		{"be", "2 года", "2 year"},
+		{"be", "3 гады", "3 year"},
+		{"be", "11 секунд", "11 second"},
+		{"be", "учора", "1 day ago"},
+		{"be", "пазаўчора", "2 day ago"},
+		{"be", "сёння", "0 day ago"},
+		{"be", "некалькі хвілін", "2 minute"},
+		// Indonesian
+		{"id", "baru saja", "0 second ago"},
+		{"id", "hari ini", "0 day ago"},
+		{"id", "kemarin", "1 day ago"},
+		{"id", "kemarin lusa", "2 day ago"},
+		{"id", "sehari yang lalu", "1 day  ago"},
+		{"id", "seminggu yang lalu", "1 week  ago"},
+		{"id", "sebulan yang lalu", "1 month  ago"},
+		{"id", "setahun yang lalu", "1 year  ago"},
+		// Finnish
+		{"fi", "1 vuosi sitten", "1 year ago"},
+		{"fi", "2 vuotta sitten", "2 year ago"},
+		{"fi", "3 v sitten", "3 year ago"},
+		{"fi", "4 v. sitten", "4 year. ago"},
+		{"fi", "5 vv. sitten", "5 year. ago"},
+		{"fi", "1 kuukausi sitten", "1 month ago"},
+		{"fi", "2 kuukautta sitten", "2 month ago"},
+		{"fi", "3 kk sitten", "3 month ago"},
+		{"fi", "1 viikko sitten", "1 week ago"},
+		{"fi", "2 viikkoa sitten", "2 week ago"},
+		{"fi", "3 vk sitten", "3 week ago"},
+		{"fi", "4 vko sitten", "4 week ago"},
+		{"fi", "1 päivä sitten", "1 day ago"},
+		{"fi", "2 päivää sitten", "2 day ago"},
+		{"fi", "8 pvää sitten", "8 day ago"},
+		{"fi", "3 pv sitten", "3 day ago"},
+		{"fi", "4 p. sitten", "4 day. ago"},
+		{"fi", "5 pvä sitten", "5 day ago"},
+		{"fi", "1 tunti sitten", "1 hour ago"},
+		{"fi", "2 tuntia sitten", "2 hour ago"},
+		{"fi", "3 t sitten", "3 hour ago"},
+		{"fi", "1 minuutti sitten", "1 minute ago"},
+		{"fi", "2 minuuttia sitten", "2 minute ago"},
+		{"fi", "3 min sitten", "3 minute ago"},
+		{"fi", "1 sekunti sitten", "1 second ago"},
+		{"fi", "2 sekuntia sitten", "2 second ago"},
+		{"fi", "1 sekuntti sitten", "1 second ago"},
+		{"fi", "2 sekunttia sitten", "2 second ago"},
+		{"fi", "3 s sitten", "3 second ago"},
+		{"fi", "eilen", "1 day ago"},
+		{"fi", "tänään", "0 day ago"},
+		{"fi", "huomenna", "in 1 day"},
+		{"fi", "nyt", "0 second ago"},
+		{"fi", "ensi viikolla", "in 1 week"},
+		{"fi", "viime viikolla", "1 week ago"},
+		{"fi", "toissa vuonna", "2 year ago"},
+		{"fi", "9 kuukautta sitten", "9 month ago"},
+		{"fi", "3 viikon päästä", "in 3 week"},
+		{"fi", "10 tunnin kuluttua", "in 10 hour"},
+		// Japanese
+		{"ja", "今年", "0 year ago"},
+		{"ja", "去年", "1 year ago"},
+		{"ja", "17年前", "17 year ago"},
+		{"ja", "今月", "0 month ago"},
+		{"ja", "先月", "1 month ago"},
+		{"ja", "1ヶ月前", "1 month ago"},
+		{"ja", "2ヶ月前", "2 month ago"},
+		{"ja", "今週", "0 week ago"},
+		{"ja", "先週", "1 week ago"},
+		{"ja", "先々週", "2 week ago"},
+		{"ja", "2週間前", "2 week ago"},
+		{"ja", "3週間", "3 week"},
+		{"ja", "今日", "0 day ago"},
+		{"ja", "昨日", "1 day ago"},
+		{"ja", "一昨日", "2 day ago"},
+		{"ja", "3日前", "3 day ago"},
+		{"ja", "1時間", "1 hour"},
+		{"ja", "23時間前", "23 hour ago"},
+		{"ja", "30分", "30 minute"},
+		{"ja", "3分間", "3 minute"},
+		{"ja", "60秒", "60 second"},
+		{"ja", "3秒前", "3 second ago"},
+		{"ja", "現在", "0 second ago"},
+		// Hebrew
+		{"he", "אתמול", "1 day ago"},
+		{"he", "אתמול בשעה 3", "1 day ago  3"},
+		{"he", "היום", "0 day ago"},
+		{"he", "לפני יומיים", "2 day ago"},
+		{"he", "לפני שבועיים", "2 week ago"},
+		// Bulgarian
+		{"bg", "вдругиден", "in 2 day"},
+		{"bg", "утре", "in 1 day"},
+		{"bg", "след 5 дни", "in 5 day"},
+		{"bg", "вчера", "1 day ago"},
+		{"bg", "преди 9 дни", "9 day ago"},
+		{"bg", "преди 10 минути", "10 minute ago"},
+		{"bg", "преди час", "1 hour ago"},
+		{"bg", "преди 4 години", "4 year ago"},
+		{"bg", "преди десетилетие", "10 year ago"},
+		// Bangla
+		{"bn", "গতকাল", "1 day ago"},
+		{"bn", "আজ", "0 day ago"},
+		{"bn", "গত মাস", "1 month ago"},
+		{"bn", "আগামী সপ্তাহ", "in 1 week"},
+		// Hindi
+		{"hi", "१ सप्ताह", "1 week"},
+		{"hi", "२४ मिनट पहले", "24 minute ago"},
+		{"hi", "5 वर्ष", "5 year"},
+		{"hi", "५३ सप्ताह बाद", "53 week in"},
+		{"hi", "12 सेकंड पूर्व", "12 second ago"},
+		// Swedish
+		{"sv", "igår", "1 day ago"},
+		{"sv", "idag", "0 day ago"},
+		{"sv", "förrgår", "2 day ago"},
+		{"sv", "förra månaden", "1 month ago"},
+		{"sv", "nästa månad", "in 1 month"},
+		// Georgian
+		{"ka", "გუშინ", "1 day ago"},
+		{"ka", "დღეს", "0 day ago"},
+		{"ka", "ერთ თვე", "1 month"},
+		{"ka", "დღეიდან ერთ კვირა", "in 1 week"},
+		// af
+		{"af", "3 week gelede", "3 week ago"},
+		{"af", "volgende jaar 10:08 nm", "in 1 year 10:08 pm"},
+		{"af", "oor 45 sekondes", "in 45 second"},
+		// am
+		{"am", "የሚቀጥለው ሳምንት", "in 1 week"},
+		{"am", "በ10 ሳምንት ውስጥ", "in 10 week"},
+		// as
+		{"as", "কাইলৈ", "in 1 day"},
+		{"as", "আজি", "0 day ago"},
+		// asa
+		{"asa", "ighuo", "1 day ago"},
+		{"asa", "yavo 09:27 ichamthi", "in 1 day 09:27 pm"},
+		// ast
+		{"ast", "el mes viniente 02:17 tarde", "in 1 month 02:17 pm"},
+		{"ast", "hai 22 selmana", "22 week ago"},
+		{"ast", "en 5 minutos", "in 5 minute"},
+		// az-Latn
+		{"az-Latn", "keçən həftə", "1 week ago"},
+		{"az-Latn", "10 ay ərzində", "in 10 month"},
+		{"az-Latn", "22 saniyə öncə", "22 second ago"},
+		// az
+		{"az", "12 saat ərzində", "in 12 hour"},
+		{"az", "15 həftə öncə", "15 week ago"},
+		// bas
+		{"bas", "lɛ̀n 12:08 i ɓugajɔp", "0 day ago 12:08 pm"},
+		{"bas", "yààni", "1 day ago"},
+		// bem
+		{"bem", "lelo", "0 day ago"},
+		{"bem", "17 umweshi", "17 month"},
+		// bez
+		{"bez", "hilawu 08:44 pamilau", "in 1 day 08:44 am"},
+		{"bez", "neng'u ni", "0 day ago"},
+		{"bez", "12 mlungu gumamfu", "12 week"},
+		// bm
+		{"bm", "sini 01:18 am", "in 1 day 01:18 am"},
+		{"bm", "kunu", "1 day ago"},
+		{"bm", "22 dɔgɔkun", "22 week"},
+		// bo
+		{"bo", "ཁས་ས་", "1 day ago"},
+		{"bo", "སང་ཉིན་", "in 1 day"},
+		// br
+		{"br", "ar sizhun diaraok", "1 week ago"},
+		{"br", "ar bloaz a zeu 02:19 gm", "in 1 year 02:19 pm"},
+		{"br", "10 deiz", "10 day"},
+		// brx
+		{"brx", "गाबोन", "in 1 day"},
+		{"brx", "मैया 11:58 फुं", "1 day ago 11:58 am"},
+		{"brx", "17 मिनिथ", "17 minute"},
+		// bs-Cyrl
+		{"bs-Cyrl", "следећег месеца", "in 1 month"},
+		{"bs-Cyrl", "прошле године 10:05 пре подне", "1 year ago 10:05 am"},
+		{"bs-Cyrl", "пре 28 недеља", "28 week ago"},
+		// bs-Latn
+		{"bs-Latn", "sljedeće godine", "in 1 year"},
+		{"bs-Latn", "prije 4 mjeseci", "4 month ago"},
+		{"bs-Latn", "za 36 sati", "in 36 hour"},
+		// bs
+		{"bs", "prije 12 sekundi", "12 second ago"},
+		{"bs", "za 5 godinu", "in 5 year"},
+		{"bs", "ovaj sat", "0 hour ago"},
+		// ca
+		{"ca", "d'aquí a 22 hores", "in 22 hour"},
+		{"ca", "fa 17 anys", "17 year ago"},
+		{"ca", "el mes passat", "1 month ago"},
+		{"ca", "la pròxima setmana", "in 1 week"},
+		{"ca", "despús-ahir", "2 day ago"},
+		{"ca", "en un dia", "in 1 day"},
+		{"ca", "demà passat", "in 2 day"},
+		// ce
+		{"ce", "72 сахьт даьлча", "in 72 hour"},
+		{"ce", "42 шо хьалха", "42 year ago"},
+		{"ce", "рогӏерчу баттахь", "in 1 month"},
+		// cgg
+		{"cgg", "nyenkyakare", "in 1 day"},
+		{"cgg", "nyomwabazyo", "1 day ago"},
+		{"cgg", "5 omwaka", "5 year"},
+		// chr
+		{"chr", "ᎯᎠ ᎢᏯᏔᏬᏍᏔᏅ", "0 minute ago"},
+		{"chr", "ᎾᎿ 8 ᎧᎸᎢ ᏥᎨᏒ", "8 month ago"},
+		{"chr", "ᎾᎿ 22 ᎢᏯᏔᏬᏍᏔᏅ", "in 22 minute"},
+		// cs
+		{"cs", "za 3 rok", "in 3 year"},
+		{"cs", "před 11 měsícem", "11 month ago"},
+		{"cs", "tento měsíc", "0 month ago"},
+		// cy
+		{"cy", "wythnos ddiwethaf", "1 week ago"},
+		{"cy", "25 o flynyddoedd yn ôl", "25 year ago"},
+		{"cy", "ymhen 4 awr", "in 4 hour"},
+		// da
+		{"da", "for 15 måneder siden", "15 month ago"},
+		{"da", "om 60 sekunder", "in 60 second"},
+		{"da", "sidste måned", "1 month ago"},
+		// dav
+		{"dav", "iguo", "1 day ago"},
+		{"dav", "kesho 02:12 luma lwa p", "in 1 day 02:12 pm"},
+		{"dav", "15 juma", "15 week"},
+		// de
+		{"de", "nächstes jahr", "in 1 year"},
+		{"de", "letzte woche 04:25 nachm", "1 week ago 04:25 pm"},
+		// dje
+		{"dje", "hõo 08:08 subbaahi", "0 day ago 08:08 am"},
+		{"dje", "suba", "in 1 day"},
+		{"dje", "7 handu", "7 month"},
+		// dsb
+		{"dsb", "pśed 10 góźinami", "10 hour ago"},
+		{"dsb", "za 43 minutow", "in 43 minute"},
+		{"dsb", "pśiducy tyźeń", "in 1 week"},
+		// dua
+		{"dua", "kíɛlɛ nítómb́í", "1 day ago"},
+		{"dua", "12 ŋgandɛ", "12 hour"},
+		{"dua", "wɛ́ŋgɛ̄", "0 day ago"},
+		// dyo
+		{"dyo", "fucen", "1 day ago"},
+		{"dyo", "kajom", "in 1 day"},
+		{"dyo", "6 fuleeŋ", "6 month"},
+		// dz
+		{"dz", "ནངས་པ་", "in 1 day"},
+		{"dz", "སྐར་མ་ 3 ནང་", "in 3 minute"},
+		{"dz", "ལོ་འཁོར་ 21 ཧེ་མ་", "21 year ago"},
+		// ebu
+		{"ebu", "ĩgoro", "1 day ago"},
+		{"ebu", "2 ndagĩka", "2 minute"},
+		{"ebu", "rũciũ", "in 1 day"},
+		// ee
+		{"ee", "ɣleti si va yi", "1 month ago"},
+		{"ee", "ƒe 24 si wo va yi", "24 year ago"},
+		{"ee", "le sekend 20 me", "in 20 second"},
+		// el
+		{"el", "πριν από 45 λεπτό", "45 minute ago"},
+		{"el", "σε 22 μήνες", "in 22 month"},
+		{"el", "επόμενη εβδομάδα 12:09 μμ", "in 1 week 12:09 pm"},
+		// et
+		{"et", "eelmine nädal", "1 week ago"},
+		{"et", "1 a pärast", "in 1 year"},
+		{"et", "4 tunni eest", "4 hour ago"},
+		// eu
+		{"eu", "aurreko hilabetea", "1 month ago"},
+		{"eu", "duela 15 segundo", "15 second ago"},
+		{"eu", "2 hilabete barru", "in 2 month"},
+		// ewo
+		{"ewo", "okírí", "in 1 day"},
+		{"ewo", "angogé 10:15 kíkíríg", "1 day ago 10:15 am"},
+		{"ewo", "5 m̀bú", "5 year"},
+		// ff
+		{"ff", "hannde", "0 day ago"},
+		{"ff", "haŋki 01:14 subaka", "1 day ago 01:14 am"},
+		{"ff", "2 yontere", "2 week"},
+		// fil
+		{"fil", "22 min ang nakalipas", "22 minute ago"},
+		{"fil", "sa 5 taon", "in 5 year"},
+		{"fil", "nakalipas na linggo", "1 week ago"},
+		// fo
+		{"fo", "seinasta mánað", "1 month ago"},
+		{"fo", "um 3 viku", "in 3 week"},
+		{"fo", "7 tímar síðan", "7 hour ago"},
+		// fur
+		{"fur", "ca di 16 setemanis", "in 16 week"},
+		{"fur", "15 secont indaûr", "15 second ago"},
+		{"fur", "doman", "in 1 day"},
+		// fy
+		{"fy", "folgjende moanne", "in 1 month"},
+		{"fy", "oer 24 oere", "in 24 hour"},
+		{"fy", "2 deien lyn", "2 day ago"},
+		// ga
+		{"ga", "i gceann 6 nóiméad", "in 6 minute"},
+		{"ga", "12 seachtain ó shin", "12 week ago"},
+		{"ga", "an bhliain seo chugainn", "in 1 year"},
+		// gd
+		{"gd", "an ceann 2 mhìosa", "in 2 month"},
+		{"gd", "15 uair a thìde air ais", "15 hour ago"},
+		{"gd", "am mìos seo chaidh", "1 month ago"},
+		// gl
+		{"gl", "hai 25 semanas", "25 week ago"},
+		{"gl", "en 2 horas", "in 2 hour"},
+		{"gl", "o ano pasado", "1 year ago"},
+		// gsw
+		{"gsw", "moorn", "in 1 day"},
+		{"gsw", "geschter", "1 day ago"},
+		// gu
+		{"gu", "2 વર્ષ પહેલા", "2 year ago"},
+		{"gu", "આવતા મહિને", "in 1 month"},
+		{"gu", "22 કલાક પહેલાં", "22 hour ago"},
+		// guz
+		{"guz", "mambia", "in 1 day"},
+		{"guz", "igoro", "1 day ago"},
+		// ha
+		{"ha", "gobe", "in 1 day"},
+		{"ha", "jiya", "1 day ago"},
+		// hr
+		{"hr", "prije 3 dana", "3 day ago"},
+		{"hr", "sljedeći mjesec", "in 1 month"},
+		{"hr", "za 2 sati", "in 2 hour"},
+		// hsb
+		{"hsb", "před 5 tydźenjemi", "5 week ago"},
+		{"hsb", "za 60 sekundow", "in 60 second"},
+		{"hsb", "lětsa", "0 year ago"},
+		// hy
+		{"hy", "հաջորդ ամիս", "in 1 month"},
+		{"hy", "2 վայրկյան առաջ", "2 second ago"},
+		{"hy", "3 տարուց", "in 3 year"},
+		// id
+		{"id", "5 tahun yang lalu", "5 year ago"},
+		{"id", "dalam 43 menit", "in 43 minute"},
+		{"id", "dlm 23 dtk", "in 23 second"},
+		// ig
+		{"ig", "nnyaafụ", "1 day ago"},
+		{"ig", "taata", "0 day ago"},
+		// is
+		{"is", "í næstu viku", "in 1 week"},
+		{"is", "fyrir 3 mánuðum", "3 month ago"},
+		{"is", "eftir 2 klst", "in 2 hour"},
+		// it
+		{"it", "tra 3 minuti", "in 3 minute"},
+		{"it", "5 giorni fa", "5 day ago"},
+		{"it", "anno prossimo", "in 1 year"},
+		// jgo
+		{"jgo", "ɛ́ gɛ mɔ́ 20 háwa", "20 hour ago"},
+		{"jgo", "ɛ́ gɛ́ mɔ́ pɛsaŋ 5", "5 month ago"},
+		{"jgo", "nǔu ŋguꞌ 2", "in 2 year"},
+		// jmc
+		{"jmc", "ngama", "in 1 day"},
+		{"jmc", "ukou", "1 day ago"},
+		// ka
+		{"ka", "ამ საათში", "0 hour ago"},
+		{"ka", "7 კვირის წინ", "7 week ago"},
+		{"ka", "6 წუთში", "in 6 minute"},
+		// kab
+		{"kab", "iḍelli", "1 day ago"},
+		{"kab", "ass-a", "0 day ago"},
+		// kam
+		{"kam", "ũmũnthĩ", "0 day ago"},
+		{"kam", "ũnĩ", "in 1 day"},
+		// kde
+		{"kde", "nundu", "in 1 day"},
+		{"kde", "lido", "1 day ago"},
+		// kea
+		{"kea", "es simana li", "0 week ago"},
+		{"kea", "di li 2 min", "in 2 minute"},
+		{"kea", "a ten 6 anu", "6 year ago"},
+		// khq
+		{"khq", "hõo", "0 day ago"},
+		{"khq", "bi", "1 day ago"},
+		// ki
+		{"ki", "rũciũ", "in 1 day"},
+		{"ki", "ira", "1 day ago"},
+		// kk
+		{"kk", "3 апта бұрын", "3 week ago"},
+		{"kk", "5 секундтан кейін", "in 5 second"},
+		{"kk", "өткен ай", "1 month ago"},
+		// kl
+		{"kl", "om 8 sapaatip-akunnera", "in 8 week"},
+		{"kl", "for 6 ukioq siden", "6 year ago"},
+		{"kl", "om 56 minutsi", "in 56 minute"},
+		// kln
+		{"kln", "raini", "0 day ago"},
+		{"kln", "mutai", "in 1 day"},
+		// km
+		{"km", "ម៉ោងនេះ", "0 hour ago"},
+		{"km", "19 ខែមុន", "19 month ago"},
+		{"km", "ក្នុង​រយៈ​ពេល 23 ម៉ោង", "in 23 hour"},
+		// kn
+		{"kn", "18 ತಿಂಗಳುಗಳ ಹಿಂದೆ", "18 month ago"},
+		{"kn", "26 ಸೆಕೆಂಡ್‌ನಲ್ಲಿ", "in 26 second"},
+		{"kn", "ಈ ನಿಮಿಷ", "0 minute ago"},
+		// ko
+		{"ko", "2분 후", "in 2 minute"},
+		{"ko", "5년 전", "5 year ago"},
+		{"ko", "다음 달", "in 1 month"},
+		// ksb
+		{"ksb", "keloi", "in 1 day"},
+		{"ksb", "evi eo", "0 day ago"},
+		// ksf
+		{"ksf", "ridúrǝ́", "in 1 day"},
+		{"ksf", "rinkɔɔ́", "1 day ago"},
+		// ksh
+		{"ksh", "nächste woche", "in 1 week"},
+		{"ksh", "en 3 johre", "in 3 year"},
+		{"ksh", "diese mohnd", "0 month ago"},
+		// ky
+		{"ky", "ушул мүнөттө", "0 minute ago"},
+		{"ky", "6 айд кийин", "in 6 month"},
+		{"ky", "5 мүнөт мурун", "5 minute ago"},
+		// lag
+		{"lag", "lamʉtoondo", "in 1 day"},
+		{"lag", "niijo", "1 day ago"},
+		// lb
+		{"lb", "virun 2 stonn", "2 hour ago"},
+		{"lb", "an 5 joer", "in 5 year"},
+		{"lb", "leschte mount", "1 month ago"},
+		// lg
+		{"lg", "nkya", "in 1 day"},
+		{"lg", "ggulo", "1 day ago"},
+		// lkt
+		{"lkt", "hékta wíyawapi 8 k'uŋ héhaŋ", "8 month ago"},
+		{"lkt", "tȟokáta okó kiŋháŋ", "in 1 week"},
+		{"lkt", "letáŋhaŋ owápȟe 4 kiŋháŋ", "in 4 hour"},
+		// ln
+		{"ln", "lóbi elékí", "1 day ago"},
+		{"ln", "lóbi ekoyâ", "in 1 day"},
+		// lo
+		{"lo", "ໃນອີກ 5 ຊົ່ວໂມງ", "in 5 hour"},
+		{"lo", "3 ປີກ່ອນ", "3 year ago"},
+		// lt
+		{"lt", "praėjusią savaitę", "1 week ago"},
+		{"lt", "prieš 12 mėnesį", "12 month ago"},
+		{"lt", "po 2 valandų", "in 2 hour"},
+		// lu
+		{"lu", "lelu", "0 day ago"},
+		{"lu", "makelela", "1 day ago"},
+		// luo
+		{"luo", "nyoro", "1 day ago"},
+		{"luo", "kiny", "in 1 day"},
+		// luy
+		{"luy", "mgorova", "1 day ago"},
+		{"luy", "lero", "0 day ago"},
+		// lv
+		{"lv", "pēc 67 minūtes", "in 67 minute"},
+		{"lv", "pirms 5 nedēļām", "5 week ago"},
+		{"lv", "nākamajā gadā", "in 1 year"},
+		// mas
+		{"mas", "tááisérè", "in 1 day"},
+		{"mas", "ŋolé", "1 day ago"},
+		// mer
+		{"mer", "ĩgoro", "1 day ago"},
+		{"mer", "narua", "0 day ago"},
+		// mfe
+		{"mfe", "zordi", "0 day ago"},
+		{"mfe", "demin", "in 1 day"},
+		// mg
+		{"mg", "rahampitso", "in 1 day"},
+		{"mg", "omaly", "1 day ago"},
+		// mgh
+		{"mgh", "lel'lo", "0 day ago"},
+		{"mgh", "n'chana", "1 day ago"},
+		// mgo
+		{"mgo", "ikwiri", "1 day ago"},
+		{"mgo", "isu", "in 1 day"},
+		// mk
+		{"mk", "пред 4 минута", "4 minute ago"},
+		{"mk", "за 6 месеци", "in 6 month"},
+		{"mk", "минатата година", "1 year ago"},
+		// ml
+		{"ml", "ഈ മിനിറ്റിൽ", "0 minute ago"},
+		{"ml", "7 മണിക്കൂറിൽ", "in 7 hour"},
+		{"ml", "2 വർഷം മുമ്പ്", "2 year ago"},
+		// mn
+		{"mn", "5 цагийн өмнө", "5 hour ago"},
+		{"mn", "10 жилийн дараа", "in 10 year"},
+		{"mn", "өнгөрсөн долоо хоног", "1 week ago"},
+		// mr
+		{"mr", "2 मिनिटांमध्ये", "in 2 minute"},
+		{"mr", "5 महिन्यापूर्वी", "5 month ago"},
+		{"mr", "हे वर्ष", "0 year ago"},
+		// ms
+		{"ms", "dalam 7 hari", "in 7 day"},
+		{"ms", "3 thn lalu", "3 year ago"},
+		{"ms", "bulan depan", "in 1 month"},
+		// mt
+		{"mt", "ix-xahar li għadda", "1 month ago"},
+		{"mt", "2 sena ilu", "2 year ago"},
+		{"mt", "il-ġimgħa d-dieħla", "in 1 week"},
+		// mua
+		{"mua", "tǝ'nahko", "0 day ago"},
+		{"mua", "tǝ'nane", "in 1 day"},
+		// my
+		{"my", "ပြီးခဲ့သည့် 7 မိနစ်", "7 minute ago"},
+		{"my", "12 လအတွင်း", "in 12 month"},
+		{"my", "ယခု သီတင်းပတ်", "0 week ago"},
+		// nb
+		{"nb", "om 6 timer", "in 6 hour"},
+		{"nb", "om 2 måneder", "in 2 month"},
+		{"nb", "forrige uke", "1 week ago"},
+		{"nb", "for 3 dager siden", "3 day ago"},
+		{"nb", "for 3 timer siden", "3 hour ago"},
+		{"nb", "3 dager siden", "3 day ago"},
+		{"nb", "3 mnd siden", "3 month ago"},
+		{"nb", "2 uker siden", "2 week ago"},
+		{"nb", "1 uke siden", "1 week ago"},
+		{"nb", "10 timer siden", "10 hour ago"},
+		// nd
+		{"nd", "kusasa", "in 1 day"},
+		{"nd", "izolo", "1 day ago"},
+		// ne
+		{"ne", "5 वर्ष अघि", "5 year ago"},
+		{"ne", "35 मिनेटमा", "in 35 minute"},
+		{"ne", "यो हप्ता", "0 week ago"},
+		// nl
+		{"nl", "15 dgn geleden", "15 day ago"},
+		{"nl", "over 2 maand", "in 2 month"},
+		{"nl", "vorige jaar", "1 year ago"},
+		// nmg
+		{"nmg", "nakugú", "1 day ago"},
+		{"nmg", "namáná", "in 1 day"},
+		// nn
+		{"nn", "for 5 minutter siden", "5 minute ago"},
+		{"nn", "om 3 uker", "in 3 week"},
+		{"nn", "i morgon", "in 1 day"},
+		// nnh
+		{"nnh", "jǔɔ gẅie à ne ntóo", "in 1 day"},
+		{"nnh", "jǔɔ gẅie à ka tɔ̌g", "1 day ago"},
+		// nus
+		{"nus", "ruun", "in 1 day"},
+		{"nus", "walɛ 06:23 tŋ", "0 day ago 06:23 pm"},
+		// nyn
+		{"nyn", "nyomwabazyo", "1 day ago"},
+		{"nyn", "erizooba", "0 day ago"},
+		// os
+		{"os", "3 боны размӕ", "3 day ago"},
+		{"os", "47 сахаты фӕстӕ", "in 47 hour"},
+		{"os", "знон", "1 day ago"},
+		// pa-Guru
+		{"pa-Guru", "ਅਗਲਾ ਹਫ਼ਤਾ", "in 1 week"},
+		{"pa-Guru", "5 ਮਹੀਨੇ ਪਹਿਲਾਂ", "5 month ago"},
+		{"pa-Guru", "22 ਮਿੰਟਾਂ ਵਿੱਚ", "in 22 minute"},
+		// pa
+		{"pa", "15 ਘੰਟੇ ਪਹਿਲਾਂ", "15 hour ago"},
+		{"pa", "16 ਸਕਿੰਟ ਵਿੱਚ", "in 16 second"},
+		{"pa", "ਅਗਲਾ ਸਾਲ", "in 1 year"},
+		// pl
+		{"pl", "6 tygodni temu", "6 week ago"},
+		{"pl", "za 8 lat", "in 8 year"},
+		{"pl", "ta minuta", "0 minute ago"},
+		// rm
+		{"rm", "damaun", "in 1 day"},
+		{"rm", "ier", "1 day ago"},
+		// ro
+		{"ro", "acum 2 de ore", "2 hour ago"},
+		{"ro", "peste 5 de ani", "in 5 year"},
+		{"ro", "săptămâna trecută", "1 week ago"},
+		// rof
+		{"rof", "linu", "0 day ago"},
+		{"rof", "ng'ama", "in 1 day"},
+		// ru
+		{"ru", "12 секунд назад", "12 second ago"},
+		{"ru", "через 8 месяцев", "in 8 month"},
+		{"ru", "в прошлом году", "1 year ago"},
+		// rwk
+		{"rwk", "ukou", "1 day ago"},
+		{"rwk", "ngama", "in 1 day"},
+		// sah
+		{"sah", "20 чаас ынараа өттүгэр", "20 hour ago"},
+		{"sah", "50 сылынан", "in 50 year"},
+		{"sah", "ааспыт нэдиэлэ", "1 week ago"},
+		// saq
+		{"saq", "duo", "0 day ago"},
+		{"saq", "taisere", "in 1 day"},
+		// sbp
+		{"sbp", "pamulaawu", "in 1 day"},
+		{"sbp", "ineng'uni", "0 day ago"},
+		// se
+		{"se", "51 minuhta maŋŋilit", "in 51 minute"},
+		{"se", "3 jahkki árat", "3 year ago"},
+		{"se", "ihttin", "in 1 day"},
+		// seh
+		{"seh", "manguana", "in 1 day"},
+		{"seh", "zuro", "1 day ago"},
+		// ses
+		{"ses", "suba", "in 1 day"},
+		{"ses", "hõo", "0 day ago"},
+		// sg
+		{"sg", "bîrï", "1 day ago"},
+		{"sg", "lâsô", "0 day ago"},
+		// shi-Latn
+		{"shi-Latn", "iḍlli", "1 day ago"},
+		{"shi-Latn", "askka 06:15 tifawt", "in 1 day 06:15 am"},
+		// shi-Tfng
+		{"shi-Tfng", "ⴰⵙⴽⴽⴰ", "in 1 day"},
+		{"shi-Tfng", "ⴰⵙⵙⴰ", "0 day ago"},
+		// shi
+		{"shi", "ⵉⴹⵍⵍⵉ", "1 day ago"},
+		// si
+		{"si", "තත්පර 14කින්", "in 14 second"},
+		{"si", "වසර 2කට පෙර", "2 year ago"},
+		{"si", "මෙම සතිය", "0 week ago"},
+		// sk
+		{"sk", "pred 11 týždňami", "11 week ago"},
+		{"sk", "o 25 rokov", "in 25 year"},
+		{"sk", "v tejto hodine", "0 hour ago"},
+		// sl
+		{"sl", "pred 4 dnevom", "4 day ago"},
+		{"sl", "čez 76 leto", "in 76 year"},
+		{"sl", "naslednji mesec", "in 1 month"},
+		// sn
+		{"sn", "mangwana", "in 1 day"},
+		{"sn", "nhasi", "0 day ago"},
+		// so
+		{"so", "berri", "in 1 day"},
+		{"so", "shalay", "1 day ago"},
+		// sq
+		{"sq", "pas 6 muajsh", "in 6 month"},
+		{"sq", "72 orë më parë", "72 hour ago"},
+		{"sq", "javën e ardhshme", "in 1 week"},
+		// sr-Cyrl
+		{"sr-Cyrl", "пре 5 година", "5 year ago"},
+		{"sr-Cyrl", "за 52 нед", "in 52 week"},
+		{"sr-Cyrl", "данас", "0 day ago"},
+		// sr-Latn
+		{"sr-Latn", "za 120 sekundi", "in 120 second"},
+		{"sr-Latn", "pre 365 dana", "365 day ago"},
+		{"sr-Latn", "prošle nedelje", "1 week ago"},
+		// sr
+		{"sr", "пре 40 сати", "40 hour ago"},
+		{"sr", "за 100 год", "in 100 year"},
+		{"sr", "овог месеца", "0 month ago"},
+		// sv
+		{"sv", "för 15 vecka sedan", "15 week ago"},
+		{"sv", "om 2 sekunder", "in 2 second"},
+		{"sv", "förra året", "1 year ago"},
+		// sw
+		{"sw", "sekunde 25 zilizopita", "25 second ago"},
+		{"sw", "miezi 5 iliyopita", "5 month ago"},
+		{"sw", "mwaka uliopita", "1 year ago"},
+		// ta
+		{"ta", "7 நாட்களுக்கு முன்", "7 day ago"},
+		{"ta", "45 ஆண்டுகளில்", "in 45 year"},
+		{"ta", "இப்போது", "0 second ago"},
+		// te
+		{"te", "12 గంటల క్రితం", "12 hour ago"},
+		{"te", "25 సంవత్సరాల్లో", "in 25 year"},
+		{"te", "గత వారం", "1 week ago"},
+		// teo
+		{"teo", "moi", "in 1 day"},
+		{"teo", "lolo", "0 day ago"},
+		// to
+		{"to", "miniti 'e 5 kuo'osi", "5 minute ago"},
+		{"to", "'i he ta'u 'e 6", "in 6 year"},
+		{"to", "'aneafi", "1 day ago"},
+		// tr
+		{"tr", "11 saat önce", "11 hour ago"},
+		{"tr", "10 yıl sonra", "in 10 year"},
+		{"tr", "geçen ay", "1 month ago"},
+		// twq
+		{"twq", "hõo", "0 day ago"},
+		{"twq", "suba", "in 1 day"},
+		// tzm
+		{"tzm", "assenaṭ", "1 day ago"},
+		{"tzm", "asekka", "in 1 day"},
+		// uk
+		{"uk", "18 хвилину тому", "18 minute ago"},
+		{"uk", "через 22 року", "in 22 year"},
+		{"uk", "цього тижня", "0 week ago"},
+		// uz-Cyrl
+		{"uz-Cyrl", "кейинги ой", "in 1 month"},
+		{"uz-Cyrl", "30 йил аввал", "30 year ago"},
+		{"uz-Cyrl", "59 сониядан сўнг", "in 59 second"},
+		// uz-Latn
+		{"uz-Latn", "3 haftadan keyin", "in 3 week"},
+		{"uz-Latn", "5 soat oldin", "5 hour ago"},
+		{"uz-Latn", "shu yil", "0 year ago"},
+		// uz
+		{"uz", "25 soat oldin", "25 hour ago"},
+		{"uz", "8 yildan keyin", "in 8 year"},
+		{"uz", "bugun", "0 day ago"},
+		// vi
+		{"vi", "sau 22 giờ nữa", "in 22 hour"},
+		{"vi", "15 tháng trước", "15 month ago"},
+		{"vi", "tuần sau", "in 1 week"},
+		// vun
+		{"vun", "ngama", "in 1 day"},
+		{"vun", "ukou", "1 day ago"},
+		// wae
+		{"wae", "vor 11 minüta", "11 minute ago"},
+		{"wae", "i 15 wuča", "in 15 week"},
+		{"wae", "hitte", "0 day ago"},
+		// xog
+		{"xog", "enkyo", "in 1 day"},
+		{"xog", "edho", "1 day ago"},
+		// yav
+		{"yav", "ínaan", "0 day ago"},
+		{"yav", "nakinyám", "in 1 day"},
+		// yo
+		{"yo", "ọ̀la", "in 1 day"},
+		{"yo", "òní", "0 day ago"},
+		// yue
+		{"yue", "13 個星期後", "in 13 week"},
+		{"yue", "2 小時前", "2 hour ago"},
+		{"yue", "上個月", "1 month ago"},
+		// zgh
+		{"zgh", "ⴰⵙⵙⴰ", "0 day ago"},
+		{"zgh", "ⵉⴹⵍⵍⵉ", "1 day ago"},
+		// zh-Hans
+		{"zh-Hans", "3秒钟后", "in 3 second"},
+		{"zh-Hans", "4年后", "in 4 year"},
+		{"zh-Hans", "上周", "1 week ago"},
+		// zh-Hant
+		{"zh-Hant", "7 分鐘後", "in 7 minute"},
+		{"zh-Hant", "12 個月前", "12 month ago"},
+		{"zh-Hant", "這一小時", "0 hour ago"},
+		// zu
+		{"zu", "10 amaminithi edlule", "10 minute ago"},
+		{"zu", "20 unyaka odlule", "20 year ago"},
+		{"zu", "manje", "0 second ago"},
+	}
+
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("%s, \"%s\"", test.Locale, test.String)
+
+		// Load locale
+		ld, err := GetLocale(test.Locale)
+		assert.Nil(t, err, message)
+
+		// Prepare config: finnish language use "t" as hour, so empty SKIP_TOKENS.
+		var cfg *setting.Configuration
+		if test.Locale != "fi" {
+			cfg = &setting.DefaultConfig
+		}
+
+		// Translate string
 		translation := Translate(*ld, test.String, false, cfg)
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
