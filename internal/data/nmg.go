@@ -43,7 +43,7 @@ var nmg_Locale = merge(nil, LocaleData{
 		"mɔndɔ":            "monday",
 		"ngwɛn":            "month",
 		"nyiɛl":            "second",
-		"sɔndɔ":            "week",
+		"sɔndɔ":            "sunday",
 		"mana":             "am",
 		"kris":             "december",
 		"wula":             "hour",

@@ -82,7 +82,7 @@ var gu_Locale = merge(nil, LocaleData{
 		"/":            "/",
 		":":            ":",
 		"ક":            "hour",
-		"મ":            "month",
+		"મ":            "may",
 		"સ":            "second",
 		"વ":            "year",
 		"z":            "z",

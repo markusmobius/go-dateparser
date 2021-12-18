@@ -40,7 +40,7 @@ var yav_Locale = merge(nil, LocaleData{
 		"felete":                     "friday",
 		"mondie":                     "monday",
 		"sesele":                     "saturday",
-		"sɔndiɛ":                     "week",
+		"sɔndiɛ":                     "sunday",
 		"inaan":                      "0 day ago",
 		"puyoo":                      "1 day ago",
 		"puɔsɛ":                      "day",

@@ -63,7 +63,7 @@ var pa_Guru_Locale = merge(nil, LocaleData{
 		"ਅਗ":          "august",
 		"ਦਸ":          "december",
 		"ਫਰ":          "february",
-		"ਜਨ":          "june",
+		"ਜਨ":          "january",
 		"ਮਈ":          "may",
 		"ਸਮ":          "monday",
 		"ਨਵ":          "november",

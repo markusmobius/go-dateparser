@@ -64,7 +64,7 @@ var is_Locale = merge(nil, LocaleData{
 		"mar":              "march",
 		"mai":              "may",
 		"min":              "minute",
-		"man":              "month",
+		"man":              "monday",
 		"nov":              "november",
 		"okt":              "october",
 		"lau":              "saturday",

@@ -87,7 +87,7 @@ var te_Locale = merge(nil, LocaleData{
 		":":             ":",
 		"ద":             "day",
 		"మ":             "may",
-		"న":             "minute",
+		"న":             "month",
 		"వ":             "week",
 		"z":             "z",
 	},

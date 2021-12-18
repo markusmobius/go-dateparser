@@ -34,7 +34,7 @@ var mer_Locale = merge(nil, LocaleData{
 		"wetano":      "friday",
 		"njurai":      "july",
 		"oktuba":      "october",
-		"kiumia":      "week",
+		"kiumia":      "sunday",
 		"narua":       "0 day ago",
 		"igoro":       "1 day ago",
 		"ipuru":       "april",

@@ -637,7 +637,7 @@ func TestTranslate(t *testing.T) {
 	}
 
 	// tests = []testScenario{
-	// 	{"en", "2014-12-12T12:33:39-08:00", "2014-12-12 12:33:39-08:00"},
+	// 	{"gd", "2 am faoilleach 1890 diardaoin 02:13 m", "2 january 1890 thursday 02:13 am"},
 	// }
 
 	nFailed := 0

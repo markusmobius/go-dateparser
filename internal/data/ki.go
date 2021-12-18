@@ -44,7 +44,7 @@ var ki_Locale = merge(nil, LocaleData{
 		"umuthi":                 "0 day ago",
 		"kiroko":                 "am",
 		"njumaa":                 "friday",
-		"kiumia":                 "week",
+		"kiumia":                 "sunday",
 		"ithaa":                  "hour",
 		"ruciu":                  "in 1 day",
 		"mweri":                  "month",

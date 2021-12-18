@@ -115,7 +115,7 @@ var af_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)(\d+) uur gelede`), "$1 hour ago"},
 		{regexp.MustCompile(`(?i)(\d+) min gelede`), "$1 minute ago"},
 		{regexp.MustCompile(`(?i)(\d+) sek gelede`), "$1 second ago"},
-		{regexp.MustCompile(`(?i)oor (\d+) minuut`), "in $1 minute"},
+		{regexp.MustCompile(`(?i)oor (\d+) minuut`), "in $1 month"},
 		{regexp.MustCompile(`(?i)(\d+) md gelede`), "$1 month ago"},
 		{regexp.MustCompile(`(?i)(\d+) w gelede`), "$1 week ago"},
 		{regexp.MustCompile(`(?i)oor (\d+) week`), "in $1 week"},

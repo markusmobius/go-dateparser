@@ -58,7 +58,7 @@ func (ld *LocaleData) AddSimplification(pattern string, replacement string) {
 	}
 
 	// Save simplification if pattern not empty
-	if pattern != "" {
+	if _, exist := ld.Simplifications[pattern]; !exist && pattern != "" {
 		ld.Simplifications[pattern] = replacement
 	}
 }
@@ -77,9 +77,8 @@ func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord 
 	}
 
 	// Save translation if word not empty
-	translation = normalizeString(translation)
-	if word != "" {
-		ld.Translations[word] = translation
+	if _, exist := ld.Translations[word]; !exist && word != "" {
+		ld.Translations[word] = normalizeString(translation)
 	}
 }
 
@@ -97,12 +96,10 @@ func (ld *LocaleData) AddTranslationRegex(pattern string, translation string, cl
 	}
 	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
 
-	// Sanitize translation
-	translation = normalizeString(translation)
-	translation = rxPythonCaptureGroup.ReplaceAllString(translation, "$${$1}")
-
 	// Save if pattern not empty
-	if pattern != "" {
+	if _, exist := ld.TranslationRegexes[pattern]; !exist && pattern != "" {
+		translation = normalizeString(translation)
+		translation = rxPythonCaptureGroup.ReplaceAllString(translation, "$${$1}")
 		ld.TranslationRegexes[pattern] = translation
 	}
 }

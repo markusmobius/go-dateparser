@@ -110,7 +110,7 @@ var ms_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)(\d+) bulan lalu`), "$1 month ago"},
 		{regexp.MustCompile(`(?i)(\d+) tahun lalu`), "$1 year ago"},
 		{regexp.MustCompile(`(?i)dalam (\d+) hari`), "in $1 day"},
-		{regexp.MustCompile(`(?i)dalam (\d+) saat`), "in $1 second"},
+		{regexp.MustCompile(`(?i)dalam (\d+) saat`), "in $1 year"},
 		{regexp.MustCompile(`(?i)(\d+) hari lalu`), "$1 day ago"},
 		{regexp.MustCompile(`(?i)(\d+) saat lalu`), "$1 second ago"},
 		{regexp.MustCompile(`(?i)dalam (\d+) jam`), "in $1 hour"},
