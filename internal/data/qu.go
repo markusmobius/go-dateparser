@@ -88,7 +88,7 @@ var qu_Locale = merge(nil, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(pauqar waray|qhapaq sitwa|hatun puquy|kapaq raymi|qulla puquy|this minute|anta sitwa|inti raymi|last month|next month|this month|ayamarq'a|last week|last year|miercoles|next week|next year|this hour|this week|this year|uma raymi|yesterday|kantaray|tomorrow|aymuray|domingo|viernes|ayriwa|jueves|martes|minute|sabado|second|lunes|month|today|hour|week|year|ant|aya|aym|ayr|day|dom|gmt|hat|int|jue|kan|kap|lun|mar|mie|now|pau|qha|qul|sab|uma|utc|vie|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(pauqar waray|qhapaq sitwa|hatun puquy|kapaq raymi|qulla puquy|this minute|anta sitwa|inti raymi|last month|next month|this month|ayamarq'a|last week|last year|miercoles|next week|next year|this hour|this week|this year|uma raymi|yesterday|kantaray|tomorrow|aymuray|domingo|viernes|ayriwa|jueves|martes|minute|sabado|second|lunes|month|today|hour|week|year|ant|aya|aym|ayr|day|dom|gmt|hat|int|jue|kan|kap|lun|mar|mie|now|pau|qha|qul|sab|uma|utc|vie|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var qu_BO_Locale = merge(&qu_Locale, LocaleData{

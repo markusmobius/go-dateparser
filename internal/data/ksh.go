@@ -107,7 +107,7 @@ var ksh_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)en (\d+) johre`), "in $1 year"},
 		{regexp.MustCompile(`(?i)en (\d+) johr`), "in $1 year"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(vor \d+ johre|en \d+ johre|vor \d+ johr|en \d+ johr)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(vor \d+ johre|en \d+ johre|vor \d+ johr|en \d+ johr)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(vor \d+ johre|en \d+ johre|vor \d+ johr|en \d+ johr)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(uhr nommendaachs|uhr vormiddaachs|nachste mohnd|nachste woche|dunnersdaach|latzde mohnd|diese mohnd|nommendaach|this minute|vormeddaach|dinnsdaach|friidaach|mohndaach|samsdaach|septamber|sunndaach|this hour|dezamber|diß johr|laz johr|laz woch|nax johr|novamber|oktohber|di woch|fabrowa|jannewa|jestere|metwoch|schtund|aprell|menutt|sekond|daach|juuli|juuni|mohnd|morje|oujoß|huck|johr|maaz|woch|apr|dez|fab|gmt|jan|jul|jun|mai|maz|min|nov|now|okt|ouj|sap|sek|std|utc|\+|\.|\[|\]|\||am|di|du|fr|me|mo|nm|pm|sa|su|vm| |'|,|-|/|:|;|@|d|j|m|s|w|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(uhr nommendaachs|uhr vormiddaachs|nachste mohnd|nachste woche|dunnersdaach|latzde mohnd|diese mohnd|nommendaach|this minute|vormeddaach|dinnsdaach|friidaach|mohndaach|samsdaach|septamber|sunndaach|this hour|dezamber|diß johr|laz johr|laz woch|nax johr|novamber|oktohber|di woch|fabrowa|jannewa|jestere|metwoch|schtund|aprell|menutt|sekond|daach|juuli|juuni|mohnd|morje|oujoß|huck|johr|maaz|woch|apr|dez|fab|gmt|jan|jul|jun|mai|maz|min|nov|now|okt|ouj|sap|sek|std|utc|\+|\.|\[|\]|\||am|di|du|fr|me|mo|nm|pm|sa|su|vm| |'|,|-|/|:|;|@|d|j|m|s|w|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

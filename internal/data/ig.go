@@ -87,5 +87,5 @@ var ig_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|februwari|last week|last year|mbosi uka|next week|next year|this hour|this week|this year|jenuwari|nkejinta|septemba|wenezdee|disemba|elekere|fraidee|nnyaafu|novemba|satodee|tiuzdee|toozdee|maachi|ogoost|oktoba|ubochi|eprel|julai|monde|nkeji|taata|echi|frai|juun|onwa|afo|dis|epr|feb|gmt|izu|jen|jul|juu|maa|mee|mon|nov|now|ogo|okt|sat|sep|tiu|too|uka|utc|wen|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|februwari|last week|last year|mbosi uka|next week|next year|this hour|this week|this year|jenuwari|nkejinta|septemba|wenezdee|disemba|elekere|fraidee|nnyaafu|novemba|satodee|tiuzdee|toozdee|maachi|ogoost|oktoba|ubochi|eprel|julai|monde|nkeji|taata|echi|frai|juun|onwa|afo|dis|epr|feb|gmt|izu|jen|jul|juu|maa|mee|mon|nov|now|ogo|okt|sat|sep|tiu|too|uka|utc|wen|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

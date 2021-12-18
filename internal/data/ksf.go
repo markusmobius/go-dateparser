@@ -89,5 +89,5 @@ var ksf_Locale = merge(nil, LocaleData{
 		":":                    ":",
 		"z":                    "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(ŋwii akǝ ntɛk di bɔk|ŋwii akǝ ntɛk di bɛɛ|ŋwii akǝ taabɛɛ|ŋwii akǝ taafɔk|ŋwii akǝ taanin|ŋwii akǝ taaraa|ŋwii a ntɔntɔ|ŋwii akǝ ntɛk|ŋwii akǝ taan|ŋwii akǝ bɛɛ|ŋwii akǝ nin|ŋwii akǝ raa|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|mɛkrɛdi|camɛɛn|cɛɛnko|ridurǝ|rinkɔɔ|saruwa|gɛɛnǝ|jumba|jǝǝdi|lǝndi|maadi|mǝnit|samdi|sɔndǝ|ŋwii|ŋwos|bǝk|gmt|hau|jum|jǝǝ|lǝn|maa|mɛk|now|sam|sɔn|utc|ŋ10|ŋ11|ŋ12|\+|\.|\[|\]|\||am|pm|ŋ1|ŋ2|ŋ3|ŋ4|ŋ5|ŋ6|ŋ7|ŋ8|ŋ9| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ŋwii akǝ ntɛk di bɔk|ŋwii akǝ ntɛk di bɛɛ|ŋwii akǝ taabɛɛ|ŋwii akǝ taafɔk|ŋwii akǝ taanin|ŋwii akǝ taaraa|ŋwii a ntɔntɔ|ŋwii akǝ ntɛk|ŋwii akǝ taan|ŋwii akǝ bɛɛ|ŋwii akǝ nin|ŋwii akǝ raa|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|mɛkrɛdi|camɛɛn|cɛɛnko|ridurǝ|rinkɔɔ|saruwa|gɛɛnǝ|jumba|jǝǝdi|lǝndi|maadi|mǝnit|samdi|sɔndǝ|ŋwii|ŋwos|bǝk|gmt|hau|jum|jǝǝ|lǝn|maa|mɛk|now|sam|sɔn|utc|ŋ10|ŋ11|ŋ12|\+|\.|\[|\]|\||am|pm|ŋ1|ŋ2|ŋ3|ŋ4|ŋ5|ŋ6|ŋ7|ŋ8|ŋ9| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

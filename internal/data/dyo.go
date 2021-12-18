@@ -86,5 +86,5 @@ var dyo_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|settembar|this hour|this week|this year|aramisay|disambar|novembar|alarbay|febirie|oktobar|aburil|arjuma|fuleeŋ|lookuŋ|minute|sanvie|second|sibiti|suuyee|talata|dimas|fucen|funak|kajom|teneŋ|emit|hour|jaat|mars|sueŋ|ala|ara|arj|dim|gmt|mee|now|sib|tal|ten|utc|\+|\.|\[|\]|\||ab|am|de|fe|ma|me|no|ok|pm|sa|se|su|ut| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|settembar|this hour|this week|this year|aramisay|disambar|novembar|alarbay|febirie|oktobar|aburil|arjuma|fuleeŋ|lookuŋ|minute|sanvie|second|sibiti|suuyee|talata|dimas|fucen|funak|kajom|teneŋ|emit|hour|jaat|mars|sueŋ|ala|ara|arj|dim|gmt|mee|now|sib|tal|ten|utc|\+|\.|\[|\]|\||ab|am|de|fe|ma|me|no|ok|pm|sa|se|su|ut| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

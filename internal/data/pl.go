@@ -9,12 +9,12 @@ var pl_Locale = merge(nil, LocaleData{
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "i", "o", "r.", "roku", "w", "|"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\A|\W|_)przedwczoraj(\z|\W|_)`), "${1}2 dnia temu${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)pojutrze(\z|\W|_)`), "${1}za 2 dnia${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)dzisiaj(\z|\W|_)`), "${1}0 dnia${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)onegdaj(\z|\W|_)`), "${1}2 dnia${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)jutro(\z|\W|_)`), "${1}za 1 dnia${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)dzis(\z|\W|_)`), "${1}0 dnia${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)przedwczoraj(\z|[^\pL\pM\d]|_)`), "${1}2 dnia temu${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)pojutrze(\z|[^\pL\pM\d]|_)`), "${1}za 2 dnia${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)dzisiaj(\z|[^\pL\pM\d]|_)`), "${1}0 dnia${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)onegdaj(\z|[^\pL\pM\d]|_)`), "${1}2 dnia${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)jutro(\z|[^\pL\pM\d]|_)`), "${1}za 1 dnia${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)dzis(\z|[^\pL\pM\d]|_)`), "${1}0 dnia${2}"},
 	},
 	Translations: map[string]string{
 		"w przyszłym miesiacu": "in 1 month",
@@ -216,7 +216,7 @@ var pl_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)za (\d+) g`), "in $1 hour"},
 		{regexp.MustCompile(`(?i)za (\d+) s`), "in $1 second"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(\d+ miesiaca temu|\d+ tygodnia temu|\d+ godzine temu|\d+ godziny temu|\d+ miesiac temu|\d+ sekunde temu|\d+ sekundy temu|\d+ tydzien temu|\d+ minute temu|\d+ minuty temu|za \d+ miesiaca|za \d+ tygodnia|\d+ dzien temu|za \d+ godzine|za \d+ godziny|za \d+ miesiac|za \d+ sekunde|za \d+ sekundy|za \d+ tydzien|\d+ dnia temu|\d+ godz temu|\d+ mies temu|\d+ roku temu|\d+ tydz temu|za \d+ minute|za \d+ minuty|\d+ min temu|\d+ rok temu|\d+ sek temu|\d+ tyg temu|za \d+ dzien|za \d+ dnia|za \d+ godz|za \d+ mies|za \d+ roku|za \d+ tydz|\d+ g temu|\d+ s temu|za \d+ min|za \d+ rok|za \d+ sek|za \d+ tyg|–\d+ mies|za \d+ g|za \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ miesiaca temu|\d+ tygodnia temu|\d+ godzine temu|\d+ godziny temu|\d+ miesiac temu|\d+ sekunde temu|\d+ sekundy temu|\d+ tydzien temu|\d+ minute temu|\d+ minuty temu|za \d+ miesiaca|za \d+ tygodnia|\d+ dzien temu|za \d+ godzine|za \d+ godziny|za \d+ miesiac|za \d+ sekunde|za \d+ sekundy|za \d+ tydzien|\d+ dnia temu|\d+ godz temu|\d+ mies temu|\d+ roku temu|\d+ tydz temu|za \d+ minute|za \d+ minuty|\d+ min temu|\d+ rok temu|\d+ sek temu|\d+ tyg temu|za \d+ dzien|za \d+ dnia|za \d+ godz|za \d+ mies|za \d+ roku|za \d+ tydz|\d+ g temu|\d+ s temu|za \d+ min|za \d+ rok|za \d+ sek|za \d+ tyg|–\d+ mies|za \d+ g|za \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ miesiaca temu|\d+ tygodnia temu|\d+ godzine temu|\d+ godziny temu|\d+ miesiac temu|\d+ sekunde temu|\d+ sekundy temu|\d+ tydzien temu|\d+ minute temu|\d+ minuty temu|za \d+ miesiaca|za \d+ tygodnia|\d+ dzien temu|za \d+ godzine|za \d+ godziny|za \d+ miesiac|za \d+ sekunde|za \d+ sekundy|za \d+ tydzien|\d+ dnia temu|\d+ godz temu|\d+ mies temu|\d+ roku temu|\d+ tydz temu|za \d+ minute|za \d+ minuty|\d+ min temu|\d+ rok temu|\d+ sek temu|\d+ tyg temu|za \d+ dzien|za \d+ dnia|za \d+ godz|za \d+ mies|za \d+ roku|za \d+ tydz|\d+ g temu|\d+ s temu|za \d+ min|za \d+ rok|za \d+ sek|za \d+ tyg|–\d+ mies|za \d+ g|za \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(w przyszłym miesiacu|w przyszłym tygodniu|w zeszłym miesiacu|w zeszłym tygodniu|w przyszłym roku|w tym miesiacu|w tym tygodniu|w zeszłym roku|pazdziernika|pazdzierniku|poniedzialek|poniedziałek|listopadzie|pazdziernik|ta godzina|w tym roku|listopada|niedziela|niedziele|ta minuta|czerwiec|czwartek|grudzien|kwiecien|kwietnia|kwietniu|listopad|miesiaca|miesiace|miesiecy|sierpien|sierpnia|sierpniu|stycznia|styczniu|tygodnie|wrzesien|wrzesnia|wrzesniu|czerwca|czerwcu|dzisiaj|godzina|godzine|godziny|grudnia|grudniu|miesiac|sekunda|sekunde|sekundy|styczen|tydzien|tygodni|wczoraj|godzin|lipiec|lutego|marzec|minuta|minute|minuty|piatek|sekund|sobota|sobote|wtorek|dzien|jutro|lipca|lipcu|lutym|marca|marcu|minut|niedz|sroda|srode|teraz|dnia|dniu|godz|kwie|lata|luty|maja|maju|mies|roku|temu|tydz|cze|czw|dni|gmt|gru|kwi|lat|lip|lis|lut|maj|mar|min|nie|paz|pia|pon|r\.|rok|sek|sie|sob|sro|sty|utc|wrz|wto|\+|\.|\[|\]|\||am|cz|mc|nd|pi|pm|pn|pt|sb|so|sr|wt|za| |'|,|-|/|:|;|@|g|i|o|r|s|w|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(w przyszłym miesiacu|w przyszłym tygodniu|w zeszłym miesiacu|w zeszłym tygodniu|w przyszłym roku|w tym miesiacu|w tym tygodniu|w zeszłym roku|pazdziernika|pazdzierniku|poniedzialek|poniedziałek|listopadzie|pazdziernik|ta godzina|w tym roku|listopada|niedziela|niedziele|ta minuta|czerwiec|czwartek|grudzien|kwiecien|kwietnia|kwietniu|listopad|miesiaca|miesiace|miesiecy|sierpien|sierpnia|sierpniu|stycznia|styczniu|tygodnie|wrzesien|wrzesnia|wrzesniu|czerwca|czerwcu|dzisiaj|godzina|godzine|godziny|grudnia|grudniu|miesiac|sekunda|sekunde|sekundy|styczen|tydzien|tygodni|wczoraj|godzin|lipiec|lutego|marzec|minuta|minute|minuty|piatek|sekund|sobota|sobote|wtorek|dzien|jutro|lipca|lipcu|lutym|marca|marcu|minut|niedz|sroda|srode|teraz|dnia|dniu|godz|kwie|lata|luty|maja|maju|mies|roku|temu|tydz|cze|czw|dni|gmt|gru|kwi|lat|lip|lis|lut|maj|mar|min|nie|paz|pia|pon|r\.|rok|sek|sie|sob|sro|sty|utc|wrz|wto|\+|\.|\[|\]|\||am|cz|mc|nd|pi|pm|pn|pt|sb|so|sr|wt|za| |'|,|-|/|:|;|@|g|i|o|r|s|w|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

@@ -92,9 +92,9 @@ var ko_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)(\d+)주 후`), "in $1 week"},
 		{regexp.MustCompile(`(?i)(\d+)년 후`), "in $1 year"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(\d+개월 전|\d+개월 후|\d+시간 전|\d+시간 후|\d+년 전|\d+년 후|\d+분 전|\d+분 후|\d+일 전|\d+일 후|\d+주 전|\d+주 후|\d+초 전|\d+초 후)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+개월 전|\d+개월 후|\d+시간 전|\d+시간 후|\d+년 전|\d+년 후|\d+분 전|\d+분 후|\d+일 전|\d+일 후|\d+주 전|\d+주 후|\d+초 전|\d+초 후)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(\d+개월 전|\d+개월 후|\d+시간 전|\d+시간 후|\d+년 전|\d+년 후|\d+분 전|\d+분 후|\d+일 전|\d+일 후|\d+주 전|\d+주 후|\d+초 전|\d+초 후)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(현재 시간|다음 달|다음 주|이번 달|이번 주|현재 분|10월|11월|12월|gmt|utc|금요일|목요일|수요일|월요일|일요일|지난달|지난주|토요일|화요일|1월|2월|3월|4월|5월|6월|7월|8월|9월|\+|\.|\[|\]|\||am|pm|내년|내일|어제|오늘|오전|오후|올해|작년|지금| |'|,|-|/|:|;|@|z|금|년|목|분|수|시|월|일|주|초|토|화)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(현재 시간|다음 달|다음 주|이번 달|이번 주|현재 분|10월|11월|12월|gmt|utc|금요일|목요일|수요일|월요일|일요일|지난달|지난주|토요일|화요일|1월|2월|3월|4월|5월|6월|7월|8월|9월|\+|\.|\[|\]|\||am|pm|내년|내일|어제|오늘|오전|오후|올해|작년|지금| |'|,|-|/|:|;|@|z|금|년|목|분|수|시|월|일|주|초|토|화)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ko_KP_Locale = merge(&ko_Locale, LocaleData{

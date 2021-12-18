@@ -77,5 +77,5 @@ var ii_Locale = merge(nil, LocaleData{
 		"ꈎ":           "year",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|gmt|now|utc|ꀋꅔꉈ|ꃆꏂꑍ|ꆏꊂꃘ|ꆏꊂꇖ|ꆏꊂꉬ|ꆏꊂꋍ|ꆏꊂꌕ|ꆏꊂꑍ|ꊰꊪꆪ|ꊰꑋꆪ|ꑭꆏꑍ|\+|\.|\[|\]|\||am|pm|ꀃꑍ|ꁯꋒ|ꃘꆪ|ꄮꈉ|ꆏꃘ|ꆏꇖ|ꆏꉬ|ꆏꋍ|ꆏꌕ|ꆏꑍ|ꇖꆪ|ꈬꆪ|ꉆꆪ|ꉬꆪ|ꊰꆪ|ꋍꆪ|ꌕꆪ|ꎸꄑ|ꏃꆪ|ꑍꆪ|ꑭꆏ| |'|,|-|/|:|;|@|z|ꃏ|ꆪ|ꇙ|ꈎ|ꑍ)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|gmt|now|utc|ꀋꅔꉈ|ꃆꏂꑍ|ꆏꊂꃘ|ꆏꊂꇖ|ꆏꊂꉬ|ꆏꊂꋍ|ꆏꊂꌕ|ꆏꊂꑍ|ꊰꊪꆪ|ꊰꑋꆪ|ꑭꆏꑍ|\+|\.|\[|\]|\||am|pm|ꀃꑍ|ꁯꋒ|ꃘꆪ|ꄮꈉ|ꆏꃘ|ꆏꇖ|ꆏꉬ|ꆏꋍ|ꆏꌕ|ꆏꑍ|ꇖꆪ|ꈬꆪ|ꉆꆪ|ꉬꆪ|ꊰꆪ|ꋍꆪ|ꌕꆪ|ꎸꄑ|ꏃꆪ|ꑍꆪ|ꑭꆏ| |'|,|-|/|:|;|@|z|ꃏ|ꆪ|ꇙ|ꈎ|ꑍ)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

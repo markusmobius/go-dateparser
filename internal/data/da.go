@@ -9,15 +9,15 @@ var da_Locale = merge(nil, LocaleData{
 	DateOrder: "DMY",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "cirka", "d.", "kl", "kl.", "|"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\A|\W|_)mindre end 1 minut siden(\z|\W|_)`), "${1}45 seconds${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)(\d+)\s*min(s?)(\z|\W|_)`), "${1}${2} minut${3}${4}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)(\d+)\s*sec(s?)(\z|\W|_)`), "${1}${2} sekund${3}${4}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)(\d+)\s*hr(s?)(\z|\W|_)`), "${1}${2} time${3}${4}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)(\d+)h(\d+)m?(\z|\W|_)`), "${1}${2}:${3}${4}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)midnat(\z|\W|_)`), "${1}00:00${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)middag(\z|\W|_)`), "${1}12:00${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)en(\z|\W|_)`), "${1}1${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)et(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)mindre end 1 minut siden(\z|[^\pL\pM\d]|_)`), "${1}45 seconds${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+)\s*min(s?)(\z|[^\pL\pM\d]|_)`), "${1}${2} minut${3}${4}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+)\s*sec(s?)(\z|[^\pL\pM\d]|_)`), "${1}${2} sekund${3}${4}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+)\s*hr(s?)(\z|[^\pL\pM\d]|_)`), "${1}${2} time${3}${4}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+)h(\d+)m?(\z|[^\pL\pM\d]|_)`), "${1}${2}:${3}${4}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)midnat(\z|[^\pL\pM\d]|_)`), "${1}00:00${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)middag(\z|[^\pL\pM\d]|_)`), "${1}12:00${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)en(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)et(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 	},
 	Translations: map[string]string{
 		"i det kommende minut": "0 minute ago",
@@ -160,9 +160,9 @@ var da_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)om (\d+) md`), "in $1 month"},
 		{regexp.MustCompile(`(?i)om (\d+) ar`), "in $1 year"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(for \d+ minutter siden|for \d+ sekunder siden|for \d+ maneder siden|for \d+ sekund siden|for \d+ maned siden|for \d+ minut siden|for \d+ timer siden|for \d+ dage siden|for \d+ time siden|for \d+ uger siden|for \d+ dag siden|for \d+ mdr siden|for \d+ min siden|for \d+ sek siden|for \d+ uge siden|for \d+ ar siden|for \d+ md siden|for \d+ minutter|for \d+ sekunder|om \d+ minutter|om \d+ sekunder|om \d+ maneder|for \d+ timer|om \d+ sekund|om \d+ maned|om \d+ minut|om \d+ timer|for \d+\s*h|for \d+\s*m|for \d+\s*s|om \d+ dage|om \d+ time|om \d+ uger|om \d+ dag|om \d+ mdr|om \d+ min|om \d+ sek|om \d+ uge|om \d+ ar|om \d+ md)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(for \d+ minutter siden|for \d+ sekunder siden|for \d+ maneder siden|for \d+ sekund siden|for \d+ maned siden|for \d+ minut siden|for \d+ timer siden|for \d+ dage siden|for \d+ time siden|for \d+ uger siden|for \d+ dag siden|for \d+ mdr siden|for \d+ min siden|for \d+ sek siden|for \d+ uge siden|for \d+ ar siden|for \d+ md siden|for \d+ minutter|for \d+ sekunder|om \d+ minutter|om \d+ sekunder|om \d+ maneder|for \d+ timer|om \d+ sekund|om \d+ maned|om \d+ minut|om \d+ timer|for \d+\s*h|for \d+\s*m|for \d+\s*s|om \d+ dage|om \d+ time|om \d+ uger|om \d+ dag|om \d+ mdr|om \d+ min|om \d+ sek|om \d+ uge|om \d+ ar|om \d+ md)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(for \d+ minutter siden|for \d+ sekunder siden|for \d+ maneder siden|for \d+ sekund siden|for \d+ maned siden|for \d+ minut siden|for \d+ timer siden|for \d+ dage siden|for \d+ time siden|for \d+ uger siden|for \d+ dag siden|for \d+ mdr siden|for \d+ min siden|for \d+ sek siden|for \d+ uge siden|for \d+ ar siden|for \d+ md siden|for \d+ minutter|for \d+ sekunder|om \d+ minutter|om \d+ sekunder|om \d+ maneder|for \d+ timer|om \d+ sekund|om \d+ maned|om \d+ minut|om \d+ timer|for \d+\s*h|for \d+\s*m|for \d+\s*s|om \d+ dage|om \d+ time|om \d+ uger|om \d+ dag|om \d+ mdr|om \d+ min|om \d+ sek|om \d+ uge|om \d+ ar|om \d+ md)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(i det kommende minut|i den kommende time|sidste maned|denne maned|næste maned|sidste uge|denne uge|næste uge|september|sidste ar|sidste md|december|denne md|i morgen|minutter|november|næste ar|næste md|sekunder|februar|maneder|oktober|tirsdag|torsdag|august|fredag|januar|lørdag|mandag|onsdag|sekund|søndag|april|cirka|i dag|i gar|maned|marts|minut|siden|timer|dage|i ar|juli|juni|kl\.|time|uger|apr|aug|d\.|dag|dec|feb|fre|gmt|jan|jul|jun|lør|maj|man|mar|min|nov|okt|ons|sek|sep|søn|tir|tor|uge|utc|\+|\.|\[|\]|\||am|ar|kl|md|nu|pm| |'|,|-|/|:|;|@|i|s|t|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(i det kommende minut|i den kommende time|sidste maned|denne maned|næste maned|sidste uge|denne uge|næste uge|september|sidste ar|sidste md|december|denne md|i morgen|minutter|november|næste ar|næste md|sekunder|februar|maneder|oktober|tirsdag|torsdag|august|fredag|januar|lørdag|mandag|onsdag|sekund|søndag|april|cirka|i dag|i gar|maned|marts|minut|siden|timer|dage|i ar|juli|juni|kl\.|time|uger|apr|aug|d\.|dag|dec|feb|fre|gmt|jan|jul|jun|lør|maj|man|mar|min|nov|okt|ons|sek|sep|søn|tir|tor|uge|utc|\+|\.|\[|\]|\||am|ar|kl|md|nu|pm| |'|,|-|/|:|;|@|i|s|t|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var da_GL_Locale = merge(&da_Locale, LocaleData{

@@ -90,5 +90,5 @@ var eo_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|septembro|this hour|this week|this year|yesterday|decembro|februaro|merkredo|novembro|tomorrow|vendredo|augusto|dimanco|januaro|oktobro|aprilo|minute|sabato|second|jaudo|julio|junio|lundo|mardo|marto|month|today|hour|majo|week|year|apr|atm|aug|day|dec|feb|gmt|jan|jul|jun|maj|mar|nov|now|okt|ptm|sep|utc|\+|\.|\[|\]|\||am|di|ja|lu|ma|me|pm|sa|ve| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|septembro|this hour|this week|this year|yesterday|decembro|februaro|merkredo|novembro|tomorrow|vendredo|augusto|dimanco|januaro|oktobro|aprilo|minute|sabato|second|jaudo|julio|junio|lundo|mardo|marto|month|today|hour|majo|week|year|apr|atm|aug|day|dec|feb|gmt|jan|jul|jun|maj|mar|nov|now|okt|ptm|sep|utc|\+|\.|\[|\]|\||am|di|ja|lu|ma|me|pm|sa|ve| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

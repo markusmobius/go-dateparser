@@ -35,7 +35,7 @@ func (ld *LocaleData) AddSimplification(pattern string, replacement string) {
 	pattern = normalizeString(pattern)
 	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
 	if !ld.NoWordSpacing {
-		pattern = `(\A|\W|_)` + pattern + `(\z|\W|_)`
+		pattern = `(\A|[^\pL\pM\d]|_)` + pattern + `(\z|[^\pL\pM\d]|_)`
 	}
 
 	// Sanitize replacement
@@ -133,7 +133,7 @@ func (ld *LocaleData) CombineRegexPatterns() {
 		if ld.NoWordSpacing {
 			ld.CombinedRegexPattern = `(` + combined + `)`
 		} else {
-			ld.CombinedRegexPattern = `(\A|\W|_)(` + combined + `)(\z|\W|_)`
+			ld.CombinedRegexPattern = `(\A|[^\pL\pM\d]|_)(` + combined + `)(\z|[^\pL\pM\d]|_)`
 		}
 
 		ld.ExactCombinedRegexPattern = "^(" + combined + ")$"
@@ -169,7 +169,7 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 		if ld.NoWordSpacing {
 			ld.KnownWordsPattern = `^(.*?)(` + combined + `)(.*)$`
 		} else {
-			ld.KnownWordsPattern = `^(.*?(?:\A|\W|_|\d))(` + combined + `)((?:\z|\W|_|\d).*)$`
+			ld.KnownWordsPattern = `^(.*?(?:\A|[^\pL\pM\d]|_|\d))(` + combined + `)((?:\z|[^\pL\pM\d]|_|\d).*)$`
 		}
 	}
 }

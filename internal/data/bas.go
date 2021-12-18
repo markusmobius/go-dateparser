@@ -90,5 +90,5 @@ var bas_Locale = merge(nil, LocaleData{
 		":":              ":",
 		"z":              "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(ŋgwa njaŋgumba|libuy li nyee|this minute|last month|next month|this month|hiŋgeŋget|i bikɛgla|i ɓugajɔp|last week|last year|next week|next year|this hour|this week|this year|ŋgwa mbɔk|ŋgwa jon|ŋgwa kɔɔ|ŋgwa nɔy|ŋgwa ŋge|hilondɛ|mayɛsep|ŋgwa um|kɔndɔŋ|matumb|bioom|dipɔs|hikaŋ|macɛl|matop|mpuyɛ|njeba|sɔndɛ|yaani|yani|ŋget|ŋgɛŋ|ŋwii|bio|dip|gmt|hik|hil|jon|kɔn|kɔɔ|kɛl|liɓ|lɛn|mac|mat|may|mbɔ|mpu|mto|nja|nje|now|nɔy|soŋ|utc|uum|ŋge|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ŋgwa njaŋgumba|libuy li nyee|this minute|last month|next month|this month|hiŋgeŋget|i bikɛgla|i ɓugajɔp|last week|last year|next week|next year|this hour|this week|this year|ŋgwa mbɔk|ŋgwa jon|ŋgwa kɔɔ|ŋgwa nɔy|ŋgwa ŋge|hilondɛ|mayɛsep|ŋgwa um|kɔndɔŋ|matumb|bioom|dipɔs|hikaŋ|macɛl|matop|mpuyɛ|njeba|sɔndɛ|yaani|yani|ŋget|ŋgɛŋ|ŋwii|bio|dip|gmt|hik|hil|jon|kɔn|kɔɔ|kɛl|liɓ|lɛn|mac|mat|may|mbɔ|mpu|mto|nja|nje|now|nɔy|soŋ|utc|uum|ŋge|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

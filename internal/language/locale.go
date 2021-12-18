@@ -38,8 +38,8 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
 	}
 
 	// Handle future words
-	// fmt.Println("IN IN TOKENS:", inInTokens)
-	// fmt.Println("FIRST TRANSLATION:", strJson(tokens))
+	fmt.Println("IN IN TOKENS:", inInTokens)
+	fmt.Println("FIRST TRANSLATION:", strJson(tokens))
 
 	if inInTokens {
 		tokens = clearFutureWords(tokens)
@@ -59,12 +59,12 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
 	}
 
 	translation := join(validTokens, joinSeparator)
-	// fmt.Println("JOINED TRANSLATION:", translation)
+	fmt.Println("JOINED TRANSLATION:", translation)
 	return translation
 }
 
 func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
-	// fmt.Println("INITIAL STR:", str)
+	fmt.Println("INITIAL STR:", str)
 	// Split the strings
 	if ld.RxCombined != nil {
 		str = ld.RxCombined.ReplaceAllStringFunc(str, func(s string) string {
@@ -98,10 +98,10 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 
 	// str = strings.Trim(str, splitSeparator)
 
-	// fmt.Println("RELATIVE:", ld.RxCombined)
-	// fmt.Println("EXACT MATCH:", ld.RxExactCombined)
-	// fmt.Println("STR SPLIT:", str)
-	// fmt.Println("INITIAL SPLIT:", strJson(strings.Split(str, splitSeparator)))
+	fmt.Println("RELATIVE:", ld.RxCombined)
+	fmt.Println("EXACT MATCH:", ld.RxExactCombined)
+	fmt.Println("STR SPLIT:", str)
+	fmt.Println("INITIAL SPLIT:", strJson(strings.Split(str, splitSeparator)))
 
 	var tokens []string
 	for _, token := range strings.Split(str, splitSeparator) {
@@ -112,7 +112,7 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 		}
 	}
 
-	// fmt.Println("FINAL SPLIT:", strJson(tokens))
+	fmt.Println("FINAL SPLIT:", strJson(tokens))
 
 	return tokens
 }

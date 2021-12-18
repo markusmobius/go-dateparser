@@ -9,9 +9,9 @@ var tl_Locale = merge(nil, LocaleData{
 	DateOrder: "",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\A|\W|_)isang araw(\z|\W|_)`), "${1}2 araw${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)kahapon(\z|\W|_)`), "${1}1 araw nakaraan${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)ngayon(\z|\W|_)`), "${1}0 segundo nakalipas${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)isang araw(\z|[^\pL\pM\d]|_)`), "${1}2 araw${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)kahapon(\z|[^\pL\pM\d]|_)`), "${1}1 araw nakaraan${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ngayon(\z|[^\pL\pM\d]|_)`), "${1}0 segundo nakalipas${2}"},
 	},
 	Translations: map[string]string{
 		"miyerkules": "wednesday",
@@ -83,5 +83,5 @@ var tl_Locale = merge(nil, LocaleData{
 		":":          ":",
 		"z":          "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(miyerkules|disyembre|nakalipas|nobyembre|setyembre|biyernes|nakaraan|huwebes|oktubre|pebrero|segundo|agosto|linggo|martes|minuto|sabado|abril|buwan|enero|ganap|hulyo|hunyo|lunes|marso|noong|araw|mayo|noon|oras|taon|abr|ago|biy|dis|ene|gmt|hul|hun|huw|lin|lun|mar|may|miy|nob|okt|peb|sab|set|utc|\+|\.|\[|\]|\||am|na|pm|sa| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(miyerkules|disyembre|nakalipas|nobyembre|setyembre|biyernes|nakaraan|huwebes|oktubre|pebrero|segundo|agosto|linggo|martes|minuto|sabado|abril|buwan|enero|ganap|hulyo|hunyo|lunes|marso|noong|araw|mayo|noon|oras|taon|abr|ago|biy|dis|ene|gmt|hul|hun|huw|lin|lun|mar|may|miy|nob|okt|peb|sab|set|utc|\+|\.|\[|\]|\||am|na|pm|sa| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

@@ -109,9 +109,9 @@ var ar_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)قبل (\d+) شهر`), "$1 month ago"},
 		{regexp.MustCompile(`(?i)قبل (\d+) سنة`), "$1 year ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(خلال \d+ اسبوع|خلال \d+ ثانية|خلال \d+ دقيقة|خلال \d+ ساعة|قبل \d+ اسبوع|قبل \d+ ثانية|قبل \d+ دقيقة|خلال \d+ سنة|خلال \d+ شهر|خلال \d+ يوم|قبل \d+ ساعة|قبل \d+ سنة|قبل \d+ شهر|قبل \d+ يوم)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(خلال \d+ اسبوع|خلال \d+ ثانية|خلال \d+ دقيقة|خلال \d+ ساعة|قبل \d+ اسبوع|قبل \d+ ثانية|قبل \d+ دقيقة|خلال \d+ سنة|خلال \d+ شهر|خلال \d+ يوم|قبل \d+ ساعة|قبل \d+ سنة|قبل \d+ شهر|قبل \d+ يوم)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(خلال \d+ اسبوع|خلال \d+ ثانية|خلال \d+ دقيقة|خلال \d+ ساعة|قبل \d+ اسبوع|قبل \d+ ثانية|قبل \d+ دقيقة|خلال \d+ سنة|خلال \d+ شهر|خلال \d+ يوم|قبل \d+ ساعة|قبل \d+ سنة|قبل \d+ شهر|قبل \d+ يوم)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(الاسبوع القادم|الاسبوع الماضي|الساعة الحالية|السنة الحالية|السنة القادمة|السنة الماضية|الشهر القادم|الشهر الماضي|اليوم السابق|هذا الاسبوع|هذه الدقيقة|ساعة واحدة|هذا الشهر|الاربعاء|الثلاثاء|الاثنين|الاسبوع|الثواني|الدقايق|الساعات|اكتوبر|الجمعة|الخميس|الساعة|ديسمبر|ساعتين|سبتمبر|فبراير|نوفمبر|ابريل|اسبوع|اغسطس|الاحد|الامس|السبت|السنة|الشهر|اليوم|ثانية|دقايق|دقيقة|ساعات|صباحا|يناير|يوليو|يومين|يونيو|الان|ايام|خلال|ساعة|مارس|مايو|مساء|gmt|utc|امس|سنة|شهر|عام|غدا|منذ|يوم|\+|\.|\[|\]|\||am|pm|في|هـ| |'|,|-|/|:|;|@|z|ص|م)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(الاسبوع القادم|الاسبوع الماضي|الساعة الحالية|السنة الحالية|السنة القادمة|السنة الماضية|الشهر القادم|الشهر الماضي|اليوم السابق|هذا الاسبوع|هذه الدقيقة|ساعة واحدة|هذا الشهر|الاربعاء|الثلاثاء|الاثنين|الاسبوع|الثواني|الدقايق|الساعات|اكتوبر|الجمعة|الخميس|الساعة|ديسمبر|ساعتين|سبتمبر|فبراير|نوفمبر|ابريل|اسبوع|اغسطس|الاحد|الامس|السبت|السنة|الشهر|اليوم|ثانية|دقايق|دقيقة|ساعات|صباحا|يناير|يوليو|يومين|يونيو|الان|ايام|خلال|ساعة|مارس|مايو|مساء|gmt|utc|امس|سنة|شهر|عام|غدا|منذ|يوم|\+|\.|\[|\]|\||am|pm|في|هـ| |'|,|-|/|:|;|@|z|ص|م)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_AE_Locale = merge(&ar_Locale, LocaleData{
@@ -132,7 +132,7 @@ var ar_AE_Locale = merge(&ar_Locale, LocaleData{
 		":":             ":",
 		"z":             "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(السنة التالية|هذه السنة|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(السنة التالية|هذه السنة|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_BH_Locale = merge(&ar_Locale, LocaleData{
@@ -168,7 +168,7 @@ var ar_DZ_Locale = merge(&ar_Locale, LocaleData{
 		":":      ":",
 		"z":      "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_EG_Locale = merge(&ar_Locale, LocaleData{
@@ -220,7 +220,7 @@ var ar_IQ_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|تشرین الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|تشرین الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_JO_Locale = merge(&ar_Locale, LocaleData{
@@ -251,7 +251,7 @@ var ar_JO_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_KM_Locale = merge(&ar_Locale, LocaleData{
@@ -292,7 +292,7 @@ var ar_LB_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_LY_Locale = merge(&ar_Locale, LocaleData{
@@ -322,7 +322,7 @@ var ar_MA_Locale = merge(&ar_Locale, LocaleData{
 		":":      ":",
 		"z":      "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(يوليوز|دجنبر|شتنبر|نونبر|gmt|utc|غشت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(يوليوز|دجنبر|شتنبر|نونبر|gmt|utc|غشت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_MR_Locale = merge(&ar_Locale, LocaleData{
@@ -344,7 +344,7 @@ var ar_MR_Locale = merge(&ar_Locale, LocaleData{
 		":":     ":",
 		"z":     "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(دجمبر|شتمبر|اغشت|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(دجمبر|شتمبر|اغشت|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_OM_Locale = merge(&ar_Locale, LocaleData{
@@ -380,7 +380,7 @@ var ar_PS_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_QA_Locale = merge(&ar_Locale, LocaleData{
@@ -436,7 +436,7 @@ var ar_SY_Locale = merge(&ar_Locale, LocaleData{
 		":":            ":",
 		"z":            "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(تشرين الثاني|كانون الثاني|تشرين الاول|كانون الاول|حزيران|ايلول|نيسان|اذار|ايار|تموز|شباط|gmt|utc|\+|\.|am|pm|اب| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_TD_Locale = merge(&ar_Locale, LocaleData{
@@ -467,7 +467,7 @@ var ar_TN_Locale = merge(&ar_Locale, LocaleData{
 		":":      ":",
 		"z":      "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(جويلية|افريل|جانفي|فيفري|جوان|gmt|utc|اوت|ماي|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ar_YE_Locale = merge(&ar_Locale, LocaleData{

@@ -90,7 +90,7 @@ var teo_Locale = merge(nil, LocaleData{
 		":":              ":",
 		"z":              "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(omodok'king'ol|nakaebarasa|osokosokoma|this minute|last month|nakasabiti|nakaung'on|next month|this month|last week|last year|nakaejuma|next week|next year|taparachu|this hour|this week|this year|isekonde|nakakany|odung'el|idakika|nakaare|nakauni|okwamg'|aparan|ebongi|olabor|omaruk|opedel|otibar|ewiki|ojola|orara|ekan|elap|esaa|jaan|lolo|omuk|opoo|aar|bar|dun|gmt|jol|jum|kan|kwa|lab|mar|mod|moi|muk|now|ped|poo|rar|sab|sok|tib|ung|uni|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(omodok'king'ol|nakaebarasa|osokosokoma|this minute|last month|nakasabiti|nakaung'on|next month|this month|last week|last year|nakaejuma|next week|next year|taparachu|this hour|this week|this year|isekonde|nakakany|odung'el|idakika|nakaare|nakauni|okwamg'|aparan|ebongi|olabor|omaruk|opedel|otibar|ewiki|ojola|orara|ekan|elap|esaa|jaan|lolo|omuk|opoo|aar|bar|dun|gmt|jol|jum|kan|kwa|lab|mar|mod|moi|muk|now|ped|poo|rar|sab|sok|tib|ung|uni|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var teo_KE_Locale = merge(&teo_Locale, LocaleData{

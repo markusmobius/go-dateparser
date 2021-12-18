@@ -10,9 +10,9 @@ var pt_Locale = merge(nil, LocaleData{
 	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "as", "cerca", "de", "e", "|"},
 	PertainWords: []string{"de"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\A|\W|_)alguns segundos(\z|\W|_)`), "${1}44 segundos${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)uma(\z|\W|_)`), "${1}1${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)um(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)alguns segundos(\z|[^\pL\pM\d]|_)`), "${1}44 segundos${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)uma(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)um(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 	},
 	Translations: map[string]string{
 		"semana passada": "1 week ago",
@@ -161,9 +161,9 @@ var pt_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)ha (\d+) h`), "$1 hour ago"},
 		{regexp.MustCompile(`(?i)em (\d+) h`), "in $1 hour"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(em \d+ segundos|ha \d+ segundos|em \d+ minutos|em \d+ segundo|em \d+ semanas|ha \d+ minutos|ha \d+ segundo|ha \d+ semanas|em \d+ minuto|em \d+ semana|ha \d+ minuto|ha \d+ semana|em \d+ horas|em \d+ meses|ha \d+ horas|ha \d+ meses|em \d+ anos|em \d+ dias|em \d+ hora|em \d+ mins|em \d+ segs|ha \d+ anos|ha \d+ dias|ha \d+ hora|ha \d+ mins|em \d+ ano|em \d+ dia|em \d+ mes|em \d+ min|em \d+ seg|em \d+ sem|ha \d+ ano|ha \d+ dia|ha \d+ mes|ha \d+ min|ha \d+ seg|ha \d+ sem|em \d+ h|ha \d+ h)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(em \d+ segundos|ha \d+ segundos|em \d+ minutos|em \d+ segundo|em \d+ semanas|ha \d+ minutos|ha \d+ segundo|ha \d+ semanas|em \d+ minuto|em \d+ semana|ha \d+ minuto|ha \d+ semana|em \d+ horas|em \d+ meses|ha \d+ horas|ha \d+ meses|em \d+ anos|em \d+ dias|em \d+ hora|em \d+ mins|em \d+ segs|ha \d+ anos|ha \d+ dias|ha \d+ hora|ha \d+ mins|em \d+ ano|em \d+ dia|em \d+ mes|em \d+ min|em \d+ seg|em \d+ sem|ha \d+ ano|ha \d+ dia|ha \d+ mes|ha \d+ min|ha \d+ seg|ha \d+ sem|em \d+ h|ha \d+ h)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(em \d+ segundos|ha \d+ segundos|em \d+ minutos|em \d+ segundo|em \d+ semanas|ha \d+ minutos|ha \d+ segundo|ha \d+ semanas|em \d+ minuto|em \d+ semana|ha \d+ minuto|ha \d+ semana|em \d+ horas|em \d+ meses|ha \d+ horas|ha \d+ meses|em \d+ anos|em \d+ dias|em \d+ hora|em \d+ mins|em \d+ segs|ha \d+ anos|ha \d+ dias|ha \d+ hora|ha \d+ mins|em \d+ ano|em \d+ dia|em \d+ mes|em \d+ min|em \d+ seg|em \d+ sem|ha \d+ ano|ha \d+ dia|ha \d+ mes|ha \d+ min|ha \d+ seg|ha \d+ sem|em \d+ h|ha \d+ h)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(proxima semana|semana passada|segunda-feira|quarta-feira|quinta-feira|ano passado|esta semana|este minuto|mes passado|proximo ano|proximo mes|sexta-feira|terca-feira|anteontem|esta hora|fevereiro|septembro|dezembro|este ano|este mes|novembro|segundos|setembro|domingo|janeiro|minutos|outubro|segunda|segundo|semanas|agosto|amanha|minuto|quarta|quinta|sabado|semana|abril|agora|atras|cerca|horas|julho|junho|marco|meses|ontem|sexta|terca|anos|dias|hoje|hora|maio|abr|ago|ano|dez|dia|dom|fev|gmt|jan|jul|jun|mai|mar|mes|min|nov|out|qua|qui|sab|seg|sem|set|sex|ter|utc|\+|\.|\[|\]|\||am|as|de|em|ha|pm| |'|,|-|/|:|;|@|e|h|m|s|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(proxima semana|semana passada|segunda-feira|quarta-feira|quinta-feira|ano passado|esta semana|este minuto|mes passado|proximo ano|proximo mes|sexta-feira|terca-feira|anteontem|esta hora|fevereiro|septembro|dezembro|este ano|este mes|novembro|segundos|setembro|domingo|janeiro|minutos|outubro|segunda|segundo|semanas|agosto|amanha|minuto|quarta|quinta|sabado|semana|abril|agora|atras|cerca|horas|julho|junho|marco|meses|ontem|sexta|terca|anos|dias|hoje|hora|maio|abr|ago|ano|dez|dia|dom|fev|gmt|jan|jul|jun|mai|mar|mes|min|nov|out|qua|qui|sab|seg|sem|set|sex|ter|utc|\+|\.|\[|\]|\||am|as|de|em|ha|pm| |'|,|-|/|:|;|@|e|h|m|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_AO_Locale = merge(&pt_Locale, LocaleData{
@@ -207,9 +207,9 @@ var pt_AO_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_CH_Locale = merge(&pt_Locale, LocaleData{
@@ -253,9 +253,9 @@ var pt_CH_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_CV_Locale = merge(&pt_Locale, LocaleData{
@@ -299,9 +299,9 @@ var pt_CV_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_GQ_Locale = merge(&pt_Locale, LocaleData{
@@ -345,9 +345,9 @@ var pt_GQ_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_GW_Locale = merge(&pt_Locale, LocaleData{
@@ -391,9 +391,9 @@ var pt_GW_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_LU_Locale = merge(&pt_Locale, LocaleData{
@@ -437,9 +437,9 @@ var pt_LU_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_MO_Locale = merge(&pt_Locale, LocaleData{
@@ -483,9 +483,9 @@ var pt_MO_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_MZ_Locale = merge(&pt_Locale, LocaleData{
@@ -529,9 +529,9 @@ var pt_MZ_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_PT_Locale = merge(&pt_Locale, LocaleData{
@@ -575,9 +575,9 @@ var pt_PT_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_ST_Locale = merge(&pt_Locale, LocaleData{
@@ -621,9 +621,9 @@ var pt_ST_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var pt_TL_Locale = merge(&pt_Locale, LocaleData{
@@ -667,7 +667,7 @@ var pt_TL_Locale = merge(&pt_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)dentro de (\d+) s`), "in $1 second"},
 		{regexp.MustCompile(`(?i)ha (\d+) s`), "$1 second ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+ segundos|dentro de \d+ minutos|dentro de \d+ segundo|dentro de \d+ semanas|dentro de \d+ minuto|dentro de \d+ semana|dentro de \d+ horas|dentro de \d+ meses|dentro de \d+ anos|dentro de \d+ dias|dentro de \d+ hora|dentro de \d+ ano|dentro de \d+ dia|dentro de \d+ mes|dentro de \d+ min|dentro de \d+ sem|dentro de \d+ h|dentro de \d+ s|ha \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(da manha|da tarde|manha|tarde|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

@@ -146,9 +146,9 @@ var sr_Latn_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)za (\d+) n`), "in $1 week"},
 		{regexp.MustCompile(`(?i)za (\d+) g`), "in $1 year"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(pre \d+ nedelja|pre \d+ nedelje|pre \d+ sekunde|pre \d+ sekundi|pre \d+ godina|pre \d+ godine|pre \d+ meseca|pre \d+ meseci|pre \d+ minuta|za \d+ nedelja|za \d+ nedelju|za \d+ sekundi|za \d+ sekundu|za \d+ godina|za \d+ godinu|za \d+ meseci|za \d+ minuta|pre \d+ dana|pre \d+ sata|pre \d+ sati|za \d+ mesec|za \d+ minut|pre \d+ god|pre \d+ mes|pre \d+ min|pre \d+ ned|pre \d+ sek|za \d+ dana|za \d+ sati|za \d+ dan|za \d+ god|za \d+ mes|za \d+ min|za \d+ ned|za \d+ sat|za \d+ sek|pre \d+ c|pre \d+ d|pre \d+ g|pre \d+ m|pre \d+ n|pre \d+ s|za \d+ c|za \d+ d|za \d+ g|za \d+ m|za \d+ n|za \d+ s)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(pre \d+ nedelja|pre \d+ nedelje|pre \d+ sekunde|pre \d+ sekundi|pre \d+ godina|pre \d+ godine|pre \d+ meseca|pre \d+ meseci|pre \d+ minuta|za \d+ nedelja|za \d+ nedelju|za \d+ sekundi|za \d+ sekundu|za \d+ godina|za \d+ godinu|za \d+ meseci|za \d+ minuta|pre \d+ dana|pre \d+ sata|pre \d+ sati|za \d+ mesec|za \d+ minut|pre \d+ god|pre \d+ mes|pre \d+ min|pre \d+ ned|pre \d+ sek|za \d+ dana|za \d+ sati|za \d+ dan|za \d+ god|za \d+ mes|za \d+ min|za \d+ ned|za \d+ sat|za \d+ sek|pre \d+ c|pre \d+ d|pre \d+ g|pre \d+ m|pre \d+ n|pre \d+ s|za \d+ c|za \d+ d|za \d+ g|za \d+ m|za \d+ n|za \d+ s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(pre \d+ nedelja|pre \d+ nedelje|pre \d+ sekunde|pre \d+ sekundi|pre \d+ godina|pre \d+ godine|pre \d+ meseca|pre \d+ meseci|pre \d+ minuta|za \d+ nedelja|za \d+ nedelju|za \d+ sekundi|za \d+ sekundu|za \d+ godina|za \d+ godinu|za \d+ meseci|za \d+ minuta|pre \d+ dana|pre \d+ sata|pre \d+ sati|za \d+ mesec|za \d+ minut|pre \d+ god|pre \d+ mes|pre \d+ min|pre \d+ ned|pre \d+ sek|za \d+ dana|za \d+ sati|za \d+ dan|za \d+ god|za \d+ mes|za \d+ min|za \d+ ned|za \d+ sat|za \d+ sek|pre \d+ c|pre \d+ d|pre \d+ g|pre \d+ m|pre \d+ n|pre \d+ s|za \d+ c|za \d+ d|za \d+ g|za \d+ m|za \d+ n|za \d+ s)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(sledece nedelje|sledeceg meseca|prosle nedelje|proslog meseca|sledece godine|prosle godine|ove nedelje|ovog meseca|ovog minuta|ove godine|ponedeljak|ovog sata|pre podne|septembar|cetvrtak|decembar|novembar|po podne|februar|nedelja|oktobar|avgust|godina|januar|sekund|subota|utorak|april|danas|mesec|minut|petak|sreda|sutra|juce|mart|sada|apr|avg|cet|dan|dec|feb|gmt|god|jan|jul|jun|maj|mar|mes|min|ned|nov|okt|pet|pon|sat|sek|sep|sre|sub|utc|uto|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|c|d|g|m|n|s|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(sledece nedelje|sledeceg meseca|prosle nedelje|proslog meseca|sledece godine|prosle godine|ove nedelje|ovog meseca|ovog minuta|ove godine|ponedeljak|ovog sata|pre podne|septembar|cetvrtak|decembar|novembar|po podne|februar|nedelja|oktobar|avgust|godina|januar|sekund|subota|utorak|april|danas|mesec|minut|petak|sreda|sutra|juce|mart|sada|apr|avg|cet|dan|dec|feb|gmt|god|jan|jul|jun|maj|mar|mes|min|ned|nov|okt|pet|pon|sat|sek|sep|sre|sub|utc|uto|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|c|d|g|m|n|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var sr_Latn_BA_Locale = merge(&sr_Latn_Locale, LocaleData{
@@ -173,7 +173,7 @@ var sr_Latn_BA_Locale = merge(&sr_Latn_Locale, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(prije podne|nedjelja|srijeda|sept|gmt|utc|\+|\.|am|pm|sr|ut| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(prije podne|nedjelja|srijeda|sept|gmt|utc|\+|\.|am|pm|sr|ut| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var sr_Latn_ME_Locale = merge(&sr_Latn_Locale, LocaleData{
@@ -198,7 +198,7 @@ var sr_Latn_ME_Locale = merge(&sr_Latn_Locale, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(prije podne|nedjelja|srijeda|sept|gmt|utc|\+|\.|am|pm|sr|ut| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(prije podne|nedjelja|srijeda|sept|gmt|utc|\+|\.|am|pm|sr|ut| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var sr_Latn_XK_Locale = merge(&sr_Latn_Locale, LocaleData{
@@ -220,5 +220,5 @@ var sr_Latn_XK_Locale = merge(&sr_Latn_Locale, LocaleData{
 		":":    ":",
 		"z":    "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(sept|gmt|utc|\+|\.|am|pm|sr|ut| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(sept|gmt|utc|\+|\.|am|pm|sr|ut| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

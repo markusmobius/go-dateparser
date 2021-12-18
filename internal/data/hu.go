@@ -9,7 +9,7 @@ var hu_Locale = merge(nil, LocaleData{
 	DateOrder: "YMD.",
 	SkipWords: []string{"'", ",", "-", "-a", "-ai", "-aig", "-akor", "-an", "-atol", "-e", "-ei", "-eig", "-ekor", "-en", "-es", "-etol", "-i", "-ig", "-je", "-jei", "-ji", "-kor", "-os", "-tol", ".", "/", ";", "@", "[", "]", "|"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\A|\W|_)egy(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)egy(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 	},
 	Translations: map[string]string{
 		"ebben az oraban": "0 hour ago",
@@ -178,7 +178,7 @@ var hu_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)(\d+) ev mulva`), "in $1 year"},
 		{regexp.MustCompile(`(?i)(\d+) napja`), "$1 day ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(\d+ masodperccel ezelott|\d+ honappal ezelott|\d+ masodperc mulva|\d+ perccel ezelott|\d+ hettel ezelott|\d+ nappal ezelott|\d+ oraval ezelott|\d+ evvel ezelott|\d+ honap mulva|\d+ perc mulva|\d+ het mulva|\d+ nap mulva|\d+ ora mulva|\d+ ev mulva|\d+ napja)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ masodperccel ezelott|\d+ honappal ezelott|\d+ masodperc mulva|\d+ perccel ezelott|\d+ hettel ezelott|\d+ nappal ezelott|\d+ oraval ezelott|\d+ evvel ezelott|\d+ honap mulva|\d+ perc mulva|\d+ het mulva|\d+ nap mulva|\d+ ora mulva|\d+ ev mulva|\d+ napja)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ masodperccel ezelott|\d+ honappal ezelott|\d+ masodperc mulva|\d+ perccel ezelott|\d+ hettel ezelott|\d+ nappal ezelott|\d+ oraval ezelott|\d+ evvel ezelott|\d+ honap mulva|\d+ perc mulva|\d+ het mulva|\d+ nap mulva|\d+ ora mulva|\d+ ev mulva|\d+ napja)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(ebben a percben|ebben az oraban|kovetkezo honap|kovetkezo het|kovetkezo ev|masodperccel|masodperctol|elozo honap|masodpercek|masodpercig|tegnapelott|ez a honap|masodperce|szeptember|augusztus|csutortok|elozo het|masodperc|december|elozo ev|ez a het|ez az ev|honappal|november|vasarnap|aprilis|ezelott|februar|honapja|honapok|marcius|oktober|perccel|perctol|szombat|hettel|holnap|januar|julius|junius|nappal|oratol|oraval|pentek|percek|percig|szerda|tegnap|-akor|-atol|-ekor|-etol|evvel|hetek|hetfo|honap|majus|mulva|napja|napok|oraig|oraja|perce|szept|-aig|-eig|-jei|-kor|-tol|evek|febr|hete|kedd|marc|most|orak|perc|viii|-ai|-an|-ei|-en|-es|-ig|-je|-ji|-os|apr|aug|dec|eve|feb|gmt|het|iii|jan|jul|jun|maj|mar|nap|nov|okt|ora|sze|szo|utc|vas|vii|xii|-a|-e|-i|\+|\.|\[|\]|\||am|cs|de|du|ev|ho|ii|iv|ix|ma|mp|pm|vi|xi| |'|,|-|/|:|;|@|h|i|k|o|p|v|x|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ebben a percben|ebben az oraban|kovetkezo honap|kovetkezo het|kovetkezo ev|masodperccel|masodperctol|elozo honap|masodpercek|masodpercig|tegnapelott|ez a honap|masodperce|szeptember|augusztus|csutortok|elozo het|masodperc|december|elozo ev|ez a het|ez az ev|honappal|november|vasarnap|aprilis|ezelott|februar|honapja|honapok|marcius|oktober|perccel|perctol|szombat|hettel|holnap|januar|julius|junius|nappal|oratol|oraval|pentek|percek|percig|szerda|tegnap|-akor|-atol|-ekor|-etol|evvel|hetek|hetfo|honap|majus|mulva|napja|napok|oraig|oraja|perce|szept|-aig|-eig|-jei|-kor|-tol|evek|febr|hete|kedd|marc|most|orak|perc|viii|-ai|-an|-ei|-en|-es|-ig|-je|-ji|-os|apr|aug|dec|eve|feb|gmt|het|iii|jan|jul|jun|maj|mar|nap|nov|okt|ora|sze|szo|utc|vas|vii|xii|-a|-e|-i|\+|\.|\[|\]|\||am|cs|de|du|ev|ho|ii|iv|ix|ma|mp|pm|vi|xi| |'|,|-|/|:|;|@|h|i|k|o|p|v|x|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

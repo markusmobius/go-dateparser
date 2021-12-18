@@ -69,7 +69,7 @@ var lrc_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|سيپتامر|يوکتوڤر|جانڤیە|ديسامر|فيڤریە|نوڤامر|اڤریل|اگوست|ثانیە|ديیقە|دیروز|ھافتە|امرو|جوان|جولا|ساات|شوصو|مارس|fri|gmt|mon|now|sat|sun|thu|tue|utc|wed|روز|سال|ميی|\+|\.|\[|\]|\||am|pm|ما| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|سيپتامر|يوکتوڤر|جانڤیە|ديسامر|فيڤریە|نوڤامر|اڤریل|اگوست|ثانیە|ديیقە|دیروز|ھافتە|امرو|جوان|جولا|ساات|شوصو|مارس|fri|gmt|mon|now|sat|sun|thu|tue|utc|wed|روز|سال|ميی|\+|\.|\[|\]|\||am|pm|ما| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var lrc_IQ_Locale = merge(&lrc_Locale, LocaleData{

@@ -9,8 +9,8 @@ var sv_Locale = merge(nil, LocaleData{
 	DateOrder: "YMD",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "den", "pa", "|"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\A|\W|_)tva(\z|\W|_)`), "${1}2${2}"},
-		{regexp.MustCompile(`(?i)(\A|\W|_)en(\z|\W|_)`), "${1}1${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)tva(\z|[^\pL\pM\d]|_)`), "${1}2${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)en(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 	},
 	Translations: map[string]string{
 		"forra manaden": "1 month ago",
@@ -181,9 +181,9 @@ var sv_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)−(\d+) s`), "$1 second ago"},
 		{regexp.MustCompile(`(?i)−(\d+) v`), "$1 week ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(for \d+ sekunder sedan|for \d+ manader sedan|for \d+ minuter sedan|for \d+ sekund sedan|for \d+ timmar sedan|for \d+ veckor sedan|for \d+ dagar sedan|for \d+ manad sedan|for \d+ minut sedan|for \d+ timme sedan|for \d+ vecka sedan|for \d+ dag sedan|for \d+ man sedan|for \d+ min sedan|for \d+ sek sedan|for \d+ tim sedan|for \d+ ar sedan|for \d+ d sedan|for \d+ v sedan|om \d+ sekunder|om \d+ manader|om \d+ minuter|om \d+ sekund|om \d+ timmar|om \d+ veckor|om \d+ dagar|om \d+ manad|om \d+ minut|om \d+ timme|om \d+ vecka|om \d+ dag|om \d+ man|om \d+ min|om \d+ sek|om \d+ tim|om \d+ ar|om \d+ d|om \d+ v|−\d+ man|−\d+ min|−\d+ ar|−\d+ d|−\d+ h|−\d+ s|−\d+ v)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(for \d+ sekunder sedan|for \d+ manader sedan|for \d+ minuter sedan|for \d+ sekund sedan|for \d+ timmar sedan|for \d+ veckor sedan|for \d+ dagar sedan|for \d+ manad sedan|for \d+ minut sedan|for \d+ timme sedan|for \d+ vecka sedan|for \d+ dag sedan|for \d+ man sedan|for \d+ min sedan|for \d+ sek sedan|for \d+ tim sedan|for \d+ ar sedan|for \d+ d sedan|for \d+ v sedan|om \d+ sekunder|om \d+ manader|om \d+ minuter|om \d+ sekund|om \d+ timmar|om \d+ veckor|om \d+ dagar|om \d+ manad|om \d+ minut|om \d+ timme|om \d+ vecka|om \d+ dag|om \d+ man|om \d+ min|om \d+ sek|om \d+ tim|om \d+ ar|om \d+ d|om \d+ v|−\d+ man|−\d+ min|−\d+ ar|−\d+ d|−\d+ h|−\d+ s|−\d+ v)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(for \d+ sekunder sedan|for \d+ manader sedan|for \d+ minuter sedan|for \d+ sekund sedan|for \d+ timmar sedan|for \d+ veckor sedan|for \d+ dagar sedan|for \d+ manad sedan|for \d+ minut sedan|for \d+ timme sedan|for \d+ vecka sedan|for \d+ dag sedan|for \d+ man sedan|for \d+ min sedan|for \d+ sek sedan|for \d+ tim sedan|for \d+ ar sedan|for \d+ d sedan|for \d+ v sedan|om \d+ sekunder|om \d+ manader|om \d+ minuter|om \d+ sekund|om \d+ timmar|om \d+ veckor|om \d+ dagar|om \d+ manad|om \d+ minut|om \d+ timme|om \d+ vecka|om \d+ dag|om \d+ man|om \d+ min|om \d+ sek|om \d+ tim|om \d+ ar|om \d+ d|om \d+ v|−\d+ man|−\d+ min|−\d+ ar|−\d+ d|−\d+ h|−\d+ s|−\d+ v)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(forra manaden|forra veckan|denna manad|denna minut|denna timme|denna vecka|eftermiddag|nasta manad|nasta vecka|forra aret|denna man|formiddag|forra man|nasta man|september|december|februari|i morgon|nasta ar|november|sekunder|augusti|denna v|forra v|forrgar|fran nu|imorgon|januari|manaden|manader|minuter|nasta v|oktober|torsdag|fredag|i fjol|lordag|mandag|onsdag|sekund|sondag|timmar|tisdag|veckor|april|dagar|i dag|i gar|manad|minut|sedan|timme|torsd|vecka|aret|fred|i ar|idag|igar|juli|juni|lord|mand|mars|onsd|sept|sond|tisd|tors|apr|aug|dag|dec|den|feb|fre|gmt|jan|jul|jun|lor|maj|man|min|nov|okt|ons|sek|sep|son|tim|tis|utc|\+|\.|\[|\]|\||am|ar|em|fm|nu|om|pa|pm| |'|,|-|/|:|;|@|h|m|s|t|v|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(forra manaden|forra veckan|denna manad|denna minut|denna timme|denna vecka|eftermiddag|nasta manad|nasta vecka|forra aret|denna man|formiddag|forra man|nasta man|september|december|februari|i morgon|nasta ar|november|sekunder|augusti|denna v|forra v|forrgar|fran nu|imorgon|januari|manaden|manader|minuter|nasta v|oktober|torsdag|fredag|i fjol|lordag|mandag|onsdag|sekund|sondag|timmar|tisdag|veckor|april|dagar|i dag|i gar|manad|minut|sedan|timme|torsd|vecka|aret|fred|i ar|idag|igar|juli|juni|lord|mand|mars|onsd|sept|sond|tisd|tors|apr|aug|dag|dec|den|feb|fre|gmt|jan|jul|jun|lor|maj|man|min|nov|okt|ons|sek|sep|son|tim|tis|utc|\+|\.|\[|\]|\||am|ar|em|fm|nu|om|pa|pm| |'|,|-|/|:|;|@|h|m|s|t|v|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var sv_AX_Locale = merge(&sv_Locale, LocaleData{

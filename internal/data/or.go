@@ -76,5 +76,5 @@ var or_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|ସେପଟେମବର|ମଙଗଳବାର|minute|second|ଅକଟୋବର|ଜାନଆରୀ|ଡସେମବର|ନଭେମବର|ଫେବଆରୀ|ଶକରବାର|ସୋମବାର|month|today|ଅପରେଲ|ଗରବାର|ବଧବାର|ମାରଚଚ|ରବବାର|ଶନବାର|hour|week|year|ଅଗଷଟ|ଜଲାଇ|ମଙଗଳ|day|gmt|now|utc|ଶକର|ସୋମ|\+|\.|\[|\]|\||am|pm|ଗର|ଜନ|ବଧ|ମଇ|ରବ|ଶନ| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|ସେପଟେମବର|ମଙଗଳବାର|minute|second|ଅକଟୋବର|ଜାନଆରୀ|ଡସେମବର|ନଭେମବର|ଫେବଆରୀ|ଶକରବାର|ସୋମବାର|month|today|ଅପରେଲ|ଗରବାର|ବଧବାର|ମାରଚଚ|ରବବାର|ଶନବାର|hour|week|year|ଅଗଷଟ|ଜଲାଇ|ମଙଗଳ|day|gmt|now|utc|ଶକର|ସୋମ|\+|\.|\[|\]|\||am|pm|ଗର|ଜନ|ବଧ|ମଇ|ରବ|ଶନ| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

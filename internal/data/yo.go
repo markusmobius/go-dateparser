@@ -88,7 +88,7 @@ var yo_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(ojo abameta|this minute|iseju aaya|last month|next month|ojo isegun|this month|last week|last year|next week|next year|osu agemo|osu ebibi|osu erele|osu erena|osu okudu|osu owara|osu owewe|this hour|this week|this year|ojo aiku|osu belu|osu igbe|osu ogun|osu sere|abameta|ojo aje|ojo eti|osu ope|isegun|wakati|agemo|ebibi|erele|erena|iseju|ojobo|ojoru|okudu|owara|owewe|aaro|aiku|belu|igbe|odun|ogun|osan|sere|aje|ana|eti|gmt|now|ojo|ola|oni|ope|ose|osu|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ojo abameta|this minute|iseju aaya|last month|next month|ojo isegun|this month|last week|last year|next week|next year|osu agemo|osu ebibi|osu erele|osu erena|osu okudu|osu owara|osu owewe|this hour|this week|this year|ojo aiku|osu belu|osu igbe|osu ogun|osu sere|abameta|ojo aje|ojo eti|osu ope|isegun|wakati|agemo|ebibi|erele|erena|iseju|ojobo|ojoru|okudu|owara|owewe|aaro|aiku|belu|igbe|odun|ogun|osan|sere|aje|ana|eti|gmt|now|ojo|ola|oni|ope|ose|osu|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var yo_BJ_Locale = merge(&yo_Locale, LocaleData{
@@ -143,5 +143,5 @@ var yo_BJ_Locale = merge(&yo_Locale, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(ɔjɔ abamɛta|isɛju aaya|oshu agɛmɔ|oshu erele|oshu okudu|oshu owewe|oshu shɛrɛ|oshu ɔwara|oshu ɛbibi|oshu ɛrɛna|ɔjɔ isɛgun|oshu belu|oshu igbe|oshu ogun|oshu ɔpɛ|ɔjɔ aiku|abamɛta|ɔjɔ aje|ɔjɔ ɛti|isɛgun|agɛmɔ|isɛju|shɛrɛ|ɔjɔbɔ|ɔjɔru|ɔwara|ɛbibi|ɛrɛna|aarɔ|ɔdun|ɔsan|gmt|utc|ɔjɔ|ɔla|ɔpɛ|ɔse|ɛti|\+|\.|am|pm| |-|/|:|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ɔjɔ abamɛta|isɛju aaya|oshu agɛmɔ|oshu erele|oshu okudu|oshu owewe|oshu shɛrɛ|oshu ɔwara|oshu ɛbibi|oshu ɛrɛna|ɔjɔ isɛgun|oshu belu|oshu igbe|oshu ogun|oshu ɔpɛ|ɔjɔ aiku|abamɛta|ɔjɔ aje|ɔjɔ ɛti|isɛgun|agɛmɔ|isɛju|shɛrɛ|ɔjɔbɔ|ɔjɔru|ɔwara|ɛbibi|ɛrɛna|aarɔ|ɔdun|ɔsan|gmt|utc|ɔjɔ|ɔla|ɔpɛ|ɔse|ɛti|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

@@ -90,5 +90,5 @@ var agq_Locale = merge(nil, LocaleData{
 		":":                   ":",
 		"z":                   "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(ndzɔŋɔtɨfʉghadzughu|ndzɔŋɔchwaʔakaa wo|ndzɔŋɔghuuwelɔm|ndzɔŋɔtaafʉgha|ndzɔŋɔtɨdʉgha|ndzɔŋɔkwifɔe|ndzɔŋɔnzugho|tsuʔndzɨkɔʔɔ|ndzɔŋɔdumlo|ndzɔŋɔkɨzuʔ|this minute|last month|ndzɔŋefwoo|next month|this month|tsuʔutɔmlo|last week|last year|ndzɔŋesee|ndzɔŋɔnum|next week|next year|this hour|this week|this year|tsuʔughɔe|tsuʔughɨm|tsuʔntsɨ|tsuʔukpa|tsuʔume|a zuɛɛ|tsʉtsʉ|kɨnum|ndzɔŋ|sɛkɔn|utsuʔ|ewɨn|mene|dum|dzk|dzu|fwo|fɔe|ghɔ|ghɨ|gmt|kaa|kpa|kɨz|lɔm|now|nts|num|nzu|see|taa|tam|tɔm|tɨd|ume|utc|\+|\.|\[|\]|\||ag|ak|am|nɛ|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ndzɔŋɔtɨfʉghadzughu|ndzɔŋɔchwaʔakaa wo|ndzɔŋɔghuuwelɔm|ndzɔŋɔtaafʉgha|ndzɔŋɔtɨdʉgha|ndzɔŋɔkwifɔe|ndzɔŋɔnzugho|tsuʔndzɨkɔʔɔ|ndzɔŋɔdumlo|ndzɔŋɔkɨzuʔ|this minute|last month|ndzɔŋefwoo|next month|this month|tsuʔutɔmlo|last week|last year|ndzɔŋesee|ndzɔŋɔnum|next week|next year|this hour|this week|this year|tsuʔughɔe|tsuʔughɨm|tsuʔntsɨ|tsuʔukpa|tsuʔume|a zuɛɛ|tsʉtsʉ|kɨnum|ndzɔŋ|sɛkɔn|utsuʔ|ewɨn|mene|dum|dzk|dzu|fwo|fɔe|ghɔ|ghɨ|gmt|kaa|kpa|kɨz|lɔm|now|nts|num|nzu|see|taa|tam|tɔm|tɨd|ume|utc|\+|\.|\[|\]|\||ag|ak|am|nɛ|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

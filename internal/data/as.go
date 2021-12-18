@@ -85,5 +85,5 @@ var as_Locale = merge(nil, LocaleData{
 		":":           ":",
 		"z":           "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|বহষপতিবাৰ|ছেপতেমবৰ|ফেবৰৱাৰী|জানৱাৰী|ডিচেমবৰ|মঙগলবাৰ|অকটোবৰ|অপৰাহণ|ছেকেণড|দেওবাৰ|নৱেমবৰ|পৰবাহণ|বহষপতি|শকৰবাৰ|শনিবাৰ|সোমবাৰ|এপৰিল|কাইলৈ|বধবাৰ|মিনিট|সপতাহ|অকটো|আগষট|কালি|ঘণটা|জলাই|ডিসে|ফেবৰ|মঙগল|মাৰচ|সেপট|gmt|now|utc|আজি|জান|দিন|নভে|বছৰ|মাহ|শকৰ|শনি|সোম|ৰবি|\+|\.|\[|\]|\||am|pm|আগ|জন|বধ|মে| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|বহষপতিবাৰ|ছেপতেমবৰ|ফেবৰৱাৰী|জানৱাৰী|ডিচেমবৰ|মঙগলবাৰ|অকটোবৰ|অপৰাহণ|ছেকেণড|দেওবাৰ|নৱেমবৰ|পৰবাহণ|বহষপতি|শকৰবাৰ|শনিবাৰ|সোমবাৰ|এপৰিল|কাইলৈ|বধবাৰ|মিনিট|সপতাহ|অকটো|আগষট|কালি|ঘণটা|জলাই|ডিসে|ফেবৰ|মঙগল|মাৰচ|সেপট|gmt|now|utc|আজি|জান|দিন|নভে|বছৰ|মাহ|শকৰ|শনি|সোম|ৰবি|\+|\.|\[|\]|\||am|pm|আগ|জন|বধ|মে| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

@@ -122,9 +122,9 @@ var se_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)(\d+) vahku arat`), "$1 week ago"},
 		{regexp.MustCompile(`(?i)(\d+) jahki arat`), "$1 year ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(\d+ manotbadji maŋŋilit|\d+ minuhtta maŋŋilit|\d+ sekundda maŋŋilit|\d+ diibmur maŋŋilit|\d+ jandora maŋŋilit|\d+ minuhta maŋŋilit|\d+ sekunda maŋŋilit|\d+ diibmu maŋŋilit|\d+ jahkki maŋŋilit|\d+ jandor maŋŋilit|\d+ manotbadji arat|\d+ vahkku maŋŋilit|\d+ jahki maŋŋilit|\d+ vahku maŋŋilit|\d+ minuhtta arat|\d+ sekundda arat|\d+ diibmur arat|\d+ jandora arat|\d+ minuhta arat|\d+ sekunda arat|\d+ diibmu arat|\d+ jahkki arat|\d+ jandor arat|\d+ vahkku arat|\d+ jahki arat|\d+ vahku arat)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ manotbadji maŋŋilit|\d+ minuhtta maŋŋilit|\d+ sekundda maŋŋilit|\d+ diibmur maŋŋilit|\d+ jandora maŋŋilit|\d+ minuhta maŋŋilit|\d+ sekunda maŋŋilit|\d+ diibmu maŋŋilit|\d+ jahkki maŋŋilit|\d+ jandor maŋŋilit|\d+ manotbadji arat|\d+ vahkku maŋŋilit|\d+ jahki maŋŋilit|\d+ vahku maŋŋilit|\d+ minuhtta arat|\d+ sekundda arat|\d+ diibmur arat|\d+ jandora arat|\d+ minuhta arat|\d+ sekunda arat|\d+ diibmu arat|\d+ jahkki arat|\d+ jandor arat|\d+ vahkku arat|\d+ jahki arat|\d+ vahku arat)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ manotbadji maŋŋilit|\d+ minuhtta maŋŋilit|\d+ sekundda maŋŋilit|\d+ diibmur maŋŋilit|\d+ jandora maŋŋilit|\d+ minuhta maŋŋilit|\d+ sekunda maŋŋilit|\d+ diibmu maŋŋilit|\d+ jahkki maŋŋilit|\d+ jandor maŋŋilit|\d+ manotbadji arat|\d+ vahkku maŋŋilit|\d+ jahki maŋŋilit|\d+ vahku maŋŋilit|\d+ minuhtta arat|\d+ sekundda arat|\d+ diibmur arat|\d+ jandora arat|\d+ minuhta arat|\d+ sekunda arat|\d+ diibmu arat|\d+ jahkki arat|\d+ jandor arat|\d+ vahkku arat|\d+ jahki arat|\d+ vahku arat)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(eahketbeaivet|ođđajagemannu|eahketbeaivi|golggotmannu|suoidnemannu|gaskavahkku|geassemannu|guovvamannu|iđitbeaivet|juovlamannu|miessemannu|njukcamannu|skabmamannu|sotnabeaivi|this minute|borgemannu|cakcamannu|cuoŋomannu|iđitbeaivi|last month|maŋŋebarga|next month|this month|bearjadat|duorasdat|last week|last year|lavvardat|next week|next year|this hour|this week|this year|vuossarga|minuhtta|sekunda|beaivi|diibmu|ihttin|vahkku|jahki|mannu|bear|borg|cakc|duor|gask|geas|golg|guov|ikte|juov|mies|njuk|odne|ođđj|skab|sotn|suoi|vuos|cuo|gmt|lav|maŋ|now|utc|\+|\.|\[|\]|\||am|eb|ib|pm| |'|,|-|/|:|;|@|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(eahketbeaivet|ođđajagemannu|eahketbeaivi|golggotmannu|suoidnemannu|gaskavahkku|geassemannu|guovvamannu|iđitbeaivet|juovlamannu|miessemannu|njukcamannu|skabmamannu|sotnabeaivi|this minute|borgemannu|cakcamannu|cuoŋomannu|iđitbeaivi|last month|maŋŋebarga|next month|this month|bearjadat|duorasdat|last week|last year|lavvardat|next week|next year|this hour|this week|this year|vuossarga|minuhtta|sekunda|beaivi|diibmu|ihttin|vahkku|jahki|mannu|bear|borg|cakc|duor|gask|geas|golg|guov|ikte|juov|mies|njuk|odne|ođđj|skab|sotn|suoi|vuos|cuo|gmt|lav|maŋ|now|utc|\+|\.|\[|\]|\||am|eb|ib|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var se_FI_Locale = merge(&se_Locale, LocaleData{
@@ -157,9 +157,9 @@ var se_FI_Locale = merge(&se_Locale, LocaleData{
 		{regexp.MustCompile(`(?i)(\d+) jagi siste`), "in $1 year"},
 		{regexp.MustCompile(`(?i)(\d+) jagi arat`), "$1 year ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|\W|_)(\d+ jagi siste|\d+ jagi arat)(\z|\W|_)`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ jagi siste|\d+ jagi arat)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ jagi siste|\d+ jagi arat)$`),
-	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|\W|_|\d))(boahtte jagi|mannan jagi|maŋŋebargga|bearjadaga|duorastaga|gaskavahku|lavvardaga|vuossargga|dan jagi|gmt|utc|\+|\.|am|pm| |-|/|:|j|z)((?:\z|\W|_|\d).*)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(boahtte jagi|mannan jagi|maŋŋebargga|bearjadaga|duorastaga|gaskavahku|lavvardaga|vuossargga|dan jagi|gmt|utc|\+|\.|am|pm| |-|/|:|j|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var se_SE_Locale = merge(&se_Locale, LocaleData{
