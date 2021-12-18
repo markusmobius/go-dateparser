@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -636,10 +637,6 @@ func TestTranslate(t *testing.T) {
 		{"zu", "son 23 umasingana 1996", "sunday 23 january 1996"},
 	}
 
-	// tests = []testScenario{
-	// 	{"ar", "6 يناير، 2015، الساعة 05:16 مساءً", "6 january 2015 05:16 pm"},
-	// }
-
 	nFailed := 0
 	for _, test := range tests {
 		message := fmt.Sprintf("%s, \"%s\"", test.Locale, test.String)
@@ -647,7 +644,8 @@ func TestTranslate(t *testing.T) {
 		ld, err := GetLocale(test.Locale)
 		assert.Nil(t, err, message)
 
-		translation := Translate(*ld, test.String, false)
+		stg := &setting.DefaultSettings
+		translation := Translate(*ld, test.String, false, stg)
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++

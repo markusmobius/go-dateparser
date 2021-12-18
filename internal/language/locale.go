@@ -6,9 +6,10 @@ import (
 	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
+	"github.com/markusmobius/go-dateparser/internal/setting"
 )
 
-func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
+func Translate(ld data.LocaleData, str string, keepFormatting bool, settings *setting.Settings) string {
 	// str = "2 months ago, friday, in 10 days, 03 september 2014"
 	str = normalizeString(str)
 
@@ -21,8 +22,18 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
 	inInTokens := false
 	tokens := Split(ld, str, keepFormatting)
 
+	// Translate
+	skippedTokens := map[string]struct{}{}
+	if settings != nil {
+		for _, token := range settings.SkipTokens {
+			skippedTokens[token] = struct{}{}
+		}
+	}
+
 	for i, token := range tokens {
-		if translation, exist := ld.Translations[token]; exist {
+		if _, skipped := skippedTokens[token]; skipped {
+			token = ""
+		} else if translation, exist := ld.Translations[token]; exist {
 			token = translation
 		} else {
 			for _, data := range ld.TranslationRegexes {
@@ -37,10 +48,10 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
 		tokens[i] = token
 	}
 
-	// Handle future words
-	fmt.Println("IN IN TOKENS:", inInTokens)
-	fmt.Println("FIRST TRANSLATION:", strJson(tokens))
+	// fmt.Println("IN IN TOKENS:", inInTokens)
+	// fmt.Println("FIRST TRANSLATION:", strJson(tokens))
 
+	// Handle future words
 	if inInTokens {
 		tokens = clearFutureWords(tokens)
 	}
@@ -59,12 +70,12 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool) string {
 	}
 
 	translation := join(validTokens, joinSeparator)
-	fmt.Println("JOINED TRANSLATION:", translation)
+	// fmt.Println("JOINED TRANSLATION:", translation)
 	return translation
 }
 
 func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
-	fmt.Println("INITIAL STR:", str)
+	// fmt.Println("INITIAL STR:", str)
 	// Split the strings
 	if ld.RxCombined != nil {
 		str = ld.RxCombined.ReplaceAllStringFunc(str, func(s string) string {
@@ -98,10 +109,10 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 
 	// str = strings.Trim(str, splitSeparator)
 
-	fmt.Println("RELATIVE:", ld.RxCombined)
-	fmt.Println("EXACT MATCH:", ld.RxExactCombined)
-	fmt.Println("STR SPLIT:", str)
-	fmt.Println("INITIAL SPLIT:", strJson(strings.Split(str, splitSeparator)))
+	// fmt.Println("RELATIVE:", ld.RxCombined)
+	// fmt.Println("EXACT MATCH:", ld.RxExactCombined)
+	// fmt.Println("STR SPLIT:", str)
+	// fmt.Println("INITIAL SPLIT:", strJson(strings.Split(str, splitSeparator)))
 
 	var tokens []string
 	for _, token := range strings.Split(str, splitSeparator) {
@@ -112,7 +123,7 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 		}
 	}
 
-	fmt.Println("FINAL SPLIT:", strJson(tokens))
+	// fmt.Println("FINAL SPLIT:", strJson(tokens))
 
 	return tokens
 }
