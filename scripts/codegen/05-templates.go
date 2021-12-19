@@ -131,7 +131,8 @@ type LocaleData struct {
 	PertainWords          []string
 	Simplifications       []ReplacementData
 	Translations          map[string]string
-	TranslationRegexes    []ReplacementData
+	RelativeType          map[string]string
+	RelativeTypeRegexes   []ReplacementData
 	RxCombined            *regexp.Regexp
 	RxExactCombined       *regexp.Regexp
 	RxKnownWords          *regexp.Regexp
@@ -151,24 +152,24 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	child.SkipWords = append(child.SkipWords, parent.SkipWords...)
 	child.PertainWords = append(child.PertainWords, parent.PertainWords...)
 	child.Simplifications = append(child.Simplifications, parent.Simplifications...)
-	child.TranslationRegexes = append(child.TranslationRegexes, parent.TranslationRegexes...)
+	child.RelativeTypeRegexes = append(child.RelativeTypeRegexes, parent.RelativeTypeRegexes...)
 
 	// Prepare maps
 	if len(child.Translations) == 0 {
 		child.Translations = map[string]string{}
 	}
 
-	// Merge maps
-	for pattern, replacement := range parent.Simplifications {
-		child.Simplifications[pattern] = replacement
+	if len(child.RelativeType) == 0 {
+		child.RelativeType = map[string]string{}
 	}
 
+	// Merge maps
 	for word, translation := range parent.Translations {
 		child.Translations[word] = translation
 	}
 
-	for pattern, translation := range parent.TranslationRegexes {
-		child.TranslationRegexes[pattern] = translation
+	for pattern, translation := range parent.RelativeType {
+		child.RelativeType[pattern] = translation
 	}
 
 	// Replace regexes
@@ -203,8 +204,8 @@ var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
 	SkipWords:    []string{ {{range $v := .SkipWords}}"{{$v}}", {{end}} },
 	PertainWords: []string{ {{range $v := .PertainWords}}"{{$v}}", {{end}} },
 	Simplifications: []ReplacementData{
-		{{range $e := (sortMap .Simplifications) -}}
-		{ {{regex $e.Key}}, "{{$e.Value}}" },
+		{{range $data := .Simplifications -}}
+		{ {{regex $data.Pattern}}, "{{$data.Replacement}}" },
 		{{end}}
 	},
 	Translations: map[string]string{
@@ -212,8 +213,13 @@ var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
 		"{{$e.Key}}": "{{$e.Value}}",
 		{{end}}
 	},
-	TranslationRegexes: []ReplacementData{
-		{{range $e := (sortMap .TranslationRegexes) -}}
+	RelativeType: map[string]string{
+		{{range $e := (sortMap .RelativeType) -}}
+		"{{$e.Key}}": "{{$e.Value}}",
+		{{end}}
+	},
+	RelativeTypeRegexes: []ReplacementData{
+		{{range $e := (sortMap .RelativeTypeRegexes) -}}
 		{ {{regex $e.Key}}, "{{$e.Value}}" },
 		{{end}}
 	},

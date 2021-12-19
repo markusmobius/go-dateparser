@@ -139,8 +139,8 @@ func parseCldrData(locale string) (*LocaleData, error) {
 		localPatterns = filterList(filter, localPatterns...)
 
 		fnAdder := data.AddTranslation
-		if strings.Contains(fieldName, "$") {
-			fnAdder = data.AddTranslationRegex
+		if strings.HasPrefix(fieldName, "in ") || strings.HasSuffix(fieldName, " ago") {
+			fnAdder = data.AddRelativeType
 		}
 
 		for _, localPattern := range localPatterns {

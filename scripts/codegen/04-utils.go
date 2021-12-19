@@ -97,3 +97,20 @@ func cleanList(useStringCleaner bool, items ...string) []string {
 	sort.Strings(cleanedList)
 	return cleanedList
 }
+
+func cleanSimplifications(items ...SimplificationData) []SimplificationData {
+	var cleanedSimplifications []SimplificationData
+	tracker := map[string]struct{}{}
+
+	for _, data := range items {
+		key := data.Pattern + "==" + data.Replacement
+		_, itemExist := tracker[key]
+
+		if data.Pattern != "" && !itemExist {
+			tracker[key] = struct{}{}
+			cleanedSimplifications = append(cleanedSimplifications, data)
+		}
+	}
+
+	return cleanedSimplifications
+}

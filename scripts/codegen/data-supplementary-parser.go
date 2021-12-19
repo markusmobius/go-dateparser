@@ -54,8 +54,8 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	addTranslationFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
 		for translation, entries := range mapStrings {
 			fnAdder := data.AddTranslation
-			if strings.Contains(translation, "$") {
-				fnAdder = data.AddTranslationRegex
+			if strings.HasPrefix(translation, "in ") || strings.HasSuffix(translation, " ago") {
+				fnAdder = data.AddRelativeType
 			}
 
 			for _, entry := range entries {

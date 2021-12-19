@@ -9,9 +9,9 @@ var tl_Locale = merge(nil, LocaleData{
 	DateOrder: "",
 	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "ganap", "na", "noon", "noong", "sa", "|"},
 	Simplifications: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)isang araw(\z|[^\pL\pM\d]|_)`), "${1}2 araw${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)kahapon(\z|[^\pL\pM\d]|_)`), "${1}1 araw nakaraan${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ngayon(\z|[^\pL\pM\d]|_)`), "${1}0 segundo nakalipas${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)isang araw(\z|[^\pL\pM\d]|_)`), "${1}2 araw${2}"},
 	},
 	Translations: map[string]string{
 		"miyerkules": "wednesday",

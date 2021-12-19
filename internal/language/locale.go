@@ -12,11 +12,16 @@ import (
 func Translate(ld data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
 	// str = "2 months ago, friday, in 10 days, 03 september 2014"
 	str = normalizeString(str)
+	// fmt.Println("INITIAL STR:", str)
 
 	// Simplify the string
 	for _, data := range ld.Simplifications {
-		str = data.Rx.ReplaceAllString(str, data.Replacement)
+		if data.Rx.MatchString(str) {
+			// fmt.Println("SIMPLIFIED BY:", data.Rx, "REPLACED WITH:", data.Replacement)
+			str = data.Rx.ReplaceAllString(str, data.Replacement)
+		}
 	}
+	// fmt.Println("SIMPLIFIED STR:", str)
 
 	// Split string to tokens
 	inInTokens := false
@@ -31,16 +36,34 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 	}
 
 	for i, token := range tokens {
+		// Check if token skipped
 		if _, skipped := skippedTokens[token]; skipped {
-			token = ""
-		} else if translation, exist := ld.Translations[token]; exist {
-			token = translation
-		} else {
-			for _, data := range ld.TranslationRegexes {
-				if data.Rx.MatchString(token) {
-					token = data.Rx.ReplaceAllString(token, data.Replacement)
-					break
-				}
+			tokens[i] = ""
+			continue
+		}
+
+		// Try to use regex to translate relative type
+		var translationFound bool
+		for _, data := range ld.RelativeTypeRegexes {
+			if data.Rx.MatchString(token) {
+				token = data.Rx.ReplaceAllString(token, data.Replacement)
+				translationFound = true
+				break
+			}
+		}
+
+		// If not found, use dictionary of relative type
+		if !translationFound {
+			if translation, exist := ld.RelativeType[token]; exist {
+				token = translation
+				translationFound = true
+			}
+		}
+
+		// If still not found, use words dictionary
+		if !translationFound {
+			if translation, exist := ld.Translations[token]; exist {
+				token = translation
 			}
 		}
 
@@ -75,7 +98,6 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 }
 
 func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
-	// fmt.Println("INITIAL STR:", str)
 	// Split the strings
 	if ld.RxCombined != nil {
 		str = ld.RxCombined.ReplaceAllStringFunc(str, func(s string) string {
@@ -111,8 +133,7 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 
 	// fmt.Println("RELATIVE:", ld.RxCombined)
 	// fmt.Println("EXACT MATCH:", ld.RxExactCombined)
-	// fmt.Println("STR SPLIT:", str)
-	// fmt.Println("INITIAL SPLIT:", strJson(strings.Split(str, splitSeparator)))
+	// fmt.Println("INITIAL TOKENS:", strJson(strings.Split(str, splitSeparator)))
 
 	var tokens []string
 	for _, token := range strings.Split(str, splitSeparator) {
@@ -123,7 +144,7 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 		}
 	}
 
-	// fmt.Println("FINAL SPLIT:", strJson(tokens))
+	// fmt.Println("TOKENS:", strJson(tokens))
 
 	return tokens
 }
