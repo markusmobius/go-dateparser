@@ -6,13 +6,14 @@ import (
 	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
+	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 )
 
 func Translate(ld data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
 	// str = "2 months ago, friday, in 10 days, 03 september 2014"
 	str = normalizeString(str)
-	// fmt.Println("INITIAL STR:", str)
+	str = digit.NormalizeString(str)
 
 	// Simplify the string
 	for _, data := range ld.Simplifications {
