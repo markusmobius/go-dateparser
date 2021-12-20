@@ -81,7 +81,7 @@ func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord 
 	}
 
 	// Save translation if word not empty
-	if _, exist := ld.Translations[word]; !exist && word != "" {
+	if word != "" {
 		ld.Translations[word] = normalizeString(translation)
 	}
 }

@@ -154,20 +154,20 @@ func parseCldrData(locale string) (*LocaleData, error) {
 		DateOrder: rxDateOrderPattern.ReplaceAllString(gregorianData.DateFormats.Short, "$1$2$3"),
 	}
 
-	for month := 1; month <= 12; month++ {
-		addMonthTranslations(&data, month)
-	}
-
 	for day := 1; day <= 7; day++ {
 		addWeekDayTranslations(&data, day)
 	}
 
-	for _, period := range enDayPeriods {
-		addDayPeriodTranslations(&data, period)
+	for month := 1; month <= 12; month++ {
+		addMonthTranslations(&data, month)
 	}
 
 	for _, dateField := range enDateFields {
 		addDateFieldTranslations(&data, dateField)
+	}
+
+	for _, period := range enDayPeriods {
+		addDayPeriodTranslations(&data, period)
 	}
 
 	return &data, nil

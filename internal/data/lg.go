@@ -18,7 +18,7 @@ var lg_Locale = merge(nil, LocaleData{
 		"lwakubiri":  "tuesday",
 		"lwakusatu":  "wednesday",
 		"okitobba":   "october",
-		"sabbiiti":   "sunday",
+		"sabbiiti":   "week",
 		"agusito":    "august",
 		"desemba":    "december",
 		"julaayi":    "july",

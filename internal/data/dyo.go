@@ -49,7 +49,7 @@ var dyo_Locale = merge(nil, LocaleData{
 		"de":        "december",
 		"fe":        "february",
 		"sa":        "january",
-		"su":        "june",
+		"su":        "july",
 		"ma":        "march",
 		"me":        "may",
 		"no":        "november",

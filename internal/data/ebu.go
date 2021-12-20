@@ -30,7 +30,7 @@ var ebu_Locale = merge(nil, LocaleData{
 		"ndagika":                 "minute",
 		"sekondi":                 "second",
 		"njumaa":                  "friday",
-		"kiumia":                  "sunday",
+		"kiumia":                  "week",
 		"ithaa":                   "hour",
 		"mweri":                   "month",
 		"mwaka":                   "year",

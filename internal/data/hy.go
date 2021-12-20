@@ -39,7 +39,7 @@ var hy_Locale = merge(nil, LocaleData{
 		"ապրիլ":      "april",
 		"մարտի":      "march",
 		"մայիս":      "may",
-		"շաբաթ":      "saturday",
+		"շաբաթ":      "week",
 		"մարտ":       "march",
 		"րոպե":       "minute",
 		"ամիս":       "month",

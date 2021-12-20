@@ -32,7 +32,7 @@ var ewo_Locale = merge(nil, LocaleData{
 		"serade":            "saturday",
 		"awola":             "hour",
 		"mɔndi":             "monday",
-		"sɔndɔ":             "sunday",
+		"sɔndɔ":             "week",
 		"amos":              "day",
 		"ngab":              "december",
 		"ngɔn":              "month",

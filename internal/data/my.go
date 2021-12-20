@@ -36,7 +36,7 @@ var my_Locale = merge(nil, LocaleData{
 		"am":       "am",
 		"ရက":       "day",
 		"ဖေ":       "february",
-		"ဇန":       "january",
+		"ဇန":       "june",
 		"မတ":       "march",
 		"မေ":       "may",
 		"pm":       "pm",

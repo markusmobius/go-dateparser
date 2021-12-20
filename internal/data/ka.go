@@ -34,7 +34,7 @@ var ka_Locale = merge(nil, LocaleData{
 		"საათი":        "hour",
 		"მარტი":        "march",
 		"მაისი":        "may",
-		"კვირა":        "sunday",
+		"კვირა":        "week",
 		"წუთი":         "minute",
 		"წამი":         "second",
 		"წელი":         "year",

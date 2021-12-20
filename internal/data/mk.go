@@ -25,7 +25,7 @@ var mk_Locale = merge(nil, LocaleData{
 		"август":     "august",
 		"минута":     "minute",
 		"сабота":     "saturday",
-		"недела":     "sunday",
+		"недела":     "week",
 		"година":     "year",
 		"април":      "april",
 		"петок":      "friday",

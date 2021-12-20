@@ -3,7 +3,6 @@ package main
 import (
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -51,12 +50,9 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		}
 	}
 
-	addTranslationFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
+	addRelativeTypeFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
 		for translation, entries := range mapStrings {
-			fnAdder := data.AddTranslation
-			if strings.HasPrefix(translation, "in ") || strings.HasSuffix(translation, " ago") {
-				fnAdder = data.AddRelativeType
-			}
+			fnAdder := data.AddRelativeType
 
 			for _, entry := range entries {
 				fnAdder(entry, translation, false)
@@ -72,6 +68,19 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		SentenceSplitterGroup: yamlData.SentenceSplitterGroup,
 	}
 
+	skipWords := cleanList(false, yamlData.SkipWords...)
+	pertainWords := cleanList(false, yamlData.PertainWords...)
+	addTranslationFromStrings(&data, "", skipWords)
+	addTranslationFromStrings(&data, "", pertainWords)
+
+	addTranslationFromStrings(&data, "monday", yamlData.Monday)
+	addTranslationFromStrings(&data, "tuesday", yamlData.Tuesday)
+	addTranslationFromStrings(&data, "wednesday", yamlData.Wednesday)
+	addTranslationFromStrings(&data, "thursday", yamlData.Thursday)
+	addTranslationFromStrings(&data, "friday", yamlData.Friday)
+	addTranslationFromStrings(&data, "saturday", yamlData.Saturday)
+	addTranslationFromStrings(&data, "sunday", yamlData.Sunday)
+
 	addTranslationFromStrings(&data, "january", yamlData.January)
 	addTranslationFromStrings(&data, "february", yamlData.February)
 	addTranslationFromStrings(&data, "march", yamlData.March)
@@ -84,15 +93,7 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	addTranslationFromStrings(&data, "october", yamlData.October)
 	addTranslationFromStrings(&data, "november", yamlData.November)
 	addTranslationFromStrings(&data, "december", yamlData.December)
-	addTranslationFromStrings(&data, "monday", yamlData.Monday)
-	addTranslationFromStrings(&data, "tuesday", yamlData.Tuesday)
-	addTranslationFromStrings(&data, "wednesday", yamlData.Wednesday)
-	addTranslationFromStrings(&data, "thursday", yamlData.Thursday)
-	addTranslationFromStrings(&data, "friday", yamlData.Friday)
-	addTranslationFromStrings(&data, "saturday", yamlData.Saturday)
-	addTranslationFromStrings(&data, "sunday", yamlData.Sunday)
-	addTranslationFromStrings(&data, "am", yamlData.AM)
-	addTranslationFromStrings(&data, "pm", yamlData.PM)
+
 	addTranslationFromStrings(&data, "decade", yamlData.Decade)
 	addTranslationFromStrings(&data, "year", yamlData.Year)
 	addTranslationFromStrings(&data, "month", yamlData.Month)
@@ -101,15 +102,14 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	addTranslationFromStrings(&data, "hour", yamlData.Hour)
 	addTranslationFromStrings(&data, "minute", yamlData.Minute)
 	addTranslationFromStrings(&data, "second", yamlData.Second)
-	addTranslationFromStrings(&data, "in", yamlData.In)
 	addTranslationFromStrings(&data, "ago", yamlData.Ago)
-	addTranslationFromMapStrings(&data, yamlData.RelativeType)
-	addTranslationFromMapStrings(&data, yamlData.RelativeTypeRegex)
+	addTranslationFromStrings(&data, "in", yamlData.In)
 
-	skipWords := cleanList(false, yamlData.SkipWords...)
-	pertainWords := cleanList(false, yamlData.PertainWords...)
-	addTranslationFromStrings(&data, "", skipWords)
-	addTranslationFromStrings(&data, "", pertainWords)
+	addTranslationFromStrings(&data, "am", yamlData.AM)
+	addTranslationFromStrings(&data, "pm", yamlData.PM)
+
+	addRelativeTypeFromMapStrings(&data, yamlData.RelativeType)
+	addRelativeTypeFromMapStrings(&data, yamlData.RelativeTypeRegex)
 
 	for _, simplification := range yamlData.Simplifications {
 		for pattern, replacement := range simplification {
