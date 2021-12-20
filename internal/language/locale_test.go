@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/stretchr/testify/assert"
 )
@@ -1528,6 +1529,78 @@ func TestFreshnessTranslation(t *testing.T) {
 		// Translate string
 		translation := Translate(*ld, test.String, false, cfg)
 		passed := assert.Equal(t, test.Expected, translation, message)
+		if !passed {
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestSplit(t *testing.T) {
+	type testScenario struct {
+		Locale   string
+		Text     string
+		Expected []string
+	}
+
+	scene := func(locale string, text string, expected []string) testScenario {
+		return testScenario{Locale: locale, Text: text, Expected: expected}
+	}
+
+	tests := []testScenario{
+		scene("pt", "sexta-feira, 10 de junho de 2014 14:52", []string{"sexta-feira", " ", "10", " ", "de", " ", "junho", " ", "de", " ", "2014", " ", "14", ":", "52"}),
+		scene("it", "14_luglio_15", []string{"14", "luglio", "15"}),
+		scene("zh", "1年11个月", []string{"1", "年", "11", "个月"}),
+		scene("zh", "1年11個月", []string{"1", "年", "11", "個月"}),
+		scene("tr", "2 saat önce", []string{"2 saat once"}),
+		scene("fr", "il ya environ 23 heures'", []string{"il ya", " ", "environ", " ", "23", " ", "heures"}),
+		scene("de", "Gestern um 04:41", []string{"gestern", " ", "um", " ", "04", ":", "41"}),
+		scene("de", "Donnerstag, 8. Januar 2015 um 07:17", []string{"donnerstag", " ", "8", ".", " ", "januar", " ", "2015", " ", "um", " ", "07", ":", "17"}),
+		scene("ru", "8 января 2015 г. в 9:10", []string{"8", " ", "января", " ", "2015", " ", "г", ".", " ", "в", " ", "9", ":", "10"}),
+		scene("cs", "6. leden 2015 v 22:29", []string{"6", ".", " ", "leden", " ", "2015", " ", "v", " ", "22", ":", "29"}),
+		scene("nl", "woensdag 7 januari 2015 om 21:32", []string{"woensdag", " ", "7", " ", "januari", " ", "2015", " ", "om", " ", "21", ":", "32"}),
+		scene("ro", "8 Ianuarie 2015 la 13:33", []string{"8", " ", "ianuarie", " ", "2015", " ", "la", " ", "13", ":", "33"}),
+		scene("ar", "8 يناير، 2015، الساعة 10:01 صباحاً", []string{"8", " ", "يناير", " ", "2015", "الساعة", " ", "10", ":", "01", " ", "صباحا"}),
+		scene("th", "8 มกราคม 2015 เวลา 12:22 น.", []string{"8", " ", "มกราคม", " ", "2015", " ", "เวลา", " ", "12", ":", "22", " ", "น."}),
+		scene("pl", "8 stycznia 2015 o 10:19", []string{"8", " ", "stycznia", " ", "2015", " ", "o", " ", "10", ":", "19"}),
+		scene("vi", "Thứ Năm, ngày 8 tháng 1 năm 2015", []string{"thu nam", " ", "ngay", " ", "8", " ", "thang 1", " ", "nam", " ", "2015"}),
+		scene("tl", "Biyernes Hulyo 3 2015", []string{"biyernes", " ", "hulyo", " ", "3", " ", "2015"}),
+		scene("be", "3 верасня 2015 г. у 11:10", []string{"3", " ", "верасня", " ", "2015", " ", "г", ".", " ", "у", " ", "11", ":", "10"}),
+		scene("id", "3 Juni 2015 13:05:46", []string{"3", " ", "juni", " ", "2015", " ", "13", ":", "05", ":", "46"}),
+		scene("he", "ה-21 לאוקטובר 2016 ב-15:00", []string{"ה-", "21", " ", "לאוקטובר", " ", "2016", " ", "ב-", "15", ":", "00"}),
+		scene("bn", "3 জুন 2015 13:05:46", []string{"3", " ", "জন", " ", "2015", " ", "13", ":", "05", ":", "46"}),
+		scene("hi", "13 मार्च 2013 11:15:09", []string{"13", " ", "मारच", " ", "2013", " ", "11", ":", "15", ":", "09"}),
+		scene("mgo", "aneg 5 12 iməg àdùmbə̀ŋ 2001 09:14 pm", []string{"aneg 5", " ", "12", " ", "iməg adumbəŋ", " ", "2001", " ", "09", ":", "14", " ", "pm"}),
+		scene("qu", "2 kapaq raymi 1998 domingo", []string{"2", " ", "kapaq raymi", " ", "1998", " ", "domingo"}),
+		scene("os", "24 сахаты размӕ 10:09 ӕмбисбоны размӕ", []string{"24 сахаты размӕ", " ", "10", ":", "09", " ", "ӕмбисбоны размӕ"}),
+		scene("pa", "25 ਘੰਟੇ ਪਹਿਲਾਂ 10:08 ਬਾਦੁ", []string{"25 ਘਟ ਪਹਿਲਾ", " ", "10", ":", "08", " ", "ਬਾਦ"}),
+		scene("en", "25_April_2008", []string{"25", "april", "2008"}),
+		scene("af", "hierdie uur 10:19 vm", []string{"hierdie uur", " ", "10", ":", "19", " ", "vm"}),
+		scene("rof", "7 mweri wa kaana 1998 12:09 kang'ama", []string{"7", " ", "mweri wa kaana", " ", "1998", " ", "12", ":", "09", " ", "kang'ama"}),
+		scene("saq", "14 lapa le tomon obo 2098 ong", []string{"14", " ", "lapa le tomon obo", " ", "2098", " ", "ong"}),
+		scene("wae", "cor 6 wučä 09:19 pm", []string{"cor 6 wuca", " ", "09", ":", "19", " ", "pm"}),
+		scene("naq", "13 ǃkhanǀgôab 1887", []string{"13", " ", "ǃkhanǀgoab", " ", "1887"}),
+	}
+
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("%s, \"%s\"", test.Locale, test.Text)
+
+		// Load locale
+		ld, err := GetLocale(test.Locale)
+		assert.Nil(t, err, message)
+
+		// Normalize text
+		str := normalizeString(test.Text)
+		str = digit.NormalizeString(str)
+
+		// Split text
+		result := Split(*ld, str, false)
+		passed := assert.Equal(t, test.Expected, result, message)
 		if !passed {
 			nFailed++
 		}
