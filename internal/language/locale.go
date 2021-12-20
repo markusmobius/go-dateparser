@@ -1,7 +1,6 @@
 package language
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -18,11 +17,9 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 	// Simplify the string
 	for _, data := range ld.Simplifications {
 		if data.Rx.MatchString(str) {
-			// fmt.Println("SIMPLIFIED BY:", data.Rx, "REPLACED WITH:", data.Replacement)
 			str = data.Rx.ReplaceAllString(str, data.Replacement)
 		}
 	}
-	// fmt.Println("SIMPLIFIED STR:", str)
 
 	// Split string to tokens
 	inInTokens := false
@@ -72,9 +69,6 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 		tokens[i] = token
 	}
 
-	// fmt.Println("IN IN TOKENS:", inInTokens)
-	// fmt.Println("FIRST TRANSLATION:", strJson(tokens))
-
 	// Handle future words
 	if inInTokens {
 		tokens = clearFutureWords(tokens)
@@ -93,9 +87,7 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 		joinSeparator = " "
 	}
 
-	translation := join(validTokens, joinSeparator)
-	// fmt.Println("JOINED TRANSLATION:", translation)
-	return translation
+	return join(validTokens, joinSeparator)
 }
 
 func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
@@ -130,12 +122,6 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 		})
 	}
 
-	// str = strings.Trim(str, splitSeparator)
-
-	// fmt.Println("RELATIVE:", ld.RxCombined)
-	// fmt.Println("EXACT MATCH:", ld.RxExactCombined)
-	// fmt.Println("INITIAL TOKENS:", strJson(strings.Split(str, splitSeparator)))
-
 	var tokens []string
 	for _, token := range strings.Split(str, splitSeparator) {
 		if ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(token) {
@@ -144,8 +130,6 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 			tokens = append(tokens, splitByKnownWords(ld, token, keepFormatting)...)
 		}
 	}
-
-	// fmt.Println("TOKENS:", strJson(tokens))
 
 	return tokens
 }
@@ -244,9 +228,4 @@ func join(tokens []string, separator string) string {
 
 	joined = strings.TrimSpace(joined)
 	return joined
-}
-
-func strJson(v interface{}) string {
-	bt, _ := json.Marshal(v)
-	return string(bt)
 }

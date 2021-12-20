@@ -1510,10 +1510,6 @@ func TestFreshnessTranslation(t *testing.T) {
 		{"zu", "manje", "0 second ago"},
 	}
 
-	// tests = []testScenario{
-	// 	{"ru", "одну минуту назад", "1 minute ago"},
-	// }
-
 	nFailed := 0
 	for _, test := range tests {
 		// Prepare log message
