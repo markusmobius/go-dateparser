@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -50,9 +51,12 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		}
 	}
 
-	addRelativeTypeFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
+	addTranslationFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
 		for translation, entries := range mapStrings {
-			fnAdder := data.AddRelativeType
+			fnAdder := data.AddTranslation
+			if strings.HasPrefix(translation, "in ") || strings.HasSuffix(translation, " ago") {
+				fnAdder = data.AddRelativeType
+			}
 
 			for _, entry := range entries {
 				fnAdder(entry, translation, false)
@@ -108,8 +112,8 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	addTranslationFromStrings(&data, "am", yamlData.AM)
 	addTranslationFromStrings(&data, "pm", yamlData.PM)
 
-	addRelativeTypeFromMapStrings(&data, yamlData.RelativeType)
-	addRelativeTypeFromMapStrings(&data, yamlData.RelativeTypeRegex)
+	addTranslationFromMapStrings(&data, yamlData.RelativeType)
+	addTranslationFromMapStrings(&data, yamlData.RelativeTypeRegex)
 
 	for _, simplification := range yamlData.Simplifications {
 		for pattern, replacement := range simplification {

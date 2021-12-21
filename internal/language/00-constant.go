@@ -26,6 +26,7 @@ var (
 	rxKeepToken2       = regexp.MustCompile(`^.*[^\P{L}\d_].*$`)
 	rxRegionRemover    = regexp.MustCompile(`-([A-Z]+)$`)
 	rxNumeral          = regexp.MustCompile(`(\d+)`)
+	rxNumberOnly       = regexp.MustCompile(`^\d+$`)
 	unicodeTransformer = transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
 
 	alwaysKeptTokens = map[string]struct{}{

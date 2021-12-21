@@ -1,31 +1,18 @@
 package language
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-func Translate(ld data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
-	// str = "2 months ago, friday, in 10 days, 03 september 2014"
-	str = normalizeString(str)
-	str = digit.NormalizeString(str)
-
-	// Simplify the string
-	for _, data := range ld.Simplifications {
-		if data.Rx.MatchString(str) {
-			str = data.Rx.ReplaceAllString(str, data.Replacement)
-		}
-	}
-
-	// Split string to tokens
-	inInTokens := false
-	tokens := Split(ld, str, keepFormatting)
-
-	// Translate
+func IsApplicable(ld data.LocaleData, str string, stripTimezone bool, config *setting.Configuration) bool {
+	// Parse config
 	skippedTokens := map[string]struct{}{}
 	if config != nil {
 		for _, token := range config.SkipTokens {
@@ -33,6 +20,72 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 		}
 	}
 
+	// Strip timezone if needed
+	if stripTimezone {
+		str, _ = timezone.PopTzOffset(str)
+	}
+
+	// Normalize string
+	str = normalizeString(str)
+	str = digit.NormalizeString(str)
+	str = simplify(ld, str)
+
+	// Generate tokens
+	tokens := Split(ld, str, false)
+
+	// Check if tokens valid
+	// First check if tokens only consist of tokens that must be kept
+	var nKeptTokens int
+	for _, token := range tokens {
+		if _, kept := alwaysKeptTokens[token]; kept {
+			nKeptTokens++
+		}
+	}
+
+	if nKeptTokens == len(tokens) {
+		return false
+	}
+
+	// Check if token exist in locale data
+	for _, token := range tokens {
+		_, isSkipped := skippedTokens[token]
+		_, isInDictionary := ld.Translations[token]
+		isNumberOnly := rxNumberOnly.MatchString(token)
+
+		var exactCombinedMatch bool
+		if ld.RxExactCombined != nil {
+			exactCombinedMatch = ld.RxExactCombined.MatchString(token)
+		}
+
+		if isNumberOnly || isInDictionary || isSkipped || exactCombinedMatch {
+			continue
+		}
+
+		return false
+	}
+
+	return true
+}
+
+func Translate(ld data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
+	// Parse config
+	skippedTokens := map[string]struct{}{}
+	if config != nil {
+		for _, token := range config.SkipTokens {
+			skippedTokens[token] = struct{}{}
+		}
+	}
+
+	// Normalize and simplify the string
+	str = normalizeString(str)
+	str = digit.NormalizeString(str)
+	str = simplify(ld, str)
+
+	// Split string to tokens
+	inInTokens := false
+	tokens := Split(ld, str, keepFormatting)
+
+	// Translate
 	for i, token := range tokens {
 		// Check if token skipped
 		if _, skipped := skippedTokens[token]; skipped {
@@ -134,6 +187,16 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 	return tokens
 }
 
+func simplify(ld data.LocaleData, str string) string {
+	for _, data := range ld.Simplifications {
+		if data.Rx.MatchString(str) {
+			str = data.Rx.ReplaceAllString(str, data.Replacement)
+		}
+	}
+
+	return str
+}
+
 func splitByKnownWords(ld data.LocaleData, str string, keepFormatting bool) []string {
 	var matches []string
 	if ld.RxKnownWords != nil {
@@ -228,4 +291,9 @@ func join(tokens []string, separator string) string {
 
 	joined = strings.TrimSpace(joined)
 	return joined
+}
+
+func strJson(data interface{}) string {
+	bt, _ := json.Marshal(data)
+	return string(bt)
 }
