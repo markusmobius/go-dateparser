@@ -1615,11 +1615,12 @@ func TestIsApplicable(t *testing.T) {
 	type testScenario struct {
 		Locale        string
 		Text          string
+		Expected      bool
 		StripTimezone bool
 	}
 
-	scene := func(locale string, text string, stripTimezone ...bool) testScenario {
-		s := testScenario{Locale: locale, Text: text}
+	scene := func(locale string, text string, expected bool, stripTimezone ...bool) testScenario {
+		s := testScenario{Locale: locale, Text: text, Expected: expected}
 		if len(stripTimezone) > 0 {
 			s.StripTimezone = stripTimezone[0]
 		}
@@ -1627,30 +1628,33 @@ func TestIsApplicable(t *testing.T) {
 	}
 
 	tests := []testScenario{
-		scene("en", "17th October, 2034 @ 01:08 am PDT", true),
-		scene("en", "#@Sept#04#2014"),
-		scene("en", "2014-12-13T00:11:00Z"),
-		scene("de", "Donnerstag, 8. Januar 2015 um 07:17"),
-		scene("da", "Torsdag, 8. januar 2015 kl. 07:17"),
-		scene("ru", "8 января 2015 г. в 9:10"),
-		scene("cs", "Pondělí v 22:29"),
-		scene("nl", "woensdag 7 januari om 21:32"),
-		scene("ro", "8 Ianuarie 2015 la 13:33"),
-		scene("ar", "ساعتين"),
-		scene("tr", "3 hafta"),
-		scene("th", "17 เดือนมิถุนายน"),
-		scene("pl", "przedwczoraj"),
-		scene("fa", "ژانویه 8, 2015، ساعت 15:46"),
-		scene("vi", "2 tuần 3 ngày"),
-		scene("tl", "Hulyo 3, 2015 7:00 pm"),
-		scene("be", "3 верасня 2015 г. у 11:10"),
-		scene("id", "01 Agustus 2015 18:23"),
-		scene("he", "6 לדצמבר 1973"),
-		scene("bn", "3 সপ্তাহ"),
-	}
+		// Should be applicable
+		scene("en", "17th October, 2034 @ 01:08 am PDT", true, true),
+		scene("en", "#@Sept#04#2014", true),
+		scene("en", "2014-12-13T00:11:00Z", true),
+		scene("de", "Donnerstag, 8. Januar 2015 um 07:17", true),
+		scene("da", "Torsdag, 8. januar 2015 kl. 07:17", true),
+		scene("ru", "8 января 2015 г. в 9:10", true),
+		scene("cs", "Pondělí v 22:29", true),
+		scene("nl", "woensdag 7 januari om 21:32", true),
+		scene("ro", "8 Ianuarie 2015 la 13:33", true),
+		scene("ar", "ساعتين", true),
+		scene("tr", "3 hafta", true),
+		scene("th", "17 เดือนมิถุนายน", true),
+		scene("pl", "przedwczoraj", true),
+		scene("fa", "ژانویه 8, 2015، ساعت 15:46", true),
+		scene("vi", "2 tuần 3 ngày", true),
+		scene("tl", "Hulyo 3, 2015 7:00 pm", true),
+		scene("be", "3 верасня 2015 г. у 11:10", true),
+		scene("id", "01 Agustus 2015 18:23", true),
+		scene("he", "6 לדצמבר 1973", true),
+		scene("bn", "3 সপ্তাহ", true),
 
-	tests = []testScenario{
-		scene("ar", "ساعتين"),
+		// Should be NOT applicable
+		scene("ru", "08.haziran.2014, 11:07", false),
+		scene("ar", "6 دقیقه", false),
+		scene("fa", "ساعتين", false),
+		scene("cs", "3 hafta", false),
 	}
 
 	nFailed := 0
@@ -1665,7 +1669,7 @@ func TestIsApplicable(t *testing.T) {
 		// Make sure it's applicable
 		cfg := &setting.DefaultConfig
 		isApplicable := IsApplicable(*ld, test.Text, test.StripTimezone, cfg)
-		passed := assert.True(t, isApplicable, message)
+		passed := assert.Equal(t, test.Expected, isApplicable, message)
 		if !passed {
 			nFailed++
 		}
