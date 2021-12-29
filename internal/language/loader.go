@@ -8,7 +8,7 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/data"
 )
 
-func GetLocales(languages []string, locales []string, region string, useGivenOrder bool, allowConflictingLocales bool) ([]data.LocaleData, error) {
+func GetLocales(languages []string, locales []string, region string, useGivenOrder bool, allowConflictingLocales bool) ([]*data.LocaleData, error) {
 	var validLocales []string
 	localeTracker := map[string]struct{}{}
 	languageTracker := map[string]struct{}{}
@@ -124,7 +124,7 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 	}
 
 	// Fetch the locale data
-	listLocaleData := make([]data.LocaleData, len(validLocales))
+	listLocaleData := make([]*data.LocaleData, len(validLocales))
 	for i, locale := range validLocales {
 		listLocaleData[i] = data.LocaleDataMap[locale]
 	}
@@ -142,5 +142,5 @@ func GetLocale(shortname string) (*data.LocaleData, error) {
 		return nil, err
 	}
 
-	return &locales[0], nil
+	return locales[0], nil
 }

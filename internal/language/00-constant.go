@@ -3,11 +3,8 @@ package language
 import (
 	"errors"
 	"regexp"
-	"unicode"
 
-	"golang.org/x/text/runes"
-	"golang.org/x/text/transform"
-	"golang.org/x/text/unicode/norm"
+	"github.com/pemistahl/lingua-go"
 )
 
 var (
@@ -22,12 +19,11 @@ const (
 )
 
 var (
-	rxKeepToken1       = regexp.MustCompile(`^.*[^\W_].*$`)
-	rxKeepToken2       = regexp.MustCompile(`^.*[^\P{L}\d_].*$`)
-	rxRegionRemover    = regexp.MustCompile(`-([A-Z]+)$`)
-	rxNumeral          = regexp.MustCompile(`(\d+)`)
-	rxNumberOnly       = regexp.MustCompile(`^\d+$`)
-	unicodeTransformer = transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
+	rxKeepToken1    = regexp.MustCompile(`^.*[^\W_].*$`)
+	rxKeepToken2    = regexp.MustCompile(`^.*[^\P{L}\d_].*$`)
+	rxRegionRemover = regexp.MustCompile(`-([A-Z]+)$`)
+	rxNumeral       = regexp.MustCompile(`(\d+)`)
+	rxNumberOnly    = regexp.MustCompile(`^\d+$`)
 
 	alwaysKeptTokens = map[string]struct{}{
 		"+": {},
@@ -47,4 +43,6 @@ var (
 		"minute": {},
 		"second": {},
 	}
+
+	externalLanguageDetector = lingua.NewLanguageDetectorBuilder().FromAllSpokenLanguages().Build()
 )

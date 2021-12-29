@@ -10,10 +10,15 @@ type Configuration struct {
 
 	// Incomplete dates
 	CurrentTime         time.Time
+	RelativeTimeBase    time.Time
 	PreferredDayOfMonth string
 
 	// Language detection
-	SkipTokens []string
+	SkipTokens       []string
+	DefaultLanguages []string
+
+	// Others
+	ReturnTimeAsPeriod bool
 }
 
 var DefaultConfig = Configuration{

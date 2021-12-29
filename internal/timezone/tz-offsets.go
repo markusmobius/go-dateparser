@@ -3,13 +3,12 @@ package timezone
 import (
 	"fmt"
 	"regexp"
-	"time"
 )
 
 type TimezoneOffsetData struct {
 	Name   string
 	Regex  *regexp.Regexp
-	Offset time.Duration
+	Offset int
 }
 
 func (tod TimezoneOffsetData) IsZero() bool {
@@ -36,7 +35,7 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData
 				offsets = append(offsets, TimezoneOffsetData{
 					Name:   tzName,
 					Regex:  regexp.MustCompile(`(?i)` + regexPattern),
-					Offset: time.Duration(offset) * time.Second,
+					Offset: offset,
 				})
 			}
 
@@ -53,7 +52,7 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData
 					offsets = append(offsets, TimezoneOffsetData{
 						Name:   tzName,
 						Regex:  regexp.MustCompile(`(?i)` + regexPattern),
-						Offset: time.Duration(offset) * time.Second,
+						Offset: offset,
 					})
 				}
 			}

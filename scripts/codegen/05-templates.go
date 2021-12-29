@@ -188,9 +188,9 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	return child
 }
 
-var LocaleDataMap = map[string]LocaleData {
+var LocaleDataMap = map[string]*LocaleData {
 	{{range $language, $data := . -}}
-	"{{$language}}": {{localeName $language}},
+	"{{$language}}": &{{localeName $language}},
 	{{end}}
 }
 `

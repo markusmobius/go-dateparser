@@ -2,7 +2,6 @@ package timezone
 
 import (
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -11,7 +10,7 @@ func TestPopTzOffset(t *testing.T) {
 	// Helper function
 	validOffset := func(str string, offsetHour float64) {
 		_, offset := PopTzOffset(str)
-		expected := time.Duration(offsetHour*3_600) * time.Second
+		expected := int(offsetHour * 3_600)
 		assert.Equal(t, expected, offset.Offset)
 	}
 

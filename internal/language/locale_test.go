@@ -6,6 +6,7 @@ import (
 
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -649,7 +650,7 @@ func TestTranslation(t *testing.T) {
 
 		// Translate string
 		cfg := &setting.DefaultConfig
-		translation := Translate(*ld, test.String, false, cfg)
+		translation := Translate(ld, test.String, false, cfg)
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++
@@ -1527,7 +1528,7 @@ func TestFreshnessTranslation(t *testing.T) {
 		}
 
 		// Translate string
-		translation := Translate(*ld, test.String, false, cfg)
+		translation := Translate(ld, test.String, false, cfg)
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++
@@ -1595,11 +1596,11 @@ func TestSplit(t *testing.T) {
 		assert.Nil(t, err, message)
 
 		// Normalize text
-		str := normalizeString(test.Text)
+		str := strutil.NormalizeString(test.Text)
 		str = digit.NormalizeString(str)
 
 		// Split text
-		result := Split(*ld, str, false)
+		result := Split(ld, str, false)
 		passed := assert.Equal(t, test.Expected, result, message)
 		if !passed {
 			nFailed++
@@ -1668,7 +1669,7 @@ func TestIsApplicable(t *testing.T) {
 
 		// Make sure it's applicable
 		cfg := &setting.DefaultConfig
-		isApplicable := IsApplicable(*ld, test.Text, test.StripTimezone, cfg)
+		isApplicable := IsApplicable(ld, test.Text, test.StripTimezone, cfg)
 		passed := assert.Equal(t, test.Expected, isApplicable, message)
 		if !passed {
 			nFailed++

@@ -5,9 +5,11 @@ import "time"
 type DatePeriod uint8
 
 const (
-	Day DatePeriod = iota
+	None DatePeriod = iota
+	Day
 	Month
 	Year
+	Time
 )
 
 type DateData struct {

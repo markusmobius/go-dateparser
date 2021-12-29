@@ -8,10 +8,11 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-func IsApplicable(ld data.LocaleData, str string, stripTimezone bool, config *setting.Configuration) bool {
+func IsApplicable(ld *data.LocaleData, str string, stripTimezone bool, config *setting.Configuration) bool {
 	// Parse config
 	skippedTokens := map[string]struct{}{}
 	if config != nil {
@@ -26,7 +27,7 @@ func IsApplicable(ld data.LocaleData, str string, stripTimezone bool, config *se
 	}
 
 	// Normalize string
-	str = normalizeString(str)
+	str = strutil.NormalizeString(str)
 	str = digit.NormalizeString(str)
 	str = simplify(ld, str)
 
@@ -49,8 +50,10 @@ func IsApplicable(ld data.LocaleData, str string, stripTimezone bool, config *se
 	// Check if token exist in locale data
 	for _, token := range tokens {
 		_, isSkipped := skippedTokens[token]
-		_, isInDictionary := ld.Translations[token]
+		_, isInTranslations := ld.Translations[token]
+		_, isInRelativeType := ld.RelativeType[token]
 		isNumberOnly := rxNumberOnly.MatchString(token)
+		isInDictionary := isInTranslations || isInRelativeType
 
 		var exactCombinedMatch bool
 		if ld.RxExactCombined != nil {
@@ -67,7 +70,7 @@ func IsApplicable(ld data.LocaleData, str string, stripTimezone bool, config *se
 	return true
 }
 
-func Translate(ld data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
+func Translate(ld *data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
 	// Parse config
 	skippedTokens := map[string]struct{}{}
 	if config != nil {
@@ -77,7 +80,7 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 	}
 
 	// Normalize and simplify the string
-	str = normalizeString(str)
+	str = strutil.NormalizeString(str)
 	str = digit.NormalizeString(str)
 	str = simplify(ld, str)
 
@@ -143,36 +146,43 @@ func Translate(ld data.LocaleData, str string, keepFormatting bool, config *sett
 	return join(validTokens, joinSeparator)
 }
 
-func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
+func Split(ld *data.LocaleData, str string, keepFormatting bool) []string {
 	// Split the strings
 	if ld.RxCombined != nil {
-		str = ld.RxCombined.ReplaceAllStringFunc(str, func(s string) string {
-			parts := ld.RxCombined.FindStringSubmatch(s)
-			switch len(parts) {
-			case 2:
-				return fmt.Sprintf("%s%s%s",
-					splitSeparator,
-					parts[1],
-					splitSeparator,
-				)
+		var tmp string
+		for {
+			pos := ld.RxCombined.FindStringSubmatchIndex(str)
+			lenPos := len(pos)
+			if lenPos == 0 {
+				break
+			}
 
-			case 4:
-				return fmt.Sprintf("%s%s%s%s%s",
-					parts[1],
+			switch lenPos {
+			case 2 * 2:
+				tmp += fmt.Sprintf("%s%s%s",
 					splitSeparator,
-					parts[2],
+					str[pos[2]:pos[3]],
+					splitSeparator)
+
+			case 4 * 2:
+				tmp += fmt.Sprintf("%s%s%s%s%s",
+					str[pos[2]:pos[3]],
 					splitSeparator,
-					parts[3],
-				)
+					str[pos[4]:pos[5]],
+					splitSeparator,
+					str[pos[6]:pos[7]])
 
 			default:
-				return fmt.Sprintf("%s%s%s",
+				tmp += fmt.Sprintf("%s%s%s",
 					splitSeparator,
-					s,
-					splitSeparator,
-				)
+					str[pos[0]:pos[1]],
+					splitSeparator)
 			}
-		})
+
+			str = str[pos[1]:]
+		}
+
+		str = tmp + str
 	}
 
 	var tokens []string
@@ -187,7 +197,7 @@ func Split(ld data.LocaleData, str string, keepFormatting bool) []string {
 	return tokens
 }
 
-func simplify(ld data.LocaleData, str string) string {
+func simplify(ld *data.LocaleData, str string) string {
 	for _, data := range ld.Simplifications {
 		if data.Rx.MatchString(str) {
 			str = data.Rx.ReplaceAllString(str, data.Replacement)
@@ -197,7 +207,7 @@ func simplify(ld data.LocaleData, str string) string {
 	return str
 }
 
-func splitByKnownWords(ld data.LocaleData, str string, keepFormatting bool) []string {
+func splitByKnownWords(ld *data.LocaleData, str string, keepFormatting bool) []string {
 	var matches []string
 	if ld.RxKnownWords != nil {
 		matches = ld.RxKnownWords.FindStringSubmatch(str)

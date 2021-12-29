@@ -11,7 +11,7 @@ import (
 
 func TestGetLocales(t *testing.T) {
 	// Helper functions
-	assertLocaleNames := func(result []data.LocaleData, expectedNames ...string) {
+	assertLocaleNames := func(result []*data.LocaleData, expectedNames ...string) {
 		names := make([]string, len(result))
 		for i, data := range result {
 			names[i] = data.Name
