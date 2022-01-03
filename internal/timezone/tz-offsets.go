@@ -3,6 +3,8 @@ package timezone
 import (
 	"fmt"
 	"regexp"
+	"sort"
+	"strings"
 )
 
 type TimezoneOffsetData struct {
@@ -25,7 +27,7 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData
 		for _, pattern := range tzInfo.RegexPatterns {
 			// Main pattern
 			for tzName, offset := range tzInfo.Timezones {
-				searchPattern := tzName
+				searchPattern := regexp.QuoteMeta(tzName)
 				regexPattern := fmt.Sprintf(pattern, searchPattern)
 				if _, exist := regexPatterns[regexPattern]; exist {
 					continue
@@ -42,7 +44,8 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData
 			// Alternative patterns
 			for replacer, replacement := range tzInfo.AlternativePatterns {
 				for tzName, offset := range tzInfo.Timezones {
-					searchPattern := replacer.ReplaceAllString(tzName, replacement)
+					searchPattern := regexp.QuoteMeta(tzName)
+					searchPattern = replacer.ReplaceAllString(searchPattern, replacement)
 					regexPattern := fmt.Sprintf(pattern, searchPattern)
 					if _, exist := regexPatterns[regexPattern]; exist {
 						continue
@@ -60,11 +63,13 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData
 	}
 
 	// Generate regex for searching
-	strSearchPatterns := ""
+	var patterns []string
 	for pattern := range searchPatterns {
-		strSearchPatterns += pattern + "|"
+		patterns = append(patterns, pattern)
 	}
-	strSearchPatterns = strSearchPatterns[:len(strSearchPatterns)-1]
+
+	sort.Strings(patterns)
+	strSearchPatterns := strings.Join(patterns, "|")
 
 	rxSearch := regexp.MustCompile(strSearchPatterns)
 	rxSearchIgnoreCase := regexp.MustCompile("(?i)" + strSearchPatterns)

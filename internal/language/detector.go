@@ -34,7 +34,6 @@ func (d *LocaleDetector) Detect(str string) ([]*data.LocaleData, error) {
 	resultTracker := map[string]struct{}{}
 
 	// Normalize and prepare date strings
-	str = strutil.SanitizeDate(str)
 	str = strutil.NormalizeString(str)
 	dateStrings := []string{str}
 	if poppedTz, _ := timezone.PopTzOffset(str); poppedTz != str {

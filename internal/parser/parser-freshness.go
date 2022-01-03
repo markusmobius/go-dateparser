@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -9,13 +10,15 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-func parseFreshnessDateTime(cfg *setting.Configuration, str string) DateData {
+func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
 	// Prepare string
 	str = rxBraces.ReplaceAllString(str, "")
 	str, tzData := timezone.PopTzOffset(str)
+	fmt.Println(tzData, tzData.IsZero())
 
 	// Parse time
 	t, _ := parseFreshnessTime(str)
+	fmt.Println("TIME:", t)
 
 	// Find current time
 	var now time.Time
@@ -25,23 +28,29 @@ func parseFreshnessDateTime(cfg *setting.Configuration, str string) DateData {
 		now = time.Now()
 	}
 
+	fmt.Println("NOW 0:", now)
 	if !tzData.IsZero() {
 		loc := time.FixedZone(tzData.Name, tzData.Offset)
 		now = now.In(loc)
-	}
-
-	if cfg != nil && cfg.Timezone != nil {
+		fmt.Println("NOW 1:", now)
+	} else if cfg != nil && cfg.Timezone != nil {
 		now = now.In(cfg.Timezone)
+		n, o := now.Zone()
+		fmt.Println("APPLIED TIMEZONE:", n, o)
 	}
 
 	// Get relative date
+	// fmt.Println("NOW:", now)
 	dt, period := parseFreshnessDate(cfg, str, now)
+	fmt.Println("NOW 2:", now)
+	fmt.Println("DATE 1:", dt)
+
 	if !dt.IsZero() {
 		if !t.IsZero() {
 			dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
 				t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 				dt.Location())
-
+			fmt.Println("DATE 2:", dt)
 			if cfg != nil && cfg.ReturnTimeAsPeriod {
 				period = Time
 			}
@@ -50,12 +59,15 @@ func parseFreshnessDateTime(cfg *setting.Configuration, str string) DateData {
 		if cfg != nil && cfg.ToTimezone != nil {
 			dt = dt.In(cfg.ToTimezone)
 		}
+		fmt.Println("DATE 3:", dt)
 
-		if cfg != nil && !cfg.ReturnAsTimezoneAware {
+		isTimezoneAware := cfg != nil && cfg.ReturnAsTimezoneAware
+		if !isTimezoneAware {
 			dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
 				dt.Hour(), dt.Minute(), dt.Second(), dt.Nanosecond(),
-				time.Local)
+				time.UTC)
 		}
+		fmt.Println("DATE 4:", dt)
 	}
 
 	// Create date data
@@ -69,7 +81,9 @@ func parseFreshnessTime(s string) (time.Time, error) {
 }
 
 func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (time.Time, DatePeriod) {
-	if !allWordsAreUnits(str) {
+	wordsAreUnit := allWordsAreUnits(str)
+	// fmt.Println("ALL WORDS ARE UNIT", wordsAreUnit)
+	if !wordsAreUnit {
 		return time.Time{}, 0
 	}
 
@@ -80,7 +94,9 @@ func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (
 
 	period := Day
 	if _, dayExist := relTimes["day"]; !dayExist {
-		if _, monthExist := relTimes["month"]; monthExist {
+		if _, weekExist := relTimes["week"]; weekExist {
+			period = Week
+		} else if _, monthExist := relTimes["month"]; monthExist {
 			period = Month
 		} else if _, yearExist := relTimes["year"]; yearExist {
 			period = Year
@@ -88,13 +104,14 @@ func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (
 	}
 
 	date := now
+	days := relTimes["day"] + relTimes["week"]*7
 	if rxFreshnessFuture.MatchString(str) && !rxFreshnessPast.MatchString(str) {
-		date = date.AddDate(relTimes["year"], relTimes["month"], relTimes["day"])
+		date = date.AddDate(relTimes["year"], relTimes["month"], days)
 		date = date.Add(time.Duration(relTimes["hour"]) * time.Hour)
 		date = date.Add(time.Duration(relTimes["minute"]) * time.Minute)
 		date = date.Add(time.Duration(relTimes["second"]) * time.Second)
 	} else {
-		date = date.AddDate(-relTimes["year"], -relTimes["month"], -relTimes["day"])
+		date = date.AddDate(-relTimes["year"], -relTimes["month"], -days)
 		date = date.Add(-time.Duration(relTimes["hour"]) * time.Hour)
 		date = date.Add(-time.Duration(relTimes["minute"]) * time.Minute)
 		date = date.Add(-time.Duration(relTimes["second"]) * time.Second)
@@ -106,13 +123,23 @@ func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (
 func allWordsAreUnits(s string) bool {
 	s = strings.Join(strings.Fields(s), " ")
 
+	// fmt.Println("SKIP:", rxFreshnessSkipWord)
+	// fmt.Println("SPLIT:", strutil.Jsonify(rxNonWord.Split(s, -1)))
+
+	var words []string
 	var wordCount int
 	for _, word := range rxNonWord.Split(s, -1) {
-		if word != "" && !rxFreshnessSkipWord.MatchString(word) {
+		if word == "" {
+			continue
+		}
+
+		if !rxFreshnessSkipWord.MatchString(word) {
 			wordCount++
+			words = append(words, word)
 		}
 	}
 
+	// fmt.Println("WORDS:", strutil.Jsonify(&words))
 	return wordCount == 0
 }
 
@@ -120,19 +147,14 @@ func getRelativeTimes(s string) map[string]int {
 	relativeTimes := map[string]int{}
 
 	for _, parts := range rxFreshnessPattern.FindAllStringSubmatch(s, -1) {
-		period := parts[1]
-		value, _ := strconv.Atoi(parts[0])
+		period := parts[2]
+		value, _ := strconv.Atoi(parts[1])
 		relativeTimes[period] = value
 	}
 
 	if decades, exist := relativeTimes["decade"]; exist {
 		relativeTimes["year"] += decades * 10
 		delete(relativeTimes, "decade")
-	}
-
-	if weeks, exist := relativeTimes["week"]; exist {
-		relativeTimes["day"] += weeks * 7
-		delete(relativeTimes, "week")
 	}
 
 	return relativeTimes

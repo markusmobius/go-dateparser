@@ -11,7 +11,7 @@ func TestPopTzOffset(t *testing.T) {
 	validOffset := func(str string, offsetHour float64) {
 		_, offset := PopTzOffset(str)
 		expected := int(offsetHour * 3_600)
-		assert.Equal(t, expected, offset.Offset)
+		assert.Equal(t, expected, offset.Offset, str)
 	}
 
 	emptyOffset := func(str string) {

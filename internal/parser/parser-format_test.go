@@ -26,7 +26,7 @@ func Test_parseFormattedDate(t *testing.T) {
 
 	// Prepare configuration
 	cfg := setting.DefaultConfig
-	cfg.CurrentTime = time.Date(2015, 2, 4, 0, 0, 0, 0, time.Local)
+	cfg.CurrentTime = time.Date(2015, 2, 4, 0, 0, 0, 0, time.UTC)
 
 	// No matching format, shouldn't be parsed
 	dt := parseFormattedDate(&cfg, "yesterday", "2006-01-02")

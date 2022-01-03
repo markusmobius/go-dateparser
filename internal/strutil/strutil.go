@@ -1,6 +1,7 @@
 package strutil
 
 import (
+	"encoding/json"
 	"regexp"
 	"strings"
 	"unicode"
@@ -64,4 +65,9 @@ func SanitizeDate(s string) string {
 	s = rxSanitizeAposthrope.ReplaceAllString(s, "'")
 	s = strings.TrimSpace(s)
 	return s
+}
+
+func Jsonify(data interface{}) string {
+	bt, _ := json.Marshal(data)
+	return string(bt)
 }

@@ -23,7 +23,7 @@ type Configuration struct {
 
 var DefaultConfig = Configuration{
 	// Timezone related
-	Timezone:              time.Local,
+	Timezone:              time.UTC,
 	ToTimezone:            nil,
 	ReturnAsTimezoneAware: false,
 

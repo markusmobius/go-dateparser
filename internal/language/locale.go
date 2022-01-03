@@ -157,6 +157,8 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool) []string {
 				break
 			}
 
+			tmp += str[:pos[0]]
+
 			switch lenPos {
 			case 2 * 2:
 				tmp += fmt.Sprintf("%s%s%s",

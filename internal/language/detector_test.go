@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -357,7 +358,8 @@ func TestLocaleDetector_Detect(t *testing.T) {
 		message := fmt.Sprintf("\"%s\" => %s", test.String, test.Expected)
 
 		// Detect locales
-		locales, err := detector.Detect(test.String)
+		str := strutil.SanitizeDate(test.String)
+		locales, err := detector.Detect(str)
 		assert.Nil(t, err, message)
 
 		// Check if locale found

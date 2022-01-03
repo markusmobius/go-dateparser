@@ -16,7 +16,7 @@ var (
 
 	rxInAgo             = regexp.MustCompile(`(?i)\b(?:ago|in)\b`)
 	rxFreshnessPattern  = regexp.MustCompile(`(?i)(\d+)\s*(` + freshnessUnits + `)\b`)
-	rxFreshnessSkipWord = regexp.MustCompile(`(?i)` + freshnessUnits + `|ago|in|\d+|:|[ap]m`)
+	rxFreshnessSkipWord = regexp.MustCompile(`(?i)^(?:` + freshnessUnits + `|ago|in|\d+|:|[ap]m)`)
 	rxFreshnessFuture   = regexp.MustCompile(`(?i)\b(?:in|future)\b`)
 	rxFreshnessPast     = regexp.MustCompile(`(?i)\bago\b`)
 )
