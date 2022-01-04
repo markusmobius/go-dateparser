@@ -42,7 +42,6 @@ func parseFormattedDate(cfg *setting.Configuration, str string, formats ...strin
 				t.Location())
 		}
 
-		t = applyTimezoneFromConfig(t, cfg)
 		return DateData{Time: t, Period: period}
 	}
 

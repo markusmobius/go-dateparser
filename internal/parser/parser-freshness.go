@@ -21,11 +21,9 @@ func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
 	fmt.Println("TIME:", t)
 
 	// Find current time
-	var now time.Time
-	if cfg != nil && !cfg.RelativeTimeBase.IsZero() {
-		now = cfg.RelativeTimeBase
-	} else {
-		now = time.Now()
+	now := time.Now()
+	if cfg != nil && !cfg.CurrentTime.IsZero() {
+		now = cfg.CurrentTime
 	}
 
 	fmt.Println("NOW 0:", now)
@@ -33,10 +31,6 @@ func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
 		loc := time.FixedZone(tzData.Name, tzData.Offset)
 		now = now.In(loc)
 		fmt.Println("NOW 1:", now)
-	} else if cfg != nil && cfg.Timezone != nil {
-		now = now.In(cfg.Timezone)
-		n, o := now.Zone()
-		fmt.Println("APPLIED TIMEZONE:", n, o)
 	}
 
 	// Get relative date
@@ -45,29 +39,14 @@ func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
 	fmt.Println("NOW 2:", now)
 	fmt.Println("DATE 1:", dt)
 
-	if !dt.IsZero() {
-		if !t.IsZero() {
-			dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
-				t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
-				dt.Location())
-			fmt.Println("DATE 2:", dt)
-			if cfg != nil && cfg.ReturnTimeAsPeriod {
-				period = Time
-			}
+	if !dt.IsZero() && !t.IsZero() {
+		dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
+			t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
+			dt.Location())
+		fmt.Println("DATE 2:", dt)
+		if cfg != nil && cfg.ReturnTimeAsPeriod {
+			period = Time
 		}
-
-		if cfg != nil && cfg.ToTimezone != nil {
-			dt = dt.In(cfg.ToTimezone)
-		}
-		fmt.Println("DATE 3:", dt)
-
-		isTimezoneAware := cfg != nil && cfg.ReturnAsTimezoneAware
-		if !isTimezoneAware {
-			dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
-				dt.Hour(), dt.Minute(), dt.Second(), dt.Nanosecond(),
-				time.UTC)
-		}
-		fmt.Println("DATE 4:", dt)
 	}
 
 	// Create date data
@@ -105,7 +84,7 @@ func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (
 
 	date := now
 	days := relTimes["day"] + relTimes["week"]*7
-	if rxFreshnessFuture.MatchString(str) && !rxFreshnessPast.MatchString(str) {
+	if (rxIn.MatchString(str) || cfg.PreferFutureTime) && !rxAgo.MatchString(str) {
 		date = date.AddDate(relTimes["year"], relTimes["month"], days)
 		date = date.Add(time.Duration(relTimes["hour"]) * time.Hour)
 		date = date.Add(time.Duration(relTimes["minute"]) * time.Minute)

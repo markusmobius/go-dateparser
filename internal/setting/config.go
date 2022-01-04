@@ -3,15 +3,10 @@ package setting
 import "time"
 
 type Configuration struct {
-	// Timezone related
-	Timezone              *time.Location
-	ToTimezone            *time.Location
-	ReturnAsTimezoneAware bool
-
 	// Incomplete dates
 	CurrentTime         time.Time
-	RelativeTimeBase    time.Time
 	PreferredDayOfMonth string
+	PreferFutureTime    bool
 
 	// Language detection
 	SkipTokens       []string
@@ -22,11 +17,6 @@ type Configuration struct {
 }
 
 var DefaultConfig = Configuration{
-	// Timezone related
-	Timezone:              time.UTC,
-	ToTimezone:            nil,
-	ReturnAsTimezoneAware: false,
-
 	// Incomplete dates
 	CurrentTime:         time.Now(),
 	PreferredDayOfMonth: "current",

@@ -14,13 +14,13 @@ func Test_parseTimestamp(t *testing.T) {
 
 	// Test milliseconds timestamp
 	assert.Equal(t,
-		time.Unix(1570308760, 263*1_000_000).UTC(),
+		time.Unix(1570308760, 263*1_000_000),
 		parseTimestamp(cfg, "1570308760263"),
 	)
 
 	// Test microseconds timestamp
 	assert.Equal(t,
-		time.Unix(1570308760, 263_111*1_000).UTC(),
+		time.Unix(1570308760, 263_111*1_000),
 		parseTimestamp(cfg, "1570308760263111"),
 	)
 

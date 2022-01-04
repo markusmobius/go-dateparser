@@ -17,12 +17,7 @@ func parseTimestamp(cfg *setting.Configuration, str string) time.Time {
 		micros, _ := strconv.ParseInt(parts[3], 10, 64)
 		nanos := micros*1_000 + millis*1_000_000
 
-		t := time.Unix(seconds, nanos).UTC()
-		if cfg.ToTimezone != nil {
-			tz := cloneTimezone(cfg.ToTimezone)
-			t = t.In(tz)
-		}
-
+		t := time.Unix(seconds, nanos)
 		return t
 	}
 

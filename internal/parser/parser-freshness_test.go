@@ -12,32 +12,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Helper structs
-type pfpDiff map[string]int
-
 // Helper variables
 var (
 	pfpNow      = time.Date(2014, 9, 1, 10, 30, 0, 0, time.UTC)
 	pfpDetector = language.LocaleDetector{}
 	pfpConfig   = setting.Configuration{
-		Timezone:              time.UTC,
-		CurrentTime:           pfpNow,
-		RelativeTimeBase:      pfpNow,
-		PreferredDayOfMonth:   "current",
-		SkipTokens:            []string{"t"},
-		ReturnTimeAsPeriod:    true,
-		ReturnAsTimezoneAware: true,
+		CurrentTime:         pfpNow,
+		PreferredDayOfMonth: "current",
+		SkipTokens:          []string{"t"},
+		ReturnTimeAsPeriod:  true,
 	}
 )
 
 // Helper functions
-func pfpExpectedDate(d pfpDiff) time.Time {
-	return pfpNow.AddDate(d["year"], d["month"], d["day"]+d["week"]*7).
-		Add(time.Duration(d["hour"]) * time.Hour).
-		Add(time.Duration(d["minute"]) * time.Minute).
-		Add(time.Duration(d["second"]) * time.Second)
-}
-
 func pfpParse(cfg *setting.Configuration, s string) (DateData, error) {
 	// Detect locales
 	str := strutil.SanitizeDate(s)
@@ -63,13 +50,23 @@ func pfpParse(cfg *setting.Configuration, s string) (DateData, error) {
 }
 
 func Test_parseFreshnessPattern_pastAndFutureDates(t *testing.T) {
-	// Prepare scenarios
+	// Prepare structs
+	type pfpDiff map[string]int
 	type testScenario struct {
 		String string
 		Diff   pfpDiff
 		Period DatePeriod
 	}
 
+	// Helper functions
+	expectedDate := func(d pfpDiff) time.Time {
+		return pfpNow.AddDate(d["year"], d["month"], d["day"]+d["week"]*7).
+			Add(time.Duration(d["hour"]) * time.Hour).
+			Add(time.Duration(d["minute"]) * time.Minute).
+			Add(time.Duration(d["second"]) * time.Second)
+	}
+
+	// Prepare scenarios
 	pastTimes := []testScenario{
 		// English dates
 		{"yesterday", pfpDiff{"day": -1}, Day},
@@ -935,7 +932,7 @@ func Test_parseFreshnessPattern_pastAndFutureDates(t *testing.T) {
 		// Check the result
 		passed := assert.Equal(t, test.Period, dt.Period, message)
 		if passed {
-			passed = assert.Equal(t, pfpExpectedDate(test.Diff), dt.Time, message)
+			passed = assert.Equal(t, expectedDate(test.Diff), dt.Time, message)
 		}
 
 		// Track failure
@@ -959,17 +956,16 @@ func Test_parseFreshnessPattern_invalidDates(t *testing.T) {
 func Test_parseFreshnessPattern_hasSpecificTime(t *testing.T) {
 	// Prepare struct
 	type testScenario struct {
-		Text       string
-		Expected   time.Time
-		Timezone   *time.Location
-		ToTimezone *time.Location
+		Text        string
+		CurrentTime time.Time
+		Expected    time.Time
 	}
 
 	// Helper function
-	tt := func(Y, M, D, h, m int, loc ...*time.Location) time.Time {
+	tt := func(Y, M, D, h, m int, locName ...string) time.Time {
 		tz := time.UTC
-		if len(loc) > 0 {
-			tz = loc[0]
+		if len(locName) > 0 {
+			tz = timezone.MustLoad(locName[0])
 		}
 		return time.Date(Y, time.Month(M), D, h, m, 0, 0, tz)
 	}
@@ -978,90 +974,166 @@ func Test_parseFreshnessPattern_hasSpecificTime(t *testing.T) {
 		return testScenario{Text: text, Expected: expected}
 	}
 
-	// tzTs := func(text, tzName string, e time.Time) testScenario {
-	// 	tz := timezone.MustLoad(tzName)
-	// 	e = time.Date(e.Year(), e.Month(), e.Day(),
-	// 		e.Hour(), e.Minute(), e.Second(), e.Nanosecond(), tz)
-	// 	return testScenario{Text: text, Expected: e, Timezone: tz}
-	// }
-
-	tzCvTs := func(text, tzName, toTzName string, e time.Time) testScenario {
+	tzTs := func(text, tzName string, e time.Time) testScenario {
 		tz := timezone.MustLoad(tzName)
-		toTz := timezone.MustLoad(toTzName)
 		e = time.Date(e.Year(), e.Month(), e.Day(),
-			e.Hour(), e.Minute(), e.Second(), e.Nanosecond(), toTz)
-		return testScenario{Text: text, Expected: e, Timezone: tz, ToTimezone: toTz}
+			e.Hour(), e.Minute(), e.Second(), e.Nanosecond(), tz)
+		return testScenario{Text: text, Expected: e, CurrentTime: pfpNow.In(tz)}
 	}
 
-	tz := func(name string, offset int) *time.Location {
-		return time.FixedZone(name, offset)
+	ctTs := func(text string, ct, e time.Time) testScenario {
+		return testScenario{Text: text, Expected: e, CurrentTime: ct}
 	}
 
 	// Prepare scenarios
+	ct := tt(2010, 6, 4, 13, 15)
+	ctUsEastern := tt(2014, 9, 1, 10, 30, "US/Eastern")
+	ctUsMountain := tt(2014, 9, 1, 10, 30, "US/Mountain")
+
 	tests := []testScenario{
-		// // No timezone in string
-		// ts("Today at 9 pm", tt(2014, 9, 1, 21, 0, nil)),
-		// ts("Today at 11:20 am", tt(2014, 9, 1, 11, 20, nil)),
-		// ts("Yesterday 1:20 pm", tt(2014, 8, 31, 13, 20, nil)),
-		// ts("Yesterday by 13:20", tt(2014, 8, 31, 13, 20, nil)),
-		// ts("the day before yesterday 16:50", tt(2014, 8, 30, 16, 50, nil)),
-		// ts("2 Tage 18:50", tt(2014, 8, 30, 18, 50, nil)),
-		// ts("1 day ago at 2 PM", tt(2014, 8, 31, 14, 0, nil)),
-		// ts("one day ago at 2 PM", tt(2014, 8, 31, 14, 0, nil)),
-		// ts("Dnes v 12:40", tt(2014, 9, 1, 12, 40, nil)),
-		// ts("1 week ago at 12:00 am", tt(2014, 8, 25, 0, 0, nil)),
-		// ts("one week ago at 12:00 am", tt(2014, 8, 25, 0, 0, nil)),
-		// ts("tomorrow at 2 PM", tt(2014, 9, 2, 14, 0, nil)),
+		// No timezone in string
+		ts("Today at 9 pm", tt(2014, 9, 1, 21, 0)),
+		ts("Today at 11:20 am", tt(2014, 9, 1, 11, 20)),
+		ts("Yesterday 1:20 pm", tt(2014, 8, 31, 13, 20)),
+		ts("Yesterday by 13:20", tt(2014, 8, 31, 13, 20)),
+		ts("the day before yesterday 16:50", tt(2014, 8, 30, 16, 50)),
+		ts("2 Tage 18:50", tt(2014, 8, 30, 18, 50)),
+		ts("1 day ago at 2 PM", tt(2014, 8, 31, 14, 0)),
+		ts("one day ago at 2 PM", tt(2014, 8, 31, 14, 0)),
+		ts("Dnes v 12:40", tt(2014, 9, 1, 12, 40)),
+		ts("1 week ago at 12:00 am", tt(2014, 8, 25, 0, 0)),
+		ts("one week ago at 12:00 am", tt(2014, 8, 25, 0, 0)),
+		ts("tomorrow at 2 PM", tt(2014, 9, 2, 14, 0)),
 
-		// // Has timezone in string
-		ts("tomorrow 8:30 CST", tt(2014, 9, 2, 8, 30, tz("CST", -6*3600))),
+		// Has timezone in string
+		ts("tomorrow 8:30 CST", tt(2014, 9, 2, 8, 30, "CST")),
 
-		// // Use IANA timezone
-		// tzTs("2 hours ago", "Asia/Karachi", tt(2014, 9, 1, 13, 30, nil)),
-		// tzTs("3 hours ago", "Europe/Paris", tt(2014, 9, 1, 9, 30, nil)),
-		// tzTs("5 hours ago", "US/Eastern", tt(2014, 9, 1, 1, 30, nil)),
-		// tzTs("Today at 9 pm", "Asia/Karachi", tt(2014, 9, 1, 21, 0, nil)),
+		// Use IANA timezone
+		tzTs("2 hours ago", "Asia/Karachi", tt(2014, 9, 1, 13, 30)),
+		tzTs("3 hours ago", "Europe/Paris", tt(2014, 9, 1, 9, 30)),
+		tzTs("5 hours ago", "US/Eastern", tt(2014, 9, 1, 1, 30)),
+		tzTs("Today at 9 pm", "Asia/Karachi", tt(2014, 9, 1, 21, 0)),
 
-		// // Use timezone abbreviations
-		// tzTs("2 hours ago", "PKT", tt(2014, 9, 1, 13, 30, nil)),
-		// tzTs("5 hours ago", "EST", tt(2014, 9, 1, 0, 30, nil)),
-		// tzTs("3 hours ago", "MET", tt(2014, 9, 1, 8, 30, nil)),
+		// Use timezone abbreviations
+		tzTs("2 hours ago", "PKT", tt(2014, 9, 1, 13, 30)),
+		tzTs("5 hours ago", "EST", tt(2014, 9, 1, 0, 30)),
+		tzTs("3 hours ago", "MET", tt(2014, 9, 1, 8, 30)),
 
-		// // Use UTC offsets
-		// tzTs("2 hours ago", "+05:00", tt(2014, 9, 1, 13, 30, nil)),
-		// tzTs("5 hours ago", "-05:00", tt(2014, 9, 1, 0, 30, nil)),
-		// tzTs("3 hours ago", "+01:00", tt(2014, 9, 1, 8, 30, nil)),
+		// Use UTC offsets
+		tzTs("2 hours ago", "+05:00", tt(2014, 9, 1, 13, 30)),
+		tzTs("5 hours ago", "-05:00", tt(2014, 9, 1, 0, 30)),
+		tzTs("3 hours ago", "+01:00", tt(2014, 9, 1, 8, 30)),
 
-		// Use timezone conversion
-		tzCvTs("Today at 4:25 pm", "US/Mountain", "UTC", tt(2014, 9, 1, 22, 25)),
-		tzCvTs("Yesterday at 4:25 pm", "US/Mountain", "UTC", tt(2014, 8, 31, 22, 25)),
-		// tzCvTs("Yesterday", "US/Mountain", "UTC", tt(2014, 8, 31, 16, 30)),
-		// tzCvTs("Today", "US/Mountain", "UTC", tt(2014, 9, 1, 16, 30)),
+		// Use custom current time
+		ctTs("Today at 4:25 pm", ctUsMountain, tt(2014, 9, 1, 22, 25)),
+		ctTs("Yesterday at 4:25 pm", ctUsMountain, tt(2014, 8, 31, 22, 25)),
+		ctTs("Yesterday", ctUsMountain, tt(2014, 8, 31, 16, 30)),
+		ctTs("Today", ctUsMountain, tt(2014, 9, 1, 16, 30)),
+		ctTs("1 minute ago", ctUsEastern, tt(2014, 9, 1, 14, 29)),
+		ctTs("Today at 9 pm", ct, tt(2010, 6, 4, 21, 0)),
+		ctTs("Today at 11:20 am", ct, tt(2010, 6, 4, 11, 20)),
+		ctTs("Yesterday 1:20 pm", ct, tt(2010, 6, 3, 13, 20)),
+		ctTs("the day before yesterday 16:50", ct, tt(2010, 6, 2, 16, 50)),
+		ctTs("2 Tage 18:50", ct, tt(2010, 6, 2, 18, 50)),
+		ctTs("1 day ago at 2 PM", ct, tt(2010, 6, 3, 14, 0)),
+		ctTs("Dnes v 12:40", ct, tt(2010, 6, 4, 12, 40)),
+		ctTs("1 week ago at 12:00 am", ct, tt(2010, 5, 28, 0, 0)),
+		ctTs("yesterday", ct, tt(2010, 6, 3, 13, 15)),
+		ctTs("the day before yesterday", ct, tt(2010, 6, 2, 13, 15)),
+		ctTs("today", ct, tt(2010, 6, 4, 13, 15)),
+		ctTs("an hour ago", ct, tt(2010, 6, 4, 12, 15)),
+		ctTs("about an hour ago", ct, tt(2010, 6, 4, 12, 15)),
+		ctTs("a day ago", ct, tt(2010, 6, 3, 13, 15)),
+		ctTs("a week ago", ct, tt(2010, 5, 28, 13, 15)),
+		ctTs("2 hours ago", ct, tt(2010, 6, 4, 11, 15)),
+		ctTs("about 23 hours ago", ct, tt(2010, 6, 3, 14, 15)),
+		ctTs("1 year 2 months", ct, tt(2009, 4, 4, 13, 15)),
+		ctTs("1 year, 09 months,01 weeks", ct, tt(2008, 8, 28, 13, 15)),
+		ctTs("1 year 11 months", ct, tt(2008, 7, 4, 13, 15)),
+		ctTs("1 year 12 months", ct, tt(2008, 6, 4, 13, 15)),
+		ctTs("15 hr", ct, tt(2010, 6, 3, 22, 15)),
+		ctTs("15 hrs", ct, tt(2010, 6, 3, 22, 15)),
+		ctTs("2 min", ct, tt(2010, 6, 4, 13, 13)),
+		ctTs("2 mins", ct, tt(2010, 6, 4, 13, 13)),
+		ctTs("3 sec", ct, time.Date(2010, 6, 4, 13, 14, 57, 0, time.UTC)),
+		ctTs("1000 years ago", ct, tt(1010, 6, 4, 13, 15)),
+		ctTs("2008 years ago", ct, tt(2, 6, 4, 13, 15)),
+		ctTs("5000 months ago", ct, tt(1593, 10, 4, 13, 15)),
+		ctTs(fmt.Sprintf("%d months ago", 2008*12+8), ct, tt(1, 10, 4, 13, 15)),
+		ctTs("1 year, 1 month, 1 week, 1 day, 1 hour and 1 minute ago", ct, tt(2009, 4, 26, 12, 14)),
+		ctTs("just now", ct, tt(2010, 6, 4, 13, 15)),
 	}
 
 	// Start tests
 	nFailed := 0
 	for _, test := range tests {
 		// Prepare log message
-		message := fmt.Sprintf("\"%s\" => \"%s\"", test.Text, test.Expected.Format("2006-01-02 15:04:05 MST -0700"))
+		message := fmt.Sprintf("\"%s\", currently \"%s\" => \"%s\"",
+			test.Text,
+			test.CurrentTime.Format("2006-01-02 15:04:05 MST -0700"),
+			test.Expected.Format("2006-01-02 15:04:05 MST -0700"))
 
 		// Prepare config
 		cfg := pfpConfig
-
-		if test.Timezone != nil {
-			cfg.Timezone = test.Timezone
-		}
-
-		if test.ToTimezone != nil {
-			cfg.ToTimezone = test.ToTimezone
+		if !test.CurrentTime.IsZero() {
+			cfg.CurrentTime = test.CurrentTime
 		}
 
 		// Parse date time
 		dt, err := pfpParse(&cfg, test.Text)
 		assert.Nil(t, err, message)
 
-		// Check the result
-		passed := assert.Equal(t, test.Expected, dt.Time, message)
+		passed := assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)
+		if !passed {
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func Test_parseFreshnessPattern_hasPreferredTimes(t *testing.T) {
+	// Prepare struct
+	type testScenario struct {
+		Text         string
+		Expected     time.Time
+		PreferFuture bool
+	}
+
+	// Helper function
+	tt := func(Y, M, D, h, m int) time.Time {
+		return time.Date(Y, time.Month(M), D, h, m, 0, 0, time.UTC)
+	}
+
+	// Prepare config
+	cfg := pfpConfig
+	cfg.CurrentTime = tt(2010, 6, 4, 13, 15)
+
+	// Prepare scenarios
+	tests := []testScenario{
+		{"3 days", tt(2010, 6, 1, 13, 15), false},
+		{"2 years", tt(2008, 6, 4, 13, 15), false},
+		{"3 days", tt(2010, 6, 7, 13, 15), true},
+		{"2 years", tt(2012, 6, 4, 13, 15), true},
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("\"%s\", future: %v => \"%s\"",
+			test.Text, test.PreferFuture, test.Expected.Format("2006-01-02 15:04:05 MST -0700"))
+
+		// Prepare config
+		cfg.PreferFutureTime = test.PreferFuture
+
+		// Parse date time
+		dt, err := pfpParse(&cfg, test.Text)
+		assert.Nil(t, err, message)
+
+		passed := assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)
 		if !passed {
 			nFailed++
 		}
