@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -14,11 +13,9 @@ func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
 	// Prepare string
 	str = rxBraces.ReplaceAllString(str, "")
 	str, tzData := timezone.PopTzOffset(str)
-	fmt.Println(tzData, tzData.IsZero())
 
 	// Parse time
 	t, _ := parseFreshnessTime(str)
-	fmt.Println("TIME:", t)
 
 	// Find current time
 	now := time.Now()
@@ -26,24 +23,18 @@ func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
 		now = cfg.CurrentTime
 	}
 
-	fmt.Println("NOW 0:", now)
 	if !tzData.IsZero() {
 		loc := time.FixedZone(tzData.Name, tzData.Offset)
 		now = now.In(loc)
-		fmt.Println("NOW 1:", now)
 	}
 
 	// Get relative date
-	// fmt.Println("NOW:", now)
 	dt, period := parseFreshnessDate(cfg, str, now)
-	fmt.Println("NOW 2:", now)
-	fmt.Println("DATE 1:", dt)
 
 	if !dt.IsZero() && !t.IsZero() {
 		dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
 			t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 			dt.Location())
-		fmt.Println("DATE 2:", dt)
 		if cfg != nil && cfg.ReturnTimeAsPeriod {
 			period = Time
 		}
@@ -60,9 +51,7 @@ func parseFreshnessTime(s string) (time.Time, error) {
 }
 
 func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (time.Time, DatePeriod) {
-	wordsAreUnit := allWordsAreUnits(str)
-	// fmt.Println("ALL WORDS ARE UNIT", wordsAreUnit)
-	if !wordsAreUnit {
+	if !allWordsAreUnits(str) {
 		return time.Time{}, 0
 	}
 
@@ -102,9 +91,6 @@ func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (
 func allWordsAreUnits(s string) bool {
 	s = strings.Join(strings.Fields(s), " ")
 
-	// fmt.Println("SKIP:", rxFreshnessSkipWord)
-	// fmt.Println("SPLIT:", strutil.Jsonify(rxNonWord.Split(s, -1)))
-
 	var words []string
 	var wordCount int
 	for _, word := range rxNonWord.Split(s, -1) {
@@ -118,7 +104,6 @@ func allWordsAreUnits(s string) bool {
 		}
 	}
 
-	// fmt.Println("WORDS:", strutil.Jsonify(&words))
 	return wordCount == 0
 }
 
