@@ -1,21 +1,34 @@
-package parser
+package relative
 
 import (
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
+var (
+	rxNonWord          = regexp.MustCompile(`\W`)
+	rxBraces           = regexp.MustCompile(`[{}()<>\[\]]`)
+	rxIn               = regexp.MustCompile(`(?i)\bin\b`)
+	rxAgo              = regexp.MustCompile(`(?i)\bago\b`)
+	rxInAgo            = regexp.MustCompile(`(?i)\b(?:ago|in)\b`)
+	rxRelativePattern  = regexp.MustCompile(`(?i)(\d+)\s*(` + relativeUnits + `)\b`)
+	rxRelativeSkipWord = regexp.MustCompile(`(?i)^(?:` + relativeUnits + `|ago|in|\d+|:|[ap]m)`)
+	relativeUnits      = `decade|year|month|week|day|hour|minute|second`
+)
+
+func Parse(cfg *setting.Configuration, str string) date.Date {
 	// Prepare string
 	str = rxBraces.ReplaceAllString(str, "")
 	str, tzData := timezone.PopTzOffset(str)
 
 	// Parse time
-	t, _ := parseFreshnessTime(str)
+	t, _ := parseTime(str)
 
 	// Find current time
 	now := time.Now()
@@ -29,28 +42,28 @@ func parseFreshnessPattern(cfg *setting.Configuration, str string) DateData {
 	}
 
 	// Get relative date
-	dt, period := parseFreshnessDate(cfg, str, now)
+	dt, period := parseDate(cfg, str, now)
 
 	if !dt.IsZero() && !t.IsZero() {
 		dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
 			t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 			dt.Location())
 		if cfg != nil && cfg.ReturnTimeAsPeriod {
-			period = Time
+			period = date.Time
 		}
 	}
 
 	// Create date data
-	return DateData{Time: dt, Period: period}
+	return date.Date{Time: dt, Period: period}
 }
 
-func parseFreshnessTime(s string) (time.Time, error) {
-	s = rxFreshnessPattern.ReplaceAllString(s, "")
+func parseTime(s string) (time.Time, error) {
+	s = rxRelativePattern.ReplaceAllString(s, "")
 	s = rxInAgo.ReplaceAllString(s, "")
 	return parseTime(s)
 }
 
-func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (time.Time, DatePeriod) {
+func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time, date.Period) {
 	if !allWordsAreUnits(str) {
 		return time.Time{}, 0
 	}
@@ -60,14 +73,14 @@ func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (
 		return time.Time{}, 0
 	}
 
-	period := Day
+	period := date.Day
 	if _, dayExist := relTimes["day"]; !dayExist {
 		if _, weekExist := relTimes["week"]; weekExist {
-			period = Week
+			period = date.Week
 		} else if _, monthExist := relTimes["month"]; monthExist {
-			period = Month
+			period = date.Month
 		} else if _, yearExist := relTimes["year"]; yearExist {
-			period = Year
+			period = date.Year
 		}
 	}
 
@@ -91,16 +104,14 @@ func parseFreshnessDate(cfg *setting.Configuration, str string, now time.Time) (
 func allWordsAreUnits(s string) bool {
 	s = strings.Join(strings.Fields(s), " ")
 
-	var words []string
 	var wordCount int
 	for _, word := range rxNonWord.Split(s, -1) {
 		if word == "" {
 			continue
 		}
 
-		if !rxFreshnessSkipWord.MatchString(word) {
+		if !rxRelativeSkipWord.MatchString(word) {
 			wordCount++
-			words = append(words, word)
 		}
 	}
 
@@ -110,7 +121,7 @@ func allWordsAreUnits(s string) bool {
 func getRelativeTimes(s string) map[string]int {
 	relativeTimes := map[string]int{}
 
-	for _, parts := range rxFreshnessPattern.FindAllStringSubmatch(s, -1) {
+	for _, parts := range rxRelativePattern.FindAllStringSubmatch(s, -1) {
 		period := parts[2]
 		value, _ := strconv.Atoi(parts[1])
 		relativeTimes[period] = value
