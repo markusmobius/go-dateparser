@@ -14,7 +14,6 @@ func TestParse_notParsed(t *testing.T) {
 	tests := []string{
 		// Date with spaces
 		"2013 25 12",
-		"2013:25 12",
 		// Empty string
 		"",
 		":",
