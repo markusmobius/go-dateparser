@@ -22,6 +22,9 @@ func TestParse_notParsed(t *testing.T) {
 		":::",
 		// Has alphabets
 		"12AUG2015",
+		// Insane date
+		"12345678901234567890",
+		"987654321234567890123456789",
 	}
 
 	nFailed := 0
@@ -66,6 +69,7 @@ func TestParse_parsed(t *testing.T) {
 
 	// Prepare scenarios
 	tests := []testScenario{
+		// Order is specified
 		{"201115", tt(2015, 11, 20), date.Day, "DMY"},
 		{"18092017", tt(2017, 9, 18), date.Day, "DMY"},
 		{"912958:15:10", tt(9581, 12, 9, 5, 1), date.Day, "DMY"},
@@ -86,6 +90,16 @@ func TestParse_parsed(t *testing.T) {
 		{"14271", tt(2014, 1, 27), date.Day, "YDM"},
 		{"2010111110:11", tt(2010, 11, 11, 10, 1, 1), date.Day, "YDM"},
 		{"10:11:2", tt(2010, 2, 11, 0, 0), date.Day, "YDM"},
+		// Order is not specified
+		{"10032017", tt(2017, 10, 3), date.Day, ""},
+		{"19991215:07:08:04.54", tt(1999, 12, 15, 7, 8, 4), date.Day, ""},
+		// 8 digit, order not specified
+		{"20110101", tt(2011, 1, 1), date.Day, ""},
+		{"01201702", tt(1702, 1, 20), date.Day, ""},
+		{"01202020", tt(2020, 1, 20), date.Day, ""},
+		{"20202001", tt(2020, 1, 20), date.Day, ""},
+		{"20202020", tt(2002, 2, 2, 0, 2), date.Day, ""},
+		{"12345678", tt(1234, 5, 6, 7, 8), date.Day, ""},
 	}
 
 	// Prepare configuration
@@ -112,6 +126,45 @@ func TestParse_parsed(t *testing.T) {
 			passed = assert.Equal(t, test.ExpectedPeriod, dt.Period, message)
 		}
 
+		if !passed {
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func Test_getPeriodFromFormat(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Format   string
+		Expected date.Period
+	}
+
+	tests := []testScenario{
+		{"d", date.Day},
+		{"H", date.Day},
+		{"M", date.Day},
+		{"S", date.Day},
+		{"m", date.Month},
+		{"y", date.Year},
+		{"", date.Year},
+		{"md", date.Day},
+		{"Ym", date.Month},
+		{"dmy", date.Day},
+		{"YmdHM", date.Day},
+		{"YmdHMS.f", date.Day},
+		{"HM", date.Day},
+		{"MS.f", date.Day},
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		result := getPeriodFromFormat(test.Format)
+		passed := assert.Equal(t, test.Expected, result, test.Format)
 		if !passed {
 			nFailed++
 		}

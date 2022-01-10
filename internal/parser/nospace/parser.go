@@ -3,8 +3,8 @@ package nospace
 import (
 	"fmt"
 	"strings"
+	"time"
 
-	"github.com/itchyny/timefmt-go"
 	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/tokenizer"
 	"github.com/markusmobius/go-dateparser/internal/setting"
@@ -23,9 +23,9 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 
 	var order string
 	if cfg != nil && cfg.DateOrder != "" {
-		order = resolveDateOrder(cfg.DateOrder)
+		order = strings.ToLower(cfg.DateOrder)
 	} else {
-		order = resolveDateOrder("MDY")
+		order = strings.ToLower("MDY")
 		if rxEightDigit.MatchString(str) {
 			dt := findBestMatchingDate(str)
 			if dt.IsValid() {
@@ -47,10 +47,10 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 
 		for _, format := range formats {
 			period := getPeriodFromFormat(format)
-			candidates, candidateFormat := createParseCandidates(token.Text, format)
+			candidates, goFormat := createParseCandidates(token.Text, format)
 
 			for _, candidate := range candidates {
-				t, _ := timefmt.Parse(candidate, candidateFormat)
+				t, _ := time.Parse(goFormat, candidate)
 				if t.IsZero() {
 					continue
 				}
@@ -87,7 +87,7 @@ func isEligible(str string) bool {
 
 func findBestMatchingDate(str string) date.Date {
 	for _, format := range preferredFormatsOrdered8Digit {
-		t, _ := timefmt.Parse(format, str)
+		t, _ := time.Parse(format, str)
 		if !t.IsZero() && t.Year() >= 1000 {
 			period := getPeriodFromFormat(format)
 			return date.Date{Time: t, Period: period}
@@ -98,14 +98,16 @@ func findBestMatchingDate(str string) date.Date {
 }
 
 func getPeriodFromFormat(format string) date.Period {
-	for _, dayKey := range []string{"%d", "%H", "%M", "%S"} {
+	for _, dayKey := range []string{"02", "d", "H", "M", "S", "f"} {
 		if strings.Contains(format, dayKey) {
 			return date.Day
 		}
 	}
 
-	if strings.Contains(format, "%m") {
-		return date.Month
+	for _, monthKey := range []string{"01", "m"} {
+		if strings.Contains(format, monthKey) {
+			return date.Month
+		}
 	}
 
 	return date.Year
@@ -136,9 +138,4 @@ func checkStrictParsing(cfg *setting.Configuration, format string) error {
 	}
 
 	return nil
-}
-
-func resolveDateOrder(order string) string {
-	order = strings.ToUpper(order)
-	return dateOrderMap[order]
 }

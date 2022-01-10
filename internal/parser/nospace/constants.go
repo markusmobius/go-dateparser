@@ -13,41 +13,33 @@ var (
 	rxEightDigit = regexp.MustCompile(`^\d{8}$`)
 
 	formatMapping = map[string]string{
-		"%d": "day",
-		"%m": "month",
-		"%y": "year",
-		"%Y": "year",
-	}
-
-	dateOrderMap = map[string]string{
-		"DMY": "%d%m%y",
-		"DYM": "%d%y%m",
-		"MDY": "%m%d%y",
-		"MYD": "%m%y%d",
-		"YDM": "%y%d%m",
-		"YMD": "%y%m%d",
+		"d": "day",
+		"m": "month",
+		"y": "year",
+		"Y": "year",
 	}
 
 	dateFormats = []string{
-		"%Y%m%d", "%Y%d%m", "%m%Y%d",
-		"%m%d%Y", "%d%Y%m", "%d%m%Y",
-		"%y%m%d", "%y%d%m", "%m%y%d",
-		"%m%d%y", "%d%y%m", "%d%m%y",
+		"Ymd", "Ydm", "mYd",
+		"mdY", "dYm", "dmY",
+		"ymd", "ydm", "myd",
+		"mdy", "dym", "dmy",
 	}
 
 	timeFormats = []string{
-		"%H%M%S",
-		"%H%M%S",
-		"%H%M",
-		"%H",
+		"HMS",
+		"HM",
+		"H",
 	}
 
 	preferredFormats = []string{
-		"%Y%m%d%H%M", "%Y%m%d%H%M%S", "%Y%m%d%H%M%S.%f",
+		"YmdHM", "YmdHMS",
 	}
 
 	preferredFormatsOrdered8Digit = []string{
-		"%m%d%Y", "%d%m%Y", "%Y%m%d", "%Y%d%m", "%m%Y%d", "%d%Y%m",
+		"01022006", "02012006",
+		"20060102", "20060201",
+		"01200602", "02200601",
 	}
 
 	allFormats = func() []string {
@@ -65,15 +57,15 @@ var (
 
 	dateTimeFormats = func() map[string][]string {
 		formats := map[string][]string{
-			"%m%d%y": createSortedFormats("%m%d%y"),
-			"%m%y%d": createSortedFormats("%m%y%d"),
-			"%y%m%d": createSortedFormats("%y%m%d"),
-			"%y%d%m": createSortedFormats("%y%d%m"),
-			"%d%m%y": createSortedFormats("%d%m%y"),
-			"%d%y%m": createSortedFormats("%d%y%m"),
+			"mdy": createSortedFormats("mdy"),
+			"myd": createSortedFormats("myd"),
+			"ymd": createSortedFormats("ymd"),
+			"ydm": createSortedFormats("ydm"),
+			"dmy": createSortedFormats("dmy"),
+			"dym": createSortedFormats("dym"),
 		}
 
-		formats["%m%d%y"] = append(preferredFormats, formats["%m%d%y"]...)
+		formats["mdy"] = append(preferredFormats, formats["mdy"]...)
 		return formats
 	}()
 
@@ -99,7 +91,7 @@ func createSortedFormats(prefix string) []string {
 func createParseCandidates(str string, format string) ([]string, string) {
 	// Split format by its part
 	var formatParts []string
-	for _, part := range strings.Split(strings.Trim(format, "%"), "%") {
+	for _, part := range strings.Split(format, "") {
 		if _, exist := partSizeMap[part]; exist {
 			formatParts = append(formatParts, part)
 		}
@@ -178,9 +170,15 @@ candidate_loop:
 		candidates = append(candidates, candidate)
 	}
 
-	// Prepare new format
-	format = strings.ReplaceAll(format, "%", "-%")
-	format = strings.Trim(format, "-")
+	// Prepare Go format
+	format = strings.Join(formatParts, "-")
+	format = strings.ReplaceAll(format, "Y", "2006")
+	format = strings.ReplaceAll(format, "y", "06")
+	format = strings.ReplaceAll(format, "m", "1")
+	format = strings.ReplaceAll(format, "d", "2")
+	format = strings.ReplaceAll(format, "H", "15")
+	format = strings.ReplaceAll(format, "M", "4")
+	format = strings.ReplaceAll(format, "S", "5")
 
 	return candidates, format
 }
