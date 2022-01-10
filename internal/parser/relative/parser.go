@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/internal/parser/common"
 	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
@@ -60,7 +61,7 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 func parseTime(s string) (time.Time, error) {
 	s = rxRelativePattern.ReplaceAllString(s, "")
 	s = rxInAgo.ReplaceAllString(s, "")
-	return parseTime(s)
+	return common.ParseTime(s)
 }
 
 func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time, date.Period) {

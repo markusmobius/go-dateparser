@@ -1,4 +1,4 @@
-package parser
+package common
 
 import (
 	"testing"
@@ -7,16 +7,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_parseTime(t *testing.T) {
+func TestParseTime(t *testing.T) {
 	// Helper function
 	isEqual := func(s string, hour, min, sec, msec int) {
 		expected := time.Date(0, 1, 1, hour, min, sec, msec*1_000, time.UTC)
-		result, _ := parseTime(s)
+		result, _ := ParseTime(s)
 		assert.Equal(t, expected, result, s)
 	}
 
 	isZero := func(s string) {
-		result, _ := parseTime(s)
+		result, _ := ParseTime(s)
 		assert.True(t, result.IsZero(), s)
 	}
 

@@ -1,4 +1,4 @@
-package parser
+package common
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func parseTime(s string) (time.Time, error) {
+func ParseTime(s string) (time.Time, error) {
 	timeFormats := []string{
 		"15:04:05",
 		"3:04:05 PM",
