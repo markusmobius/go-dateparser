@@ -6,16 +6,21 @@ import (
 
 type TokenType uint8
 
+const (
+	Null TokenType = iota
+	Digit
+	Letter
+	Other
+)
+
 type Token struct {
 	Text string
 	Type TokenType
 }
 
-const (
-	Digit TokenType = iota
-	Letter
-	Other
-)
+func (t Token) IsEmpty() bool {
+	return t.Text == "" && t.Type == 0
+}
 
 func Tokenize(str string) []Token {
 	chars := []rune(str)

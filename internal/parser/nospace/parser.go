@@ -5,9 +5,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/internal/parser/common"
 	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/tokenizer"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
 func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
@@ -61,7 +63,14 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 					continue
 				}
 
-				if err := checkStrictParsing(cfg, format); err != nil {
+				missingParts := strutil.NewDict()
+				for key, part := range formatMapping {
+					if !strings.Contains(format, key) {
+						missingParts.Add(part)
+					}
+				}
+
+				if err := common.CheckStrictParsing(cfg, missingParts); err != nil {
 					continue
 				}
 
@@ -111,31 +120,4 @@ func getPeriodFromFormat(format string) date.Period {
 	}
 
 	return date.Year
-}
-
-func checkStrictParsing(cfg *setting.Configuration, format string) error {
-	if cfg == nil || !cfg.StrictParsing || len(cfg.RequiredParts) == 0 {
-		return nil
-	}
-
-	missingParts := map[string]struct{}{}
-	for key, part := range formatMapping {
-		if !strings.Contains(format, key) {
-			missingParts[part] = struct{}{}
-		}
-	}
-
-	if len(missingParts) > 0 {
-		if cfg.StrictParsing {
-			return fmt.Errorf("several part of date are missing")
-		}
-
-		for _, requiredPart := range cfg.RequiredParts {
-			if _, isMissing := missingParts[requiredPart]; isMissing {
-				return fmt.Errorf("required part \"%s\" is missing", requiredPart)
-			}
-		}
-	}
-
-	return nil
 }
