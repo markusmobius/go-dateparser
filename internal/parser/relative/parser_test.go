@@ -40,7 +40,7 @@ func testParse(cfg *setting.Configuration, s string) (date.Date, error) {
 		translated := language.Translate(locale, str, false, cfg)
 		dt := Parse(cfg, translated)
 
-		if dt.IsValid() {
+		if !dt.IsZero() {
 			dt.Locale = locale.Name
 			result = dt
 			break
@@ -951,7 +951,7 @@ func TestParse_pastAndFutureDates(t *testing.T) {
 func TestParse_invalidDates(t *testing.T) {
 	dt, err := testParse(&testConfig, "15th of Aug, 2014 Diane Bennett")
 	assert.Nil(t, err)
-	assert.False(t, dt.IsValid())
+	assert.True(t, dt.IsZero())
 }
 
 func TestParse_hasSpecificTime(t *testing.T) {

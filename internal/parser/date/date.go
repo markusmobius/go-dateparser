@@ -19,6 +19,6 @@ type Date struct {
 	Time   time.Time
 }
 
-func (d Date) IsValid() bool {
-	return d.Period != None && !d.Time.IsZero()
+func (d Date) IsZero() bool {
+	return d.Period == None || d.Time.IsZero()
 }

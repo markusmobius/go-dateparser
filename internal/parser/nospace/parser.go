@@ -30,7 +30,7 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 		order = strings.ToLower("MDY")
 		if rxEightDigit.MatchString(str) {
 			dt := findBestMatchingDate(str)
-			if dt.IsValid() {
+			if !dt.IsZero() {
 				return dt, nil
 			}
 		}
@@ -79,7 +79,7 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 		}
 	}
 
-	if ambiguousDate.IsValid() {
+	if !ambiguousDate.IsZero() {
 		return ambiguousDate, nil
 	}
 
