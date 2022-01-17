@@ -13,11 +13,11 @@ func ApplyDayFromConfig(cfg *setting.Configuration, t time.Time, currentDay ...i
 
 	var newDay int
 	switch cfg.PreferredDayOfMonth {
-	case "first":
+	case setting.First:
 		newDay = 1
-	case "last":
+	case setting.Last:
 		newDay = t.AddDate(0, 1, -t.Day()).Day()
-	case "current":
+	default: // current day
 		if len(currentDay) > 0 {
 			newDay = currentDay[0]
 		} else {

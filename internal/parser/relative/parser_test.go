@@ -19,7 +19,7 @@ var (
 	testDetector = language.LocaleDetector{}
 	testConfig   = setting.Configuration{
 		CurrentTime:         testNow,
-		PreferredDayOfMonth: "current",
+		PreferredDayOfMonth: setting.Current,
 		SkipTokens:          []string{"t"},
 		ReturnTimeAsPeriod:  true,
 	}
@@ -1128,7 +1128,9 @@ func TestParse_hasPreferredTimes(t *testing.T) {
 			test.Text, test.PreferFuture, test.Expected.Format("2006-01-02 15:04:05 MST -0700"))
 
 		// Prepare config
-		cfg.PreferFutureTime = test.PreferFuture
+		if test.PreferFuture {
+			cfg.PreferredDateSource = setting.Future
+		}
 
 		// Parse date time
 		dt, err := testParse(&cfg, test.Text)

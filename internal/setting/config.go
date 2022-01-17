@@ -2,6 +2,22 @@ package setting
 
 import "time"
 
+type PreferredDateSource uint8
+
+const (
+	CurrentPeriod PreferredDateSource = iota
+	Past
+	Future
+)
+
+type PreferredDayOfMonth uint8
+
+const (
+	Current PreferredDayOfMonth = iota
+	First
+	Last
+)
+
 type Configuration struct {
 	// Date order
 	DateOrder             string
@@ -9,8 +25,8 @@ type Configuration struct {
 
 	// Incomplete dates
 	CurrentTime         time.Time
-	PreferredDayOfMonth string
-	PreferFutureTime    bool
+	PreferredDayOfMonth PreferredDayOfMonth
+	PreferredDateSource PreferredDateSource
 	StrictParsing       bool
 	RequiredParts       []string
 
@@ -29,7 +45,7 @@ var DefaultConfig = Configuration{
 
 	// Incomplete dates
 	CurrentTime:         time.Now(),
-	PreferredDayOfMonth: "current",
+	PreferredDayOfMonth: Current,
 
 	// Language detection
 	SkipTokens: []string{"t"},

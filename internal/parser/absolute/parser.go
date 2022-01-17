@@ -414,14 +414,18 @@ func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
 	_, tokenMonthExist := p.ComponentTokens["month"]
 	tokenYear, tokenYearExist := p.ComponentTokens["year"]
 	tokenWeekday, tokenWeekdayExist := p.ComponentTokens["weekday"]
-	preferFutureTime := p.Config != nil && p.Config.PreferFutureTime
+
+	var dateSource setting.PreferredDateSource
+	if p.Config != nil {
+		dateSource = p.Config.PreferredDateSource
+	}
 
 	if tokenWeekdayExist && !tokenYearExist && !tokenMonthExist && !tokenDayExist {
 		dayIndex := int(t.Weekday())
 		day := strings.ToLower(tokenWeekday.Text[:3])
 
 		var steps int
-		if preferFutureTime {
+		if dateSource == setting.Future {
 			if weekdayNames[dayIndex] == day {
 				steps = 7
 			} else {
@@ -432,7 +436,11 @@ func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
 			}
 		} else {
 			if weekdayNames[dayIndex] == day {
-				steps = 7
+				if dateSource == setting.Past {
+					steps = 7
+				} else {
+					steps = 0
+				}
 			} else {
 				for weekdayNames[dayIndex] != day {
 					dayIndex--
@@ -448,32 +456,36 @@ func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
 		t = t.AddDate(0, 0, steps)
 	}
 
-	if monthExist && !yearExist && p.Now.Before(t) {
-		if preferFutureTime {
-			t = t.AddDate(1, 0, 0)
+	if monthExist && !yearExist {
+		if p.Now.Before(t) {
+			if dateSource == setting.Past {
+				t = t.AddDate(-1, 0, 0)
+			}
 		} else {
-			t = t.AddDate(-1, 0, 0)
+			if dateSource == setting.Future {
+				t = t.AddDate(1, 0, 0)
+			}
 		}
 	}
 
 	if tokenYearExist && len(tokenYear.Text) == 2 {
 		if p.Now.Before(t) {
-			if !preferFutureTime {
+			if dateSource == setting.Past {
 				t = t.AddDate(-100, 0, 0)
 			}
 		} else {
-			if preferFutureTime {
+			if dateSource == setting.Future {
 				t = t.AddDate(100, 0, 0)
 			}
 		}
 	}
 
 	if tokenTimeExist && !tokenYearExist && !tokenMonthExist && !tokenDayExist && !tokenWeekdayExist {
-		if !preferFutureTime && p.Now.Before(t) {
+		if dateSource == setting.Past && p.Now.Before(t) {
 			t = t.AddDate(0, 0, -1)
 		}
 
-		if preferFutureTime && p.Now.After(t) {
+		if dateSource == setting.Future && p.Now.After(t) {
 			t = t.AddDate(0, 0, 1)
 		}
 	}

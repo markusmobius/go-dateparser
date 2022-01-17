@@ -44,15 +44,15 @@ func TestParse(t *testing.T) {
 	// Should use day from config for dates without day
 	str, format := "August 2014", "January 2006"
 
-	cfg.PreferredDayOfMonth = "first"
+	cfg.PreferredDayOfMonth = setting.First
 	dt = Parse(&cfg, str, format)
 	dateAsExpected(dt, "2014-08-01")
 
-	cfg.PreferredDayOfMonth = "last"
+	cfg.PreferredDayOfMonth = setting.Last
 	dt = Parse(&cfg, str, format)
 	dateAsExpected(dt, "2014-08-31")
 
-	cfg.PreferredDayOfMonth = "current"
+	cfg.PreferredDayOfMonth = setting.Current
 	dt = Parse(&cfg, str, format)
 	dateAsExpected(dt, "2014-08-04")
 }

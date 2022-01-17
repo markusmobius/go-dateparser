@@ -87,7 +87,7 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 
 	date := now
 	days := relTimes["day"] + relTimes["week"]*7
-	if (rxIn.MatchString(str) || cfg.PreferFutureTime) && !rxAgo.MatchString(str) {
+	if (rxIn.MatchString(str) || cfg.PreferredDateSource == setting.Future) && !rxAgo.MatchString(str) {
 		date = date.AddDate(relTimes["year"], relTimes["month"], days)
 		date = date.Add(time.Duration(relTimes["hour"]) * time.Hour)
 		date = date.Add(time.Duration(relTimes["minute"]) * time.Minute)
