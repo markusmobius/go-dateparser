@@ -640,6 +640,7 @@ func TestTranslation(t *testing.T) {
 	}
 
 	nFailed := 0
+	cfg := &setting.DefaultConfig
 	for _, test := range tests {
 		// Prepare log message
 		message := fmt.Sprintf("%s, \"%s\"", test.Locale, test.String)
@@ -649,8 +650,7 @@ func TestTranslation(t *testing.T) {
 		assert.Nil(t, err, message)
 
 		// Translate string
-		cfg := &setting.DefaultConfig
-		translation := Translate(ld, test.String, false, cfg)
+		translation := Translate(cfg, ld, test.String, false)
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++
@@ -1528,7 +1528,7 @@ func TestFreshnessTranslation(t *testing.T) {
 		}
 
 		// Translate string
-		translation := Translate(ld, test.String, false, cfg)
+		translation := Translate(cfg, ld, test.String, false)
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++
@@ -1587,6 +1587,7 @@ func TestSplit(t *testing.T) {
 	}
 
 	nFailed := 0
+	skippedTokens := strutil.NewDict("t")
 	for _, test := range tests {
 		// Prepare log message
 		message := fmt.Sprintf("%s, \"%s\"", test.Locale, test.Text)
@@ -1600,7 +1601,7 @@ func TestSplit(t *testing.T) {
 		str = digit.NormalizeString(str)
 
 		// Split text
-		result := Split(ld, str, false)
+		result := Split(ld, str, false, skippedTokens)
 		passed := assert.Equal(t, test.Expected, result, message)
 		if !passed {
 			nFailed++
@@ -1669,7 +1670,7 @@ func TestIsApplicable(t *testing.T) {
 
 		// Make sure it's applicable
 		cfg := &setting.DefaultConfig
-		isApplicable := IsApplicable(ld, test.Text, test.StripTimezone, cfg)
+		isApplicable := IsApplicable(cfg, ld, test.Text, test.StripTimezone)
 		passed := assert.Equal(t, test.Expected, isApplicable, message)
 		if !passed {
 			nFailed++

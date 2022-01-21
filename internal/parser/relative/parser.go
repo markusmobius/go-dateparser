@@ -9,12 +9,12 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
 	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
 var (
 	rxNonWord          = regexp.MustCompile(`\W`)
-	rxBraces           = regexp.MustCompile(`[{}()<>\[\]]`)
 	rxIn               = regexp.MustCompile(`(?i)\bin\b`)
 	rxAgo              = regexp.MustCompile(`(?i)\bago\b`)
 	rxInAgo            = regexp.MustCompile(`(?i)\b(?:ago|in)\b`)
@@ -25,14 +25,14 @@ var (
 
 func Parse(cfg *setting.Configuration, str string) date.Date {
 	// Prepare string
-	str = rxBraces.ReplaceAllString(str, "")
+	str = strutil.StripBraces(str)
 	str, tzData := timezone.PopTzOffset(str)
 
 	// Parse time
 	t, _ := parseTime(str)
 
 	// Find current time
-	now := time.Now()
+	now := time.Now().UTC()
 	if cfg != nil && !cfg.CurrentTime.IsZero() {
 		now = cfg.CurrentTime
 	}

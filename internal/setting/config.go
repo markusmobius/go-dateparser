@@ -38,13 +38,28 @@ type Configuration struct {
 	ReturnTimeAsPeriod bool
 }
 
+func (c Configuration) Clone() Configuration {
+	return Configuration{
+		DateOrder:             c.DateOrder,
+		PreferLocaleDateOrder: c.PreferLocaleDateOrder,
+		CurrentTime:           c.CurrentTime,
+		PreferredDayOfMonth:   c.PreferredDayOfMonth,
+		PreferredDateSource:   c.PreferredDateSource,
+		StrictParsing:         c.StrictParsing,
+		RequiredParts:         append([]string{}, c.RequiredParts...),
+		SkipTokens:            append([]string{}, c.SkipTokens...),
+		DefaultLanguages:      append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+	}
+}
+
 var DefaultConfig = Configuration{
 	// Date order
 	DateOrder:             "MDY",
 	PreferLocaleDateOrder: true,
 
 	// Incomplete dates
-	CurrentTime:         time.Now(),
+	CurrentTime:         time.Now().UTC(),
 	PreferredDayOfMonth: Current,
 
 	// Language detection

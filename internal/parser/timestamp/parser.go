@@ -14,6 +14,11 @@ var (
 )
 
 func Parse(cfg *setting.Configuration, str string) date.Date {
+	period := date.Day
+	if cfg != nil && cfg.ReturnTimeAsPeriod {
+		period = date.Time
+	}
+
 	parts := rxTimestamp.FindStringSubmatch(str)
 	if len(parts) > 0 {
 		seconds, _ := strconv.ParseInt(parts[1], 10, 64)
@@ -22,7 +27,7 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 		nanos := micros*1_000 + millis*1_000_000
 
 		t := time.Unix(seconds, nanos)
-		return date.Date{Time: t, Period: date.Time}
+		return date.Date{Time: t, Period: period}
 	}
 
 	return date.Date{}

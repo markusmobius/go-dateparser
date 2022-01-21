@@ -1,8 +1,8 @@
 package language
 
 import (
-	"encoding/json"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
@@ -12,13 +12,11 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-func IsApplicable(ld *data.LocaleData, str string, stripTimezone bool, config *setting.Configuration) bool {
+func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, stripTimezone bool) bool {
 	// Parse config
-	skippedTokens := map[string]struct{}{}
-	if config != nil {
-		for _, token := range config.SkipTokens {
-			skippedTokens[token] = struct{}{}
-		}
+	skippedTokens := strutil.NewDict()
+	if cfg != nil {
+		skippedTokens.Add(cfg.SkipTokens...)
 	}
 
 	// Strip timezone if needed
@@ -32,7 +30,9 @@ func IsApplicable(ld *data.LocaleData, str string, stripTimezone bool, config *s
 	str = simplify(ld, str)
 
 	// Generate tokens
-	tokens := Split(ld, str, false)
+	tokens := Split(ld, str, false, skippedTokens)
+	// fmt.Println(ld.Name, "TOKENS:", strutil.Jsonify(&tokens))
+	// fmt.Println(ld.Name, "SKIPPED TOKENS:", strutil.Jsonify(&cfg.SkipTokens))
 
 	// Check if tokens valid
 	// First check if tokens only consist of tokens that must be kept
@@ -49,11 +49,12 @@ func IsApplicable(ld *data.LocaleData, str string, stripTimezone bool, config *s
 
 	// Check if token exist in locale data
 	for _, token := range tokens {
-		_, isSkipped := skippedTokens[token]
+		isSkipped := skippedTokens.Contain(token)
 		_, isInTranslations := ld.Translations[token]
 		_, isInRelativeType := ld.RelativeType[token]
 		isNumberOnly := rxNumberOnly.MatchString(token)
 		isInDictionary := isInTranslations || isInRelativeType
+		// fmt.Println("XXX:", isSkipped)
 
 		var exactCombinedMatch bool
 		if ld.RxExactCombined != nil {
@@ -70,13 +71,11 @@ func IsApplicable(ld *data.LocaleData, str string, stripTimezone bool, config *s
 	return true
 }
 
-func Translate(ld *data.LocaleData, str string, keepFormatting bool, config *setting.Configuration) string {
+func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keepFormatting bool) string {
 	// Parse config
-	skippedTokens := map[string]struct{}{}
-	if config != nil {
-		for _, token := range config.SkipTokens {
-			skippedTokens[token] = struct{}{}
-		}
+	skippedTokens := strutil.NewDict()
+	if cfg != nil {
+		skippedTokens.Add(cfg.SkipTokens...)
 	}
 
 	// Normalize and simplify the string
@@ -86,12 +85,12 @@ func Translate(ld *data.LocaleData, str string, keepFormatting bool, config *set
 
 	// Split string to tokens
 	inInTokens := false
-	tokens := Split(ld, str, keepFormatting)
+	tokens := Split(ld, str, keepFormatting, skippedTokens)
 
 	// Translate
 	for i, token := range tokens {
 		// Check if token skipped
-		if _, skipped := skippedTokens[token]; skipped {
+		if skippedTokens.Contain(token) {
 			tokens[i] = ""
 			continue
 		}
@@ -146,45 +145,10 @@ func Translate(ld *data.LocaleData, str string, keepFormatting bool, config *set
 	return join(validTokens, joinSeparator)
 }
 
-func Split(ld *data.LocaleData, str string, keepFormatting bool) []string {
+func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens strutil.Dict) []string {
 	// Split the strings
 	if ld.RxCombined != nil {
-		var tmp string
-		for {
-			pos := ld.RxCombined.FindStringSubmatchIndex(str)
-			lenPos := len(pos)
-			if lenPos == 0 {
-				break
-			}
-
-			tmp += str[:pos[0]]
-
-			switch lenPos {
-			case 2 * 2:
-				tmp += fmt.Sprintf("%s%s%s",
-					splitSeparator,
-					str[pos[2]:pos[3]],
-					splitSeparator)
-
-			case 4 * 2:
-				tmp += fmt.Sprintf("%s%s%s%s%s",
-					str[pos[2]:pos[3]],
-					splitSeparator,
-					str[pos[4]:pos[5]],
-					splitSeparator,
-					str[pos[6]:pos[7]])
-
-			default:
-				tmp += fmt.Sprintf("%s%s%s",
-					splitSeparator,
-					str[pos[0]:pos[1]],
-					splitSeparator)
-			}
-
-			str = str[pos[1]:]
-		}
-
-		str = tmp + str
+		str = splitWithRegex(str, ld.RxCombined)
 	}
 
 	var tokens []string
@@ -194,6 +158,18 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool) []string {
 		} else {
 			tokens = append(tokens, splitByKnownWords(ld, token, keepFormatting)...)
 		}
+	}
+
+	if len(skippedTokens) > 0 {
+		var finalTokens []string
+		for _, token := range tokens {
+			trimmedToken := strings.TrimSpace(token)
+			// fmt.Println("TRIMMED TOKEN:", trimmedToken, skippedTokens.Contain(trimmedToken))
+			if !skippedTokens.Contain(trimmedToken) {
+				finalTokens = append(finalTokens, token)
+			}
+		}
+		tokens = finalTokens
 	}
 
 	return tokens
@@ -207,6 +183,46 @@ func simplify(ld *data.LocaleData, str string) string {
 	}
 
 	return str
+}
+
+func splitWithRegex(s string, rx *regexp.Regexp) string {
+	var tmp string
+	for {
+		pos := rx.FindStringSubmatchIndex(s)
+		lenPos := len(pos)
+		if lenPos == 0 {
+			break
+		}
+
+		tmp += s[:pos[0]]
+
+		switch lenPos {
+		case 2 * 2:
+			tmp += fmt.Sprintf("%s%s%s",
+				splitSeparator,
+				s[pos[2]:pos[3]],
+				splitSeparator)
+
+		case 4 * 2:
+			tmp += fmt.Sprintf("%s%s%s%s%s",
+				s[pos[2]:pos[3]],
+				splitSeparator,
+				s[pos[4]:pos[5]],
+				splitSeparator,
+				s[pos[6]:pos[7]])
+
+		default:
+			tmp += fmt.Sprintf("%s%s%s",
+				splitSeparator,
+				s[pos[0]:pos[1]],
+				splitSeparator)
+		}
+
+		s = s[pos[1]:]
+	}
+
+	s = tmp + s
+	return s
 }
 
 func splitByKnownWords(ld *data.LocaleData, str string, keepFormatting bool) []string {
@@ -303,9 +319,4 @@ func join(tokens []string, separator string) string {
 
 	joined = strings.TrimSpace(joined)
 	return joined
-}
-
-func strJson(data interface{}) string {
-	bt, _ := json.Marshal(data)
-	return string(bt)
 }

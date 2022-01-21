@@ -16,7 +16,7 @@ var (
 func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date {
 	period := date.Day
 
-	currentTime := time.Now()
+	currentTime := time.Now().UTC()
 	if !cfg.CurrentTime.IsZero() {
 		currentTime = cfg.CurrentTime
 	}

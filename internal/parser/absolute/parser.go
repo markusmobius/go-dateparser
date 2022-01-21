@@ -20,8 +20,8 @@ var (
 	rxMeridian    = regexp.MustCompile(`(?i)am|pm`)
 
 	alphaDirectives = map[string][]string{
-		"weekday": {"monday", "mon"},
-		"month":   {"january", "jan"},
+		"weekday": {"Monday", "Mon"},
+		"month":   {"January", "Jan"},
 	}
 
 	weekdayNames = []string{"sun", "mon", "tue", "wed", "thu", "fri", "sat"}
@@ -59,18 +59,17 @@ type Parser struct {
 	NumberDirectives [][]string
 }
 
-func NewParser(cfg *setting.Configuration, str string) Parser {
+func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
 	// Prepare variables
 	p := Parser{
 		Config:          cfg,
-		Now:             time.Now(),
+		Now:             time.Now().UTC(),
 		Tokens:          tokenizer.Tokenize(str),
 		ComponentValues: map[string]int{},
 		ComponentTokens: map[string]tokenizer.Token{},
 		SkippedIndexes:  map[int]struct{}{},
 		SkippedTokens:   strutil.NewDict("t", "year", "hour", "minute"),
 	}
-	print("TOKENS:", jsonify(&p.Tokens))
 
 	// Set current time if specified on config
 	if cfg != nil && !cfg.CurrentTime.IsZero() {
@@ -86,7 +85,9 @@ func NewParser(cfg *setting.Configuration, str string) Parser {
 			})
 		}
 	}
-	print("FILTERED TOKENS:", jsonify(&p.FilteredTokens))
+
+	print("\tTOKENS:", jsonify(&p.Tokens))
+	print("\tFILTERED TOKENS:", jsonify(&p.FilteredTokens))
 
 	// Prepare list of number directives
 	if cfg != nil {
@@ -107,7 +108,7 @@ func NewParser(cfg *setting.Configuration, str string) Parser {
 
 	// Process each filtered token
 	for index, filteredToken := range p.FilteredTokens {
-		print("INDEX:", index, "TTOI:", jsonify(&filteredToken))
+		print("\tCURRENT TOKEN:", filteredToken.Text)
 
 		// Check if this token should be skipped
 		if _, exist := p.SkippedIndexes[index]; exist {
@@ -135,12 +136,14 @@ func NewParser(cfg *setting.Configuration, str string) Parser {
 
 			nextFilteredToken, exist := p.getFilteredToken(index + 1)
 			if exist && isBeforePeriod && !isAfterPeriod {
-				nextTokenIsLast := index+1 == len(p.FilteredTokens)-1
+				nextTokenIndex := index + 1
+				nextToken, _ := p.getFilteredToken(nextTokenIndex)
+				nextTokenIsLast := nextTokenIndex == len(p.FilteredTokens)-1
 				nextOriginalToken, exist := p.getToken(nextFilteredToken.OriginalIndex + 1)
 				nextOriginalTokenIsNotPeriod := !exist || nextOriginalToken.Text != "."
 
 				if nextTokenIsLast || nextOriginalTokenIsNotPeriod {
-					newToken := filteredToken.Text + ":" + nextOriginalToken.Text
+					newToken := filteredToken.Text + ":" + nextToken.Text
 					if rxHourMinute.MatchString(newToken) {
 						filteredToken.Text = newToken
 						p.SkippedIndexes[index+1] = struct{}{}
@@ -161,7 +164,6 @@ func NewParser(cfg *setting.Configuration, str string) Parser {
 				}
 
 				nextOriginalToken, _ := p.getToken(nextOriginalIndex + 1)
-				nextOriginalToken, _ = p.getToken(filteredToken.OriginalIndex + 1) // DIFF
 
 				if strings.Contains(filteredToken.Text, ":") &&
 					strings.Contains(nextOriginalToken.Text, ".") {
@@ -200,21 +202,24 @@ func NewParser(cfg *setting.Configuration, str string) Parser {
 					strTime = tokenText
 				}
 
-				p.ParsedTime, _ = common.ParseTime(strTime)
 				p.ComponentTokens["time"] = tokenizer.Token{Text: strTime, Type: tokenizer.Digit}
 				continue
 			}
 		}
 
+		var err error
 		var results []TokenParseResult
 		if filteredToken.Type == tokenizer.Digit {
-			results, _ = p.parseDigitToken(filteredToken.Text, p.SkippedComponent)
+			results, err = p.parseDigitToken(filteredToken.Text, p.SkippedComponent)
 		} else if filteredToken.Type == tokenizer.Letter {
-			results, _ = p.parseLetterToken(filteredToken.Text, p.SkippedComponent)
+			results, err = p.parseLetterToken(filteredToken.Text, p.SkippedComponent)
+		}
+
+		if err != nil {
+			return Parser{}, err
 		}
 
 		// Save the initial token parsing result
-		print("RESULTS:", jsonify(&results))
 		for _, result := range results {
 			if len(filteredToken.Text) == 4 && result.Component == "year" {
 				p.SkippedComponent = "year"
@@ -224,8 +229,10 @@ func NewParser(cfg *setting.Configuration, str string) Parser {
 	}
 
 	// Use fallback for unknown component
+	print("\tUNKNOWN COMPONENTS:")
 	for _, component := range []string{"day", "month", "year"} {
 		if _, exist := p.ComponentValues[component]; !exist {
+			print("\t\t", component)
 			for _, ut := range p.UnsetTokens {
 				if ut.Type == tokenizer.Digit {
 					newValue, _ := strconv.Atoi(ut.Text)
@@ -236,7 +243,7 @@ func NewParser(cfg *setting.Configuration, str string) Parser {
 		}
 	}
 
-	return p
+	return p, nil
 }
 
 func (p *Parser) Parse() (date.Date, error) {
@@ -248,13 +255,21 @@ func (p *Parser) Parse() (date.Date, error) {
 		}
 	}
 
-	print("MISSING PARTS:", jsonify(&missingParts))
 	err := common.CheckStrictParsing(p.Config, missingParts)
 	if err != nil {
 		return date.Date{}, err
 	}
 
 	// Generate time result
+	if timeToken, exist := p.ComponentTokens["time"]; exist {
+		p.ParsedTime, err = common.ParseTime(timeToken.Text)
+		if err != nil {
+			print("\tERROR:", err)
+			return date.Date{}, err
+		}
+	}
+
+	print("\t\tPARSED TIME:", p.ParsedTime)
 	result := p.createTimeFromComponents()
 	if !p.ParsedTime.IsZero() {
 		result = time.Date(result.Year(), result.Month(), result.Day(),
@@ -293,10 +308,20 @@ func (p *Parser) setAndReturn(component string, token tokenizer.Token, date time
 		p.AutoOrder = append(p.AutoOrder, component)
 	}
 
+	var value int
+	switch component {
+	case "day":
+		value = date.Day()
+	case "month":
+		value = int(date.Month())
+	case "year":
+		value = date.Year()
+	}
+
 	p.ComponentTokens[component] = token
 	return []TokenParseResult{{
 		Component: component,
-		Value:     p.ComponentValues[component],
+		Value:     value,
 	}}, nil
 }
 
@@ -388,6 +413,7 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 }
 
 func (p *Parser) createTimeFromComponents() time.Time {
+	// Get component values
 	day, dayExist := p.ComponentValues["day"]
 	if !dayExist || day == 0 {
 		day = p.Now.Day()
@@ -401,6 +427,18 @@ func (p *Parser) createTimeFromComponents() time.Time {
 	year, yearExist := p.ComponentValues["year"]
 	if !yearExist || year == 0 {
 		year = p.Now.Year()
+	}
+
+	// Fix leap year
+	if day == 29 && month == 2 && !p.isLeapYear(year) {
+		year = p.getCorrectLeapYear(year)
+	}
+
+	// Fix max day
+	maxDayOfMonth := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC).
+		AddDate(0, 1, -1).Day()
+	if day > maxDayOfMonth {
+		day = maxDayOfMonth
 	}
 
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, p.Now.Location())
@@ -457,15 +495,25 @@ func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
 	}
 
 	if monthExist && !yearExist {
+		tDay, tMonth, tYear := t.Day(), t.Month(), t.Year()
+
 		if p.Now.Before(t) {
 			if dateSource == setting.Past {
-				t = t.AddDate(-1, 0, 0)
+				tYear--
 			}
 		} else {
 			if dateSource == setting.Future {
-				t = t.AddDate(1, 0, 0)
+				tYear++
 			}
 		}
+
+		if tDay == 29 && tMonth == 2 && !p.isLeapYear(tYear) {
+			tYear = p.getCorrectLeapYear(tYear)
+		}
+
+		t = time.Date(tYear, tMonth, tDay,
+			t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
+			t.Location())
 	}
 
 	if tokenYearExist && len(tokenYear.Text) == 2 {
@@ -501,12 +549,13 @@ func (p *Parser) correctForDay(t time.Time) time.Time {
 		return t
 	}
 
+	print("\tYOHOHOHO:", p.Now.Day(), t)
 	t = common.ApplyDayFromConfig(p.Config, t, p.Now.Day())
 	return t
 }
 
 func (p *Parser) getPeriod() date.Period {
-	_, timeExist := p.ComponentValues["time"]
+	timeExist := !p.ParsedTime.IsZero()
 	_, dayExist := p.ComponentValues["day"]
 	_, monthExist := p.ComponentValues["month"]
 	_, yearExist := p.ComponentValues["year"]
@@ -524,4 +573,53 @@ func (p *Parser) getPeriod() date.Period {
 	}
 
 	return date.Day
+}
+
+func (p Parser) isLeapYear(year int) bool {
+	if year%400 == 0 {
+		return true
+	} else if year%100 == 0 {
+		return false
+	} else if year%4 == 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (p Parser) getCorrectLeapYear(currentYear int) int {
+	var dateSource setting.PreferredDateSource
+	if p.Config != nil {
+		dateSource = p.Config.PreferredDateSource
+	}
+
+	switch dateSource {
+	case setting.Future:
+		return p.getLeapYear(currentYear, true)
+	case setting.Past:
+		return p.getLeapYear(currentYear, false)
+	default:
+		nextLeapYear := p.getLeapYear(currentYear, true)
+		prevLeapYear := p.getLeapYear(currentYear, false)
+		nextLeapYearIsCloser := nextLeapYear-currentYear < currentYear-prevLeapYear
+		if nextLeapYearIsCloser {
+			return nextLeapYear
+		} else {
+			return prevLeapYear
+		}
+	}
+}
+
+func (p Parser) getLeapYear(year int, toFuture bool) int {
+	step := 1
+	if !toFuture {
+		step = -1
+	}
+
+	for {
+		year += step
+		if p.isLeapYear(year) {
+			return year
+		}
+	}
 }

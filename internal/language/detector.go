@@ -16,7 +16,6 @@ type LocaleDetector struct {
 	Locales             []string
 	Region              string
 	UseGivenOrder       bool
-	TryUsedLocales      bool
 	UseExternalDetector bool
 	ConfidenceThreshold float64
 
@@ -76,6 +75,7 @@ func (d *LocaleDetector) Detect(str string) ([]*data.LocaleData, error) {
 	}
 
 	for _, locale := range locales {
+		// fmt.Println("XX:", locale.Name)
 		// If locale already stored in result, skip
 		if _, exist := resultTracker[locale.Name]; exist {
 			continue
@@ -127,5 +127,5 @@ func (d *LocaleDetector) SaveUsedLocale(ld *data.LocaleData) {
 }
 
 func (d *LocaleDetector) isApplicable(ld *data.LocaleData, s string) bool {
-	return IsApplicable(ld, s, false, d.Configuration)
+	return IsApplicable(d.Configuration, ld, s, false)
 }

@@ -6,6 +6,11 @@ import (
 )
 
 func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
-	parser := NewParser(cfg, str)
+	parser, err := NewParser(cfg, str)
+	if err != nil {
+		return date.Date{}, err
+	}
+
+	print("\tINITIATION FINISHED")
 	return parser.Parse()
 }

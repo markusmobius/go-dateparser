@@ -15,13 +15,15 @@ import (
 
 // Helper variables
 var (
-	testNow      = time.Date(2014, 9, 1, 10, 30, 0, 0, time.UTC)
-	testDetector = language.LocaleDetector{}
-	testConfig   = setting.Configuration{
+	testNow    = time.Date(2014, 9, 1, 10, 30, 0, 0, time.UTC)
+	testConfig = &setting.Configuration{
 		CurrentTime:         testNow,
 		PreferredDayOfMonth: setting.Current,
 		SkipTokens:          []string{"t"},
 		ReturnTimeAsPeriod:  true,
+	}
+	testDetector = language.LocaleDetector{
+		Configuration: testConfig,
 	}
 )
 
@@ -37,7 +39,7 @@ func testParse(cfg *setting.Configuration, s string) (date.Date, error) {
 	// Process each locale
 	var result date.Date
 	for _, locale := range locales {
-		translated := language.Translate(locale, str, false, cfg)
+		translated := language.Translate(cfg, locale, str, false)
 		dt := Parse(cfg, translated)
 
 		if !dt.IsZero() {
@@ -927,7 +929,7 @@ func TestParse_pastAndFutureDates(t *testing.T) {
 		message := fmt.Sprintf("\"%s\" => %v (%d)", test.String, strutil.Jsonify(&test.Diff), test.Period)
 
 		// Parse date time
-		dt, err := testParse(&testConfig, test.String)
+		dt, err := testParse(testConfig, test.String)
 		assert.Nil(t, err, message)
 
 		// Check the result
@@ -949,7 +951,7 @@ func TestParse_pastAndFutureDates(t *testing.T) {
 }
 
 func TestParse_invalidDates(t *testing.T) {
-	dt, err := testParse(&testConfig, "15th of Aug, 2014 Diane Bennett")
+	dt, err := testParse(testConfig, "15th of Aug, 2014 Diane Bennett")
 	assert.Nil(t, err)
 	assert.True(t, dt.IsZero())
 }
@@ -1081,7 +1083,7 @@ func TestParse_hasSpecificTime(t *testing.T) {
 		}
 
 		// Parse date time
-		dt, err := testParse(&cfg, test.Text)
+		dt, err := testParse(cfg, test.Text)
 		assert.Nil(t, err, message)
 
 		passed := assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)
@@ -1133,7 +1135,7 @@ func TestParse_hasPreferredTimes(t *testing.T) {
 		}
 
 		// Parse date time
-		dt, err := testParse(&cfg, test.Text)
+		dt, err := testParse(cfg, test.Text)
 		assert.Nil(t, err, message)
 
 		passed := assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)
