@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
 	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/tokenizer"
@@ -430,15 +431,14 @@ func (p *Parser) createTimeFromComponents() time.Time {
 	}
 
 	// Fix leap year
-	if day == 29 && month == 2 && !p.isLeapYear(year) {
+	if day == 29 && month == 2 && !dateutil.IsLeapYear(year) {
 		year = p.getCorrectLeapYear(year)
 	}
 
 	// Fix max day
-	maxDayOfMonth := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC).
-		AddDate(0, 1, -1).Day()
-	if day > maxDayOfMonth {
-		day = maxDayOfMonth
+	lastDayOfMonth := dateutil.GetLastDayOfMonth(year, month)
+	if day > lastDayOfMonth {
+		day = lastDayOfMonth
 	}
 
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, p.Now.Location())
@@ -507,7 +507,7 @@ func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
 			}
 		}
 
-		if tDay == 29 && tMonth == 2 && !p.isLeapYear(tYear) {
+		if tDay == 29 && tMonth == 2 && !dateutil.IsLeapYear(tYear) {
 			tYear = p.getCorrectLeapYear(tYear)
 		}
 
@@ -575,18 +575,6 @@ func (p *Parser) getPeriod() date.Period {
 	return date.Day
 }
 
-func (p Parser) isLeapYear(year int) bool {
-	if year%400 == 0 {
-		return true
-	} else if year%100 == 0 {
-		return false
-	} else if year%4 == 0 {
-		return true
-	} else {
-		return false
-	}
-}
-
 func (p Parser) getCorrectLeapYear(currentYear int) int {
 	var dateSource setting.PreferredDateSource
 	if p.Config != nil {
@@ -595,31 +583,17 @@ func (p Parser) getCorrectLeapYear(currentYear int) int {
 
 	switch dateSource {
 	case setting.Future:
-		return p.getLeapYear(currentYear, true)
+		return dateutil.GetLeapYear(currentYear, true)
 	case setting.Past:
-		return p.getLeapYear(currentYear, false)
+		return dateutil.GetLeapYear(currentYear, false)
 	default:
-		nextLeapYear := p.getLeapYear(currentYear, true)
-		prevLeapYear := p.getLeapYear(currentYear, false)
+		nextLeapYear := dateutil.GetLeapYear(currentYear, true)
+		prevLeapYear := dateutil.GetLeapYear(currentYear, false)
 		nextLeapYearIsCloser := nextLeapYear-currentYear < currentYear-prevLeapYear
 		if nextLeapYearIsCloser {
 			return nextLeapYear
 		} else {
 			return prevLeapYear
-		}
-	}
-}
-
-func (p Parser) getLeapYear(year int, toFuture bool) int {
-	step := 1
-	if !toFuture {
-		step = -1
-	}
-
-	for {
-		year += step
-		if p.isLeapYear(year) {
-			return year
 		}
 	}
 }

@@ -3,6 +3,7 @@ package common
 import (
 	"time"
 
+	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 )
 
@@ -30,17 +31,12 @@ func ApplyDayFromConfig(cfg *setting.Configuration, t time.Time, currentDay ...i
 	}
 
 	// Make sure new day is not bigger than max day
-	if maxDay := getMaxDayOfMonth(t.Month(), t.Year()); newDay > maxDay {
-		newDay = maxDay
+	lastDayOfMonth := dateutil.GetLastDayOfMonth(t.Year(), int(t.Month()))
+	if newDay > lastDayOfMonth {
+		newDay = lastDayOfMonth
 	}
 
 	return time.Date(t.Year(), t.Month(), newDay,
 		t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 		t.Location())
-}
-
-func getMaxDayOfMonth(month time.Month, year int) int {
-	return time.Date(year, month, 1, 0, 0, 0, 0, time.UTC).
-		AddDate(0, 1, -1).
-		Day()
 }
