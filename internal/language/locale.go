@@ -12,6 +12,9 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
+// IsApplicable checks the specified locale data is applicable to translate the date string `str`.
+// The `str` parameter is a string representing date and/or time in a recognizably valid format.
+// If `stripTimezone` set to true, timezone will be stripped and ignored.
 func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, stripTimezone bool) bool {
 	// Parse config
 	skippedTokens := strutil.NewDict()
@@ -23,22 +26,24 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	if stripTimezone {
 		str, _ = timezone.PopTzOffset(str)
 	}
+	// fmt.Println("NAME:", ld.Name)
+	// fmt.Println("STR:", str)
 
 	// Normalize string
 	str = strutil.NormalizeString(str)
 	str = digit.NormalizeString(str)
 	str = simplify(ld, str)
+	// fmt.Println("SIMPLIFIED:", str)
 
 	// Generate tokens
 	tokens := Split(ld, str, false, skippedTokens)
-	// fmt.Println(ld.Name, "TOKENS:", strutil.Jsonify(&tokens))
-	// fmt.Println(ld.Name, "SKIPPED TOKENS:", strutil.Jsonify(&cfg.SkipTokens))
+	// fmt.Println("TOKENS:", strutil.Jsonify(&tokens))
 
 	// Check if tokens valid
 	// First check if tokens only consist of tokens that must be kept
 	var nKeptTokens int
 	for _, token := range tokens {
-		if _, kept := alwaysKeptTokens[token]; kept {
+		if alwaysKeptTokens.Contain(token) {
 			nKeptTokens++
 		}
 	}
@@ -46,6 +51,7 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	if nKeptTokens == len(tokens) {
 		return false
 	}
+	// fmt.Println("TOKEN VALID:", nKeptTokens != len(tokens))
 
 	// Check if token exist in locale data
 	for _, token := range tokens {
@@ -54,7 +60,6 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 		_, isInRelativeType := ld.RelativeType[token]
 		isNumberOnly := rxNumberOnly.MatchString(token)
 		isInDictionary := isInTranslations || isInRelativeType
-		// fmt.Println("XXX:", isSkipped)
 
 		var exactCombinedMatch bool
 		if ld.RxExactCombined != nil {
@@ -68,9 +73,12 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 		return false
 	}
 
+	// fmt.Println("FINALLY VALID")
 	return true
 }
 
+// Translate the date string `str` to its English equivalent using information from the locale data.
+// If `keepFormatting` is set to true, retain formatting of the date string after translation.
 func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keepFormatting bool) string {
 	// Parse config
 	skippedTokens := strutil.NewDict()
@@ -145,6 +153,8 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 	return join(validTokens, joinSeparator)
 }
 
+// Split splits the date string `str` using translations in locale data. If `keepFormatting` is
+// set to true, it will retaing the formatting of date string.
 func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens strutil.Dict) []string {
 	// Split the strings
 	if ld.RxCombined != nil {
@@ -164,7 +174,6 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 		var finalTokens []string
 		for _, token := range tokens {
 			trimmedToken := strings.TrimSpace(token)
-			// fmt.Println("TRIMMED TOKEN:", trimmedToken, skippedTokens.Contain(trimmedToken))
 			if !skippedTokens.Contain(trimmedToken) {
 				finalTokens = append(finalTokens, token)
 			}
@@ -274,8 +283,8 @@ func splitByNumerals(str string, keepFormatting bool) []string {
 }
 
 func tokenShouldBeCaptured(token string, keepFormatting bool) bool {
-	_, alwaysKept := alwaysKeptTokens[token]
-	return keepFormatting || alwaysKept ||
+	return keepFormatting ||
+		alwaysKeptTokens.Contain(token) ||
 		rxKeepToken1.MatchString(token) ||
 		rxKeepToken2.MatchString(token)
 }
@@ -285,7 +294,7 @@ func clearFutureWords(words []string) []string {
 	var hasFreshness bool
 	var wordsWithoutIn []string
 	for _, word := range words {
-		_, isFreshWord := freshnessWords[word]
+		isFreshWord := freshnessWords.Contain(word)
 		hasFreshness = hasFreshness || isFreshWord
 
 		if word != "in" {
@@ -308,8 +317,8 @@ func join(tokens []string, separator string) string {
 	joined := tokens[0]
 	for i := 1; i < len(tokens); i++ {
 		left, right := tokens[i-1], tokens[i]
-		_, leftAlwaysKept := alwaysKeptTokens[left]
-		_, rightAlwaysKept := alwaysKeptTokens[right]
+		leftAlwaysKept := alwaysKeptTokens.Contain(left)
+		rightAlwaysKept := alwaysKeptTokens.Contain(right)
 		if !leftAlwaysKept && !rightAlwaysKept {
 			joined += separator
 		}

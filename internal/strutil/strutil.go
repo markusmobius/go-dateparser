@@ -35,6 +35,16 @@ var (
 	rxBraces             = regexp.MustCompile(`[{}()<>\[\]]`)
 )
 
+// SanitizeSpaces replaces non-breaking spaces into a normal one,
+// then remove any excess whitespaces.
+func SanitizeSpaces(s string) string {
+	s = rxNbsp.ReplaceAllString(s, " ")
+	s = strings.Join(strings.Fields(s), " ")
+	return s
+}
+
+// NormalizeUnicode removes Nonspacing Mark (Mn) characters then
+// use NFKC as the normal forms.
 func NormalizeUnicode(str string) string {
 	normalized, _, err := transform.String(unicodeTransformer, str)
 	if err != nil {
@@ -43,22 +53,21 @@ func NormalizeUnicode(str string) string {
 	return normalized
 }
 
+// NormalizeString is used to normalize the string before translated
+// into another language. This function will normalizes the unicode,
+// convert the string to lowercase then remove any excess whitespaces.
 func NormalizeString(str string) string {
 	str = NormalizeUnicode(str)
 	str = strings.ToLower(str)
-	str = strings.Join(strings.Fields(str), " ")
+	str = SanitizeSpaces(str)
 	return str
 }
 
-func SanitizeSpaces(s string) string {
-	s = rxNbsp.ReplaceAllString(s, " ")
-	s = strings.Join(strings.Fields(s), " ")
-	return s
-}
-
+// SanitizeDate is used to sanitize the specified date string before
+// it parsed by the parser.
 func SanitizeDate(s string) string {
 	s = rxSanitizeSkip.ReplaceAllString(s, " ")
-	s = rxSanitizeRussian.ReplaceAllString(s, "$1 ")
+	s = rxSanitizeRussian.ReplaceAllString(s, "$1 ") // remove 'г.' (Russian for year) but not in words
 	s = SanitizeSpaces(s)
 	s = rxSanitizePeriod.ReplaceAllString(s, "$1")
 	s = rxSanitizeOn.ReplaceAllString(s, "$1")
@@ -68,10 +77,12 @@ func SanitizeDate(s string) string {
 	return s
 }
 
+// StripBraces, as it name implies, will remove any braces from the string.
 func StripBraces(s string) string {
 	return rxBraces.ReplaceAllString(s, "")
 }
 
+// Jsonify is used to get a JSON rpresentation of specified data.
 func Jsonify(data interface{}) string {
 	bt, _ := json.Marshal(data)
 	return string(bt)

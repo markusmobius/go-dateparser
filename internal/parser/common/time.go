@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// ParseTime parses the specified string using one of the common time formats.
 func ParseTime(s string) (time.Time, error) {
 	timeFormats := []string{
 		"15:04:05",

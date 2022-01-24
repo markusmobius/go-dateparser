@@ -13,6 +13,7 @@ var (
 	rxDayNumber = regexp.MustCompile(`2.{0,3}`)
 )
 
+// Parse the specified string using one of the specified formats.
 func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date {
 	period := date.Day
 
@@ -52,5 +53,5 @@ func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date 
 		return date.Date{Time: t, Period: period}
 	}
 
-	return date.Date{Period: period}
+	return date.Date{}
 }

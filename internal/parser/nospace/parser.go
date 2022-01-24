@@ -12,17 +12,22 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
+// Parse parses the date string that written without spaces, for example
+// 2021-10-11 is written as 20211011.
 func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
+	// Make sure string can be parsed by this parser.
 	if !isEligible(str) {
 		return date.Date{}, fmt.Errorf("unable to parse date from %s", str)
 	}
 
-	str = strings.TrimSpace(str)
+	// Sanitize string
+	str = strutil.SanitizeSpaces(str)
 	str = strings.ReplaceAll(str, ":", "")
 	if str == "" {
 		return date.Date{}, fmt.Errorf("string is empty")
 	}
 
+	// Fetch date order
 	var order string
 	if cfg != nil && cfg.DateOrder != "" {
 		order = strings.ToLower(cfg.DateOrder)
@@ -41,12 +46,15 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 		return date.Date{}, fmt.Errorf("order %s is invalid", order)
 	}
 
+	// Process each token in string
 	var ambiguousDate date.Date
 	for _, token := range tokenizer.Tokenize(str) {
+		// We only want digit token
 		if token.Type != tokenizer.Digit {
 			continue
 		}
 
+		// Try each format
 		for _, format := range formats {
 			period := getPeriodFromFormat(format)
 			candidates, goFormat := createParseCandidates(token.Text, format)
@@ -88,10 +96,7 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 
 func isEligible(str string) bool {
 	match := rxCompatible.FindString(str)
-	if match == "" || match == ":" {
-		return true
-	}
-	return false
+	return match == "" || match == ":"
 }
 
 func findBestMatchingDate(str string) date.Date {

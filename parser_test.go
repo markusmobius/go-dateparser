@@ -1,42 +1,14 @@
-package parser
+package godateparser
 
 import (
 	"fmt"
 	"testing"
 	"time"
 
-	"github.com/markusmobius/go-dateparser/internal/language"
-	"github.com/markusmobius/go-dateparser/internal/parser/date"
-	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/stretchr/testify/assert"
 )
 
-// Helper variables and functions
-var testDetector = language.LocaleDetector{
-	UseExternalDetector: false,
-}
-
-func tt(Y, M, D int, times ...int) time.Time {
-	nTimes := len(times)
-	var H, m, s, ms int
-
-	if nTimes >= 1 {
-		H = times[0]
-	}
-	if nTimes >= 2 {
-		m = times[1]
-	}
-	if nTimes >= 3 {
-		s = times[2]
-	}
-	if nTimes >= 4 {
-		ms = times[3]
-	}
-
-	return time.Date(Y, time.Month(M), D, H, m, s, ms*1000, time.UTC)
-}
-
-func TestParse(t *testing.T) {
+func TestParser_Parse(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {
 		Text         string
@@ -146,7 +118,7 @@ func TestParse(t *testing.T) {
 		// Vietnamese dates
 		{"Thứ năm", tt(2012, 11, 8)},                                 // Thursday
 		{"Thứ sáu", tt(2012, 11, 9)},                                 // Friday
-		{"Tháng Mười Hai 29, 2013, 14:14", tt(2013, 12, 29, 14, 14)}, // bpsosrcs.wordpress.com // NOQA
+		{"Tháng Mười Hai 29, 2013, 14:14", tt(2013, 12, 29, 14, 14)}, // bpsosrcs.wordpress.com NOQA
 		{"05 Tháng một 2015 - 03:54 AM", tt(2015, 1, 5, 3, 54)},
 		// Belarusian dates
 		{"11 траўня", tt(2012, 5, 11)},
@@ -205,9 +177,14 @@ func TestParse(t *testing.T) {
 		{"2015 წ. 12 ივნ, 15:34", tt(2015, 6, 12, 15, 34)},
 		// Finnish dates
 		{"5.7.2018 5.45 ip.", tt(2018, 7, 5, 17, 45)},
+		// Others (from `test_clean_api.py`)
+		{"24 de Janeiro de 2014", tt(2014, 1, 24)},
+		{"2 de Enero de 2013", tt(2013, 1, 2)},
+		{"January 25, 2014", tt(2014, 1, 25)},
+		{"May 5, 2000 13:00", tt(2000, 5, 5, 13, 0)},
 
-		// === NOSPACE PARSER ===
-		{"2016020417:10", tt(2016, 2, 4, 17, 10)},
+		{"August 8, 2018 5 PM", tt(2018, 8, 8, 17, 0)},
+		{"February 26, 1981 5 am UTC", tt(1981, 2, 26, 5, 0)},
 
 		// === CONTAINS TIMEZONE ===
 		{"Sep 03 2014 | 4:32 pm EDT", tt(2014, 9, 3, 20, 32)},
@@ -222,6 +199,9 @@ func TestParse(t *testing.T) {
 		{"Mon, 25 Jun 2018 10:37:47 +0530 ", tt(2018, 6, 25, 5, 7, 47)}, // trailing spaces
 		{"Fri Sep 23 2016 10:34:51 GMT+0800 (CST)", tt(2016, 9, 23, 2, 34, 51)},
 
+		// === NOSPACE PARSER ===
+		{"2016020417:10", tt(2016, 2, 4, 17, 10)},
+
 		// === ISO DATESTAMP ===
 		{"2015-05-02T10:20:19+0000", tt(2015, 5, 2, 10, 20, 19)},
 
@@ -232,13 +212,9 @@ func TestParse(t *testing.T) {
 		{"2016-09-23T02:54:32.845Z", tt(2016, 9, 23, 2, 54, 32, 845000)},
 	}
 
-	// Prepare configuration
-	cfg := setting.Configuration{
-		CurrentTime: time.Date(2012, 11, 13, 0, 0, 0, 0, time.UTC),
-		SkipTokens:  setting.DefaultConfig.SkipTokens,
-	}
-
-	testDetector.Configuration = &cfg
+	// Prepare parser
+	cfg := Configuration{CurrentTime: tt(2012, 11, 13)}
+	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -248,20 +224,9 @@ func TestParse(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Parse text
-		dt, err := Parse(&cfg, &testDetector, test.Text)
-
-		// Check the result
-		passed := assert.Nil(t, err, message)
-		if passed {
-			diff := test.ExpectedTime.Sub(dt.Time)
-			passed = assert.Zero(t, diff, message)
-		}
-		if passed {
-			passed = assert.Equal(t, date.Day, dt.Period, message)
-		}
-
-		if !passed {
-			fmt.Println("\t\tGOT:", dt)
+		dt, _ := parser.Parse(test.Text)
+		if passed := assertResult(t, dt, test.ExpectedTime, Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
 	}
@@ -271,20 +236,16 @@ func TestParse(t *testing.T) {
 	}
 }
 
-func TestParse_hasPreferredDateSource(t *testing.T) {
+func TestParser_Parse_hasPreferredDateSource(t *testing.T) {
 	// Prepare scenarios
-	past := setting.Past
-	future := setting.Future
-	current := setting.CurrentPeriod
-
 	type testScenario struct {
-		DateSource   setting.PreferredDateSource
+		DateSource   PreferredDateSource
 		Text         string
 		ExpectedTime time.Time
 		BaseTime     time.Time
 	}
 
-	ts := func(ds setting.PreferredDateSource, text string, eTime time.Time, bTime ...time.Time) testScenario {
+	ts := func(ds PreferredDateSource, text string, eTime time.Time, bTime ...time.Time) testScenario {
 		var baseTime time.Time
 		if len(bTime) == 0 {
 			baseTime = tt(2015, 2, 15, 15, 30)
@@ -297,55 +258,59 @@ func TestParse_hasPreferredDateSource(t *testing.T) {
 
 	tests := []testScenario{
 		// Prefer past dates
-		ts(past, "10 December", tt(2014, 12, 10)),
-		ts(past, "March", tt(2014, 3, 15)),
-		ts(past, "Friday", tt(2015, 2, 13)),
-		ts(past, "Monday", tt(2015, 2, 9)),
-		ts(past, "Sunday", tt(2015, 2, 8)), // current day
-		ts(past, "10:00PM", tt(2015, 2, 14, 22, 0)),
-		ts(past, "16:10", tt(2015, 2, 14, 16, 10)),
-		ts(past, "14:05", tt(2015, 2, 15, 14, 5)),
-		ts(past, "15 february 15:00", tt(2015, 2, 15, 15, 0)),
-		ts(past, "3/3/50", tt(1950, 3, 3)),
-		ts(past, "3/3/94", tt(1994, 3, 3)),
+		ts(Past, "10 December", tt(2014, 12, 10)),
+		ts(Past, "March", tt(2014, 3, 15)),
+		ts(Past, "Friday", tt(2015, 2, 13)),
+		ts(Past, "Monday", tt(2015, 2, 9)),
+		ts(Past, "Sunday", tt(2015, 2, 8)), // current day
+		ts(Past, "10:00PM", tt(2015, 2, 14, 22, 0)),
+		ts(Past, "16:10", tt(2015, 2, 14, 16, 10)),
+		ts(Past, "14:05", tt(2015, 2, 15, 14, 5)),
+		ts(Past, "15 february 15:00", tt(2015, 2, 15, 15, 0)),
+		ts(Past, "3/3/50", tt(1950, 3, 3)),
+		ts(Past, "3/3/94", tt(1994, 3, 3)),
 
 		// Prefer future dates
-		ts(future, "10 December", tt(2015, 12, 10)),
-		ts(future, "March", tt(2015, 3, 15)),
-		ts(future, "Friday", tt(2015, 2, 20)),
-		ts(future, "Sunday", tt(2015, 2, 22)), // current day
-		ts(future, "Monday", tt(2015, 2, 16)),
-		ts(future, "10:00PM", tt(2015, 2, 15, 22, 0)),
-		ts(future, "16:10", tt(2015, 2, 15, 16, 10)),
-		ts(future, "14:05", tt(2015, 2, 16, 14, 5)),
-		ts(future, "3/3/50", tt(2050, 3, 3)),
-		ts(future, "3/3/94", tt(2094, 3, 3)),
+		ts(Future, "10 December", tt(2015, 12, 10)),
+		ts(Future, "March", tt(2015, 3, 15)),
+		ts(Future, "Friday", tt(2015, 2, 20)),
+		ts(Future, "Sunday", tt(2015, 2, 22)), // current day
+		ts(Future, "Monday", tt(2015, 2, 16)),
+		ts(Future, "10:00PM", tt(2015, 2, 15, 22, 0)),
+		ts(Future, "16:10", tt(2015, 2, 15, 16, 10)),
+		ts(Future, "14:05", tt(2015, 2, 16, 14, 5)),
+		ts(Future, "3/3/50", tt(2050, 3, 3)),
+		ts(Future, "3/3/94", tt(2094, 3, 3)),
 
 		// Prefer current period
-		ts(current, "10 December", tt(2015, 12, 10)),
-		ts(current, "March", tt(2015, 3, 15)),
-		ts(current, "Friday", tt(2015, 2, 13)),
-		ts(current, "Sunday", tt(2015, 2, 15)), // current weekday
-		ts(current, "10:00PM", tt(2015, 2, 15, 22, 0)),
-		ts(current, "16:10", tt(2015, 2, 15, 16, 10)),
-		ts(current, "14:05", tt(2015, 2, 15, 14, 5)),
+		ts(CurrentPeriod, "10 December", tt(2015, 12, 10)),
+		ts(CurrentPeriod, "March", tt(2015, 3, 15)),
+		ts(CurrentPeriod, "Friday", tt(2015, 2, 13)),
+		ts(CurrentPeriod, "Sunday", tt(2015, 2, 15)), // current weekday
+		ts(CurrentPeriod, "10:00PM", tt(2015, 2, 15, 22, 0)),
+		ts(CurrentPeriod, "16:10", tt(2015, 2, 15, 16, 10)),
+		ts(CurrentPeriod, "14:05", tt(2015, 2, 15, 14, 5)),
 
 		// Prefer leap year from the past
-		ts(past, "29 Feb", tt(2016, 2, 29), tt(2020, 1, 1)),
-		ts(past, "29/02", tt(2020, 2, 29), tt(2020, 3, 30)),
-		ts(past, "02/29", tt(1696, 2, 29), tt(1702, 1, 1)),
+		ts(Past, "29 Feb", tt(2016, 2, 29), tt(2020, 1, 1)),
+		ts(Past, "29/02", tt(2020, 2, 29), tt(2020, 3, 30)),
+		ts(Past, "02/29", tt(1696, 2, 29), tt(1702, 1, 1)),
 
 		// Prefer leap year from the future
-		ts(future, "29 Feb", tt(2020, 2, 29), tt(2020, 1, 1)),
-		ts(future, "29/02", tt(2024, 2, 29), tt(2020, 3, 30)),
-		ts(future, "02/29", tt(1704, 2, 29), tt(1696, 3, 1)),
+		ts(Future, "29 Feb", tt(2020, 2, 29), tt(2020, 1, 1)),
+		ts(Future, "29/02", tt(2024, 2, 29), tt(2020, 3, 30)),
+		ts(Future, "02/29", tt(1704, 2, 29), tt(1696, 3, 1)),
 
 		// No preference for the leap year
-		ts(current, "29 Feb", tt(2020, 2, 29), tt(2020, 1, 1)),
-		ts(current, "29/02", tt(2020, 2, 29), tt(2020, 3, 30)),
-		ts(current, "29 Feb", tt(1704, 2, 29), tt(1702, 3, 1)),
-		ts(current, "02/29", tt(1696, 2, 29), tt(1699, 3, 1)),
+		ts(CurrentPeriod, "29 Feb", tt(2020, 2, 29), tt(2020, 1, 1)),
+		ts(CurrentPeriod, "29/02", tt(2020, 2, 29), tt(2020, 3, 30)),
+		ts(CurrentPeriod, "29 Feb", tt(1704, 2, 29), tt(1702, 3, 1)),
+		ts(CurrentPeriod, "02/29", tt(1696, 2, 29), tt(1699, 3, 1)),
 	}
+
+	// Prepare parser
+	cfg := Configuration{}
+	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -356,13 +321,11 @@ func TestParse_hasPreferredDateSource(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Prepare configuration
-		cfg := setting.Configuration{
-			CurrentTime:         test.BaseTime,
-			PreferredDateSource: test.DateSource,
-		}
+		cfg.CurrentTime = test.BaseTime
+		cfg.PreferredDateSource = test.DateSource
 
 		// Parse text
-		dt, err := Parse(&cfg, &testDetector, test.Text)
+		dt, err := parser.Parse(test.Text)
 
 		// Check the result
 		passed := assert.Nil(t, err, message)
@@ -372,7 +335,7 @@ func TestParse_hasPreferredDateSource(t *testing.T) {
 		}
 
 		if !passed {
-			fmt.Println("\t\tGOT:", dt)
+			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
 	}
@@ -382,14 +345,10 @@ func TestParse_hasPreferredDateSource(t *testing.T) {
 	}
 }
 
-func TestParse_hasPreferredDayOfMonth(t *testing.T) {
+func TestParser_Parse_hasPreferredDayOfMonth(t *testing.T) {
 	// Prepare scenarios
-	last := setting.Last
-	first := setting.First
-	current := setting.Current
-
 	type testScenario struct {
-		DayOfMonth   setting.PreferredDayOfMonth
+		DayOfMonth   PreferredDayOfMonth
 		Text         string
 		BaseTime     time.Time
 		ExpectedTime time.Time
@@ -397,34 +356,38 @@ func TestParse_hasPreferredDayOfMonth(t *testing.T) {
 
 	tests := []testScenario{
 		// Prefer current day of month
-		{current, "February 2015", tt(2015, 1, 31), tt(2015, 2, 28)},
-		{current, "February 2012", tt(2015, 1, 31), tt(2012, 2, 29)},
-		{current, "March 2015", tt(2015, 1, 25), tt(2015, 3, 25)},
-		{current, "April 2015", tt(2015, 1, 31), tt(2015, 4, 30)},
-		{current, "April 2015", tt(2015, 2, 28), tt(2015, 4, 28)},
-		{current, "December 2014", tt(2015, 2, 15), tt(2014, 12, 15)},
+		{Current, "February 2015", tt(2015, 1, 31), tt(2015, 2, 28)},
+		{Current, "February 2012", tt(2015, 1, 31), tt(2012, 2, 29)},
+		{Current, "March 2015", tt(2015, 1, 25), tt(2015, 3, 25)},
+		{Current, "April 2015", tt(2015, 1, 31), tt(2015, 4, 30)},
+		{Current, "April 2015", tt(2015, 2, 28), tt(2015, 4, 28)},
+		{Current, "December 2014", tt(2015, 2, 15), tt(2014, 12, 15)},
 
 		// Prefer last day of month
-		{last, "February 2015", tt(2015, 1, 1), tt(2015, 2, 28)},
-		{last, "February 2012", tt(2015, 1, 1), tt(2012, 2, 29)},
-		{last, "March 2015", tt(2015, 1, 25), tt(2015, 3, 31)},
-		{last, "April 2015", tt(2015, 1, 15), tt(2015, 4, 30)},
-		{last, "April 2015", tt(2015, 2, 28), tt(2015, 4, 30)},
-		{last, "December 2014", tt(2015, 2, 15), tt(2014, 12, 31)},
+		{Last, "February 2015", tt(2015, 1, 1), tt(2015, 2, 28)},
+		{Last, "February 2012", tt(2015, 1, 1), tt(2012, 2, 29)},
+		{Last, "March 2015", tt(2015, 1, 25), tt(2015, 3, 31)},
+		{Last, "April 2015", tt(2015, 1, 15), tt(2015, 4, 30)},
+		{Last, "April 2015", tt(2015, 2, 28), tt(2015, 4, 30)},
+		{Last, "December 2014", tt(2015, 2, 15), tt(2014, 12, 31)},
 
 		// Prefer first day of month
-		{first, "February 2015", tt(2015, 1, 8), tt(2015, 2, 1)},
-		{first, "February 2012", tt(2015, 1, 7), tt(2012, 2, 1)},
-		{first, "March 2015", tt(2015, 1, 25), tt(2015, 3, 1)},
-		{first, "April 2015", tt(2015, 1, 15), tt(2015, 4, 1)},
-		{first, "April 2015", tt(2015, 2, 28), tt(2015, 4, 1)},
-		{first, "December 2014", tt(2015, 2, 15), tt(2014, 12, 1)},
+		{First, "February 2015", tt(2015, 1, 8), tt(2015, 2, 1)},
+		{First, "February 2012", tt(2015, 1, 7), tt(2012, 2, 1)},
+		{First, "March 2015", tt(2015, 1, 25), tt(2015, 3, 1)},
+		{First, "April 2015", tt(2015, 1, 15), tt(2015, 4, 1)},
+		{First, "April 2015", tt(2015, 2, 28), tt(2015, 4, 1)},
+		{First, "December 2014", tt(2015, 2, 15), tt(2014, 12, 1)},
 
 		// Preference doesn't affect date with explicit day
-		{last, "24 April 2012", tt(2015, 2, 12), tt(2012, 4, 24)},
-		{first, "24 April 2012", tt(2015, 2, 12), tt(2012, 4, 24)},
-		{current, "24 April 2012", tt(2015, 2, 12), tt(2012, 4, 24)},
+		{Last, "24 April 2012", tt(2015, 2, 12), tt(2012, 4, 24)},
+		{First, "24 April 2012", tt(2015, 2, 12), tt(2012, 4, 24)},
+		{Current, "24 April 2012", tt(2015, 2, 12), tt(2012, 4, 24)},
 	}
+
+	// Prepare parser
+	cfg := Configuration{}
+	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -436,13 +399,11 @@ func TestParse_hasPreferredDayOfMonth(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05"))
 
 		// Prepare configuration
-		cfg := setting.Configuration{
-			CurrentTime:         test.BaseTime,
-			PreferredDayOfMonth: test.DayOfMonth,
-		}
+		cfg.CurrentTime = test.BaseTime
+		cfg.PreferredDayOfMonth = test.DayOfMonth
 
 		// Parse text
-		dt, err := Parse(&cfg, &testDetector, test.Text)
+		dt, err := parser.Parse(test.Text)
 
 		// Check the result
 		passed := assert.Nil(t, err, message)
@@ -452,7 +413,7 @@ func TestParse_hasPreferredDayOfMonth(t *testing.T) {
 		}
 
 		if !passed {
-			fmt.Println("\t\tGOT:", dt)
+			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
 	}
@@ -462,13 +423,13 @@ func TestParse_hasPreferredDayOfMonth(t *testing.T) {
 	}
 }
 
-func TestParse_returnTimeAsPeriod(t *testing.T) {
+func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {
 		Text           string
 		BaseTime       time.Time
 		ExpectedTime   time.Time
-		ExpectedPeriod date.Period
+		ExpectedPeriod Period
 	}
 
 	ts := func(text string, eTime time.Time, bTime ...time.Time) testScenario {
@@ -476,13 +437,12 @@ func TestParse_returnTimeAsPeriod(t *testing.T) {
 		if len(bTime) > 0 {
 			baseTime = bTime[0]
 		}
-
-		return testScenario{text, baseTime, eTime, date.Time}
+		return testScenario{text, baseTime, eTime, Time}
 	}
 
 	tsd := func(text string, eTime time.Time, bTime ...time.Time) testScenario {
 		test := ts(text, eTime, bTime...)
-		test.ExpectedPeriod = date.Day
+		test.ExpectedPeriod = Day
 		return test
 	}
 
@@ -506,15 +466,9 @@ func TestParse_returnTimeAsPeriod(t *testing.T) {
 		tsd("21-12-19", tt(2019, 12, 21, 0, 0)),
 	}
 
-	// Prepare configuration
-	cfg := setting.Configuration{
-		ReturnTimeAsPeriod: true,
-		SkipTokens:         setting.DefaultConfig.SkipTokens,
-	}
-
-	detector := language.LocaleDetector{
-		Configuration: &cfg,
-	}
+	// Prepare parser
+	cfg := Configuration{ReturnTimeAsPeriod: true}
+	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -527,20 +481,9 @@ func TestParse_returnTimeAsPeriod(t *testing.T) {
 
 		// Parse text
 		cfg.CurrentTime = test.BaseTime
-		dt, err := Parse(&cfg, &detector, test.Text)
-
-		// Check the result
-		passed := assert.Nil(t, err, message)
-		if passed {
-			passed = assert.Equal(t, test.ExpectedPeriod, dt.Period, message)
-		}
-		if passed {
-			diff := test.ExpectedTime.Sub(dt.Time)
-			passed = assert.Zero(t, diff, message)
-		}
-
-		if !passed {
-			fmt.Println("\t\tGOT:", dt)
+		dt, _ := parser.Parse(test.Text)
+		if passed := assertResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
 	}
@@ -550,39 +493,35 @@ func TestParse_returnTimeAsPeriod(t *testing.T) {
 	}
 }
 
-func TestParse_checkPeriod(t *testing.T) {
+func TestParser_Parse_checkPeriod(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {
 		Text           string
 		ExpectedTime   time.Time
-		ExpectedPeriod date.Period
+		ExpectedPeriod Period
 	}
 
 	tests := []testScenario{
-		{"10 December", tt(2015, 12, 10), date.Day},
-		{"March", tt(2015, 3, 15), date.Month},
-		{"April", tt(2015, 4, 15), date.Month},
-		{"December", tt(2015, 12, 15), date.Month},
-		{"Friday", tt(2015, 2, 13), date.Day},
-		{"Monday", tt(2015, 2, 9), date.Day},
-		{"10:00PM", tt(2015, 2, 15, 22, 00), date.Day},
-		{"16:10", tt(2015, 2, 15, 16, 10), date.Day},
-		{"2014", tt(2014, 2, 15), date.Year},
-		{"2008", tt(2008, 2, 15), date.Year},
+		{"10 December", tt(2015, 12, 10), Day},
+		{"March", tt(2015, 3, 15), Month},
+		{"April", tt(2015, 4, 15), Month},
+		{"December", tt(2015, 12, 15), Month},
+		{"Friday", tt(2015, 2, 13), Day},
+		{"Monday", tt(2015, 2, 9), Day},
+		{"10:00PM", tt(2015, 2, 15, 22, 00), Day},
+		{"16:10", tt(2015, 2, 15, 16, 10), Day},
+		{"2014", tt(2014, 2, 15), Year},
+		{"2008", tt(2008, 2, 15), Year},
 		// Subscript and superscript dates
-		{"²⁰¹⁵", tt(2015, 2, 15), date.Year},
-		{"²⁹/⁰⁵/²⁰¹⁵", tt(2015, 5, 29), date.Day},
-		{"₁₅/₀₂/₂₀₂₀", tt(2020, 2, 15), date.Day},
-		{"₃₁ December", tt(2015, 12, 31), date.Day},
+		{"²⁰¹⁵", tt(2015, 2, 15), Year},
+		{"²⁹/⁰⁵/²⁰¹⁵", tt(2015, 5, 29), Day},
+		{"₁₅/₀₂/₂₀₂₀", tt(2020, 2, 15), Day},
+		{"₃₁ December", tt(2015, 12, 31), Day},
 	}
 
-	// Prepare configuration
-	cfg := setting.Configuration{
-		CurrentTime: time.Date(2015, 2, 15, 15, 30, 0, 0, time.UTC),
-		SkipTokens:  setting.DefaultConfig.SkipTokens,
-	}
-
-	testDetector.Configuration = &cfg
+	// Prepare parser
+	cfg := Configuration{CurrentTime: tt(2015, 2, 15, 15, 30)}
+	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -593,20 +532,9 @@ func TestParse_checkPeriod(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Parse text
-		dt, err := Parse(&cfg, &testDetector, test.Text)
-
-		// Check the result
-		passed := assert.Nil(t, err, message)
-		if passed {
-			diff := test.ExpectedTime.Sub(dt.Time)
-			passed = assert.Zero(t, diff, message)
-		}
-		if passed {
-			passed = assert.Equal(t, test.ExpectedPeriod, dt.Period, message)
-		}
-
-		if !passed {
-			fmt.Println("\t\tGOT:", dt)
+		dt, _ := parser.Parse(test.Text)
+		if passed := assertResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
 	}
@@ -616,7 +544,7 @@ func TestParse_checkPeriod(t *testing.T) {
 	}
 }
 
-func TestParse_customOrder(t *testing.T) {
+func TestParser_Parse_customOrder(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {
 		Text         string
@@ -645,15 +573,9 @@ func TestParse_customOrder(t *testing.T) {
 		{"201108", tt(2008, 11, 20, 0, 0), "DMY"},
 	}
 
-	// Prepare configuration
-	cfg := setting.Configuration{
-		CurrentTime: setting.DefaultConfig.CurrentTime,
-		SkipTokens:  setting.DefaultConfig.SkipTokens,
-	}
-
-	detector := language.LocaleDetector{
-		Configuration: &cfg,
-	}
+	// Prepare parser
+	cfg := Configuration{PreferConfigDateOrder: true}
+	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -665,20 +587,9 @@ func TestParse_customOrder(t *testing.T) {
 
 		// Parse text
 		cfg.DateOrder = test.DateOrder
-		dt, err := Parse(&cfg, &detector, test.Text)
-
-		// Check the result
-		passed := assert.Nil(t, err, message)
-		if passed {
-			diff := test.ExpectedTime.Sub(dt.Time)
-			passed = assert.Zero(t, diff, message)
-		}
-		if passed {
-			passed = assert.Equal(t, date.Day, dt.Period, message)
-		}
-
-		if !passed {
-			fmt.Println("\t\tGOT:", dt)
+		dt, _ := parser.Parse(test.Text)
+		if passed := assertResult(t, dt, test.ExpectedTime, Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
 	}
@@ -688,7 +599,7 @@ func TestParse_customOrder(t *testing.T) {
 	}
 }
 
-func TestParse_onlySeparatorTokens(t *testing.T) {
+func TestParser_Parse_onlySeparatorTokens(t *testing.T) {
 	// Prepare scenarios
 	tests := []string{
 		"::",
@@ -699,22 +610,16 @@ func TestParse_onlySeparatorTokens(t *testing.T) {
 		"++",
 	}
 
-	// Prepare configuration
-	cfg := setting.DefaultConfig
-	detector := language.LocaleDetector{
-		Configuration: &cfg,
-	}
+	// Prepare parser
+	parser := Parser{}
 
 	// Start tests
 	nFailed := 0
 	for _, test := range tests {
 		// Parse text
-		dt, _ := Parse(&cfg, &detector, test)
-
-		// Check the result
-		passed := assert.True(t, dt.IsZero())
-		if !passed {
-			fmt.Println("\t\tGOT:", dt)
+		dt, _ := parser.Parse(test)
+		if passed := assert.True(t, dt.IsZero()); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
 	}
@@ -724,43 +629,112 @@ func TestParse_onlySeparatorTokens(t *testing.T) {
 	}
 }
 
-func TestParse_successWhenSkipTokensSpecified(t *testing.T) {
-	cfg := setting.Configuration{
+func TestParser_Parse_successWhenSkipTokensSpecified(t *testing.T) {
+	parser := Parser{Config: &Configuration{
 		CurrentTime: tt(2015, 2, 12),
 		SkipTokens:  []string{"de"},
-	}
+	}}
 
-	detector := language.LocaleDetector{Configuration: &cfg}
-	dt, err := Parse(&cfg, &detector, "24 April 2012 de")
+	dt, err := parser.Parse("24 April 2012 de")
 	assert.NoError(t, err)
 	assert.Equal(t, tt(2012, 4, 24), dt.Time)
 }
 
-func Test_tryAbsoluteParser_shouldFailed(t *testing.T) {
-	tests := []string{
-		"",
-		"invalid date string",
-		"Aug 7, 2014Aug 7, 2014",
-		"24h ago",
-		"2015-03-17t16:37:51+00:002015-03-17t15:24:37+00:00",
-		"8 enero 2013 martes 7:03 AM EST 8 enero 2013 martes 7:03 AM EST",
-		"12/09/18567",
+func TestParser_Parse_customParser(t *testing.T) {
+	// Prepare parser
+	parser := Parser{}
+	var dt Date
+
+	// Language is DE, config specified
+	parser.Languages = []string{"de"}
+	parser.Config = &Configuration{PreferredDayOfMonth: First}
+	dt, _ = parser.Parse("10.1.2019")
+	assert.Equal(t, tt(2019, 1, 10), dt.Time)
+
+	// Languages is DE, config not specified
+	parser.Languages = []string{"de"}
+	parser.Config = nil
+	dt, _ = parser.Parse("10.1.2019")
+	assert.Equal(t, tt(2019, 1, 10), dt.Time)
+
+	// Languages not specified, date order in config specified
+	parser.Languages = nil
+	parser.Config = &Configuration{DateOrder: "MDY"}
+	dt, _ = parser.Parse("10.1.2019")
+	assert.Equal(t, tt(2019, 10, 1), dt.Time)
+
+	// Languages is TH, prefer date order in config
+	parser.Languages = []string{"th"}
+	parser.Config = &Configuration{DateOrder: "MDY", PreferConfigDateOrder: true}
+
+	dt, _ = parser.Parse("03/11/2559 05:13")
+	assert.Equal(t, tt(2559, 3, 11, 5, 13), dt.Time)
+
+	dt, _ = parser.Parse("03/15/2559 05:13")
+	assert.Equal(t, tt(2559, 3, 15, 5, 13), dt.Time)
+
+	// Languages set to PT and text is PT as well
+	parser.Languages = []string{"pt"}
+	parser.Config = nil
+	dt, _ = parser.Parse("24 de Janeiro de 2014")
+	assert.Equal(t, tt(2014, 1, 24), dt.Time)
+
+	// Languages set to PT but text is EN
+	parser.Languages = []string{"pt"}
+	parser.Config = nil
+	dt, _ = parser.Parse("24 January, 2014")
+	assert.True(t, dt.IsZero())
+
+	// TODOS: FIX SPLIT TOKENS
+	// // Locales set to pt-TL and text is matched
+	// parser.Config = nil
+	// parser.Languages = nil
+	// parser.Locales = []string{"pt-TL"}
+	// dt, _ = parser.Parse("24 de Janeiro de 2014")
+	// assert.Equal(t, tt(2014, 1, 24), dt.Time)
+
+	// // Locales and text not matched
+	// parser.Languages = nil
+	// parser.Locales = []string{"pt-AO"}
+	// dt, _ = parser.Parse("24 January, 2014")
+	// assert.True(t, dt.IsZero())
+}
+
+func tt(Y, M, D int, times ...int) time.Time {
+	nTimes := len(times)
+	var H, m, s, ms int
+
+	if nTimes >= 1 {
+		H = times[0]
+	}
+	if nTimes >= 2 {
+		m = times[1]
+	}
+	if nTimes >= 3 {
+		s = times[2]
+	}
+	if nTimes >= 4 {
+		ms = times[3]
 	}
 
-	// Start tests
-	nFailed := 0
-	cfg := setting.Configuration{}
-	for _, test := range tests {
-		// Parse text
-		dt := tryAbsoluteParser(&cfg, test, "")
+	return time.Date(Y, time.Month(M), D, H, m, s, ms*1000, time.UTC)
+}
 
-		// Check the result
-		if passed := assert.True(t, dt.IsZero(), test); !passed {
-			nFailed++
-		}
+func assertResult(t *testing.T, dt Date, expectedTime time.Time, expectedPeriod Period, messages ...string) bool {
+	var message string
+	if len(messages) > 0 {
+		message = messages[0]
 	}
 
-	if nFailed > 0 {
-		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	passed := assert.False(t, dt.IsZero(), message)
+	if passed {
+		diff := expectedTime.Sub(dt.Time)
+		passed = assert.Zero(t, diff, message)
 	}
+
+	if passed {
+		passed = assert.Equal(t, expectedPeriod, dt.Period, message)
+	}
+
+	return passed
 }

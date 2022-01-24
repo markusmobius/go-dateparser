@@ -6,12 +6,25 @@ import (
 	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
-func GetLocales(languages []string, locales []string, region string, useGivenOrder bool, allowConflictingLocales bool) ([]*data.LocaleData, error) {
+// GetLocales returns list of locale data based on the specified `locales`, `languages` and `region`.
+//
+// Parameter `locales` is a list of codes of locales which are to be loaded e.g. ['fr-PF', 'qu-EC',
+// 'af-NA'], `languages` is a list of language codes e.g. ['en', 'es', 'zh-Hant'], and `region` is
+// a region code, e.g. 'IN', '001', 'NE'. If `locales` are empty, languages and region are used to
+// construct locales to load.
+//
+// If `useGivenOrder` is true, the returned list is ordered in the order locales are given. If set
+// to false, the list will be sorted by how common the locale is used in the world.
+//
+// If `allowConflictingLocales` is set to true, locales with same language and different region
+// can be loaded.
+func GetLocales(locales []string, languages []string, region string, useGivenOrder bool, allowConflictingLocales bool) ([]*data.LocaleData, error) {
 	var validLocales []string
-	localeTracker := map[string]struct{}{}
-	languageTracker := map[string]struct{}{}
+	localeTracker := strutil.NewDict()
+	languageTracker := strutil.NewDict()
 
 	// If locales specified, process it first
 	if len(locales) > 0 {
@@ -19,7 +32,7 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 
 		for _, locale := range locales {
 			// If locale already registered, skip
-			if _, exist := localeTracker[locale]; exist {
+			if localeTracker.Contain(locale) {
 				continue
 			}
 
@@ -32,15 +45,15 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 			// Make sure language is only used once
 			if !allowConflictingLocales {
 				language := rxRegionRemover.ReplaceAllString(locale, "")
-				if _, exist := languageTracker[language]; exist {
+				if languageTracker.Contain(language) {
 					return nil, ErrConflictingLocales
 				}
 
-				languageTracker[language] = struct{}{}
+				languageTracker.Add(language)
 			}
 
 			// Save the locale
-			localeTracker[locale] = struct{}{}
+			localeTracker.Add(locale)
 			validLocales = append(validLocales, locale)
 		}
 
@@ -66,10 +79,10 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 
 		for _, language := range languages {
 			// If language already checked, skip
-			if _, exist := languageTracker[language]; exist {
+			if languageTracker.Contain(language) {
 				continue
 			} else {
-				languageTracker[language] = struct{}{}
+				languageTracker.Add(language)
 			}
 
 			// Check if language is known
@@ -85,7 +98,7 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 			}
 
 			// If locale already registered, skip
-			if _, exist := localeTracker[locale]; exist {
+			if localeTracker.Contain(locale) {
 				continue
 			}
 
@@ -95,7 +108,7 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 			}
 
 			// Save the generated locale
-			localeTracker[locale] = struct{}{}
+			localeTracker.Add(locale)
 			validLocales = append(validLocales, locale)
 		}
 
@@ -136,8 +149,10 @@ func GetLocales(languages []string, locales []string, region string, useGivenOrd
 	return listLocaleData, nil
 }
 
-func GetLocale(shortname string) (*data.LocaleData, error) {
-	locales, err := GetLocales(nil, []string{shortname}, "", false, false)
+// GetLocale returns a single locale instance based on the specified locale `code`,
+// e.g. 'fr-PF', 'qu-EC', 'af-NA'.
+func GetLocale(code string) (*data.LocaleData, error) {
+	locales, err := GetLocales([]string{code}, nil, "", false, false)
 	if err != nil {
 		return nil, err
 	}

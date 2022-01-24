@@ -8,7 +8,10 @@ import (
 )
 
 func TestTokenize(t *testing.T) {
-	// Helper function
+	// Helper functions
+	sp := func(items ...string) []string { return items }
+	tt := func(items ...TokenType) []TokenType { return items }
+
 	fnTexts := func(tokens []Token) []string {
 		var texts []string
 		for i := range tokens {
@@ -33,53 +36,51 @@ func TestTokenize(t *testing.T) {
 		ExpectedTypes []TokenType
 	}
 
-	tests := []testScenario{
-		{
-			"11 april 2010",
-			[]string{"11", " ", "april", " ", "2010"},
-			[]TokenType{D, O, L, O, D},
-		}, {
-			"Tuesday 11 april 2010",
-			[]string{"Tuesday", " ", "11", " ", "april", " ", "2010"},
-			[]TokenType{L, O, D, O, L, O, D},
-		}, {
-			"11/12-2013",
-			[]string{"11", "/", "12", "-", "2013"},
-			[]TokenType{D, O, D, O, D},
-		}, {
-			"11/12-2013",
-			[]string{"11", "/", "12", "-", "2013"},
-			[]TokenType{D, O, D, O, D},
-		}, {
-			"10:30:35 PM",
-			[]string{"10:30:35", " ", "PM"},
-			[]TokenType{D, O, L},
-		}, {
-			"18:50",
-			[]string{"18:50"},
-			[]TokenType{D},
-		}, {
-			"December 23, 2010, 16:50 pm",
-			[]string{"December", " ", "23", ", ", "2010", ", ", "16:50", " ", "pm"},
-			[]TokenType{L, O, D, O, D, O, D, O, L},
-		}, {
-			"Oct 1 2018 4:40 PM EST —",
-			[]string{"Oct", " ", "1", " ", "2018", " ", "4:40", " ", "PM", " ", "EST", " —"},
-			[]TokenType{L, O, D, O, D, O, D, O, L, O, L, O},
-		}, {
-			"0123456789",
-			[]string{"0123456789"},
-			[]TokenType{D},
-		}, {
-			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-			[]string{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"},
-			[]TokenType{L},
-		}, {
-			"./\\()\"',.;<>~!@#$%^&*|+=[]{}`~?-—–     😊", // unrecognized characters
-			[]string{"./\\()\"',.;<>~!@#$%^&*|+=[]{}`~?-—–     😊"},
-			[]TokenType{O},
-		},
-	}
+	tests := []testScenario{{
+		"11 april 2010",
+		sp("11", " ", "april", " ", "2010"),
+		tt(D, O, L, O, D),
+	}, {
+		"Tuesday 11 april 2010",
+		sp("Tuesday", " ", "11", " ", "april", " ", "2010"),
+		tt(L, O, D, O, L, O, D),
+	}, {
+		"11/12-2013",
+		sp("11", "/", "12", "-", "2013"),
+		tt(D, O, D, O, D),
+	}, {
+		"11/12-2013",
+		sp("11", "/", "12", "-", "2013"),
+		tt(D, O, D, O, D),
+	}, {
+		"10:30:35 PM",
+		sp("10:30:35", " ", "PM"),
+		tt(D, O, L),
+	}, {
+		"18:50",
+		sp("18:50"),
+		tt(D),
+	}, {
+		"December 23, 2010, 16:50 pm",
+		sp("December", " ", "23", ", ", "2010", ", ", "16:50", " ", "pm"),
+		tt(L, O, D, O, D, O, D, O, L),
+	}, {
+		"Oct 1 2018 4:40 PM EST —",
+		sp("Oct", " ", "1", " ", "2018", " ", "4:40", " ", "PM", " ", "EST", " —"),
+		tt(L, O, D, O, D, O, D, O, L, O, L, O),
+	}, {
+		"0123456789",
+		sp("0123456789"),
+		tt(D),
+	}, {
+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		sp("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+		tt(L),
+	}, {
+		"./\\()\"',.;<>~!@#$%^&*|+=[]{}`~?-—–     😊", // unrecognized characters
+		sp("./\\()\"',.;<>~!@#$%^&*|+=[]{}`~?-—–     😊"),
+		tt(O),
+	}}
 
 	// Start tests
 	nFailed := 0

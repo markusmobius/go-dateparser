@@ -61,6 +61,12 @@ type Parser struct {
 }
 
 func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
+	// Sanitize string
+	str = strutil.SanitizeSpaces(str)
+	if str == "" {
+		return Parser{}, fmt.Errorf("string is empty")
+	}
+
 	// Prepare variables
 	p := Parser{
 		Config:          cfg,
@@ -87,9 +93,6 @@ func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
 		}
 	}
 
-	print("\tTOKENS:", jsonify(&p.Tokens))
-	print("\tFILTERED TOKENS:", jsonify(&p.FilteredTokens))
-
 	// Prepare list of number directives
 	if cfg != nil {
 		for _, char := range strings.ToLower(cfg.DateOrder) {
@@ -109,8 +112,6 @@ func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
 
 	// Process each filtered token
 	for index, filteredToken := range p.FilteredTokens {
-		print("\tCURRENT TOKEN:", filteredToken.Text)
-
 		// Check if this token should be skipped
 		if _, exist := p.SkippedIndexes[index]; exist {
 			continue
@@ -183,9 +184,7 @@ func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
 			}
 
 			// Capture time
-			if strings.Contains(filteredToken.Text, ":") ||
-				strings.Contains(meridian, ":") ||
-				strings.Contains(microsecond, ":") {
+			if strings.Contains(filteredToken.Text, ":") || meridian != "" || microsecond != "" {
 				var strTime string
 				tokenText := filteredToken.Text
 
@@ -230,10 +229,8 @@ func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
 	}
 
 	// Use fallback for unknown component
-	print("\tUNKNOWN COMPONENTS:")
 	for _, component := range []string{"day", "month", "year"} {
 		if _, exist := p.ComponentValues[component]; !exist {
-			print("\t\t", component)
 			for _, ut := range p.UnsetTokens {
 				if ut.Type == tokenizer.Digit {
 					newValue, _ := strconv.Atoi(ut.Text)
@@ -265,12 +262,10 @@ func (p *Parser) Parse() (date.Date, error) {
 	if timeToken, exist := p.ComponentTokens["time"]; exist {
 		p.ParsedTime, err = common.ParseTime(timeToken.Text)
 		if err != nil {
-			print("\tERROR:", err)
 			return date.Date{}, err
 		}
 	}
 
-	print("\t\tPARSED TIME:", p.ParsedTime)
 	result := p.createTimeFromComponents()
 	if !p.ParsedTime.IsZero() {
 		result = time.Date(result.Year(), result.Month(), result.Day(),
@@ -549,7 +544,6 @@ func (p *Parser) correctForDay(t time.Time) time.Time {
 		return t
 	}
 
-	print("\tYOHOHOHO:", p.Now.Day(), t)
 	t = common.ApplyDayFromConfig(p.Config, t, p.Now.Day())
 	return t
 }

@@ -2,12 +2,18 @@ package timezone
 
 import "regexp"
 
+// TimezoneInfo is the data for parsing timezone from a string.
 type TimezoneInfo struct {
 	RegexPatterns       []string
 	AlternativePatterns map[*regexp.Regexp]string
 	Timezones           map[string]int
 }
 
+// These timezone list are taken fromseveral sources:
+// - http://stackoverflow.com/q/1703546
+// - http://en.wikipedia.org/wiki/List_of_time_zone_abbreviations
+// - https://github.com/scrapinghub/dateparser/pull/4
+// - http://en.wikipedia.org/wiki/List_of_UTC_time_offsets
 var timezoneInfoList = []TimezoneInfo{
 	{
 		RegexPatterns: []string{

@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+// Load loads a timezone from the known timezone list and IANA database.
+// Returns error if the `name` is not found.
 func Load(name string) (*time.Location, error) {
 	// Check if name exists in known timezone list
 	upperName := strings.ToUpper(name)
@@ -30,6 +32,7 @@ func Load(name string) (*time.Location, error) {
 	return time.UTC, fmt.Errorf("%s is not a known timezone", name)
 }
 
+// MustLoad is like `Load`, except it will return `nil` if no timezone found.
 func MustLoad(name string) *time.Location {
 	loc, err := Load(name)
 	if loc == nil || err != nil {

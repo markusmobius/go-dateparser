@@ -13,6 +13,7 @@ var (
 	rxTimestamp = regexp.MustCompile(`^(\d{10})(\d{3})?(\d{3})?(?:\.|\s|$)`)
 )
 
+// Parse parses the Unix timestamp.
 func Parse(cfg *setting.Configuration, str string) date.Date {
 	period := date.Day
 	if cfg != nil && cfg.ReturnTimeAsPeriod {

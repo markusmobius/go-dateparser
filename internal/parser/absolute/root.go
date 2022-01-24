@@ -10,7 +10,5 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 	if err != nil {
 		return date.Date{}, err
 	}
-
-	print("\tINITIATION FINISHED")
 	return parser.Parse()
 }

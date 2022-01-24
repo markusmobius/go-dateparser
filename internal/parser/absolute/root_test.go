@@ -1,66 +1,84 @@
 package absolute
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestParse(t *testing.T) {
-	// Helper function
-	var messagePrefix string
-	var cfg setting.Configuration
-	expectError := func(s string) {
-		_, err := Parse(&cfg, s)
-		assert.Error(t, err, messagePrefix+" "+s)
+func TestParse_error(t *testing.T) {
+	// Prepare scenarios
+	cfgStrict := &setting.Configuration{StrictParsing: true}
+	cfgAllRequired := &setting.Configuration{RequiredParts: []string{"day", "month", "year"}}
+	cfgDayRequired := &setting.Configuration{RequiredParts: []string{"day"}}
+	cfgMonthRequired := &setting.Configuration{RequiredParts: []string{"month"}}
+	cfgYearRequired := &setting.Configuration{RequiredParts: []string{"year"}}
+
+	type testScenario struct {
+		Text   string
+		Config *setting.Configuration
 	}
 
-	// Should be error when incomplete dates given
-	cfg = setting.DefaultConfig
-	cfg.StrictParsing = true
-	messagePrefix = "STRICT PARSING"
+	tests := []testScenario{
+		// Empty string
+		{"", nil},
 
-	expectError("april 2010")
-	expectError("11 March")
-	expectError("March")
-	expectError("31 2010")
-	expectError("31/2010")
+		// Not date
+		{"invalid date string", nil},
+		{"Aug 7, 2014Aug 7, 2014", nil},
+		{"24h ago", nil},
+		{"2015-03-17t16:37:51+00:002015-03-17t15:24:37+00:00", nil},
+		{"8 enero 2013 martes 7:03 AM EST 8 enero 2013 martes 7:03 AM EST", nil},
+		{"12/09/18567", nil},
 
-	// Should be error when partially complete dates given
-	cfg = setting.DefaultConfig
-	cfg.RequiredParts = []string{"day", "month", "year"}
-	messagePrefix = "INCOMPLETE DATES"
+		// Wrong day
+		{"29 February 2015", nil},
+		{"32 January 2015", nil},
+		{"31 April 2015", nil},
+		{"31 June 2015", nil},
+		{"31 September 2015", nil},
 
-	expectError("april 2010")
-	expectError("11 March")
-	expectError("March")
-	expectError("31 2010")
-	expectError("31/2010")
+		// Incomplete dates with strict parsing enabled
+		{"april 2010", cfgStrict},
+		{"11 March", cfgStrict},
+		{"March", cfgStrict},
+		{"31 2010", cfgStrict},
+		{"31/2010", cfgStrict},
 
-	// Should be error when day part missing
-	cfg = setting.DefaultConfig
-	cfg.RequiredParts = []string{"day"}
-	messagePrefix = "MISSING DAY"
+		// Partially complete dates, all date components required
+		{"april 2010", cfgAllRequired},
+		{"11 March", cfgAllRequired},
+		{"March", cfgAllRequired},
+		{"31 2010", cfgAllRequired},
+		{"31/2010", cfgAllRequired},
 
-	expectError("april 2010")
-	expectError("March")
-	expectError("2010")
+		// Day is required
+		{"april 2010", cfgDayRequired},
+		{"March", cfgDayRequired},
+		{"2010", cfgDayRequired},
 
-	// Should be error when month part missing
-	cfg = setting.DefaultConfig
-	cfg.RequiredParts = []string{"month"}
-	messagePrefix = "MISSING MONTH"
+		// Month required
+		{"31 2010", cfgMonthRequired},
+		{"31/2010", cfgMonthRequired},
 
-	expectError("31 2010")
-	expectError("31/2010")
+		// Year required
+		{"11 March", cfgYearRequired},
+		{"March", cfgYearRequired},
+	}
 
-	// Should be error when year part missing
-	cfg = setting.DefaultConfig
-	cfg.RequiredParts = []string{"year"}
-	messagePrefix = "MISSING YEAR"
+	// Start test
+	var nFailed int
+	for _, test := range tests {
+		_, err := Parse(test.Config, test.Text)
+		passed := assert.Error(t, err)
+		if !passed {
+			nFailed++
+		}
+	}
 
-	expectError("11 March")
-	expectError("March")
-
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
 }

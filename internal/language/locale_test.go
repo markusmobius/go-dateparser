@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTranslation(t *testing.T) {
+func TestTranslate(t *testing.T) {
 	type testScenario struct {
 		Locale   string
 		String   string
@@ -662,7 +662,7 @@ func TestTranslation(t *testing.T) {
 	}
 }
 
-func TestFreshnessTranslation(t *testing.T) {
+func TestTranslate_relative(t *testing.T) {
 	type testScenario struct {
 		Locale   string
 		String   string
@@ -1541,51 +1541,52 @@ func TestFreshnessTranslation(t *testing.T) {
 }
 
 func TestSplit(t *testing.T) {
+	// Helper function
+	sp := func(items ...string) []string { return items }
+
+	// Prepare scenarios
 	type testScenario struct {
 		Locale   string
 		Text     string
 		Expected []string
 	}
 
-	scene := func(locale string, text string, expected []string) testScenario {
-		return testScenario{Locale: locale, Text: text, Expected: expected}
-	}
-
 	tests := []testScenario{
-		scene("pt", "sexta-feira, 10 de junho de 2014 14:52", []string{"sexta-feira", " ", "10", " ", "de", " ", "junho", " ", "de", " ", "2014", " ", "14", ":", "52"}),
-		scene("it", "14_luglio_15", []string{"14", "luglio", "15"}),
-		scene("zh", "1年11个月", []string{"1", "年", "11", "个月"}),
-		scene("zh", "1年11個月", []string{"1", "年", "11", "個月"}),
-		scene("tr", "2 saat önce", []string{"2 saat once"}),
-		scene("fr", "il ya environ 23 heures'", []string{"il ya", " ", "environ", " ", "23", " ", "heures"}),
-		scene("de", "Gestern um 04:41", []string{"gestern", " ", "um", " ", "04", ":", "41"}),
-		scene("de", "Donnerstag, 8. Januar 2015 um 07:17", []string{"donnerstag", " ", "8", ".", " ", "januar", " ", "2015", " ", "um", " ", "07", ":", "17"}),
-		scene("ru", "8 января 2015 г. в 9:10", []string{"8", " ", "января", " ", "2015", " ", "г", ".", " ", "в", " ", "9", ":", "10"}),
-		scene("cs", "6. leden 2015 v 22:29", []string{"6", ".", " ", "leden", " ", "2015", " ", "v", " ", "22", ":", "29"}),
-		scene("nl", "woensdag 7 januari 2015 om 21:32", []string{"woensdag", " ", "7", " ", "januari", " ", "2015", " ", "om", " ", "21", ":", "32"}),
-		scene("ro", "8 Ianuarie 2015 la 13:33", []string{"8", " ", "ianuarie", " ", "2015", " ", "la", " ", "13", ":", "33"}),
-		scene("ar", "8 يناير، 2015، الساعة 10:01 صباحاً", []string{"8", " ", "يناير", " ", "2015", "الساعة", " ", "10", ":", "01", " ", "صباحا"}),
-		scene("th", "8 มกราคม 2015 เวลา 12:22 น.", []string{"8", " ", "มกราคม", " ", "2015", " ", "เวลา", " ", "12", ":", "22", " ", "น."}),
-		scene("pl", "8 stycznia 2015 o 10:19", []string{"8", " ", "stycznia", " ", "2015", " ", "o", " ", "10", ":", "19"}),
-		scene("vi", "Thứ Năm, ngày 8 tháng 1 năm 2015", []string{"thu nam", " ", "ngay", " ", "8", " ", "thang 1", " ", "nam", " ", "2015"}),
-		scene("tl", "Biyernes Hulyo 3 2015", []string{"biyernes", " ", "hulyo", " ", "3", " ", "2015"}),
-		scene("be", "3 верасня 2015 г. у 11:10", []string{"3", " ", "верасня", " ", "2015", " ", "г", ".", " ", "у", " ", "11", ":", "10"}),
-		scene("id", "3 Juni 2015 13:05:46", []string{"3", " ", "juni", " ", "2015", " ", "13", ":", "05", ":", "46"}),
-		scene("he", "ה-21 לאוקטובר 2016 ב-15:00", []string{"ה-", "21", " ", "לאוקטובר", " ", "2016", " ", "ב-", "15", ":", "00"}),
-		scene("bn", "3 জুন 2015 13:05:46", []string{"3", " ", "জন", " ", "2015", " ", "13", ":", "05", ":", "46"}),
-		scene("hi", "13 मार्च 2013 11:15:09", []string{"13", " ", "मारच", " ", "2013", " ", "11", ":", "15", ":", "09"}),
-		scene("mgo", "aneg 5 12 iməg àdùmbə̀ŋ 2001 09:14 pm", []string{"aneg 5", " ", "12", " ", "iməg adumbəŋ", " ", "2001", " ", "09", ":", "14", " ", "pm"}),
-		scene("qu", "2 kapaq raymi 1998 domingo", []string{"2", " ", "kapaq raymi", " ", "1998", " ", "domingo"}),
-		scene("os", "24 сахаты размӕ 10:09 ӕмбисбоны размӕ", []string{"24 сахаты размӕ", " ", "10", ":", "09", " ", "ӕмбисбоны размӕ"}),
-		scene("pa", "25 ਘੰਟੇ ਪਹਿਲਾਂ 10:08 ਬਾਦੁ", []string{"25 ਘਟ ਪਹਿਲਾ", " ", "10", ":", "08", " ", "ਬਾਦ"}),
-		scene("en", "25_April_2008", []string{"25", "april", "2008"}),
-		scene("af", "hierdie uur 10:19 vm", []string{"hierdie uur", " ", "10", ":", "19", " ", "vm"}),
-		scene("rof", "7 mweri wa kaana 1998 12:09 kang'ama", []string{"7", " ", "mweri wa kaana", " ", "1998", " ", "12", ":", "09", " ", "kang'ama"}),
-		scene("saq", "14 lapa le tomon obo 2098 ong", []string{"14", " ", "lapa le tomon obo", " ", "2098", " ", "ong"}),
-		scene("wae", "cor 6 wučä 09:19 pm", []string{"cor 6 wuca", " ", "09", ":", "19", " ", "pm"}),
-		scene("naq", "13 ǃkhanǀgôab 1887", []string{"13", " ", "ǃkhanǀgoab", " ", "1887"}),
+		{"pt", "sexta-feira, 10 de junho de 2014 14:52", sp("sexta-feira", " ", "10", " ", "de", " ", "junho", " ", "de", " ", "2014", " ", "14", ":", "52")},
+		{"it", "14_luglio_15", sp("14", "luglio", "15")},
+		{"zh", "1年11个月", sp("1", "年", "11", "个月")},
+		{"zh", "1年11個月", sp("1", "年", "11", "個月")},
+		{"tr", "2 saat önce", sp("2 saat once")},
+		{"fr", "il ya environ 23 heures'", sp("il ya", " ", "environ", " ", "23", " ", "heures")},
+		{"de", "Gestern um 04:41", sp("gestern", " ", "um", " ", "04", ":", "41")},
+		{"de", "Donnerstag, 8. Januar 2015 um 07:17", sp("donnerstag", " ", "8", ".", " ", "januar", " ", "2015", " ", "um", " ", "07", ":", "17")},
+		{"ru", "8 января 2015 г. в 9:10", sp("8", " ", "января", " ", "2015", " ", "г", ".", " ", "в", " ", "9", ":", "10")},
+		{"cs", "6. leden 2015 v 22:29", sp("6", ".", " ", "leden", " ", "2015", " ", "v", " ", "22", ":", "29")},
+		{"nl", "woensdag 7 januari 2015 om 21:32", sp("woensdag", " ", "7", " ", "januari", " ", "2015", " ", "om", " ", "21", ":", "32")},
+		{"ro", "8 Ianuarie 2015 la 13:33", sp("8", " ", "ianuarie", " ", "2015", " ", "la", " ", "13", ":", "33")},
+		{"ar", "8 يناير، 2015، الساعة 10:01 صباحاً", sp("8", " ", "يناير", " ", "2015", "الساعة", " ", "10", ":", "01", " ", "صباحا")},
+		{"th", "8 มกราคม 2015 เวลา 12:22 น.", sp("8", " ", "มกราคม", " ", "2015", " ", "เวลา", " ", "12", ":", "22", " ", "น.")},
+		{"pl", "8 stycznia 2015 o 10:19", sp("8", " ", "stycznia", " ", "2015", " ", "o", " ", "10", ":", "19")},
+		{"vi", "Thứ Năm, ngày 8 tháng 1 năm 2015", sp("thu nam", " ", "ngay", " ", "8", " ", "thang 1", " ", "nam", " ", "2015")},
+		{"tl", "Biyernes Hulyo 3 2015", sp("biyernes", " ", "hulyo", " ", "3", " ", "2015")},
+		{"be", "3 верасня 2015 г. у 11:10", sp("3", " ", "верасня", " ", "2015", " ", "г", ".", " ", "у", " ", "11", ":", "10")},
+		{"id", "3 Juni 2015 13:05:46", sp("3", " ", "juni", " ", "2015", " ", "13", ":", "05", ":", "46")},
+		{"he", "ה-21 לאוקטובר 2016 ב-15:00", sp("ה-", "21", " ", "לאוקטובר", " ", "2016", " ", "ב-", "15", ":", "00")},
+		{"bn", "3 জুন 2015 13:05:46", sp("3", " ", "জন", " ", "2015", " ", "13", ":", "05", ":", "46")},
+		{"hi", "13 मार्च 2013 11:15:09", sp("13", " ", "मारच", " ", "2013", " ", "11", ":", "15", ":", "09")},
+		{"mgo", "aneg 5 12 iməg àdùmbə̀ŋ 2001 09:14 pm", sp("aneg 5", " ", "12", " ", "iməg adumbəŋ", " ", "2001", " ", "09", ":", "14", " ", "pm")},
+		{"qu", "2 kapaq raymi 1998 domingo", sp("2", " ", "kapaq raymi", " ", "1998", " ", "domingo")},
+		{"os", "24 сахаты размӕ 10:09 ӕмбисбоны размӕ", sp("24 сахаты размӕ", " ", "10", ":", "09", " ", "ӕмбисбоны размӕ")},
+		{"pa", "25 ਘੰਟੇ ਪਹਿਲਾਂ 10:08 ਬਾਦੁ", sp("25 ਘਟ ਪਹਿਲਾ", " ", "10", ":", "08", " ", "ਬਾਦ")},
+		{"en", "25_April_2008", sp("25", "april", "2008")},
+		{"af", "hierdie uur 10:19 vm", sp("hierdie uur", " ", "10", ":", "19", " ", "vm")},
+		{"rof", "7 mweri wa kaana 1998 12:09 kang'ama", sp("7", " ", "mweri wa kaana", " ", "1998", " ", "12", ":", "09", " ", "kang'ama")},
+		{"saq", "14 lapa le tomon obo 2098 ong", sp("14", " ", "lapa le tomon obo", " ", "2098", " ", "ong")},
+		{"wae", "cor 6 wučä 09:19 pm", sp("cor 6 wuca", " ", "09", ":", "19", " ", "pm")},
+		{"naq", "13 ǃkhanǀgôab 1887", sp("13", " ", "ǃkhanǀgoab", " ", "1887")},
 	}
 
+	// Start test
 	nFailed := 0
 	skippedTokens := strutil.NewDict("t")
 	for _, test := range tests {
@@ -1621,7 +1622,7 @@ func TestIsApplicable(t *testing.T) {
 		StripTimezone bool
 	}
 
-	scene := func(locale string, text string, expected bool, stripTimezone ...bool) testScenario {
+	ts := func(locale string, text string, expected bool, stripTimezone ...bool) testScenario {
 		s := testScenario{Locale: locale, Text: text, Expected: expected}
 		if len(stripTimezone) > 0 {
 			s.StripTimezone = stripTimezone[0]
@@ -1629,34 +1630,35 @@ func TestIsApplicable(t *testing.T) {
 		return s
 	}
 
+	stripTimezone := true
 	tests := []testScenario{
 		// Should be applicable
-		scene("en", "17th October, 2034 @ 01:08 am PDT", true, true),
-		scene("en", "#@Sept#04#2014", true),
-		scene("en", "2014-12-13T00:11:00Z", true),
-		scene("de", "Donnerstag, 8. Januar 2015 um 07:17", true),
-		scene("da", "Torsdag, 8. januar 2015 kl. 07:17", true),
-		scene("ru", "8 января 2015 г. в 9:10", true),
-		scene("cs", "Pondělí v 22:29", true),
-		scene("nl", "woensdag 7 januari om 21:32", true),
-		scene("ro", "8 Ianuarie 2015 la 13:33", true),
-		scene("ar", "ساعتين", true),
-		scene("tr", "3 hafta", true),
-		scene("th", "17 เดือนมิถุนายน", true),
-		scene("pl", "przedwczoraj", true),
-		scene("fa", "ژانویه 8, 2015، ساعت 15:46", true),
-		scene("vi", "2 tuần 3 ngày", true),
-		scene("tl", "Hulyo 3, 2015 7:00 pm", true),
-		scene("be", "3 верасня 2015 г. у 11:10", true),
-		scene("id", "01 Agustus 2015 18:23", true),
-		scene("he", "6 לדצמבר 1973", true),
-		scene("bn", "3 সপ্তাহ", true),
+		ts("en", "17th October, 2034 @ 01:08 am PDT", true, stripTimezone),
+		ts("en", "#@Sept#04#2014", true),
+		ts("en", "2014-12-13T00:11:00Z", true),
+		ts("de", "Donnerstag, 8. Januar 2015 um 07:17", true),
+		ts("da", "Torsdag, 8. januar 2015 kl. 07:17", true),
+		ts("ru", "8 января 2015 г. в 9:10", true),
+		ts("cs", "Pondělí v 22:29", true),
+		ts("nl", "woensdag 7 januari om 21:32", true),
+		ts("ro", "8 Ianuarie 2015 la 13:33", true),
+		ts("ar", "ساعتين", true),
+		ts("tr", "3 hafta", true),
+		ts("th", "17 เดือนมิถุนายน", true),
+		ts("pl", "przedwczoraj", true),
+		ts("fa", "ژانویه 8, 2015، ساعت 15:46", true),
+		ts("vi", "2 tuần 3 ngày", true),
+		ts("tl", "Hulyo 3, 2015 7:00 pm", true),
+		ts("be", "3 верасня 2015 г. у 11:10", true),
+		ts("id", "01 Agustus 2015 18:23", true),
+		ts("he", "6 לדצמבר 1973", true),
+		ts("bn", "3 সপ্তাহ", true),
 
 		// Should be NOT applicable
-		scene("ru", "08.haziran.2014, 11:07", false),
-		scene("ar", "6 دقیقه", false),
-		scene("fa", "ساعتين", false),
-		scene("cs", "3 hafta", false),
+		ts("ru", "08.haziran.2014, 11:07", false),
+		ts("ar", "6 دقیقه", false),
+		ts("fa", "ساعتين", false),
+		ts("cs", "3 hafta", false),
 	}
 
 	nFailed := 0

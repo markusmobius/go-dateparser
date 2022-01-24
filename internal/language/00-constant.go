@@ -4,6 +4,7 @@ import (
 	"errors"
 	"regexp"
 
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/pemistahl/lingua-go"
 )
 
@@ -25,24 +26,8 @@ var (
 	rxNumeral       = regexp.MustCompile(`(\d+)`)
 	rxNumberOnly    = regexp.MustCompile(`^\d+$`)
 
-	alwaysKeptTokens = map[string]struct{}{
-		"+": {},
-		":": {},
-		".": {},
-		" ": {},
-		"-": {},
-		"/": {},
-	}
-
-	freshnessWords = map[string]struct{}{
-		"day":    {},
-		"week":   {},
-		"month":  {},
-		"year":   {},
-		"hour":   {},
-		"minute": {},
-		"second": {},
-	}
+	alwaysKeptTokens = strutil.NewDict("+", ":", ".", " ", "-", "/")
+	freshnessWords   = strutil.NewDict("day", "week", "month", "year", "hour", "minute", "second")
 
 	externalLanguageDetector = lingua.NewLanguageDetectorBuilder().FromAllSpokenLanguages().Build()
 )

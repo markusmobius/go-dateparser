@@ -3,7 +3,6 @@ package relative
 import (
 	"regexp"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
@@ -23,6 +22,7 @@ var (
 	relativeUnits      = `decade|year|month|week|day|hour|minute|second`
 )
 
+// Parse parses date string like "1 year, 2 months ago" and "3 hours, 50 minutes ago".
 func Parse(cfg *setting.Configuration, str string) date.Date {
 	// Prepare string
 	str = strutil.StripBraces(str)
@@ -76,9 +76,7 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 
 	period := date.Day
 	if _, dayExist := relTimes["day"]; !dayExist {
-		if _, weekExist := relTimes["week"]; weekExist {
-			period = date.Week
-		} else if _, monthExist := relTimes["month"]; monthExist {
+		if _, monthExist := relTimes["month"]; monthExist {
 			period = date.Month
 		} else if _, yearExist := relTimes["year"]; yearExist {
 			period = date.Year
@@ -86,14 +84,13 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	}
 
 	date := now
-	days := relTimes["day"] + relTimes["week"]*7
 	if (rxIn.MatchString(str) || cfg.PreferredDateSource == setting.Future) && !rxAgo.MatchString(str) {
-		date = date.AddDate(relTimes["year"], relTimes["month"], days)
+		date = date.AddDate(relTimes["year"], relTimes["month"], relTimes["day"])
 		date = date.Add(time.Duration(relTimes["hour"]) * time.Hour)
 		date = date.Add(time.Duration(relTimes["minute"]) * time.Minute)
 		date = date.Add(time.Duration(relTimes["second"]) * time.Second)
 	} else {
-		date = date.AddDate(-relTimes["year"], -relTimes["month"], -days)
+		date = date.AddDate(-relTimes["year"], -relTimes["month"], -relTimes["day"])
 		date = date.Add(-time.Duration(relTimes["hour"]) * time.Hour)
 		date = date.Add(-time.Duration(relTimes["minute"]) * time.Minute)
 		date = date.Add(-time.Duration(relTimes["second"]) * time.Second)
@@ -103,7 +100,7 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 }
 
 func allWordsAreUnits(s string) bool {
-	s = strings.Join(strings.Fields(s), " ")
+	s = strutil.SanitizeSpaces(s)
 
 	var wordCount int
 	for _, word := range rxNonWord.Split(s, -1) {
@@ -131,6 +128,11 @@ func getRelativeTimes(s string) map[string]int {
 	if decades, exist := relativeTimes["decade"]; exist {
 		relativeTimes["year"] += decades * 10
 		delete(relativeTimes, "decade")
+	}
+
+	if week, exist := relativeTimes["week"]; exist {
+		relativeTimes["day"] += week * 7
+		delete(relativeTimes, "week")
 	}
 
 	return relativeTimes

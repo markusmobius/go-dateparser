@@ -21,7 +21,7 @@ const (
 type Configuration struct {
 	// Date order
 	DateOrder             string
-	PreferLocaleDateOrder bool
+	PreferConfigDateOrder bool
 
 	// Incomplete dates
 	CurrentTime         time.Time
@@ -41,7 +41,7 @@ type Configuration struct {
 func (c Configuration) Clone() Configuration {
 	return Configuration{
 		DateOrder:             c.DateOrder,
-		PreferLocaleDateOrder: c.PreferLocaleDateOrder,
+		PreferConfigDateOrder: c.PreferConfigDateOrder,
 		CurrentTime:           c.CurrentTime,
 		PreferredDayOfMonth:   c.PreferredDayOfMonth,
 		PreferredDateSource:   c.PreferredDateSource,
@@ -56,7 +56,7 @@ func (c Configuration) Clone() Configuration {
 var DefaultConfig = Configuration{
 	// Date order
 	DateOrder:             "MDY",
-	PreferLocaleDateOrder: true,
+	PreferConfigDateOrder: false,
 
 	// Incomplete dates
 	CurrentTime:         time.Now().UTC(),

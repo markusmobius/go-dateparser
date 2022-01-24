@@ -1,6 +1,10 @@
-package date
+package godateparser
 
-import "time"
+import (
+	"time"
+
+	"github.com/markusmobius/go-dateparser/internal/parser/date"
+)
 
 // Period is representation of confidence level for the parsed date.
 // For example, if the parsed date has period level `Month`, then
@@ -26,4 +30,12 @@ type Date struct {
 // IsZero reports whether the date is empty or not.
 func (d Date) IsZero() bool {
 	return d.Period == None || d.Time.IsZero()
+}
+
+func dateFromInternal(d date.Date) Date {
+	return Date{
+		Locale: d.Locale,
+		Period: Period(d.Period),
+		Time:   d.Time,
+	}
 }

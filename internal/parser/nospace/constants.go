@@ -6,6 +6,9 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
+
+	"github.com/markusmobius/go-dateparser/internal/dateutil"
 )
 
 var (
@@ -88,6 +91,12 @@ func createSortedFormats(prefix string) []string {
 	return list
 }
 
+// createParseCandidates generate parse candidates and its Go layout from the specified format.
+// For example, string `202112` can be parsed as:
+// - `2021-1-12`
+// - `2021-11-2`
+// - `20-2-1112`
+// - `2-02-1112`
 func createParseCandidates(str string, format string) ([]string, string) {
 	// Split format by its part
 	var formatParts []string
@@ -154,6 +163,7 @@ candidate_loop:
 
 		var lastIdx int
 		var candidateParts []string
+		mapCandidateValues := map[string]int{}
 		for j, limit := range limits {
 			partName := formatParts[j]
 			partText := str[lastIdx : lastIdx+limit]
@@ -163,11 +173,14 @@ candidate_loop:
 			}
 
 			candidateParts = append(candidateParts, partText)
+			mapCandidateValues[partName] = partValue
 			lastIdx += limit
 		}
 
-		candidate := strings.Join(candidateParts, "-")
-		candidates = append(candidates, candidate)
+		if candidateIsValid(mapCandidateValues) {
+			candidate := strings.Join(candidateParts, "-")
+			candidates = append(candidates, candidate)
+		}
 	}
 
 	// Prepare Go format
@@ -200,4 +213,41 @@ func valueIsValid(partName string, value int) bool {
 	}
 
 	return false
+}
+
+func candidateIsValid(mapValues map[string]int) bool {
+	// Get year
+	year, exist := mapValues["Y"]
+	if !exist {
+		year, exist = mapValues["y"]
+		if !exist {
+			return false
+		}
+
+		currentYear := time.Now().Year()
+		currentCentury := (currentYear / 1000) * 1000
+		if year < currentYear-currentCentury {
+			year += currentCentury
+		} else {
+			year += currentCentury - 100
+		}
+	}
+
+	// Get month and day
+	month, exist := mapValues["m"]
+	if !exist {
+		return false
+	}
+
+	day, exist := mapValues["d"]
+	if !exist {
+		return false
+	}
+
+	// Make sure day is valid
+	if day < 1 || day > dateutil.GetLastDayOfMonth(year, month) {
+		return false
+	}
+
+	return true
 }
