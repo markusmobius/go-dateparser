@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 	"github.com/stretchr/testify/assert"
@@ -25,7 +26,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 	type testScenario struct {
 		String string
 		Diff   pfpDiff
-		Period Period
+		Period date.Period
 	}
 
 	// Helper functions
@@ -37,6 +38,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 	}
 
 	// Prepare scenarios
+	Day, Month, Year, Time := date.Day, date.Month, date.Year, date.Time
 	pastTimes := []testScenario{
 		// English dates
 		{"yesterday", pfpDiff{"day": -1}, Day},

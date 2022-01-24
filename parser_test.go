@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/date"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -225,7 +226,7 @@ func TestParser_Parse(t *testing.T) {
 
 		// Parse text
 		dt, _ := parser.Parse(test.Text)
-		if passed := assertResult(t, dt, test.ExpectedTime, Day, message); !passed {
+		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
@@ -429,7 +430,7 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		Text           string
 		BaseTime       time.Time
 		ExpectedTime   time.Time
-		ExpectedPeriod Period
+		ExpectedPeriod date.Period
 	}
 
 	ts := func(text string, eTime time.Time, bTime ...time.Time) testScenario {
@@ -437,12 +438,12 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		if len(bTime) > 0 {
 			baseTime = bTime[0]
 		}
-		return testScenario{text, baseTime, eTime, Time}
+		return testScenario{text, baseTime, eTime, date.Time}
 	}
 
 	tsd := func(text string, eTime time.Time, bTime ...time.Time) testScenario {
 		test := ts(text, eTime, bTime...)
-		test.ExpectedPeriod = Day
+		test.ExpectedPeriod = date.Day
 		return test
 	}
 
@@ -498,25 +499,25 @@ func TestParser_Parse_checkPeriod(t *testing.T) {
 	type testScenario struct {
 		Text           string
 		ExpectedTime   time.Time
-		ExpectedPeriod Period
+		ExpectedPeriod date.Period
 	}
 
 	tests := []testScenario{
-		{"10 December", tt(2015, 12, 10), Day},
-		{"March", tt(2015, 3, 15), Month},
-		{"April", tt(2015, 4, 15), Month},
-		{"December", tt(2015, 12, 15), Month},
-		{"Friday", tt(2015, 2, 13), Day},
-		{"Monday", tt(2015, 2, 9), Day},
-		{"10:00PM", tt(2015, 2, 15, 22, 00), Day},
-		{"16:10", tt(2015, 2, 15, 16, 10), Day},
-		{"2014", tt(2014, 2, 15), Year},
-		{"2008", tt(2008, 2, 15), Year},
+		{"10 December", tt(2015, 12, 10), date.Day},
+		{"March", tt(2015, 3, 15), date.Month},
+		{"April", tt(2015, 4, 15), date.Month},
+		{"December", tt(2015, 12, 15), date.Month},
+		{"Friday", tt(2015, 2, 13), date.Day},
+		{"Monday", tt(2015, 2, 9), date.Day},
+		{"10:00PM", tt(2015, 2, 15, 22, 00), date.Day},
+		{"16:10", tt(2015, 2, 15, 16, 10), date.Day},
+		{"2014", tt(2014, 2, 15), date.Year},
+		{"2008", tt(2008, 2, 15), date.Year},
 		// Subscript and superscript dates
-		{"²⁰¹⁵", tt(2015, 2, 15), Year},
-		{"²⁹/⁰⁵/²⁰¹⁵", tt(2015, 5, 29), Day},
-		{"₁₅/₀₂/₂₀₂₀", tt(2020, 2, 15), Day},
-		{"₃₁ December", tt(2015, 12, 31), Day},
+		{"²⁰¹⁵", tt(2015, 2, 15), date.Year},
+		{"²⁹/⁰⁵/²⁰¹⁵", tt(2015, 5, 29), date.Day},
+		{"₁₅/₀₂/₂₀₂₀", tt(2020, 2, 15), date.Day},
+		{"₃₁ December", tt(2015, 12, 31), date.Day},
 	}
 
 	// Prepare parser
@@ -588,7 +589,7 @@ func TestParser_Parse_customOrder(t *testing.T) {
 		// Parse text
 		cfg.DateOrder = test.DateOrder
 		dt, _ := parser.Parse(test.Text)
-		if passed := assertResult(t, dt, test.ExpectedTime, Day, message); !passed {
+		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
@@ -643,7 +644,7 @@ func TestParser_Parse_successWhenSkipTokensSpecified(t *testing.T) {
 func TestParser_Parse_customParser(t *testing.T) {
 	// Prepare parser
 	parser := Parser{}
-	var dt Date
+	var dt date.Date
 
 	// Language is DE, config specified
 	parser.Languages = []string{"de"}
@@ -719,7 +720,7 @@ func tt(Y, M, D int, times ...int) time.Time {
 	return time.Date(Y, time.Month(M), D, H, m, s, ms*1000, time.UTC)
 }
 
-func assertResult(t *testing.T, dt Date, expectedTime time.Time, expectedPeriod Period, messages ...string) bool {
+func assertResult(t *testing.T, dt date.Date, expectedTime time.Time, expectedPeriod date.Period, messages ...string) bool {
 	var message string
 	if len(messages) > 0 {
 		message = messages[0]

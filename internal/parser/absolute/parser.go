@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
-	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/tokenizer"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"

@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
-	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"

@@ -1,6 +1,8 @@
 package date
 
-import "time"
+import (
+	"time"
+)
 
 // Period is representation of confidence level for the parsed date.
 // For example, if the parsed date has period level `Month`, then

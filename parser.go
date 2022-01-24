@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/language"
 	"github.com/markusmobius/go-dateparser/internal/parser/absolute"
-	"github.com/markusmobius/go-dateparser/internal/parser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/formatted"
 	"github.com/markusmobius/go-dateparser/internal/parser/nospace"
 	"github.com/markusmobius/go-dateparser/internal/parser/relative"
@@ -50,7 +50,7 @@ type Parser struct {
 
 // Parse parses string representing date and/or time in recognizable localized formats.
 // Supports parsing multiple languages.
-func (p *Parser) Parse(str string, formats ...string) (Date, error) {
+func (p *Parser) Parse(str string, formats ...string) (date.Date, error) {
 	// Initiate and validate config
 	cfg := p.Config
 	if cfg == nil {
@@ -61,16 +61,16 @@ func (p *Parser) Parse(str string, formats ...string) (Date, error) {
 	cfg.initiate()
 	err := cfg.validate()
 	if err != nil {
-		return Date{}, err
+		return date.Date{}, err
 	}
 
 	// Convert config to internal config
 	iCfg := cfg.toInternalConfig()
 
 	// Try to parse with specified formats
-	var iDt date.Date
-	if iDt = formatted.Parse(&iCfg, str, formats...); !iDt.IsZero() {
-		return dateFromInternal(iDt), nil
+	var dt date.Date
+	if dt = formatted.Parse(&iCfg, str, formats...); !dt.IsZero() {
+		return dt, nil
 	}
 
 	// Sanitize string
@@ -80,7 +80,7 @@ func (p *Parser) Parse(str string, formats ...string) (Date, error) {
 	// Find the suitable locales for this string
 	locales, err := p.getApplicableLocales(&iCfg, str)
 	if err != nil {
-		return Date{}, err
+		return date.Date{}, err
 	}
 
 	// Process each locale
@@ -98,31 +98,31 @@ func (p *Parser) Parse(str string, formats ...string) (Date, error) {
 		for _, parserType := range p.Config.Parsers {
 			switch parserType {
 			case Timestamp:
-				iDt = timestamp.Parse(&lCfg, str)
+				dt = timestamp.Parse(&lCfg, str)
 			case RelativeTime:
-				iDt = relative.Parse(&lCfg, translation)
+				dt = relative.Parse(&lCfg, translation)
 			case CustomFormat:
-				iDt = formatted.Parse(&lCfg, translationWithFormat, formats...)
+				dt = formatted.Parse(&lCfg, translationWithFormat, formats...)
 			case AbsoluteTime:
 				if t, tz := p.stripBracesAndTimezones(translation); t != "" {
-					iDt, _ = absolute.Parse(&lCfg, t)
-					iDt = p.applyTimezone(iDt, tz)
+					dt, _ = absolute.Parse(&lCfg, t)
+					dt = p.applyTimezone(dt, tz)
 				}
 			case NoSpacesTime:
 				if t, tz := p.stripBracesAndTimezones(translation); t != "" {
-					iDt, _ = nospace.Parse(&lCfg, t)
-					iDt = p.applyTimezone(iDt, tz)
+					dt, _ = nospace.Parse(&lCfg, t)
+					dt = p.applyTimezone(dt, tz)
 				}
 			}
 
-			if !iDt.IsZero() {
-				iDt.Locale = locale.Name
-				return dateFromInternal(iDt), nil
+			if !dt.IsZero() {
+				dt.Locale = locale.Name
+				return dt, nil
 			}
 		}
 	}
 
-	return Date{}, fmt.Errorf("failed to parse \"%s\": unknown format", originalStr)
+	return date.Date{}, fmt.Errorf("failed to parse \"%s\": unknown format", originalStr)
 }
 
 func (p *Parser) getApplicableLocales(iCfg *setting.Configuration, str string) ([]*data.LocaleData, error) {
