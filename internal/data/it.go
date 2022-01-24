@@ -161,16 +161,25 @@ var it_Locale = merge(nil, LocaleData{
 })
 
 var it_CH_Locale = merge(&it_Locale, LocaleData{
-	Name:      "it-CH",
-	DateOrder: "DMY",
+	Name:            "it-CH",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(tra \d+ settimana|tra \d+ settimane|\d+ settimana fa|\d+ settimane fa|tra \d+ secondi|tra \d+ secondo|\d+ secondi fa|\d+ secondo fa|tra \d+ giorni|tra \d+ giorno|tra \d+ minuti|tra \d+ minuto|\d+ giorni fa|\d+ giorno fa|\d+ minuti fa|\d+ minuto fa|tra \d+ anni|tra \d+ anno|tra \d+ mese|tra \d+ mesi|tra \d+ sett|\d+ anni fa|\d+ anno fa|\d+ mese fa|\d+ mesi fa|\d+ sett fa|tra \d+ min|tra \d+ ora|tra \d+ ore|tra \d+ sec|\d+ min fa|\d+ ora fa|\d+ ore fa|\d+ sec fa|tra \d+ gg|\d+ gg fa|tra \d+ g|tra \d+ h|tra \d+ s|\d+ g fa|\d+ h fa|\d+ s fa)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(tra \d+ settimana|tra \d+ settimane|\d+ settimana fa|\d+ settimane fa|tra \d+ secondi|tra \d+ secondo|\d+ secondi fa|\d+ secondo fa|tra \d+ giorni|tra \d+ giorno|tra \d+ minuti|tra \d+ minuto|\d+ giorni fa|\d+ giorno fa|\d+ minuti fa|\d+ minuto fa|tra \d+ anni|tra \d+ anno|tra \d+ mese|tra \d+ mesi|tra \d+ sett|\d+ anni fa|\d+ anno fa|\d+ mese fa|\d+ mesi fa|\d+ sett fa|tra \d+ min|tra \d+ ora|tra \d+ ore|tra \d+ sec|\d+ min fa|\d+ ora fa|\d+ ore fa|\d+ sec fa|tra \d+ gg|\d+ gg fa|tra \d+ g|tra \d+ h|tra \d+ s|\d+ g fa|\d+ h fa|\d+ s fa)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(settimana prossima|questa settimana|settimana scorsa|anno prossimo|mese prossimo|questo minuto|anno scorso|mese scorso|questo mese|altro ieri|quest'anno|mercoledi|quest'ora|settembre|settimana|settimane|dicembre|domenica|febbraio|novembre|gennaio|giovedi|martedi|ottobre|secondi|secondo|venerdi|agosto|aprile|domani|giorni|giorno|giugno|luglio|lunedi|maggio|minuti|minuto|sabato|circa|marzo|anni|anno|ieri|mese|mesi|oggi|sett|ago|apr|dic|dom|feb|gen|gio|giu|gmt|lug|lun|mag|mar|mer|min|nov|ora|ora|ore|ott|sab|sec|set|utc|ven|\+|\.|\[|\]|\||am|fa|in|pm| |'|,|-|/|:|;|@|e|g|h|m|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var it_SM_Locale = merge(&it_Locale, LocaleData{
-	Name:      "it-SM",
-	DateOrder: "DMY",
+	Name:            "it-SM",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(tra \d+ settimana|tra \d+ settimane|\d+ settimana fa|\d+ settimane fa|tra \d+ secondi|tra \d+ secondo|\d+ secondi fa|\d+ secondo fa|tra \d+ giorni|tra \d+ giorno|tra \d+ minuti|tra \d+ minuto|\d+ giorni fa|\d+ giorno fa|\d+ minuti fa|\d+ minuto fa|tra \d+ anni|tra \d+ anno|tra \d+ mese|tra \d+ mesi|tra \d+ sett|\d+ anni fa|\d+ anno fa|\d+ mese fa|\d+ mesi fa|\d+ sett fa|tra \d+ min|tra \d+ ora|tra \d+ ore|tra \d+ sec|\d+ min fa|\d+ ora fa|\d+ ore fa|\d+ sec fa|tra \d+ gg|\d+ gg fa|tra \d+ g|tra \d+ h|tra \d+ s|\d+ g fa|\d+ h fa|\d+ s fa)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(tra \d+ settimana|tra \d+ settimane|\d+ settimana fa|\d+ settimane fa|tra \d+ secondi|tra \d+ secondo|\d+ secondi fa|\d+ secondo fa|tra \d+ giorni|tra \d+ giorno|tra \d+ minuti|tra \d+ minuto|\d+ giorni fa|\d+ giorno fa|\d+ minuti fa|\d+ minuto fa|tra \d+ anni|tra \d+ anno|tra \d+ mese|tra \d+ mesi|tra \d+ sett|\d+ anni fa|\d+ anno fa|\d+ mese fa|\d+ mesi fa|\d+ sett fa|tra \d+ min|tra \d+ ora|tra \d+ ore|tra \d+ sec|\d+ min fa|\d+ ora fa|\d+ ore fa|\d+ sec fa|tra \d+ gg|\d+ gg fa|tra \d+ g|tra \d+ h|tra \d+ s|\d+ g fa|\d+ h fa|\d+ s fa)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(settimana prossima|questa settimana|settimana scorsa|anno prossimo|mese prossimo|questo minuto|anno scorso|mese scorso|questo mese|altro ieri|quest'anno|mercoledi|quest'ora|settembre|settimana|settimane|dicembre|domenica|febbraio|novembre|gennaio|giovedi|martedi|ottobre|secondi|secondo|venerdi|agosto|aprile|domani|giorni|giorno|giugno|luglio|lunedi|maggio|minuti|minuto|sabato|circa|marzo|anni|anno|ieri|mese|mesi|oggi|sett|ago|apr|dic|dom|feb|gen|gio|giu|gmt|lug|lun|mag|mar|mer|min|nov|ora|ora|ore|ott|sab|sec|set|utc|ven|\+|\.|\[|\]|\||am|fa|in|pm| |'|,|-|/|:|;|@|e|g|h|m|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var it_VA_Locale = merge(&it_Locale, LocaleData{
-	Name:      "it-VA",
-	DateOrder: "DMY",
+	Name:            "it-VA",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(tra \d+ settimana|tra \d+ settimane|\d+ settimana fa|\d+ settimane fa|tra \d+ secondi|tra \d+ secondo|\d+ secondi fa|\d+ secondo fa|tra \d+ giorni|tra \d+ giorno|tra \d+ minuti|tra \d+ minuto|\d+ giorni fa|\d+ giorno fa|\d+ minuti fa|\d+ minuto fa|tra \d+ anni|tra \d+ anno|tra \d+ mese|tra \d+ mesi|tra \d+ sett|\d+ anni fa|\d+ anno fa|\d+ mese fa|\d+ mesi fa|\d+ sett fa|tra \d+ min|tra \d+ ora|tra \d+ ore|tra \d+ sec|\d+ min fa|\d+ ora fa|\d+ ore fa|\d+ sec fa|tra \d+ gg|\d+ gg fa|tra \d+ g|tra \d+ h|tra \d+ s|\d+ g fa|\d+ h fa|\d+ s fa)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(tra \d+ settimana|tra \d+ settimane|\d+ settimana fa|\d+ settimane fa|tra \d+ secondi|tra \d+ secondo|\d+ secondi fa|\d+ secondo fa|tra \d+ giorni|tra \d+ giorno|tra \d+ minuti|tra \d+ minuto|\d+ giorni fa|\d+ giorno fa|\d+ minuti fa|\d+ minuto fa|tra \d+ anni|tra \d+ anno|tra \d+ mese|tra \d+ mesi|tra \d+ sett|\d+ anni fa|\d+ anno fa|\d+ mese fa|\d+ mesi fa|\d+ sett fa|tra \d+ min|tra \d+ ora|tra \d+ ore|tra \d+ sec|\d+ min fa|\d+ ora fa|\d+ ore fa|\d+ sec fa|tra \d+ gg|\d+ gg fa|tra \d+ g|tra \d+ h|tra \d+ s|\d+ g fa|\d+ h fa|\d+ s fa)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(settimana prossima|questa settimana|settimana scorsa|anno prossimo|mese prossimo|questo minuto|anno scorso|mese scorso|questo mese|altro ieri|quest'anno|mercoledi|quest'ora|settembre|settimana|settimane|dicembre|domenica|febbraio|novembre|gennaio|giovedi|martedi|ottobre|secondi|secondo|venerdi|agosto|aprile|domani|giorni|giorno|giugno|luglio|lunedi|maggio|minuti|minuto|sabato|circa|marzo|anni|anno|ieri|mese|mesi|oggi|sett|ago|apr|dic|dom|feb|gen|gio|giu|gmt|lug|lun|mag|mar|mer|min|nov|ora|ora|ore|ott|sab|sec|set|utc|ven|\+|\.|\[|\]|\||am|fa|in|pm| |'|,|-|/|:|;|@|e|g|h|m|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

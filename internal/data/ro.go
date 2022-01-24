@@ -157,6 +157,9 @@ var ro_Locale = merge(nil, LocaleData{
 })
 
 var ro_MD_Locale = merge(&ro_Locale, LocaleData{
-	Name:      "ro-MD",
-	DateOrder: "DMY",
+	Name:            "ro-MD",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(peste \d+ de saptamani|acum \d+ de saptamani|peste \d+ de secunde|acum \d+ de secunde|peste \d+ de minute|peste \d+ saptamana|acum \d+ de minute|acum \d+ saptamana|peste \d+ de luni|peste \d+ de zile|peste \d+ secunda|acum \d+ de luni|acum \d+ de zile|acum \d+ secunda|peste \d+ de ani|peste \d+ de ore|acum \d+ de ani|acum \d+ de ore|peste \d+ minut|acum \d+ minut|peste \d+ luna|peste \d+ luni|peste \d+ sapt|peste \d+ zile|acum \d+ luna|acum \d+ luni|acum \d+ sapt|acum \d+ zile|peste \d+ ani|peste \d+ min|peste \d+ ora|peste \d+ sec|acum \d+ min|acum \d+ ora|acum \d+ sec|peste \d+ an|peste \d+ zi|acum \d+ an|acum \d+ zi|peste \d+ h|acum \d+ h)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(peste \d+ de saptamani|acum \d+ de saptamani|peste \d+ de secunde|acum \d+ de secunde|peste \d+ de minute|peste \d+ saptamana|acum \d+ de minute|acum \d+ saptamana|peste \d+ de luni|peste \d+ de zile|peste \d+ secunda|acum \d+ de luni|acum \d+ de zile|acum \d+ secunda|peste \d+ de ani|peste \d+ de ore|acum \d+ de ani|acum \d+ de ore|peste \d+ minut|acum \d+ minut|peste \d+ luna|peste \d+ luni|peste \d+ sapt|peste \d+ zile|acum \d+ luna|acum \d+ luni|acum \d+ sapt|acum \d+ zile|peste \d+ ani|peste \d+ min|peste \d+ ora|peste \d+ sec|acum \d+ min|acum \d+ ora|acum \d+ sec|peste \d+ an|peste \d+ zi|acum \d+ an|acum \d+ zi|peste \d+ h|acum \d+ h)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(saptamana viitoare|saptamana aceasta|saptamana trecuta|minutul acesta|luna viitoare|luna aceasta|luna trecuta|anul acesta|anul trecut|anul viitor|ora aceasta|septembrie|decembrie|februarie|noiembrie|octombrie|saptamana|saptamani|duminica|ianuarie|miercuri|aprilie|in urma|sambata|secunda|secunde|august|martie|minute|vineri|iulie|iunie|maine|marti|minut|noiem|acum|febr|ieri|luna|luni|mart|sapt|sept|zile|ani|apr|aug|azi|dec|dum|feb|gmt|ian|iul|iun|joi|lun|mai|mar|mie|min|nov|oct|ora|ore|sam|sec|sep|utc|vin|\+|\.|\[|\]|\||am|an|de|in|la|mi|pm|zi| |'|,|-|/|:|;|@|h|m|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

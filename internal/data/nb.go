@@ -152,6 +152,9 @@ var nb_Locale = merge(nil, LocaleData{
 })
 
 var nb_SJ_Locale = merge(&nb_Locale, LocaleData{
-	Name:      "nb-SJ",
-	DateOrder: "DMY",
+	Name:            "nb-SJ",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(for \d+ minutter siden|for \d+ sekunder siden|for \d+ maneder siden|for \d+ minutt siden|for \d+ sekund siden|for \d+ dager siden|for \d+ maned siden|for \d+ timer siden|for \d+ døgn siden|for \d+ time siden|for \d+ uker siden|for \d+ min siden|for \d+ sek siden|for \d+ uke siden|for \d+ ar siden|for \d+ md siden|for \d+ d siden|for \d+ t siden|for \d+ u siden|om \d+ minutter|om \d+ sekunder|om \d+ maneder|om \d+ minutt|om \d+ sekund|om \d+ maned|om \d+ timer|om \d+ døgn|om \d+ time|om \d+ uker|om \d+ min|om \d+ sek|om \d+ uke|om \d+ ar|om \d+ md|om \d+ d|om \d+ t|om \d+ u|–\d+ ar)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(for \d+ minutter siden|for \d+ sekunder siden|for \d+ maneder siden|for \d+ minutt siden|for \d+ sekund siden|for \d+ dager siden|for \d+ maned siden|for \d+ timer siden|for \d+ døgn siden|for \d+ time siden|for \d+ uker siden|for \d+ min siden|for \d+ sek siden|for \d+ uke siden|for \d+ ar siden|for \d+ md siden|for \d+ d siden|for \d+ t siden|for \d+ u siden|om \d+ minutter|om \d+ sekunder|om \d+ maneder|om \d+ minutt|om \d+ sekund|om \d+ maned|om \d+ timer|om \d+ døgn|om \d+ time|om \d+ uker|om \d+ min|om \d+ sek|om \d+ uke|om \d+ ar|om \d+ md|om \d+ d|om \d+ t|om \d+ u|–\d+ ar)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(dette minuttet|denne maneden|forrige maned|denne timen|forrige uke|neste maned|denne uken|forrige md|neste uke|september|denne md|desember|i morgen|neste ar|neste md|november|februar|oktober|tirsdag|torsdag|august|fredag|i fjor|januar|lørdag|mandag|minutt|onsdag|sekund|søndag|april|dager|i dag|i gar|maned|siden|timer|i ar|juli|juni|mars|time|uker|apr|aug|dag|des|feb|fre|gmt|jan|jul|jun|lør|mai|man|mar|min|mnd|nov|okt|ons|sek|sep|søn|tir|tor|uke|utc|\+|\.|\[|\]|\||am|ar|md|na|om|pm| |'|,|-|/|:|;|@|d|m|s|t|u|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

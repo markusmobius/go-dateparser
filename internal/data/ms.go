@@ -135,11 +135,17 @@ var ms_Locale = merge(nil, LocaleData{
 })
 
 var ms_BN_Locale = merge(&ms_Locale, LocaleData{
-	Name:      "ms-BN",
-	DateOrder: "DMY",
+	Name:            "ms-BN",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dalam \d+ minggu|\d+ minggu lalu|dalam \d+ bulan|dalam \d+ minit|\d+ bulan lalu|\d+ minit lalu|\d+ tahun lalu|dalam \d+ hari|dalam \d+ saat|\d+ hari lalu|\d+ saat lalu|dalam \d+ jam|dalam \d+ thn|\d+ bln lalu|\d+ jam lalu|\d+ mgu lalu|\d+ min lalu|\d+ thn lalu|dlm \d+ hari|dlm \d+ saat|dlm \d+ bln|dlm \d+ jam|dlm \d+ mgu|dlm \d+ min)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(dalam \d+ minggu|\d+ minggu lalu|dalam \d+ bulan|dalam \d+ minit|\d+ bulan lalu|\d+ minit lalu|\d+ tahun lalu|dalam \d+ hari|dalam \d+ saat|\d+ hari lalu|\d+ saat lalu|dalam \d+ jam|dalam \d+ thn|\d+ bln lalu|\d+ jam lalu|\d+ mgu lalu|\d+ min lalu|\d+ thn lalu|dlm \d+ hari|dlm \d+ saat|dlm \d+ bln|dlm \d+ jam|dlm \d+ mgu|dlm \d+ min)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(pada minit ini|minggu depan|bulan depan|minggu lalu|tahun depan|bulan lalu|minggu ini|tahun lalu|bln depan|bulan ini|mng depan|mng lepas|september|tahun ini|thn depan|thn lepas|bln lalu|disember|februari|hari ini|november|sekarang|bln ini|jam ini|januari|mng ini|oktober|semalam|thn ini|jumaat|khamis|minggu|selasa|april|bulan|isnin|julai|minit|sabtu|semlm|tahun|ahad|esok|hari|ogos|rabu|saat|ahd|apr|bln|dis|feb|gmt|isn|jam|jan|jul|jum|jun|kha|mac|mei|mgu|min|nov|ogo|okt|ptg|rab|sab|sel|sep|thn|utc|\+|\.|\[|\]|\||am|pg|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var ms_SG_Locale = merge(&ms_Locale, LocaleData{
-	Name:      "ms-SG",
-	DateOrder: "DMY",
+	Name:            "ms-SG",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dalam \d+ minggu|\d+ minggu lalu|dalam \d+ bulan|dalam \d+ minit|\d+ bulan lalu|\d+ minit lalu|\d+ tahun lalu|dalam \d+ hari|dalam \d+ saat|\d+ hari lalu|\d+ saat lalu|dalam \d+ jam|dalam \d+ thn|\d+ bln lalu|\d+ jam lalu|\d+ mgu lalu|\d+ min lalu|\d+ thn lalu|dlm \d+ hari|dlm \d+ saat|dlm \d+ bln|dlm \d+ jam|dlm \d+ mgu|dlm \d+ min)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(dalam \d+ minggu|\d+ minggu lalu|dalam \d+ bulan|dalam \d+ minit|\d+ bulan lalu|\d+ minit lalu|\d+ tahun lalu|dalam \d+ hari|dalam \d+ saat|\d+ hari lalu|\d+ saat lalu|dalam \d+ jam|dalam \d+ thn|\d+ bln lalu|\d+ jam lalu|\d+ mgu lalu|\d+ min lalu|\d+ thn lalu|dlm \d+ hari|dlm \d+ saat|dlm \d+ bln|dlm \d+ jam|dlm \d+ mgu|dlm \d+ min)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(pada minit ini|minggu depan|bulan depan|minggu lalu|tahun depan|bulan lalu|minggu ini|tahun lalu|bln depan|bulan ini|mng depan|mng lepas|september|tahun ini|thn depan|thn lepas|bln lalu|disember|februari|hari ini|november|sekarang|bln ini|jam ini|januari|mng ini|oktober|semalam|thn ini|jumaat|khamis|minggu|selasa|april|bulan|isnin|julai|minit|sabtu|semlm|tahun|ahad|esok|hari|ogos|rabu|saat|ahd|apr|bln|dis|feb|gmt|isn|jam|jan|jul|jum|jun|kha|mac|mei|mgu|min|nov|ogo|okt|ptg|rab|sab|sel|sep|thn|utc|\+|\.|\[|\]|\||am|pg|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

@@ -685,19 +685,18 @@ func TestParser_Parse_customParser(t *testing.T) {
 	dt, _ = parser.Parse("24 January, 2014")
 	assert.True(t, dt.IsZero())
 
-	// TODOS: FIX SPLIT TOKENS
-	// // Locales set to pt-TL and text is matched
-	// parser.Config = nil
-	// parser.Languages = nil
-	// parser.Locales = []string{"pt-TL"}
-	// dt, _ = parser.Parse("24 de Janeiro de 2014")
-	// assert.Equal(t, tt(2014, 1, 24), dt.Time)
+	// Locales set to pt-TL and text is matched
+	parser.Config = nil
+	parser.Languages = nil
+	parser.Locales = []string{"pt-TL"}
+	dt, _ = parser.Parse("24 de Janeiro de 2014")
+	assert.Equal(t, tt(2014, 1, 24), dt.Time)
 
-	// // Locales and text not matched
-	// parser.Languages = nil
-	// parser.Locales = []string{"pt-AO"}
-	// dt, _ = parser.Parse("24 January, 2014")
-	// assert.True(t, dt.IsZero())
+	// Locales and text not matched
+	parser.Languages = nil
+	parser.Locales = []string{"pt-AO"}
+	dt, _ = parser.Parse("24 January, 2014")
+	assert.True(t, dt.IsZero())
 }
 
 func tt(Y, M, D int, times ...int) time.Time {

@@ -151,6 +151,9 @@ var fo_Locale = merge(nil, LocaleData{
 })
 
 var fo_DK_Locale = merge(&fo_Locale, LocaleData{
-	Name:      "fo-DK",
-	DateOrder: "DMY",
+	Name:            "fo-DK",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ minuttir siðan|\d+ manaðir siðan|\d+ minutt siðan|\d+ sekund siðan|\d+ dagar siðan|\d+ dagur siðan|\d+ manað siðan|\d+ timar siðan|\d+ vikur siðan|um \d+ minuttir|\d+ timi siðan|\d+ vika siðan|um \d+ manaðir|\d+ min siðan|\d+ mnð siðan|\d+ sek siðan|um \d+ minutt|um \d+ sekund|\d+ ar siðan|\d+ da siðan|\d+ vi siðan|um \d+ dagar|um \d+ manað|um \d+ timar|um \d+ vikur|\d+ d siðan|\d+ m siðan|\d+ s siðan|\d+ t siðan|\d+ v siðan|um \d+ tima|um \d+ viku|um \d+ dag|um \d+ min|um \d+ mnð|um \d+ sek|um \d+ ar|um \d+ da|um \d+ vi|um \d+ d|um \d+ m|um \d+ s|um \d+ t|um \d+ v)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ minuttir siðan|\d+ manaðir siðan|\d+ minutt siðan|\d+ sekund siðan|\d+ dagar siðan|\d+ dagur siðan|\d+ manað siðan|\d+ timar siðan|\d+ vikur siðan|um \d+ minuttir|\d+ timi siðan|\d+ vika siðan|um \d+ manaðir|\d+ min siðan|\d+ mnð siðan|\d+ sek siðan|um \d+ minutt|um \d+ sekund|\d+ ar siðan|\d+ da siðan|\d+ vi siðan|um \d+ dagar|um \d+ manað|um \d+ timar|um \d+ vikur|\d+ d siðan|\d+ m siðan|\d+ s siðan|\d+ t siðan|\d+ v siðan|um \d+ tima|um \d+ viku|um \d+ dag|um \d+ min|um \d+ mnð|um \d+ sek|um \d+ ar|um \d+ da|um \d+ vi|um \d+ d|um \d+ m|um \d+ s|um \d+ t|um \d+ v)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(hendan minuttin|seinasta manað|henda manaðin|seinastu viku|friggjadagur|hendan timan|leygardagur|næsta manað|næstu viku|sunnudagur|hesu viku|manadagur|mikudagur|september|desember|hosdagur|i morgin|minuttur|november|næsta ar|tysdagur|februar|manaður|oktober|august|i fjør|i gjar|januar|sekund|april|dagur|i dag|i ar|juli|juni|mars|timi|vika|apr|aug|des|feb|fri|gmt|hos|jan|jul|jun|ley|mai|man|mar|mik|min|mnð|nov|okt|sek|sep|sun|tys|utc|\+|\.|\[|\]|\||am|ar|da|nu|pm|vi| |'|,|-|/|:|;|@|d|m|s|t|v|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

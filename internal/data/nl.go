@@ -144,31 +144,49 @@ var nl_Locale = merge(nil, LocaleData{
 })
 
 var nl_AW_Locale = merge(&nl_Locale, LocaleData{
-	Name:      "nl-AW",
-	DateOrder: "DMY",
+	Name:            "nl-AW",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(binnen een minuut|binnen een uur|volgende maand|volgende week|volgend jaar|vorige maand|eergisteren|vorige jaar|vorige week|deze maand|overmorgen|vorig jaar|deze week|donderdag|september|augustus|december|dit jaar|februari|gisteren|november|seconden|woensdag|zaterdag|dinsdag|geleden|januari|maandag|maanden|minuten|oktober|seconde|vandaag|vrijdag|minuut|morgen|zondag|april|dagen|maand|maart|weken|jaar|juli|juni|week|apr|aug|dag|dec|feb|gmt|jan|jul|jun|mei|min|mnd|mrt|nov|okt|sec|sep|utc|uur|\+|\.|\[|\]|\||am|di|do|in|jr|ma|nu|om|pm|vr|wk|wo|za|zo| |'|,|-|/|:|;|@|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var nl_BE_Locale = merge(&nl_Locale, LocaleData{
-	Name:      "nl-BE",
-	DateOrder: "DMY",
+	Name:            "nl-BE",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(binnen een minuut|binnen een uur|volgende maand|volgende week|volgend jaar|vorige maand|eergisteren|vorige jaar|vorige week|deze maand|overmorgen|vorig jaar|deze week|donderdag|september|augustus|december|dit jaar|februari|gisteren|november|seconden|woensdag|zaterdag|dinsdag|geleden|januari|maandag|maanden|minuten|oktober|seconde|vandaag|vrijdag|minuut|morgen|zondag|april|dagen|maand|maart|weken|jaar|juli|juni|week|apr|aug|dag|dec|feb|gmt|jan|jul|jun|mei|min|mnd|mrt|nov|okt|sec|sep|utc|uur|\+|\.|\[|\]|\||am|di|do|in|jr|ma|nu|om|pm|vr|wk|wo|za|zo| |'|,|-|/|:|;|@|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var nl_BQ_Locale = merge(&nl_Locale, LocaleData{
-	Name:      "nl-BQ",
-	DateOrder: "DMY",
+	Name:            "nl-BQ",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(binnen een minuut|binnen een uur|volgende maand|volgende week|volgend jaar|vorige maand|eergisteren|vorige jaar|vorige week|deze maand|overmorgen|vorig jaar|deze week|donderdag|september|augustus|december|dit jaar|februari|gisteren|november|seconden|woensdag|zaterdag|dinsdag|geleden|januari|maandag|maanden|minuten|oktober|seconde|vandaag|vrijdag|minuut|morgen|zondag|april|dagen|maand|maart|weken|jaar|juli|juni|week|apr|aug|dag|dec|feb|gmt|jan|jul|jun|mei|min|mnd|mrt|nov|okt|sec|sep|utc|uur|\+|\.|\[|\]|\||am|di|do|in|jr|ma|nu|om|pm|vr|wk|wo|za|zo| |'|,|-|/|:|;|@|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var nl_CW_Locale = merge(&nl_Locale, LocaleData{
-	Name:      "nl-CW",
-	DateOrder: "DMY",
+	Name:            "nl-CW",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(binnen een minuut|binnen een uur|volgende maand|volgende week|volgend jaar|vorige maand|eergisteren|vorige jaar|vorige week|deze maand|overmorgen|vorig jaar|deze week|donderdag|september|augustus|december|dit jaar|februari|gisteren|november|seconden|woensdag|zaterdag|dinsdag|geleden|januari|maandag|maanden|minuten|oktober|seconde|vandaag|vrijdag|minuut|morgen|zondag|april|dagen|maand|maart|weken|jaar|juli|juni|week|apr|aug|dag|dec|feb|gmt|jan|jul|jun|mei|min|mnd|mrt|nov|okt|sec|sep|utc|uur|\+|\.|\[|\]|\||am|di|do|in|jr|ma|nu|om|pm|vr|wk|wo|za|zo| |'|,|-|/|:|;|@|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var nl_SR_Locale = merge(&nl_Locale, LocaleData{
-	Name:      "nl-SR",
-	DateOrder: "DMY",
+	Name:            "nl-SR",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(binnen een minuut|binnen een uur|volgende maand|volgende week|volgend jaar|vorige maand|eergisteren|vorige jaar|vorige week|deze maand|overmorgen|vorig jaar|deze week|donderdag|september|augustus|december|dit jaar|februari|gisteren|november|seconden|woensdag|zaterdag|dinsdag|geleden|januari|maandag|maanden|minuten|oktober|seconde|vandaag|vrijdag|minuut|morgen|zondag|april|dagen|maand|maart|weken|jaar|juli|juni|week|apr|aug|dag|dec|feb|gmt|jan|jul|jun|mei|min|mnd|mrt|nov|okt|sec|sep|utc|uur|\+|\.|\[|\]|\||am|di|do|in|jr|ma|nu|om|pm|vr|wk|wo|za|zo| |'|,|-|/|:|;|@|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var nl_SX_Locale = merge(&nl_Locale, LocaleData{
-	Name:      "nl-SX",
-	DateOrder: "DMY",
+	Name:            "nl-SX",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ seconden geleden|\d+ maanden geleden|\d+ minuten geleden|\d+ seconde geleden|\d+ minuut geleden|\d+ dagen geleden|\d+ maand geleden|\d+ weken geleden|over \d+ seconden|\d+ jaar geleden|\d+ week geleden|over \d+ maanden|over \d+ minuten|over \d+ seconde|\d+ dag geleden|\d+ dgn geleden|\d+ min geleden|\d+ sec geleden|\d+ uur geleden|over \d+ minuut|over \d+ dagen|over \d+ maand|over \d+ weken|over \d+ jaar|over \d+ week|over \d+ dag|over \d+ dgn|over \d+ min|over \d+ sec|over \d+ uur)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(binnen een minuut|binnen een uur|volgende maand|volgende week|volgend jaar|vorige maand|eergisteren|vorige jaar|vorige week|deze maand|overmorgen|vorig jaar|deze week|donderdag|september|augustus|december|dit jaar|februari|gisteren|november|seconden|woensdag|zaterdag|dinsdag|geleden|januari|maandag|maanden|minuten|oktober|seconde|vandaag|vrijdag|minuut|morgen|zondag|april|dagen|maand|maart|weken|jaar|juli|juni|week|apr|aug|dag|dec|feb|gmt|jan|jul|jun|mei|min|mnd|mrt|nov|okt|sec|sep|utc|uur|\+|\.|\[|\]|\||am|di|do|in|jr|ma|nu|om|pm|vr|wk|wo|za|zo| |'|,|-|/|:|;|@|s|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

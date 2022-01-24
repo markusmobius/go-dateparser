@@ -121,27 +121,24 @@ var sw_CD_Locale = merge(&sw_Locale, LocaleData{
 	DateOrder: "DMY",
 	Translations: map[string]string{
 		"juma": "week",
-		"gmt":  "gmt",
-		"utc":  "utc",
-		"am":   "am",
-		"pm":   "pm",
-		" ":    " ",
-		"+":    "+",
-		"-":    "-",
-		".":    ".",
-		"/":    "/",
-		":":    ":",
-		"z":    "z",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(juma|gmt|utc|\+|\.|am|pm| |-|/|:|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(sekunde \d+ zilizopita|dakika \d+ zilizopita|sekunde \d+ iliyopita|baada ya sekunde \d+|dakika \d+ iliyopita|baada ya dakika \d+|miaka \d+ iliyopita|miezi \d+ iliyopita|siku \d+ zilizopita|wiki \d+ zilizopita|baada ya miaka \d+|baada ya miezi \d+|baada ya mwaka \d+|baada ya mwezi \d+|mwaka \d+ uliopita|mwezi \d+ uliopita|saa \d+ zilizopita|siku \d+ iliyopita|wiki \d+ iliyopita|baada ya siku \d+|baada ya wiki \d+|saa \d+ iliyopita|baada ya saa \d+)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(sekunde \d+ zilizopita|dakika \d+ zilizopita|sekunde \d+ iliyopita|baada ya sekunde \d+|dakika \d+ iliyopita|baada ya dakika \d+|miaka \d+ iliyopita|miezi \d+ iliyopita|siku \d+ zilizopita|wiki \d+ zilizopita|baada ya miaka \d+|baada ya miezi \d+|baada ya mwaka \d+|baada ya mwezi \d+|mwaka \d+ uliopita|mwezi \d+ uliopita|saa \d+ zilizopita|siku \d+ iliyopita|wiki \d+ iliyopita|baada ya siku \d+|baada ya wiki \d+|saa \d+ iliyopita|baada ya saa \d+)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(mwaka uliopita|mwezi uliopita|wiki iliyopita|dakika hii|mwaka ujao|mwezi ujao|wiki ijayo|mwaka huu|mwezi huu|sasa hivi|alhamisi|februari|jumamosi|jumapili|jumatano|jumatatu|septemba|wiki hii|asubuhi|desemba|januari|jumanne|novemba|saa hii|sekunde|agosti|aprili|dakika|ijumaa|mchana|oktoba|julai|kesho|machi|mwaka|mwezi|jana|juma|juni|siku|wiki|ago|apr|dak|des|feb|gmt|jan|jul|jun|leo|mac|mei|nov|okt|saa|sek|sep|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var sw_KE_Locale = merge(&sw_Locale, LocaleData{
-	Name:      "sw-KE",
-	DateOrder: "DMY",
+	Name:            "sw-KE",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(sekunde \d+ zilizopita|dakika \d+ zilizopita|sekunde \d+ iliyopita|baada ya sekunde \d+|dakika \d+ iliyopita|baada ya dakika \d+|miaka \d+ iliyopita|miezi \d+ iliyopita|siku \d+ zilizopita|wiki \d+ zilizopita|baada ya miaka \d+|baada ya miezi \d+|baada ya mwaka \d+|baada ya mwezi \d+|mwaka \d+ uliopita|mwezi \d+ uliopita|saa \d+ zilizopita|siku \d+ iliyopita|wiki \d+ iliyopita|baada ya siku \d+|baada ya wiki \d+|saa \d+ iliyopita|baada ya saa \d+)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(sekunde \d+ zilizopita|dakika \d+ zilizopita|sekunde \d+ iliyopita|baada ya sekunde \d+|dakika \d+ iliyopita|baada ya dakika \d+|miaka \d+ iliyopita|miezi \d+ iliyopita|siku \d+ zilizopita|wiki \d+ zilizopita|baada ya miaka \d+|baada ya miezi \d+|baada ya mwaka \d+|baada ya mwezi \d+|mwaka \d+ uliopita|mwezi \d+ uliopita|saa \d+ zilizopita|siku \d+ iliyopita|wiki \d+ iliyopita|baada ya siku \d+|baada ya wiki \d+|saa \d+ iliyopita|baada ya saa \d+)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(mwaka uliopita|mwezi uliopita|wiki iliyopita|dakika hii|mwaka ujao|mwezi ujao|wiki ijayo|mwaka huu|mwezi huu|sasa hivi|alhamisi|februari|jumamosi|jumapili|jumatano|jumatatu|septemba|wiki hii|asubuhi|desemba|januari|jumanne|novemba|saa hii|sekunde|agosti|aprili|dakika|ijumaa|mchana|oktoba|julai|kesho|machi|mwaka|mwezi|jana|juni|siku|wiki|ago|apr|dak|des|feb|gmt|jan|jul|jun|leo|mac|mei|nov|okt|saa|sek|sep|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var sw_UG_Locale = merge(&sw_Locale, LocaleData{
-	Name:      "sw-UG",
-	DateOrder: "DMY",
+	Name:            "sw-UG",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(sekunde \d+ zilizopita|dakika \d+ zilizopita|sekunde \d+ iliyopita|baada ya sekunde \d+|dakika \d+ iliyopita|baada ya dakika \d+|miaka \d+ iliyopita|miezi \d+ iliyopita|siku \d+ zilizopita|wiki \d+ zilizopita|baada ya miaka \d+|baada ya miezi \d+|baada ya mwaka \d+|baada ya mwezi \d+|mwaka \d+ uliopita|mwezi \d+ uliopita|saa \d+ zilizopita|siku \d+ iliyopita|wiki \d+ iliyopita|baada ya siku \d+|baada ya wiki \d+|saa \d+ iliyopita|baada ya saa \d+)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(sekunde \d+ zilizopita|dakika \d+ zilizopita|sekunde \d+ iliyopita|baada ya sekunde \d+|dakika \d+ iliyopita|baada ya dakika \d+|miaka \d+ iliyopita|miezi \d+ iliyopita|siku \d+ zilizopita|wiki \d+ zilizopita|baada ya miaka \d+|baada ya miezi \d+|baada ya mwaka \d+|baada ya mwezi \d+|mwaka \d+ uliopita|mwezi \d+ uliopita|saa \d+ zilizopita|siku \d+ iliyopita|wiki \d+ iliyopita|baada ya siku \d+|baada ya wiki \d+|saa \d+ iliyopita|baada ya saa \d+)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(mwaka uliopita|mwezi uliopita|wiki iliyopita|dakika hii|mwaka ujao|mwezi ujao|wiki ijayo|mwaka huu|mwezi huu|sasa hivi|alhamisi|februari|jumamosi|jumapili|jumatano|jumatatu|septemba|wiki hii|asubuhi|desemba|januari|jumanne|novemba|saa hii|sekunde|agosti|aprili|dakika|ijumaa|mchana|oktoba|julai|kesho|machi|mwaka|mwezi|jana|juni|siku|wiki|ago|apr|dak|des|feb|gmt|jan|jul|jun|leo|mac|mei|nov|okt|saa|sek|sep|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

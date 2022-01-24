@@ -151,6 +151,9 @@ var tr_Locale = merge(nil, LocaleData{
 })
 
 var tr_CY_Locale = merge(&tr_Locale, LocaleData{
-	Name:      "tr-CY",
-	DateOrder: "DMY",
+	Name:            "tr-CY",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ dakika sonra|\d+ saniye sonra|\d+ dakika once|\d+ hafta sonra|\d+ saniye once|\d+ hafta once|\d+ saat sonra|\d+ gun sonra|\d+ saat once|\d+ yıl sonra|\d+ ay sonra|\d+ dk sonra|\d+ gun once|\d+ hf sonra|\d+ sa sonra|\d+ sn sonra|\d+ yıl once|\d+ ay once|\d+ dk once|\d+ hf once|\d+ sa once|\d+ sn once)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ dakika sonra|\d+ saniye sonra|\d+ dakika once|\d+ hafta sonra|\d+ saniye once|\d+ hafta once|\d+ saat sonra|\d+ gun sonra|\d+ saat once|\d+ yıl sonra|\d+ ay sonra|\d+ dk sonra|\d+ gun once|\d+ hf sonra|\d+ sa sonra|\d+ sn sonra|\d+ yıl once|\d+ ay once|\d+ dk once|\d+ hf once|\d+ sa once|\d+ sn once)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(onumuzdeki hafta|onumuzdeki gun|onumuzdeki yıl|gelecek hafta|onumuzdeki ay|gecen hafta|gelecek yıl|gelecek ay|icerisinde|bu dakika|cumartesi|gecen gun|gecen yıl|pazartesi|bu hafta|carsamba|gecen ay|persembe|yaklasık|agustos|bu saat|haftaya|haziran|aralık|bu yıl|dakika|icinde|saniye|temmuz|bu ay|bugun|eylul|hafta|kasım|mayıs|nisan|pazar|simdi|sonra|subat|yarın|cuma|ekim|mart|ocak|once|saat|salı|sene|agu|ara|car|cmt|crs|cum|dun|eki|eyl|gmt|gun|haz|kas|mar|may|nis|oca|paz|per|prs|pzt|sal|sub|tem|utc|yıl|\+|\.|\[|\]|\||ag|am|ar|ay|dk|ek|ey|ha|hf|ka|ni|oc|oo|os|pm|sa|sn|su|te|ve| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

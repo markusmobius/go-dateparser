@@ -96,16 +96,19 @@ var so_Locale = merge(nil, LocaleData{
 })
 
 var so_DJ_Locale = merge(&so_Locale, LocaleData{
-	Name:      "so-DJ",
-	DateOrder: "DMY",
+	Name:         "so-DJ",
+	DateOrder:    "DMY",
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(bisha laba iyo tobnaad|bisha kow iyo tobnaad|bisha saddexaad|bisha sagaalaad|bisha sideedaad|bisha todobaad|bisha koobaad|bisha shanaad|bisha tobnaad|bisha afraad|bisha labaad|bisha lixaad|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|khamiis|talaado|arbaco|isniin|maanta|minute|second|shalay|berri|jimco|month|sabti|axad|hour|week|year|afr|arb|axd|day|gmt|isn|jim|kha|kit|kob|lab|lit|lix|now|sab|sad|sag|sha|sid|tal|tob|tod|utc|\+|\.|\[|\]|\||am|gn|pm|sn| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var so_ET_Locale = merge(&so_Locale, LocaleData{
-	Name:      "so-ET",
-	DateOrder: "DMY",
+	Name:         "so-ET",
+	DateOrder:    "DMY",
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(bisha laba iyo tobnaad|bisha kow iyo tobnaad|bisha saddexaad|bisha sagaalaad|bisha sideedaad|bisha todobaad|bisha koobaad|bisha shanaad|bisha tobnaad|bisha afraad|bisha labaad|bisha lixaad|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|khamiis|talaado|arbaco|isniin|maanta|minute|second|shalay|berri|jimco|month|sabti|axad|hour|week|year|afr|arb|axd|day|gmt|isn|jim|kha|kit|kob|lab|lit|lix|now|sab|sad|sag|sha|sid|tal|tob|tod|utc|\+|\.|\[|\]|\||am|gn|pm|sn| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
 
 var so_KE_Locale = merge(&so_Locale, LocaleData{
-	Name:      "so-KE",
-	DateOrder: "DMY",
+	Name:         "so-KE",
+	DateOrder:    "DMY",
+	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(bisha laba iyo tobnaad|bisha kow iyo tobnaad|bisha saddexaad|bisha sagaalaad|bisha sideedaad|bisha todobaad|bisha koobaad|bisha shanaad|bisha tobnaad|bisha afraad|bisha labaad|bisha lixaad|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|khamiis|talaado|arbaco|isniin|maanta|minute|second|shalay|berri|jimco|month|sabti|axad|hour|week|year|afr|arb|axd|day|gmt|isn|jim|kha|kit|kob|lab|lit|lix|now|sab|sad|sag|sha|sid|tal|tob|tod|utc|\+|\.|\[|\]|\||am|gn|pm|sn| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

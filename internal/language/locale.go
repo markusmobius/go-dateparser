@@ -26,18 +26,14 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	if stripTimezone {
 		str, _ = timezone.PopTzOffset(str)
 	}
-	// fmt.Println("NAME:", ld.Name)
-	// fmt.Println("STR:", str)
 
 	// Normalize string
 	str = strutil.NormalizeString(str)
 	str = digit.NormalizeString(str)
 	str = simplify(ld, str)
-	// fmt.Println("SIMPLIFIED:", str)
 
 	// Generate tokens
 	tokens := Split(ld, str, false, skippedTokens)
-	// fmt.Println("TOKENS:", strutil.Jsonify(&tokens))
 
 	// Check if tokens valid
 	// First check if tokens only consist of tokens that must be kept
@@ -51,7 +47,6 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	if nKeptTokens == len(tokens) {
 		return false
 	}
-	// fmt.Println("TOKEN VALID:", nKeptTokens != len(tokens))
 
 	// Check if token exist in locale data
 	for _, token := range tokens {
@@ -73,7 +68,6 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 		return false
 	}
 
-	// fmt.Println("FINALLY VALID")
 	return true
 }
 

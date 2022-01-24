@@ -168,6 +168,9 @@ var da_Locale = merge(nil, LocaleData{
 })
 
 var da_GL_Locale = merge(&da_Locale, LocaleData{
-	Name:      "da-GL",
-	DateOrder: "DMY",
+	Name:            "da-GL",
+	DateOrder:       "DMY",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(for \d+ minutter siden|for \d+ sekunder siden|for \d+ maneder siden|for \d+ sekund siden|for \d+ maned siden|for \d+ minut siden|for \d+ timer siden|for \d+ dage siden|for \d+ time siden|for \d+ uger siden|for \d+ dag siden|for \d+ mdr siden|for \d+ min siden|for \d+ sek siden|for \d+ uge siden|for \d+ ar siden|for \d+ md siden|for \d+ minutter|for \d+ sekunder|om \d+ minutter|om \d+ sekunder|om \d+ maneder|for \d+ timer|om \d+ sekund|om \d+ maned|om \d+ minut|om \d+ timer|for \d+\s*h|for \d+\s*m|for \d+\s*s|om \d+ dage|om \d+ time|om \d+ uger|om \d+ dag|om \d+ mdr|om \d+ min|om \d+ sek|om \d+ uge|om \d+ ar|om \d+ md)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(for \d+ minutter siden|for \d+ sekunder siden|for \d+ maneder siden|for \d+ sekund siden|for \d+ maned siden|for \d+ minut siden|for \d+ timer siden|for \d+ dage siden|for \d+ time siden|for \d+ uger siden|for \d+ dag siden|for \d+ mdr siden|for \d+ min siden|for \d+ sek siden|for \d+ uge siden|for \d+ ar siden|for \d+ md siden|for \d+ minutter|for \d+ sekunder|om \d+ minutter|om \d+ sekunder|om \d+ maneder|for \d+ timer|om \d+ sekund|om \d+ maned|om \d+ minut|om \d+ timer|for \d+\s*h|for \d+\s*m|for \d+\s*s|om \d+ dage|om \d+ time|om \d+ uger|om \d+ dag|om \d+ mdr|om \d+ min|om \d+ sek|om \d+ uge|om \d+ ar|om \d+ md)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(i det kommende minut|i den kommende time|sidste maned|denne maned|næste maned|sidste uge|denne uge|næste uge|september|sidste ar|sidste md|december|denne md|i morgen|minutter|november|næste ar|næste md|sekunder|februar|maneder|oktober|tirsdag|torsdag|august|fredag|januar|lørdag|mandag|onsdag|sekund|søndag|april|cirka|i dag|i gar|maned|marts|minut|siden|timer|dage|i ar|juli|juni|kl\.|time|uger|apr|aug|d\.|dag|dec|feb|fre|gmt|jan|jul|jun|lør|maj|man|mar|min|nov|okt|ons|sek|sep|søn|tir|tor|uge|utc|\+|\.|\[|\]|\||am|ar|kl|md|nu|pm| |'|,|-|/|:|;|@|i|s|t|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })

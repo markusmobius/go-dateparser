@@ -72,13 +72,20 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		languageData, languageExist := cldrLocaleData[language]
 		if !languageExist && !supplementalExist {
 			continue
+		}
+
+		// Finalize and save language data
+		languageData = languageData.Merge(supplementalData)
+		languageData, err := finalizeData(languageData)
+		if err != nil {
+			return err
 		} else {
-			languageData = languageData.Merge(supplementalData)
 			finalLocaleData[language] = languageData
 		}
 
 		// Process sub locales data
 		for _, locale := range locales {
+			// Create sub locale data
 			localeData, localeExist := cldrLocaleData[locale]
 			if !localeExist && !supplementalExist {
 				continue
@@ -86,33 +93,17 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 
 			localeData = localeData.Merge(supplementalData)
 			localeData = localeData.Merge(languageData)
+
+			// Finalize and save sub locale data
+			localeData, err = finalizeData(localeData)
+			if err != nil {
+				return err
+			}
+
 			localeData = localeData.Reduce(languageData)
 			localeData.Parent = language
-
 			finalLocaleData[locale] = localeData
 		}
-	}
-
-	// Validate locale data and create pattern
-	for i, data := range finalLocaleData {
-		// Validate regex patterns
-		err = data.Validate()
-		if err != nil {
-			return err
-		}
-
-		// Save words that is known or always kept no matter what the language is
-		if len(data.Translations) > 0 {
-			for _, token := range importantTokens {
-				data.Translations[token] = token
-			}
-		}
-
-		// Generate combined patterns
-		data.CombineRegexPatterns()
-		data.GenerateKnownWordPattern()
-
-		finalLocaleData[i] = data
 	}
 
 	// Generate code
@@ -183,4 +174,23 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+func finalizeData(ld LocaleData) (LocaleData, error) {
+	// Validate regex patterns
+	if err := ld.Validate(); err != nil {
+		return ld, err
+	}
+
+	// Save words that is known or always kept no matter what the language is
+	if len(ld.Translations) > 0 {
+		for _, token := range importantTokens {
+			ld.Translations[token] = token
+		}
+	}
+
+	// Generate combined patterns
+	ld.CombineRegexPatterns()
+	ld.GenerateKnownWordPattern()
+	return ld, nil
 }

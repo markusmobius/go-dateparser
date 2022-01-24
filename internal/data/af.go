@@ -137,6 +137,9 @@ var af_Locale = merge(nil, LocaleData{
 })
 
 var af_NA_Locale = merge(&af_Locale, LocaleData{
-	Name:      "af-NA",
-	DateOrder: "YMD",
+	Name:            "af-NA",
+	DateOrder:       "YMD",
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ sekondes gelede|\d+ sekonde gelede|\d+ maande gelede|\d+ minute gelede|\d+ minuut gelede|\d+ maand gelede|oor \d+ sekondes|\d+ jaar gelede|\d+ week gelede|\d+ weke gelede|oor \d+ sekonde|\d+ dae gelede|\d+ dag gelede|\d+ min gelede|\d+ sek gelede|\d+ uur gelede|oor \d+ minuut|\d+ md gelede|\d+ w gelede|oor \d+ jaar|oor \d+ week|oor \d+ weke|oor \d+ dae|oor \d+ dag|oor \d+ min|oor \d+ sek|oor \d+ uur|oor \d+ md|oor \d+ w)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ sekondes gelede|\d+ sekonde gelede|\d+ maande gelede|\d+ minute gelede|\d+ minuut gelede|\d+ maand gelede|oor \d+ sekondes|\d+ jaar gelede|\d+ week gelede|\d+ weke gelede|oor \d+ sekonde|\d+ dae gelede|\d+ dag gelede|\d+ min gelede|\d+ sek gelede|\d+ uur gelede|oor \d+ minuut|\d+ md gelede|\d+ w gelede|oor \d+ jaar|oor \d+ week|oor \d+ weke|oor \d+ dae|oor \d+ dag|oor \d+ min|oor \d+ sek|oor \d+ uur|oor \d+ md|oor \d+ w)$`),
+	RxKnownWords:    regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(hierdie minuut|volgende maand|verlede maand|volgende jaar|volgende week|hierdie jaar|vandeesmaand|verlede jaar|verlede week|hierdie uur|vandeesweek|donderdag|februarie|september|augustus|desember|januarie|november|saterdag|woensdag|dinsdag|maandag|oktober|sekonde|gister|minuut|sondag|vandag|vrydag|april|julie|junie|maand|maart|jaar|more|week|apr|aug|dag|des|feb|gmt|jan|jul|jun|mei|min|mrt|nou|nov|okt|sek|sep|utc|uur|\+|\.|\[|\]|\||am|di|do|ma|md|nm|pm|sa|so|vm|vr|wk|wo| |'|,|-|/|:|;|@|d|j|m|s|u|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
 })
