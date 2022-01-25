@@ -183,9 +183,13 @@ func TestParser_Parse(t *testing.T) {
 		{"2 de Enero de 2013", tt(2013, 1, 2)},
 		{"January 25, 2014", tt(2014, 1, 25)},
 		{"May 5, 2000 13:00", tt(2000, 5, 5, 13, 0)},
-
 		{"August 8, 2018 5 PM", tt(2018, 8, 8, 17, 0)},
 		{"February 26, 1981 5 am UTC", tt(1981, 2, 26, 5, 0)},
+		{"2014/11/17 14:56 EDT", tt(2014, 11, 17, 18, 56)},
+		{"08-08-2014\xa018:29", tt(2014, 8, 8, 18, 29)},
+		{"12 jan 1876", tt(1876, 1, 12)},
+		{"02/09/16", tt(2016, 2, 9)},
+		{"10 giu 2018", tt(2018, 6, 10)},
 
 		// === CONTAINS TIMEZONE ===
 		{"Sep 03 2014 | 4:32 pm EDT", tt(2014, 9, 3, 20, 32)},
@@ -459,6 +463,7 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		ts("9 Jan 11 0:00", tt(2011, 1, 9, 0, 0)),
 
 		// Basic text with base time
+		ts("10:04am EDT", tt(2020, 7, 19, 14, 4), tt(2020, 7, 19)),
 		ts("16:00", tt(2018, 12, 13, 16, 0), tt(2018, 12, 13, 15, 15)),
 		ts("Monday 7:15 AM", tt(2018, 12, 10, 7, 15), tt(2018, 12, 13, 15, 15)),
 
@@ -641,6 +646,98 @@ func TestParser_Parse_successWhenSkipTokensSpecified(t *testing.T) {
 	assert.Equal(t, tt(2012, 4, 24), dt.Time)
 }
 
+func TestParser_Parse_format(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text         string
+		ExpectedTime time.Time
+		Format       string
+	}
+
+	tests := []testScenario{
+		{"14 giu 13", tt(2014, 6, 13), "06 January 02"},
+		{"14_luglio_15", tt(2014, 7, 15), "06_January_02"},
+		{"14_LUGLIO_15", tt(2014, 7, 15), "06_January_02"},
+		{"10.01.2016, 20:35", tt(2016, 1, 10, 20, 35), "02.01.2006 15:04"},
+		{"2014/11/17 14:56 EDT", tt(2014, 11, 17, 18, 56), "2006/01/02 15:04 MST"},
+	}
+
+	// Prepare parser
+	cfg := Configuration{Parsers: []ParserType{CustomFormat}}
+	parser := Parser{Config: &cfg}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("\"%s\", format \"%s\" => \"%s\"",
+			test.Text, test.Format,
+			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
+
+		// Parse text
+		dt, _ := parser.Parse(test.Text, test.Format)
+		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestParser_Parse_detectLocale(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text           string
+		ExpectedLocale string
+	}
+
+	tests := []testScenario{
+		{"11 Marzo, 2014", "es"},
+		{"13 Septiembre, 2014", "es"},
+		{"Сегодня", "ru"},
+		{"Avant-hier", "fr"},
+		{"Anteontem", "pt"},
+		{"ธันวาคม 11, 2014, 08:55:08 PM", "th"},
+		{"Anteontem", "pt"},
+		{"14 aprilie 2014", "ro"},
+		{"11 Ağustos, 2014", "tr"},
+		{"pon 16. čer 2014 10:07:43", "cs"},
+		{"24 януари 2015г.", "bg"},
+		{"Mañana", "es"},
+		{"2020-05-01", "en"},
+		{"Понедельник", "ru"},
+	}
+
+	// Prepare parser
+	parser := Parser{}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("\"%s\"  => \"%s\"", test.Text, test.ExpectedLocale)
+
+		// Parse text
+		dt, _ := parser.Parse(test.Text)
+		passed := assert.False(t, dt.IsZero(), message)
+		if passed {
+			passed = assert.Equal(t, test.ExpectedLocale, dt.Locale, message)
+		}
+
+		if !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
 func TestParser_Parse_customParser(t *testing.T) {
 	// Prepare parser
 	parser := Parser{}
@@ -698,6 +795,46 @@ func TestParser_Parse_customParser(t *testing.T) {
 	parser.Locales = []string{"pt-AO"}
 	dt, _ = parser.Parse("24 January, 2014")
 	assert.True(t, dt.IsZero())
+
+	// Restricted languages
+	parser.Config = nil
+	parser.Locales = nil
+	parser.Languages = []string{"en", "de", "fr", "it", "pt", "nl", "ro", "es", "ru"}
+
+	dt, _ = parser.Parse("07/07/2014") // any language
+	assert.Equal(t, tt(2014, 7, 7), dt.Time)
+
+	dt, _ = parser.Parse("07.jul.2014 | 12:52") // en, es, pt, nl
+	assert.Equal(t, tt(2014, 7, 7, 12, 52), dt.Time)
+	assert.Equal(t, "en", dt.Locale)
+
+	dt, _ = parser.Parse("07.ago.2014 | 12:52") // es, it, pt
+	assert.Equal(t, tt(2014, 8, 7, 12, 52), dt.Time)
+	assert.Equal(t, "es", dt.Locale)
+
+	dt, _ = parser.Parse("07.feb.2014 | 12:52") // en, de, es, it, nl, ro
+	assert.Equal(t, tt(2014, 2, 7, 12, 52), dt.Time)
+	assert.Equal(t, "en", dt.Locale)
+
+	dt, _ = parser.Parse("07.ene.2014 | 12:52") // es
+	assert.Equal(t, tt(2014, 1, 7, 12, 52), dt.Time)
+	assert.Equal(t, "es", dt.Locale)
+
+	// Try previous locales
+	parser = Parser{TryPreviousLocales: true}
+	dt, _ = parser.Parse("Mañana")
+	assert.Equal(t, "es", dt.Locale)
+	dt, _ = parser.Parse("2020-05-01")
+	assert.Equal(t, "es", dt.Locale) // is en, but follow the previous locale
+	dt, _ = parser.Parse("Понедельник")
+	assert.Equal(t, "ru", dt.Locale)
+
+	// Used locale order is deterministic
+	usedLocaleNames := make([]string, len(parser.usedLocales))
+	for i, ld := range parser.usedLocales {
+		usedLocaleNames[i] = ld.Name
+	}
+	assert.Equal(t, []string{"es", "ru"}, usedLocaleNames)
 }
 
 func tt(Y, M, D int, times ...int) time.Time {

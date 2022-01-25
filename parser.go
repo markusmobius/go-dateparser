@@ -45,17 +45,21 @@ type Parser struct {
 	// this function is only used if `languages` and `locales` are not provided.
 	DetectLanguagesFunction func(string) []string
 
-	usedLocales []*data.LocaleData
+	usedLocales        []*data.LocaleData
+	usedLocalesTracker strutil.Dict
 }
 
 // Parse parses string representing date and/or time in recognizable localized formats.
 // Supports parsing multiple languages.
 func (p *Parser) Parse(str string, formats ...string) (date.Date, error) {
+	// Lock mutex
+	p.Lock()
+	defer p.Unlock()
+
 	// Initiate and validate config
 	cfg := p.Config
 	if cfg == nil {
 		cfg = &Configuration{}
-		p.Config = cfg
 	}
 
 	cfg.initiate()
@@ -95,7 +99,7 @@ func (p *Parser) Parse(str string, formats ...string) (date.Date, error) {
 		translation := language.Translate(&lCfg, locale, str, false)
 		translationWithFormat := language.Translate(&lCfg, locale, str, true)
 
-		for _, parserType := range p.Config.Parsers {
+		for _, parserType := range cfg.Parsers {
 			switch parserType {
 			case Timestamp:
 				dt = timestamp.Parse(&lCfg, str)
@@ -117,6 +121,7 @@ func (p *Parser) Parse(str string, formats ...string) (date.Date, error) {
 
 			if !dt.IsZero() {
 				dt.Locale = locale.Name
+				p.saveUsedLocale(locale)
 				return dt, nil
 			}
 		}
@@ -184,8 +189,8 @@ func (p *Parser) getApplicableLocales(iCfg *setting.Configuration, str string) (
 	}
 
 	// Finally, append locales of default languages
-	if len(p.Config.DefaultLanguages) > 0 {
-		locales, _ := language.GetLocales(nil, p.Config.DefaultLanguages, p.Region, p.UseGivenOrder, false)
+	if len(iCfg.DefaultLanguages) > 0 {
+		locales, _ := language.GetLocales(nil, iCfg.DefaultLanguages, p.Region, p.UseGivenOrder, false)
 		for _, locale := range locales {
 			if !resultTracker.Contain(locale.Name) {
 				results = append(results, locale)
@@ -194,6 +199,21 @@ func (p *Parser) getApplicableLocales(iCfg *setting.Configuration, str string) (
 	}
 
 	return results, nil
+}
+
+func (p *Parser) saveUsedLocale(ld *data.LocaleData) {
+	if !p.TryPreviousLocales {
+		return
+	}
+
+	if p.usedLocalesTracker == nil {
+		p.usedLocalesTracker = strutil.NewDict()
+	}
+
+	if !p.usedLocalesTracker.Contain(ld.Name) {
+		p.usedLocalesTracker.Add(ld.Name)
+		p.usedLocales = append(p.usedLocales, ld)
+	}
 }
 
 func (p *Parser) localeIsApplicable(iCfg *setting.Configuration, ld *data.LocaleData, s string) bool {

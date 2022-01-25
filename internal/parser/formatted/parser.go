@@ -7,6 +7,7 @@ import (
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
 var (
@@ -15,16 +16,27 @@ var (
 
 // Parse the specified string using one of the specified formats.
 func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date {
+	// Create initial period
 	period := date.Day
 
+	// Check if string contain timezone
+	var timeLoc *time.Location
+	if _, tzData := timezone.PopTzOffset(str); tzData.IsZero() {
+		timeLoc = time.UTC
+	} else {
+		timeLoc = time.FixedZone(tzData.Name, tzData.Offset)
+	}
+
+	// Fetch current time
 	currentTime := time.Now().UTC()
 	if !cfg.CurrentTime.IsZero() {
 		currentTime = cfg.CurrentTime
 	}
 
+	// Try each format
 	for _, format := range formats {
 		// Parse time
-		t, err := time.Parse(format, str)
+		t, err := time.ParseInLocation(format, str, timeLoc)
 		if err != nil {
 			continue
 		}

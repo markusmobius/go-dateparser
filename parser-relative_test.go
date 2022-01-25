@@ -40,6 +40,24 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 	// Prepare scenarios
 	Day, Month, Year, Time := date.Day, date.Month, date.Year, date.Time
 	pastTimes := []testScenario{
+		// Mixed temporal nouns
+		{"today", pfpDiff{"day": -0}, date.Day},
+		{"Today", pfpDiff{"day": -0}, date.Day},
+		{"TODAY", pfpDiff{"day": -0}, date.Day},
+		{"Сегодня", pfpDiff{"day": -0}, date.Day},
+		{"Hoje", pfpDiff{"day": -0}, date.Day},
+		{"Oggi", pfpDiff{"day": -0}, date.Day},
+		{"yesterday", pfpDiff{"day": -1}, date.Day},
+		{" Yesterday \n", pfpDiff{"day": -1}, date.Day},
+		{"Ontem", pfpDiff{"day": -1}, date.Day},
+		{"Ieri", pfpDiff{"day": -1}, date.Day},
+		{"the day before yesterday", pfpDiff{"day": -2}, date.Day},
+		{"The DAY before Yesterday", pfpDiff{"day": -2}, date.Day},
+		{"Anteontem", pfpDiff{"day": -2}, date.Day},
+		{"Avant-hier", pfpDiff{"day": -2}, date.Day},
+		{"вчера", pfpDiff{"day": -1}, date.Day},
+		{"снощи", pfpDiff{"day": -1}, date.Day},
+
 		// English dates
 		{"yesterday", pfpDiff{"day": -1}, Day},
 		{"yesterday at 11:30", pfpDiff{"hour": -23}, Time},
