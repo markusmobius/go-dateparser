@@ -52,16 +52,3 @@ func (c Configuration) Clone() Configuration {
 		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
 	}
 }
-
-var DefaultConfig = Configuration{
-	// Date order
-	DateOrder:             "MDY",
-	PreferConfigDateOrder: false,
-
-	// Incomplete dates
-	CurrentTime:         time.Now().UTC(),
-	PreferredDayOfMonth: Current,
-
-	// Language detection
-	SkipTokens: []string{"t"},
-}

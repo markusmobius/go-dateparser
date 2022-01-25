@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,7 +11,7 @@ func TestParse(t *testing.T) {
 	// Prepare variables and helper function
 	zero := time.Time{}
 	parse := func(s string) time.Time {
-		dt := Parse(&setting.DefaultConfig, s)
+		dt := Parse(nil, s)
 		return dt.Time
 	}
 

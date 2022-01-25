@@ -103,7 +103,7 @@ func TestParse_parsed(t *testing.T) {
 	}
 
 	// Prepare configuration
-	cfg := setting.DefaultConfig
+	cfg := setting.Configuration{}
 
 	// Start tests
 	nFailed := 0

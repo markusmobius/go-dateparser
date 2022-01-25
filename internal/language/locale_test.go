@@ -640,7 +640,10 @@ func TestTranslate(t *testing.T) {
 	}
 
 	nFailed := 0
-	cfg := &setting.DefaultConfig
+	cfg := &setting.Configuration{
+		SkipTokens: []string{"t"},
+	}
+
 	for _, test := range tests {
 		// Prepare log message
 		message := fmt.Sprintf("%s, \"%s\"", test.Locale, test.String)
@@ -1524,7 +1527,9 @@ func TestTranslate_relative(t *testing.T) {
 		// Prepare config: finnish language use "t" as hour, so empty SKIP_TOKENS.
 		var cfg *setting.Configuration
 		if test.Locale != "fi" {
-			cfg = &setting.DefaultConfig
+			cfg = &setting.Configuration{
+				SkipTokens: []string{"t"},
+			}
 		}
 
 		// Translate string
@@ -1661,6 +1666,11 @@ func TestIsApplicable(t *testing.T) {
 		ts("cs", "3 hafta", false),
 	}
 
+	// Prepare config
+	cfg := &setting.Configuration{
+		SkipTokens: []string{"t"},
+	}
+
 	nFailed := 0
 	for _, test := range tests {
 		// Prepare log message
@@ -1671,7 +1681,6 @@ func TestIsApplicable(t *testing.T) {
 		assert.Nil(t, err, message)
 
 		// Make sure it's applicable
-		cfg := &setting.DefaultConfig
 		isApplicable := IsApplicable(cfg, ld, test.Text, test.StripTimezone)
 		passed := assert.Equal(t, test.Expected, isApplicable, message)
 		if !passed {
