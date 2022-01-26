@@ -2,6 +2,13 @@ package tokenizer
 
 import (
 	"unicode"
+
+	"golang.org/x/text/unicode/rangetable"
+)
+
+var (
+	digits  = rangetable.New([]rune("1234567890:")...)
+	letters = rangetable.New([]rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")...)
 )
 
 type TokenType uint8
@@ -60,10 +67,10 @@ func Tokenize(str string) []Token {
 }
 
 func compareChars(r1, r2 rune) (TokenType, bool) {
-	r1IsDigit := unicode.IsDigit(r1) || r1 == ':'
-	r2IsDigit := unicode.IsDigit(r2) || r2 == ':'
-	r1IsLetter := unicode.IsLetter(r1)
-	r2IsLetter := unicode.IsLetter(r2)
+	r1IsDigit := unicode.Is(digits, r1) || r1 == ':'
+	r2IsDigit := unicode.Is(digits, r2) || r2 == ':'
+	r1IsLetter := unicode.Is(letters, r1)
+	r2IsLetter := unicode.Is(letters, r2)
 
 	if r1IsDigit {
 		return Digit, !r2IsDigit

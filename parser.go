@@ -1,4 +1,4 @@
-package godateparser
+package dateparser
 
 import (
 	"fmt"
@@ -23,8 +23,6 @@ import (
 type Parser struct {
 	sync.Mutex
 
-	// Config is the advanced settings to set the parser behavior.
-	Config *Configuration
 	// Locales is a list of locale codes, e.g. ['fr-PF', 'qu-EC', 'af-NA'].
 	// The parser uses only these locales to translate date string.
 	Locales []string
@@ -44,20 +42,60 @@ type Parser struct {
 	// as input a `text` and returns a list of detected language codes. Note:
 	// this function is only used if `languages` and `locales` are not provided.
 	DetectLanguagesFunction func(string) []string
+	// ParserTypes is a list of types of parsers to try, allowing to customize which parsers are tried
+	// against the input date string, and in which order they are tried. By default it will use
+	// all parser in following order: `Timestamp`, `RelativeTime`, `CustomFormat`, `AbsoluteTime`,
+	// and finally `NoSpacesTime`.
+	ParserTypes []ParserType
 
 	usedLocales        []*data.LocaleData
 	usedLocalesTracker strutil.Dict
 }
 
+// ParserType is the variable to specify which type of parser that will be used.
+type ParserType uint8
+
+const (
+	// Timestamp is parser to parse Unix timestamp.
+	Timestamp ParserType = iota
+	// RelativeTime is parser to parse date string with relative value like
+	// "1 year, 2 months ago" and "3 hours, 50 minutes ago".
+	RelativeTime
+	// CustomFormat is parser to parse a date string with custom formats.
+	CustomFormat
+	// AbsoluteTime is parser to parse date string with absolute value like
+	// "12 August 2021" and "23 January, 15:10:01".
+	AbsoluteTime
+	// NoSpacesTime is parser to parse date string that written without spaces,
+	// for example 2021-10-11 that written as 20211011.
+	NoSpacesTime
+)
+
+// Parse parses string representing date and/or time in recognizable localized formats,
+// using the default Parser. Useful for quick use.
+func Parse(cfg *Configuration, str string, formats ...string) (date.Date, error) {
+	return (&Parser{}).Parse(cfg, str, formats...)
+}
+
 // Parse parses string representing date and/or time in recognizable localized formats.
 // Supports parsing multiple languages.
-func (p *Parser) Parse(str string, formats ...string) (date.Date, error) {
+func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.Date, error) {
 	// Lock mutex
 	p.Lock()
 	defer p.Unlock()
 
+	// Validate and initiate parsers
+	for _, parser := range p.ParserTypes {
+		if parser < 0 || parser > NoSpacesTime {
+			return date.Date{}, fmt.Errorf("invalid parser type: %d", parser)
+		}
+	}
+
+	if len(p.ParserTypes) == 0 {
+		p.ParserTypes = []ParserType{Timestamp, RelativeTime, CustomFormat, AbsoluteTime, NoSpacesTime}
+	}
+
 	// Initiate and validate config
-	cfg := p.Config
 	if cfg == nil {
 		cfg = &Configuration{}
 	}
@@ -65,7 +103,7 @@ func (p *Parser) Parse(str string, formats ...string) (date.Date, error) {
 	cfg.initiate()
 	err := cfg.validate()
 	if err != nil {
-		return date.Date{}, err
+		return date.Date{}, fmt.Errorf("config error: %w", err)
 	}
 
 	// Convert config to internal config
@@ -99,7 +137,7 @@ func (p *Parser) Parse(str string, formats ...string) (date.Date, error) {
 		translation := language.Translate(&lCfg, locale, str, false)
 		translationWithFormat := language.Translate(&lCfg, locale, str, true)
 
-		for _, parserType := range cfg.Parsers {
+		for _, parserType := range p.ParserTypes {
 			switch parserType {
 			case Timestamp:
 				dt = timestamp.Parse(&lCfg, str)

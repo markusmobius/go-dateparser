@@ -1,4 +1,4 @@
-package godateparser
+package dateparser
 
 import (
 	"fmt"
@@ -15,8 +15,10 @@ var (
 	relativeTestNow    = tt(2014, 9, 1, 10, 30)
 	relativeTestConfig = Configuration{
 		CurrentTime:        relativeTestNow,
-		Parsers:            []ParserType{RelativeTime},
 		ReturnTimeAsPeriod: true,
+	}
+	relativeTestParser = Parser{
+		ParserTypes: []ParserType{RelativeTime},
 	}
 )
 
@@ -903,9 +905,6 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"há alguns segundos", pfpDiff{"second": -44}, Day},
 	}
 
-	// Prepare parser
-	parser := Parser{Config: &relativeTestConfig}
-
 	// Start tests
 	tests := []testScenario{}
 	tests = append(tests, pastTimes...)
@@ -919,7 +918,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		message := fmt.Sprintf("\"%s\" => %v (%d)", test.String, strutil.Jsonify(&test.Diff), test.Period)
 
 		// Parse date time
-		dt, err := parser.Parse(test.String)
+		dt, err := relativeTestParser.Parse(&relativeTestConfig, test.String)
 		passed := assert.Nil(t, err, message)
 		if passed {
 			passed = assert.Equal(t, test.Period, dt.Period, message)
@@ -941,8 +940,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 }
 
 func TestParser_Parse_relative_invalidDates(t *testing.T) {
-	parser := Parser{Config: &relativeTestConfig}
-	dt, err := parser.Parse("15th of Aug, 2014 Diane Bennett")
+	dt, err := relativeTestParser.Parse(&relativeTestConfig, "15th of Aug, 2014 Diane Bennett")
 	assert.Error(t, err)
 	assert.True(t, dt.IsZero())
 }
@@ -1060,7 +1058,6 @@ func TestParser_Parse_relative_hasSpecificTime(t *testing.T) {
 
 	// Prepare parser
 	cfg := relativeTestConfig.Clone()
-	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -1078,7 +1075,7 @@ func TestParser_Parse_relative_hasSpecificTime(t *testing.T) {
 		}
 
 		// Parse date time
-		dt, err := parser.Parse(test.Text)
+		dt, err := relativeTestParser.Parse(&cfg, test.Text)
 		passed := assert.Nil(t, err, message)
 		if passed {
 			passed = assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)
@@ -1110,7 +1107,6 @@ func TestParser_Parse_relative_hasPreferredTimes(t *testing.T) {
 	// Prepare parser
 	cfg := relativeTestConfig.Clone()
 	cfg.CurrentTime = tt(2010, 6, 4, 13, 15)
-	parser := Parser{Config: &cfg}
 
 	// Prepare scenarios
 	tests := []testScenario{
@@ -1135,7 +1131,7 @@ func TestParser_Parse_relative_hasPreferredTimes(t *testing.T) {
 		}
 
 		// Parse date time
-		dt, err := parser.Parse(test.Text)
+		dt, err := relativeTestParser.Parse(&cfg, test.Text)
 		passed := assert.Nil(t, err, message)
 		if passed {
 			passed = assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)

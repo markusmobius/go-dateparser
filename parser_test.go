@@ -1,4 +1,4 @@
-package godateparser
+package dateparser
 
 import (
 	"fmt"
@@ -217,9 +217,8 @@ func TestParser_Parse(t *testing.T) {
 		{"2016-09-23T02:54:32.845Z", tt(2016, 9, 23, 2, 54, 32, 845000)},
 	}
 
-	// Prepare parser
+	// Prepare config
 	cfg := Configuration{CurrentTime: tt(2012, 11, 13)}
-	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -229,7 +228,7 @@ func TestParser_Parse(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Parse text
-		dt, _ := parser.Parse(test.Text)
+		dt, _ := Parse(&cfg, test.Text)
 		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
@@ -313,9 +312,8 @@ func TestParser_Parse_hasPreferredDateSource(t *testing.T) {
 		ts(CurrentPeriod, "02/29", tt(1696, 2, 29), tt(1699, 3, 1)),
 	}
 
-	// Prepare parser
+	// Prepare config
 	cfg := Configuration{}
-	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -330,7 +328,7 @@ func TestParser_Parse_hasPreferredDateSource(t *testing.T) {
 		cfg.PreferredDateSource = test.DateSource
 
 		// Parse text
-		dt, err := parser.Parse(test.Text)
+		dt, err := Parse(&cfg, test.Text)
 
 		// Check the result
 		passed := assert.Nil(t, err, message)
@@ -390,9 +388,8 @@ func TestParser_Parse_hasPreferredDayOfMonth(t *testing.T) {
 		{Current, "24 April 2012", tt(2015, 2, 12), tt(2012, 4, 24)},
 	}
 
-	// Prepare parser
+	// Prepare config
 	cfg := Configuration{}
-	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -408,7 +405,7 @@ func TestParser_Parse_hasPreferredDayOfMonth(t *testing.T) {
 		cfg.PreferredDayOfMonth = test.DayOfMonth
 
 		// Parse text
-		dt, err := parser.Parse(test.Text)
+		dt, err := Parse(&cfg, test.Text)
 
 		// Check the result
 		passed := assert.Nil(t, err, message)
@@ -472,9 +469,8 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		tsd("21-12-19", tt(2019, 12, 21, 0, 0)),
 	}
 
-	// Prepare parser
+	// Prepare config
 	cfg := Configuration{ReturnTimeAsPeriod: true}
-	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -487,7 +483,7 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 
 		// Parse text
 		cfg.CurrentTime = test.BaseTime
-		dt, _ := parser.Parse(test.Text)
+		dt, _ := Parse(&cfg, test.Text)
 		if passed := assertResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
@@ -525,9 +521,8 @@ func TestParser_Parse_checkPeriod(t *testing.T) {
 		{"₃₁ December", tt(2015, 12, 31), date.Day},
 	}
 
-	// Prepare parser
+	// Prepare config
 	cfg := Configuration{CurrentTime: tt(2015, 2, 15, 15, 30)}
-	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -538,7 +533,7 @@ func TestParser_Parse_checkPeriod(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Parse text
-		dt, _ := parser.Parse(test.Text)
+		dt, _ := Parse(&cfg, test.Text)
 		if passed := assertResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
@@ -579,9 +574,8 @@ func TestParser_Parse_customOrder(t *testing.T) {
 		{"201108", tt(2008, 11, 20, 0, 0), "DMY"},
 	}
 
-	// Prepare parser
+	// Prepare config
 	cfg := Configuration{PreferConfigDateOrder: true}
-	parser := Parser{Config: &cfg}
 
 	// Start tests
 	nFailed := 0
@@ -593,7 +587,7 @@ func TestParser_Parse_customOrder(t *testing.T) {
 
 		// Parse text
 		cfg.DateOrder = test.DateOrder
-		dt, _ := parser.Parse(test.Text)
+		dt, _ := Parse(&cfg, test.Text)
 		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
@@ -616,14 +610,11 @@ func TestParser_Parse_onlySeparatorTokens(t *testing.T) {
 		"++",
 	}
 
-	// Prepare parser
-	parser := Parser{}
-
 	// Start tests
 	nFailed := 0
 	for _, test := range tests {
 		// Parse text
-		dt, _ := parser.Parse(test)
+		dt, _ := Parse(nil, test)
 		if passed := assert.True(t, dt.IsZero()); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
@@ -636,12 +627,12 @@ func TestParser_Parse_onlySeparatorTokens(t *testing.T) {
 }
 
 func TestParser_Parse_successWhenSkipTokensSpecified(t *testing.T) {
-	parser := Parser{Config: &Configuration{
+	cfg := Configuration{
 		CurrentTime: tt(2015, 2, 12),
 		SkipTokens:  []string{"de"},
-	}}
+	}
 
-	dt, err := parser.Parse("24 April 2012 de")
+	dt, err := Parse(&cfg, "24 April 2012 de")
 	assert.NoError(t, err)
 	assert.Equal(t, tt(2012, 4, 24), dt.Time)
 }
@@ -663,8 +654,7 @@ func TestParser_Parse_format(t *testing.T) {
 	}
 
 	// Prepare parser
-	cfg := Configuration{Parsers: []ParserType{CustomFormat}}
-	parser := Parser{Config: &cfg}
+	parser := Parser{ParserTypes: []ParserType{CustomFormat}}
 
 	// Start tests
 	nFailed := 0
@@ -675,7 +665,7 @@ func TestParser_Parse_format(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Parse text
-		dt, _ := parser.Parse(test.Text, test.Format)
+		dt, _ := parser.Parse(nil, test.Text, test.Format)
 		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
@@ -711,9 +701,6 @@ func TestParser_Parse_detectLocale(t *testing.T) {
 		{"Понедельник", "ru"},
 	}
 
-	// Prepare parser
-	parser := Parser{}
-
 	// Start tests
 	nFailed := 0
 	for _, test := range tests {
@@ -721,7 +708,7 @@ func TestParser_Parse_detectLocale(t *testing.T) {
 		message := fmt.Sprintf("\"%s\"  => \"%s\"", test.Text, test.ExpectedLocale)
 
 		// Parse text
-		dt, _ := parser.Parse(test.Text)
+		dt, _ := Parse(nil, test.Text)
 		passed := assert.False(t, dt.IsZero(), message)
 		if passed {
 			passed = assert.Equal(t, test.ExpectedLocale, dt.Locale, message)
@@ -744,89 +731,83 @@ func TestParser_Parse_customParser(t *testing.T) {
 	var dt date.Date
 
 	// Language is DE, config specified
+	cfg := Configuration{PreferredDayOfMonth: First}
 	parser.Languages = []string{"de"}
-	parser.Config = &Configuration{PreferredDayOfMonth: First}
-	dt, _ = parser.Parse("10.1.2019")
+	dt, _ = parser.Parse(&cfg, "10.1.2019")
 	assert.Equal(t, tt(2019, 1, 10), dt.Time)
 
 	// Languages is DE, config not specified
 	parser.Languages = []string{"de"}
-	parser.Config = nil
-	dt, _ = parser.Parse("10.1.2019")
+	dt, _ = parser.Parse(nil, "10.1.2019")
 	assert.Equal(t, tt(2019, 1, 10), dt.Time)
 
 	// Languages not specified, date order in config specified
 	parser.Languages = nil
-	parser.Config = &Configuration{DateOrder: "MDY"}
-	dt, _ = parser.Parse("10.1.2019")
+	cfg = Configuration{DateOrder: "MDY"}
+	dt, _ = parser.Parse(&cfg, "10.1.2019")
 	assert.Equal(t, tt(2019, 10, 1), dt.Time)
 
 	// Languages is TH, prefer date order in config
 	parser.Languages = []string{"th"}
-	parser.Config = &Configuration{DateOrder: "MDY", PreferConfigDateOrder: true}
+	cfg = Configuration{DateOrder: "MDY", PreferConfigDateOrder: true}
 
-	dt, _ = parser.Parse("03/11/2559 05:13")
+	dt, _ = parser.Parse(&cfg, "03/11/2559 05:13")
 	assert.Equal(t, tt(2559, 3, 11, 5, 13), dt.Time)
 
-	dt, _ = parser.Parse("03/15/2559 05:13")
+	dt, _ = parser.Parse(&cfg, "03/15/2559 05:13")
 	assert.Equal(t, tt(2559, 3, 15, 5, 13), dt.Time)
 
 	// Languages set to PT and text is PT as well
 	parser.Languages = []string{"pt"}
-	parser.Config = nil
-	dt, _ = parser.Parse("24 de Janeiro de 2014")
+	dt, _ = parser.Parse(nil, "24 de Janeiro de 2014")
 	assert.Equal(t, tt(2014, 1, 24), dt.Time)
 
 	// Languages set to PT but text is EN
 	parser.Languages = []string{"pt"}
-	parser.Config = nil
-	dt, _ = parser.Parse("24 January, 2014")
+	dt, _ = parser.Parse(nil, "24 January, 2014")
 	assert.True(t, dt.IsZero())
 
 	// Locales set to pt-TL and text is matched
-	parser.Config = nil
 	parser.Languages = nil
 	parser.Locales = []string{"pt-TL"}
-	dt, _ = parser.Parse("24 de Janeiro de 2014")
+	dt, _ = parser.Parse(nil, "24 de Janeiro de 2014")
 	assert.Equal(t, tt(2014, 1, 24), dt.Time)
 
 	// Locales and text not matched
-	parser.Languages = nil
 	parser.Locales = []string{"pt-AO"}
-	dt, _ = parser.Parse("24 January, 2014")
+	dt, _ = parser.Parse(nil, "24 January, 2014")
 	assert.True(t, dt.IsZero())
 
 	// Restricted languages
-	parser.Config = nil
 	parser.Locales = nil
 	parser.Languages = []string{"en", "de", "fr", "it", "pt", "nl", "ro", "es", "ru"}
 
-	dt, _ = parser.Parse("07/07/2014") // any language
+	dt, _ = parser.Parse(nil, "07/07/2014") // any language
 	assert.Equal(t, tt(2014, 7, 7), dt.Time)
 
-	dt, _ = parser.Parse("07.jul.2014 | 12:52") // en, es, pt, nl
+	dt, _ = parser.Parse(nil, "07.jul.2014 | 12:52") // en, es, pt, nl
 	assert.Equal(t, tt(2014, 7, 7, 12, 52), dt.Time)
 	assert.Equal(t, "en", dt.Locale)
 
-	dt, _ = parser.Parse("07.ago.2014 | 12:52") // es, it, pt
+	dt, _ = parser.Parse(nil, "07.ago.2014 | 12:52") // es, it, pt
 	assert.Equal(t, tt(2014, 8, 7, 12, 52), dt.Time)
 	assert.Equal(t, "es", dt.Locale)
 
-	dt, _ = parser.Parse("07.feb.2014 | 12:52") // en, de, es, it, nl, ro
+	dt, _ = parser.Parse(nil, "07.feb.2014 | 12:52") // en, de, es, it, nl, ro
 	assert.Equal(t, tt(2014, 2, 7, 12, 52), dt.Time)
 	assert.Equal(t, "en", dt.Locale)
 
-	dt, _ = parser.Parse("07.ene.2014 | 12:52") // es
+	dt, _ = parser.Parse(nil, "07.ene.2014 | 12:52") // es
 	assert.Equal(t, tt(2014, 1, 7, 12, 52), dt.Time)
 	assert.Equal(t, "es", dt.Locale)
 
 	// Try previous locales
 	parser = Parser{TryPreviousLocales: true}
-	dt, _ = parser.Parse("Mañana")
+	dt, _ = parser.Parse(nil, "Mañana")
 	assert.Equal(t, "es", dt.Locale)
-	dt, _ = parser.Parse("2020-05-01")
+	dt, _ = parser.Parse(nil, "2020-05-01")
 	assert.Equal(t, "es", dt.Locale) // is en, but follow the previous locale
-	dt, _ = parser.Parse("Понедельник")
+	dt, _ = parser.Parse(nil, "Понедельник")
 	assert.Equal(t, "ru", dt.Locale)
 
 	// Used locale order is deterministic

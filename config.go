@@ -1,4 +1,4 @@
-package godateparser
+package dateparser
 
 import (
 	"fmt"
@@ -6,25 +6,6 @@ import (
 	"time"
 
 	"github.com/markusmobius/go-dateparser/internal/setting"
-)
-
-// ParserType is the variable to specify which type of parser that will be used.
-type ParserType uint8
-
-const (
-	// Timestamp is parser to parse Unix timestamp.
-	Timestamp ParserType = iota
-	// RelativeTime is parser to parse date string with relative value like
-	// "1 year, 2 months ago" and "3 hours, 50 minutes ago".
-	RelativeTime
-	// CustomFormat is parser to parse a date string with custom formats.
-	CustomFormat
-	// AbsoluteTime is parser to parse date string with absolute value like
-	// "12 August 2021" and "23 January, 15:10:01".
-	AbsoluteTime
-	// NoSpacesTime is parser to parse date string that written without spaces,
-	// for example 2021-10-11 that written as 20211011.
-	NoSpacesTime
 )
 
 // PreferredDateSource is the variable to set date source to fill incomplete dates value.
@@ -68,7 +49,7 @@ type Configuration struct {
 	DateOrder string
 	// PreferConfigDateOrder defaults to false. Most languages have a default date order
 	// specified for them. For example, for French it is DMY. If this option set to true,
-	// this language date order will be ignored in favor of the date order from config.
+	// the language date order will be ignored in favor of the date order from config.
 	PreferConfigDateOrder bool
 	// CurrentTime is the base datetime to use for interpreting partial or relative date
 	// strings. Defaults to the current date and time in UTC.
@@ -92,11 +73,6 @@ type Configuration struct {
 	// setting, these languages will be tried after trying with the detected languages with no
 	// success. It is especially useful when using the `DetectLanguagesFunction`.
 	DefaultLanguages []string
-	// Parsers is a list of types of parsers to try, allowing to customize which parsers are tried
-	// against the input date string, and in which order they are tried. By default it will use
-	// all parser in following order: `Timestamp`, `RelativeTime`, `CustomFormat`, `AbsoluteTime`,
-	// and finally `NoSpacesTime`.
-	Parsers []ParserType
 	// ReturnTimeAsPeriod returns `Time` as period in date object, if time component is present
 	// in date string. Defaults to false.
 	ReturnTimeAsPeriod bool
@@ -113,7 +89,6 @@ func (c Configuration) Clone() Configuration {
 		RequiredParts:         append([]string{}, c.RequiredParts...),
 		SkipTokens:            append([]string{}, c.SkipTokens...),
 		DefaultLanguages:      append([]string{}, c.DefaultLanguages...),
-		Parsers:               append([]ParserType{}, c.Parsers...),
 		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
 	}
 }
@@ -148,13 +123,6 @@ func (c Configuration) validate() error {
 		}
 	}
 
-	// Validate parsers
-	for _, parser := range c.Parsers {
-		if parser < 0 || parser > NoSpacesTime {
-			return fmt.Errorf("invalid parser type: %d", parser)
-		}
-	}
-
 	return nil
 }
 
@@ -171,10 +139,6 @@ func (c *Configuration) initiate() {
 
 	if len(c.SkipTokens) == 0 {
 		c.SkipTokens = []string{"t"}
-	}
-
-	if len(c.Parsers) == 0 {
-		c.Parsers = []ParserType{Timestamp, RelativeTime, CustomFormat, AbsoluteTime, NoSpacesTime}
 	}
 }
 

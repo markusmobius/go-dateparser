@@ -39,49 +39,62 @@ type TokenParseResult struct {
 }
 
 type Parser struct {
-	Config *setting.Configuration
-	Now    time.Time
+	Now                 time.Time
+	Config              *setting.Configuration
+	FnGetDateTimeParams func(p *Parser) map[string]int
+	FnCreateDateTime    func(p *Parser, params map[string]int, loc *time.Location) time.Time
+	FnGetDatePartValue  func(p *Parser, component, token, directive string) (int, bool)
 
-	Tokens         []tokenizer.Token
-	FilteredTokens []FilteredToken
-
-	Components      []string
-	ComponentValues map[string]int
-	ComponentTokens map[string]tokenizer.Token
-	ParsedTime      time.Time
-
-	AutoOrder   []string
-	UnsetTokens []tokenizer.Token
-
+	Tokens           []tokenizer.Token
+	FilteredTokens   []FilteredToken
+	Components       []string
+	ComponentValues  map[string]int
+	ComponentTokens  map[string]tokenizer.Token
+	ParsedTime       time.Time
+	AutoOrder        []string
+	UnsetTokens      []tokenizer.Token
 	SkippedComponent string
 	SkippedIndexes   map[int]struct{}
 	SkippedTokens    strutil.Dict
-
 	NumberDirectives [][]string
 }
 
-func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
+func (p *Parser) Init(str string) error {
 	// Sanitize string
 	str = strutil.SanitizeSpaces(str)
 	if str == "" {
-		return Parser{}, fmt.Errorf("string is empty")
+		return fmt.Errorf("string is empty")
 	}
 
-	// Prepare variables
-	p := Parser{
-		Config:          cfg,
-		Now:             time.Now().UTC(),
-		Tokens:          tokenizer.Tokenize(str),
-		ComponentValues: map[string]int{},
-		ComponentTokens: map[string]tokenizer.Token{},
-		SkippedIndexes:  map[int]struct{}{},
-		SkippedTokens:   strutil.NewDict("t", "year", "hour", "minute"),
+	// Make sure all external function defined
+	if p.FnGetDateTimeParams == nil {
+		return fmt.Errorf("FnGetDateTimeParams is undefined")
 	}
 
-	// Set current time if specified on config
-	if cfg != nil && !cfg.CurrentTime.IsZero() {
+	if p.FnGetDatePartValue == nil {
+		return fmt.Errorf("FnCreateDatePart is undefined")
+	}
+
+	if p.FnCreateDateTime == nil {
+		return fmt.Errorf("FnCreateDateTime is undefined")
+	}
+
+	// Initiate parser members
+	cfg := p.Config
+	if cfg == nil {
+		cfg = &setting.Configuration{}
+	}
+
+	p.Now = time.Now().UTC()
+	if !cfg.CurrentTime.IsZero() {
 		p.Now = cfg.CurrentTime
 	}
+
+	p.Tokens = tokenizer.Tokenize(str)
+	p.ComponentValues = map[string]int{}
+	p.ComponentTokens = map[string]tokenizer.Token{}
+	p.SkippedIndexes = map[int]struct{}{}
+	p.SkippedTokens = strutil.NewDict("t", "year", "hour", "minute")
 
 	// Filter tokens to exclude non-letter and non-digit
 	for i, token := range p.Tokens {
@@ -216,7 +229,7 @@ func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
 		}
 
 		if err != nil {
-			return Parser{}, err
+			return err
 		}
 
 		// Save the initial token parsing result
@@ -241,7 +254,7 @@ func NewParser(cfg *setting.Configuration, str string) (Parser, error) {
 		}
 	}
 
-	return p, nil
+	return nil
 }
 
 func (p *Parser) Parse() (date.Date, error) {
@@ -258,7 +271,7 @@ func (p *Parser) Parse() (date.Date, error) {
 		return date.Date{}, err
 	}
 
-	// Generate time result
+	// Parse time
 	if timeToken, exist := p.ComponentTokens["time"]; exist {
 		p.ParsedTime, err = common.ParseTime(timeToken.Text)
 		if err != nil {
@@ -266,21 +279,28 @@ func (p *Parser) Parse() (date.Date, error) {
 		}
 	}
 
-	result := p.createTimeFromComponents()
+	// Fetch datetime parameters
+	dtLocation := p.Now.Location()
+	dtParams := p.FnGetDateTimeParams(p)
 	if !p.ParsedTime.IsZero() {
-		result = time.Date(result.Year(), result.Month(), result.Day(),
-			p.ParsedTime.Hour(), p.ParsedTime.Minute(), p.ParsedTime.Second(),
-			p.ParsedTime.Nanosecond(), p.ParsedTime.Location())
+		dtParams["hour"] = p.ParsedTime.Hour()
+		dtParams["minute"] = p.ParsedTime.Minute()
+		dtParams["second"] = p.ParsedTime.Second()
+		dtParams["nanosecond"] = p.ParsedTime.Nanosecond()
+		dtLocation = p.ParsedTime.Location()
 	}
 
+	// Create datetime object
+	dt := p.FnCreateDateTime(p, dtParams, dtLocation)
+
 	// Apply correction for past and future
-	result = p.correctForTimeFrame(result)
+	dt = p.correctForTimeFrame(dt)
 
 	// Apply correction for preference of day: beginning, current, end
-	result = p.correctForDay(result)
+	dt = p.correctForDay(dt)
 
 	return date.Date{
-		Time:   result,
+		Time:   dt,
 		Period: p.getPeriod(),
 	}, nil
 }
@@ -299,19 +319,9 @@ func (p *Parser) getFilteredToken(i int) (FilteredToken, bool) {
 	return FilteredToken{}, false
 }
 
-func (p *Parser) setAndReturn(component string, token tokenizer.Token, date time.Time, skipDateOrder bool) ([]TokenParseResult, error) {
+func (p *Parser) setAndReturn(component string, token tokenizer.Token, value int, skipDateOrder bool) ([]TokenParseResult, error) {
 	if !skipDateOrder {
 		p.AutoOrder = append(p.AutoOrder, component)
-	}
-
-	var value int
-	switch component {
-	case "day":
-		value = date.Day()
-	case "month":
-		value = int(date.Month())
-	case "year":
-		value = date.Year()
 	}
 
 	p.ComponentTokens[component] = token
@@ -341,18 +351,18 @@ func (p *Parser) parseDigitToken(tokenText string, skippedComponent string) ([]T
 
 		// Try each directive
 		for _, directive := range directives {
-			date, _ := time.Parse(directive, tokenText)
-			if date.IsZero() {
+			partValue, found := p.FnGetDatePartValue(p, component, tokenText, directive)
+			if !found {
 				continue
 			}
 
 			if prevValue == 0 {
-				return p.setAndReturn(component, token, date, false)
+				return p.setAndReturn(component, token, partValue, false)
 			} else if prevToken.Type == tokenizer.Digit {
-				prevDate, _ := time.Parse(directive, prevToken.Text)
-				if prevDate.IsZero() {
+				_, found := p.FnGetDatePartValue(p, component, prevToken.Text, directive)
+				if !found {
 					p.UnsetTokens = append(p.UnsetTokens, prevToken)
-					return p.setAndReturn(component, token, date, false)
+					return p.setAndReturn(component, token, partValue, false)
 				}
 			}
 		}
@@ -380,13 +390,13 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 
 		// Try each directive
 		for _, directive := range directives {
-			date, _ := time.Parse(directive, tokenText)
-			if date.IsZero() {
+			partValue, found := p.FnGetDatePartValue(p, component, tokenText, directive)
+			if !found {
 				continue
 			}
 
 			if prevValue == 0 {
-				return p.setAndReturn(component, token, date, true)
+				return p.setAndReturn(component, token, partValue, true)
 			} else if component == "month" {
 				for j := range p.AutoOrder {
 					if p.AutoOrder[j] == "month" {
@@ -398,7 +408,7 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 				p.ComponentTokens["day"] = p.ComponentTokens["month"]
 				p.ComponentTokens["month"] = token
 				return []TokenParseResult{
-					{Component: "month", Value: int(date.Month())},
+					{Component: "month", Value: partValue},
 					{Component: "day", Value: prevValue},
 				}, nil
 			}
@@ -406,37 +416,6 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 	}
 
 	return nil, fmt.Errorf("unable to parse %s", tokenText)
-}
-
-func (p *Parser) createTimeFromComponents() time.Time {
-	// Get component values
-	day, dayExist := p.ComponentValues["day"]
-	if !dayExist || day == 0 {
-		day = p.Now.Day()
-	}
-
-	month, monthExist := p.ComponentValues["month"]
-	if !monthExist || month == 0 {
-		month = int(p.Now.Month())
-	}
-
-	year, yearExist := p.ComponentValues["year"]
-	if !yearExist || year == 0 {
-		year = p.Now.Year()
-	}
-
-	// Fix leap year
-	if day == 29 && month == 2 && !dateutil.IsLeapYear(year) {
-		year = p.getCorrectLeapYear(year)
-	}
-
-	// Fix max day
-	lastDayOfMonth := dateutil.GetLastDayOfMonth(year, month)
-	if day > lastDayOfMonth {
-		day = lastDayOfMonth
-	}
-
-	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, p.Now.Location())
 }
 
 func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
