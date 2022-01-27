@@ -42,7 +42,7 @@ type Parser struct {
 	Now                 time.Time
 	Config              *setting.Configuration
 	FnGetDateTimeParams func(p *Parser) map[string]int
-	FnCreateDateTime    func(p *Parser, params map[string]int, loc *time.Location) time.Time
+	FnCreateDateTime    func(p *Parser, params map[string]int, loc *time.Location) (time.Time, error)
 	FnGetDatePartValue  func(p *Parser, component, token, directive string) (int, bool)
 
 	Tokens           []tokenizer.Token
@@ -291,7 +291,10 @@ func (p *Parser) Parse() (date.Date, error) {
 	}
 
 	// Create datetime object
-	dt := p.FnCreateDateTime(p, dtParams, dtLocation)
+	dt, err := p.FnCreateDateTime(p, dtParams, dtLocation)
+	if err != nil {
+		return date.Date{}, err
+	}
 
 	// Apply correction for past and future
 	dt = p.correctForTimeFrame(dt)
@@ -378,7 +381,6 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 		Type: tokenizer.Letter,
 	}
 
-	tokenText = strings.ToLower(tokenText)
 	for component, directives := range alphaDirectives {
 		// Check if this component need to be skipped
 		if component == skippedComponent {

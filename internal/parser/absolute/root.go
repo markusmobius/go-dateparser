@@ -1,6 +1,7 @@
 package absolute
 
 import (
+	"strings"
 	"time"
 
 	"github.com/markusmobius/go-dateparser/date"
@@ -47,7 +48,7 @@ func getDateTimeParams(p *Parser) map[string]int {
 	}
 }
 
-func createDateTime(p *Parser, pms map[string]int, loc *time.Location) time.Time {
+func createDateTime(p *Parser, pms map[string]int, loc *time.Location) (time.Time, error) {
 	Y, M, D := pms["year"], pms["month"], pms["day"]
 	H, m, s, ns := pms["hour"], pms["minute"], pms["second"], pms["nanosecond"]
 
@@ -62,10 +63,11 @@ func createDateTime(p *Parser, pms map[string]int, loc *time.Location) time.Time
 		D = lastDayOfMonth
 	}
 
-	return time.Date(Y, time.Month(M), D, H, m, s, ns, loc)
+	return time.Date(Y, time.Month(M), D, H, m, s, ns, loc), nil
 }
 
 func getDatePartValue(p *Parser, component, token, directive string) (int, bool) {
+	token = strings.ToLower(token)
 	if t, _ := time.Parse(directive, token); !t.IsZero() {
 		switch component {
 		case "day":

@@ -9,14 +9,14 @@ import (
 // ParseTime parses the specified string using one of the common time formats.
 func ParseTime(s string) (time.Time, error) {
 	timeFormats := []string{
-		"15:04:05",
-		"3:04:05 PM",
-		"15:04",
-		"3:04 PM",
+		"15:4:5",
+		"3:4:5 PM",
+		"15:4",
+		"3:4 PM",
 		"3 PM",
-		"15:04:05.999999",
-		"3:04:05.999999 PM",
-		"15:04 PM",
+		"15:4:5.999999",
+		"3:4:5.999999 PM",
+		"15:4 PM",
 	}
 
 	tmp := strings.TrimSpace(s)

@@ -78,6 +78,7 @@ type Configuration struct {
 	ReturnTimeAsPeriod bool
 }
 
+// Clone clones the config to a new, separate one.
 func (c Configuration) Clone() Configuration {
 	return Configuration{
 		DateOrder:             c.DateOrder,

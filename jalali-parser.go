@@ -4,18 +4,18 @@ import (
 	"fmt"
 
 	"github.com/markusmobius/go-dateparser/date"
-	"github.com/markusmobius/go-dateparser/internal/parser/hijri"
+	"github.com/markusmobius/go-dateparser/internal/parser/jalali"
 )
 
-// ParseHijri parses a Hijri date string using Umm al-Qura Calendar
-// which commonly used in Islamic country.
-func ParseHijri(cfg *Configuration, str string) (date.Date, error) {
+// ParseJalali parses a Jalali date (which also called Persian or Solar
+// Hijri date) which commonly used in Iran and Afghanistan.
+func ParseJalali(cfg *Configuration, str string) (date.Date, error) {
 	// Prepare config
 	if cfg == nil {
 		cfg = &Configuration{}
 	}
 
-	// Hijri usually used in Eastern country which uses DMY,
+	// Iran and Afghanistan mostly uses DMY format,
 	// so here it used as default.
 	if cfg.DateOrder == "" {
 		cfg.DateOrder = "DMY"
@@ -29,5 +29,5 @@ func ParseHijri(cfg *Configuration, str string) (date.Date, error) {
 
 	// Start parser
 	iCfg := cfg.toInternalConfig()
-	return hijri.Parse(&iCfg, str)
+	return jalali.Parse(&iCfg, str)
 }
