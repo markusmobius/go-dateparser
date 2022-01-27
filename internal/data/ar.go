@@ -7,7 +7,7 @@ import "regexp"
 var ar_Locale = merge(nil, LocaleData{
 	Name:      "ar",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "الساعة", "في", "مساء", "هـ"},
+	Charset:   []rune("+,-./;@[]cgtuz|ءابةتثجحخدذرسشصضطعغـفقكلمنهوي"),
 	Translations: map[string]string{
 		"الثلاثاء": "tuesday",
 		"الاربعاء": "wednesday",

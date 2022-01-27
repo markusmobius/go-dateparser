@@ -7,7 +7,7 @@ import "regexp"
 var shi_Tfng_Locale = merge(nil, LocaleData{
 	Name:      "shi-Tfng",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]ceghiklnorstuwxyz|ⴰⴱⴳⴷⴹⴼⴽⵉⵊⵍⵎⵏⵓⵔⵕⵖⵙⵚⵛⵜⵡⵢⵣ"),
 	Translations: map[string]string{
 		"ⴷⵓⵊⴰⵏⴱⵉⵔ": "december",
 		"ⵏⵓⵡⴰⵏⴱⵉⵔ": "november",

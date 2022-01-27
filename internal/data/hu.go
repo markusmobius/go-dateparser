@@ -7,7 +7,7 @@ import "regexp"
 var hu_Locale = merge(nil, LocaleData{
 	Name:      "hu",
 	DateOrder: "YMD.",
-	SkipWords: []string{"'", ",", "-", "-a", "-ai", "-aig", "-akor", "-an", "-atol", "-e", "-ei", "-eig", "-ekor", "-en", "-es", "-etol", "-i", "-ig", "-je", "-jei", "-ji", "-kor", "-os", "-tol", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvxz|"),
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)egy(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 	},

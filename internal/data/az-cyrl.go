@@ -7,7 +7,7 @@ import "regexp"
 var az_Cyrl_Locale = merge(nil, LocaleData{
 	Name:      "az-Cyrl",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]cdeghiklnorstuwxyz|абвгдезиклмнопрстуфхчшыјүҹә"),
 	Translations: map[string]string{
 		"чәршәнбә ахшамы": "tuesday",
 		"базар ертәси":    "monday",

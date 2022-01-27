@@ -7,7 +7,7 @@ import "regexp"
 var bg_Locale = merge(nil, LocaleData{
 	Name:      "bg",
 	DateOrder: "DMY 'Г'.",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "върху", "до", "на", "около", "от", "под"},
+	Charset:   []rune("+,-./;@[]cgtuz|абвгдезиклмнопрстуфхцчщъюя"),
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)един(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)два(\z|[^\pL\pM\d]|_)`), "${1}2${2}"},

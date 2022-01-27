@@ -5,10 +5,9 @@ package data
 import "regexp"
 
 var en_Locale = merge(nil, LocaleData{
-	Name:         "en",
-	DateOrder:    "MDY",
-	SkipWords:    []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "about", "ad", "and", "at", "by", "just", "m", "nd", "of", "on", "rd", "st", "th", "the", "|"},
-	PertainWords: []string{"of"},
+	Name:      "en",
+	DateOrder: "MDY",
+	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|"),
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)an(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)a(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},

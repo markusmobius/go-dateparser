@@ -7,7 +7,7 @@ import "regexp"
 var or_Locale = merge(nil, LocaleData{
 	Name:      "or",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]cdeghiklnorstuwxyz|ଅଆଇକଗଙଚଜଟଡଧନପଫବଭମରଲଳଶଷସାୀେୋ"),
 	Translations: map[string]string{
 		"ସେପଟେମବର": "september",
 		"ମଙଗଳବାର":  "tuesday",

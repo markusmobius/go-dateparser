@@ -7,7 +7,7 @@ import "regexp"
 var te_Locale = merge(nil, LocaleData{
 	Name:      "te",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]cgtuz|ంఅఆఈఏకగచజటడతదధనపఫబమరలళవశషసుూ"),
 	Translations: map[string]string{
 		"శుకరవరం": "friday",
 		"గురువరం": "thursday",

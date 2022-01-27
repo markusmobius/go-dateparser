@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 )
 
@@ -15,6 +16,7 @@ type LocaleData struct {
 	DateOrder                 string               `json:",omitempty"`
 	NoWordSpacing             bool                 `json:",omitempty"`
 	SentenceSplitterGroup     int                  `json:",omitempty"`
+	Charset                   []rune               `json:",omitempty"`
 	SkipWords                 []string             `json:",omitempty"`
 	PertainWords              []string             `json:",omitempty"`
 	Simplifications           []SimplificationData `json:",omitempty"`
@@ -195,6 +197,39 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 	}
 }
 
+func (ld *LocaleData) GenerateCharset() {
+	// Fetch all chars
+	var chars []rune
+	charTracker := map[rune]struct{}{}
+	fnSaveChars := func(s string) {
+		for _, r := range s {
+			if unicode.Is(commonChars, r) {
+				continue
+			}
+
+			if _, exist := charTracker[r]; !exist {
+				charTracker[r] = struct{}{}
+				chars = append(chars, r)
+			}
+		}
+	}
+
+	for text := range ld.Translations {
+		fnSaveChars(text)
+	}
+
+	for text := range ld.RelativeType {
+		fnSaveChars(text)
+	}
+
+	// Sort the chars
+	sort.Slice(chars, func(i, j int) bool {
+		return chars[i] < chars[j]
+	})
+
+	ld.Charset = chars
+}
+
 func (ld LocaleData) Clone() LocaleData {
 	cloneMap := func(m map[string]string) map[string]string {
 		newMap := map[string]string{}
@@ -209,6 +244,7 @@ func (ld LocaleData) Clone() LocaleData {
 		DateOrder:                 ld.DateOrder,
 		NoWordSpacing:             ld.NoWordSpacing,
 		SentenceSplitterGroup:     ld.SentenceSplitterGroup,
+		Charset:                   append([]rune{}, ld.Charset...),
 		SkipWords:                 append([]string{}, ld.SkipWords...),
 		PertainWords:              append([]string{}, ld.PertainWords...),
 		Simplifications:           append([]SimplificationData{}, ld.Simplifications...),

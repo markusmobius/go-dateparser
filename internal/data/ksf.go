@@ -7,7 +7,7 @@ import "regexp"
 var ksf_Locale = merge(nil, LocaleData{
 	Name:      "ksf",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdefghijklnorstuwxyz|ŋǝɔɛ"),
 	Translations: map[string]string{
 		"ŋwii akǝ ntɛk di bɛɛ": "december",
 		"ŋwii akǝ ntɛk di bɔk": "november",

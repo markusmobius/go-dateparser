@@ -8,7 +8,7 @@ var ja_Locale = merge(nil, LocaleData{
 	Name:          "ja",
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
-	SkipWords:     []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "約"},
+	Charset:       []rune("+,-./;@[]cgtuz|々かてらカヶ一七三九二五今以先八六内分前十午去四土在年後日明昨時曜月木水火現秒約翌週金間"),
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\d+)年(?:\s+)?(\d+)月(?:\s+)?(\d+)日`), "$1-$2-$3"},
 		{regexp.MustCompile(`(?i)(\d+)月(?:\s+)?(\d+)日`), "$1-$2"},

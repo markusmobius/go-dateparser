@@ -7,7 +7,7 @@ import "regexp"
 var he_Locale = merge(nil, LocaleData{
 	Name:      "he",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "ב-", "בסביבות", "בערך", "בקירוב", "בשעה", "ה-"},
+	Charset:   []rune("+,-./;@[]cgtuz|אבגדהוזחטיךכלםמןנסעפץצקרשת׳״"),
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ויום(\z|[^\pL\pM\d]|_)`), "${1}1 יום${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ושבוע(\z|[^\pL\pM\d]|_)`), "${1}1 שבוע${2}"},

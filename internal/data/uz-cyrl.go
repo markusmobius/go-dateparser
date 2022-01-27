@@ -7,7 +7,7 @@ import "regexp"
 var uz_Cyrl_Locale = merge(nil, LocaleData{
 	Name:      "uz-Cyrl",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]ceghinorstuz|абвгдежзиклмнопрстуфчшэюяқҳ"),
 	Translations: map[string]string{
 		"паишанба": "thursday",
 		"чоршанба": "wednesday",

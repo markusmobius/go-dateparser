@@ -7,7 +7,7 @@ import "regexp"
 var dua_Locale = merge(nil, LocaleData{
 	Name:      "dua",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdeghiklnorstuwxyz|ŋɓɔɗɛ"),
 	Translations: map[string]string{
 		"madiɓɛdiɓɛ": "july",
 		"esɔpɛsɔpɛ":  "june",

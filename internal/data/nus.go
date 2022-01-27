@@ -7,7 +7,7 @@ import "regexp"
 var nus_Locale = merge(nil, LocaleData{
 	Name:      "nus",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdeghijklnorstuwxyz|ŋɔɛ"),
 	Translations: map[string]string{
 		"tiop thar pɛt": "january",
 		"tiop in diit":  "december",

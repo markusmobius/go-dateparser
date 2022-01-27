@@ -8,6 +8,7 @@ import (
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
+	"golang.org/x/text/unicode/rangetable"
 )
 
 const (
@@ -57,6 +58,7 @@ var (
 	rxParentheses         = regexp.MustCompile(`[\(\)]`)
 
 	importantTokens = []string{"+", ":", ".", " ", "-", "/", "am", "pm", "utc", "gmt", "z"}
+	commonChars     = rangetable.New([]rune("0123456789:()'qamp ")...)
 
 	// Languages with insufficient translation data are excluded
 	excludedLanguages = map[string]struct{}{

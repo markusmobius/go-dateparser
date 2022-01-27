@@ -7,7 +7,7 @@ import "regexp"
 var gsw_Locale = merge(nil, LocaleData{
 	Name:      "gsw",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|"),
 	Translations: map[string]string{
 		"am vormittag": "am",
 		"am namittag":  "pm",

@@ -7,7 +7,7 @@ import "regexp"
 var fi_Locale = merge(nil, LocaleData{
 	Name:      "fi",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ":n", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]cdeghijklnorstuvyz|"),
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+) (sekunnin|sekuntin|minuutin|tunnin|paivan|viikon|kuukauden|vuoden) (paasta|kuluttua)(\z|[^\pL\pM\d]|_)`), "${1}${4} ${2} ${3}${5}"},
 	},

@@ -7,7 +7,7 @@ import "regexp"
 var ug_Locale = merge(nil, LocaleData{
 	Name:      "ug",
 	DateOrder: "YMD",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]ceghinorstuwz|ابتجدرسشغفكلمنوىيپچگھۆۇۈۋېە"),
 	Translations: map[string]string{
 		"چۈشتىن بۇرۇن": "am",
 		"چۈشتىن كېيىن": "pm",

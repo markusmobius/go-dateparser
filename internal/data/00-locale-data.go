@@ -9,8 +9,7 @@ type LocaleData struct {
 	DateOrder             string
 	NoWordSpacing         bool
 	SentenceSplitterGroup int
-	SkipWords             []string
-	PertainWords          []string
+	Charset               []rune
 	Simplifications       []ReplacementData
 	Translations          map[string]string
 	RelativeType          map[string]string
@@ -31,8 +30,7 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	}
 
 	// Merge list
-	child.SkipWords = append(child.SkipWords, parent.SkipWords...)
-	child.PertainWords = append(child.PertainWords, parent.PertainWords...)
+	child.Charset = append(child.Charset, parent.Charset...)
 	child.Simplifications = append(child.Simplifications, parent.Simplifications...)
 	child.RelativeTypeRegexes = append(child.RelativeTypeRegexes, parent.RelativeTypeRegexes...)
 

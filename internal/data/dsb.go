@@ -7,7 +7,7 @@ import "regexp"
 var dsb_Locale = merge(nil, LocaleData{
 	Name:      "dsb",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdefghijklnorstuwyz|ł"),
 	Translations: map[string]string{
 		"wotpołdnja": "pm",
 		"dopołdnja":  "am",

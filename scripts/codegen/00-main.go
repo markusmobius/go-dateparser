@@ -80,6 +80,7 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return err
 		} else {
+			languageData.GenerateCharset()
 			finalLocaleData[language] = languageData
 		}
 

@@ -7,7 +7,7 @@ import "regexp"
 var zgh_Locale = merge(nil, LocaleData{
 	Name:      "zgh",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]ceghiklnorstuwxyz|ⴰⴱⴳⴷⴹⴼⴽⵉⵊⵍⵎⵏⵓⵔⵕⵖⵙⵚⵛⵜⵡⵢⵣ"),
 	Translations: map[string]string{
 		"ⴷⵓⵊⴰⵏⴱⵉⵔ": "december",
 		"ⵏⵓⵡⴰⵏⴱⵉⵔ": "november",

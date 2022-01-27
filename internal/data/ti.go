@@ -7,7 +7,7 @@ import "regexp"
 var ti_Locale = merge(nil, LocaleData{
 	Name:      "ti",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]cdeghiklnorstuwxyz|ሆለሉሓሕመሙሚምሠረሪርሰሳስቀቅበቡቢቦተቲታትኃነኑንከካዓዕዝያይዳድጉጋግጥ"),
 	Translations: map[string]string{
 		"ንጉሆ ሰዓተ": "am",
 		"ድሕር ሰዓት": "pm",

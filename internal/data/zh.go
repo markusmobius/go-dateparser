@@ -8,7 +8,7 @@ var zh_Locale = merge(nil, LocaleData{
 	Name:          "zh",
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
-	SkipWords:     []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|", "约"},
+	Charset:       []rune("+,-./;@[]cgtuz|一七三上下个九二五今個八六分刚刻前十午去周四在天小年拜日时明星昨月期本此现礼秒约这钟间"),
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)半小时前`), "30分前"},
 		{regexp.MustCompile(`(?i)(?:中午|下午|(?:晚上?))(?:\s*)(\d+)(?:\s*):(?:\s+|:)?(\d+)`), "$1:$2 pm"},

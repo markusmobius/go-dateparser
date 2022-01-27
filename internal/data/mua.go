@@ -7,7 +7,7 @@ import "regexp"
 var mua_Locale = merge(nil, LocaleData{
 	Name:      "mua",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdefghijklnorstuwxyz|ŋǝɓɗ"),
 	Translations: map[string]string{
 		"cok comme ma laŋ tǝ biŋ": "second",
 		"cok comme ma laŋne":      "minute",

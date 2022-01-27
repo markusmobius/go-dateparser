@@ -7,7 +7,7 @@ import "regexp"
 var asa_Locale = merge(nil, LocaleData{
 	Name:      "asa",
 	DateOrder: "DMY",
-	SkipWords: []string{"'", ",", "-", ".", "/", ";", "@", "[", "]", "|"},
+	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|"),
 	Translations: map[string]string{
 		"icheheavo": "am",
 		"februari":  "february",
