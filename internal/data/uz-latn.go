@@ -7,7 +7,7 @@ import "regexp"
 var uz_Latn_Locale = merge(nil, LocaleData{
 	Name:      "uz-Latn",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvyz|‘"),
+	Charset:   []rune(`bcdefghijklnorstuvyz‘`),
 	Translations: map[string]string{
 		"chorshanba": "wednesday",
 		"yakshanba":  "sunday",

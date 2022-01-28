@@ -7,7 +7,7 @@ import "regexp"
 var brx_Locale = merge(nil, LocaleData{
 	Name:      "brx",
 	DateOrder: "MDY",
-	Charset:   []rune("+,-./;@[]ceghiklnorstuwxyz|अआइएखगजथदनफबमयरलवसहािीो"),
+	Charset:   []rune(`/ceghiklnorstuwxyzअआइएखगजथदनफबमयरलवसहािीो`),
 	Translations: map[string]string{
 		"सबथा/हबथा": "week",
 		"बिसथिबार":  "thursday",

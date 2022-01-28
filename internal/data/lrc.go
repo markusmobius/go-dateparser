@@ -7,7 +7,7 @@ import "regexp"
 var lrc_Locale = merge(nil, LocaleData{
 	Name:      "lrc",
 	DateOrder: "YMD",
-	Charset:   []rune("+,-./;@[]cdefghiklnorstuwxyz|اتثجدرزسشصفقلمنويپڤکگھیە"),
+	Charset:   []rune(`cdefghiklnorstuwxyzاتثجدرزسشصفقلمنويپڤکگھیە`),
 	Translations: map[string]string{
 		"يوکتوڤر": "october",
 		"سيپتامر": "september",

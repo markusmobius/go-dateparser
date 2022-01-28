@@ -7,7 +7,7 @@ import "regexp"
 var pa_Guru_Locale = merge(nil, LocaleData{
 	Name:      "pa-Guru",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]cgtuz|ਅਆਇਈਐਕਗਘਚਛਜਟਣਤਦਧਨਪਫਬਭਮਰਲਵਸਹਾਿੀ"),
+	Charset:   []rune(`cgtuzਅਆਇਈਐਕਗਘਚਛਜਟਣਤਦਧਨਪਫਬਭਮਰਲਵਸਹਾਿੀ`),
 	Translations: map[string]string{
 		"ਸਨਿਚਰਵਾਰ": "saturday",
 		"ਸਕਰਵਾਰ":   "friday",

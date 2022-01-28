@@ -7,7 +7,7 @@ import "regexp"
 var ta_Locale = merge(nil, LocaleData{
 	Name:      "ta",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]cgtuz|அஆஇஏஒகஙசஜஞடணதநனபமயரறலளழவஸாிுூெேைோ"),
+	Charset:   []rune(`cgtuzஅஆஇஏஒகஙசஜஞடணதநனபமயரறலளழவஸாிுூெேைோ`),
 	Translations: map[string]string{
 		"பிபரவரி": "february",
 		"செபடமபர": "september",

@@ -7,7 +7,7 @@ import "regexp"
 var ckb_Locale = merge(nil, LocaleData{
 	Name:      "ckb",
 	DateOrder: "YMD",
-	Charset:   []rune("+,-./;@[]cdeghiklnorstuwxyz|ابتجحدرزسشلمنويپچکھیێە"),
+	Charset:   []rune(`cdeghiklnorstuwxyzابتجحدرزسشلمنويپچکھیێە`),
 	Translations: map[string]string{
 		"کانوونی دووەم": "january",
 		"کانونی یەکەم":  "december",

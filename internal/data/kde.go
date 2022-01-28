@@ -7,7 +7,7 @@ import "regexp"
 var kde_Locale = merge(nil, LocaleData{
 	Name:      "kde",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|"),
+	Charset:   []rune(`bcdefghijklnorstuvwxyz`),
 	Translations: map[string]string{
 		"mwedi wa nnyano na nnyano na m": "december",
 		"mwedi wa nnyano na nnyano na u": "november",

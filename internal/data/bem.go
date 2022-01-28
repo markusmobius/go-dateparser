@@ -7,7 +7,7 @@ import "regexp"
 var bem_Locale = merge(nil, LocaleData{
 	Name:      "bem",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|"),
+	Charset:   []rune(`bcdefghijklnorstuvwxyz`),
 	Translations: map[string]string{
 		"pachibelushi": "saturday",
 		"palichisano":  "friday",

@@ -8,7 +8,7 @@ var zh_Hans_Locale = merge(nil, LocaleData{
 	Name:          "zh-Hans",
 	DateOrder:     "YMD",
 	NoWordSpacing: true,
-	Charset:       []rune("+,-./;@[]cgtuz|一七三上下个九二五今八六分刻十午去周四在天小年日时明星昨月期本此现秒这钟间"),
+	Charset:       []rune(`/cgtuz一七三上下个九二五今八六分刻十午去周四在天小年日时明星昨月期本此现秒这钟间`),
 	Translations: map[string]string{
 		"12月": "december",
 		"十二月": "december",

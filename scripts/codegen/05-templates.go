@@ -46,7 +46,7 @@ func charset(chars []rune) string {
 		strRunes = append(strRunes, strRune)
 	}
 
-	return `[]rune("` + strings.Join(strRunes, "") + `")`
+	return "[]rune(`" + strings.Join(strRunes, "") + "`)"
 }
 
 func localeName(language string) string {

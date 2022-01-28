@@ -7,7 +7,7 @@ import "regexp"
 var xog_Locale = merge(nil, LocaleData{
 	Name:      "xog",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|"),
+	Charset:   []rune(`bcdefghijklnorstuvwxyz`),
 	Translations: map[string]string{
 		"obutikitiki": "second",
 		"olokutaanu":  "friday",

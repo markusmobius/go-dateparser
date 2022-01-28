@@ -56,6 +56,7 @@ var (
 	rxPythonCaptureGroup  = regexp.MustCompile(`\\(\d+)`)
 	rxGoCaptureGroup      = regexp.MustCompile(`\$\{?(\d+)\}?`)
 	rxParentheses         = regexp.MustCompile(`[\(\)]`)
+	rxCharsetFilter       = regexp.MustCompile(`^[\P{L}\p{N}_]+$`)
 
 	importantTokens = []string{"+", ":", ".", " ", "-", "/", "am", "pm", "utc", "gmt", "z"}
 	commonChars     = rangetable.New([]rune("0123456789:()'qamp ")...)

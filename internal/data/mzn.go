@@ -7,7 +7,7 @@ import "regexp"
 var mzn_Locale = merge(nil, LocaleData{
 	Name:      "mzn",
 	DateOrder: "YMD",
-	Charset:   []rune("+,-./;@[]cdefghinorstuwz|ابتثدرزسعفقلمنهويپژکگی"),
+	Charset:   []rune(`cdefghinorstuwzابتثدرزسعفقلمنهويپژکگی`),
 	Translations: map[string]string{
 		"سپتامبر": "september",
 		"دسامبر":  "december",

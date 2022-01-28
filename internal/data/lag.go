@@ -7,7 +7,7 @@ import "regexp"
 var lag_Locale = merge(nil, LocaleData{
 	Name:      "lag",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|ɨʉ"),
+	Charset:   []rune(`bcdefghijklnorstuvwxyzɨʉ`),
 	Translations: map[string]string{
 		"kwiinyambala": "may",
 		"kwiidwaata":   "june",

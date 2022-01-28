@@ -7,7 +7,7 @@ import "regexp"
 var twq_Locale = merge(nil, LocaleData{
 	Name:      "twq",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuwxyz|ŋ"),
+	Charset:   []rune(`bcdefghijklnorstuwxyzŋ`),
 	Translations: map[string]string{
 		"zaarikay b": "pm",
 		"deesanbur":  "december",

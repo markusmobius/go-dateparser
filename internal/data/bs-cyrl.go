@@ -7,7 +7,7 @@ import "regexp"
 var bs_Cyrl_Locale = merge(nil, LocaleData{
 	Name:      "bs-Cyrl",
 	DateOrder: "DMY.",
-	Charset:   []rune("+,-./;@[]ceghinorstuwz|абвгдеиклмнопрстуфцчшјљћ"),
+	Charset:   []rune(`ceghinorstuwzабвгдеиклмнопрстуфцчшјљћ`),
 	Translations: map[string]string{
 		"пре подне": "am",
 		"понедељак": "monday",

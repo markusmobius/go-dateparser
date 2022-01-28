@@ -7,7 +7,7 @@ import "regexp"
 var lkt_Locale = merge(nil, LocaleData{
 	Name:      "lkt",
 	DateOrder: "YMD",
-	Charset:   []rune("+,-./;@[]ceghiklnorstuwyz|ŋ"),
+	Charset:   []rune(`-ceghiklnorstuwyzŋ`),
 	Translations: map[string]string{
 		"wipazukha-waste wi": "june",
 		"istawichayazaŋ wi":  "march",

@@ -7,7 +7,7 @@ import "regexp"
 var shi_Locale = merge(nil, LocaleData{
 	Name:      "shi",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]ceghiklnorstuwxyz|ⴰⴱⴳⴷⴹⴼⴽⵉⵊⵍⵎⵏⵓⵔⵕⵖⵙⵚⵛⵜⵡⵢⵣ"),
+	Charset:   []rune(`ceghiklnorstuwxyzⴰⴱⴳⴷⴹⴼⴽⵉⵊⵍⵎⵏⵓⵔⵕⵖⵙⵚⵛⵜⵡⵢⵣ`),
 	Translations: map[string]string{
 		"ⴷⵓⵊⴰⵏⴱⵉⵔ": "december",
 		"ⵏⵓⵡⴰⵏⴱⵉⵔ": "november",

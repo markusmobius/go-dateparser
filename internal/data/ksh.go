@@ -7,7 +7,7 @@ import "regexp"
 var ksh_Locale = merge(nil, LocaleData{
 	Name:      "ksh",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxz|ß"),
+	Charset:   []rune(`bcdefghijklnorstuvwxzß`),
 	Translations: map[string]string{
 		"uhr vormiddaachs": "am",
 		"uhr nommendaachs": "pm",

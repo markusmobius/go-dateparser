@@ -7,7 +7,7 @@ import "regexp"
 var ast_Locale = merge(nil, LocaleData{
 	Name:      "ast",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghilnorstuvxyz|"),
+	Charset:   []rune(`bcdefghilnorstuvxyz`),
 	Translations: map[string]string{
 		"de la manana": "am",
 		"de setiembre": "september",

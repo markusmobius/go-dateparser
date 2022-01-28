@@ -7,7 +7,7 @@ import "regexp"
 var is_Locale = merge(nil, LocaleData{
 	Name:      "is",
 	DateOrder: "DMY",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvz|æðþ"),
+	Charset:   []rune(`bcdefghijklnorstuvzæðþ`),
 	Translations: map[string]string{
 		"miðvikudagur": "wednesday",
 		"klukkustund":  "hour",

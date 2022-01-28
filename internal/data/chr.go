@@ -7,7 +7,7 @@ import "regexp"
 var chr_Locale = merge(nil, LocaleData{
 	Name:      "chr",
 	DateOrder: "MDY",
-	Charset:   []rune("+,-./;@[]cgtuz|ᏸᏹᏼꭰꭱꭲꭴꭵꭶꭷꭸꭹꭺꭻꭼꭽꭿꮂꮄꮅꮆꮇꮈꮎꮑꮒꮓꮕꮖꮘꮙꮚꮜꮝꮞꮠꮡꮢꮣꮤꮥꮧꮨꮩꮪꮫꮯꮲꮵꮶꮷꮼꮿ"),
+	Charset:   []rune(`cgtuzᏸᏹᏼꭰꭱꭲꭴꭵꭶꭷꭸꭹꭺꭻꭼꭽꭿꮂꮄꮅꮆꮇꮈꮎꮑꮒꮓꮕꮖꮘꮙꮚꮜꮝꮞꮠꮡꮢꮣꮤꮥꮧꮨꮩꮪꮫꮯꮲꮵꮶꮷꮼꮿ`),
 	Translations: map[string]string{
 		"ꭴꮥꮨᏼꮜꮧꮢꭲ": "year",
 		"ꭲꮿꮤꮼꮝꮤꮕ":  "minute",

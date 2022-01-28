@@ -198,22 +198,27 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 }
 
 func (ld *LocaleData) GenerateCharset() {
-	// Fetch all chars
+	// Prepare variables and helper function
 	var chars []rune
-	charTracker := map[rune]struct{}{}
+	tracker := map[rune]struct{}{}
 	fnSaveChars := func(s string) {
+		if rxCharsetFilter.MatchString(s) {
+			return
+		}
+
 		for _, r := range s {
 			if unicode.Is(commonChars, r) {
 				continue
 			}
 
-			if _, exist := charTracker[r]; !exist {
-				charTracker[r] = struct{}{}
+			if _, exist := tracker[r]; !exist {
+				tracker[r] = struct{}{}
 				chars = append(chars, r)
 			}
 		}
 	}
 
+	// Fetch all chars
 	for text := range ld.Translations {
 		fnSaveChars(text)
 	}

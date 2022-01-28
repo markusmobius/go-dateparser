@@ -7,7 +7,7 @@ import "regexp"
 var fa_Locale = merge(nil, LocaleData{
 	Name:      "fa",
 	DateOrder: "YMD",
-	Charset:   []rune("+,-./;@[]cgtuz|ابتثجدذرزسشظعفقلمنهويپچژکگی\u200c"),
+	Charset:   []rune(`cgtuzابتثجدذرزسشظعفقلمنهويپچژکگی\u200c`),
 	Translations: map[string]string{
 		"قبل‌ازظهر": "am",
 		"چهار شنبه": "wednesday",

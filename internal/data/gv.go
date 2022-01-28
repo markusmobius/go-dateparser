@@ -7,7 +7,7 @@ import "regexp"
 var gv_Locale = merge(nil, LocaleData{
 	Name:      "gv",
 	DateOrder: "YMD",
-	Charset:   []rune("+,-./;@[]bcdefghijklnorstuvwxyz|"),
+	Charset:   []rune(`-bcdefghijklnorstuvwxyz`),
 	Translations: map[string]string{
 		"toshiaght-arree": "february",
 		"mee ny nollick":  "december",
