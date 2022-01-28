@@ -192,6 +192,7 @@ func finalizeData(ld LocaleData) (LocaleData, error) {
 
 	// Generate combined patterns
 	ld.CombineRegexPatterns()
+	ld.GenerateAbbreviations()
 	ld.GenerateKnownWordPattern()
 	return ld, nil
 }

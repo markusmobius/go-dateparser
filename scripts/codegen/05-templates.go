@@ -145,6 +145,7 @@ type LocaleData struct {
 	NoWordSpacing         bool
 	SentenceSplitterGroup int
 	Charset               []rune
+	Abbreviations         []string
 	Simplifications       []ReplacementData
 	Translations          map[string]string
 	RelativeType          map[string]string
@@ -166,6 +167,7 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 
 	// Merge list
 	child.Charset = append(child.Charset, parent.Charset...)
+	child.Abbreviations = append(child.Abbreviations, parent.Abbreviations...)
 	child.Simplifications = append(child.Simplifications, parent.Simplifications...)
 	child.RelativeTypeRegexes = append(child.RelativeTypeRegexes, parent.RelativeTypeRegexes...)
 
@@ -216,6 +218,7 @@ var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
 	DateOrder:             "{{.DateOrder}}",
 	NoWordSpacing:         {{.NoWordSpacing}},
 	Charset:               {{charset .Charset}},
+	Abbreviations:    []string{ {{range $v := .Abbreviations}}"{{$v}}", {{end}} },
 	SentenceSplitterGroup: {{.SentenceSplitterGroup}},
 	Simplifications: []ReplacementData{
 		{{range $data := .Simplifications -}}

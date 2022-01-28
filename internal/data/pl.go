@@ -5,9 +5,10 @@ package data
 import "regexp"
 
 var pl_Locale = merge(nil, LocaleData{
-	Name:      "pl",
-	DateOrder: "DMY",
-	Charset:   []rune(`.bcdegijklnorstuwyzł`),
+	Name:          "pl",
+	DateOrder:     "DMY",
+	Charset:       []rune(`.bcdegijklnorstuwyzł`),
+	Abbreviations: []string{"r."},
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)dzis(\z|[^\pL\pM\d]|_)`), "${1}0 dnia${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)dzisiaj(\z|[^\pL\pM\d]|_)`), "${1}0 dnia${2}"},
