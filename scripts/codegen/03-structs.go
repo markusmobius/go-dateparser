@@ -19,6 +19,7 @@ type LocaleData struct {
 	Charset                   []rune               `json:",omitempty"`
 	SkipWords                 []string             `json:",omitempty"`
 	PertainWords              []string             `json:",omitempty"`
+	Abbreviations             []string             `json:",omitempty"`
 	Simplifications           []SimplificationData `json:",omitempty"`
 	Translations              map[string]string    `json:",omitempty"`
 	RelativeType              map[string]string    `json:",omitempty"`
@@ -235,6 +236,35 @@ func (ld *LocaleData) GenerateCharset() {
 	ld.Charset = chars
 }
 
+func (ld *LocaleData) GenerateAbbreviations() {
+	// Prepare variables and helper function
+	var abbreviations []string
+	tracker := map[string]struct{}{}
+	fnSaveAbbrs := func(texts map[string]string) {
+		for text := range texts {
+			if !strings.HasSuffix(text, ".") || len(text) <= 1 {
+				continue
+			}
+
+			if _, exist := tracker[text]; !exist {
+				tracker[text] = struct{}{}
+				abbreviations = append(abbreviations, text)
+			}
+		}
+	}
+
+	// Save all abbreviations
+	fnSaveAbbrs(ld.Translations)
+	fnSaveAbbrs(ld.RelativeType)
+
+	// Sort the abbreviations
+	sort.Slice(abbreviations, func(i, j int) bool {
+		return abbreviations[i] < abbreviations[j]
+	})
+
+	ld.Abbreviations = abbreviations
+}
+
 func (ld LocaleData) Clone() LocaleData {
 	cloneMap := func(m map[string]string) map[string]string {
 		newMap := map[string]string{}
@@ -252,6 +282,7 @@ func (ld LocaleData) Clone() LocaleData {
 		Charset:                   append([]rune{}, ld.Charset...),
 		SkipWords:                 append([]string{}, ld.SkipWords...),
 		PertainWords:              append([]string{}, ld.PertainWords...),
+		Abbreviations:             append([]string{}, ld.Abbreviations...),
 		Simplifications:           append([]SimplificationData{}, ld.Simplifications...),
 		Translations:              cloneMap(ld.Translations),
 		RelativeType:              cloneMap(ld.RelativeType),
@@ -277,6 +308,7 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 	clone.SentenceSplitterGroup = input.SentenceSplitterGroup
 	clone.SkipWords = cleanList(false, append(clone.SkipWords, input.SkipWords...)...)
 	clone.PertainWords = cleanList(false, append(clone.PertainWords, input.PertainWords...)...)
+	clone.Abbreviations = cleanList(false, append(clone.Abbreviations, input.Abbreviations...)...)
 	clone.Simplifications = cleanSimplifications(append(clone.Simplifications, input.Simplifications...)...)
 
 	for word, translation := range input.Translations {
@@ -344,6 +376,7 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	clone := ld.Clone()
 	clone.SkipWords = reduceStrings(clone.SkipWords, input.SkipWords)
 	clone.PertainWords = reduceStrings(clone.PertainWords, input.PertainWords)
+	clone.Abbreviations = reduceStrings(clone.Abbreviations, input.Abbreviations)
 	clone.Simplifications = reduceSimplifications(clone.Simplifications, input.Simplifications)
 	clone.Translations = reduceMap(clone.Translations, input.Translations)
 	clone.RelativeType = reduceMap(clone.RelativeType, input.RelativeType)
