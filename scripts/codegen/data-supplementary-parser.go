@@ -30,7 +30,7 @@ func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[stri
 		}
 
 		log.Info().Msgf("parsed supplementary %s", language)
-		result[language] = localeData.Merge(baseClone)
+		result[language] = baseClone.Merge(*localeData)
 	}
 
 	return result, nil

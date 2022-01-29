@@ -5,9 +5,10 @@ package data
 import "regexp"
 
 var fi_Locale = merge(nil, LocaleData{
-	Name:      "fi",
-	DateOrder: "DMY",
-	Charset:   []rune(`cdeghijklnorstuvyz`),
+	Name:                  "fi",
+	DateOrder:             "DMY",
+	Charset:               []rune(`cdeghijklnorstuvyz`),
+	SentenceSplitterGroup: 1,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+) (sekunnin|sekuntin|minuutin|tunnin|paivan|viikon|kuukauden|vuoden) (paasta|kuluttua)(\z|[^\pL\pM\d]|_)`), "${1}${4} ${2} ${3}${5}"},
 	},

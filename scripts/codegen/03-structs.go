@@ -304,8 +304,11 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 		clone.DateOrder = input.DateOrder
 	}
 
+	if input.SentenceSplitterGroup > 0 {
+		clone.SentenceSplitterGroup = input.SentenceSplitterGroup
+	}
+
 	clone.NoWordSpacing = clone.NoWordSpacing || input.NoWordSpacing
-	clone.SentenceSplitterGroup = input.SentenceSplitterGroup
 	clone.SkipWords = cleanList(false, append(clone.SkipWords, input.SkipWords...)...)
 	clone.PertainWords = cleanList(false, append(clone.PertainWords, input.PertainWords...)...)
 	clone.Abbreviations = cleanList(false, append(clone.Abbreviations, input.Abbreviations...)...)
@@ -381,6 +384,10 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	clone.Translations = reduceMap(clone.Translations, input.Translations)
 	clone.RelativeType = reduceMap(clone.RelativeType, input.RelativeType)
 	clone.RelativeTypeRegexes = reduceMap(clone.RelativeTypeRegexes, input.RelativeTypeRegexes)
+
+	if clone.SentenceSplitterGroup == input.SentenceSplitterGroup {
+		clone.SentenceSplitterGroup = 0
+	}
 
 	return clone
 }

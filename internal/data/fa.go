@@ -5,9 +5,10 @@ package data
 import "regexp"
 
 var fa_Locale = merge(nil, LocaleData{
-	Name:      "fa",
-	DateOrder: "YMD",
-	Charset:   []rune(`cgtuzابتثجدذرزسشظعفقلمنهويپچژکگی\u200c`),
+	Name:                  "fa",
+	DateOrder:             "YMD",
+	Charset:               []rune(`cgtuzابتثجدذرزسشظعفقلمنهويپچژکگی\u200c`),
+	SentenceSplitterGroup: 6,
 	Translations: map[string]string{
 		"قبل‌ازظهر": "am",
 		"چهار شنبه": "wednesday",

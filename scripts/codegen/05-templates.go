@@ -171,6 +171,11 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	child.Simplifications = append(child.Simplifications, parent.Simplifications...)
 	child.RelativeTypeRegexes = append(child.RelativeTypeRegexes, parent.RelativeTypeRegexes...)
 
+	// Merge int
+	if child.SentenceSplitterGroup == 0 {
+		child.SentenceSplitterGroup = parent.SentenceSplitterGroup
+	}
+
 	// Prepare maps
 	if len(child.Translations) == 0 {
 		child.Translations = map[string]string{}

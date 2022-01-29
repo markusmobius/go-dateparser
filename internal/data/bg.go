@@ -5,9 +5,10 @@ package data
 import "regexp"
 
 var bg_Locale = merge(nil, LocaleData{
-	Name:      "bg",
-	DateOrder: "DMY 'Г'.",
-	Charset:   []rune(`cgtuzабвгдезиклмнопрстуфхцчщъюя`),
+	Name:                  "bg",
+	DateOrder:             "DMY 'Г'.",
+	Charset:               []rune(`cgtuzабвгдезиклмнопрстуфхцчщъюя`),
+	SentenceSplitterGroup: 1,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)един(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)два(\z|[^\pL\pM\d]|_)`), "${1}2${2}"},

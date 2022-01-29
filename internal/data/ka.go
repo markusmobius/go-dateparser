@@ -5,9 +5,10 @@ package data
 import "regexp"
 
 var ka_Locale = merge(nil, LocaleData{
-	Name:      "ka",
-	DateOrder: "DMY",
-	Charset:   []rune(`cgtuzაბგდევზთიკლმნოპრსტუქღშწხ`),
+	Name:                  "ka",
+	DateOrder:             "DMY",
+	Charset:               []rune(`cgtuzაბგდევზთიკლმნოპრსტუქღშწხ`),
+	SentenceSplitterGroup: 1,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ერთ(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 	},

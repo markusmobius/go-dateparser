@@ -5,9 +5,10 @@ package data
 import "regexp"
 
 var tl_Locale = merge(nil, LocaleData{
-	Name:      "tl",
-	DateOrder: "",
-	Charset:   []rune(`bcdeghiklnorstuwyz`),
+	Name:                  "tl",
+	DateOrder:             "",
+	Charset:               []rune(`bcdeghiklnorstuwyz`),
+	SentenceSplitterGroup: 1,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)kahapon(\z|[^\pL\pM\d]|_)`), "${1}1 araw nakaraan${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ngayon(\z|[^\pL\pM\d]|_)`), "${1}0 segundo nakalipas${2}"},

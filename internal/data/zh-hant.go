@@ -5,10 +5,11 @@ package data
 import "regexp"
 
 var zh_Hant_Locale = merge(nil, LocaleData{
-	Name:          "zh-Hant",
-	DateOrder:     "YMD",
-	NoWordSpacing: true,
-	Charset:       []rune(`cgtuz一三上下二五今個六分午去四在天小年日明星昨時月期本現秒這週鐘`),
+	Name:                  "zh-Hant",
+	DateOrder:             "YMD",
+	NoWordSpacing:         true,
+	Charset:               []rune(`cgtuz一三上下二五今個六分午去四在天小年日明星昨時月期本現秒這週鐘`),
+	SentenceSplitterGroup: 4,
 	Translations: map[string]string{
 		"12月": "december",
 		"星期五": "friday",

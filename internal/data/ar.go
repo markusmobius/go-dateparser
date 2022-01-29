@@ -5,9 +5,10 @@ package data
 import "regexp"
 
 var ar_Locale = merge(nil, LocaleData{
-	Name:      "ar",
-	DateOrder: "DMY",
-	Charset:   []rune(`cgtuzءابةتثجحخدذرسشصضطعغـفقكلمنهوي`),
+	Name:                  "ar",
+	DateOrder:             "DMY",
+	Charset:               []rune(`cgtuzءابةتثجحخدذرسشصضطعغـفقكلمنهوي`),
+	SentenceSplitterGroup: 6,
 	Translations: map[string]string{
 		"الثلاثاء": "tuesday",
 		"الاربعاء": "wednesday",

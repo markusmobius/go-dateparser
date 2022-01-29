@@ -5,10 +5,11 @@ package data
 import "regexp"
 
 var th_Locale = merge(nil, LocaleData{
-	Name:          "th",
-	DateOrder:     "DMY",
-	Charset:       []rune(`.cgtuzกขคงจชฎฏณดตถทธนบปพภมยรฤลวศษสหอะาเแโใ`),
-	Abbreviations: []string{"น."},
+	Name:                  "th",
+	DateOrder:             "DMY",
+	Charset:               []rune(`.cgtuzกขคงจชฎฏณดตถทธนบปพภมยรฤลวศษสหอะาเแโใ`),
+	Abbreviations:         []string{"น."},
+	SentenceSplitterGroup: 5,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)วนน(\z|[^\pL\pM\d]|_)`), "${1}0 วน${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)เมอวานน(\z|[^\pL\pM\d]|_)`), "${1}1 วน${2}"},
