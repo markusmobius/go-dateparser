@@ -7,7 +7,7 @@ import "regexp"
 var tzm_Locale = merge(nil, LocaleData{
 	Name:      "tzm",
 	DateOrder: "DMY",
-	Charset:   []rune(`bcdefghijklnorstuwxyzɣ`),
+	Charset:   []rune(`bcdefghijklnorstuwxyzɣḍṭ`),
 	Translations: map[string]string{
 		"deffir aza": "pm",
 		"zdat azal":  "am",

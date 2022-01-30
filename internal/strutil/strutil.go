@@ -12,6 +12,7 @@ import (
 )
 
 var (
+	nfkcTransformer    = transform.Chain(norm.NFKD, norm.NFKC)
 	unicodeTransformer = transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
 
 	apostropheLookAlikeChars = []string{
@@ -51,6 +52,21 @@ func NormalizeUnicode(str string) string {
 		return str
 	}
 	return normalized
+}
+
+// NormalizeCharset is used to normalize charset in a string. Used before
+// detecting language of a string.
+func NormalizeCharset(str string) string {
+	normalized, _, err := transform.String(nfkcTransformer, str)
+	if err == nil {
+		str = normalized
+	}
+
+	str = rxSanitizeAposthrope.ReplaceAllString(str, "'")
+	str = strings.ReplaceAll(str, ".", "")
+	str = strings.ToLower(str)
+	str = SanitizeSpaces(str)
+	return str
 }
 
 // NormalizeString is used to normalize the string before translated

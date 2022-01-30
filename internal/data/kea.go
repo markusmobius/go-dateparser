@@ -7,7 +7,7 @@ import "regexp"
 var kea_Locale = merge(nil, LocaleData{
 	Name:      "kea",
 	DateOrder: "DMY",
-	Charset:   []rune(`-bcdefghijklnorstuvwz`),
+	Charset:   []rune(`-bcdefghijklnorstuvwzáó`),
 	Translations: map[string]string{
 		"sigunda-fera": "monday",
 		"kuarta-fera":  "wednesday",

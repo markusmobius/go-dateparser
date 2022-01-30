@@ -7,7 +7,7 @@ import "regexp"
 var yav_Locale = merge(nil, LocaleData{
 	Name:      "yav",
 	DateOrder: "DMY",
-	Charset:   []rune(`,bcdefghiklnorstuwxyzŋɔɛ`),
+	Charset:   []rune(`,bcdefghiklnorstuwxyzáéíóúŋɔɛ́`),
 	Translations: map[string]string{
 		"pikitikitie, ooli u kutuan": "january",
 		"imɛŋ i putuk,ooli u katiɛ":  "october",

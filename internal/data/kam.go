@@ -7,7 +7,7 @@ import "regexp"
 var kam_Locale = merge(nil, LocaleData{
 	Name:      "kam",
 	DateOrder: "DMY",
-	Charset:   []rune(`bcdeghiklnorstuwxyz`),
+	Charset:   []rune(`bcdeghiklnorstuwxyzĩũ`),
 	Translations: map[string]string{
 		"mwai wa ikumi na imwe": "november",
 		"mwai wa ikumi na ili":  "december",

@@ -7,7 +7,7 @@ import "regexp"
 var ug_Locale = merge(nil, LocaleData{
 	Name:      "ug",
 	DateOrder: "YMD",
-	Charset:   []rune(`ceghinorstuwzابتجدرسشغفكلمنوىيپچگھۆۇۈۋېە`),
+	Charset:   []rune(`ceghinorstuwzئابتجدرسشغفكلمنوىيپچگھۆۇۈۋېە`),
 	Translations: map[string]string{
 		"چۈشتىن بۇرۇن": "am",
 		"چۈشتىن كېيىن": "pm",

@@ -7,7 +7,7 @@ import "regexp"
 var ks_Locale = merge(nil, LocaleData{
 	Name:      "ks",
 	DateOrder: "MDY",
-	Charset:   []rune(`ceghiklnorstuwxyzابتجدرزسفلمنوٮٲٹپچڑژکگھہۄی`),
+	Charset:   []rune(`ceghiklnorstuwxyzآؤابتجدرزسفلمنؤَُِٕٗٚٛٮٲٹپچڑژکگھہۄی۪`),
 	Translations: map[string]string{
 		"ژندرروار": "monday",
 		"ژندروار":  "monday",

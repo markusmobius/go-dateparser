@@ -7,7 +7,7 @@ import "regexp"
 var pa_Arab_Locale = merge(nil, LocaleData{
 	Name:      "pa-Arab",
 	DateOrder: "DMY",
-	Charset:   []rune(`cdeghiklnorstuwxyzابتجدرسعفلمنويٹپچکگھہی`),
+	Charset:   []rune(`cdeghiklnorstuwxyzئابتجدرسعفلمنويُٹپچکگھہی`),
 	Translations: map[string]string{
 		"جولايی": "july",
 		"اکتوبر": "october",

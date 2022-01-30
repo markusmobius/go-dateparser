@@ -7,7 +7,7 @@ import "regexp"
 var tr_Locale = merge(nil, LocaleData{
 	Name:                  "tr",
 	DateOrder:             "DMY",
-	Charset:               []rune(`bcdefghiklnorstuvyzı`),
+	Charset:               []rune(`bcdefghiklnorstuvyzçöüğış`),
 	SentenceSplitterGroup: 1,
 	Translations: map[string]string{
 		"icerisinde": "in",

@@ -21,6 +21,7 @@ const (
 )
 
 var (
+	nfkcTransformer    = transform.Chain(norm.NFKD, norm.NFKC)
 	unicodeTransformer = transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
 
 	apostropheLookAlikeChars = []string{
@@ -57,9 +58,10 @@ var (
 	rxGoCaptureGroup      = regexp.MustCompile(`\$\{?(\d+)\}?`)
 	rxParentheses         = regexp.MustCompile(`[\(\)]`)
 	rxCharsetFilter       = regexp.MustCompile(`^[\P{L}\p{N}_]+$`)
+	rxNbsp                = regexp.MustCompile(`\x{a0}`)
 
 	importantTokens = []string{"+", ":", ".", " ", "-", "/", "am", "pm", "utc", "gmt", "z"}
-	commonChars     = rangetable.New([]rune("0123456789:()'qamp ")...)
+	commonChars     = rangetable.New([]rune("0123456789:()'.qamp ")...)
 
 	// Languages with insufficient translation data are excluded
 	excludedLanguages = map[string]struct{}{

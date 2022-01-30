@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
@@ -69,6 +70,49 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	}
 
 	return true
+}
+
+func CountApplicability(cfg *setting.Configuration, ld *data.LocaleData, str string, stripTimezone bool) (int, int) {
+	// Parse config
+	skippedTokens := strutil.NewDict()
+	if cfg != nil {
+		skippedTokens.Add(cfg.SkipTokens...)
+	}
+
+	// Strip timezone if needed
+	if stripTimezone {
+		str, _ = timezone.PopTzOffset(str)
+	}
+
+	// Split string to sentences
+	str = simplify(ld, str)
+	sentences := SplitSentence(ld, str)
+
+	// Extract tokens from sentences
+	tokens := strutil.NewDict()
+	tokenList := []string{}
+	for _, sentence := range sentences {
+		sentenceTokens := simpleSplit(ld, sentence, false, skippedTokens)
+		tokens.Add(sentenceTokens...)
+		tokenList = append(tokenList, sentenceTokens...)
+	}
+
+	// Count token that exist in dictionary
+	var nExist, nSkipped int
+	for token := range tokens {
+		trans, exist := ld.Translations[token]
+		if exist && utf8.RuneCountInString(token) >= 2 {
+			if trans != "" {
+				nExist++
+			} else {
+				nSkipped++
+			}
+		} else if rxNumberOnly.MatchString(token) {
+			nSkipped++
+		}
+	}
+
+	return nExist, nSkipped
 }
 
 // Translate the date string `str` to its English equivalent using information from the locale data.
@@ -160,6 +204,7 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 		if ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(token) {
 			tokens = append(tokens, token)
 		} else {
+			// HEYY
 			tokens = append(tokens, splitByKnownWords(ld, token, keepFormatting)...)
 		}
 	}
@@ -176,6 +221,60 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 	}
 
 	return tokens
+}
+
+func SplitSentence(ld *data.LocaleData, str string) []string {
+	// Prepare helper function
+	isAbbreviation := func(s string) bool {
+		for i := range ld.Abbreviations {
+			if s == ld.Abbreviations[i] {
+				return true
+			}
+		}
+		return false
+	}
+
+	// Get splitter
+	splitterGroup := ld.SentenceSplitterGroup
+	if splitterGroup < 1 || splitterGroup > 6 {
+		splitterGroup = 1
+	}
+	rxSplitter := rxSentenceSplitters[splitterGroup]
+
+	// Split sentences
+	var sentences []string
+	var lastPosition int
+	useDigitAbbrs := langWithDigitAbbrs.Contain(ld.Name)
+	for _, pos := range rxSplitter.FindAllStringSubmatchIndex(str, -1) {
+		// Fetch end of sentence from this match
+		eos := str[pos[2]:pos[3]]
+
+		// If end of sentence is abbreviation, continue
+		if isAbbreviation(eos) {
+			continue
+		}
+
+		// If this language use digit abbreviation, make sure end of sentence is not number
+		if useDigitAbbrs && rxNumberOnly.MatchString(eos) {
+			continue
+		}
+
+		// Extract this sentence
+		sentence := strings.TrimSpace(str[lastPosition:pos[3]])
+		if sentence != "" {
+			sentences = append(sentences, sentence)
+		}
+
+		lastPosition = pos[1]
+	}
+
+	// Fetch last sentence (if exist)
+	lastSentence := strings.TrimSpace(str[lastPosition:])
+	if lastSentence != "" {
+		sentences = append(sentences, lastSentence)
+	}
+
+	return sentences
 }
 
 func simplify(ld *data.LocaleData, str string) string {
@@ -274,6 +373,29 @@ func splitByNumerals(str string, keepFormatting bool) []string {
 	}
 
 	return validTokens
+}
+
+func simpleSplit(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens strutil.Dict) []string {
+	// Split by numerals
+	var lastPos int
+	var tokens []string
+	for _, pos := range rxNumeral.FindAllStringSubmatchIndex(str, -1) {
+		tokens = append(tokens, str[lastPos:pos[0]])
+		tokens = append(tokens, str[pos[0]:pos[1]])
+		lastPos = pos[1]
+	}
+	tokens = append(tokens, str[lastPos:])
+
+	// Split by known word
+	var finalTokens []string
+	for _, token := range tokens {
+		if token != "" {
+			subtokens := Split(ld, token, keepFormatting, skippedTokens)
+			finalTokens = append(finalTokens, subtokens...)
+		}
+	}
+
+	return finalTokens
 }
 
 func tokenShouldBeCaptured(token string, keepFormatting bool) bool {

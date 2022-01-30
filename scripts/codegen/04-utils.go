@@ -49,19 +49,38 @@ func normalizeUnicode(str string) string {
 	return normalized
 }
 
+func sanitizeSpaces(s string) string {
+	s = rxNbsp.ReplaceAllString(s, " ")
+	s = strings.Join(strings.Fields(s), " ")
+	return s
+}
+
 func cleanString(str string) string {
 	str = normalizeUnicode(str)
 	str = rxSanitizeAposthrope.ReplaceAllString(str, "'")
 	str = strings.ReplaceAll(str, ".", "")
 	str = strings.ToLower(str)
-	str = strings.Join(strings.Fields(str), " ")
+	str = sanitizeSpaces(str)
 	return str
 }
 
 func normalizeString(str string) string {
 	str = normalizeUnicode(str)
 	str = strings.ToLower(str)
-	str = strings.Join(strings.Fields(str), " ")
+	str = sanitizeSpaces(str)
+	return str
+}
+
+func normalizeCharset(str string) string {
+	normalized, _, err := transform.String(nfkcTransformer, str)
+	if err == nil {
+		str = normalized
+	}
+
+	str = rxSanitizeAposthrope.ReplaceAllString(str, "'")
+	str = strings.ReplaceAll(str, ".", "")
+	str = strings.ToLower(str)
+	str = sanitizeSpaces(str)
 	return str
 }
 

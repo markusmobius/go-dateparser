@@ -7,7 +7,7 @@ import "regexp"
 var lv_Locale = merge(nil, LocaleData{
 	Name:      "lv",
 	DateOrder: "DMY",
-	Charset:   []rune(`bcdefghijklnorstuvz`),
+	Charset:   []rune(`bcdefghijklnorstuvzāēīļšū`),
 	Translations: map[string]string{
 		"priekspusdiena": "am",
 		"pecpusdiena":    "pm",

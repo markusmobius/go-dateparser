@@ -7,7 +7,7 @@ import "regexp"
 var yi_Locale = merge(nil, LocaleData{
 	Name:      "yi",
 	DateOrder: "DMY",
-	Charset:   []rune(`ceghiklnorstuwzאבגדהוזחטיךכלםמןנסעפץצקרשתײ`),
+	Charset:   []rune(`ceghiklnorstuwzַָּֿאבגדהוזחטיךכלםמןנסעפץצקרשתײ`),
 	Translations: map[string]string{
 		"נאוועמבער": "november",
 		"סעפטעמבער": "september",

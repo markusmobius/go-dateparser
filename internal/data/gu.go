@@ -7,7 +7,7 @@ import "regexp"
 var gu_Locale = merge(nil, LocaleData{
 	Name:      "gu",
 	DateOrder: "DMY",
-	Charset:   []rune(`cgtuzઅઆઈએઑકગચજટઠડણતદધનપફબમયરલળવશષસહાિીો`),
+	Charset:   []rune(`cgtuzંઅઆઈએઑકગચજટઠડણતદધનપફબમયરલળવશષસહાિીુૂેો્`),
 	Translations: map[string]string{
 		"જાનયઆરી": "january",
 		"અઠવાડિય": "week",

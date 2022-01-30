@@ -1561,6 +1561,7 @@ func TestSplit(t *testing.T) {
 		{"it", "14_luglio_15", sp("14", "luglio", "15")},
 		{"zh", "1年11个月", sp("1", "年", "11", "个月")},
 		{"zh", "1年11個月", sp("1", "年", "11", "個月")},
+		{"zh-Hant", "2015年04月08日10点05", sp("2015", "年", "04", "月", "08", "日", "10", "点", "05")},
 		{"tr", "2 saat önce", sp("2 saat once")},
 		{"fr", "il ya environ 23 heures'", sp("il ya", " ", "environ", " ", "23", " ", "heures")},
 		{"de", "Gestern um 04:41", sp("gestern", " ", "um", " ", "04", ":", "41")},
@@ -1589,6 +1590,10 @@ func TestSplit(t *testing.T) {
 		{"saq", "14 lapa le tomon obo 2098 ong", sp("14", " ", "lapa le tomon obo", " ", "2098", " ", "ong")},
 		{"wae", "cor 6 wučä 09:19 pm", sp("cor 6 wuca", " ", "09", ":", "19", " ", "pm")},
 		{"naq", "13 ǃkhanǀgôab 1887", sp("13", " ", "ǃkhanǀgoab", " ", "1887")},
+	}
+
+	tests = []testScenario{
+		{"zh-Hant", "2015年04月08日10点05", sp("2015", "年", "0", "4月", "08", "日", "10", "点", "05")},
 	}
 
 	// Start test

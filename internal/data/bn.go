@@ -7,7 +7,7 @@ import "regexp"
 var bn_Locale = merge(nil, LocaleData{
 	Name:                  "bn",
 	DateOrder:             "DMY",
-	Charset:               []rune(`cgtuzংঅআইএকখগঘঙচছজটডণতদধনপফবভমযরলশষসহািীেোৎ`),
+	Charset:               []rune(`cgtuzংঅআইএকখগঘঙচছজটডণতদধনপফবভমযরলশষসহ়ািীুৃেো্ৎ`),
 	SentenceSplitterGroup: 3,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)মধযাহন(\z|[^\pL\pM\d]|_)`), "${1}12:00${2}"},

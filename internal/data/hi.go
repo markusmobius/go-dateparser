@@ -7,7 +7,7 @@ import "regexp"
 var hi_Locale = merge(nil, LocaleData{
 	Name:                  "hi",
 	DateOrder:             "DMY",
-	Charset:               []rune(`cgtuzअआइईकगघचछजटडतदधनपफबमयरलवशषसहािीो॰`),
+	Charset:               []rune(`cgtuzंअआइईकगघचछजटडतदधनपफबमयरलवशषसह़ािीुूेैो्॰`),
 	SentenceSplitterGroup: 3,
 	Translations: map[string]string{
 		"परवाहन": "am",

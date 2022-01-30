@@ -7,7 +7,7 @@ import "regexp"
 var bg_Locale = merge(nil, LocaleData{
 	Name:                  "bg",
 	DateOrder:             "DMY 'Г'.",
-	Charset:               []rune(`cgtuzабвгдезиклмнопрстуфхцчщъюя`),
+	Charset:               []rune(`cgtuzабвгдезийклмнопрстуфхцчщъюя`),
 	SentenceSplitterGroup: 1,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)един(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},

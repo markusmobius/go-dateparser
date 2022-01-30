@@ -7,7 +7,7 @@ import "regexp"
 var lb_Locale = merge(nil, LocaleData{
 	Name:      "lb",
 	DateOrder: "DMY",
-	Charset:   []rune(`bcdefghijklnorstuvwz`),
+	Charset:   []rune(`bcdefghijklnorstuvwzäéë`),
 	Translations: map[string]string{
 		"donneschdeg": "thursday",
 		"samschdeg":   "saturday",

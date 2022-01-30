@@ -7,7 +7,7 @@ import "regexp"
 var uz_Arab_Locale = merge(nil, LocaleData{
 	Name:      "uz-Arab",
 	DateOrder: "YMD",
-	Charset:   []rune(`cdeghiklnorstuwxyzابتجدرسشعفلمنهوپچکگی\u200c`),
+	Charset:   []rune(`cdeghiklnorstuwxyzابتجدرسشعفلمنهوپچکگی‌`),
 	Translations: map[string]string{
 		"چهارشنبه": "wednesday",
 		"پنجشنبه":  "thursday",

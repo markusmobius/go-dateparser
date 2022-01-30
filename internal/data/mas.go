@@ -7,7 +7,7 @@ import "regexp"
 var mas_Locale = merge(nil, LocaleData{
 	Name:      "mas",
 	DateOrder: "DMY",
-	Charset:   []rune(`bcdeghijklnorstuwxyzŋɔɛɨʉ`),
+	Charset:   []rune(`bcdeghijklnorstuwxyzàáâèéêìíîóúēīŋūɔɛɨʉ́`),
 	Translations: map[string]string{
 		"oloilepunyie inkokua": "may",
 		"olodoyiorie inkokua":  "april",

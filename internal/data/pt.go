@@ -7,7 +7,7 @@ import "regexp"
 var pt_Locale = merge(nil, LocaleData{
 	Name:                  "pt",
 	DateOrder:             "DMY",
-	Charset:               []rune(`-bcdefghijlnorstuvxz`),
+	Charset:               []rune(`-bcdefghijlnorstuvxzáãçêó`),
 	SentenceSplitterGroup: 1,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)uma(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},

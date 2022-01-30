@@ -7,7 +7,7 @@ import "regexp"
 var km_Locale = merge(nil, LocaleData{
 	Name:      "km",
 	DateOrder: "DMY",
-	Charset:   []rune(`cgtuzកខគងចឆញដតថទធនបពភមយរលវសហឡអឥឧាេែៃោៅះៈ\u200b`),
+	Charset:   []rune(`cgtuzកខគងចឆញដតថទធនបពភមយរលវសហឡអឥឧាិីុូេែៃោៅំះៈ៉៍័្​`),
 	Translations: map[string]string{
 		"ពរហសបត": "thursday",
 		"កកកដា":  "july",

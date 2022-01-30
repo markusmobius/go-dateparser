@@ -7,7 +7,7 @@ import "regexp"
 var ar_Locale = merge(nil, LocaleData{
 	Name:                  "ar",
 	DateOrder:             "DMY",
-	Charset:               []rune(`cgtuzءابةتثجحخدذرسشصضطعغـفقكلمنهوي`),
+	Charset:               []rune(`cgtuzءآأإئابةتثجحخدذرسشصضطعغـفقكلمنهويً`),
 	SentenceSplitterGroup: 6,
 	Translations: map[string]string{
 		"الثلاثاء": "tuesday",
@@ -197,6 +197,7 @@ var ar_IL_Locale = merge(&ar_Locale, LocaleData{
 var ar_IQ_Locale = merge(&ar_Locale, LocaleData{
 	Name:      "ar-IQ",
 	DateOrder: "DMY",
+	Charset:   []rune(`زی`),
 	Translations: map[string]string{
 		"كانون الثاني": "january",
 		"تشرين الثاني": "november",
@@ -220,6 +221,7 @@ var ar_IQ_Locale = merge(&ar_Locale, LocaleData{
 var ar_JO_Locale = merge(&ar_Locale, LocaleData{
 	Name:      "ar-JO",
 	DateOrder: "DMY",
+	Charset:   []rune(`ز`),
 	Translations: map[string]string{
 		"كانون الثاني": "january",
 		"تشرين الثاني": "november",
@@ -258,6 +260,7 @@ var ar_KW_Locale = merge(&ar_Locale, LocaleData{
 var ar_LB_Locale = merge(&ar_Locale, LocaleData{
 	Name:      "ar-LB",
 	DateOrder: "DMY",
+	Charset:   []rune(`ز`),
 	Translations: map[string]string{
 		"كانون الثاني": "january",
 		"تشرين الثاني": "november",
@@ -288,6 +291,7 @@ var ar_LY_Locale = merge(&ar_Locale, LocaleData{
 var ar_MA_Locale = merge(&ar_Locale, LocaleData{
 	Name:      "ar-MA",
 	DateOrder: "DMY",
+	Charset:   []rune(`ز`),
 	Translations: map[string]string{
 		"يوليوز": "july",
 		"دجنبر":  "december",
@@ -325,6 +329,7 @@ var ar_OM_Locale = merge(&ar_Locale, LocaleData{
 var ar_PS_Locale = merge(&ar_Locale, LocaleData{
 	Name:      "ar-PS",
 	DateOrder: "DMY",
+	Charset:   []rune(`ز`),
 	Translations: map[string]string{
 		"كانون الثاني": "january",
 		"تشرين الثاني": "november",
@@ -387,6 +392,7 @@ var ar_SS_Locale = merge(&ar_Locale, LocaleData{
 var ar_SY_Locale = merge(&ar_Locale, LocaleData{
 	Name:      "ar-SY",
 	DateOrder: "DMY",
+	Charset:   []rune(`ز`),
 	Translations: map[string]string{
 		"كانون الثاني": "january",
 		"تشرين الثاني": "november",

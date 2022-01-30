@@ -7,7 +7,7 @@ import "regexp"
 var be_Locale = merge(nil, LocaleData{
 	Name:                  "be",
 	DateOrder:             "DMY",
-	Charset:               []rune(`cgtuzабвгдежзиклмнопрстухцчыьэюяі`),
+	Charset:               []rune(`cgtuzабвгдежзийклмнопрстухцчыьэюяёіў`),
 	SentenceSplitterGroup: 1,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)^гадзіна(\z|[^\pL\pM\d]|_)`), "${1}1 гадзіна${2}"},

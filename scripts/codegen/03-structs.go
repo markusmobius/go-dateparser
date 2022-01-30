@@ -27,11 +27,45 @@ type LocaleData struct {
 	CombinedRegexPattern      string               `json:",omitempty"`
 	ExactCombinedRegexPattern string               `json:",omitempty"`
 	KnownWordsPattern         string               `json:",omitempty"`
+
+	charsetTracker map[rune]struct{}
 }
 
 type SimplificationData struct {
 	Pattern     string
 	Replacement string
+}
+
+func (ld *LocaleData) AddCharset(str string) {
+	// Prepare tracker
+	if ld.charsetTracker == nil {
+		ld.charsetTracker = map[rune]struct{}{}
+	}
+
+	// Prepare strings to save
+	strs := []string{
+		cleanString(str),
+		normalizeCharset(str),
+	}
+
+	for _, str := range strs {
+		// Check if this string doesn't have to be saved
+		if rxCharsetFilter.MatchString(str) {
+			return
+		}
+
+		// Save each chars
+		for _, r := range str {
+			if unicode.Is(commonChars, r) {
+				continue
+			}
+
+			if _, exist := ld.charsetTracker[r]; !exist {
+				ld.charsetTracker[r] = struct{}{}
+				ld.Charset = append(ld.Charset, r)
+			}
+		}
+	}
 }
 
 func (ld *LocaleData) AddSimplification(pattern string, replacement string) {
@@ -76,6 +110,9 @@ func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord 
 		ld.Translations = map[string]string{}
 	}
 
+	// Save the charset before word normalized
+	ld.AddCharset(word)
+
 	// Sanitize word
 	if cleanWord {
 		word = cleanString(word)
@@ -99,20 +136,23 @@ func (ld *LocaleData) AddRelativeType(pattern string, translation string, cleanP
 		ld.RelativeTypeRegexes = map[string]string{}
 	}
 
+	// Specify target map
+	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
+
+	var targetMap map[string]string
+	if strings.Contains(pattern, `(\d+)`) {
+		targetMap = ld.RelativeTypeRegexes
+	} else {
+		// Save the charset before pattern normalized
+		ld.AddCharset(pattern)
+		targetMap = ld.RelativeType
+	}
+
 	// Sanitize pattern
 	if cleanPattern {
 		pattern = cleanString(pattern)
 	} else {
 		pattern = normalizeString(pattern)
-	}
-	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
-
-	// Specify target map
-	var targetMap map[string]string
-	if strings.Contains(pattern, `(\d+)`) {
-		targetMap = ld.RelativeTypeRegexes
-	} else {
-		targetMap = ld.RelativeType
 	}
 
 	// Save if pattern not empty
@@ -198,57 +238,20 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 	}
 }
 
-func (ld *LocaleData) GenerateCharset() {
-	// Prepare variables and helper function
-	var chars []rune
-	tracker := map[rune]struct{}{}
-	fnSaveChars := func(s string) {
-		if rxCharsetFilter.MatchString(s) {
-			return
-		}
-
-		for _, r := range s {
-			if unicode.Is(commonChars, r) {
-				continue
-			}
-
-			if _, exist := tracker[r]; !exist {
-				tracker[r] = struct{}{}
-				chars = append(chars, r)
-			}
-		}
-	}
-
-	// Fetch all chars
-	for text := range ld.Translations {
-		fnSaveChars(text)
-	}
-
-	for text := range ld.RelativeType {
-		fnSaveChars(text)
-	}
-
-	// Sort the chars
-	sort.Slice(chars, func(i, j int) bool {
-		return chars[i] < chars[j]
-	})
-
-	ld.Charset = chars
-}
-
 func (ld *LocaleData) GenerateAbbreviations() {
 	// Prepare variables and helper function
 	var abbreviations []string
 	tracker := map[string]struct{}{}
 	fnSaveAbbrs := func(texts map[string]string) {
 		for text := range texts {
-			if !strings.HasSuffix(text, ".") || len(text) <= 1 {
+			trimmed := strings.TrimSuffix(text, ".")
+			if text == trimmed || len(trimmed) == 0 {
 				continue
 			}
 
-			if _, exist := tracker[text]; !exist {
-				tracker[text] = struct{}{}
-				abbreviations = append(abbreviations, text)
+			if _, exist := tracker[trimmed]; !exist {
+				tracker[trimmed] = struct{}{}
+				abbreviations = append(abbreviations, trimmed)
 			}
 		}
 	}
@@ -274,6 +277,14 @@ func (ld LocaleData) Clone() LocaleData {
 		return newMap
 	}
 
+	cloneRuneMap := func(m map[rune]struct{}) map[rune]struct{} {
+		newMap := map[rune]struct{}{}
+		for k := range m {
+			newMap[k] = struct{}{}
+		}
+		return newMap
+	}
+
 	return LocaleData{
 		Name:                      ld.Name,
 		DateOrder:                 ld.DateOrder,
@@ -290,6 +301,8 @@ func (ld LocaleData) Clone() LocaleData {
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
 		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
 		KnownWordsPattern:         ld.KnownWordsPattern,
+
+		charsetTracker: cloneRuneMap(ld.charsetTracker),
 	}
 }
 
@@ -324,6 +337,15 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 
 	for pattern, translation := range input.RelativeTypeRegexes {
 		clone.RelativeTypeRegexes[pattern] = translation
+	}
+
+	for _, r := range input.Charset {
+		if !unicode.Is(commonChars, r) {
+			if _, exist := clone.charsetTracker[r]; !exist {
+				clone.charsetTracker[r] = struct{}{}
+				clone.Charset = append(clone.Charset, r)
+			}
+		}
 	}
 
 	return clone
@@ -375,6 +397,18 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 		return newMap
 	}
 
+	reduceCharset := func(base, input map[rune]struct{}) ([]rune, map[rune]struct{}) {
+		newCharset := []rune{}
+		newTracker := map[rune]struct{}{}
+		for r := range base {
+			if _, exist := input[r]; !exist {
+				newTracker[r] = struct{}{}
+				newCharset = append(newCharset, r)
+			}
+		}
+		return newCharset, newTracker
+	}
+
 	// Reduce data
 	clone := ld.Clone()
 	clone.SkipWords = reduceStrings(clone.SkipWords, input.SkipWords)
@@ -384,6 +418,7 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	clone.Translations = reduceMap(clone.Translations, input.Translations)
 	clone.RelativeType = reduceMap(clone.RelativeType, input.RelativeType)
 	clone.RelativeTypeRegexes = reduceMap(clone.RelativeTypeRegexes, input.RelativeTypeRegexes)
+	clone.Charset, clone.charsetTracker = reduceCharset(clone.charsetTracker, input.charsetTracker)
 
 	if clone.SentenceSplitterGroup == input.SentenceSplitterGroup {
 		clone.SentenceSplitterGroup = 0

@@ -39,10 +39,13 @@ func charset(chars []rune) string {
 		return "nil"
 	}
 
+	sort.Slice(chars, func(i, j int) bool {
+		return chars[i] < chars[j]
+	})
+
 	var strRunes []string
 	for _, r := range chars {
-		strRune := fmt.Sprintf("%q", r)
-		strRune = strings.Trim(strRune, "'")
+		strRune := fmt.Sprintf("%c", r)
 		strRunes = append(strRunes, strRune)
 	}
 

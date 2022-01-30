@@ -7,7 +7,7 @@ import "regexp"
 var mua_Locale = merge(nil, LocaleData{
 	Name:      "mua",
 	DateOrder: "DMY",
-	Charset:   []rune(`/bcdefghijklnorstuwxyzŋǝɓɗ`),
+	Charset:   []rune(`/bcdefghijklnorstuwxyzãĩŋǝɓɗ`),
 	Translations: map[string]string{
 		"cok comme ma laŋ tǝ biŋ": "second",
 		"cok comme ma laŋne":      "minute",

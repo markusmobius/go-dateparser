@@ -80,7 +80,6 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return err
 		} else {
-			languageData.GenerateCharset()
 			finalLocaleData[language] = languageData
 		}
 
@@ -186,6 +185,7 @@ func finalizeData(ld LocaleData) (LocaleData, error) {
 	// Save words that is known or always kept no matter what the language is
 	if len(ld.Translations) > 0 {
 		for _, token := range importantTokens {
+			ld.AddCharset(token)
 			ld.Translations[token] = token
 		}
 	}

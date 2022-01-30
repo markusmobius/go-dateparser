@@ -7,8 +7,8 @@ import "regexp"
 var th_Locale = merge(nil, LocaleData{
 	Name:                  "th",
 	DateOrder:             "DMY",
-	Charset:               []rune(`.cgtuzกขคงจชฎฏณดตถทธนบปพภมยรฤลวศษสหอะาเแโใ`),
-	Abbreviations:         []string{"น."},
+	Charset:               []rune(`cgtuzกขคงจชฎฏณดตถทธนบปพภมยรฤลวศษสหอะัาิีืุเแโใ่้์`),
+	Abbreviations:         []string{"น"},
 	SentenceSplitterGroup: 5,
 	Simplifications: []ReplacementData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)วนน(\z|[^\pL\pM\d]|_)`), "${1}0 วน${2}"},
