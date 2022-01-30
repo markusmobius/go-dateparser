@@ -5,7 +5,6 @@ import (
 	"regexp"
 
 	"github.com/markusmobius/go-dateparser/internal/strutil"
-	"github.com/pemistahl/lingua-go"
 	"golang.org/x/text/unicode/rangetable"
 )
 
@@ -46,6 +45,4 @@ var (
 	freshnessWords     = strutil.NewDict("day", "week", "month", "year", "hour", "minute", "second")
 	langWithDigitAbbrs = strutil.NewDict("fi", "cs", "hu", "de", "da")
 	commonCharset      = rangetable.New([]rune(`0123456789()\-/.,:' `)...)
-
-	externalLanguageDetector = lingua.NewLanguageDetectorBuilder().FromAllSpokenLanguages().Build()
 )
