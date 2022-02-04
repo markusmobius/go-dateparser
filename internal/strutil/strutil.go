@@ -98,6 +98,20 @@ func StripBraces(s string) string {
 	return rxBraces.ReplaceAllString(s, "")
 }
 
+// TrimChars will trim all character in beginning and end of the string
+// that matched with the specified characters.
+func TrimChars(s string, chars string) string {
+	charMap := map[rune]struct{}{}
+	for _, c := range chars {
+		charMap[c] = struct{}{}
+	}
+
+	return strings.TrimFunc(s, func(r rune) bool {
+		_, exist := charMap[r]
+		return exist
+	})
+}
+
 // Jsonify is used to get a JSON rpresentation of specified data.
 func Jsonify(data interface{}) string {
 	bt, _ := json.Marshal(data)

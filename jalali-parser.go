@@ -21,7 +21,7 @@ func ParseJalali(cfg *Configuration, str string) (date.Date, error) {
 		cfg.DateOrder = "DMY"
 	}
 
-	cfg.initiate()
+	cfg = cfg.initiate()
 	err := cfg.validate()
 	if err != nil {
 		return date.Date{}, fmt.Errorf("config error: %w", err)
@@ -29,5 +29,5 @@ func ParseJalali(cfg *Configuration, str string) (date.Date, error) {
 
 	// Start parser
 	iCfg := cfg.toInternalConfig()
-	return jalali.Parse(&iCfg, str)
+	return jalali.Parse(iCfg, str)
 }

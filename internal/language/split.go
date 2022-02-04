@@ -17,28 +17,30 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 		str = splitWithRegex(str, ld.RxCombined)
 	}
 
+	// Check if each token can be split further
 	var tokens []string
 	for _, token := range strings.Split(str, splitSeparator) {
 		if ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(token) {
 			tokens = append(tokens, token)
 		} else {
-			// HEYY
 			tokens = append(tokens, splitByKnownWords(ld, token, keepFormatting)...)
 		}
 	}
 
-	if len(skippedTokens) > 0 {
-		var finalTokens []string
-		for _, token := range tokens {
-			trimmedToken := strings.TrimSpace(token)
-			if !skippedTokens.Contain(trimmedToken) {
-				finalTokens = append(finalTokens, token)
-			}
+	// Filter token to remove empty or skipped token
+	var finalTokens []string
+	for _, token := range tokens {
+		if token == "" {
+			continue
 		}
-		tokens = finalTokens
+
+		trimmedToken := strings.TrimSpace(token)
+		if !skippedTokens.Contain(trimmedToken) {
+			finalTokens = append(finalTokens, token)
+		}
 	}
 
-	return tokens
+	return finalTokens
 }
 
 func SplitSentence(ld *data.LocaleData, str string) []string {
@@ -93,29 +95,6 @@ func SplitSentence(ld *data.LocaleData, str string) []string {
 	}
 
 	return sentences
-}
-
-func SimpleSplit(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens strutil.Dict) []string {
-	// Split by numerals
-	var lastPos int
-	var tokens []string
-	for _, pos := range rxNumeral.FindAllStringSubmatchIndex(str, -1) {
-		tokens = append(tokens, str[lastPos:pos[0]])
-		tokens = append(tokens, str[pos[0]:pos[1]])
-		lastPos = pos[1]
-	}
-	tokens = append(tokens, str[lastPos:])
-
-	// Split by known word
-	var finalTokens []string
-	for _, token := range tokens {
-		if token != "" {
-			subtokens := Split(ld, token, keepFormatting, skippedTokens)
-			finalTokens = append(finalTokens, subtokens...)
-		}
-	}
-
-	return finalTokens
 }
 
 func splitWithRegex(s string, rx *regexp.Regexp) string {
@@ -211,4 +190,33 @@ func tokenShouldBeCaptured(token string, keepFormatting bool) bool {
 		alwaysKeptTokens.Contain(token) ||
 		rxKeepToken1.MatchString(token) ||
 		rxKeepToken2.MatchString(token)
+}
+
+func simpleSplit(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens strutil.Dict) []string {
+	// Split by numerals
+	var lastPos int
+	var tokens []string
+	for _, pos := range rxNumeral.FindAllStringSubmatchIndex(str, -1) {
+		if beforeNumber := str[lastPos:pos[0]]; beforeNumber != "" {
+			tokens = append(tokens, beforeNumber)
+		}
+
+		tokens = append(tokens, str[pos[0]:pos[1]])
+		lastPos = pos[1]
+	}
+
+	if leftover := str[lastPos:]; leftover != "" {
+		tokens = append(tokens, leftover)
+	}
+
+	// Split by known word
+	var finalTokens []string
+	for _, token := range tokens {
+		if token != "" {
+			subtokens := Split(ld, token, keepFormatting, skippedTokens)
+			finalTokens = append(finalTokens, subtokens...)
+		}
+	}
+
+	return finalTokens
 }

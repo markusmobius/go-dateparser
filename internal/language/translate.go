@@ -1,8 +1,6 @@
 package language
 
 import (
-	"strings"
-
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
@@ -45,17 +43,9 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 			}
 		}
 
-		// If not found, use dictionary of relative type
+		// If not found, look in dictionary
 		if !translationFound {
-			if translation, exist := ld.RelativeType[token]; exist {
-				token = translation
-				translationFound = true
-			}
-		}
-
-		// If still not found, use words dictionary
-		if !translationFound {
-			if translation, exist := ld.Translations[token]; exist {
+			if translation, exist := translateWord(ld, token); exist {
 				token = translation
 			}
 		}
@@ -113,25 +103,4 @@ func clearFutureWords(words []string) []string {
 	}
 
 	return words
-}
-
-func join(tokens []string, separator string) string {
-	if len(tokens) == 0 {
-		return ""
-	}
-
-	joined := tokens[0]
-	for i := 1; i < len(tokens); i++ {
-		left, right := tokens[i-1], tokens[i]
-		leftAlwaysKept := alwaysKeptTokens.Contain(left)
-		rightAlwaysKept := alwaysKeptTokens.Contain(right)
-		if !leftAlwaysKept && !rightAlwaysKept {
-			joined += separator
-		}
-
-		joined += right
-	}
-
-	joined = strings.TrimSpace(joined)
-	return joined
 }

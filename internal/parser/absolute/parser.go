@@ -400,13 +400,19 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 			if prevValue == 0 {
 				return p.setAndReturn(component, token, partValue, true)
 			} else if component == "month" {
+				autoOrderIdx := -1
 				for j := range p.AutoOrder {
 					if p.AutoOrder[j] == "month" {
-						p.AutoOrder[j] = "day"
+						autoOrderIdx = j
 						break
 					}
 				}
 
+				if autoOrderIdx == -1 {
+					continue
+				}
+
+				p.AutoOrder[autoOrderIdx] = "day"
 				p.ComponentTokens["day"] = p.ComponentTokens["month"]
 				p.ComponentTokens["month"] = token
 				return []TokenParseResult{

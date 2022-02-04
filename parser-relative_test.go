@@ -1075,7 +1075,7 @@ func TestParser_Parse_relative_hasSpecificTime(t *testing.T) {
 		}
 
 		// Parse date time
-		dt, err := relativeTestParser.Parse(&cfg, test.Text)
+		dt, err := relativeTestParser.Parse(cfg, test.Text)
 		passed := assert.Nil(t, err, message)
 		if passed {
 			passed = assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)
@@ -1131,7 +1131,7 @@ func TestParser_Parse_relative_hasPreferredTimes(t *testing.T) {
 		}
 
 		// Parse date time
-		dt, err := relativeTestParser.Parse(&cfg, test.Text)
+		dt, err := relativeTestParser.Parse(cfg, test.Text)
 		passed := assert.Nil(t, err, message)
 		if passed {
 			passed = assert.Zero(t, test.Expected.Sub(dt.Time).Seconds(), message)

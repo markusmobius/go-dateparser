@@ -49,17 +49,15 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	// Check if token exist in locale data
 	for _, token := range tokens {
 		isSkipped := skippedTokens.Contain(token)
-		_, isInTranslations := ld.Translations[token]
-		_, isInRelativeType := ld.RelativeType[token]
 		isNumberOnly := rxNumberOnly.MatchString(token)
-		isInDictionary := isInTranslations || isInRelativeType
+		inDictionary := isInDictionary(ld, token)
 
 		var exactCombinedMatch bool
 		if ld.RxExactCombined != nil {
 			exactCombinedMatch = ld.RxExactCombined.MatchString(token)
 		}
 
-		if isNumberOnly || isInDictionary || isSkipped || exactCombinedMatch {
+		if isNumberOnly || inDictionary || isSkipped || exactCombinedMatch {
 			continue
 		}
 
@@ -89,7 +87,7 @@ func CountApplicability(cfg *setting.Configuration, ld *data.LocaleData, str str
 	tokens := strutil.NewDict()
 	tokenList := []string{}
 	for _, sentence := range sentences {
-		sentenceTokens := SimpleSplit(ld, sentence, false, skippedTokens)
+		sentenceTokens := simpleSplit(ld, sentence, false, skippedTokens)
 		tokens.Add(sentenceTokens...)
 		tokenList = append(tokenList, sentenceTokens...)
 	}

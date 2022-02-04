@@ -79,8 +79,8 @@ type Configuration struct {
 }
 
 // Clone clones the config to a new, separate one.
-func (c Configuration) Clone() Configuration {
-	return Configuration{
+func (c Configuration) Clone() *Configuration {
+	return &Configuration{
 		DateOrder:             c.DateOrder,
 		PreferConfigDateOrder: c.PreferConfigDateOrder,
 		CurrentTime:           c.CurrentTime,
@@ -128,7 +128,9 @@ func (c Configuration) validate() error {
 }
 
 // initiate normalize config value and apply the defaults.
-func (c *Configuration) initiate() {
+func (c *Configuration) initiate() *Configuration {
+	c = c.Clone()
+
 	c.DateOrder = strings.ToUpper(c.DateOrder)
 	if c.DateOrder == "" && c.PreferConfigDateOrder {
 		c.DateOrder = "MDY"
@@ -141,15 +143,32 @@ func (c *Configuration) initiate() {
 	if len(c.SkipTokens) == 0 {
 		c.SkipTokens = []string{"t"}
 	}
+
+	return c
 }
 
-func (c Configuration) toInternalConfig() setting.Configuration {
-	return setting.Configuration{
+func (c Configuration) toInternalConfig() *setting.Configuration {
+	return &setting.Configuration{
 		DateOrder:             c.DateOrder,
 		PreferConfigDateOrder: c.PreferConfigDateOrder,
 		CurrentTime:           c.CurrentTime,
 		PreferredDayOfMonth:   setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
 		PreferredDateSource:   setting.PreferredDateSource(c.PreferredDateSource),
+		StrictParsing:         c.StrictParsing,
+		RequiredParts:         append([]string{}, c.RequiredParts...),
+		SkipTokens:            append([]string{}, c.SkipTokens...),
+		DefaultLanguages:      append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+	}
+}
+
+func configFromInternal(c *setting.Configuration) *Configuration {
+	return &Configuration{
+		DateOrder:             c.DateOrder,
+		PreferConfigDateOrder: c.PreferConfigDateOrder,
+		CurrentTime:           c.CurrentTime,
+		PreferredDayOfMonth:   PreferredDayOfMonth(c.PreferredDayOfMonth),
+		PreferredDateSource:   PreferredDateSource(c.PreferredDateSource),
 		StrictParsing:         c.StrictParsing,
 		RequiredParts:         append([]string{}, c.RequiredParts...),
 		SkipTokens:            append([]string{}, c.SkipTokens...),

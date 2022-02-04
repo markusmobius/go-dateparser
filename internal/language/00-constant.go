@@ -20,11 +20,13 @@ const (
 )
 
 var (
+	rxSpaces        = regexp.MustCompile(`\s{2,}`)
 	rxKeepToken1    = regexp.MustCompile(`^.*[^\W_].*$`)
 	rxKeepToken2    = regexp.MustCompile(`^.*[^\P{L}\d_].*$`)
 	rxRegionRemover = regexp.MustCompile(`-([A-Z]+)$`)
 	rxNumeral       = regexp.MustCompile(`(\d+)`)
 	rxNumberOnly    = regexp.MustCompile(`^\d+$`)
+	rxTokenDigit    = regexp.MustCompile(`[\d\.:\-/]+`)
 
 	rxSentenceSplitters = map[int]*regexp.Regexp{
 		// The most common splitter, used in European, Tagalog, Hebrew, Georgian, Indonesian, Vietnamese
@@ -41,6 +43,7 @@ var (
 		6: regexp.MustCompile(`([^\s.]*)[\r\n؟!\.…]+(?:\s|$)+`),
 	}
 
+	dashes             = strutil.NewDict("-", "——", "—", "～")
 	alwaysKeptTokens   = strutil.NewDict("+", ":", ".", " ", "-", "/")
 	freshnessWords     = strutil.NewDict("day", "week", "month", "year", "hour", "minute", "second")
 	langWithDigitAbbrs = strutil.NewDict("fi", "cs", "hu", "de", "da")

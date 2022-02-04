@@ -72,7 +72,7 @@ func TestParse_error(t *testing.T) {
 	var nFailed int
 	for _, test := range tests {
 		_, err := Parse(test.Config, test.Text)
-		passed := assert.Error(t, err)
+		passed := assert.Error(t, err, test.Text)
 		if !passed {
 			nFailed++
 		}

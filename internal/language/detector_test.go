@@ -102,11 +102,6 @@ func TestDetectLanguage(t *testing.T) {
 		{"en", `2007`},
 	}
 
-	// tests = []testScenario{
-	// 	{"pl", `II wojna światowa – największa wojna światowa w historii, ` +
-	// 		`trwająca od 1 września 1939 do 2 września 1945 (w Europie do 8 maja 1945)`},
-	// }
-
 	// Prepare config
 	cfg := setting.Configuration{SkipTokens: []string{"t"}}
 

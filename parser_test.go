@@ -229,7 +229,7 @@ func TestParser_Parse(t *testing.T) {
 
 		// Parse text
 		dt, _ := Parse(&cfg, test.Text)
-		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
@@ -484,7 +484,7 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		// Parse text
 		cfg.CurrentTime = test.BaseTime
 		dt, _ := Parse(&cfg, test.Text)
-		if passed := assertResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
+		if passed := assertParseResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
@@ -534,7 +534,7 @@ func TestParser_Parse_checkPeriod(t *testing.T) {
 
 		// Parse text
 		dt, _ := Parse(&cfg, test.Text)
-		if passed := assertResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
+		if passed := assertParseResult(t, dt, test.ExpectedTime, test.ExpectedPeriod, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
@@ -588,7 +588,7 @@ func TestParser_Parse_customOrder(t *testing.T) {
 		// Parse text
 		cfg.DateOrder = test.DateOrder
 		dt, _ := Parse(&cfg, test.Text)
-		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
@@ -666,7 +666,7 @@ func TestParser_Parse_format(t *testing.T) {
 
 		// Parse text
 		dt, _ := parser.Parse(nil, test.Text, test.Format)
-		if passed := assertResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}
@@ -838,7 +838,7 @@ func tt(Y, M, D int, times ...int) time.Time {
 	return time.Date(Y, time.Month(M), D, H, m, s, ms*1000, time.UTC)
 }
 
-func assertResult(t *testing.T, dt date.Date, expectedTime time.Time, expectedPeriod date.Period, messages ...string) bool {
+func assertParseResult(t *testing.T, dt date.Date, expectedTime time.Time, expectedPeriod date.Period, messages ...string) bool {
 	var message string
 	if len(messages) > 0 {
 		message = messages[0]

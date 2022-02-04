@@ -100,7 +100,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 		cfg = &Configuration{}
 	}
 
-	cfg.initiate()
+	cfg = cfg.initiate()
 	err := cfg.validate()
 	if err != nil {
 		return date.Date{}, fmt.Errorf("config error: %w", err)
@@ -111,7 +111,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 
 	// Try to parse with specified formats
 	var dt date.Date
-	if dt = formatted.Parse(&iCfg, str, formats...); !dt.IsZero() {
+	if dt = formatted.Parse(iCfg, str, formats...); !dt.IsZero() {
 		return dt, nil
 	}
 
@@ -120,7 +120,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 	str = strutil.SanitizeDate(str)
 
 	// Find the suitable locales for this string
-	locales, err := p.getApplicableLocales(&iCfg, str)
+	locales, err := p.getApplicableLocales(iCfg, str)
 	if err != nil {
 		return date.Date{}, err
 	}
