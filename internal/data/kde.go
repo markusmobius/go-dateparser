@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var kde_Locale = merge(nil, LocaleData{
 	Name:      "kde",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var kde_Locale = merge(nil, LocaleData{
 		"lido":        "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(mwedi wa nnyano na nnyano na m|mwedi wa nnyano na nnyano na u|liduva lyannyano na mavili|mwedi wa nnyano na nchechi|liduva lyannyano na linji|mwedi wa nnyano na mitatu|mwedi wa nnyano na mivili|mwedi wa nnyano na nnyano|mwedi wa nnyano na umo|liduva lyanchechi|liduva lyannyano|mwedi wa nchechi|mwedi wa nnyano|liduva litandi|liduva lyapili|liduva lyatatu|mwedi wa pili|mwedi wa tatu|mwedi ntandi|this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|sekunde|dakika|lihiku|lijuma|chilo|mwaka|mwedi|nundu|lido|muhi|nelo|ago|apr|des|feb|gmt|jan|jul|jun|ll1|ll2|ll3|ll4|ll5|ll6|ll7|mac|mei|nov|now|okt|saa|sep|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"mwedi wa nnyano na nnyano na m", "mwedi wa nnyano na nnyano na u", "liduva lyannyano na mavili", "mwedi wa nnyano na nchechi", "liduva lyannyano na linji", "mwedi wa nnyano na mitatu", "mwedi wa nnyano na mivili", "mwedi wa nnyano na nnyano", "mwedi wa nnyano na umo", "liduva lyanchechi", "liduva lyannyano", "mwedi wa nchechi", "mwedi wa nnyano", "liduva litandi", "liduva lyapili", "liduva lyatatu", "mwedi wa pili", "mwedi wa tatu", "mwedi ntandi", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "sekunde", "dakika", "lihiku", "lijuma", "chilo", "mwaka", "mwedi", "nundu", "lido", "muhi", "nelo", "ago", "apr", "des", "feb", "gmt", "jan", "jul", "jun", "ll1", "ll2", "ll3", "ll4", "ll5", "ll6", "ll7", "mac", "mei", "nov", "now", "okt", "saa", "sep", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

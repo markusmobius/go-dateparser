@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var gv_Locale = merge(nil, LocaleData{
 	Name:      "gv",
 	DateOrder: "YMD",
@@ -87,5 +85,5 @@ var gv_Locale = merge(nil, LocaleData{
 		"today":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(toshiaght-arree|mee ny nollick|jerrey-fouyir|jerrey-geuree|jerrey-souree|mean-fouyir|mean-souree|this minute|last month|mee houney|next month|this month|last week|last year|luanistyn|m-nollick|next week|next year|this hour|this week|this year|yesterday|j-fouyir|j-souree|jedoonee|jeheiney|m-fouyir|m-houney|m-souree|tomorrow|boaldyn|jelhein|jemayrt|jercean|jerdein|t-arree|averil|avrril|j-guer|jesarn|mayrnt|minute|second|month|today|hour|jerc|jerd|week|year|day|gmt|jed|jeh|jel|jem|jes|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"toshiaght-arree", "mee ny nollick", "jerrey-fouyir", "jerrey-geuree", "jerrey-souree", "mean-fouyir", "mean-souree", "this minute", "last month", "mee houney", "next month", "this month", "last week", "last year", "luanistyn", "m-nollick", "next week", "next year", "this hour", "this week", "this year", "yesterday", "j-fouyir", "j-souree", "jedoonee", "jeheiney", "m-fouyir", "m-houney", "m-souree", "tomorrow", "boaldyn", "jelhein", "jemayrt", "jercean", "jerdein", "t-arree", "averil", "avrril", "j-guer", "jesarn", "mayrnt", "minute", "second", "month", "today", "hour", "jerc", "jerd", "week", "year", "day", "gmt", "jed", "jeh", "jel", "jem", "jes", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

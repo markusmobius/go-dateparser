@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var yo_Locale = merge(nil, LocaleData{
 	Name:      "yo",
 	DateOrder: "DMY",
@@ -90,7 +88,7 @@ var yo_Locale = merge(nil, LocaleData{
 		"ana":         "1 day ago",
 		"ola":         "in 1 day",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ojo abameta|this minute|iseju aaya|last month|next month|ojo isegun|this month|last week|last year|next week|next year|osu agemo|osu ebibi|osu erele|osu erena|osu okudu|osu owara|osu owewe|this hour|this week|this year|ojo aiku|osu belu|osu igbe|osu ogun|osu sere|abameta|ojo aje|ojo eti|osu ope|isegun|wakati|agemo|ebibi|erele|erena|iseju|ojobo|ojoru|okudu|owara|owewe|aaro|aiku|belu|igbe|odun|ogun|osan|sere|aje|ana|eti|gmt|now|ojo|ola|oni|ope|ose|osu|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"ojo abameta", "this minute", "iseju aaya", "last month", "next month", "ojo isegun", "this month", "last week", "last year", "next week", "next year", "osu agemo", "osu ebibi", "osu erele", "osu erena", "osu okudu", "osu owara", "osu owewe", "this hour", "this week", "this year", "ojo aiku", "osu belu", "osu igbe", "osu ogun", "osu sere", "abameta", "ojo aje", "ojo eti", "osu ope", "isegun", "wakati", "agemo", "ebibi", "erele", "erena", "iseju", "ojobo", "ojoru", "okudu", "owara", "owewe", "aaro", "aiku", "belu", "igbe", "odun", "ogun", "osan", "sere", "aje", "ana", "eti", "gmt", "now", "ojo", "ola", "oni", "ope", "ose", "osu", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })
 
 var yo_BJ_Locale = merge(&yo_Locale, LocaleData{
@@ -137,5 +135,5 @@ var yo_BJ_Locale = merge(&yo_Locale, LocaleData{
 	RelativeType: map[string]string{
 		"ɔla": "in 1 day",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ojo abameta|this minute|ɔjɔ abamɛta|iseju aaya|isɛju aaya|last month|next month|ojo isegun|oshu agɛmɔ|oshu erele|oshu okudu|oshu owewe|oshu shɛrɛ|oshu ɔwara|oshu ɛbibi|oshu ɛrɛna|this month|ɔjɔ isɛgun|last week|last year|next week|next year|oshu belu|oshu igbe|oshu ogun|osu agemo|osu ebibi|osu erele|osu erena|osu okudu|osu owara|osu owewe|this hour|this week|this year|ojo aiku|oshu ɔpɛ|osu belu|osu igbe|osu ogun|osu sere|ɔjɔ aiku|abameta|abamɛta|ojo aje|ojo eti|osu ope|ɔjɔ aje|ɔjɔ ɛti|isegun|isɛgun|wakati|agemo|agɛmɔ|ebibi|erele|erena|iseju|isɛju|ojobo|ojoru|okudu|owara|owewe|shɛrɛ|ɔjɔbɔ|ɔjɔru|ɔwara|ɛbibi|ɛrɛna|aaro|aarɔ|aiku|belu|igbe|odun|ogun|osan|sere|ɔdun|ɔsan|aje|ana|eti|gmt|now|ojo|ola|oni|ope|ose|osu|utc|ɔjɔ|ɔla|ɔpɛ|ɔse|ɛti|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"ojo abameta", "this minute", "ɔjɔ abamɛta", "iseju aaya", "isɛju aaya", "last month", "next month", "ojo isegun", "oshu agɛmɔ", "oshu erele", "oshu okudu", "oshu owewe", "oshu shɛrɛ", "oshu ɔwara", "oshu ɛbibi", "oshu ɛrɛna", "this month", "ɔjɔ isɛgun", "last week", "last year", "next week", "next year", "oshu belu", "oshu igbe", "oshu ogun", "osu agemo", "osu ebibi", "osu erele", "osu erena", "osu okudu", "osu owara", "osu owewe", "this hour", "this week", "this year", "ojo aiku", "oshu ɔpɛ", "osu belu", "osu igbe", "osu ogun", "osu sere", "ɔjɔ aiku", "abameta", "abamɛta", "ojo aje", "ojo eti", "osu ope", "ɔjɔ aje", "ɔjɔ ɛti", "isegun", "isɛgun", "wakati", "agemo", "agɛmɔ", "ebibi", "erele", "erena", "iseju", "isɛju", "ojobo", "ojoru", "okudu", "owara", "owewe", "shɛrɛ", "ɔjɔbɔ", "ɔjɔru", "ɔwara", "ɛbibi", "ɛrɛna", "aaro", "aarɔ", "aiku", "belu", "igbe", "odun", "ogun", "osan", "sere", "ɔdun", "ɔsan", "aje", "ana", "eti", "gmt", "now", "ojo", "ola", "oni", "ope", "ose", "osu", "utc", "ɔjɔ", "ɔla", "ɔpɛ", "ɔse", "ɛti", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

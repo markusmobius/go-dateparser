@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var ks_Locale = merge(nil, LocaleData{
 	Name:      "ks",
 	DateOrder: "MDY",
@@ -72,5 +70,5 @@ var ks_Locale = merge(nil, LocaleData{
 		"now":         "0 second ago",
 		"از":          "0 day ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|ژندرروار|برٮسوار|ژندروار|اتھوار|اکتوبر|بودوار|بوموار|جولایی|اپریل|بٹوار|جنوری|دسمبر|ستمبر|سٮکنڑ|فروری|نومبر|گٲنٹہ|اگست|راتھ|رٮتھ|مارچ|پگاہ|ہفتہ|gmt|now|utc|جمہ|جون|دۄہ|منٹ|وری|\+|\.|\[|\]|\||am|pm|از|می| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "ژندرروار", "برٮسوار", "ژندروار", "اتھوار", "اکتوبر", "بودوار", "بوموار", "جولایی", "اپریل", "بٹوار", "جنوری", "دسمبر", "ستمبر", "سٮکنڑ", "فروری", "نومبر", "گٲنٹہ", "اگست", "راتھ", "رٮتھ", "مارچ", "پگاہ", "ہفتہ", "gmt", "now", "utc", "جمہ", "جون", "دۄہ", "منٹ", "وری", "am", "pm", "از", "می", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

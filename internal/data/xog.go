@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var xog_Locale = merge(nil, LocaleData{
 	Name:      "xog",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var xog_Locale = merge(nil, LocaleData{
 		"edho":              "1 day ago",
 		"now":               "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(olwaleelo \(leelo\)|obutikitiki|this minute|last month|next month|olokutaanu|olomukaaga|sebuttemba|this month|febwaliyo|janwaliyo|last week|last year|next week|next year|owokubili|owokusatu|this hour|this week|this year|edakiika|esabiiti|okitobba|agusito|desemba|julaayi|novemba|olokuna|olunaku|sabiiti|balaza|eigulo|essawa|marisi|munkyo|omwaka|omwezi|apuli|enkyo|juuni|maayi|bala|edho|kubi|kuna|kusa|kuta|muka|sabi|agu|apu|des|feb|gmt|jan|jul|juu|maa|mar|nov|now|oki|seb|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"olwaleelo (leelo)", "obutikitiki", "this minute", "last month", "next month", "olokutaanu", "olomukaaga", "sebuttemba", "this month", "febwaliyo", "janwaliyo", "last week", "last year", "next week", "next year", "owokubili", "owokusatu", "this hour", "this week", "this year", "edakiika", "esabiiti", "okitobba", "agusito", "desemba", "julaayi", "novemba", "olokuna", "olunaku", "sabiiti", "balaza", "eigulo", "essawa", "marisi", "munkyo", "omwaka", "omwezi", "apuli", "enkyo", "juuni", "maayi", "bala", "edho", "kubi", "kuna", "kusa", "kuta", "muka", "sabi", "agu", "apu", "des", "feb", "gmt", "jan", "jul", "juu", "maa", "mar", "nov", "now", "oki", "seb", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

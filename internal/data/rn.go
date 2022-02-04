@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var rn_Locale = merge(nil, LocaleData{
 	Name:      "rn",
 	DateOrder: "DMY",
@@ -91,5 +89,5 @@ var rn_Locale = merge(nil, LocaleData{
 		"uyu musi":     "0 day ago",
 		"now":          "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ku wa gatandatu|ejo \(haheze\)|ejo \(hazoza\)|indwi, iyinga|ku wa gatanu|ku wa gatatu|ku wa kabiri|ku wa mbere|this minute|ku w'indwi|ku wa kane|last month|next month|nyandagaro|this month|last week|last year|ndamukiza|next week|next year|ntwarante|this hour|this week|this year|gitugutu|isegonda|kigarama|mukakaro|munyonyo|nyakanga|ruhuhuma|uyu musi|ruheshi|umunota|rusama|ukwezi|umwaka|isaha|nzero|umusi|gas|gic|gmt|gnd|gnu|gtu|kab|kam|kan|mat|mbe|mut|now|nya|nze|ugu|uku|ukw|utc|wer|zmu|zmw|\+|\.|\[|\]|\||am|cu|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"ku wa gatandatu", "indwi, iyinga", "ejo (haheze)", "ejo (hazoza)", "ku wa gatanu", "ku wa gatatu", "ku wa kabiri", "ku wa mbere", "this minute", "ku w'indwi", "ku wa kane", "last month", "next month", "nyandagaro", "this month", "last week", "last year", "ndamukiza", "next week", "next year", "ntwarante", "this hour", "this week", "this year", "gitugutu", "isegonda", "kigarama", "mukakaro", "munyonyo", "nyakanga", "ruhuhuma", "uyu musi", "ruheshi", "umunota", "rusama", "ukwezi", "umwaka", "isaha", "nzero", "umusi", "gas", "gic", "gmt", "gnd", "gnu", "gtu", "kab", "kam", "kan", "mat", "mbe", "mut", "now", "nya", "nze", "ugu", "uku", "ukw", "utc", "wer", "zmu", "zmw", "am", "cu", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

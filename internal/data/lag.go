@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var lag_Locale = merge(nil, LocaleData{
 	Name:      "lag",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var lag_Locale = merge(nil, LocaleData{
 		"niijo":       "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(kwiinyambala|this minute|kwiidwaata|lamʉtoondo|last month|next month|this month|inyambala|jumamoosi|jumapiiri|jumataano|kʉfungatɨ|kʉmʉʉnchɨ|last week|last year|next week|next year|this hour|this week|this year|alamiisi|jumatatu|kwiikumi|kʉkeenda|kʉsasatʉ|sekuunde|fungatɨ|idwaata|jumaine|kwiinyi|kʉnaanɨ|kʉsaano|kʉsaatʉ|kʉvɨɨrɨ|mʉʉnchɨ|dakika|ijumaa|keenda|mwaaka|mweeri|sasatʉ|ikumi|isikʉ|moosi|naanɨ|niijo|piili|saano|saatʉ|taano|taatu|vɨɨrɨ|wiiki|inyi|sikʉ|alh|gmt|ijm|ine|muu|now|saa|too|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"kwiinyambala", "this minute", "kwiidwaata", "lamʉtoondo", "last month", "next month", "this month", "inyambala", "jumamoosi", "jumapiiri", "jumataano", "kʉfungatɨ", "kʉmʉʉnchɨ", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alamiisi", "jumatatu", "kwiikumi", "kʉkeenda", "kʉsasatʉ", "sekuunde", "fungatɨ", "idwaata", "jumaine", "kwiinyi", "kʉnaanɨ", "kʉsaano", "kʉsaatʉ", "kʉvɨɨrɨ", "mʉʉnchɨ", "dakika", "ijumaa", "keenda", "mwaaka", "mweeri", "sasatʉ", "ikumi", "isikʉ", "moosi", "naanɨ", "niijo", "piili", "saano", "saatʉ", "taano", "taatu", "vɨɨrɨ", "wiiki", "inyi", "sikʉ", "alh", "gmt", "ijm", "ine", "muu", "now", "saa", "too", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

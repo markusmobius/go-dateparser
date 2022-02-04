@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var ewo_Locale = merge(nil, LocaleData{
 	Name:      "ewo",
 	DateOrder: "DMY",
@@ -91,5 +89,5 @@ var ewo_Locale = merge(nil, LocaleData{
 		"ana":         "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(ngɔn awom ai dzia|sɔndɔ məlu mənyi|ngɔn awom ai bɛ|sɔndɔ məlu məbɛ|sɔndɔ məlu məlɛ|ngɔn zamgbala|ngɔn saməna|this minute|last month|next month|ngɔn ebulu|ngɔn nyina|this month|last week|last year|next week|next year|ngɔn awom|ngɔn lala|ngɔn mwom|ngɔn tana|ngəgogəle|this hour|this week|this year|ngɔn osu|akabəga|kikirig|ngɔn bɛ|angoge|enutɛn|fulade|serade|awola|mɔndi|okiri|sɔndɔ|amos|ngab|ngad|ngɔn|ana|ful|gmt|mbu|mɔn|nga|ngb|nge|ngl|ngm|ngn|ngo|ngs|ngt|ngz|now|ser|smb|sml|smn|sɔn|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"ngɔn awom ai dzia", "sɔndɔ məlu mənyi", "ngɔn awom ai bɛ", "sɔndɔ məlu məbɛ", "sɔndɔ məlu məlɛ", "ngɔn zamgbala", "ngɔn saməna", "this minute", "last month", "next month", "ngɔn ebulu", "ngɔn nyina", "this month", "last week", "last year", "next week", "next year", "ngɔn awom", "ngɔn lala", "ngɔn mwom", "ngɔn tana", "ngəgogəle", "this hour", "this week", "this year", "ngɔn osu", "akabəga", "kikirig", "ngɔn bɛ", "angoge", "enutɛn", "fulade", "serade", "awola", "mɔndi", "okiri", "sɔndɔ", "amos", "ngab", "ngad", "ngɔn", "ana", "ful", "gmt", "mbu", "mɔn", "nga", "ngb", "nge", "ngl", "ngm", "ngn", "ngo", "ngs", "ngt", "ngz", "now", "ser", "smb", "sml", "smn", "sɔn", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

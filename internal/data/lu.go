@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var lu_Locale = merge(nil, LocaleData{
 	Name:      "lu",
 	DateOrder: "DMY",
@@ -90,5 +88,5 @@ var lu_Locale = merge(nil, LocaleData{
 		"lelu":        "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(kabalashipu|kasunsukusu|this minute|last month|next month|this month|kaswekese|last week|last year|lumungulu|lutongolo|next week|next year|this hour|this week|this year|makelela|tshidimu|kasunsu|lubingu|lufuimi|lumingu|lungudi|lushika|ciongo|dilolo|dituku|luishi|lusolo|malaba|ndaaya|ndangu|ngondo|ngovya|nkodya|ciswa|dinda|muuya|njowa|diba|lelu|lush|cio|cis|gmt|kab|kas|lub|luf|lui|lum|lun|lus|lut|muu|ndg|ndy|ngv|njw|nko|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"kabalashipu", "kasunsukusu", "this minute", "last month", "next month", "this month", "kaswekese", "last week", "last year", "lumungulu", "lutongolo", "next week", "next year", "this hour", "this week", "this year", "makelela", "tshidimu", "kasunsu", "lubingu", "lufuimi", "lumingu", "lungudi", "lushika", "ciongo", "dilolo", "dituku", "luishi", "lusolo", "malaba", "ndaaya", "ndangu", "ngondo", "ngovya", "nkodya", "ciswa", "dinda", "muuya", "njowa", "diba", "lelu", "lush", "cio", "cis", "gmt", "kab", "kas", "lub", "luf", "lui", "lum", "lun", "lus", "lut", "muu", "ndg", "ndy", "ngv", "njw", "nko", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

@@ -17,7 +17,7 @@ type LocaleData struct {
 	RelativeTypeRegexes   []ReplacementData
 	RxCombined            *regexp.Regexp
 	RxExactCombined       *regexp.Regexp
-	RxKnownWords          *regexp.Regexp
+	KnownWords            []string
 }
 
 type ReplacementData struct {
@@ -66,10 +66,6 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 
 	if child.RxExactCombined == nil {
 		child.RxExactCombined = parent.RxExactCombined
-	}
-
-	if child.RxKnownWords == nil {
-		child.RxKnownWords = parent.RxKnownWords
 	}
 
 	return child

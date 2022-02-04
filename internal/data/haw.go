@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var haw_Locale = merge(nil, LocaleData{
 	Name:      "haw",
 	DateOrder: "DMY",
@@ -89,5 +87,5 @@ var haw_Locale = merge(nil, LocaleData{
 		"today":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|kepakemapa|last month|next month|this month|last week|last year|next week|next year|pepeluali|this hour|this week|this year|yesterday|'apelila|'okakopa|kekemapa|nowemapa|po'akahi|po'akolu|po'alima|tomorrow|'aukake|ianuali|po'alua|po'aono|lapule|malaki|minute|po'aha|second|iulai|month|today|hour|iune|week|year|'ap|'au|'ok|day|gmt|ian|iul|iun|kek|kep|mal|mei|now|now|pep|utc|\+|\.|\[|\]|\||am|lp|p1|p2|p3|p4|p5|p6|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "kepakemapa", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "pepeluali", "this hour", "this week", "this year", "yesterday", "'apelila", "'okakopa", "kekemapa", "nowemapa", "po'akahi", "po'akolu", "po'alima", "tomorrow", "'aukake", "ianuali", "po'alua", "po'aono", "lapule", "malaki", "minute", "po'aha", "second", "iulai", "month", "today", "hour", "iune", "week", "year", "'ap", "'au", "'ok", "day", "gmt", "ian", "iul", "iun", "kek", "kep", "mal", "mei", "now", "now", "pep", "utc", "am", "lp", "p1", "p2", "p3", "p4", "p5", "p6", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

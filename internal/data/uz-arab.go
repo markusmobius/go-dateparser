@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var uz_Arab_Locale = merge(nil, LocaleData{
 	Name:      "uz-Arab",
 	DateOrder: "YMD",
@@ -88,5 +86,5 @@ var uz_Arab_Locale = merge(nil, LocaleData{
 		"today":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|چهارشنبه|سه‌شنبه|پنجشنبه|minute|second|اکتوبر|دوشنبه|سپتمبر|فبروری|یکشنبه|month|today|اپریل|جنوری|جولای|دسمبر|نومبر|hour|week|year|اگست|جمعه|شنبه|مارچ|day|gmt|now|utc|اپر|اکت|اگس|جنو|جول|جون|دسم|سپت|فبر|مار|نوم|\+|\.|\[|\]|\||am|pm|می| |'|,|-|/|:|;|@|z|ج|د|س|ش|پ|چ|ی)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "چهارشنبه", "سه‌شنبه", "پنجشنبه", "minute", "second", "اکتوبر", "دوشنبه", "سپتمبر", "فبروری", "یکشنبه", "month", "today", "اپریل", "جنوری", "جولای", "دسمبر", "نومبر", "hour", "week", "year", "اگست", "جمعه", "شنبه", "مارچ", "day", "gmt", "now", "utc", "اپر", "اکت", "اگس", "جنو", "جول", "جون", "دسم", "سپت", "فبر", "مار", "نوم", "am", "pm", "می", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ج", "د", "س", "ش", "پ", "چ", "ی"},
 })

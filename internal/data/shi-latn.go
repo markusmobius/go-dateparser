@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var shi_Latn_Locale = merge(nil, LocaleData{
 	Name:      "shi-Latn",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var shi_Latn_Locale = merge(nil, LocaleData{
 		"assa":        "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|cutanbir|dujanbir|nuwanbir|tadggwat|asggwas|asidyas|asimwas|imalass|tasragt|tusdidt|asamas|asinas|innayr|tasint|tifawt|yulyuz|akras|akwas|askka|aynas|ayyur|brayr|ibrir|idlli|ktubr|mayyu|yunyu|asid|asim|assa|mars|ɣuct|akr|akw|asa|asi|ass|ayn|bra|cut|duj|gmt|ibr|inn|ktu|mar|may|now|nuw|utc|yul|yun|ɣuc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "cutanbir", "dujanbir", "nuwanbir", "tadggwat", "asggwas", "asidyas", "asimwas", "imalass", "tasragt", "tusdidt", "asamas", "asinas", "innayr", "tasint", "tifawt", "yulyuz", "akras", "akwas", "askka", "aynas", "ayyur", "brayr", "ibrir", "idlli", "ktubr", "mayyu", "yunyu", "asid", "asim", "assa", "mars", "ɣuct", "akr", "akw", "asa", "asi", "ass", "ayn", "bra", "cut", "duj", "gmt", "ibr", "inn", "ktu", "mar", "may", "now", "nuw", "utc", "yul", "yun", "ɣuc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

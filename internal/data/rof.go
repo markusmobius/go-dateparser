@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var rof_Locale = merge(nil, LocaleData{
 	Name:      "rof",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var rof_Locale = merge(nil, LocaleData{
 		"hiyo":        "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(mweri wa ikumi na mbili|mweri wa ikumi na moja|mweri wa katatu|mweri wa kwanza|mweri wa ikumi|mweri wa kaana|mweri wa kaili|mweri wa nane|mweri wa saba|mweri wa sita|mweri wa tanu|mweri wa tisa|this minute|last month|next month|this month|ijumamosi|ijumapili|ijumatano|ijumatatu|last week|last year|next week|next year|this hour|this week|this year|alhamisi|ijumanne|kang'ama|kingoto|sekunde|dakika|ijumaa|ng'ama|iwiki|mfiri|muaka|mweri|hiyo|ijtn|isaa|linu|alh|gmt|ijm|ijn|ijp|ijt|iju|m10|m11|m12|now|utc|\+|\.|\[|\]|\||am|m1|m2|m3|m4|m5|m6|m7|m8|m9|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"mweri wa ikumi na mbili", "mweri wa ikumi na moja", "mweri wa katatu", "mweri wa kwanza", "mweri wa ikumi", "mweri wa kaana", "mweri wa kaili", "mweri wa nane", "mweri wa saba", "mweri wa sita", "mweri wa tanu", "mweri wa tisa", "this minute", "last month", "next month", "this month", "ijumamosi", "ijumapili", "ijumatano", "ijumatatu", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "ijumanne", "kang'ama", "kingoto", "sekunde", "dakika", "ijumaa", "ng'ama", "iwiki", "mfiri", "muaka", "mweri", "hiyo", "ijtn", "isaa", "linu", "alh", "gmt", "ijm", "ijn", "ijp", "ijt", "iju", "m10", "m11", "m12", "now", "utc", "am", "m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

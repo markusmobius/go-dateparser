@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var nnh_Locale = merge(nil, LocaleData{
 	Name:      "nnh",
 	DateOrder: "DMY",
@@ -73,5 +71,5 @@ var nnh_Locale = merge(nil, LocaleData{
 		"lyɛ'ɔɔn":            "0 day ago",
 		"now":                "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(mbɔɔnte tsetsɛɛ lyɛ'|juɔ gwie a ne ntoo|saŋ tyɛb tyɛb mbʉŋ|juɔ gwie a ka tɔg|mbɔɔnte mvfo lyɛ'|saŋ taŋa tsetsa'|saŋ tsetsɛɛ lum|mvfo maga lyɛ'|saŋ lepye shum|saŋ ngwɔ' mbyɛ|saŋ kag ngwoŋ|lyɛ'ɛ swiŋte|saŋ tsɛɛ cyo|tsetsɛɛ lyɛ'|saŋ mejwoŋo|saŋ njyola'|this minute|last month|next month|this month|last week|last year|maga lyɛ'|mba'amba'|mvfo lyɛ'|next week|next year|this hour|this week|this year|ncwonzem|saŋ mbʉŋ|fʉ' nem|lyɛ'ɔɔn|saŋ cyo|saŋ lum|minute|second|month|lyɛ'|ngu'|week|gmt|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"mbɔɔnte tsetsɛɛ lyɛ'", "juɔ gwie a ne ntoo", "saŋ tyɛb tyɛb mbʉŋ", "juɔ gwie a ka tɔg", "mbɔɔnte mvfo lyɛ'", "saŋ taŋa tsetsa'", "saŋ tsetsɛɛ lum", "mvfo maga lyɛ'", "saŋ lepye shum", "saŋ ngwɔ' mbyɛ", "saŋ kag ngwoŋ", "lyɛ'ɛ swiŋte", "saŋ tsɛɛ cyo", "tsetsɛɛ lyɛ'", "saŋ mejwoŋo", "saŋ njyola'", "this minute", "last month", "next month", "this month", "last week", "last year", "maga lyɛ'", "mba'amba'", "mvfo lyɛ'", "next week", "next year", "this hour", "this week", "this year", "ncwonzem", "saŋ mbʉŋ", "fʉ' nem", "lyɛ'ɔɔn", "saŋ cyo", "saŋ lum", "minute", "second", "month", "lyɛ'", "ngu'", "week", "gmt", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var nus_Locale = merge(nil, LocaleData{
 	Name:      "nus",
 	DateOrder: "DMY",
@@ -87,5 +85,5 @@ var nus_Locale = merge(nil, LocaleData{
 		"now":         "0 second ago",
 		"pan":         "1 day ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(tiop thar pɛt|dhieec latni|tiop in diit|bakɛl latni|this minute|ŋuaan latni|diɔk latni|last month|next month|pay yietni|this month|caŋ kuɔth|last week|last year|next week|next year|rɛw latni|this hour|this week|this year|jiec lat|kornyoot|thɛkɛni|dhieec|bakɛl|duɔɔŋ|laath|minit|thaak|thoor|ŋuaan|diɔk|duat|duɔɔ|guak|jiec|jiɔk|ruun|ruɔn|thoo|tiop|tɛɛr|walɛ|caŋ|dua|gmt|kor|kur|laa|now|pan|pay|pɛt|rɛw|tid|tɛɛ|utc|\+|\.|\[|\]|\||am|pm|rw|tŋ| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"tiop thar pɛt", "dhieec latni", "tiop in diit", "bakɛl latni", "this minute", "ŋuaan latni", "diɔk latni", "last month", "next month", "pay yietni", "this month", "caŋ kuɔth", "last week", "last year", "next week", "next year", "rɛw latni", "this hour", "this week", "this year", "jiec lat", "kornyoot", "thɛkɛni", "dhieec", "bakɛl", "duɔɔŋ", "laath", "minit", "thaak", "thoor", "ŋuaan", "diɔk", "duat", "duɔɔ", "guak", "jiec", "jiɔk", "ruun", "ruɔn", "thoo", "tiop", "tɛɛr", "walɛ", "caŋ", "dua", "gmt", "kor", "kur", "laa", "now", "pan", "pay", "pɛt", "rɛw", "tid", "tɛɛ", "utc", "am", "pm", "rw", "tŋ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

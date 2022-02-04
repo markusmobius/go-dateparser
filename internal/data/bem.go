@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var bem_Locale = merge(nil, LocaleData{
 	Name:      "bem",
 	DateOrder: "DMY",
@@ -84,5 +82,5 @@ var bem_Locale = merge(nil, LocaleData{
 		"lelo":        "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(pachibelushi|palichibuli|palichisano|palichitatu|this minute|last month|next month|pa mulungu|this month|last week|last year|next week|next year|palichimo|palichine|this hour|this week|this year|yesterday|februari|septemba|tomorrow|ubushiku|uluchelo|umulungu|akasuba|disemba|januari|novemba|sekondi|umweshi|mineti|ogasti|oktoba|umwaka|epreo|julai|machi|insa|juni|lelo|dis|epr|feb|gmt|jan|jul|jun|mac|mei|nov|now|oga|okt|sep|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"pachibelushi", "palichibuli", "palichisano", "palichitatu", "this minute", "last month", "next month", "pa mulungu", "this month", "last week", "last year", "next week", "next year", "palichimo", "palichine", "this hour", "this week", "this year", "yesterday", "februari", "septemba", "tomorrow", "ubushiku", "uluchelo", "umulungu", "akasuba", "disemba", "januari", "novemba", "sekondi", "umweshi", "mineti", "ogasti", "oktoba", "umwaka", "epreo", "julai", "machi", "insa", "juni", "lelo", "dis", "epr", "feb", "gmt", "jan", "jul", "jun", "mac", "mei", "nov", "now", "oga", "okt", "sep", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

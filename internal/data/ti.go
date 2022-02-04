@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var ti_Locale = merge(nil, LocaleData{
 	Name:      "ti",
 	DateOrder: "DMY",
@@ -92,11 +90,10 @@ var ti_Locale = merge(nil, LocaleData{
 		"today":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|ንጉሆ ሰዓተ|ድሕር ሰዓት|minute|second|month|today|መስከረም|hour|week|year|ለካቲት|መጋቢት|ሚያዝያ|ሰንበት|ታሕሳስ|ግንቦት|ጥቅምቲ|day|gmt|now|utc|ሓሙስ|ሓምለ|ሕዳር|ሠሉስ|ረቡዕ|ሰሉስ|ሰኑይ|ቀዳም|ኃሙስ|ነሓሰ|ዓርቢ|\+|\.|\[|\]|\||am|pm|ለካ|ሓሙ|ሓም|ሕዳ|መስ|መጋ|ሚያ|ረቡ|ሰሉ|ሰነ|ሰኑ|ሰን|ቀዳ|ታሕ|ነሓ|ዓር|ግን|ጥሪ|ጥቅ| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "ንጉሆ ሰዓተ", "ድሕር ሰዓት", "minute", "second", "month", "today", "መስከረም", "hour", "week", "year", "ለካቲት", "መጋቢት", "ሚያዝያ", "ሰንበት", "ታሕሳስ", "ግንቦት", "ጥቅምቲ", "day", "gmt", "now", "utc", "ሓሙስ", "ሓምለ", "ሕዳር", "ሠሉስ", "ረቡዕ", "ሰሉስ", "ሰኑይ", "ቀዳም", "ኃሙስ", "ነሓሰ", "ዓርቢ", "am", "pm", "ለካ", "ሓሙ", "ሓም", "ሕዳ", "መስ", "መጋ", "ሚያ", "ረቡ", "ሰሉ", "ሰነ", "ሰኑ", "ሰን", "ቀዳ", "ታሕ", "ነሓ", "ዓር", "ግን", "ጥሪ", "ጥቅ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })
 
 var ti_ER_Locale = merge(&ti_Locale, LocaleData{
-	Name:         "ti-ER",
-	DateOrder:    "DMY",
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|ንጉሆ ሰዓተ|ድሕር ሰዓት|minute|second|month|today|መስከረም|hour|week|year|ለካቲት|መጋቢት|ሚያዝያ|ሰንበት|ታሕሳስ|ግንቦት|ጥቅምቲ|day|gmt|now|utc|ሓሙስ|ሓምለ|ሕዳር|ሠሉስ|ረቡዕ|ሰሉስ|ሰኑይ|ቀዳም|ኃሙስ|ነሓሰ|ዓርቢ|\+|\.|\[|\]|\||am|pm|ለካ|ሓሙ|ሓም|ሕዳ|መስ|መጋ|ሚያ|ረቡ|ሰሉ|ሰነ|ሰኑ|ሰን|ቀዳ|ታሕ|ነሓ|ዓር|ግን|ጥሪ|ጥቅ| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	Name:      "ti-ER",
+	DateOrder: "DMY",
 })

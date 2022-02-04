@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var pa_Arab_Locale = merge(nil, LocaleData{
 	Name:      "pa-Arab",
 	DateOrder: "DMY",
@@ -70,5 +68,5 @@ var pa_Arab_Locale = merge(nil, LocaleData{
 		"today":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|second|اکتوبر|جمعرات|جولايی|today|اتوار|اپریل|جنوری|دسمبر|ستمبر|فروری|مہينا|نومبر|گھنٹا|اگست|جمعہ|مارچ|منگل|ورھا|ہفتہ|gmt|now|utc|بدھ|جون|دين|منٹ|پیر|\+|\.|\[|\]|\||am|pm|مي| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "second", "اکتوبر", "جمعرات", "جولايی", "today", "اتوار", "اپریل", "جنوری", "دسمبر", "ستمبر", "فروری", "مہينا", "نومبر", "گھنٹا", "اگست", "جمعہ", "مارچ", "منگل", "ورھا", "ہفتہ", "gmt", "now", "utc", "بدھ", "جون", "دين", "منٹ", "پیر", "am", "pm", "مي", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

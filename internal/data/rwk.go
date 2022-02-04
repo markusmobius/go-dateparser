@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var rwk_Locale = merge(nil, LocaleData{
 	Name:      "rwk",
 	DateOrder: "DMY",
@@ -91,5 +89,5 @@ var rwk_Locale = merge(nil, LocaleData{
 		"inu":         "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|jumapilyi|jumatatuu|kyiukonyi|last week|last year|next week|next year|this hour|this week|this year|alhamisi|februari|jumamosi|jumatanu|septemba|aprilyi|dakyika|desemba|januari|jumanne|novemba|sekunde|agusti|ijumaa|julyai|oktoba|wiikyi|junyi|machi|mfiri|ngama|utuko|maka|mori|ukou|ago|alh|apr|des|feb|gmt|iju|inu|jan|jmo|jnn|jpi|jtn|jtt|jul|jun|mac|mei|nov|now|okt|saa|sep|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "jumapilyi", "jumatatuu", "kyiukonyi", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "februari", "jumamosi", "jumatanu", "septemba", "aprilyi", "dakyika", "desemba", "januari", "jumanne", "novemba", "sekunde", "agusti", "ijumaa", "julyai", "oktoba", "wiikyi", "junyi", "machi", "mfiri", "ngama", "utuko", "maka", "mori", "ukou", "ago", "alh", "apr", "des", "feb", "gmt", "iju", "inu", "jan", "jmo", "jnn", "jpi", "jtn", "jtt", "jul", "jun", "mac", "mei", "nov", "now", "okt", "saa", "sep", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

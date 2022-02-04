@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var ff_Locale = merge(nil, LocaleData{
 	Name:      "ff",
 	DateOrder: "DMY",
@@ -92,23 +90,20 @@ var ff_Locale = merge(nil, LocaleData{
 		"haŋki":       "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|hoore-biir|last month|next month|this month|last week|last year|naasaande|next week|next year|njeslaare|this hour|this week|this year|hitaande|majaango|mawbaare|yarkomaa|kikiiɗe|yontere|aaɓnde|duujal|hannde|jaŋngo|mawnde|nalnde|seeɗto|siilto|subaka|bowte|colte|haŋki|hoƴom|jolal|korse|lewru|mbooy|morso|siilo|waktu|dewo|juko|aaɓ|bow|col|dew|duu|gmt|hbi|jol|juk|kor|maw|mbo|mor|mwd|naa|nje|now|see|sii|slt|utc|yar|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "hoore-biir", "last month", "next month", "this month", "last week", "last year", "naasaande", "next week", "next year", "njeslaare", "this hour", "this week", "this year", "hitaande", "majaango", "mawbaare", "yarkomaa", "kikiiɗe", "yontere", "aaɓnde", "duujal", "hannde", "jaŋngo", "mawnde", "nalnde", "seeɗto", "siilto", "subaka", "bowte", "colte", "haŋki", "hoƴom", "jolal", "korse", "lewru", "mbooy", "morso", "siilo", "waktu", "dewo", "juko", "aaɓ", "bow", "col", "dew", "duu", "gmt", "hbi", "jol", "juk", "kor", "maw", "mbo", "mor", "mwd", "naa", "nje", "now", "see", "sii", "slt", "utc", "yar", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })
 
 var ff_CM_Locale = merge(&ff_Locale, LocaleData{
-	Name:         "ff-CM",
-	DateOrder:    "DMY",
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|hoore-biir|last month|next month|this month|last week|last year|naasaande|next week|next year|njeslaare|this hour|this week|this year|hitaande|majaango|mawbaare|yarkomaa|kikiiɗe|yontere|aaɓnde|duujal|hannde|jaŋngo|mawnde|nalnde|seeɗto|siilto|subaka|bowte|colte|haŋki|hoƴom|jolal|korse|lewru|mbooy|morso|siilo|waktu|dewo|juko|aaɓ|bow|col|dew|duu|gmt|hbi|jol|juk|kor|maw|mbo|mor|mwd|naa|nje|now|see|sii|slt|utc|yar|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	Name:      "ff-CM",
+	DateOrder: "DMY",
 })
 
 var ff_GN_Locale = merge(&ff_Locale, LocaleData{
-	Name:         "ff-GN",
-	DateOrder:    "DMY",
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|hoore-biir|last month|next month|this month|last week|last year|naasaande|next week|next year|njeslaare|this hour|this week|this year|hitaande|majaango|mawbaare|yarkomaa|kikiiɗe|yontere|aaɓnde|duujal|hannde|jaŋngo|mawnde|nalnde|seeɗto|siilto|subaka|bowte|colte|haŋki|hoƴom|jolal|korse|lewru|mbooy|morso|siilo|waktu|dewo|juko|aaɓ|bow|col|dew|duu|gmt|hbi|jol|juk|kor|maw|mbo|mor|mwd|naa|nje|now|see|sii|slt|utc|yar|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	Name:      "ff-GN",
+	DateOrder: "DMY",
 })
 
 var ff_MR_Locale = merge(&ff_Locale, LocaleData{
-	Name:         "ff-MR",
-	DateOrder:    "DMY",
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|hoore-biir|last month|next month|this month|last week|last year|naasaande|next week|next year|njeslaare|this hour|this week|this year|hitaande|majaango|mawbaare|yarkomaa|kikiiɗe|yontere|aaɓnde|duujal|hannde|jaŋngo|mawnde|nalnde|seeɗto|siilto|subaka|bowte|colte|haŋki|hoƴom|jolal|korse|lewru|mbooy|morso|siilo|waktu|dewo|juko|aaɓ|bow|col|dew|duu|gmt|hbi|jol|juk|kor|maw|mbo|mor|mwd|naa|nje|now|see|sii|slt|utc|yar|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	Name:      "ff-MR",
+	DateOrder: "DMY",
 })

@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var cgg_Locale = merge(nil, LocaleData{
 	Name:      "cgg",
 	DateOrder: "DMY",
@@ -90,5 +88,5 @@ var cgg_Locale = merge(nil, LocaleData{
 		"erizooba":    "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(okwaikumi na ibiri|okwaikumi na kumwe|obucweka/esekendi|okwamushanju|nyenkyakare|nyomwabazyo|okwakashatu|okwakataana|okwamukaaga|okwamunaana|okwokubanza|orwakashatu|orwakataano|orwamukaaga|orwokubanza|this minute|last month|next month|okwakabiri|okwamwenda|orwakabiri|this month|last week|last year|next week|next year|okwaikumi|this hour|this week|this year|edakiika|erizooba|okwakana|orwakana|eizooba|esande|omwaka|omwezi|shaaha|sande|gmt|kbr|kbz|kkm|kkn|kmk|kmn|kms|kmw|knb|knk|kst|ktn|now|okb|okn|oks|okt|omk|ork|san|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"okwaikumi na ibiri", "okwaikumi na kumwe", "obucweka/esekendi", "okwamushanju", "nyenkyakare", "nyomwabazyo", "okwakashatu", "okwakataana", "okwamukaaga", "okwamunaana", "okwokubanza", "orwakashatu", "orwakataano", "orwamukaaga", "orwokubanza", "this minute", "last month", "next month", "okwakabiri", "okwamwenda", "orwakabiri", "this month", "last week", "last year", "next week", "next year", "okwaikumi", "this hour", "this week", "this year", "edakiika", "erizooba", "okwakana", "orwakana", "eizooba", "esande", "omwaka", "omwezi", "shaaha", "sande", "gmt", "kbr", "kbz", "kkm", "kkn", "kmk", "kmn", "kms", "kmw", "knb", "knk", "kst", "ktn", "now", "okb", "okn", "oks", "okt", "omk", "ork", "san", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

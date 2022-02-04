@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var mfe_Locale = merge(nil, LocaleData{
 	Name:      "mfe",
 	DateOrder: "DMY",
@@ -86,5 +84,5 @@ var mfe_Locale = merge(nil, LocaleData{
 		"now":         "0 second ago",
 		"yer":         "1 day ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|merkredi|vandredi|fevriye|dimans|segonn|semenn|septam|zanvie|avril|demin|desam|lindi|mardi|minit|novam|oktob|samdi|zilye|zordi|lane|mars|zedi|zour|avr|des|dim|fev|gmt|ler|lin|mar|mer|mwa|nov|now|okt|out|sam|sep|utc|van|yer|zan|zil|zin|\+|\.|\[|\]|\||am|me|pm|ze| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "merkredi", "vandredi", "fevriye", "dimans", "segonn", "semenn", "septam", "zanvie", "avril", "demin", "desam", "lindi", "mardi", "minit", "novam", "oktob", "samdi", "zilye", "zordi", "lane", "mars", "zedi", "zour", "avr", "des", "dim", "fev", "gmt", "ler", "lin", "mar", "mer", "mwa", "nov", "now", "okt", "out", "sam", "sep", "utc", "van", "yer", "zan", "zil", "zin", "am", "me", "pm", "ze", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

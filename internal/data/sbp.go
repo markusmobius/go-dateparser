@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var sbp_Locale = merge(nil, LocaleData{
 	Name:      "sbp",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var sbp_Locale = merge(nil, LocaleData{
 		"imehe":       "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(mushende magali|musongandembwe|mupalangulwa|this minute|last month|next month|this month|alahamisi|ineng'uni|last week|last year|lwamilawu|mushipepo|next week|next year|pamulaawu|pashamihe|this hour|this week|this year|isekunde|jumamosi|jumatano|jumatatu|munyense|mupuguto|mushende|idakika|ilijuma|ilisala|jumanne|muhaano|mujimbi|mulungu|mwitope|ijumaa|lusiku|mwakha|imehe|mokhu|munyi|mwesi|alh|gmt|iju|jmo|jnn|jtn|jtt|mag|mok|mpg|msh|msp|muh|muj|mul|mun|mup|mus|mwi|mye|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"mushende magali", "musongandembwe", "mupalangulwa", "this minute", "last month", "next month", "this month", "alahamisi", "ineng'uni", "last week", "last year", "lwamilawu", "mushipepo", "next week", "next year", "pamulaawu", "pashamihe", "this hour", "this week", "this year", "isekunde", "jumamosi", "jumatano", "jumatatu", "munyense", "mupuguto", "mushende", "idakika", "ilijuma", "ilisala", "jumanne", "muhaano", "mujimbi", "mulungu", "mwitope", "ijumaa", "lusiku", "mwakha", "imehe", "mokhu", "munyi", "mwesi", "alh", "gmt", "iju", "jmo", "jnn", "jtn", "jtt", "mag", "mok", "mpg", "msh", "msp", "muh", "muj", "mul", "mun", "mup", "mus", "mwi", "mye", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

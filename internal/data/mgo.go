@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var mgo_Locale = merge(nil, LocaleData{
 	Name:      "mgo",
 	DateOrder: "YMD",
@@ -72,5 +70,5 @@ var mgo_Locale = merge(nil, LocaleData{
 		"now":         "0 second ago",
 		"isu":         "in 1 day",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(imeg mbəŋchubi|iməg ichiibɔd|iməg adumbəŋ|iməg krizmed|iməg mbegtug|iməg ichika|iməg tesi'e|this minute|imeg abubi|iməg ngwət|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|iməg fog|iməg kud|iməg zo|mbegtug|aneg 1|aneg 2|aneg 3|aneg 4|aneg 5|aneg 6|aneg 7|ikwiri|minute|second|techɔŋ|fitu'|anəg|hour|iməg|nkap|gmt|isu|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"imeg mbəŋchubi", "iməg ichiibɔd", "iməg adumbəŋ", "iməg krizmed", "iməg mbegtug", "iməg ichika", "iməg tesi'e", "this minute", "imeg abubi", "iməg ngwət", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "iməg fog", "iməg kud", "iməg zo", "mbegtug", "aneg 1", "aneg 2", "aneg 3", "aneg 4", "aneg 5", "aneg 6", "aneg 7", "ikwiri", "minute", "second", "techɔŋ", "fitu'", "anəg", "hour", "iməg", "nkap", "gmt", "isu", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

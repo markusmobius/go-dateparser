@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var mua_Locale = merge(nil, LocaleData{
 	Name:      "mua",
 	DateOrder: "DMY",
@@ -91,5 +89,5 @@ var mua_Locale = merge(nil, LocaleData{
 		"tǝsoo":       "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(cok comme ma laŋ tǝ biŋ|cok comme ma laŋne|mamǝŋgwaafahbii|zah'nane/ comme|madǝǝuutǝbijaŋ|cokcwaklaŋne|comkaldǝɓlii|mamǝŋgwaalii|fii gwahlle|this minute|cokcwaklii|comzyeɓsuu|comzyiiɗii|fii dǝɓlii|fii marfoo|fii mundaŋ|last month|next month|this month|cok comme|com'yakke|comgaisuu|comlaaɗii|last week|last year|next week|next year|this hour|this week|this year|comkolle|fii yuru|madǝmbii|tǝ'nahko|fii loo|tǝ'nane|comme|lilli|tǝsoo|luma|syii|cga|cka|cki|cko|cla|cya|cze|czi|fde|fgw|fii|flo|fmf|fmu|fyu|gmt|mad|mam|mbi|mli|now|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"cok comme ma laŋ tǝ biŋ", "cok comme ma laŋne", "mamǝŋgwaafahbii", "zah'nane/ comme", "madǝǝuutǝbijaŋ", "cokcwaklaŋne", "comkaldǝɓlii", "mamǝŋgwaalii", "fii gwahlle", "this minute", "cokcwaklii", "comzyeɓsuu", "comzyiiɗii", "fii dǝɓlii", "fii marfoo", "fii mundaŋ", "last month", "next month", "this month", "cok comme", "com'yakke", "comgaisuu", "comlaaɗii", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "comkolle", "fii yuru", "madǝmbii", "tǝ'nahko", "fii loo", "tǝ'nane", "comme", "lilli", "tǝsoo", "luma", "syii", "cga", "cka", "cki", "cko", "cla", "cya", "cze", "czi", "fde", "fgw", "fii", "flo", "fmf", "fmu", "fyu", "gmt", "mad", "mam", "mbi", "mli", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

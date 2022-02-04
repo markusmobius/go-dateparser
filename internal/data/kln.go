@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var kln_Locale = merge(nil, LocaleData{
 	Name:      "kln",
 	DateOrder: "DMY",
@@ -94,5 +92,5 @@ var kln_Locale = merge(nil, LocaleData{
 		"amut":        "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(kipsuunde nebo aeng'|kipsuunde ne taai|this minute|kooskoliny|last month|next month|ng'atyaato|this month|iwootkuut|koang'wan|last week|last year|next week|next year|ng'eiyeet|this hour|this week|this year|kiptaamo|sekondit|koaeng'|kosomok|kotisap|minitit|rooptui|arawet|bureet|epeeso|karoon|kenyit|komuut|kotaai|mamuut|mulgul|betut|koosk|mutai|paagi|raini|wikit|amut|kolo|ngat|sait|bur|epe|gmt|iwo|koa|kol|kom|koo|kos|kot|kpa|kpt|krn|kts|mam|mul|nge|now|paa|roo|taa|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"kipsuunde nebo aeng'", "kipsuunde ne taai", "this minute", "kooskoliny", "last month", "next month", "ng'atyaato", "this month", "iwootkuut", "koang'wan", "last week", "last year", "next week", "next year", "ng'eiyeet", "this hour", "this week", "this year", "kiptaamo", "sekondit", "koaeng'", "kosomok", "kotisap", "minitit", "rooptui", "arawet", "bureet", "epeeso", "karoon", "kenyit", "komuut", "kotaai", "mamuut", "mulgul", "betut", "koosk", "mutai", "paagi", "raini", "wikit", "amut", "kolo", "ngat", "sait", "bur", "epe", "gmt", "iwo", "koa", "kol", "kom", "koo", "kos", "kot", "kpa", "kpt", "krn", "kts", "mam", "mul", "nge", "now", "paa", "roo", "taa", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

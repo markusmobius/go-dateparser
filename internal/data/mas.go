@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var mas_Locale = merge(nil, LocaleData{
 	Name:      "mas",
 	DateOrder: "DMY",
@@ -92,11 +90,10 @@ var mas_Locale = merge(nil, LocaleData{
 		"ŋole":        "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(oloilepunyie inkokua|olodoyiorie inkokua|this minute|last month|next month|this month|ɔlɔɨbɔrarɛ|last week|last year|morusasin|next week|next year|oldakikae|this hour|this week|this year|ɔɛnɨɔɨŋɔk|ɛnkakɛnya|alaamisi|jumamosi|jumapili|jumatanɔ|jumatatu|kujuɔrɔk|taaisere|oladalʉ|olgisan|pʉshʉka|sekunde|ɛnkɔlɔŋ|jumane|kushin|ntʉŋʉs|ɛndama|ewiki|jumaa|taata|ɔlapa|ɔlari|arat|ŋole|ɛsaa|alh|ara|bɔr|dal|doy|gis|gmt|iju|jmo|jnn|jpi|jtn|jtt|kus|lep|now|ntʉ|rok|sas|shʉ|utc|ɔɛn|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"oloilepunyie inkokua", "olodoyiorie inkokua", "this minute", "last month", "next month", "this month", "ɔlɔɨbɔrarɛ", "last week", "last year", "morusasin", "next week", "next year", "oldakikae", "this hour", "this week", "this year", "ɔɛnɨɔɨŋɔk", "ɛnkakɛnya", "alaamisi", "jumamosi", "jumapili", "jumatanɔ", "jumatatu", "kujuɔrɔk", "taaisere", "oladalʉ", "olgisan", "pʉshʉka", "sekunde", "ɛnkɔlɔŋ", "jumane", "kushin", "ntʉŋʉs", "ɛndama", "ewiki", "jumaa", "taata", "ɔlapa", "ɔlari", "arat", "ŋole", "ɛsaa", "alh", "ara", "bɔr", "dal", "doy", "gis", "gmt", "iju", "jmo", "jnn", "jpi", "jtn", "jtt", "kus", "lep", "now", "ntʉ", "rok", "sas", "shʉ", "utc", "ɔɛn", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })
 
 var mas_TZ_Locale = merge(&mas_Locale, LocaleData{
-	Name:         "mas-TZ",
-	DateOrder:    "DMY",
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(oloilepunyie inkokua|olodoyiorie inkokua|this minute|last month|next month|this month|ɔlɔɨbɔrarɛ|last week|last year|morusasin|next week|next year|oldakikae|this hour|this week|this year|ɔɛnɨɔɨŋɔk|ɛnkakɛnya|alaamisi|jumamosi|jumapili|jumatanɔ|jumatatu|kujuɔrɔk|taaisere|oladalʉ|olgisan|pʉshʉka|sekunde|ɛnkɔlɔŋ|jumane|kushin|ntʉŋʉs|ɛndama|ewiki|jumaa|taata|ɔlapa|ɔlari|arat|ŋole|ɛsaa|alh|ara|bɔr|dal|doy|gis|gmt|iju|jmo|jnn|jpi|jtn|jtt|kus|lep|now|ntʉ|rok|sas|shʉ|utc|ɔɛn|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	Name:      "mas-TZ",
+	DateOrder: "DMY",
 })

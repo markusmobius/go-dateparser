@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var sn_Locale = merge(nil, LocaleData{
 	Name:      "sn",
 	DateOrder: "YMD",
@@ -90,5 +88,5 @@ var sn_Locale = merge(nil, LocaleData{
 		"nhasi":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(nyamavhuvhu|this minute|chikunguru|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|chishanu|chivabvu|gumiguru|kubvumbi|mangwana|mugovera|chikumi|chipiri|chitatu|gunyana|kukadzi|muvhuro|sekondi|kurume|mbudzi|mineti|mwedzi|nezuro|svondo|china|ndira|nhasi|vhiki|zvita|gore|zuva|awa|chg|chk|chn|chp|chs|cht|chv|gmt|gum|gun|kub|kuk|kur|mbu|mug|muv|ndi|now|nya|svo|utc|zvi|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"nyamavhuvhu", "this minute", "chikunguru", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "chishanu", "chivabvu", "gumiguru", "kubvumbi", "mangwana", "mugovera", "chikumi", "chipiri", "chitatu", "gunyana", "kukadzi", "muvhuro", "sekondi", "kurume", "mbudzi", "mineti", "mwedzi", "nezuro", "svondo", "china", "ndira", "nhasi", "vhiki", "zvita", "gore", "zuva", "awa", "chg", "chk", "chn", "chp", "chs", "cht", "chv", "gmt", "gum", "gun", "kub", "kuk", "kur", "mbu", "mug", "muv", "ndi", "now", "nya", "svo", "utc", "zvi", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

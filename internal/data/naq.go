@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var naq_Locale = merge(nil, LocaleData{
 	Name:      "naq",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var naq_Locale = merge(nil, LocaleData{
 		"neetsee":     "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(taraǀkhuumuǁkhab|aoǁkhuumuǁkhab|dondertaxtsees|satertaxtsees|denstaxtsees|fraitaxtsees|hoasoreǁkhab|wunstaxtsees|mantaxtsees|sontaxtsees|this minute|last month|next month|this month|ǀkhuuǁkhab|ǂnuǁnaiseb|ǃhoaǂkhaib|ǃkhanǀgoab|last week|last year|next week|next year|this hour|this week|this year|yesterday|ǀhooǂgaeb|ǂkhoesaob|ǃkhaitsab|gamaǀaeb|tomorrow|neetsee|ǁgoagas|ǃkhanni|wekheb|kurib|tsees|ǀgaub|ǁkhab|ǃuias|haib|iiri|apr|aug|dec|feb|gmt|jan|jul|jun|mar|may|nov|now|oct|sat|sep|son|utc|\+|\.|\[|\]|\||am|de|do|fr|ma|pm|wu| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"taraǀkhuumuǁkhab", "aoǁkhuumuǁkhab", "dondertaxtsees", "satertaxtsees", "denstaxtsees", "fraitaxtsees", "hoasoreǁkhab", "wunstaxtsees", "mantaxtsees", "sontaxtsees", "this minute", "last month", "next month", "this month", "ǀkhuuǁkhab", "ǂnuǁnaiseb", "ǃhoaǂkhaib", "ǃkhanǀgoab", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "ǀhooǂgaeb", "ǂkhoesaob", "ǃkhaitsab", "gamaǀaeb", "tomorrow", "neetsee", "ǁgoagas", "ǃkhanni", "wekheb", "kurib", "tsees", "ǀgaub", "ǁkhab", "ǃuias", "haib", "iiri", "apr", "aug", "dec", "feb", "gmt", "jan", "jul", "jun", "mar", "may", "nov", "now", "oct", "sat", "sep", "son", "utc", "am", "de", "do", "fr", "ma", "pm", "wu", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

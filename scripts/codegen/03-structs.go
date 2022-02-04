@@ -27,6 +27,7 @@ type LocaleData struct {
 	CombinedRegexPattern      string               `json:",omitempty"`
 	ExactCombinedRegexPattern string               `json:",omitempty"`
 	KnownWordsPattern         string               `json:",omitempty"`
+	KnownWords                []string             `json:",omitempty"`
 
 	charsetTracker map[rune]struct{}
 }
@@ -204,12 +205,10 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 	var texts []string
 
 	for text := range ld.Translations {
-		text = regexp.QuoteMeta(text)
 		texts = append(texts, text)
 	}
 
 	for text := range ld.RelativeType {
-		text = regexp.QuoteMeta(text)
 		texts = append(texts, text)
 	}
 
@@ -224,17 +223,24 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 		return textA < textB
 	})
 
+	// Create regex escaped texts
+	escapedTexts := make([]string, len(texts))
+	for i, text := range texts {
+		escapedTexts[i] = regexp.QuoteMeta(text)
+	}
+
 	// Combine the texts
 	ld.KnownWordsPattern = ""
 
 	if len(texts) > 0 {
-		combined := strings.Join(texts, "|")
-
+		pattern := strings.Join(escapedTexts, "|")
 		if ld.NoWordSpacing {
-			ld.KnownWordsPattern = `^(.*?)(` + combined + `)(.*)$`
+			ld.KnownWordsPattern = `^(.*?)(` + pattern + `)(.*)$`
 		} else {
-			ld.KnownWordsPattern = `^(.*?(?:\A|[^\pL\pM\d]|_|\d))(` + combined + `)((?:\z|[^\pL\pM\d]|_|\d).*)$`
+			ld.KnownWordsPattern = `^(.*?(?:\A|[^\pL\pM\d]|_|\d))(` + pattern + `)((?:\z|[^\pL\pM\d]|_|\d).*)$`
 		}
+
+		ld.KnownWords = texts
 	}
 }
 
@@ -301,6 +307,7 @@ func (ld LocaleData) Clone() LocaleData {
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
 		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
 		KnownWordsPattern:         ld.KnownWordsPattern,
+		KnownWords:                append([]string{}, ld.KnownWords...),
 
 		charsetTracker: cloneRuneMap(ld.charsetTracker),
 	}
@@ -409,6 +416,27 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 		return newCharset, newTracker
 	}
 
+	reducePattern := func(base, input string) string {
+		if base == input {
+			return ""
+		}
+		return base
+	}
+
+	reduceKnownWords := func(base, input []string) []string {
+		if len(base) != len(input) {
+			return base
+		}
+
+		for i := range base {
+			if base[i] != input[i] {
+				return base
+			}
+		}
+
+		return nil
+	}
+
 	// Reduce data
 	clone := ld.Clone()
 	clone.SkipWords = reduceStrings(clone.SkipWords, input.SkipWords)
@@ -419,6 +447,10 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	clone.RelativeType = reduceMap(clone.RelativeType, input.RelativeType)
 	clone.RelativeTypeRegexes = reduceMap(clone.RelativeTypeRegexes, input.RelativeTypeRegexes)
 	clone.Charset, clone.charsetTracker = reduceCharset(clone.charsetTracker, input.charsetTracker)
+	clone.CombinedRegexPattern = reducePattern(clone.CombinedRegexPattern, input.CombinedRegexPattern)
+	clone.ExactCombinedRegexPattern = reducePattern(clone.ExactCombinedRegexPattern, input.ExactCombinedRegexPattern)
+	clone.KnownWordsPattern = reducePattern(clone.KnownWordsPattern, input.KnownWordsPattern)
+	clone.KnownWords = reduceKnownWords(clone.KnownWords, input.KnownWords)
 
 	if clone.SentenceSplitterGroup == input.SentenceSplitterGroup {
 		clone.SentenceSplitterGroup = 0

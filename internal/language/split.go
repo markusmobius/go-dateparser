@@ -138,11 +138,7 @@ func splitWithRegex(s string, rx *regexp.Regexp) string {
 }
 
 func splitByKnownWords(ld *data.LocaleData, str string, keepFormatting bool) []string {
-	var matches []string
-	if ld.RxKnownWords != nil {
-		matches = ld.RxKnownWords.FindStringSubmatch(str)
-	}
-
+	matches := findMatchingKnownWord(ld, str)
 	if len(matches) == 0 {
 		if tokenShouldBeCaptured(str, keepFormatting) {
 			return splitByNumerals(str, keepFormatting)
@@ -167,6 +163,47 @@ func splitByKnownWords(ld *data.LocaleData, str string, keepFormatting bool) []s
 	}
 
 	return splitted
+}
+
+func findMatchingKnownWord(ld *data.LocaleData, str string) []string {
+	if strings.TrimSpace(str) == "" {
+		return nil
+	}
+
+	// Try each known word
+	lastPos := -1
+	var candidates []string
+	for _, knownWord := range ld.KnownWords {
+		wordLen := len(knownWord)
+		pos := strings.Index(str, knownWord)
+		if pos < 0 {
+			continue
+		}
+
+		prefix := str[:pos]
+		match := str[pos : pos+wordLen]
+		suffix := str[pos+wordLen:]
+
+		prefixMatch := true
+		suffixMatch := true
+		if !ld.NoWordSpacing {
+			prefixMatch = rxKnownWordPrefix.MatchString(prefix)
+			suffixMatch = rxKnownWordSuffix.MatchString(suffix)
+		}
+
+		if prefixMatch && suffixMatch {
+			if lastPos == -1 || pos < lastPos {
+				lastPos = pos
+				candidates = []string{str, prefix, match, suffix}
+			}
+
+			if pos == 0 {
+				return candidates
+			}
+		}
+	}
+
+	return candidates
 }
 
 func splitByNumerals(str string, keepFormatting bool) []string {

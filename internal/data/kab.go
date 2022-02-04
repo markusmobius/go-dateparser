@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var kab_Locale = merge(nil, LocaleData{
 	Name:      "kab",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var kab_Locale = merge(nil, LocaleData{
 		"ass-a":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|n tmeddit|next week|next year|this hour|this week|this year|dugember|nunember|yennayer|aseggas|ctember|kradass|n tufat|sdisass|tamrect|azekka|idelli|kuzass|meɣres|samass|sanass|sayass|tamert|tasint|yanass|yebrir|aggur|ass-a|ddurt|furar|mayyu|tuber|yulyu|yunyu|krad|sdis|ɣuct|ass|cte|dug|fur|gmt|kuz|may|meɣ|now|nun|sam|san|say|tub|utc|yan|yeb|yen|yul|yun|ɣuc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "n tmeddit", "next week", "next year", "this hour", "this week", "this year", "dugember", "nunember", "yennayer", "aseggas", "ctember", "kradass", "n tufat", "sdisass", "tamrect", "azekka", "idelli", "kuzass", "meɣres", "samass", "sanass", "sayass", "tamert", "tasint", "yanass", "yebrir", "aggur", "ass-a", "ddurt", "furar", "mayyu", "tuber", "yulyu", "yunyu", "krad", "sdis", "ɣuct", "ass", "cte", "dug", "fur", "gmt", "kuz", "may", "meɣ", "now", "nun", "sam", "san", "say", "tub", "utc", "yan", "yeb", "yen", "yul", "yun", "ɣuc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

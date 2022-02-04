@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var seh_Locale = merge(nil, LocaleData{
 	Name:      "seh",
 	DateOrder: "DMY",
@@ -90,5 +88,5 @@ var seh_Locale = merge(nil, LocaleData{
 		"zuro":        "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|chishanu|decembro|fevreiro|manguana|novembro|setembro|augusto|chipiri|chiposi|chitatu|dimingu|janeiro|segundo|chinai|minuto|ntsiku|otubro|sabudu|abril|chaka|julho|junho|marco|mwezi|hora|lero|maio|week|zuro|abr|aug|dec|dim|fev|gmt|jan|jul|jun|mai|mar|nai|nov|now|otu|pir|pos|sab|set|sha|tat|utc|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "chishanu", "decembro", "fevreiro", "manguana", "novembro", "setembro", "augusto", "chipiri", "chiposi", "chitatu", "dimingu", "janeiro", "segundo", "chinai", "minuto", "ntsiku", "otubro", "sabudu", "abril", "chaka", "julho", "junho", "marco", "mwezi", "hora", "lero", "maio", "week", "zuro", "abr", "aug", "dec", "dim", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "nai", "nov", "now", "otu", "pir", "pos", "sab", "set", "sha", "tat", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

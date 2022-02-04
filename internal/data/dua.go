@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var dua_Locale = merge(nil, LocaleData{
 	Name:      "dua",
 	DateOrder: "DMY",
@@ -92,5 +90,5 @@ var dua_Locale = merge(nil, LocaleData{
 		"kiɛlɛ":         "in 1 day",
 		"now":           "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(kiɛlɛ nitombi|this minute|last month|madiɓɛdiɓɛ|next month|this month|esɔpɛsɔpɛ|last week|last year|next week|next year|this hour|this week|this year|diŋgindi|emiasele|esaɓasu|nyɛtɛki|dimɔdi|disama|diɓaɓa|ebyamu|elaŋgɛ|mayesɛ|mukɔsu|tinini|ŋgandɛ|ŋgɔndɛ|ɗonɛsu|bunya|idiɓa|kiɛlɛ|kwasu|ndɔkɔ|pindi|wɛŋgɛ|ŋgisu|mɔdi|mɔsu|nyɛt|sɔŋɛ|ŋgɔn|diŋ|diɓ|ela|emi|esa|esɔ|eti|gmt|kwa|mad|may|mbu|muk|mɔs|now|sɔŋ|tin|utc|ŋgi|ɗon|\+|\.|\[|\]|\||am|di|et|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"kiɛlɛ nitombi", "this minute", "last month", "madiɓɛdiɓɛ", "next month", "this month", "esɔpɛsɔpɛ", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "diŋgindi", "emiasele", "esaɓasu", "nyɛtɛki", "dimɔdi", "disama", "diɓaɓa", "ebyamu", "elaŋgɛ", "mayesɛ", "mukɔsu", "tinini", "ŋgandɛ", "ŋgɔndɛ", "ɗonɛsu", "bunya", "idiɓa", "kiɛlɛ", "kwasu", "ndɔkɔ", "pindi", "wɛŋgɛ", "ŋgisu", "mɔdi", "mɔsu", "nyɛt", "sɔŋɛ", "ŋgɔn", "diŋ", "diɓ", "ela", "emi", "esa", "esɔ", "eti", "gmt", "kwa", "mad", "may", "mbu", "muk", "mɔs", "now", "sɔŋ", "tin", "utc", "ŋgi", "ɗon", "am", "di", "et", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

@@ -155,7 +155,7 @@ type LocaleData struct {
 	RelativeTypeRegexes   []ReplacementData
 	RxCombined            *regexp.Regexp
 	RxExactCombined       *regexp.Regexp
-	RxKnownWords          *regexp.Regexp
+	KnownWords            []string
 }
 
 type ReplacementData struct {
@@ -206,10 +206,6 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 		child.RxExactCombined = parent.RxExactCombined
 	}
 
-	if child.RxKnownWords == nil {
-		child.RxKnownWords = parent.RxKnownWords
-	}
-
 	return child
 }
 
@@ -226,7 +222,7 @@ var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
 	DateOrder:             "{{.DateOrder}}",
 	NoWordSpacing:         {{.NoWordSpacing}},
 	Charset:               {{charset .Charset}},
-	Abbreviations:    []string{ {{range $v := .Abbreviations}}"{{$v}}", {{end}} },
+	Abbreviations:         []string{ {{range $v := .Abbreviations}}"{{$v}}", {{end}} },
 	SentenceSplitterGroup: {{.SentenceSplitterGroup}},
 	Simplifications: []ReplacementData{
 		{{range $data := .Simplifications -}}
@@ -250,6 +246,6 @@ var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
 	},
 	RxCombined: {{regex .CombinedRegexPattern}},
 	RxExactCombined: {{regex .ExactCombinedRegexPattern}},
-	RxKnownWords: {{regex .KnownWordsPattern}},
+	KnownWords:   []string{ {{range $v := .KnownWords}}"{{$v}}", {{end}} },
 })
 `

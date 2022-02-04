@@ -28,6 +28,9 @@ var (
 	rxNumberOnly    = regexp.MustCompile(`^\d+$`)
 	rxTokenDigit    = regexp.MustCompile(`[\d\.:\-/]+`)
 
+	rxKnownWordPrefix = regexp.MustCompile(`^(.*?(?:\A|[^\pL\pM\d]|_|\d))$`)
+	rxKnownWordSuffix = regexp.MustCompile(`^((?:\z|[^\pL\pM\d]|_|\d).*)$`)
+
 	rxSentenceSplitters = map[int]*regexp.Regexp{
 		// The most common splitter, used in European, Tagalog, Hebrew, Georgian, Indonesian, Vietnamese
 		1: regexp.MustCompile(`([^\s.]*)[\.!?;…\r\n]+(?:\s|$)*`),

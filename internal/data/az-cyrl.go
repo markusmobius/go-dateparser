@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var az_Cyrl_Locale = merge(nil, LocaleData{
 	Name:      "az-Cyrl",
 	DateOrder: "DMY",
@@ -91,5 +89,5 @@ var az_Cyrl_Locale = merge(nil, LocaleData{
 		"today":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(чәршәнбә ахшамы|базар ертәси|this minute|ҹүмә ахшамы|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|сентјабр|чәршәнбә|октјабр|minute|second|август|декабр|нојабр|феврал|јанвар|month|today|апрел|базар|шәнбә|hour|week|year|ијул|ијун|март|ҹүмә|day|gmt|now|utc|авг|апр|дек|ијл|ијн|маи|мар|ној|окт|сен|фев|јан|\+|\.|\[|\]|\||am|pm|ам|бе|пм|ча|ҹа| |'|,|-|/|:|;|@|z|б|ч|ш|ҹ)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"чәршәнбә ахшамы", "базар ертәси", "this minute", "ҹүмә ахшамы", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "сентјабр", "чәршәнбә", "октјабр", "minute", "second", "август", "декабр", "нојабр", "феврал", "јанвар", "month", "today", "апрел", "базар", "шәнбә", "hour", "week", "year", "ијул", "ијун", "март", "ҹүмә", "day", "gmt", "now", "utc", "авг", "апр", "дек", "ијл", "ијн", "маи", "мар", "ној", "окт", "сен", "фев", "јан", "am", "pm", "ам", "бе", "пм", "ча", "ҹа", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "б", "ч", "ш", "ҹ"},
 })

@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var bez_Locale = merge(nil, LocaleData{
 	Name:      "bez",
 	DateOrder: "DMY",
@@ -91,5 +89,5 @@ var bez_Locale = merge(nil, LocaleData{
 		"igolo":       "1 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(pa mwedzi gwa kumi na mbili|pa mwedzi gwa kumi na moja|pa mwedzi gwa hutala|pa mwedzi gwa wudatu|pa mwedzi gwa wuhanu|pa mwedzi gwa wuvili|pa mwedzi gwa wutai|pa mwedzi gwa kumi|pa mwedzi gwa nane|pa mwedzi gwa saba|pa mwedzi gwa sita|pa mwedzi gwa tisa|pa shahulembela|mlungu gumamfu|pa shahuviluha|this minute|last month|next month|pa mulungu|this month|last week|last year|neng'u ni|next week|next year|pa hidatu|pa hihanu|pa hitayi|pa hivili|this hour|this week|this year|pamilau|pamunyi|sekunde|dakika|hilawu|mwedzi|igolo|mwaha|sihu|dat|gmt|han|hid|hih|hit|hiv|hut|kmb|kmj|kum|lem|mul|nan|now|saa|sab|sit|tai|tis|utc|vil|\+|\.|\[|\]|\||am|pm| |'|,|-|/|:|;|@|z)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"pa mwedzi gwa kumi na mbili", "pa mwedzi gwa kumi na moja", "pa mwedzi gwa hutala", "pa mwedzi gwa wudatu", "pa mwedzi gwa wuhanu", "pa mwedzi gwa wuvili", "pa mwedzi gwa wutai", "pa mwedzi gwa kumi", "pa mwedzi gwa nane", "pa mwedzi gwa saba", "pa mwedzi gwa sita", "pa mwedzi gwa tisa", "pa shahulembela", "mlungu gumamfu", "pa shahuviluha", "this minute", "last month", "next month", "pa mulungu", "this month", "last week", "last year", "neng'u ni", "next week", "next year", "pa hidatu", "pa hihanu", "pa hitayi", "pa hivili", "this hour", "this week", "this year", "pamilau", "pamunyi", "sekunde", "dakika", "hilawu", "mwedzi", "igolo", "mwaha", "sihu", "dat", "gmt", "han", "hid", "hih", "hit", "hiv", "hut", "kmb", "kmj", "kum", "lem", "mul", "nan", "now", "saa", "sab", "sit", "tai", "tis", "utc", "vil", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

@@ -2,8 +2,6 @@
 
 package data
 
-import "regexp"
-
 var kok_Locale = merge(nil, LocaleData{
 	Name:      "kok",
 	DateOrder: "YMD",
@@ -80,5 +78,5 @@ var kok_Locale = merge(nil, LocaleData{
 		"today":       "0 day ago",
 		"now":         "0 second ago",
 	},
-	RxKnownWords: regexp.MustCompile(`(?i)^(.*?(?:\A|[^\pL\pM\d]|_|\d))(this minute|last month|next month|this month|last week|last year|next week|next year|this hour|this week|this year|yesterday|tomorrow|आदितयवार|जानवारी|फबरवारी|minute|second|ओकटोबर|नोवहबर|शकरवार|शनिवार|सोमवार|month|today|एपरिल|गरवार|डिसबर|बधवार|मगळार|सपटबर|hour|week|year|ओगसट|मारच|day|gmt|now|utc|मगळ|रवि|शकर|शनि|सोम|\+|\.|\[|\]|\||am|pm|गर|जन|जल|बध|मन|मप| |'|,|-|/|:|;|@|z|म)((?:\z|[^\pL\pM\d]|_|\d).*)$`),
+	KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "आदितयवार", "जानवारी", "फबरवारी", "minute", "second", "ओकटोबर", "नोवहबर", "शकरवार", "शनिवार", "सोमवार", "month", "today", "एपरिल", "गरवार", "डिसबर", "बधवार", "मगळार", "सपटबर", "hour", "week", "year", "ओगसट", "मारच", "day", "gmt", "now", "utc", "मगळ", "रवि", "शकर", "शनि", "सोम", "am", "pm", "गर", "जन", "जल", "बध", "मन", "मप", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "म"},
 })
