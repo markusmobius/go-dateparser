@@ -1,10 +1,11 @@
-package dateparser
+package dateparser_test
 
 import (
 	"fmt"
 	"testing"
 	"time"
 
+	dps "github.com/markusmobius/go-dateparser"
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
@@ -13,12 +14,12 @@ import (
 
 var (
 	relativeTestNow    = tt(2014, 9, 1, 10, 30)
-	relativeTestConfig = Configuration{
+	relativeTestConfig = dps.Configuration{
 		CurrentTime:        relativeTestNow,
 		ReturnTimeAsPeriod: true,
 	}
-	relativeTestParser = Parser{
-		ParserTypes: []ParserType{RelativeTime},
+	relativeTestParser = dps.Parser{
+		ParserTypes: []dps.ParserType{dps.RelativeTime},
 	}
 )
 
@@ -1125,9 +1126,9 @@ func TestParser_Parse_relative_hasPreferredTimes(t *testing.T) {
 
 		// Prepare config
 		if test.PreferFuture {
-			cfg.PreferredDateSource = Future
+			cfg.PreferredDateSource = dps.Future
 		} else {
-			cfg.PreferredDateSource = Past
+			cfg.PreferredDateSource = dps.Past
 		}
 
 		// Parse date time

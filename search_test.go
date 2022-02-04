@@ -1,10 +1,11 @@
-package dateparser
+package dateparser_test
 
 import (
 	"fmt"
 	"testing"
 	"time"
 
+	dps "github.com/markusmobius/go-dateparser"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,7 +17,7 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 		CurrentTime   time.Time
 		ExtractedText []string
 		ExtractedTime []time.Time
-		ParserTypes   []ParserType
+		ParserTypes   []dps.ParserType
 	}
 
 	utcNow := time.Now().UTC()
@@ -118,7 +119,12 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			Text:          "25th march 2015 , i need this report today.",
 			ExtractedText: []string{"25th march 2015"},
 			ExtractedTime: []time.Time{tt(2015, 3, 25)},
-			ParserTypes:   []ParserType{Timestamp, CustomFormat, AbsoluteTime, NoSpacesTime},
+			ParserTypes: []dps.ParserType{
+				dps.Timestamp,
+				dps.CustomFormat,
+				dps.AbsoluteTime,
+				dps.NoSpacesTime,
+			},
 		}, {
 			Language:      "en",
 			Text:          "25th march 2015 , i need this report today.",
@@ -489,8 +495,8 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 		message := fmt.Sprintf("%s \"%s\"", test.Language, test.Text)
 
 		// Search for dates
-		p := Parser{ParserTypes: test.ParserTypes}
-		cfg := Configuration{CurrentTime: test.CurrentTime}
+		p := dps.Parser{ParserTypes: test.ParserTypes}
+		cfg := dps.Configuration{CurrentTime: test.CurrentTime}
 		result, err := p.SearchWithLanguage(&cfg, test.Language, test.Text)
 
 		// Assert result
@@ -608,8 +614,8 @@ func TestParser_Search(t *testing.T) {
 		message := fmt.Sprintf("%v \"%s\"", test.Languages, test.Text)
 
 		// Search for dates
-		p := Parser{Languages: test.Languages}
-		lang, result, err := p.Search(&Configuration{
+		p := dps.Parser{Languages: test.Languages}
+		lang, result, err := p.Search(&dps.Configuration{
 			CurrentTime:   test.CurrentTime,
 			StrictParsing: test.StrictParsing,
 		}, test.Text)
