@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
@@ -187,8 +189,8 @@ func findMatchingKnownWord(ld *data.LocaleData, str string) []string {
 		prefixMatch := true
 		suffixMatch := true
 		if !ld.NoWordSpacing {
-			prefixMatch = rxKnownWordPrefix.MatchString(prefix)
-			suffixMatch = rxKnownWordSuffix.MatchString(suffix)
+			prefixMatch = checkKnownWordNeighbor(prefix, true)
+			suffixMatch = checkKnownWordNeighbor(suffix, false)
 		}
 
 		if prefixMatch && suffixMatch {
@@ -204,6 +206,21 @@ func findMatchingKnownWord(ld *data.LocaleData, str string) []string {
 	}
 
 	return candidates
+}
+
+func checkKnownWordNeighbor(s string, isPrefix bool) bool {
+	if s == "" {
+		return true
+	}
+
+	var r rune
+	if isPrefix {
+		r, _ = utf8.DecodeLastRuneInString(s)
+	} else {
+		r, _ = utf8.DecodeRuneInString(s)
+	}
+
+	return r == '_' || unicode.IsNumber(r) || !unicode.Is(disallowedKnownWordRunes, r)
 }
 
 func splitByNumerals(str string, keepFormatting bool) []string {

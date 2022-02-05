@@ -3,6 +3,7 @@ package language
 import (
 	"errors"
 	"regexp"
+	"unicode"
 
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"golang.org/x/text/unicode/rangetable"
@@ -28,8 +29,11 @@ var (
 	rxNumberOnly    = regexp.MustCompile(`^\d+$`)
 	rxTokenDigit    = regexp.MustCompile(`[\d\.:\-/]+`)
 
-	rxKnownWordPrefix = regexp.MustCompile(`^(.*?(?:\A|[^\pL\pM\d]|_|\d))$`)
-	rxKnownWordSuffix = regexp.MustCompile(`^((?:\z|[^\pL\pM\d]|_|\d).*)$`)
+	disallowedKnownWordRunes = rangetable.Merge(
+		unicode.Letter,
+		unicode.Mark,
+		unicode.Number,
+	)
 
 	rxSentenceSplitters = map[int]*regexp.Regexp{
 		// The most common splitter, used in European, Tagalog, Hebrew, Georgian, Indonesian, Vietnamese
