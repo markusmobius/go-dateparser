@@ -81,10 +81,6 @@ func sortMap(m map[string]string) []MapEntry {
 			return lenKeyA > lenKeyB
 		}
 
-		if eA.Value != eB.Value {
-			return eA.Value < eB.Value
-		}
-
 		return eA.Key < eB.Key
 	})
 

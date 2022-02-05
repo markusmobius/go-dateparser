@@ -26,7 +26,6 @@ type LocaleData struct {
 	RelativeTypeRegexes       map[string]string    `json:",omitempty"`
 	CombinedRegexPattern      string               `json:",omitempty"`
 	ExactCombinedRegexPattern string               `json:",omitempty"`
-	KnownWordsPattern         string               `json:",omitempty"`
 	KnownWords                []string             `json:",omitempty"`
 
 	charsetTracker map[rune]struct{}
@@ -200,7 +199,7 @@ func (ld *LocaleData) CombineRegexPatterns() {
 	}
 }
 
-func (ld *LocaleData) GenerateKnownWordPattern() {
+func (ld *LocaleData) GenerateKnownWords() {
 	// Fetch all texts
 	var texts []string
 
@@ -223,25 +222,7 @@ func (ld *LocaleData) GenerateKnownWordPattern() {
 		return textA < textB
 	})
 
-	// Create regex escaped texts
-	escapedTexts := make([]string, len(texts))
-	for i, text := range texts {
-		escapedTexts[i] = regexp.QuoteMeta(text)
-	}
-
-	// Combine the texts
-	ld.KnownWordsPattern = ""
-
-	if len(texts) > 0 {
-		pattern := strings.Join(escapedTexts, "|")
-		if ld.NoWordSpacing {
-			ld.KnownWordsPattern = `^(.*?)(` + pattern + `)(.*)$`
-		} else {
-			ld.KnownWordsPattern = `^(.*?(?:\A|[^\pL\pM\d]|_|\d))(` + pattern + `)((?:\z|[^\pL\pM\d]|_|\d).*)$`
-		}
-
-		ld.KnownWords = texts
-	}
+	ld.KnownWords = texts
 }
 
 func (ld *LocaleData) GenerateAbbreviations() {
@@ -306,7 +287,6 @@ func (ld LocaleData) Clone() LocaleData {
 		RelativeTypeRegexes:       cloneMap(ld.RelativeTypeRegexes),
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
 		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
-		KnownWordsPattern:         ld.KnownWordsPattern,
 		KnownWords:                append([]string{}, ld.KnownWords...),
 
 		charsetTracker: cloneRuneMap(ld.charsetTracker),
@@ -449,7 +429,6 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	clone.Charset, clone.charsetTracker = reduceCharset(clone.charsetTracker, input.charsetTracker)
 	clone.CombinedRegexPattern = reducePattern(clone.CombinedRegexPattern, input.CombinedRegexPattern)
 	clone.ExactCombinedRegexPattern = reducePattern(clone.ExactCombinedRegexPattern, input.ExactCombinedRegexPattern)
-	clone.KnownWordsPattern = reducePattern(clone.KnownWordsPattern, input.KnownWordsPattern)
 	clone.KnownWords = reduceKnownWords(clone.KnownWords, input.KnownWords)
 
 	if clone.SentenceSplitterGroup == input.SentenceSplitterGroup {
