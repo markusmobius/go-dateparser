@@ -21,13 +21,12 @@ const (
 )
 
 var (
-	rxSpaces        = regexp.MustCompile(`\s{2,}`)
-	rxKeepToken1    = regexp.MustCompile(`^.*[^\W_].*$`)
-	rxKeepToken2    = regexp.MustCompile(`^.*[^\P{L}\d_].*$`)
-	rxRegionRemover = regexp.MustCompile(`-([A-Z]+)$`)
-	rxNumeral       = regexp.MustCompile(`(\d+)`)
-	rxNumberOnly    = regexp.MustCompile(`^\d+$`)
-	rxTokenDigit    = regexp.MustCompile(`[\d\.:\-/]+`)
+	rxSpaces     = regexp.MustCompile(`\s{2,}`)
+	rxKeepToken1 = regexp.MustCompile(`^.*[^\W_].*$`)
+	rxKeepToken2 = regexp.MustCompile(`^.*[^\P{L}\d_].*$`)
+	rxNumeral    = regexp.MustCompile(`(\d+)`)
+	rxNumberOnly = regexp.MustCompile(`^\d+$`)
+	rxTokenDigit = regexp.MustCompile(`[\d\.:\-/]+`)
 
 	disallowedKnownWordRunes = rangetable.Merge(
 		unicode.Letter,

@@ -44,7 +44,7 @@ func GetLocales(locales []string, languages []string, region string, useGivenOrd
 
 			// Make sure language is only used once
 			if !allowConflictingLocales {
-				language := rxRegionRemover.ReplaceAllString(locale, "")
+				language := removeRegion(locale)
 				if languageTracker.Contain(language) {
 					return nil, ErrConflictingLocales
 				}
@@ -123,8 +123,8 @@ func GetLocales(locales []string, languages []string, region string, useGivenOrd
 		sort.Slice(validLocales, func(a, b int) bool {
 			localeA := validLocales[a]
 			localeB := validLocales[b]
-			languageA := rxRegionRemover.ReplaceAllString(localeA, "")
-			languageB := rxRegionRemover.ReplaceAllString(localeB, "")
+			languageA := removeRegion(localeA)
+			languageB := removeRegion(localeB)
 
 			if languageA != languageB {
 				orderA := data.LanguageOrder[languageA]
@@ -158,4 +158,16 @@ func GetLocale(code string) (*data.LocaleData, error) {
 	}
 
 	return locales[0], nil
+}
+
+func removeRegion(locale string) string {
+	lastIdx := strings.LastIndex(locale, "-")
+	if lastIdx >= 0 {
+		suffix := locale[lastIdx+1:]
+		if suffix != "" && suffix == strings.ToUpper(suffix) {
+			return locale[:lastIdx]
+		}
+	}
+
+	return locale
 }
