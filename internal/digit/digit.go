@@ -3,12 +3,8 @@
 package digit
 
 import (
-	"regexp"
-	"strconv"
-	"unicode/utf8"
+	"unicode"
 )
-
-var rxNumeral = regexp.MustCompile("\\p{Nd}")
 
 type RangeData struct {
 	Start rune
@@ -16,35 +12,37 @@ type RangeData struct {
 }
 
 func NormalizeString(str string) string {
-	lastUsedDigit := -1
+	lastUsedRange := -1
 
-	return rxNumeral.ReplaceAllStringFunc(str, func(s string) string {
-		r, _ := utf8.DecodeRuneInString(s)
+	runes := []rune(str)
+	for i, r := range runes {
+		if !unicode.IsDigit(r) {
+			continue
+		}
 
-		if lastUsedDigit > 0 {
-			if number, ok := Ranges[lastUsedDigit].apply(r); ok {
-				return strconv.Itoa(number)
+		if lastUsedRange > 0 {
+			if number, ok := Ranges[lastUsedRange].apply(r); ok {
+				runes[i] = number
 			}
 		}
 
-		for i, digitRange := range Ranges {
-			if number, ok := digitRange.apply(r); ok {
-				lastUsedDigit = i
-				return strconv.Itoa(number)
+		for j := range Ranges {
+			if number, ok := Ranges[j].apply(r); ok {
+				runes[i] = number
 			}
 		}
-
-		return s
-	})
-}
-
-func (dr RangeData) apply(r rune) (int, bool) {
-	if r >= dr.Start && r <= dr.End {
-		number := int(r - dr.Start)
-		return number, true
 	}
 
-	return -1, false
+	return string(runes)
+}
+
+func (dr RangeData) apply(r rune) (rune, bool) {
+	if r >= dr.Start && r <= dr.End {
+		number := int32(r - dr.Start)
+		return '\U00000030' + number, true
+	}
+
+	return r, false
 }
 
 var Ranges = []RangeData{
