@@ -224,12 +224,26 @@ func checkKnownWordNeighbor(s string, isPrefix bool) bool {
 }
 
 func splitByNumerals(str string, keepFormatting bool) []string {
-	str = rxNumeral.ReplaceAllStringFunc(str, func(s string) string {
-		return splitSeparator + s + splitSeparator
-	})
+	// Splid string to tokens
+	var tokens []string
+	var currentGroup []rune
+	var currentIsDigit bool
 
+	for i, r := range str {
+		rIsDigit := unicode.IsDigit(r)
+		if i > 0 && currentIsDigit != rIsDigit {
+			tokens = append(tokens, string(currentGroup))
+			currentGroup = []rune{}
+		}
+
+		currentIsDigit = rIsDigit
+		currentGroup = append(currentGroup, r)
+	}
+
+	tokens = append(tokens, string(currentGroup))
+
+	// Filter tokens
 	var validTokens []string
-	tokens := strings.Split(str, splitSeparator)
 	for _, token := range tokens {
 		if tokenShouldBeCaptured(token, keepFormatting) {
 			validTokens = append(validTokens, token)

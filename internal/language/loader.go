@@ -123,12 +123,10 @@ func GetLocales(locales []string, languages []string, region string, useGivenOrd
 		sort.Slice(validLocales, func(a, b int) bool {
 			localeA := validLocales[a]
 			localeB := validLocales[b]
-			languageA := removeRegion(localeA)
-			languageB := removeRegion(localeB)
+			orderA := data.LocaleOrder[localeA]
+			orderB := data.LocaleOrder[localeB]
 
-			if languageA != languageB {
-				orderA := data.LanguageOrder[languageA]
-				orderB := data.LanguageOrder[languageB]
+			if orderA != orderB {
 				return orderA < orderB
 			} else {
 				return localeA < localeB

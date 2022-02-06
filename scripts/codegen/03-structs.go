@@ -569,3 +569,8 @@ type MapEntry struct {
 	Key   string
 	Value string
 }
+
+type OrderEntry struct {
+	Key   string
+	Order int
+}

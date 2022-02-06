@@ -9,37 +9,47 @@ import (
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
+	"golang.org/x/text/unicode/rangetable"
 )
 
 var (
 	nfkcTransformer    = transform.Chain(norm.NFKD, norm.NFKC)
 	unicodeTransformer = transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
 
-	apostropheLookAlikeChars = []string{
-		`\x{2019}`, // right single quotation mark
-		`\x{02bc}`, // modifier letter apostrophe
-		`\x{02bb}`, // modifier letter turned comma
-		`\x{055a}`, // armenian apostrophe
-		`\x{a78c}`, // latin small letter saltillo
-		`\x{2032}`, // prime
-		`\x{2035}`, // reversed prime
-		`\x{02b9}`, // modifier letter prime
-		`\x{ff07}`, // fullwidth apostrophe
-	}
+	aposthropeTransformer = runes.Map(func(r rune) rune {
+		switch r {
+		case '\u2019', // right single quotation mark
+			'\u02bc', // modifier letter apostrophe
+			'\u02bb', // modifier letter turned comma
+			'\u055a', // armenian apostrophe
+			'\ua78c', // latin small letter saltillo
+			'\u2032', // prime
+			'\u2035', // reversed prime
+			'\u02b9', // modifier letter prime
+			'\uff07': // fullwidth apostrophe
+			return '\''
+		default:
+			return r
+		}
+	})
 
-	rxNbsp               = regexp.MustCompile(`\x{a0}`)
-	rxSanitizeSkip       = regexp.MustCompile(`\t|\n|\r|\x{00bb}|,\s\x{0432}\b|\x{200e}|\x{b7}|\x{200f}|\x{064e}|\x{064f}`)
-	rxSanitizeRussian    = regexp.MustCompile(`(?i)([\PL\pN])\x{0433}\.`)
-	rxSanitizePeriod     = regexp.MustCompile(`(?i)([^\pN\.])\.`)
-	rxSanitizeOn         = regexp.MustCompile(`(?i)^.*?on:\s+(.*)`)
-	rxSanitizeAposthrope = regexp.MustCompile(strings.Join(apostropheLookAlikeChars, "|"))
-	rxBraces             = regexp.MustCompile(`[{}()<>\[\]]`)
+	braceTransformer = runes.Remove(runes.In(rangetable.New(
+		'{', '}',
+		'(', ')',
+		'<', '>',
+		'[', ']',
+	)))
+
+	rxSanitizeSkip    = regexp.MustCompile(`\t|\n|\r|\x{00bb}|,\s\x{0432}\b|\x{200e}|\x{b7}|\x{200f}|\x{064e}|\x{064f}`)
+	rxSanitizeRussian = regexp.MustCompile(`(?i)([\PL\pN])\x{0433}\.`)
+	rxSanitizePeriod  = regexp.MustCompile(`(?i)([^\pN\.])\.`)
+	rxSanitizeOn      = regexp.MustCompile(`(?i)^.*?on:\s+(.*)`)
 )
 
 // SanitizeSpaces replaces non-breaking spaces into a normal one,
 // then remove any excess whitespaces.
 func SanitizeSpaces(s string) string {
-	s = rxNbsp.ReplaceAllString(s, " ")
+	s = strings.ReplaceAll(s, "\u00A0", "")
 	s = strings.Join(strings.Fields(s), " ")
 	return s
 }
@@ -54,6 +64,12 @@ func NormalizeUnicode(str string) string {
 	return normalized
 }
 
+// NormalizeAposthrope replace apostrope lookalike chars into the ordinary aposthrope.
+func NormalizeAposthrope(s string) string {
+	normalized, _, _ := transform.String(aposthropeTransformer, s)
+	return normalized
+}
+
 // NormalizeCharset is used to normalize charset in a string. Used before
 // detecting language of a string.
 func NormalizeCharset(str string) string {
@@ -62,7 +78,7 @@ func NormalizeCharset(str string) string {
 		str = normalized
 	}
 
-	str = rxSanitizeAposthrope.ReplaceAllString(str, "'")
+	str = NormalizeAposthrope(str)
 	str = strings.ReplaceAll(str, ".", "")
 	str = strings.ToLower(str)
 	str = SanitizeSpaces(str)
@@ -88,14 +104,16 @@ func SanitizeDate(s string) string {
 	s = rxSanitizePeriod.ReplaceAllString(s, "$1")
 	s = rxSanitizeOn.ReplaceAllString(s, "$1")
 	s = strings.TrimSuffix(s, ":")
-	s = rxSanitizeAposthrope.ReplaceAllString(s, "'")
+	s = NormalizeAposthrope(s)
 	s = strings.TrimSpace(s)
 	return s
 }
 
 // StripBraces, as it name implies, will remove any braces from the string.
 func StripBraces(s string) string {
-	return rxBraces.ReplaceAllString(s, "")
+	stripped, _, _ := transform.String(braceTransformer, s)
+	return stripped
+
 }
 
 // TrimChars will trim all character in beginning and end of the string

@@ -50,6 +50,9 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	// Generate map between a language and its descendant (if any)
 	languageMap := createLanguageMap(languageOrder)
 
+	// Generate map of locale order
+	localeOrder := createLocaleOrder(languageLocalesMap, languageOrder)
+
 	// Parse CLDR data
 	cldrLocaleData, err := parseAllCldrData(languageLocalesMap)
 	if err != nil {
@@ -130,6 +133,12 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 
 	path = filepath.Join(GO_CODE_DIR, "03-language-locales-map.go")
 	err = generateCode("lang-loc-map", &languageLocalesMap, path)
+	if err != nil {
+		return err
+	}
+
+	path = filepath.Join(GO_CODE_DIR, "04-locale-order.go")
+	err = generateCode("locale-order", &localeOrder, path)
 	if err != nil {
 		return err
 	}
