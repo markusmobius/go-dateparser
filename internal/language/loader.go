@@ -44,7 +44,7 @@ func GetLocales(locales []string, languages []string, region string, useGivenOrd
 
 			// Make sure language is only used once
 			if !allowConflictingLocales {
-				language := removeRegion(locale)
+				language := strutil.RemoveRegion(locale)
 				if languageTracker.Contain(language) {
 					return nil, ErrConflictingLocales
 				}
@@ -156,16 +156,4 @@ func GetLocale(code string) (*data.LocaleData, error) {
 	}
 
 	return locales[0], nil
-}
-
-func removeRegion(locale string) string {
-	lastIdx := strings.LastIndex(locale, "-")
-	if lastIdx >= 0 {
-		suffix := locale[lastIdx+1:]
-		if suffix != "" && suffix == strings.ToUpper(suffix) {
-			return locale[:lastIdx]
-		}
-	}
-
-	return locale
 }

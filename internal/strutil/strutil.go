@@ -113,7 +113,19 @@ func SanitizeDate(s string) string {
 func StripBraces(s string) string {
 	stripped, _, _ := transform.String(braceTransformer, s)
 	return stripped
+}
 
+// RemoveRegion removes region code from a locale, returning the language of locale.
+func RemoveRegion(locale string) string {
+	lastIdx := strings.LastIndex(locale, "-")
+	if lastIdx >= 0 {
+		suffix := locale[lastIdx+1:]
+		if suffix != "" && suffix == strings.ToUpper(suffix) {
+			return locale[:lastIdx]
+		}
+	}
+
+	return locale
 }
 
 // TrimChars will trim all character in beginning and end of the string

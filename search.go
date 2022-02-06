@@ -2,7 +2,6 @@ package dateparser
 
 import (
 	"fmt"
-	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -17,9 +16,8 @@ import (
 )
 
 var (
-	splitters       = []string{",", "،", "——", "—", "–", ".", " "}
-	rxRegionRemover = regexp.MustCompile(`-([A-Z]+)$`)
-	rxRelativeWord  = regexp.MustCompile(`(?i)(ago|in|from now|tomorrow|today|yesterday)`)
+	splitters     = []string{",", "،", "——", "—", "–", ".", " "}
+	relativeWords = []string{"ago", "in", "from now", "tomorrow", "today", "yesterday"}
 )
 
 type SearchResult struct {
@@ -140,7 +138,7 @@ func getParserLanguages(p *Parser) []string {
 		tracker := strutil.NewDict()
 
 		for _, locale := range p.Locales {
-			language := rxRegionRemover.ReplaceAllString(locale, "")
+			language := strutil.RemoveRegion(locale)
 			if !tracker.Contain(language) {
 				tracker.Add(language)
 				languages = append(languages, language)
@@ -243,7 +241,15 @@ func parseEntry(p *Parser, iCfg *setting.Configuration, entry, translation strin
 		parsedEntry, _ = p.Parse(cfg, entry)
 	}
 
-	isRelative := rxRelativeWord.MatchString(translation)
+	// Check if this date is relative
+	var isRelative bool
+	for _, rw := range relativeWords {
+		if strings.Contains(translation, rw) {
+			isRelative = true
+			break
+		}
+	}
+
 	return parsedEntry, isRelative
 }
 
