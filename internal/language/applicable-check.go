@@ -49,7 +49,7 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	// Check if token exist in locale data
 	for _, token := range tokens {
 		isSkipped := skippedTokens.Contain(token)
-		isNumberOnly := rxNumberOnly.MatchString(token)
+		isNumberOnly := strutil.IsNumberOnly(token)
 		inDictionary := isInDictionary(ld, token)
 
 		var exactCombinedMatch bool
@@ -102,7 +102,7 @@ func CountApplicability(cfg *setting.Configuration, ld *data.LocaleData, str str
 			} else {
 				nSkipped++
 			}
-		} else if rxNumberOnly.MatchString(token) {
+		} else if strutil.IsNumberOnly(token) {
 			nSkipped++
 		}
 	}

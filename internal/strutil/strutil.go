@@ -142,6 +142,16 @@ func TrimChars(s string, chars string) string {
 	})
 }
 
+// IsNumberOnly check if string only consist of number.
+func IsNumberOnly(s string) bool {
+	for _, r := range s {
+		if !unicode.IsDigit(r) {
+			return false
+		}
+	}
+	return true
+}
+
 // Jsonify is used to get a JSON rpresentation of specified data.
 func Jsonify(data interface{}) string {
 	bt, _ := json.Marshal(data)

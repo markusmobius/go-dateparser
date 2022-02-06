@@ -77,7 +77,7 @@ func SplitSentence(ld *data.LocaleData, str string) []string {
 		}
 
 		// If this language use digit abbreviation, make sure end of sentence is not number
-		if useDigitAbbrs && rxNumberOnly.MatchString(eos) {
+		if useDigitAbbrs && strutil.IsNumberOnly(eos) {
 			continue
 		}
 
