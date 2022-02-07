@@ -104,11 +104,13 @@ func TestDetectLanguage(t *testing.T) {
 
 	// Prepare config
 	cfg := setting.Configuration{SkipTokens: []string{"t"}}
+	languages, _ := GetLanguages(nil, nil, false)
+	uniqueCharsets := GetUniqueCharsets(languages)
 
 	// Start test
 	var nFailed int
 	for _, test := range tests {
-		bestLanguage, _ := DetectLanguage(&cfg, test.Text, nil, nil)
+		bestLanguage, _ := DetectLanguage(&cfg, test.Text, languages, uniqueCharsets, nil)
 		if passed := assert.Equal(t, test.Language, bestLanguage); !passed {
 			nFailed++
 		}

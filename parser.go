@@ -50,6 +50,7 @@ type Parser struct {
 
 	usedLocales        []*data.LocaleData
 	usedLocalesTracker strutil.Dict
+	uniqueCharsets     map[string][]rune
 }
 
 // ParserType is the variable to specify which type of parser that will be used.

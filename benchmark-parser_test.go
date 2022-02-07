@@ -7,7 +7,7 @@ import (
 	dps "github.com/markusmobius/go-dateparser"
 )
 
-func BenchmarkParser(b *testing.B) {
+func BenchmarkParser_Parse(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		for _, text := range benchmarkParserTexts {
 			_, err := dps.Parse(nil, text)

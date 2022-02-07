@@ -10,7 +10,8 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
-func DetectLanguage(cfg *setting.Configuration, str string, languages []string, detectLanguagesFunction func(string) []string) (string, error) {
+func DetectLanguage(cfg *setting.Configuration, str string, languages []string,
+	uniqueCharsets map[string][]rune, detectLanguagesFunction func(string) []string) (string, error) {
 	// If custom detect function defined and there are no languages specified,
 	// use the custom detect function
 	if detectLanguagesFunction != nil && len(languages) == 0 {
@@ -28,27 +29,8 @@ func DetectLanguage(cfg *setting.Configuration, str string, languages []string, 
 		}
 	}
 
-	// If list of languages defined, validate it
-	// If not, take from the known language order
-	if len(languages) > 0 {
-		for _, lang := range languages {
-			if _, exist := data.LanguageMap[lang]; !exist {
-				return "", fmt.Errorf("unknown language: %s", lang)
-			}
-		}
-	} else {
-		languages = make([]string, len(data.LanguageOrder))
-		for lang, order := range data.LanguageOrder {
-			languages[order] = lang
-		}
-	}
-
-	// Fetch charset for all languages
-	charsets := getLanguageCharsets(languages)
-	uniqueCharsets := getUniqueCharsets(languages, charsets)
-
 	// Fetch language candidates for the string
-	candidates := getLanguageCandidates(str, languages, charsets, uniqueCharsets)
+	candidates := getLanguageCandidates(str, languages, uniqueCharsets)
 	if len(candidates) == 1 {
 		return candidates[0], nil
 	}
@@ -97,57 +79,7 @@ func DetectLanguage(cfg *setting.Configuration, str string, languages []string, 
 	return finalCandidates[0], nil
 }
 
-func getLanguageCharsets(languages []string) [][]rune {
-	charsets := make([][]rune, len(languages))
-	for i, language := range languages {
-		locale := data.LocaleDataMap[language]
-		charsets[i] = locale.Charset
-	}
-	return charsets
-}
-
-func getUniqueCharsets(languages []string, charsets [][]rune) [][]rune {
-	// Prepare result
-	uniqueCharsets := make([][]rune, len(charsets))
-
-	// Process each charset
-	for i, charset := range charsets {
-		language := languages[i]
-
-		// Initiate map to contain the unique chars for this language
-		mapUniqueChar := map[rune]struct{}{}
-		for _, char := range charset {
-			mapUniqueChar[char] = struct{}{}
-		}
-
-		// Look for charset in the other languages
-		for j, otherCharset := range charsets {
-			otherLanguage := languages[j]
-			if otherLanguage == language {
-				continue
-			}
-
-			// If the charset of this language exist in map, remove it
-			for _, char := range otherCharset {
-				if _, exist := mapUniqueChar[char]; exist {
-					delete(mapUniqueChar, char)
-				}
-			}
-		}
-
-		// Convert map to list
-		var uniqueCharset []rune
-		for char := range mapUniqueChar {
-			uniqueCharset = append(uniqueCharset, char)
-		}
-
-		uniqueCharsets[i] = uniqueCharset
-	}
-
-	return uniqueCharsets
-}
-
-func getLanguageCandidates(str string, languages []string, charsets [][]rune, uniqueCharsets [][]rune) []string {
+func getLanguageCandidates(str string, languages []string, uniqueCharsets map[string][]rune) []string {
 	// Normalize charset
 	str = strutil.NormalizeCharset(str)
 
@@ -171,19 +103,19 @@ func getLanguageCandidates(str string, languages []string, charsets [][]rune, un
 	}
 
 	// Check if this string use unique charsets
-	for i, uniqueCharset := range uniqueCharsets {
-		for _, char := range uniqueCharset {
+	for _, language := range languages {
+		for _, char := range uniqueCharsets[language] {
 			if _, exist := strCharset[char]; exist {
-				return []string{languages[i]}
+				return []string{language}
 			}
 		}
 	}
 
 	// Finally, use any languages whose chars used in string
 	var usedLanguages []string
-	for i, charset := range charsets {
+	for _, language := range languages {
 		var charsetUsed bool
-		for _, char := range charset {
+		for _, char := range data.LocaleDataMap[language].Charset {
 			if _, exist := strCharset[char]; exist {
 				charsetUsed = true
 				break
@@ -191,7 +123,7 @@ func getLanguageCandidates(str string, languages []string, charsets [][]rune, un
 		}
 
 		if charsetUsed {
-			usedLanguages = append(usedLanguages, languages[i])
+			usedLanguages = append(usedLanguages, language)
 		}
 	}
 

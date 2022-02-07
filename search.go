@@ -51,9 +51,19 @@ func (p *Parser) Search(cfg *Configuration, text string) (string, []SearchResult
 		return "", nil, err
 	}
 
+	// Get list of used languages
+	languages, err := language.GetLanguages(p.Locales, p.Languages, p.UseGivenOrder)
+	if err != nil {
+		return "", nil, err
+	}
+
+	// Generate charsets
+	p.initUniqueCharsets(languages)
+
 	// Detect language of the text
 	iCfg := cfg.toInternalConfig()
-	lang, err := language.DetectLanguage(iCfg, text, getParserLanguages(p), p.DetectLanguagesFunction)
+	lang, err := language.DetectLanguage(iCfg, text, languages,
+		p.uniqueCharsets, p.DetectLanguagesFunction)
 	if err != nil {
 		return "", nil, err
 	}
@@ -132,23 +142,30 @@ func (p *Parser) initSearchConfig(cfg *Configuration) (*Configuration, error) {
 	return cfg, nil
 }
 
-func getParserLanguages(p *Parser) []string {
-	if len(p.Locales) > 0 {
-		var languages []string
-		tracker := strutil.NewDict()
+func (p *Parser) initUniqueCharsets(languages []string) {
+	// Lock parser
+	p.Lock()
+	defer p.Unlock()
 
-		for _, locale := range p.Locales {
-			language := strutil.RemoveRegion(locale)
-			if !tracker.Contain(language) {
-				tracker.Add(language)
-				languages = append(languages, language)
-			}
-		}
-
-		return languages
+	// Prepare map
+	if p.uniqueCharsets == nil {
+		p.uniqueCharsets = map[string][]rune{}
 	}
 
-	return p.Languages
+	// Check if charsets need to be generated
+	mustGenerate := len(p.uniqueCharsets) != len(languages)
+	if !mustGenerate {
+		for _, lang := range languages {
+			if _, exist := p.uniqueCharsets[lang]; !exist {
+				mustGenerate = true
+				break
+			}
+		}
+	}
+
+	if mustGenerate {
+		p.uniqueCharsets = language.GetUniqueCharsets(languages)
+	}
 }
 
 func parseFoundObjects(p *Parser, iCfg *setting.Configuration, translation, original []string) ([]parsedSearch, []string) {
