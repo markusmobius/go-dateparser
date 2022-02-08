@@ -287,7 +287,6 @@ func (p *Parser) Parse() (date.Date, error) {
 		dtParams["minute"] = p.ParsedTime.Minute()
 		dtParams["second"] = p.ParsedTime.Second()
 		dtParams["nanosecond"] = p.ParsedTime.Nanosecond()
-		dtLocation = p.ParsedTime.Location()
 	}
 
 	// Create datetime object
