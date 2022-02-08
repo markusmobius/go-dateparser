@@ -1,6 +1,15 @@
 # Go-DateParser
 
-This package provides functionality to easily parse localized dates in almost any string formats commonly found on web pages. This is Go port from the Python library with the same name.
+This package provides functionality to easily parse localized dates in almost any string formats commonly found on web pages. This is Go port from the [Python library][0] with the same name.
+
+## Table of Contents
+
+- [Key Features](#key-features)
+- [Status](#status)
+- [Basic Usage](#basic-usage)
+- [False Positives](#false-positives)
+- [Common Use Cases](#common-use-cases)
+- [License](#license)
 
 ## Key Features
 
@@ -14,7 +23,7 @@ This package provides functionality to easily parse localized dates in almost an
 
 ## Status
 
-This package is up to date with the original dateparser until commit [ff439d1][0] (several commits after [v1.1.0][1]). There are several behavior and implementation differences between this port and the original:
+This package is up to date with the original dateparser until commit [ff439d1][1] (several commits after [v1.1.0][2]). There are several behavior and implementation differences between this port and the original:
 
 - In Python, timezone data is not included in date and time objects. Meanwhile in Go timezone data is required. So, in this parser if the timezone is not specified in the string, parser will use timezone data from the `CurrentTime`.
 - Regex in Go is pretty slow, so in this port, whenever possible we use basic strings or runes operations instead of regex to improve the performance.
@@ -195,8 +204,9 @@ Offering natural interaction with users:
 
 ## License
 
-Just like the original, this package is licensed under [BSD-3 License][2].
+Just like the original, this package is licensed under [BSD-3 License][3].
 
-[0]: https://github.com/scrapinghub/dateparser/commit/ff439d1c5f87ef997951e66c31861720726faffb
-[1]: https://github.com/scrapinghub/dateparser/tree/v1.1.0
-[2]: https://tldrlegal.com/license/bsd-3-clause-license-(revised)
+[0]: https://github.com/scrapinghub/dateparser
+[1]: https://github.com/scrapinghub/dateparser/commit/ff439d1c5f87ef997951e66c31861720726faffb
+[2]: https://github.com/scrapinghub/dateparser/tree/v1.1.0
+[3]: https://tldrlegal.com/license/bsd-3-clause-license-(revised)
