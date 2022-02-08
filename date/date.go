@@ -18,6 +18,21 @@ const (
 	Year
 )
 
+func (p Period) String() string {
+	switch p {
+	case Time:
+		return "Time"
+	case Day:
+		return "Day"
+	case Month:
+		return "Month"
+	case Year:
+		return "Year"
+	default:
+		return ""
+	}
+}
+
 // Date is object that represents the parsed date with useful information.
 type Date struct {
 	Locale string
