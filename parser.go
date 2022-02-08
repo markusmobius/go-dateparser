@@ -72,12 +72,6 @@ const (
 	NoSpacesTime
 )
 
-// Parse parses string representing date and/or time in recognizable localized formats,
-// using the default Parser. Useful for quick use.
-func Parse(cfg *Configuration, str string, formats ...string) (date.Date, error) {
-	return (&Parser{}).Parse(cfg, str, formats...)
-}
-
 // Parse parses string representing date and/or time in recognizable localized formats.
 // Supports parsing multiple languages.
 func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.Date, error) {
