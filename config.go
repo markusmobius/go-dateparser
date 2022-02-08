@@ -45,12 +45,8 @@ type Configuration struct {
 	// expected while parsing ambiguous dates. It defaults to MDY which translates to
 	// month first, day second and year last order. Characters M, D or Y can be shuffled
 	// to meet required order. For example, DMY specifies day first, month second and
-	// year last order.
+	// year last order. If empty, parser will use each locale specific date order.
 	DateOrder string
-	// PreferConfigDateOrder defaults to false. Most languages have a default date order
-	// specified for them. For example, for French it is DMY. If this option set to true,
-	// the language date order will be ignored in favor of the date order from config.
-	PreferConfigDateOrder bool
 	// CurrentTime is the base datetime to use for interpreting partial or relative date
 	// strings. Defaults to the current date and time in UTC.
 	CurrentTime time.Time
@@ -81,16 +77,15 @@ type Configuration struct {
 // Clone clones the config to a new, separate one.
 func (c Configuration) Clone() *Configuration {
 	return &Configuration{
-		DateOrder:             c.DateOrder,
-		PreferConfigDateOrder: c.PreferConfigDateOrder,
-		CurrentTime:           c.CurrentTime,
-		PreferredDayOfMonth:   c.PreferredDayOfMonth,
-		PreferredDateSource:   c.PreferredDateSource,
-		StrictParsing:         c.StrictParsing,
-		RequiredParts:         append([]string{}, c.RequiredParts...),
-		SkipTokens:            append([]string{}, c.SkipTokens...),
-		DefaultLanguages:      append([]string{}, c.DefaultLanguages...),
-		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+		DateOrder:           c.DateOrder,
+		CurrentTime:         c.CurrentTime,
+		PreferredDayOfMonth: c.PreferredDayOfMonth,
+		PreferredDateSource: c.PreferredDateSource,
+		StrictParsing:       c.StrictParsing,
+		RequiredParts:       append([]string{}, c.RequiredParts...),
+		SkipTokens:          append([]string{}, c.SkipTokens...),
+		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
 	}
 }
 
@@ -132,9 +127,6 @@ func (c *Configuration) initiate() *Configuration {
 	c = c.Clone()
 
 	c.DateOrder = strings.ToUpper(c.DateOrder)
-	if c.DateOrder == "" && c.PreferConfigDateOrder {
-		c.DateOrder = "MDY"
-	}
 
 	if c.CurrentTime.IsZero() {
 		c.CurrentTime = time.Now().UTC()
@@ -149,30 +141,28 @@ func (c *Configuration) initiate() *Configuration {
 
 func (c Configuration) toInternalConfig() *setting.Configuration {
 	return &setting.Configuration{
-		DateOrder:             c.DateOrder,
-		PreferConfigDateOrder: c.PreferConfigDateOrder,
-		CurrentTime:           c.CurrentTime,
-		PreferredDayOfMonth:   setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
-		PreferredDateSource:   setting.PreferredDateSource(c.PreferredDateSource),
-		StrictParsing:         c.StrictParsing,
-		RequiredParts:         append([]string{}, c.RequiredParts...),
-		SkipTokens:            append([]string{}, c.SkipTokens...),
-		DefaultLanguages:      append([]string{}, c.DefaultLanguages...),
-		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+		DateOrder:           c.DateOrder,
+		CurrentTime:         c.CurrentTime,
+		PreferredDayOfMonth: setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
+		PreferredDateSource: setting.PreferredDateSource(c.PreferredDateSource),
+		StrictParsing:       c.StrictParsing,
+		RequiredParts:       append([]string{}, c.RequiredParts...),
+		SkipTokens:          append([]string{}, c.SkipTokens...),
+		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
 	}
 }
 
 func configFromInternal(c *setting.Configuration) *Configuration {
 	return &Configuration{
-		DateOrder:             c.DateOrder,
-		PreferConfigDateOrder: c.PreferConfigDateOrder,
-		CurrentTime:           c.CurrentTime,
-		PreferredDayOfMonth:   PreferredDayOfMonth(c.PreferredDayOfMonth),
-		PreferredDateSource:   PreferredDateSource(c.PreferredDateSource),
-		StrictParsing:         c.StrictParsing,
-		RequiredParts:         append([]string{}, c.RequiredParts...),
-		SkipTokens:            append([]string{}, c.SkipTokens...),
-		DefaultLanguages:      append([]string{}, c.DefaultLanguages...),
-		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+		DateOrder:           c.DateOrder,
+		CurrentTime:         c.CurrentTime,
+		PreferredDayOfMonth: PreferredDayOfMonth(c.PreferredDayOfMonth),
+		PreferredDateSource: PreferredDateSource(c.PreferredDateSource),
+		StrictParsing:       c.StrictParsing,
+		RequiredParts:       append([]string{}, c.RequiredParts...),
+		SkipTokens:          append([]string{}, c.SkipTokens...),
+		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
 	}
 }

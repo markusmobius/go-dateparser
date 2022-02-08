@@ -584,7 +584,7 @@ func TestParser_Parse_customOrder(t *testing.T) {
 	}
 
 	// Prepare config
-	cfg := dps.Configuration{PreferConfigDateOrder: true}
+	cfg := dps.Configuration{}
 
 	// Start tests
 	nFailed := 0
@@ -758,9 +758,8 @@ func TestParser_Parse_customParser(t *testing.T) {
 	dt, _ = parser.Parse(&cfg, "10.1.2019")
 	assert.Equal(t, tt(2019, 10, 1), dt.Time)
 
-	// Languages is TH, prefer date order in config
 	parser.Languages = []string{"th"}
-	cfg = dps.Configuration{DateOrder: "MDY", PreferConfigDateOrder: true}
+	cfg = dps.Configuration{DateOrder: "MDY"}
 
 	dt, _ = parser.Parse(&cfg, "03/11/2559 05:13")
 	assert.Equal(t, tt(2559, 3, 11, 5, 13), dt.Time)

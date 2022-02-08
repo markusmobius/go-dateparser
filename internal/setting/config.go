@@ -20,8 +20,7 @@ const (
 
 type Configuration struct {
 	// Date order
-	DateOrder             string
-	PreferConfigDateOrder bool
+	DateOrder string
 
 	// Incomplete dates
 	CurrentTime         time.Time
@@ -38,17 +37,16 @@ type Configuration struct {
 	ReturnTimeAsPeriod bool
 }
 
-func (c Configuration) Clone() Configuration {
-	return Configuration{
-		DateOrder:             c.DateOrder,
-		PreferConfigDateOrder: c.PreferConfigDateOrder,
-		CurrentTime:           c.CurrentTime,
-		PreferredDayOfMonth:   c.PreferredDayOfMonth,
-		PreferredDateSource:   c.PreferredDateSource,
-		StrictParsing:         c.StrictParsing,
-		RequiredParts:         append([]string{}, c.RequiredParts...),
-		SkipTokens:            append([]string{}, c.SkipTokens...),
-		DefaultLanguages:      append([]string{}, c.DefaultLanguages...),
-		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+func (c Configuration) Clone() *Configuration {
+	return &Configuration{
+		DateOrder:           c.DateOrder,
+		CurrentTime:         c.CurrentTime,
+		PreferredDayOfMonth: c.PreferredDayOfMonth,
+		PreferredDateSource: c.PreferredDateSource,
+		StrictParsing:       c.StrictParsing,
+		RequiredParts:       append([]string{}, c.RequiredParts...),
+		SkipTokens:          append([]string{}, c.SkipTokens...),
+		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
 	}
 }

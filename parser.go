@@ -124,30 +124,30 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 	for _, locale := range locales {
 		// Create locale specific config
 		lCfg := iCfg.Clone()
-		if lCfg.DateOrder == "" || !lCfg.PreferConfigDateOrder {
+		if lCfg.DateOrder == "" {
 			lCfg.DateOrder = locale.DateOrder
 		}
 
 		// Translate string
-		translation := language.Translate(&lCfg, locale, str, false)
-		translationWithFormat := language.Translate(&lCfg, locale, str, true)
+		translation := language.Translate(lCfg, locale, str, false)
+		translationWithFormat := language.Translate(lCfg, locale, str, true)
 
 		for _, parserType := range p.ParserTypes {
 			switch parserType {
 			case Timestamp:
-				dt = timestamp.Parse(&lCfg, str)
+				dt = timestamp.Parse(lCfg, str)
 			case RelativeTime:
-				dt = relative.Parse(&lCfg, translation)
+				dt = relative.Parse(lCfg, translation)
 			case CustomFormat:
-				dt = formatted.Parse(&lCfg, translationWithFormat, formats...)
+				dt = formatted.Parse(lCfg, translationWithFormat, formats...)
 			case AbsoluteTime:
 				if t, tz := p.stripBracesAndTimezones(translation); t != "" {
-					dt, _ = absolute.Parse(&lCfg, t)
+					dt, _ = absolute.Parse(lCfg, t)
 					dt = p.applyTimezone(dt, tz)
 				}
 			case NoSpacesTime:
 				if t, tz := p.stripBracesAndTimezones(translation); t != "" {
-					dt, _ = nospace.Parse(&lCfg, t)
+					dt, _ = nospace.Parse(lCfg, t)
 					dt = p.applyTimezone(dt, tz)
 				}
 			}
