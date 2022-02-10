@@ -52,7 +52,7 @@ func (p *Parser) Search(cfg *Configuration, text string) (string, []SearchResult
 	}
 
 	// Get list of used languages
-	languages, err := language.GetLanguages(p.Locales, p.Languages, p.UseGivenOrder)
+	languages, err := language.GetLanguages(cfg.Locales, cfg.Languages, cfg.UseGivenOrder)
 	if err != nil {
 		return "", nil, err
 	}
@@ -99,16 +99,8 @@ func (p *Parser) SearchWithLanguage(cfg *Configuration, lang string, text string
 		languages = []string{ld.Name}
 	}
 
-	// Clone the parser and make it only use the specifed languages
-	parserClone := &Parser{
-		Languages:               languages,
-		TryPreviousLocales:      p.TryPreviousLocales,
-		DetectLanguagesFunction: p.DetectLanguagesFunction,
-		ParserTypes:             p.ParserTypes,
-	}
-
 	// Parse the text
-	parsedSearch, subStrings := parseFoundObjects(parserClone, iCfg, translation, original)
+	parsedSearch, subStrings := p.parseFoundObjects(iCfg, languages, translation, original)
 
 	// Create final result
 	result := make([]SearchResult, len(parsedSearch))
@@ -168,10 +160,10 @@ func (p *Parser) initUniqueCharsets(languages []string) {
 	}
 }
 
-func parseFoundObjects(p *Parser, iCfg *setting.Configuration, translation, original []string) ([]parsedSearch, []string) {
+func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, translation, original []string) ([]parsedSearch, []string) {
 	// Specify entries to parse
 	var parserEntries []string
-	if p.Languages[0] == "en" {
+	if languages[0] == "en" {
 		parserEntries = append([]string{}, translation...)
 	} else {
 		parserEntries = append([]string{}, original...)
@@ -187,7 +179,7 @@ func parseFoundObjects(p *Parser, iCfg *setting.Configuration, translation, orig
 			continue
 		}
 
-		parsedEntry, isRelative := parseEntry(p, iCfg, entry, translation[i], parsedList, needRelativeBase)
+		parsedEntry, isRelative := p.parseEntry(iCfg, languages, entry, translation[i], parsedList, needRelativeBase)
 		if !parsedEntry.IsZero() {
 			parsedList = append(parsedList, parsedSearch{parsedEntry, isRelative})
 			subStrings = append(subStrings, strutil.TrimChars(original[i], ` .,:()[]-'`))
@@ -211,7 +203,7 @@ func parseFoundObjects(p *Parser, iCfg *setting.Configuration, translation, orig
 						continue
 					}
 
-					parsedJEntry, jIsRelative := parseEntry(p, iCfg, jEntry,
+					parsedJEntry, jIsRelative := p.parseEntry(iCfg, languages, jEntry,
 						split.EntryParts[j], currentParseResult, needRelativeBase)
 
 					jSubString := strutil.TrimChars(split.OriginalParts[j], ` .,:()[]-`)
@@ -237,7 +229,7 @@ func parseFoundObjects(p *Parser, iCfg *setting.Configuration, translation, orig
 	return parsedList, subStrings
 }
 
-func parseEntry(p *Parser, iCfg *setting.Configuration, entry, translation string, parsedList []parsedSearch, needRelativeBase bool) (date.Date, bool) {
+func (p *Parser) parseEntry(iCfg *setting.Configuration, languages []string, entry, translation string, parsedList []parsedSearch, needRelativeBase bool) (date.Date, bool) {
 	// Normalize entry
 	entry = strings.ReplaceAll(entry, "ngày", "")
 	entry = strings.ReplaceAll(entry, "am", "")

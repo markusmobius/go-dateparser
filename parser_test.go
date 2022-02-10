@@ -736,31 +736,25 @@ func TestParser_Parse_detectLocale(t *testing.T) {
 	}
 }
 
-func TestParser_Parse_customParser(t *testing.T) {
+func TestParser_Parse_customConfig(t *testing.T) {
 	// Prepare parser
 	parser := dps.Parser{}
 	var dt date.Date
 
-	// Language is DE, config specified
-	cfg := dps.Configuration{PreferredDayOfMonth: dps.First}
-	parser.Languages = []string{"de"}
+	// Language is DE
+	cfg := dps.Configuration{
+		Languages:           []string{"de"},
+		PreferredDayOfMonth: dps.First}
 	dt, _ = parser.Parse(&cfg, "10.1.2019")
 	assert.Equal(t, tt(2019, 1, 10), dt.Time)
 
-	// Languages is DE, config not specified
-	parser.Languages = []string{"de"}
-	dt, _ = parser.Parse(nil, "10.1.2019")
-	assert.Equal(t, tt(2019, 1, 10), dt.Time)
-
-	// Languages not specified, date order in config specified
-	parser.Languages = nil
+	// Languages not specified, date order is specified
 	cfg = dps.Configuration{DateOrder: "MDY"}
 	dt, _ = parser.Parse(&cfg, "10.1.2019")
 	assert.Equal(t, tt(2019, 10, 1), dt.Time)
 
-	parser.Languages = []string{"th"}
-	cfg = dps.Configuration{DateOrder: "MDY"}
-
+	// Languages and date order are specified
+	cfg = dps.Configuration{DateOrder: "MDY", Languages: []string{"th"}}
 	dt, _ = parser.Parse(&cfg, "03/11/2559 05:13")
 	assert.Equal(t, tt(2559, 3, 11, 5, 13), dt.Time)
 
@@ -768,55 +762,58 @@ func TestParser_Parse_customParser(t *testing.T) {
 	assert.Equal(t, tt(2559, 3, 15, 5, 13), dt.Time)
 
 	// Languages set to PT and text is PT as well
-	parser.Languages = []string{"pt"}
-	dt, _ = parser.Parse(nil, "24 de Janeiro de 2014")
+	cfg = dps.Configuration{Languages: []string{"pt"}}
+	dt, _ = parser.Parse(&cfg, "24 de Janeiro de 2014")
 	assert.Equal(t, tt(2014, 1, 24), dt.Time)
 
 	// Languages set to PT but text is EN
-	parser.Languages = []string{"pt"}
-	dt, _ = parser.Parse(nil, "24 January, 2014")
+	cfg = dps.Configuration{Languages: []string{"pt"}}
+	dt, _ = parser.Parse(&cfg, "24 January, 2014")
 	assert.True(t, dt.IsZero())
 
 	// Locales set to pt-TL and text is matched
-	parser.Languages = nil
-	parser.Locales = []string{"pt-TL"}
-	dt, _ = parser.Parse(nil, "24 de Janeiro de 2014")
+	cfg = dps.Configuration{Locales: []string{"pt-TL"}}
+	dt, _ = parser.Parse(&cfg, "24 de Janeiro de 2014")
 	assert.Equal(t, tt(2014, 1, 24), dt.Time)
 
 	// Locales and text not matched
-	parser.Locales = []string{"pt-AO"}
-	dt, _ = parser.Parse(nil, "24 January, 2014")
+	cfg = dps.Configuration{Locales: []string{"pt-AO"}}
+	dt, _ = parser.Parse(&cfg, "24 January, 2014")
 	assert.True(t, dt.IsZero())
 
 	// Restricted languages
-	parser.Locales = nil
-	parser.Languages = []string{"en", "de", "fr", "it", "pt", "nl", "ro", "es", "ru"}
+	cfg = dps.Configuration{
+		Languages: []string{"en", "de", "fr", "it", "pt", "nl", "ro", "es", "ru"},
+	}
 
-	dt, _ = parser.Parse(nil, "07/07/2014") // any language
+	dt, _ = parser.Parse(&cfg, "07/07/2014") // any language
 	assert.Equal(t, tt(2014, 7, 7), dt.Time)
 
-	dt, _ = parser.Parse(nil, "07.jul.2014 | 12:52") // en, es, pt, nl
+	dt, _ = parser.Parse(&cfg, "07.jul.2014 | 12:52") // en, es, pt, nl
 	assert.Equal(t, tt(2014, 7, 7, 12, 52), dt.Time)
 	assert.Equal(t, "en", dt.Locale)
 
-	dt, _ = parser.Parse(nil, "07.ago.2014 | 12:52") // es, it, pt
+	dt, _ = parser.Parse(&cfg, "07.ago.2014 | 12:52") // es, it, pt
 	assert.Equal(t, tt(2014, 8, 7, 12, 52), dt.Time)
 	assert.Equal(t, "es", dt.Locale)
 
-	dt, _ = parser.Parse(nil, "07.feb.2014 | 12:52") // en, de, es, it, nl, ro
+	dt, _ = parser.Parse(&cfg, "07.feb.2014 | 12:52") // en, de, es, it, nl, ro
 	assert.Equal(t, tt(2014, 2, 7, 12, 52), dt.Time)
 	assert.Equal(t, "en", dt.Locale)
 
-	dt, _ = parser.Parse(nil, "07.ene.2014 | 12:52") // es
+	dt, _ = parser.Parse(&cfg, "07.ene.2014 | 12:52") // es
 	assert.Equal(t, tt(2014, 1, 7, 12, 52), dt.Time)
 	assert.Equal(t, "es", dt.Locale)
 
 	// Try previous locales
-	parser = dps.Parser{TryPreviousLocales: true}
-	dt, _ = parser.Parse(nil, "Mañana")
+	cfg = dps.Configuration{TryPreviousLocales: true}
+
+	dt, _ = parser.Parse(&cfg, "Mañana")
 	assert.Equal(t, "es", dt.Locale)
-	dt, _ = parser.Parse(nil, "2020-05-01")
+
+	dt, _ = parser.Parse(&cfg, "2020-05-01")
 	assert.Equal(t, "es", dt.Locale) // is en, but follow the previous locale
-	dt, _ = parser.Parse(nil, "Понедельник")
+
+	dt, _ = parser.Parse(&cfg, "Понедельник")
 	assert.Equal(t, "ru", dt.Locale)
 }

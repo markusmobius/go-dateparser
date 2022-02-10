@@ -23,25 +23,11 @@ import (
 type Parser struct {
 	sync.Mutex
 
-	// Locales is a list of locale codes, e.g. ['fr-PF', 'qu-EC', 'af-NA'].
-	// The parser uses only these locales to translate date string.
-	Locales []string
-	// Languages is a list of language codes, e.g. ['en', 'es', 'zh-Hant']. If
-	// locales are not given, languages and region are used to construct locales
-	// for translation.
-	Languages []string
-	// Region is a region code, e.g. 'IN', '001', 'NE'. If locales are not given,
-	// languages and region are used to construct locales for translation.
-	Region string
-	// If true, locales previously used to translate date are tried first.
-	TryPreviousLocales bool
-	// If true, locales are tried for translation of date string in the order in
-	// which they are given.
-	UseGivenOrder bool
 	// DetectLanguagesFunction is a function for language detection that takes
 	// as input a `text` and returns a list of detected language codes. Note:
 	// this function is only used if `languages` and `locales` are not provided.
 	DetectLanguagesFunction func(string) []string
+
 	// ParserTypes is a list of types of parsers to try, allowing to customize which parsers are tried
 	// against the input date string, and in which order they are tried. By default it will use
 	// all parser in following order: `Timestamp`, `RelativeTime`, `CustomFormat`, `AbsoluteTime`,
@@ -115,7 +101,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 	str = strutil.SanitizeDate(str)
 
 	// Find the suitable locales for this string
-	locales, err := p.getApplicableLocales(iCfg, str)
+	locales, err := p.getApplicableLocales(cfg, iCfg, str)
 	if err != nil {
 		return date.Date{}, err
 	}
@@ -153,8 +139,11 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 			}
 
 			if !dt.IsZero() {
+				if cfg.TryPreviousLocales {
+					p.saveUsedLocale(cfg, locale)
+				}
+
 				dt.Locale = locale.Name
-				p.saveUsedLocale(locale)
 				return dt, nil
 			}
 		}
@@ -163,7 +152,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 	return date.Date{}, fmt.Errorf("failed to parse \"%s\": unknown format", originalStr)
 }
 
-func (p *Parser) getApplicableLocales(iCfg *setting.Configuration, str string) ([]*data.LocaleData, error) {
+func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configuration, str string) ([]*data.LocaleData, error) {
 	// Prepare results
 	var results []*data.LocaleData
 	resultTracker := strutil.NewDict()
@@ -176,27 +165,23 @@ func (p *Parser) getApplicableLocales(iCfg *setting.Configuration, str string) (
 	}
 
 	// Fetch previously used locales first
-	if p.TryPreviousLocales {
-		for _, usedLocale := range p.usedLocales {
-			for _, ds := range dateStrings {
-				if p.localeIsApplicable(iCfg, usedLocale, ds) {
-					results = append(results, usedLocale)
-					resultTracker.Add(usedLocale.Name)
-					break
-				}
-			}
+	if cfg.TryPreviousLocales {
+		ld := p.checkPreviousLocales(iCfg, dateStrings)
+		if ld != nil {
+			results = append(results, ld)
+			resultTracker.Add(ld.Name)
 		}
 	}
 
 	// If specified, use external detector to fetch languages
-	languages := append([]string{}, p.Languages...)
-	if p.DetectLanguagesFunction != nil && len(p.Locales) == 0 && len(languages) == 0 {
+	languages := append([]string{}, cfg.Languages...)
+	if p.DetectLanguagesFunction != nil && len(cfg.Locales) == 0 && len(languages) == 0 {
 		detectionResults := p.DetectLanguagesFunction(str)
 		languages = append(languages, detectionResults...)
 	}
 
 	// Load locales
-	locales, err := language.GetLocales(p.Locales, languages, p.Region, p.UseGivenOrder, false)
+	locales, err := language.GetLocales(cfg.Locales, languages, cfg.Region, cfg.UseGivenOrder, false)
 	if err != nil && err != language.ErrNotFound {
 		return nil, err
 	}
@@ -223,7 +208,7 @@ func (p *Parser) getApplicableLocales(iCfg *setting.Configuration, str string) (
 
 	// Finally, append locales of default languages
 	if len(iCfg.DefaultLanguages) > 0 {
-		locales, _ := language.GetLocales(nil, iCfg.DefaultLanguages, p.Region, p.UseGivenOrder, false)
+		locales, _ := language.GetLocales(nil, cfg.DefaultLanguages, cfg.Region, cfg.UseGivenOrder, false)
 		for _, locale := range locales {
 			if !resultTracker.Contain(locale.Name) {
 				results = append(results, locale)
@@ -234,11 +219,19 @@ func (p *Parser) getApplicableLocales(iCfg *setting.Configuration, str string) (
 	return results, nil
 }
 
-func (p *Parser) saveUsedLocale(ld *data.LocaleData) {
-	if !p.TryPreviousLocales {
-		return
+func (p *Parser) checkPreviousLocales(iCfg *setting.Configuration, dateStrings []string) *data.LocaleData {
+	for _, usedLocale := range p.usedLocales {
+		for _, ds := range dateStrings {
+			if p.localeIsApplicable(iCfg, usedLocale, ds) {
+				return usedLocale
+			}
+		}
 	}
 
+	return nil
+}
+
+func (p *Parser) saveUsedLocale(cfg *Configuration, ld *data.LocaleData) {
 	if p.usedLocalesTracker == nil {
 		p.usedLocalesTracker = strutil.NewDict()
 	}

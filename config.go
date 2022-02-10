@@ -41,34 +41,61 @@ const (
 
 // Configuration is object to control and configure parsing behavior of date parser.
 type Configuration struct {
-	// DateOrder specifies the order in which date components year, month and day are
-	// expected while parsing ambiguous dates. It defaults to MDY which translates to
-	// month first, day second and year last order. Characters M, D or Y can be shuffled
-	// to meet required order. For example, DMY specifies day first, month second and
-	// year last order. If empty, parser will use each locale specific date order.
-	DateOrder string
-	// CurrentTime is the base datetime to use for interpreting partial or relative date
-	// strings. Defaults to the current date and time in UTC.
-	CurrentTime time.Time
-	// PreferredDayOfMonth specify the day for date with missing day. Defaults to `Current`.
-	PreferredDayOfMonth PreferredDayOfMonth
-	// PreferredDateSource specify the date source to fill incomplete date values. Defaults
-	// to `CurrentPeriod`.
-	PreferredDateSource PreferredDateSource
-	// StrictParsing when set to true will make the parser returns a date only if the date
-	// is complete, i.e. has day, month and year value. Defaults to false.
-	StrictParsing bool
-	// RequiredParts is list of date components that required by the parser. Defaults to
-	// `nil` and can accept "day", "month" and "year".
-	RequiredParts []string
-	// SkipTokens is a list of tokens to discard while detecting language. Defaults to
-	// []string{"t"} which skips T in iso format datetime string e.g. 2015-05-02T10:20:19+0000.
-	SkipTokens []string
+	// Locales is a list of locale codes, e.g. ['fr-PF', 'qu-EC', 'af-NA'].
+	// The parser uses only these locales to translate date string.
+	Locales []string
+
+	// Languages is a list of language codes, e.g. ['en', 'es', 'zh-Hant']. If
+	// locales are not given, languages and region are used to construct locales
+	// for translation.
+	Languages []string
+
+	// Region is a region code, e.g. 'IN', '001', 'NE'. If locales are not given,
+	// languages and region are used to construct locales for translation.
+	Region string
+
+	// If true, locales previously used to translate date are tried first.
+	TryPreviousLocales bool
+
+	// If true, locales are tried for translation of date string in the order in
+	// which they are given.
+	UseGivenOrder bool
+
 	// Default languages is a list of language codes in ISO 639 (e.g. "en", "fr") that will be
 	// used as default languages for parsing when language detection fails. When using this
 	// setting, these languages will be tried after trying with the detected languages with no
 	// success. It is especially useful when using the `DetectLanguagesFunction`.
 	DefaultLanguages []string
+
+	// DateOrder specifies the order in which date components year, month and day are
+	// expected while parsing ambiguous dates. It uses characters M, D or Y which can
+	// be shuffled to meet required order. For example, DMY specifies day first, month
+	// second and year last. If empty, parser will use each language specific date order.
+	DateOrder string
+
+	// CurrentTime is the base datetime to use for interpreting partial or relative date
+	// strings. Defaults to the current date and time in UTC.
+	CurrentTime time.Time
+
+	// PreferredDayOfMonth specify the day for date with missing day. Defaults to `Current`.
+	PreferredDayOfMonth PreferredDayOfMonth
+
+	// PreferredDateSource specify the date source to fill incomplete date values. Defaults
+	// to `CurrentPeriod`.
+	PreferredDateSource PreferredDateSource
+
+	// StrictParsing when set to true will make the parser returns a date only if the date
+	// is complete, i.e. has day, month and year value. Defaults to false.
+	StrictParsing bool
+
+	// RequiredParts is list of date components that required by the parser. Defaults to
+	// `nil` and can accept "day", "month" and "year".
+	RequiredParts []string
+
+	// SkipTokens is a list of tokens to discard while detecting language. Defaults to
+	// []string{"t"} which skips T in iso format datetime string e.g. 2015-05-02T10:20:19+0000.
+	SkipTokens []string
+
 	// ReturnTimeAsPeriod returns `Time` as period in date object, if time component is present
 	// in date string. Defaults to false.
 	ReturnTimeAsPeriod bool
@@ -77,6 +104,12 @@ type Configuration struct {
 // Clone clones the config to a new, separate one.
 func (c Configuration) Clone() *Configuration {
 	return &Configuration{
+		Locales:             append([]string{}, c.Locales...),
+		Languages:           append([]string{}, c.Languages...),
+		Region:              c.Region,
+		TryPreviousLocales:  c.TryPreviousLocales,
+		UseGivenOrder:       c.UseGivenOrder,
+		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
 		DateOrder:           c.DateOrder,
 		CurrentTime:         c.CurrentTime,
 		PreferredDayOfMonth: c.PreferredDayOfMonth,
@@ -84,7 +117,6 @@ func (c Configuration) Clone() *Configuration {
 		StrictParsing:       c.StrictParsing,
 		RequiredParts:       append([]string{}, c.RequiredParts...),
 		SkipTokens:          append([]string{}, c.SkipTokens...),
-		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
 		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
 	}
 }
