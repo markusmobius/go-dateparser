@@ -4,7 +4,22 @@ import (
 	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
+	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
+
+func mapSkippedTokens(cfg *setting.Configuration, ld *data.LocaleData) strutil.Dict {
+	skippedTokens := strutil.NewDict()
+	if cfg != nil {
+		skippedTokens.Add(cfg.SkipTokens...)
+	}
+
+	if ld != nil && ld.Name == "fi" {
+		skippedTokens.Remove("t")
+	}
+
+	return skippedTokens
+}
 
 func join(tokens []string, separator string) string {
 	if len(tokens) == 0 {

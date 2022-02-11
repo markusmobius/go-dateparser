@@ -11,10 +11,7 @@ import (
 // If `keepFormatting` is set to true, retain formatting of the date string after translation.
 func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keepFormatting bool) string {
 	// Parse config
-	skippedTokens := strutil.NewDict()
-	if cfg != nil {
-		skippedTokens.Add(cfg.SkipTokens...)
-	}
+	skippedTokens := mapSkippedTokens(cfg, ld)
 
 	// Normalize and simplify the string
 	str = strutil.NormalizeString(str)

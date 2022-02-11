@@ -12,10 +12,7 @@ import (
 
 func TranslateSearch(cfg *setting.Configuration, ld *data.LocaleData, str string) ([]string, []string) {
 	// Parse config
-	skippedTokens := strutil.NewDict()
-	if cfg != nil {
-		skippedTokens.Add(cfg.SkipTokens...)
-	}
+	skippedTokens := mapSkippedTokens(cfg, ld)
 
 	// Split string to sentences
 	var original [][]string

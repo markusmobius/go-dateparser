@@ -15,10 +15,7 @@ import (
 // If `stripTimezone` set to true, timezone will be stripped and ignored.
 func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, stripTimezone bool) bool {
 	// Parse config
-	skippedTokens := strutil.NewDict()
-	if cfg != nil {
-		skippedTokens.Add(cfg.SkipTokens...)
-	}
+	skippedTokens := mapSkippedTokens(cfg, ld)
 
 	// Strip timezone if needed
 	if stripTimezone {

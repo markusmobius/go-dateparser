@@ -1513,6 +1513,12 @@ func TestTranslate_relative(t *testing.T) {
 		{"zu", "manje", "0 second ago"},
 	}
 
+	// Prepare config
+	cfg := &setting.Configuration{
+		SkipTokens: []string{"t"},
+	}
+
+	// Start tests
 	nFailed := 0
 	for _, test := range tests {
 		// Prepare log message
@@ -1521,14 +1527,6 @@ func TestTranslate_relative(t *testing.T) {
 		// Load locale
 		ld, err := GetLocale(test.Locale)
 		assert.Nil(t, err, message)
-
-		// Prepare config: finnish language use "t" as hour, so empty SKIP_TOKENS.
-		var cfg *setting.Configuration
-		if test.Locale != "fi" {
-			cfg = &setting.Configuration{
-				SkipTokens: []string{"t"},
-			}
-		}
 
 		// Translate string
 		translation := Translate(cfg, ld, test.String, false)
