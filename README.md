@@ -42,7 +42,7 @@ This package is up to date with the original dateparser until commit [ff439d1][o
 
 ## <a name="common-use-cases"></a> 3. Common Use Cases [▲](#table-of-contents)
 
-**dateparser** can be used with a really different number of purposes, but it stands out when it comes to:
+**dateparser** can be used for many different purposes, but it stands out when it comes to:
 
 Consuming data from different sources:
 
@@ -230,7 +230,7 @@ dt, _ = dps.Parse(cfg, "miy 02-03-2016") // philippines, keep using MDY date ord
 
 ## <a name="timezone-and-utc-offset"></a> 9. Timezone And UTC Offset [▲](#table-of-contents)
 
-By default, **dateparser** will uses timezone that present in the date string. If the timezone is not present, then it will uses timezone from the `CurrentTime`:
+By default, **dateparser** uses the timezone that is present in the date string. If the timezone is not present, then it will use timezone from the `CurrentTime`:
 
 ```go
 // Current time is 2015-06-01 12:00:00 WIB
