@@ -1,6 +1,9 @@
 package dateparser
 
-import "github.com/markusmobius/go-dateparser/date"
+import (
+	"github.com/markusmobius/go-dateparser/date"
+	"github.com/markusmobius/go-dateparser/internal/data"
+)
 
 var defaultParser = &Parser{}
 
@@ -15,4 +18,11 @@ func Parse(cfg *Configuration, str string, formats ...string) (date.Date, error)
 // for quick use.
 func Search(cfg *Configuration, text string) (string, []SearchResult, error) {
 	return defaultParser.Search(cfg, text)
+}
+
+// IsKnownLocale is helper function to check if the specified locale or language can be parsed
+// by the Parser. The code must be in ISO639 format.
+func IsKnownLocale(code string) bool {
+	_, exist := data.LocaleDataMap[code]
+	return exist
 }
