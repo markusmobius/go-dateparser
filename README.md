@@ -1,195 +1,50 @@
-# Go-DateParser
+# Go-DateParser [![Go Reference][go-ref-icon]][go-ref]
 
-This package provides functionality to easily parse localized dates in almost any string formats commonly found on web pages. This is Go port from the [Python library][0] with the same name.
+This package provides functionality to easily parse localized dates in almost any string formats commonly found on web pages. This is Go port from the [Python library][original] with the same name.
 
-## Table of Contents
-
-- [Key Features](#key-features)
-- [Status](#status)
-- [Basic Usage](#basic-usage)
-- [False Positives](#false-positives)
-- [Common Use Cases](#common-use-cases)
-- [License](#license)
-
-## Key Features
-
-- Support for almost every existing date format: absolute dates, relative dates (`"two weeks ago"` or `"tomorrow"`), timestamps, etc.
-- Support for more than 200 language locales.
-- Language autodetection
-- Customizable behavior through settings.
-- Support for non-Gregorian calendar systems.
-- Support for dates with timezones abbreviations or UTC offsets (`"August 14, 2015 EST"`, `"21 July 2013 10:15 pm +0500"`, etc)
-- Search dates in longer texts.
-
-## Status
-
-This package is up to date with the original dateparser until commit [ff439d1][1] (several commits after [v1.1.0][2]). There are several behavior and implementation differences between this port and the original:
-
-- In Python, timezone data is not included in date and time objects. Meanwhile in Go timezone data is required. So, in this parser if the timezone is not specified in the string, parser will use timezone data from the `CurrentTime`.
-- Regex in Go is pretty slow, so in this port, whenever possible we use basic strings or runes operations instead of regex to improve the performance.
-
-## Basic Usage
-
-Install the package inside your project:
+To use it, install the package inside your project:
 
 ```
 go get -u -v github.com/markusmobius/go-dateparser
 ```
 
-Then use the parser in your code. The most straightforward way to parse dates with **dateparser** is to use the `dateparser.Parse()` function, that wraps around most of the functionality of the module.
+## Table of Contents
 
-```go
-package main
+1. [Features](#features)
+2. [Status](#status)
+3. [Common use cases](#common-use-cases)
+4. [Usage](#usage)
+5. [Supported languages and locales](#supported-languages-and-locales)
+6. [Supported patterns](#supported-patterns)
+7. [Supported calendars](#supported-calendars)
+8. [Language based date order](#language-based-date-order)
+9. [Timezone and UTC offset](#timezone-and-utc-offset)
+10. [Incomplete date handling](#incomplete-date-handling)
+11. [Custom language detector](#custom-language-detector)
+12. [Handling false positives](#handling-false-positives)
+13. [License](#license)
 
-import (
-	"fmt"
-	"time"
+## <a name="features"></a> 1. Features [▲](#table-of-contents)
 
-	dps "github.com/markusmobius/go-dateparser"
-)
+- Generic parsing of dates in over 200 language locales plus numerous formats in a language agnostic fashion.
+- Generic parsing of relative dates like: `"1 min ago"`, `"2 weeks ago"`, `"3 months, 1 week and 1 day ago"`, `"in 2 days"`, `"tomorrow"`.
+- Generic parsing of dates with time zones abbreviations or UTC offsets like: `"August 14, 2015 EST"`, `"July 4, 2013 PST"`, `"21 July 2013 10:15 pm +0500"`.
+- Date lookup in longer texts.
+- Support for non-Gregorian calendar systems. See [Supported Calendars](#supported-calendars).
+- Extensive test coverage.
 
-func main() {
-	texts := []string{
-		"Fri, 12 Dec 2014 10:55:50",
-		"1991-05-17",
-		"In two months", // today is 1st Aug 2020
-		"1484823450",    // timestamp
-		"January 12, 2012 10:00 PM EST",
-	}
+## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-	cfg := &dps.Configuration{
-		CurrentTime: time.Date(2020, 8, 1, 0, 0, 0, 0, time.UTC),
-	}
+This package is up to date with the original dateparser until commit [ff439d1][original-commit] (several commits after [v1.1.0][original-tag]). There are several behavior and implementation differences between this port and the original:
 
-	for _, text := range texts {
-		dt, _ := dps.Parse(cfg, text)
-		fmt.Printf("locale: %s, time: %s, confidence: %s\n",
-			dt.Locale, dt.Time, dt.Period)
-	}
-}
+- In Python, timezone data is not included in date and time objects. Meanwhile in Go timezone data is required.
+- Regex in Go is pretty slow, so in this port whenever possible we use basic strings or runes operations instead of regex to improve the performance.
 
-/*
-Output:
-
-locale: en, time: 2014-12-12 10:55:50 +0000 UTC, confidence: Day
-locale: en, time: 1991-05-17 00:00:00 +0000 UTC, confidence: Day
-locale: en, time: 2020-10-01 00:00:00 +0000 UTC, confidence: Month
-locale: en, time: 2017-01-19 17:57:30 +0700 WIB, confidence: Day
-locale: en, time: 2012-01-12 22:00:00 -0500 EST, confidence: Day
-*/
-```
-
-As you can see, **dateparser** works with different date formats, but it can also be used directly with strings in different languages:
-
-```go
-package main
-
-import (
-	"fmt"
-	"time"
-
-	dps "github.com/markusmobius/go-dateparser"
-)
-
-func main() {
-	texts := []string{
-		"Martes 21 de Octubre de 2014", // Spanish (Tuesday 21 October 2014)
-		"Le 11 Décembre 2014 à 09:00",  // French (11 December 2014 at 09:00)
-		"13 января 2015 г. в 13:34",    // Russian (13 January 2015 at 13:34)
-		"1 เดือนตุลาคม 2005, 1:00 AM",  // Thai (1 October 2005, 1:00 AM)
-		"yaklaşık 23 saat önce",        // Turkish (23 hours ago), current time: 23:46
-		"2小时前",                         // Chinese (2 hours ago), current time: 23:46
-	}
-
-	cfg := &dps.Configuration{
-		CurrentTime: time.Date(2020, 8, 1, 23, 46, 0, 0, time.UTC),
-	}
-
-	for _, text := range texts {
-		dt, _ := dps.Parse(cfg, text)
-		fmt.Printf("locale: %s, time: %s, confidence: %s\n",
-			dt.Locale, dt.Time, dt.Period)
-	}
-}
-
-/*
-Output:
-
-locale: es, time: 2014-10-21 00:00:00 +0000 UTC, confidence: Day
-locale: fr, time: 2014-12-11 09:00:00 +0000 UTC, confidence: Day
-locale: ru, time: 2015-01-13 13:34:00 +0000 UTC, confidence: Day
-locale: th, time: 2005-10-01 01:00:00 +0000 UTC, confidence: Day
-locale: tr, time: 2020-08-01 00:46:00 +0000 UTC, confidence: Day
-locale: zh, time: 2020-08-01 21:46:00 +0000 UTC, confidence: Day
-*/
-```
-
-You can control multiple behaviors by using the `Configuration` parameter:
-
-```go
-package main
-
-import (
-	"fmt"
-	"time"
-
-	dps "github.com/markusmobius/go-dateparser"
-	"github.com/markusmobius/go-dateparser/date"
-)
-
-func main() {
-	// Initial configuration
-	cfg := &dps.Configuration{
-		CurrentTime: time.Date(2020, 9, 23, 0, 0, 0, 0, time.UTC),
-	}
-
-	// Custom date order
-	cfg.DateOrder = "YMD"
-	cfg.PreferConfigDateOrder = true
-	dt, _ := dps.Parse(cfg, "2014-10-12")
-	printDate(dt)
-
-	cfg.DateOrder = "YDM"
-	cfg.PreferConfigDateOrder = true
-	dt, _ = dps.Parse(cfg, "2014-10-12")
-	printDate(dt)
-
-	// Has preferred date source
-	cfg.PreferredDateSource = dps.Future
-	dt, _ = dps.Parse(cfg, "1 year")
-	printDate(dt)
-}
-
-func printDate(dt date.Date) {
-	fmt.Printf("locale: %s, time: %s, confidence: %s\n",
-		dt.Locale, dt.Time, dt.Period)
-}
-
-/*
-Output:
-
-locale: en, time: 2014-10-12 00:00:00 +0000 UTC, confidence: Day
-locale: en, time: 2014-12-10 00:00:00 +0000 UTC, confidence: Day
-locale: en, time: 2021-09-23 00:00:00 +0000 UTC, confidence: Year
-*/
-```
-
-To see more, check out the advanced [docs](docs).
-
-## False Positives
-
-By default **dateparser** will do its best to return a date, dealing with multiple formats and different locales. For that reason it is important that the input is a valid date, otherwise it could return false positives.
-
-To reduce the possibility of receiving false positives, make sure that:
-
-- The input string is a valid date and it doesn't contain any other words or numbers.
-- If you know the language or languages beforehand you add them through the languages or locales properties of the `Parser`. You also could exclude any of the parser method (timestamp, relative-time...) or change the order in which they are executed.
-
-## Common Use Cases
+## <a name="common-use-cases"></a> 3. Common Use Cases [▲](#table-of-contents)
 
 **dateparser** can be used with a really different number of purposes, but it stands out when it comes to:
 
-### Consuming data from different sources:
+Consuming data from different sources:
 
 - **Scraping**: extract dates from different places with several different formats and languages
 - **IoT**: consuming data coming from different sources with different date formats
@@ -202,11 +57,370 @@ Offering natural interaction with users:
 - **Search engine**: allow people to search by date in an easiest / natural format.
 - **Bots**: allow users to interact with a bot easily
 
-## License
+## <a name="usage"></a> 4. Usage [▲](#table-of-contents)
 
-Just like the original, this package is licensed under [BSD-3 License][3].
+The most straightforward way is to use the [`dateparser.Parse`][dps-parse] function that wraps around most of the functionality:
 
-[0]: https://github.com/scrapinghub/dateparser
-[1]: https://github.com/scrapinghub/dateparser/commit/ff439d1c5f87ef997951e66c31861720726faffb
-[2]: https://github.com/scrapinghub/dateparser/tree/v1.1.0
-[3]: https://tldrlegal.com/license/bsd-3-clause-license-(revised)
+```go
+dt, err := dateparser.Parse(nil, "6 July 2020")
+// locale: en, time: 2020-07-06 00:00:00, confidence: Day
+```
+
+You can also extract dates from longer strings of text by using [`dateparser.Search`][dps-search]. The extracted dates are returned as list of [`SearchResult`][dps-search-result] containing data of the extracted date and its original string:
+
+> Support for searching dates is really limited and needs a lot of improvement.
+
+```go
+_, dates, _ := dps.Search(nil, "The client arrived to the office for the first time "+
+	"in March 3rd, 2004 and got serviced, after a couple of months, on May 6th 2004, "+
+	"the customer returned indicating a defect on the part")
+
+// Output, formatted:
+// "in March 3rd, 2004 and" => time: 2004-03-03 00:00:00, confidence: Day
+// "on May 6th 2004" => time: 2004-05-06 00:00:00, confidence: Day
+```
+
+If you need more control over what is being parsed, check the documentation for [`Configuration`][dps-config] and [`Parser`][dps-parser].
+
+## <a name="supported-languages-and-locales"></a> 5. Supported Languages and Locales [▲](#table-of-contents)
+
+You can check the supported locales by checking out [this code][dps-locale-list]. In total there are almost 300 locales across 205 languages.
+
+## <a name="supported-patterns"></a> 6. Supported Patterns [▲](#table-of-contents)
+
+There are several patterns that can be parsed by **dateparser**:
+
+- Timestamp
+- Relative date
+- Absolute date
+- Custom specified formats
+
+### 6.1. Timestamp
+
+Timestamp is the date time string in Unix time format:
+
+```go
+dt, _ := dps.Parse(nil, "1570308760263")
+// time: 2019-10-05 20:52:40 +0000, confidence: Day
+```
+
+### 6.2. Relative Date
+
+Relative date is pattern where the date is specified in relative value like "1 week ago" or "5 years ago". **Dateparser** will try to parse a date from the given string, attempting to detect the language for each time:
+
+```go
+// Current time is 2015-06-01 00:00:00
+cfg := &dps.Configuration{
+	CurrentTime: time.Date(2015, 6, 1, 0, 0, 0, 0, time.UTC),
+}
+
+var dt date.Date
+dt, _ = dps.Parse(cfg, "1 hour ago")
+// time: 2015-05-31 23:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(cfg, "Il ya 2 heures") // French (2 hours ago)
+// time: 2015-05-31 22:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(cfg, "1 anno 2 mesi") // Italian (1 year 2 months)
+// time: 2014-04-01 00:00:00 UTC, confidence: Month
+
+dt, _ = dps.Parse(cfg, "yaklaşık 23 saat önce") // Turkish (23 hours ago)
+// time: 2015-05-31 01:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(cfg, "Hace una semana") // Spanish (a week ago)
+// time: 2015-05-25 00:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(cfg, "2小时前") // Chinese (2 hours ago)
+// time: 2015-05-31 22:00:00 UTC, confidence: Day
+```
+
+### 6.3. Absolute Date
+
+Absolute date is pattern where the date (and time) is explicitly mentioned, e.g. "12 August 2021" or "23 January, 15:05". Like the relative time, **dateparser** will try to detect the language for each time:
+
+```go
+dt, _ = dps.Parse(nil, "12/12/12")
+// time: 2012-12-12 00:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(nil, "Fri, 12 Dec 2014 10:55:50")
+// time: 2014-12-12 10:55:50 UTC, confidence: Day
+
+dt, _ = dps.Parse(nil, "Martes 21 de Octubre de 2014") // Spanish (Tuesday 21 October 2014)
+// time: 2014-10-21 00:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(nil, "Le 11 Décembre 2014 à 09:00") // French (11 December 2014 at 09:00)
+// time: 2014-12-11 09:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(nil, "13 января 2015 г. в 13:34") // Russian (13 January 2015 at 13:34)
+// time: 2015-01-13 13:34:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(nil, "1 เดือนตุลาคม 2005, 1:00 AM") // Thai (1 October 2005, 1:00 AM)
+// time: 2005-10-01 01:00:00 UTC, confidence: Day
+```
+
+### 6.4. Custom Specified Formats
+
+If you know the possible formats of the dates, you can specify it yourself using the Go time's layout:
+
+```go
+dt, _ = dps.Parse(nil, "22 Décembre 2010", "02 January 2006")
+// time: 2010-12-22 00:00:00 UTC, confidence: Day
+```
+
+## <a name="supported-calendars"></a> 7. Supported Calendars [▲](#table-of-contents)
+
+Apart from the Georgian calendar, **dateparser** also supports the Persian Jalali calendar and the Hijri calendar which can be used by calling [`dateparser.ParseJalali`][dps-jalali] and [`dateparser.ParseHijri`][dps-hijri].
+
+Persian Jalali calendar is also often called Solar Hijri calendar and commonly used in Iran and Afghanistan.
+
+Hijri calendar is a Lunar calendar which commonly used in Islamic countries. Some only use it for religious purposes (e.g. calculating when Ramadhan or Hajj started) while some also use it for both administrative purposes.
+
+There are several variations of Hijri calendar, e.g. [Tabular][tabular-hijri] and [Umm al-Qura][umm-al-qura]. In **dateparser** we use Umm al-Qura calendar since it's the one that apparently mpstly used by Islamic world.
+
+```go
+dt, _ = dps.ParseJalali(nil, "جمعه سی ام اسفند ۱۳۸۷")
+// time: 2009-03-20 00:00:00, confidence: Day
+
+dt, _ = dps.ParseHijri(nil, "17-01-1437 هـ 08:30 مساءً")
+// time: 2015-10-30 20:30:00, confidence: Day
+```
+
+> Note: Hijri and Jalali parser on support the absolute date pattern, so relative and timestamp pattern won't work.
+
+## <a name="language-based-date-order"></a> 8. Language Based Date Order [▲](#table-of-contents)
+
+By default **dateparser** will use date order from the detected language:
+
+```go
+dt, _ = dps.Parse(nil, "02-03-2016") // assumes english language, uses MDY date order
+// time: 2016-02-03 00:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(nil, "le 02-03-2016") // detects french, uses DMY date order
+// time: 2016-03-02 00:00:00 UTC, confidence: Day
+```
+
+However, ordering is not locale based. So, since most English speakers come from America which uses _MDY_ order, it will be used as default order. That's why you can't expect to use _DMY_ order for UK/Australia English by default.
+
+To solve this issue, you can explicitly specify the date order in `Configuration`:
+
+```go
+cfg = &dps.Configuration{DateOrder: dps.DMY}
+dt, _ = dps.Parse(cfg, "02-03-2016")
+// time: 2016-03-02 00:00:00 UTC, confidence: Day
+```
+
+You can also specify the date order only for a specific locale:
+
+```go
+cfg = &dps.Configuration{
+	DateOrder: func(locale string) string {
+		if locale == "en" {
+			return "DMY"
+		}
+		return dps.DefaultDateOrder(locale)
+	},
+}
+
+dt, _ = dps.Parse(cfg, "02-03-2016") // english language, now use DMY date order
+// locale: en, time: 2016-03-02 00:00:00 UTC, confidence: Day
+
+dt, _ = dps.Parse(cfg, "miy 02-03-2016") // philippines, keep using MDY date order
+// locale: fil, time: 2016-02-03 00:00:00 UTC, confidence: Day
+```
+
+## <a name="timezone-and-utc-offset"></a> 9. Timezone And UTC Offset [▲](#table-of-contents)
+
+By default, **dateparser** will uses timezone that present in the date string. If the timezone is not present, then it will uses timezone from the `CurrentTime`:
+
+```go
+// Current time is 2015-06-01 12:00:00 WIB
+wib := time.FixedZone("WIB", 7*60*60)
+cfg := &dps.Configuration{
+	CurrentTime: time.Date(2015, 6, 1, 12, 0, 0, 0, wib),
+}
+
+dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM EST")
+// time: 2012-01-12 22:00:00 EST, confidence: Day
+
+dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM -0500")
+// time: 2012-01-12 22:00:00 UTC-05:00, confidence: Day
+
+dt, _ = dps.Parse(cfg, "2 hours ago EST")
+// time: 2015-05-31 22:00:00 EST, confidence: Day
+
+dt, _ = dps.Parse(cfg, "2 hours ago -0500")
+// time: 2015-05-31 22:00:00 UTC-05:00, confidence: Day
+
+dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM") // use tz from current time
+// time: 2012-01-12 22:00:00 WIB, confidence: Day
+
+dt, _ = dps.Parse(cfg, "2 hours ago") // use tz from current time
+// time: 2015-06-01 10:00:00 WIB, confidence: Day
+```
+
+## <a name="incomplete-date-handling"></a> 10. Incomplete Date Handling [▲](#table-of-contents)
+
+By default **dateparser** will try to fill incomplete dates with value from current time:
+
+```go
+// Current time is 2015-07-31 12:00:00 UTC
+cfg := &dps.Configuration{
+	CurrentTime: time.Date(2015, 7, 31, 12, 0, 0, 0, time.UTC),
+}
+
+dt, _ = dps.Parse(cfg, "December 2015")
+// time: 2015-12-31 00:00:00 UTC (day from current time)
+
+dt, _ = dps.Parse(cfg, "February 2020")
+// time: 2020-02-29 00:00:00 UTC (day from current time, corrected for leap year)
+
+dt, _ = dps.Parse(cfg, "December")
+// time: 2015-12-31 00:00:00 UTC (year and day from current time)
+
+dt, _ = dps.Parse(cfg, "2015")
+// time: 2015-07-31 00:00:00 UTC (day and month from current time)
+
+dt, _ = dps.Parse(cfg, "Sunday")
+// time: 2015-07-26 00:00:00 UTC (the closest Sunday from current time)
+```
+
+You can change the behavior by using `PreferredDayOfMonth` and `PreferredDateSource` in `Configuration`:
+
+```go
+// Current time is 2015-07-10 12:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.Current
+dt, _ = dps.Parse(cfg, "December 2015")
+// time: 2015-12-10 00:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.First
+dt, _ = dps.Parse(cfg, "December 2015")
+// time: 2015-12-01 00:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.Last
+dt, _ = dps.Parse(cfg, "December 2015")
+// time: 2015-12-31 00:00:00 UTC
+```
+
+```go
+// Current time is 2015-10-10 12:00:00 UTC
+
+cfg.PreferredDateSource = dps.CurrentPeriod
+dt, _ = dps.Parse(cfg, "March")
+// time: 2015-03-10 00:00:00 UTC
+
+cfg.PreferredDateSource = dps.Future
+dt, _ = dps.Parse(cfg, "March")
+// time: 2016-03-10 00:00:00 UTC
+
+cfg.PreferredDateSource = dps.Past
+dt, _ = dps.Parse(cfg, "August")
+// time: 2015-08-10 00:00:00 UTC
+```
+
+You can also ignore parsing incomplete dates altogether by setting `StrictParsing` in config:
+
+```go
+cfg = &dps.Configuration{StrictParsing: true}
+dt, _ = dps.Parse(cfg, "March")
+fmt.Println(dt.IsZero()) // true
+```
+
+## <a name="custom-language-detector"></a> 11. Custom Language Detector [▲](#table-of-contents)
+
+**Dateparser** allows to use a language detection behavior by using the `DetectLanguagesFunction` in the `Parser`. Using this, you can use any language detectors that you want. However since language detection often fail or inaccurate for short strings, it's highly recommended to use `DetectLanguagesFunction` while specifying `DefaultLanguages` in `Configuration`.
+
+Here is an example on how to use [`lingua-go`][lingua-go] as detector:
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+
+	dps "github.com/markusmobius/go-dateparser"
+	"github.com/markusmobius/go-dateparser/date"
+	"github.com/pemistahl/lingua-go"
+)
+
+func main() {
+	// Prepare detector
+	detector := lingua.
+		NewLanguageDetectorBuilder().
+		FromAllLanguages().
+		WithPreloadedLanguageModels().
+		Build()
+
+	// Create custom Parser
+	p := dps.Parser{
+		DetectLanguagesFunction: func(s string) []string {
+			var languages []string
+
+			candidates := detector.ComputeLanguageConfidenceValues(s)
+			for _, c := range candidates {
+				isoCode := c.Language().IsoCode639_1().String()
+				isoCode = strings.ToLower(isoCode)
+
+				if c.Value() >= 0.9 && dps.IsKnownLocale(isoCode) {
+					languages = append(languages, isoCode)
+				}
+			}
+
+			return languages
+		},
+	}
+
+	// Use the custom Parser to parse
+	dt, _ := p.Parse(nil, "Sabtu, 13 Maret 2021")
+	printDate(dt) // locale: id, time: 2021-03-13 00:00:00 UTC, confidence: Day
+
+	// It will fail for short strings
+	dt, _ = p.Parse(nil, "13 Maret 2021")
+	fmt.Println(dt.IsZero()) // true
+
+	// So we need to specify default languages
+	cfg := &dps.Configuration{DefaultLanguages: []string{"id"}}
+	dt, _ = p.Parse(cfg, "13 Maret 2021")
+	printDate(dt) // locale: id, time: 2021-03-13 00:00:00 UTC, confidence: Day
+}
+
+func printDate(dt date.Date) {
+	fmt.Printf("locale: %s, time: %s, confidence: %s\n",
+		dt.Locale, dt.Time.Format("2006-01-02 15:04:05 MST"), dt.Period)
+}
+```
+
+## <a name="handling-false-positives"></a> 12. Handling False Positives [▲](#table-of-contents)
+
+By default **dateparser** will do its best to return a date, dealing with multiple formats and different locales. For that reason it is important that the input is a valid date, otherwise it could return false positives.
+
+To reduce the possibility of receiving false positives, make sure that:
+
+- The input string is a valid date and it doesn't contain any other words or numbers.
+- If you know the languages or locales beforehand, you can specify them in the `Configuration`.
+
+Besides those, you also could exclude any of the [parser method][dps-parser-type] (timestamp, relative-time...) or change the order in which they are executed.
+
+## <a name="license"></a> 13. License [▲](#table-of-contents)
+
+Just like the original, this package is licensed under [BSD-3 License][bsd3].
+
+[go-ref-icon]: https://pkg.go.dev/badge/github.com/markusmobius/go-dateparser.svg
+[go-ref]: https://pkg.go.dev/github.com/markusmobius/go-dateparser
+[original]: https://github.com/scrapinghub/dateparser
+[original-commit]: https://github.com/scrapinghub/dateparser/tree/ff439d1c5f87ef997951e66c31861720726faffb
+[original-tag]: https://github.com/scrapinghub/dateparser/tree/v1.1.0
+[dps-parse]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Parse
+[dps-jalali]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseJalali
+[dps-hijri]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseHijri
+[dps-search]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Search
+[dps-search-result]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#SearchResult
+[dps-config]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Configuration
+[dps-parser]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Parser
+[dps-parser-type]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParserType
+[dps-locale-list]: https://github.com/markusmobius/go-dateparser/blob/main/internal/data/04-locale-order.go
+[tabular-hijri]: https://en.wikipedia.org/wiki/Tabular_Islamic_calendar
+[umm-al-qura]: https://webspace.science.uu.nl/~gent0113/islam/ummalqura.htm
+[lingua-go]: https://github.com/pemistahl/lingua-go
+[bsd3]: https://tldrlegal.com/license/bsd-3-clause-license-(revised)
