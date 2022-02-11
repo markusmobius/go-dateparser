@@ -17,8 +17,12 @@ func ParseHijri(cfg *Configuration, str string) (date.Date, error) {
 
 	// Hijri usually used in Eastern country which uses DMY,
 	// so here it used as default.
-	if cfg.DateOrder == "" {
-		cfg.DateOrder = "DMY"
+	dateOrder := "DMY"
+	if cfg.DateOrder != nil {
+		do := cfg.DateOrder("")
+		if do, valid := validateDateOrder(do); valid {
+			dateOrder = do
+		}
 	}
 
 	cfg = cfg.initiate()
@@ -29,5 +33,6 @@ func ParseHijri(cfg *Configuration, str string) (date.Date, error) {
 
 	// Start parser
 	iCfg := cfg.toInternalConfig()
+	iCfg.DateOrder = dateOrder
 	return hijri.Parse(iCfg, str)
 }

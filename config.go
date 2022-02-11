@@ -5,7 +5,25 @@ import (
 	"strings"
 	"time"
 
+	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+)
+
+// DateOrder is function that returns date order string for specified language and/or locale.
+// The returned date order MUST only uses characters M, D or Y which represents month, day and year.
+type DateOrder func(locale string) string
+
+var (
+	YMD = func(_ string) string { return "YMD" }
+	YDM = func(_ string) string { return "YDM" }
+	MYD = func(_ string) string { return "MYD" }
+	MDY = func(_ string) string { return "MDY" }
+	DYM = func(_ string) string { return "DYM" }
+	DMY = func(_ string) string { return "DMY" }
+
+	DefaultDateOrder = func(locale string) string {
+		return data.LocaleDataMap[locale].DateOrder
+	}
 )
 
 // PreferredDateSource is the variable to set date source to fill incomplete dates value.
@@ -67,11 +85,10 @@ type Configuration struct {
 	// success. It is especially useful when using the `DetectLanguagesFunction`.
 	DefaultLanguages []string
 
-	// DateOrder specifies the order in which date components year, month and day are
-	// expected while parsing ambiguous dates. It uses characters M, D or Y which can
-	// be shuffled to meet required order. For example, DMY specifies day first, month
-	// second and year last. If empty, parser will use each language specific date order.
-	DateOrder string
+	// DateOrder is function that specifies the order in which date components year, month
+	// and day are expected while parsing ambiguous dates. If empty, parser will use each
+	// language specific date order.
+	DateOrder DateOrder
 
 	// CurrentTime is the base datetime to use for interpreting partial or relative date
 	// strings. Defaults to the current date and time in UTC.
@@ -123,16 +140,6 @@ func (c Configuration) Clone() *Configuration {
 
 // validate validates the configuration and return error if it's not valid.
 func (c Configuration) validate() error {
-	// Validate date order
-	c.DateOrder = strings.ToUpper(c.DateOrder)
-	for _, char := range c.DateOrder {
-		switch char {
-		case 'D', 'M', 'Y':
-		default:
-			return fmt.Errorf("invalid component in date order: %q", char)
-		}
-	}
-
 	// Validate preferred day of month
 	if dom := c.PreferredDayOfMonth; dom < 0 || dom > Last {
 		return fmt.Errorf("invalid preferred day of month: %d", dom)
@@ -158,8 +165,6 @@ func (c Configuration) validate() error {
 func (c *Configuration) initiate() *Configuration {
 	c = c.Clone()
 
-	c.DateOrder = strings.ToUpper(c.DateOrder)
-
 	if c.CurrentTime.IsZero() {
 		c.CurrentTime = time.Now().UTC()
 	}
@@ -173,7 +178,6 @@ func (c *Configuration) initiate() *Configuration {
 
 func (c Configuration) toInternalConfig() *setting.Configuration {
 	return &setting.Configuration{
-		DateOrder:           c.DateOrder,
 		CurrentTime:         c.CurrentTime,
 		PreferredDayOfMonth: setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
 		PreferredDateSource: setting.PreferredDateSource(c.PreferredDateSource),
@@ -187,7 +191,6 @@ func (c Configuration) toInternalConfig() *setting.Configuration {
 
 func configFromInternal(c *setting.Configuration) *Configuration {
 	return &Configuration{
-		DateOrder:           c.DateOrder,
 		CurrentTime:         c.CurrentTime,
 		PreferredDayOfMonth: PreferredDayOfMonth(c.PreferredDayOfMonth),
 		PreferredDateSource: PreferredDateSource(c.PreferredDateSource),

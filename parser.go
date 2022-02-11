@@ -2,6 +2,7 @@ package dateparser
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -108,11 +109,18 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 
 	// Process each locale
 	for _, locale := range locales {
+		// Create date order for this locale
+		dateOrder := locale.DateOrder
+		if cfg.DateOrder != nil {
+			do := cfg.DateOrder(locale.Name)
+			if do, valid := validateDateOrder(do); valid {
+				dateOrder = do
+			}
+		}
+
 		// Create locale specific config
 		lCfg := iCfg.Clone()
-		if lCfg.DateOrder == "" {
-			lCfg.DateOrder = locale.DateOrder
-		}
+		lCfg.DateOrder = dateOrder
 
 		// Translate string
 		translation := language.Translate(lCfg, locale, str, false)
@@ -261,4 +269,26 @@ func (p *Parser) applyTimezone(dt date.Date, tz timezone.TimezoneOffsetData) dat
 		time.FixedZone(tz.Name, tz.Offset))
 
 	return dt
+}
+
+func validateDateOrder(do string) (string, bool) {
+	if len(do) != 3 {
+		return do, false
+	}
+
+	do = strings.ToUpper(do)
+	mapChars := map[rune]struct{}{}
+	for _, r := range do {
+		if r == 'D' || r == 'M' || r == 'Y' {
+			mapChars[r] = struct{}{}
+		} else {
+			return do, false
+		}
+	}
+
+	if len(mapChars) != 3 {
+		return do, false
+	}
+
+	return do, true
 }

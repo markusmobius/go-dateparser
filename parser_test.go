@@ -559,28 +559,28 @@ func TestParser_Parse_customOrder(t *testing.T) {
 	type testScenario struct {
 		Text         string
 		ExpectedTime time.Time
-		DateOrder    string
+		DateOrder    dps.DateOrder
 	}
 
 	tests := []testScenario{
 		// Basic text
-		{"15-12-18 06:00", tt(2015, 12, 18, 6, 0), "YMD"},
-		{"15-18-12 06:00", tt(2015, 12, 18, 6, 0), "YDM"},
-		{"10-11-12 06:00", tt(2012, 10, 11, 6, 0), "MDY"},
-		{"10-11-12 06:00", tt(2011, 10, 12, 6, 0), "MYD"},
-		{"10-11-12 06:00", tt(2011, 12, 10, 6, 0), "DYM"},
-		{"15-12-18 06:00", tt(2018, 12, 15, 6, 0), "DMY"},
-		{"12/09/08 04:23:15.567", tt(2008, 9, 12, 4, 23, 15, 567000), "DMY"},
-		{"10/9/1914 03:07:09.788888 pm", tt(1914, 10, 9, 15, 7, 9, 788888), "MDY"},
-		{"1-8-09 07:12:49 AM", tt(2009, 1, 8, 7, 12, 49), "MDY"},
-		{"2016 july 13.", tt(2016, 7, 13, 0, 0), "YMD"},
-		{"16 july 13.", tt(2016, 7, 13, 0, 0), "YMD"},
-		{"Sunday 23 May 1856 12:09:08 AM", tt(1856, 5, 23, 0, 9, 8), "DMY"},
+		{"15-12-18 06:00", tt(2015, 12, 18, 6, 0), dps.YMD},
+		{"15-18-12 06:00", tt(2015, 12, 18, 6, 0), dps.YDM},
+		{"10-11-12 06:00", tt(2012, 10, 11, 6, 0), dps.MDY},
+		{"10-11-12 06:00", tt(2011, 10, 12, 6, 0), dps.MYD},
+		{"10-11-12 06:00", tt(2011, 12, 10, 6, 0), dps.DYM},
+		{"15-12-18 06:00", tt(2018, 12, 15, 6, 0), dps.DMY},
+		{"12/09/08 04:23:15.567", tt(2008, 9, 12, 4, 23, 15, 567000), dps.DMY},
+		{"10/9/1914 03:07:09.788888 pm", tt(1914, 10, 9, 15, 7, 9, 788888), dps.MDY},
+		{"1-8-09 07:12:49 AM", tt(2009, 1, 8, 7, 12, 49), dps.MDY},
+		{"2016 july 13.", tt(2016, 7, 13, 0, 0), dps.YMD},
+		{"16 july 13.", tt(2016, 7, 13, 0, 0), dps.YMD},
+		{"Sunday 23 May 1856 12:09:08 AM", tt(1856, 5, 23, 0, 9, 8), dps.DMY},
 
 		// Nospace
-		{"201508", tt(2015, 8, 20, 0, 0), "DYM"},
-		{"201508", tt(2020, 8, 15, 0, 0), "YDM"},
-		{"201108", tt(2008, 11, 20, 0, 0), "DMY"},
+		{"201508", tt(2015, 8, 20, 0, 0), dps.DYM},
+		{"201508", tt(2020, 8, 15, 0, 0), dps.YDM},
+		{"201108", tt(2008, 11, 20, 0, 0), dps.DMY},
 	}
 
 	// Prepare config
@@ -591,7 +591,7 @@ func TestParser_Parse_customOrder(t *testing.T) {
 	for _, test := range tests {
 		// Prepare log message
 		message := fmt.Sprintf("\"%s\" (%s) => \"%s\"",
-			test.Text, test.DateOrder,
+			test.Text, test.DateOrder(""),
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Parse text
@@ -749,12 +749,12 @@ func TestParser_Parse_customConfig(t *testing.T) {
 	assert.Equal(t, tt(2019, 1, 10), dt.Time)
 
 	// Languages not specified, date order is specified
-	cfg = dps.Configuration{DateOrder: "MDY"}
+	cfg = dps.Configuration{DateOrder: dps.MDY}
 	dt, _ = parser.Parse(&cfg, "10.1.2019")
 	assert.Equal(t, tt(2019, 10, 1), dt.Time)
 
 	// Languages and date order are specified
-	cfg = dps.Configuration{DateOrder: "MDY", Languages: []string{"th"}}
+	cfg = dps.Configuration{DateOrder: dps.MDY, Languages: []string{"th"}}
 	dt, _ = parser.Parse(&cfg, "03/11/2559 05:13")
 	assert.Equal(t, tt(2559, 3, 11, 5, 13), dt.Time)
 
