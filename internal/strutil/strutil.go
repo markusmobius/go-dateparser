@@ -42,7 +42,7 @@ var (
 
 	rxSanitizeSkip    = regexp.MustCompile(`\t|\n|\r|\x{00bb}|,\s\x{0432}\b|\x{200e}|\x{b7}|\x{200f}|\x{064e}|\x{064f}`)
 	rxSanitizeRussian = regexp.MustCompile(`(?i)([\PL\pN])\x{0433}\.`)
-	rxSanitizePeriod  = regexp.MustCompile(`(?i)([^\pN\.])\.`)
+	rxSanitizePeriod  = regexp.MustCompile(`(?i)([^\pN\.\s])\.`)
 	rxSanitizeOn      = regexp.MustCompile(`(?i)^.*?on:\s+(.*)`)
 )
 

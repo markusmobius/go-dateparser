@@ -10,19 +10,25 @@ go get -u -v github.com/markusmobius/go-dateparser
 
 ## Table of Contents
 
-1. [Features](#features)
-2. [Status](#status)
-3. [Common use cases](#common-use-cases)
-4. [Usage](#usage)
-5. [Supported languages and locales](#supported-languages-and-locales)
-6. [Supported patterns](#supported-patterns)
-7. [Supported calendars](#supported-calendars)
-8. [Language based date order](#language-based-date-order)
-9. [Timezone and UTC offset](#timezone-and-utc-offset)
-10. [Incomplete date handling](#incomplete-date-handling)
-11. [Custom language detector](#custom-language-detector)
-12. [Handling false positives](#handling-false-positives)
-13. [License](#license)
+- [Go-DateParser ](#go-dateparser-)
+  - [Table of Contents](#table-of-contents)
+  - [ 1. Features ▲](#-1-features-)
+  - [ 2. Status ▲](#-2-status-)
+  - [ 3. Common Use Cases ▲](#-3-common-use-cases-)
+  - [ 4. Usage ▲](#-4-usage-)
+  - [ 5. Supported Languages and Locales ▲](#-5-supported-languages-and-locales-)
+  - [ 6. Supported Patterns ▲](#-6-supported-patterns-)
+    - [6.1. Timestamp](#61-timestamp)
+    - [6.2. Relative Date](#62-relative-date)
+    - [6.3. Absolute Date](#63-absolute-date)
+    - [6.4. Custom Specified Formats](#64-custom-specified-formats)
+  - [ 7. Supported Calendars ▲](#-7-supported-calendars-)
+  - [ 8. Language Based Date Order ▲](#-8-language-based-date-order-)
+  - [ 9. Timezone And UTC Offset ▲](#-9-timezone-and-utc-offset-)
+  - [ 10. Incomplete Date Handling ▲](#-10-incomplete-date-handling-)
+  - [ 11. Custom Language Detector ▲](#-11-custom-language-detector-)
+  - [ 12. Handling False Positives ▲](#-12-handling-false-positives-)
+  - [ 13. License ▲](#-13-license-)
 
 ## <a name="features"></a> 1. Features [▲](#table-of-contents)
 
@@ -35,7 +41,7 @@ go get -u -v github.com/markusmobius/go-dateparser
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-This package is up to date with the original dateparser until commit [ff439d1][original-commit] (several commits after [v1.1.0][original-tag]). There are several behavior and implementation differences between this port and the original:
+This package is up to date with the original dateparser until commit [ffb9a2d][original-commit]. There are several behavior and implementation differences between this port and the original:
 
 - In Python, timezone data is not included in date and time objects. Meanwhile in Go timezone data is required.
 - Regex in Go is pretty slow, so in this port whenever possible we use basic strings or runes operations instead of regex to improve the performance.
@@ -409,8 +415,7 @@ Just like the original, this package is licensed under [BSD-3 License][bsd3].
 [go-ref-icon]: https://pkg.go.dev/badge/github.com/markusmobius/go-dateparser.svg
 [go-ref]: https://pkg.go.dev/github.com/markusmobius/go-dateparser
 [original]: https://github.com/scrapinghub/dateparser
-[original-commit]: https://github.com/scrapinghub/dateparser/tree/ff439d1c5f87ef997951e66c31861720726faffb
-[original-tag]: https://github.com/scrapinghub/dateparser/tree/v1.1.0
+[original-commit]: https://github.com/scrapinghub/dateparser/tree/ffb9a2d
 [dps-parse]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Parse
 [dps-jalali]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseJalali
 [dps-hijri]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseHijri

@@ -90,7 +90,12 @@ func (p *Parser) Init(str string) error {
 		p.Now = cfg.CurrentTime
 	}
 
-	p.Tokens = tokenizer.Tokenize(str)
+	tokens := tokenizer.Tokenize(str)
+	for i := range tokens {
+		tokens[i].Text = strings.TrimSpace(tokens[i].Text)
+	}
+
+	p.Tokens = tokens
 	p.ComponentValues = map[string]int{}
 	p.ComponentTokens = map[string]tokenizer.Token{}
 	p.SkippedIndexes = map[int]struct{}{}
