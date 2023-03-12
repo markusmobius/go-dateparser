@@ -10,8 +10,13 @@ import (
 func TestParse(t *testing.T) {
 	// Prepare variables and helper function
 	zero := time.Time{}
-	parse := func(s string) time.Time {
-		dt := Parse(nil, s)
+	parse := func(s string, negative ...bool) time.Time {
+		var isNegative bool
+		if len(negative) > 0 {
+			isNegative = negative[0]
+		}
+
+		dt := Parse(nil, s, isNegative)
 		return dt.Time
 	}
 
@@ -22,6 +27,15 @@ func TestParse(t *testing.T) {
 	// Test microseconds timestamp
 	expected = time.Unix(1570308760, 263_111*1_000)
 	assert.Equal(t, expected, parse("1570308760263111"))
+
+	// Test negative timestamp
+	expected = time.Unix(-1570308760, 0)
+	assert.Equal(t, expected, parse("-1570308760", true))
+	assert.Equal(t, zero, parse("-1570308760", false))
+	assert.Equal(t, zero, parse("1570308760", true))
+
+	expected = time.Unix(1570308760, 0)
+	assert.Equal(t, expected, parse("1570308760", false))
 
 	// Test wrong timestamp
 	assert.Equal(t, zero, parse("15703087602631"))

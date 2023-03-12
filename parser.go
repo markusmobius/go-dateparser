@@ -46,6 +46,8 @@ type ParserType uint8
 const (
 	// Timestamp is parser to parse Unix timestamp.
 	Timestamp ParserType = iota
+	// NegativeTimestamp is parser to parse Unix timestamp in negative value.
+	NegativeTimestamp
 	// RelativeTime is parser to parse date string with relative value like
 	// "1 year, 2 months ago" and "3 hours, 50 minutes ago".
 	RelativeTime
@@ -68,13 +70,20 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 
 	// Validate and initiate parsers
 	for _, parser := range p.ParserTypes {
-		if parser < 0 || parser > NoSpacesTime {
+		if parser > NoSpacesTime {
 			return date.Date{}, fmt.Errorf("invalid parser type: %d", parser)
 		}
 	}
 
 	if len(p.ParserTypes) == 0 {
-		p.ParserTypes = []ParserType{Timestamp, RelativeTime, CustomFormat, AbsoluteTime, NoSpacesTime}
+		p.ParserTypes = []ParserType{
+			Timestamp,
+			NegativeTimestamp,
+			RelativeTime,
+			CustomFormat,
+			AbsoluteTime,
+			NoSpacesTime,
+		}
 	}
 
 	// Initiate and validate config
@@ -129,7 +138,9 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 		for _, parserType := range p.ParserTypes {
 			switch parserType {
 			case Timestamp:
-				dt = timestamp.Parse(lCfg, str)
+				dt = timestamp.Parse(lCfg, str, false)
+			case NegativeTimestamp:
+				dt = timestamp.Parse(lCfg, str, true)
 			case RelativeTime:
 				dt = relative.Parse(lCfg, translation)
 			case CustomFormat:
