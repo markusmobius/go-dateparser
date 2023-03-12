@@ -280,8 +280,8 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime: tt(2000, 1, 1),
 			ExtractedText: []string{
 				"13 вересня 1931",
-				"7 липня 1937",
-				"14 березня 1939",
+				"7 липня 1937 року",
+				"14 березня 1939 року",
 			},
 			ExtractedTime: []time.Time{
 				tt(1931, 9, 13),

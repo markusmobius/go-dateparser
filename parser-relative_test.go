@@ -832,7 +832,6 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"pas 2 muajsh", pfpDiff{"month": 2}, Month},
 		{"pas 15 ditësh", pfpDiff{"day": 15}, Day},
 		// sr-Cyrl
-		{"за 3 годину", pfpDiff{"year": 3}, Year},
 		{"за 10 мин 20 сек", pfpDiff{"minute": 10, "second": 20}, Day},
 		// sr-Latn
 		{"za 2 god 6 mes", pfpDiff{"year": 2, "month": 6}, Month},

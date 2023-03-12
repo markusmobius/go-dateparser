@@ -78,6 +78,8 @@ func TestTranslate(t *testing.T) {
 		{"pl", "29 listopada 2014 o 08:40", "29 november 2014  08:40"},
 		// Ukrainian
 		{"uk", "30 листопада 2013 о 04:27", "30 november 2013  04:27"},
+		{"uk", "28 лютого 2020 року об 11:57", "28 february 2020 year  11:57"},
+		{"uk", "середу, 28 лютого 2020 року об 11:57", "wednesday 28 february 2020 year  11:57"},
 		// Belarusian
 		{"be", "5 снежня 2015 г. у 12:00", "5 december 2015 year.  12:00"},
 		{"be", "11 верасня 2015 г. у 12:11", "11 september 2015 year.  12:11"},
@@ -796,6 +798,13 @@ func TestTranslate_relative(t *testing.T) {
 		{"tl", "ngayon", "0 second ago"},
 		// Ukrainian
 		{"uk", "позавчора", "2 day ago"},
+		{"uk", "післязавтра", "in 2 day"},
+		{"uk", "через 2 дні", "in 2 day"},
+		{"uk", "через 2 доби", "in 2 day"},
+		{"uk", "через 5 діб", "in 5 day"},
+		{"uk", "через п'ять діб", "in 5 day"},
+		{"uk", "за вісім днів", "in 8 day"},
+		{"uk", "2 роки", "2 year"},
 		// Belarusian
 		{"be", "9 месяцаў", "9 month"},
 		{"be", "8 тыдняў", "8 week"},
@@ -1415,6 +1424,7 @@ func TestTranslate_relative(t *testing.T) {
 		{"sr-Cyrl", "пре 5 година", "5 year ago"},
 		{"sr-Cyrl", "за 52 нед", "in 52 week"},
 		{"sr-Cyrl", "данас", "0 day ago"},
+		{"sr-Cyrl", "за 3 годину", "in 3 year"},
 		// sr-Latn
 		{"sr-Latn", "za 120 sekundi", "in 120 second"},
 		{"sr-Latn", "pre 365 dana", "365 day ago"},
@@ -1457,9 +1467,13 @@ func TestTranslate_relative(t *testing.T) {
 		{"tzm", "assenaṭ", "1 day ago"},
 		{"tzm", "asekka", "in 1 day"},
 		// uk
-		{"uk", "18 хвилину тому", "18 minute ago"},
-		{"uk", "через 22 року", "in 22 year"},
+		{"uk", "18 хвилин тому", "18 minute ago"},
+		{"uk", "через 22 роки", "in 22 year"},
 		{"uk", "цього тижня", "0 week ago"},
+		{"uk", "півгодини тому", "30 minute ago"},
+		{"uk", "пів години тому", "30 minute ago"},
+		{"uk", "півроку тому", "6 month ago"},
+		{"uk", "за півтора року", "in 18 month"},
 		// uz-Cyrl
 		{"uz-Cyrl", "кейинги ой", "in 1 month"},
 		{"uz-Cyrl", "30 йил аввал", "30 year ago"},
