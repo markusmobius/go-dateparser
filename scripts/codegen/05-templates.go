@@ -6,6 +6,8 @@ import (
 	"strings"
 	"text/template"
 	"unicode/utf8"
+
+	"github.com/elliotchance/pie/v2"
 )
 
 var (
@@ -37,11 +39,12 @@ func regex(pattern string) string {
 	return "regexp.MustCompile(`(?i)" + pattern + "`)"
 }
 
-func charset(chars []rune) string {
-	if len(chars) == 0 {
+func charset(charset map[rune]struct{}) string {
+	if len(charset) == 0 {
 		return "nil"
 	}
 
+	chars := pie.Keys(charset)
 	sort.Slice(chars, func(i, j int) bool {
 		return chars[i] < chars[j]
 	})

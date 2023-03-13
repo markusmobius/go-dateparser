@@ -10,7 +10,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/elliotchance/pie/v2"
-	"github.com/zyedidia/generic/mapset"
 )
 
 type LocaleData struct {
@@ -19,7 +18,7 @@ type LocaleData struct {
 	DateOrder                 string               `json:",omitempty"`
 	NoWordSpacing             bool                 `json:",omitempty"`
 	SentenceSplitterGroup     int                  `json:",omitempty"`
-	Charset                   []rune               `json:",omitempty"`
+	Charset                   map[rune]struct{}    `json:",omitempty"`
 	SkipWords                 []string             `json:",omitempty"`
 	PertainWords              []string             `json:",omitempty"`
 	Abbreviations             []string             `json:",omitempty"`
@@ -30,8 +29,6 @@ type LocaleData struct {
 	CombinedRegexPattern      string               `json:",omitempty"`
 	ExactCombinedRegexPattern string               `json:",omitempty"`
 	KnownWords                []string             `json:",omitempty"`
-
-	charsetTracker mapset.Set[rune]
 }
 
 type SimplificationData struct {
@@ -41,8 +38,8 @@ type SimplificationData struct {
 
 func (ld *LocaleData) AddCharset(str string) {
 	// Prepare tracker
-	if ld.charsetTracker.Size() == 0 {
-		ld.charsetTracker = mapset.New[rune]()
+	if ld.Charset == nil {
+		ld.Charset = make(map[rune]struct{})
 	}
 
 	// Prepare strings to save
@@ -59,13 +56,8 @@ func (ld *LocaleData) AddCharset(str string) {
 
 		// Save each chars
 		for _, r := range str {
-			if unicode.Is(commonChars, r) {
-				continue
-			}
-
-			if !ld.charsetTracker.Has(r) {
-				ld.charsetTracker.Put(r)
-				ld.Charset = append(ld.Charset, r)
+			if !unicode.Is(commonChars, r) {
+				ld.Charset[r] = struct{}{}
 			}
 		}
 	}
@@ -262,7 +254,7 @@ func (ld LocaleData) Clone() LocaleData {
 		DateOrder:                 ld.DateOrder,
 		NoWordSpacing:             ld.NoWordSpacing,
 		SentenceSplitterGroup:     ld.SentenceSplitterGroup,
-		Charset:                   cloneSlice(ld.Charset),
+		Charset:                   cloneMap(ld.Charset),
 		SkipWords:                 cloneSlice(ld.SkipWords),
 		PertainWords:              cloneSlice(ld.PertainWords),
 		Abbreviations:             cloneSlice(ld.Abbreviations),
@@ -273,12 +265,6 @@ func (ld LocaleData) Clone() LocaleData {
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
 		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
 		KnownWords:                cloneSlice(ld.KnownWords),
-
-		charsetTracker: mapset.New[rune](),
-	}
-
-	for _, r := range clone.Charset {
-		clone.charsetTracker.Put(r)
 	}
 
 	return clone
@@ -321,13 +307,8 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 		clone.RelativeTypeRegexes[pattern] = translation
 	}
 
-	for _, r := range input.Charset {
-		if !unicode.Is(commonChars, r) {
-			if !clone.charsetTracker.Has(r) {
-				clone.charsetTracker.Put(r)
-				clone.Charset = append(clone.Charset, r)
-			}
-		}
+	for r := range input.Charset {
+		clone.Charset[r] = struct{}{}
 	}
 
 	return clone
@@ -372,10 +353,7 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	clone.KnownWords = reduceKnownWords(clone.KnownWords, input.KnownWords)
 
 	// Reduce charset
-	clone.Charset = reduceSlice(clone.Charset, input.Charset)
-	input.charsetTracker.Each(func(r rune) {
-		clone.charsetTracker.Put(r)
-	})
+	clone.Charset = reduceMap(clone.Charset, input.Charset)
 
 	// Apply sentence splitter group
 	if clone.SentenceSplitterGroup == input.SentenceSplitterGroup {
