@@ -8,9 +8,11 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/elliotchance/pie/v2"
 )
 
-func createLanguageOrder(languageLocalesMap map[string][]string) ([]string, error) {
+func createLanguageOrder(languageLocales map[string][]string) ([]string, error) {
 	// Open territory info file
 	fPath := filepath.Join(RAW_DIR, "cldr-core/supplemental/territoryInfo.json")
 	f, err := os.Open(fPath)
@@ -39,21 +41,21 @@ func createLanguageOrder(languageLocalesMap map[string][]string) ([]string, erro
 	}
 
 	// Separate between languages that has population data or not
-	var languageList []string
+	var languages []string
 	var unusedLanguages []string
-	for language := range languageLocalesMap {
+	for language := range languageLocales {
 		population := languagePopulationMap[language]
 		if population > 0 {
-			languageList = append(languageList, language)
+			languages = append(languages, language)
 		} else {
 			unusedLanguages = append(unusedLanguages, language)
 		}
 	}
 
 	// Sort languages based on how common is it and how many speaker it has
-	sort.Slice(languageList, func(i, j int) bool {
-		langI := languageList[i]
-		langJ := languageList[j]
+	sort.Slice(languages, func(i, j int) bool {
+		langI := languages[i]
+		langJ := languages[j]
 
 		// Check for common language
 		iIdx, iIsCommon := mostCommonLocales[langI]
@@ -81,30 +83,18 @@ func createLanguageOrder(languageLocalesMap map[string][]string) ([]string, erro
 	// Put back the unused languages
 	sort.Strings(unusedLanguages)
 
-	parentLanguageIndexes := map[string]int{}
-	for _, language := range unusedLanguages {
-		parentLanguage := rxLocaleCleaner.ReplaceAllString(language, "")
-		parentIdx, exist := parentLanguageIndexes[parentLanguage]
-		if !exist {
-			parentIdx = -1
-			for i, lang := range languageList {
-				if lang == parentLanguage {
-					parentIdx = i + 1
-					break
-				}
-			}
-			parentLanguageIndexes[parentLanguage] = parentIdx
-		}
+	for _, unusedLanguage := range unusedLanguages {
+		parentLanguage := rxLocaleCleaner.ReplaceAllString(unusedLanguage, "")
+		parentIdx := pie.FindFirstUsing(languages, func(v string) bool {
+			return v == parentLanguage
+		})
 
-		if parentIdx >= 0 && parentIdx != len(languageList) {
-			languageList = append(languageList, "")
-			copy(languageList[parentIdx+1:], languageList[parentIdx:])
-			languageList[parentIdx] = language
-			parentLanguageIndexes[parentLanguage]++
+		if parentIdx >= 0 {
+			languages = pie.Insert(languages, parentIdx+1, unusedLanguage)
 		} else {
-			languageList = append(languageList, language)
+			languages = append(languages, unusedLanguage)
 		}
 	}
 
-	return languageList, nil
+	return languages, nil
 }

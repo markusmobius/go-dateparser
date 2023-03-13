@@ -71,509 +71,1017 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	return child
 }
 
-var LocaleDataMap = map[string]*LocaleData{
-	"af":         &af_Locale,
-	"af-NA":      &af_NA_Locale,
-	"agq":        &agq_Locale,
-	"ak":         &ak_Locale,
-	"am":         &am_Locale,
-	"ar":         &ar_Locale,
-	"ar-AE":      &ar_AE_Locale,
-	"ar-BH":      &ar_BH_Locale,
-	"ar-DJ":      &ar_DJ_Locale,
-	"ar-DZ":      &ar_DZ_Locale,
-	"ar-EG":      &ar_EG_Locale,
-	"ar-EH":      &ar_EH_Locale,
-	"ar-ER":      &ar_ER_Locale,
-	"ar-IL":      &ar_IL_Locale,
-	"ar-IQ":      &ar_IQ_Locale,
-	"ar-JO":      &ar_JO_Locale,
-	"ar-KM":      &ar_KM_Locale,
-	"ar-KW":      &ar_KW_Locale,
-	"ar-LB":      &ar_LB_Locale,
-	"ar-LY":      &ar_LY_Locale,
-	"ar-MA":      &ar_MA_Locale,
-	"ar-MR":      &ar_MR_Locale,
-	"ar-OM":      &ar_OM_Locale,
-	"ar-PS":      &ar_PS_Locale,
-	"ar-QA":      &ar_QA_Locale,
-	"ar-SA":      &ar_SA_Locale,
-	"ar-SD":      &ar_SD_Locale,
-	"ar-SO":      &ar_SO_Locale,
-	"ar-SS":      &ar_SS_Locale,
-	"ar-SY":      &ar_SY_Locale,
-	"ar-TD":      &ar_TD_Locale,
-	"ar-TN":      &ar_TN_Locale,
-	"ar-YE":      &ar_YE_Locale,
-	"as":         &as_Locale,
-	"asa":        &asa_Locale,
-	"ast":        &ast_Locale,
-	"az":         &az_Locale,
-	"az-Cyrl":    &az_Cyrl_Locale,
-	"az-Latn":    &az_Latn_Locale,
-	"bas":        &bas_Locale,
-	"be":         &be_Locale,
-	"bem":        &bem_Locale,
-	"bez":        &bez_Locale,
-	"bg":         &bg_Locale,
-	"bm":         &bm_Locale,
-	"bn":         &bn_Locale,
-	"bn-IN":      &bn_IN_Locale,
-	"bo":         &bo_Locale,
-	"bo-IN":      &bo_IN_Locale,
-	"br":         &br_Locale,
-	"brx":        &brx_Locale,
-	"bs":         &bs_Locale,
-	"bs-Cyrl":    &bs_Cyrl_Locale,
-	"bs-Latn":    &bs_Latn_Locale,
-	"ca":         &ca_Locale,
-	"ca-AD":      &ca_AD_Locale,
-	"ca-FR":      &ca_FR_Locale,
-	"ca-IT":      &ca_IT_Locale,
-	"ce":         &ce_Locale,
-	"cgg":        &cgg_Locale,
-	"chr":        &chr_Locale,
-	"ckb":        &ckb_Locale,
-	"ckb-IR":     &ckb_IR_Locale,
-	"cs":         &cs_Locale,
-	"cy":         &cy_Locale,
-	"da":         &da_Locale,
-	"da-GL":      &da_GL_Locale,
-	"dav":        &dav_Locale,
-	"de":         &de_Locale,
-	"de-AT":      &de_AT_Locale,
-	"de-BE":      &de_BE_Locale,
-	"de-CH":      &de_CH_Locale,
-	"de-IT":      &de_IT_Locale,
-	"de-LI":      &de_LI_Locale,
-	"de-LU":      &de_LU_Locale,
-	"dje":        &dje_Locale,
-	"dsb":        &dsb_Locale,
-	"dua":        &dua_Locale,
-	"dyo":        &dyo_Locale,
-	"dz":         &dz_Locale,
-	"ebu":        &ebu_Locale,
-	"ee":         &ee_Locale,
-	"ee-TG":      &ee_TG_Locale,
-	"el":         &el_Locale,
-	"el-CY":      &el_CY_Locale,
-	"en":         &en_Locale,
-	"en-001":     &en_001_Locale,
-	"en-150":     &en_150_Locale,
-	"en-AG":      &en_AG_Locale,
-	"en-AI":      &en_AI_Locale,
-	"en-AS":      &en_AS_Locale,
-	"en-AT":      &en_AT_Locale,
-	"en-AU":      &en_AU_Locale,
-	"en-BB":      &en_BB_Locale,
-	"en-BE":      &en_BE_Locale,
-	"en-BI":      &en_BI_Locale,
-	"en-BM":      &en_BM_Locale,
-	"en-BS":      &en_BS_Locale,
-	"en-BW":      &en_BW_Locale,
-	"en-BZ":      &en_BZ_Locale,
-	"en-CA":      &en_CA_Locale,
-	"en-CC":      &en_CC_Locale,
-	"en-CH":      &en_CH_Locale,
-	"en-CK":      &en_CK_Locale,
-	"en-CM":      &en_CM_Locale,
-	"en-CX":      &en_CX_Locale,
-	"en-CY":      &en_CY_Locale,
-	"en-DE":      &en_DE_Locale,
-	"en-DG":      &en_DG_Locale,
-	"en-DK":      &en_DK_Locale,
-	"en-DM":      &en_DM_Locale,
-	"en-ER":      &en_ER_Locale,
-	"en-FI":      &en_FI_Locale,
-	"en-FJ":      &en_FJ_Locale,
-	"en-FK":      &en_FK_Locale,
-	"en-FM":      &en_FM_Locale,
-	"en-GB":      &en_GB_Locale,
-	"en-GD":      &en_GD_Locale,
-	"en-GG":      &en_GG_Locale,
-	"en-GH":      &en_GH_Locale,
-	"en-GI":      &en_GI_Locale,
-	"en-GM":      &en_GM_Locale,
-	"en-GU":      &en_GU_Locale,
-	"en-GY":      &en_GY_Locale,
-	"en-HK":      &en_HK_Locale,
-	"en-IE":      &en_IE_Locale,
-	"en-IL":      &en_IL_Locale,
-	"en-IM":      &en_IM_Locale,
-	"en-IN":      &en_IN_Locale,
-	"en-IO":      &en_IO_Locale,
-	"en-JE":      &en_JE_Locale,
-	"en-JM":      &en_JM_Locale,
-	"en-KE":      &en_KE_Locale,
-	"en-KI":      &en_KI_Locale,
-	"en-KN":      &en_KN_Locale,
-	"en-KY":      &en_KY_Locale,
-	"en-LC":      &en_LC_Locale,
-	"en-LR":      &en_LR_Locale,
-	"en-LS":      &en_LS_Locale,
-	"en-MG":      &en_MG_Locale,
-	"en-MH":      &en_MH_Locale,
-	"en-MO":      &en_MO_Locale,
-	"en-MP":      &en_MP_Locale,
-	"en-MS":      &en_MS_Locale,
-	"en-MT":      &en_MT_Locale,
-	"en-MU":      &en_MU_Locale,
-	"en-MW":      &en_MW_Locale,
-	"en-MY":      &en_MY_Locale,
-	"en-NA":      &en_NA_Locale,
-	"en-NF":      &en_NF_Locale,
-	"en-NG":      &en_NG_Locale,
-	"en-NL":      &en_NL_Locale,
-	"en-NR":      &en_NR_Locale,
-	"en-NU":      &en_NU_Locale,
-	"en-NZ":      &en_NZ_Locale,
-	"en-PG":      &en_PG_Locale,
-	"en-PH":      &en_PH_Locale,
-	"en-PK":      &en_PK_Locale,
-	"en-PN":      &en_PN_Locale,
-	"en-PR":      &en_PR_Locale,
-	"en-PW":      &en_PW_Locale,
-	"en-RW":      &en_RW_Locale,
-	"en-SB":      &en_SB_Locale,
-	"en-SC":      &en_SC_Locale,
-	"en-SD":      &en_SD_Locale,
-	"en-SE":      &en_SE_Locale,
-	"en-SG":      &en_SG_Locale,
-	"en-SH":      &en_SH_Locale,
-	"en-SI":      &en_SI_Locale,
-	"en-SL":      &en_SL_Locale,
-	"en-SS":      &en_SS_Locale,
-	"en-SX":      &en_SX_Locale,
-	"en-SZ":      &en_SZ_Locale,
-	"en-TC":      &en_TC_Locale,
-	"en-TK":      &en_TK_Locale,
-	"en-TO":      &en_TO_Locale,
-	"en-TT":      &en_TT_Locale,
-	"en-TV":      &en_TV_Locale,
-	"en-TZ":      &en_TZ_Locale,
-	"en-UG":      &en_UG_Locale,
-	"en-UM":      &en_UM_Locale,
-	"en-VC":      &en_VC_Locale,
-	"en-VG":      &en_VG_Locale,
-	"en-VI":      &en_VI_Locale,
-	"en-VU":      &en_VU_Locale,
-	"en-WS":      &en_WS_Locale,
-	"en-ZA":      &en_ZA_Locale,
-	"en-ZM":      &en_ZM_Locale,
-	"en-ZW":      &en_ZW_Locale,
-	"eo":         &eo_Locale,
-	"es":         &es_Locale,
-	"es-419":     &es_419_Locale,
-	"es-AR":      &es_AR_Locale,
-	"es-BO":      &es_BO_Locale,
-	"es-BR":      &es_BR_Locale,
-	"es-BZ":      &es_BZ_Locale,
-	"es-CL":      &es_CL_Locale,
-	"es-CO":      &es_CO_Locale,
-	"es-CR":      &es_CR_Locale,
-	"es-CU":      &es_CU_Locale,
-	"es-DO":      &es_DO_Locale,
-	"es-EA":      &es_EA_Locale,
-	"es-EC":      &es_EC_Locale,
-	"es-GQ":      &es_GQ_Locale,
-	"es-GT":      &es_GT_Locale,
-	"es-HN":      &es_HN_Locale,
-	"es-IC":      &es_IC_Locale,
-	"es-MX":      &es_MX_Locale,
-	"es-NI":      &es_NI_Locale,
-	"es-PA":      &es_PA_Locale,
-	"es-PE":      &es_PE_Locale,
-	"es-PH":      &es_PH_Locale,
-	"es-PR":      &es_PR_Locale,
-	"es-PY":      &es_PY_Locale,
-	"es-SV":      &es_SV_Locale,
-	"es-US":      &es_US_Locale,
-	"es-UY":      &es_UY_Locale,
-	"es-VE":      &es_VE_Locale,
-	"et":         &et_Locale,
-	"eu":         &eu_Locale,
-	"ewo":        &ewo_Locale,
-	"fa":         &fa_Locale,
-	"fa-AF":      &fa_AF_Locale,
-	"ff":         &ff_Locale,
-	"ff-CM":      &ff_CM_Locale,
-	"ff-GN":      &ff_GN_Locale,
-	"ff-MR":      &ff_MR_Locale,
-	"fi":         &fi_Locale,
-	"fil":        &fil_Locale,
-	"fo":         &fo_Locale,
-	"fo-DK":      &fo_DK_Locale,
-	"fr":         &fr_Locale,
-	"fr-BE":      &fr_BE_Locale,
-	"fr-BF":      &fr_BF_Locale,
-	"fr-BI":      &fr_BI_Locale,
-	"fr-BJ":      &fr_BJ_Locale,
-	"fr-BL":      &fr_BL_Locale,
-	"fr-CA":      &fr_CA_Locale,
-	"fr-CD":      &fr_CD_Locale,
-	"fr-CF":      &fr_CF_Locale,
-	"fr-CG":      &fr_CG_Locale,
-	"fr-CH":      &fr_CH_Locale,
-	"fr-CI":      &fr_CI_Locale,
-	"fr-CM":      &fr_CM_Locale,
-	"fr-DJ":      &fr_DJ_Locale,
-	"fr-DZ":      &fr_DZ_Locale,
-	"fr-GA":      &fr_GA_Locale,
-	"fr-GF":      &fr_GF_Locale,
-	"fr-GN":      &fr_GN_Locale,
-	"fr-GP":      &fr_GP_Locale,
-	"fr-GQ":      &fr_GQ_Locale,
-	"fr-HT":      &fr_HT_Locale,
-	"fr-KM":      &fr_KM_Locale,
-	"fr-LU":      &fr_LU_Locale,
-	"fr-MA":      &fr_MA_Locale,
-	"fr-MC":      &fr_MC_Locale,
-	"fr-MF":      &fr_MF_Locale,
-	"fr-MG":      &fr_MG_Locale,
-	"fr-ML":      &fr_ML_Locale,
-	"fr-MQ":      &fr_MQ_Locale,
-	"fr-MR":      &fr_MR_Locale,
-	"fr-MU":      &fr_MU_Locale,
-	"fr-NC":      &fr_NC_Locale,
-	"fr-NE":      &fr_NE_Locale,
-	"fr-PF":      &fr_PF_Locale,
-	"fr-PM":      &fr_PM_Locale,
-	"fr-RE":      &fr_RE_Locale,
-	"fr-RW":      &fr_RW_Locale,
-	"fr-SC":      &fr_SC_Locale,
-	"fr-SN":      &fr_SN_Locale,
-	"fr-SY":      &fr_SY_Locale,
-	"fr-TD":      &fr_TD_Locale,
-	"fr-TG":      &fr_TG_Locale,
-	"fr-TN":      &fr_TN_Locale,
-	"fr-VU":      &fr_VU_Locale,
-	"fr-WF":      &fr_WF_Locale,
-	"fr-YT":      &fr_YT_Locale,
-	"fur":        &fur_Locale,
-	"fy":         &fy_Locale,
-	"ga":         &ga_Locale,
-	"gd":         &gd_Locale,
-	"gl":         &gl_Locale,
-	"gsw":        &gsw_Locale,
-	"gsw-FR":     &gsw_FR_Locale,
-	"gsw-LI":     &gsw_LI_Locale,
-	"gu":         &gu_Locale,
-	"guz":        &guz_Locale,
-	"gv":         &gv_Locale,
-	"ha":         &ha_Locale,
-	"ha-GH":      &ha_GH_Locale,
-	"ha-NE":      &ha_NE_Locale,
-	"haw":        &haw_Locale,
-	"he":         &he_Locale,
-	"hi":         &hi_Locale,
-	"hr":         &hr_Locale,
-	"hr-BA":      &hr_BA_Locale,
-	"hsb":        &hsb_Locale,
-	"hu":         &hu_Locale,
-	"hy":         &hy_Locale,
-	"id":         &id_Locale,
-	"ig":         &ig_Locale,
-	"ii":         &ii_Locale,
-	"is":         &is_Locale,
-	"it":         &it_Locale,
-	"it-CH":      &it_CH_Locale,
-	"it-SM":      &it_SM_Locale,
-	"it-VA":      &it_VA_Locale,
-	"ja":         &ja_Locale,
-	"jgo":        &jgo_Locale,
-	"jmc":        &jmc_Locale,
-	"ka":         &ka_Locale,
-	"kab":        &kab_Locale,
-	"kam":        &kam_Locale,
-	"kde":        &kde_Locale,
-	"kea":        &kea_Locale,
-	"khq":        &khq_Locale,
-	"ki":         &ki_Locale,
-	"kk":         &kk_Locale,
-	"kl":         &kl_Locale,
-	"kln":        &kln_Locale,
-	"km":         &km_Locale,
-	"kn":         &kn_Locale,
-	"ko":         &ko_Locale,
-	"ko-KP":      &ko_KP_Locale,
-	"kok":        &kok_Locale,
-	"ks":         &ks_Locale,
-	"ksb":        &ksb_Locale,
-	"ksf":        &ksf_Locale,
-	"ksh":        &ksh_Locale,
-	"kw":         &kw_Locale,
-	"ky":         &ky_Locale,
-	"lag":        &lag_Locale,
-	"lb":         &lb_Locale,
-	"lg":         &lg_Locale,
-	"lkt":        &lkt_Locale,
-	"ln":         &ln_Locale,
-	"ln-AO":      &ln_AO_Locale,
-	"ln-CF":      &ln_CF_Locale,
-	"ln-CG":      &ln_CG_Locale,
-	"lo":         &lo_Locale,
-	"lrc":        &lrc_Locale,
-	"lrc-IQ":     &lrc_IQ_Locale,
-	"lt":         &lt_Locale,
-	"lu":         &lu_Locale,
-	"luo":        &luo_Locale,
-	"luy":        &luy_Locale,
-	"lv":         &lv_Locale,
-	"mas":        &mas_Locale,
-	"mas-TZ":     &mas_TZ_Locale,
-	"mer":        &mer_Locale,
-	"mfe":        &mfe_Locale,
-	"mg":         &mg_Locale,
-	"mgh":        &mgh_Locale,
-	"mgo":        &mgo_Locale,
-	"mk":         &mk_Locale,
-	"ml":         &ml_Locale,
-	"mn":         &mn_Locale,
-	"mr":         &mr_Locale,
-	"ms":         &ms_Locale,
-	"ms-BN":      &ms_BN_Locale,
-	"ms-SG":      &ms_SG_Locale,
-	"mt":         &mt_Locale,
-	"mua":        &mua_Locale,
-	"my":         &my_Locale,
-	"mzn":        &mzn_Locale,
-	"naq":        &naq_Locale,
-	"nb":         &nb_Locale,
-	"nb-SJ":      &nb_SJ_Locale,
-	"nd":         &nd_Locale,
-	"ne":         &ne_Locale,
-	"ne-IN":      &ne_IN_Locale,
-	"nl":         &nl_Locale,
-	"nl-AW":      &nl_AW_Locale,
-	"nl-BE":      &nl_BE_Locale,
-	"nl-BQ":      &nl_BQ_Locale,
-	"nl-CW":      &nl_CW_Locale,
-	"nl-SR":      &nl_SR_Locale,
-	"nl-SX":      &nl_SX_Locale,
-	"nmg":        &nmg_Locale,
-	"nn":         &nn_Locale,
-	"nnh":        &nnh_Locale,
-	"nus":        &nus_Locale,
-	"nyn":        &nyn_Locale,
-	"om":         &om_Locale,
-	"om-KE":      &om_KE_Locale,
-	"or":         &or_Locale,
-	"os":         &os_Locale,
-	"os-RU":      &os_RU_Locale,
-	"pa":         &pa_Locale,
-	"pa-Arab":    &pa_Arab_Locale,
-	"pa-Guru":    &pa_Guru_Locale,
-	"pl":         &pl_Locale,
-	"ps":         &ps_Locale,
-	"pt":         &pt_Locale,
-	"pt-AO":      &pt_AO_Locale,
-	"pt-CH":      &pt_CH_Locale,
-	"pt-CV":      &pt_CV_Locale,
-	"pt-GQ":      &pt_GQ_Locale,
-	"pt-GW":      &pt_GW_Locale,
-	"pt-LU":      &pt_LU_Locale,
-	"pt-MO":      &pt_MO_Locale,
-	"pt-MZ":      &pt_MZ_Locale,
-	"pt-PT":      &pt_PT_Locale,
-	"pt-ST":      &pt_ST_Locale,
-	"pt-TL":      &pt_TL_Locale,
-	"qu":         &qu_Locale,
-	"qu-BO":      &qu_BO_Locale,
-	"qu-EC":      &qu_EC_Locale,
-	"rm":         &rm_Locale,
-	"rn":         &rn_Locale,
-	"ro":         &ro_Locale,
-	"ro-MD":      &ro_MD_Locale,
-	"rof":        &rof_Locale,
-	"ru":         &ru_Locale,
-	"ru-BY":      &ru_BY_Locale,
-	"ru-KG":      &ru_KG_Locale,
-	"ru-KZ":      &ru_KZ_Locale,
-	"ru-MD":      &ru_MD_Locale,
-	"ru-UA":      &ru_UA_Locale,
-	"rw":         &rw_Locale,
-	"rwk":        &rwk_Locale,
-	"sah":        &sah_Locale,
-	"saq":        &saq_Locale,
-	"sbp":        &sbp_Locale,
-	"se":         &se_Locale,
-	"se-FI":      &se_FI_Locale,
-	"se-SE":      &se_SE_Locale,
-	"seh":        &seh_Locale,
-	"ses":        &ses_Locale,
-	"sg":         &sg_Locale,
-	"shi":        &shi_Locale,
-	"shi-Latn":   &shi_Latn_Locale,
-	"shi-Tfng":   &shi_Tfng_Locale,
-	"si":         &si_Locale,
-	"sk":         &sk_Locale,
-	"sl":         &sl_Locale,
-	"smn":        &smn_Locale,
-	"sn":         &sn_Locale,
-	"so":         &so_Locale,
-	"so-DJ":      &so_DJ_Locale,
-	"so-ET":      &so_ET_Locale,
-	"so-KE":      &so_KE_Locale,
-	"sq":         &sq_Locale,
-	"sq-MK":      &sq_MK_Locale,
-	"sq-XK":      &sq_XK_Locale,
-	"sr":         &sr_Locale,
-	"sr-Cyrl":    &sr_Cyrl_Locale,
-	"sr-Cyrl-BA": &sr_Cyrl_BA_Locale,
-	"sr-Cyrl-ME": &sr_Cyrl_ME_Locale,
-	"sr-Cyrl-XK": &sr_Cyrl_XK_Locale,
-	"sr-Latn":    &sr_Latn_Locale,
-	"sr-Latn-BA": &sr_Latn_BA_Locale,
-	"sr-Latn-ME": &sr_Latn_ME_Locale,
-	"sr-Latn-XK": &sr_Latn_XK_Locale,
-	"sv":         &sv_Locale,
-	"sv-AX":      &sv_AX_Locale,
-	"sv-FI":      &sv_FI_Locale,
-	"sw":         &sw_Locale,
-	"sw-CD":      &sw_CD_Locale,
-	"sw-KE":      &sw_KE_Locale,
-	"sw-UG":      &sw_UG_Locale,
-	"ta":         &ta_Locale,
-	"ta-LK":      &ta_LK_Locale,
-	"ta-MY":      &ta_MY_Locale,
-	"ta-SG":      &ta_SG_Locale,
-	"te":         &te_Locale,
-	"teo":        &teo_Locale,
-	"teo-KE":     &teo_KE_Locale,
-	"th":         &th_Locale,
-	"ti":         &ti_Locale,
-	"ti-ER":      &ti_ER_Locale,
-	"tl":         &tl_Locale,
-	"to":         &to_Locale,
-	"tr":         &tr_Locale,
-	"tr-CY":      &tr_CY_Locale,
-	"twq":        &twq_Locale,
-	"tzm":        &tzm_Locale,
-	"ug":         &ug_Locale,
-	"uk":         &uk_Locale,
-	"ur":         &ur_Locale,
-	"ur-IN":      &ur_IN_Locale,
-	"uz":         &uz_Locale,
-	"uz-Arab":    &uz_Arab_Locale,
-	"uz-Cyrl":    &uz_Cyrl_Locale,
-	"uz-Latn":    &uz_Latn_Locale,
-	"vi":         &vi_Locale,
-	"vun":        &vun_Locale,
-	"wae":        &wae_Locale,
-	"xog":        &xog_Locale,
-	"yav":        &yav_Locale,
-	"yi":         &yi_Locale,
-	"yo":         &yo_Locale,
-	"yo-BJ":      &yo_BJ_Locale,
-	"yue":        &yue_Locale,
-	"zgh":        &zgh_Locale,
-	"zh":         &zh_Locale,
-	"zh-Hans":    &zh_Hans_Locale,
-	"zh-Hans-HK": &zh_Hans_HK_Locale,
-	"zh-Hans-MO": &zh_Hans_MO_Locale,
-	"zh-Hans-SG": &zh_Hans_SG_Locale,
-	"zh-Hant":    &zh_Hant_Locale,
-	"zh-Hant-HK": &zh_Hant_HK_Locale,
-	"zh-Hant-MO": &zh_Hant_MO_Locale,
-	"zu":         &zu_Locale,
+func GetLocaleData(locale string) (*LocaleData, bool) {
+	switch locale {
+	case "af":
+		return &af_Locale, true
+	case "af-NA":
+		return &af_NA_Locale, true
+	case "agq":
+		return &agq_Locale, true
+	case "ak":
+		return &ak_Locale, true
+	case "am":
+		return &am_Locale, true
+	case "ar":
+		return &ar_Locale, true
+	case "ar-AE":
+		return &ar_AE_Locale, true
+	case "ar-BH":
+		return &ar_BH_Locale, true
+	case "ar-DJ":
+		return &ar_DJ_Locale, true
+	case "ar-DZ":
+		return &ar_DZ_Locale, true
+	case "ar-EG":
+		return &ar_EG_Locale, true
+	case "ar-EH":
+		return &ar_EH_Locale, true
+	case "ar-ER":
+		return &ar_ER_Locale, true
+	case "ar-IL":
+		return &ar_IL_Locale, true
+	case "ar-IQ":
+		return &ar_IQ_Locale, true
+	case "ar-JO":
+		return &ar_JO_Locale, true
+	case "ar-KM":
+		return &ar_KM_Locale, true
+	case "ar-KW":
+		return &ar_KW_Locale, true
+	case "ar-LB":
+		return &ar_LB_Locale, true
+	case "ar-LY":
+		return &ar_LY_Locale, true
+	case "ar-MA":
+		return &ar_MA_Locale, true
+	case "ar-MR":
+		return &ar_MR_Locale, true
+	case "ar-OM":
+		return &ar_OM_Locale, true
+	case "ar-PS":
+		return &ar_PS_Locale, true
+	case "ar-QA":
+		return &ar_QA_Locale, true
+	case "ar-SA":
+		return &ar_SA_Locale, true
+	case "ar-SD":
+		return &ar_SD_Locale, true
+	case "ar-SO":
+		return &ar_SO_Locale, true
+	case "ar-SS":
+		return &ar_SS_Locale, true
+	case "ar-SY":
+		return &ar_SY_Locale, true
+	case "ar-TD":
+		return &ar_TD_Locale, true
+	case "ar-TN":
+		return &ar_TN_Locale, true
+	case "ar-YE":
+		return &ar_YE_Locale, true
+	case "as":
+		return &as_Locale, true
+	case "asa":
+		return &asa_Locale, true
+	case "ast":
+		return &ast_Locale, true
+	case "az":
+		return &az_Locale, true
+	case "az-Cyrl":
+		return &az_Cyrl_Locale, true
+	case "az-Latn":
+		return &az_Latn_Locale, true
+	case "bas":
+		return &bas_Locale, true
+	case "be":
+		return &be_Locale, true
+	case "bem":
+		return &bem_Locale, true
+	case "bez":
+		return &bez_Locale, true
+	case "bg":
+		return &bg_Locale, true
+	case "bm":
+		return &bm_Locale, true
+	case "bn":
+		return &bn_Locale, true
+	case "bn-IN":
+		return &bn_IN_Locale, true
+	case "bo":
+		return &bo_Locale, true
+	case "bo-IN":
+		return &bo_IN_Locale, true
+	case "br":
+		return &br_Locale, true
+	case "brx":
+		return &brx_Locale, true
+	case "bs":
+		return &bs_Locale, true
+	case "bs-Cyrl":
+		return &bs_Cyrl_Locale, true
+	case "bs-Latn":
+		return &bs_Latn_Locale, true
+	case "ca":
+		return &ca_Locale, true
+	case "ca-AD":
+		return &ca_AD_Locale, true
+	case "ca-FR":
+		return &ca_FR_Locale, true
+	case "ca-IT":
+		return &ca_IT_Locale, true
+	case "ce":
+		return &ce_Locale, true
+	case "cgg":
+		return &cgg_Locale, true
+	case "chr":
+		return &chr_Locale, true
+	case "ckb":
+		return &ckb_Locale, true
+	case "ckb-IR":
+		return &ckb_IR_Locale, true
+	case "cs":
+		return &cs_Locale, true
+	case "cy":
+		return &cy_Locale, true
+	case "da":
+		return &da_Locale, true
+	case "da-GL":
+		return &da_GL_Locale, true
+	case "dav":
+		return &dav_Locale, true
+	case "de":
+		return &de_Locale, true
+	case "de-AT":
+		return &de_AT_Locale, true
+	case "de-BE":
+		return &de_BE_Locale, true
+	case "de-CH":
+		return &de_CH_Locale, true
+	case "de-IT":
+		return &de_IT_Locale, true
+	case "de-LI":
+		return &de_LI_Locale, true
+	case "de-LU":
+		return &de_LU_Locale, true
+	case "dje":
+		return &dje_Locale, true
+	case "dsb":
+		return &dsb_Locale, true
+	case "dua":
+		return &dua_Locale, true
+	case "dyo":
+		return &dyo_Locale, true
+	case "dz":
+		return &dz_Locale, true
+	case "ebu":
+		return &ebu_Locale, true
+	case "ee":
+		return &ee_Locale, true
+	case "ee-TG":
+		return &ee_TG_Locale, true
+	case "el":
+		return &el_Locale, true
+	case "el-CY":
+		return &el_CY_Locale, true
+	case "en":
+		return &en_Locale, true
+	case "en-001":
+		return &en_001_Locale, true
+	case "en-150":
+		return &en_150_Locale, true
+	case "en-AG":
+		return &en_AG_Locale, true
+	case "en-AI":
+		return &en_AI_Locale, true
+	case "en-AS":
+		return &en_AS_Locale, true
+	case "en-AT":
+		return &en_AT_Locale, true
+	case "en-AU":
+		return &en_AU_Locale, true
+	case "en-BB":
+		return &en_BB_Locale, true
+	case "en-BE":
+		return &en_BE_Locale, true
+	case "en-BI":
+		return &en_BI_Locale, true
+	case "en-BM":
+		return &en_BM_Locale, true
+	case "en-BS":
+		return &en_BS_Locale, true
+	case "en-BW":
+		return &en_BW_Locale, true
+	case "en-BZ":
+		return &en_BZ_Locale, true
+	case "en-CA":
+		return &en_CA_Locale, true
+	case "en-CC":
+		return &en_CC_Locale, true
+	case "en-CH":
+		return &en_CH_Locale, true
+	case "en-CK":
+		return &en_CK_Locale, true
+	case "en-CM":
+		return &en_CM_Locale, true
+	case "en-CX":
+		return &en_CX_Locale, true
+	case "en-CY":
+		return &en_CY_Locale, true
+	case "en-DE":
+		return &en_DE_Locale, true
+	case "en-DG":
+		return &en_DG_Locale, true
+	case "en-DK":
+		return &en_DK_Locale, true
+	case "en-DM":
+		return &en_DM_Locale, true
+	case "en-ER":
+		return &en_ER_Locale, true
+	case "en-FI":
+		return &en_FI_Locale, true
+	case "en-FJ":
+		return &en_FJ_Locale, true
+	case "en-FK":
+		return &en_FK_Locale, true
+	case "en-FM":
+		return &en_FM_Locale, true
+	case "en-GB":
+		return &en_GB_Locale, true
+	case "en-GD":
+		return &en_GD_Locale, true
+	case "en-GG":
+		return &en_GG_Locale, true
+	case "en-GH":
+		return &en_GH_Locale, true
+	case "en-GI":
+		return &en_GI_Locale, true
+	case "en-GM":
+		return &en_GM_Locale, true
+	case "en-GU":
+		return &en_GU_Locale, true
+	case "en-GY":
+		return &en_GY_Locale, true
+	case "en-HK":
+		return &en_HK_Locale, true
+	case "en-IE":
+		return &en_IE_Locale, true
+	case "en-IL":
+		return &en_IL_Locale, true
+	case "en-IM":
+		return &en_IM_Locale, true
+	case "en-IN":
+		return &en_IN_Locale, true
+	case "en-IO":
+		return &en_IO_Locale, true
+	case "en-JE":
+		return &en_JE_Locale, true
+	case "en-JM":
+		return &en_JM_Locale, true
+	case "en-KE":
+		return &en_KE_Locale, true
+	case "en-KI":
+		return &en_KI_Locale, true
+	case "en-KN":
+		return &en_KN_Locale, true
+	case "en-KY":
+		return &en_KY_Locale, true
+	case "en-LC":
+		return &en_LC_Locale, true
+	case "en-LR":
+		return &en_LR_Locale, true
+	case "en-LS":
+		return &en_LS_Locale, true
+	case "en-MG":
+		return &en_MG_Locale, true
+	case "en-MH":
+		return &en_MH_Locale, true
+	case "en-MO":
+		return &en_MO_Locale, true
+	case "en-MP":
+		return &en_MP_Locale, true
+	case "en-MS":
+		return &en_MS_Locale, true
+	case "en-MT":
+		return &en_MT_Locale, true
+	case "en-MU":
+		return &en_MU_Locale, true
+	case "en-MW":
+		return &en_MW_Locale, true
+	case "en-MY":
+		return &en_MY_Locale, true
+	case "en-NA":
+		return &en_NA_Locale, true
+	case "en-NF":
+		return &en_NF_Locale, true
+	case "en-NG":
+		return &en_NG_Locale, true
+	case "en-NL":
+		return &en_NL_Locale, true
+	case "en-NR":
+		return &en_NR_Locale, true
+	case "en-NU":
+		return &en_NU_Locale, true
+	case "en-NZ":
+		return &en_NZ_Locale, true
+	case "en-PG":
+		return &en_PG_Locale, true
+	case "en-PH":
+		return &en_PH_Locale, true
+	case "en-PK":
+		return &en_PK_Locale, true
+	case "en-PN":
+		return &en_PN_Locale, true
+	case "en-PR":
+		return &en_PR_Locale, true
+	case "en-PW":
+		return &en_PW_Locale, true
+	case "en-RW":
+		return &en_RW_Locale, true
+	case "en-SB":
+		return &en_SB_Locale, true
+	case "en-SC":
+		return &en_SC_Locale, true
+	case "en-SD":
+		return &en_SD_Locale, true
+	case "en-SE":
+		return &en_SE_Locale, true
+	case "en-SG":
+		return &en_SG_Locale, true
+	case "en-SH":
+		return &en_SH_Locale, true
+	case "en-SI":
+		return &en_SI_Locale, true
+	case "en-SL":
+		return &en_SL_Locale, true
+	case "en-SS":
+		return &en_SS_Locale, true
+	case "en-SX":
+		return &en_SX_Locale, true
+	case "en-SZ":
+		return &en_SZ_Locale, true
+	case "en-TC":
+		return &en_TC_Locale, true
+	case "en-TK":
+		return &en_TK_Locale, true
+	case "en-TO":
+		return &en_TO_Locale, true
+	case "en-TT":
+		return &en_TT_Locale, true
+	case "en-TV":
+		return &en_TV_Locale, true
+	case "en-TZ":
+		return &en_TZ_Locale, true
+	case "en-UG":
+		return &en_UG_Locale, true
+	case "en-UM":
+		return &en_UM_Locale, true
+	case "en-VC":
+		return &en_VC_Locale, true
+	case "en-VG":
+		return &en_VG_Locale, true
+	case "en-VI":
+		return &en_VI_Locale, true
+	case "en-VU":
+		return &en_VU_Locale, true
+	case "en-WS":
+		return &en_WS_Locale, true
+	case "en-ZA":
+		return &en_ZA_Locale, true
+	case "en-ZM":
+		return &en_ZM_Locale, true
+	case "en-ZW":
+		return &en_ZW_Locale, true
+	case "eo":
+		return &eo_Locale, true
+	case "es":
+		return &es_Locale, true
+	case "es-419":
+		return &es_419_Locale, true
+	case "es-AR":
+		return &es_AR_Locale, true
+	case "es-BO":
+		return &es_BO_Locale, true
+	case "es-BR":
+		return &es_BR_Locale, true
+	case "es-BZ":
+		return &es_BZ_Locale, true
+	case "es-CL":
+		return &es_CL_Locale, true
+	case "es-CO":
+		return &es_CO_Locale, true
+	case "es-CR":
+		return &es_CR_Locale, true
+	case "es-CU":
+		return &es_CU_Locale, true
+	case "es-DO":
+		return &es_DO_Locale, true
+	case "es-EA":
+		return &es_EA_Locale, true
+	case "es-EC":
+		return &es_EC_Locale, true
+	case "es-GQ":
+		return &es_GQ_Locale, true
+	case "es-GT":
+		return &es_GT_Locale, true
+	case "es-HN":
+		return &es_HN_Locale, true
+	case "es-IC":
+		return &es_IC_Locale, true
+	case "es-MX":
+		return &es_MX_Locale, true
+	case "es-NI":
+		return &es_NI_Locale, true
+	case "es-PA":
+		return &es_PA_Locale, true
+	case "es-PE":
+		return &es_PE_Locale, true
+	case "es-PH":
+		return &es_PH_Locale, true
+	case "es-PR":
+		return &es_PR_Locale, true
+	case "es-PY":
+		return &es_PY_Locale, true
+	case "es-SV":
+		return &es_SV_Locale, true
+	case "es-US":
+		return &es_US_Locale, true
+	case "es-UY":
+		return &es_UY_Locale, true
+	case "es-VE":
+		return &es_VE_Locale, true
+	case "et":
+		return &et_Locale, true
+	case "eu":
+		return &eu_Locale, true
+	case "ewo":
+		return &ewo_Locale, true
+	case "fa":
+		return &fa_Locale, true
+	case "fa-AF":
+		return &fa_AF_Locale, true
+	case "ff":
+		return &ff_Locale, true
+	case "ff-CM":
+		return &ff_CM_Locale, true
+	case "ff-GN":
+		return &ff_GN_Locale, true
+	case "ff-MR":
+		return &ff_MR_Locale, true
+	case "fi":
+		return &fi_Locale, true
+	case "fil":
+		return &fil_Locale, true
+	case "fo":
+		return &fo_Locale, true
+	case "fo-DK":
+		return &fo_DK_Locale, true
+	case "fr":
+		return &fr_Locale, true
+	case "fr-BE":
+		return &fr_BE_Locale, true
+	case "fr-BF":
+		return &fr_BF_Locale, true
+	case "fr-BI":
+		return &fr_BI_Locale, true
+	case "fr-BJ":
+		return &fr_BJ_Locale, true
+	case "fr-BL":
+		return &fr_BL_Locale, true
+	case "fr-CA":
+		return &fr_CA_Locale, true
+	case "fr-CD":
+		return &fr_CD_Locale, true
+	case "fr-CF":
+		return &fr_CF_Locale, true
+	case "fr-CG":
+		return &fr_CG_Locale, true
+	case "fr-CH":
+		return &fr_CH_Locale, true
+	case "fr-CI":
+		return &fr_CI_Locale, true
+	case "fr-CM":
+		return &fr_CM_Locale, true
+	case "fr-DJ":
+		return &fr_DJ_Locale, true
+	case "fr-DZ":
+		return &fr_DZ_Locale, true
+	case "fr-GA":
+		return &fr_GA_Locale, true
+	case "fr-GF":
+		return &fr_GF_Locale, true
+	case "fr-GN":
+		return &fr_GN_Locale, true
+	case "fr-GP":
+		return &fr_GP_Locale, true
+	case "fr-GQ":
+		return &fr_GQ_Locale, true
+	case "fr-HT":
+		return &fr_HT_Locale, true
+	case "fr-KM":
+		return &fr_KM_Locale, true
+	case "fr-LU":
+		return &fr_LU_Locale, true
+	case "fr-MA":
+		return &fr_MA_Locale, true
+	case "fr-MC":
+		return &fr_MC_Locale, true
+	case "fr-MF":
+		return &fr_MF_Locale, true
+	case "fr-MG":
+		return &fr_MG_Locale, true
+	case "fr-ML":
+		return &fr_ML_Locale, true
+	case "fr-MQ":
+		return &fr_MQ_Locale, true
+	case "fr-MR":
+		return &fr_MR_Locale, true
+	case "fr-MU":
+		return &fr_MU_Locale, true
+	case "fr-NC":
+		return &fr_NC_Locale, true
+	case "fr-NE":
+		return &fr_NE_Locale, true
+	case "fr-PF":
+		return &fr_PF_Locale, true
+	case "fr-PM":
+		return &fr_PM_Locale, true
+	case "fr-RE":
+		return &fr_RE_Locale, true
+	case "fr-RW":
+		return &fr_RW_Locale, true
+	case "fr-SC":
+		return &fr_SC_Locale, true
+	case "fr-SN":
+		return &fr_SN_Locale, true
+	case "fr-SY":
+		return &fr_SY_Locale, true
+	case "fr-TD":
+		return &fr_TD_Locale, true
+	case "fr-TG":
+		return &fr_TG_Locale, true
+	case "fr-TN":
+		return &fr_TN_Locale, true
+	case "fr-VU":
+		return &fr_VU_Locale, true
+	case "fr-WF":
+		return &fr_WF_Locale, true
+	case "fr-YT":
+		return &fr_YT_Locale, true
+	case "fur":
+		return &fur_Locale, true
+	case "fy":
+		return &fy_Locale, true
+	case "ga":
+		return &ga_Locale, true
+	case "gd":
+		return &gd_Locale, true
+	case "gl":
+		return &gl_Locale, true
+	case "gsw":
+		return &gsw_Locale, true
+	case "gsw-FR":
+		return &gsw_FR_Locale, true
+	case "gsw-LI":
+		return &gsw_LI_Locale, true
+	case "gu":
+		return &gu_Locale, true
+	case "guz":
+		return &guz_Locale, true
+	case "gv":
+		return &gv_Locale, true
+	case "ha":
+		return &ha_Locale, true
+	case "ha-GH":
+		return &ha_GH_Locale, true
+	case "ha-NE":
+		return &ha_NE_Locale, true
+	case "haw":
+		return &haw_Locale, true
+	case "he":
+		return &he_Locale, true
+	case "hi":
+		return &hi_Locale, true
+	case "hr":
+		return &hr_Locale, true
+	case "hr-BA":
+		return &hr_BA_Locale, true
+	case "hsb":
+		return &hsb_Locale, true
+	case "hu":
+		return &hu_Locale, true
+	case "hy":
+		return &hy_Locale, true
+	case "id":
+		return &id_Locale, true
+	case "ig":
+		return &ig_Locale, true
+	case "ii":
+		return &ii_Locale, true
+	case "is":
+		return &is_Locale, true
+	case "it":
+		return &it_Locale, true
+	case "it-CH":
+		return &it_CH_Locale, true
+	case "it-SM":
+		return &it_SM_Locale, true
+	case "it-VA":
+		return &it_VA_Locale, true
+	case "ja":
+		return &ja_Locale, true
+	case "jgo":
+		return &jgo_Locale, true
+	case "jmc":
+		return &jmc_Locale, true
+	case "ka":
+		return &ka_Locale, true
+	case "kab":
+		return &kab_Locale, true
+	case "kam":
+		return &kam_Locale, true
+	case "kde":
+		return &kde_Locale, true
+	case "kea":
+		return &kea_Locale, true
+	case "khq":
+		return &khq_Locale, true
+	case "ki":
+		return &ki_Locale, true
+	case "kk":
+		return &kk_Locale, true
+	case "kl":
+		return &kl_Locale, true
+	case "kln":
+		return &kln_Locale, true
+	case "km":
+		return &km_Locale, true
+	case "kn":
+		return &kn_Locale, true
+	case "ko":
+		return &ko_Locale, true
+	case "ko-KP":
+		return &ko_KP_Locale, true
+	case "kok":
+		return &kok_Locale, true
+	case "ks":
+		return &ks_Locale, true
+	case "ksb":
+		return &ksb_Locale, true
+	case "ksf":
+		return &ksf_Locale, true
+	case "ksh":
+		return &ksh_Locale, true
+	case "kw":
+		return &kw_Locale, true
+	case "ky":
+		return &ky_Locale, true
+	case "lag":
+		return &lag_Locale, true
+	case "lb":
+		return &lb_Locale, true
+	case "lg":
+		return &lg_Locale, true
+	case "lkt":
+		return &lkt_Locale, true
+	case "ln":
+		return &ln_Locale, true
+	case "ln-AO":
+		return &ln_AO_Locale, true
+	case "ln-CF":
+		return &ln_CF_Locale, true
+	case "ln-CG":
+		return &ln_CG_Locale, true
+	case "lo":
+		return &lo_Locale, true
+	case "lrc":
+		return &lrc_Locale, true
+	case "lrc-IQ":
+		return &lrc_IQ_Locale, true
+	case "lt":
+		return &lt_Locale, true
+	case "lu":
+		return &lu_Locale, true
+	case "luo":
+		return &luo_Locale, true
+	case "luy":
+		return &luy_Locale, true
+	case "lv":
+		return &lv_Locale, true
+	case "mas":
+		return &mas_Locale, true
+	case "mas-TZ":
+		return &mas_TZ_Locale, true
+	case "mer":
+		return &mer_Locale, true
+	case "mfe":
+		return &mfe_Locale, true
+	case "mg":
+		return &mg_Locale, true
+	case "mgh":
+		return &mgh_Locale, true
+	case "mgo":
+		return &mgo_Locale, true
+	case "mk":
+		return &mk_Locale, true
+	case "ml":
+		return &ml_Locale, true
+	case "mn":
+		return &mn_Locale, true
+	case "mr":
+		return &mr_Locale, true
+	case "ms":
+		return &ms_Locale, true
+	case "ms-BN":
+		return &ms_BN_Locale, true
+	case "ms-SG":
+		return &ms_SG_Locale, true
+	case "mt":
+		return &mt_Locale, true
+	case "mua":
+		return &mua_Locale, true
+	case "my":
+		return &my_Locale, true
+	case "mzn":
+		return &mzn_Locale, true
+	case "naq":
+		return &naq_Locale, true
+	case "nb":
+		return &nb_Locale, true
+	case "nb-SJ":
+		return &nb_SJ_Locale, true
+	case "nd":
+		return &nd_Locale, true
+	case "ne":
+		return &ne_Locale, true
+	case "ne-IN":
+		return &ne_IN_Locale, true
+	case "nl":
+		return &nl_Locale, true
+	case "nl-AW":
+		return &nl_AW_Locale, true
+	case "nl-BE":
+		return &nl_BE_Locale, true
+	case "nl-BQ":
+		return &nl_BQ_Locale, true
+	case "nl-CW":
+		return &nl_CW_Locale, true
+	case "nl-SR":
+		return &nl_SR_Locale, true
+	case "nl-SX":
+		return &nl_SX_Locale, true
+	case "nmg":
+		return &nmg_Locale, true
+	case "nn":
+		return &nn_Locale, true
+	case "nnh":
+		return &nnh_Locale, true
+	case "nus":
+		return &nus_Locale, true
+	case "nyn":
+		return &nyn_Locale, true
+	case "om":
+		return &om_Locale, true
+	case "om-KE":
+		return &om_KE_Locale, true
+	case "or":
+		return &or_Locale, true
+	case "os":
+		return &os_Locale, true
+	case "os-RU":
+		return &os_RU_Locale, true
+	case "pa":
+		return &pa_Locale, true
+	case "pa-Arab":
+		return &pa_Arab_Locale, true
+	case "pa-Guru":
+		return &pa_Guru_Locale, true
+	case "pl":
+		return &pl_Locale, true
+	case "ps":
+		return &ps_Locale, true
+	case "pt":
+		return &pt_Locale, true
+	case "pt-AO":
+		return &pt_AO_Locale, true
+	case "pt-CH":
+		return &pt_CH_Locale, true
+	case "pt-CV":
+		return &pt_CV_Locale, true
+	case "pt-GQ":
+		return &pt_GQ_Locale, true
+	case "pt-GW":
+		return &pt_GW_Locale, true
+	case "pt-LU":
+		return &pt_LU_Locale, true
+	case "pt-MO":
+		return &pt_MO_Locale, true
+	case "pt-MZ":
+		return &pt_MZ_Locale, true
+	case "pt-PT":
+		return &pt_PT_Locale, true
+	case "pt-ST":
+		return &pt_ST_Locale, true
+	case "pt-TL":
+		return &pt_TL_Locale, true
+	case "qu":
+		return &qu_Locale, true
+	case "qu-BO":
+		return &qu_BO_Locale, true
+	case "qu-EC":
+		return &qu_EC_Locale, true
+	case "rm":
+		return &rm_Locale, true
+	case "rn":
+		return &rn_Locale, true
+	case "ro":
+		return &ro_Locale, true
+	case "ro-MD":
+		return &ro_MD_Locale, true
+	case "rof":
+		return &rof_Locale, true
+	case "ru":
+		return &ru_Locale, true
+	case "ru-BY":
+		return &ru_BY_Locale, true
+	case "ru-KG":
+		return &ru_KG_Locale, true
+	case "ru-KZ":
+		return &ru_KZ_Locale, true
+	case "ru-MD":
+		return &ru_MD_Locale, true
+	case "ru-UA":
+		return &ru_UA_Locale, true
+	case "rw":
+		return &rw_Locale, true
+	case "rwk":
+		return &rwk_Locale, true
+	case "sah":
+		return &sah_Locale, true
+	case "saq":
+		return &saq_Locale, true
+	case "sbp":
+		return &sbp_Locale, true
+	case "se":
+		return &se_Locale, true
+	case "se-FI":
+		return &se_FI_Locale, true
+	case "se-SE":
+		return &se_SE_Locale, true
+	case "seh":
+		return &seh_Locale, true
+	case "ses":
+		return &ses_Locale, true
+	case "sg":
+		return &sg_Locale, true
+	case "shi":
+		return &shi_Locale, true
+	case "shi-Latn":
+		return &shi_Latn_Locale, true
+	case "shi-Tfng":
+		return &shi_Tfng_Locale, true
+	case "si":
+		return &si_Locale, true
+	case "sk":
+		return &sk_Locale, true
+	case "sl":
+		return &sl_Locale, true
+	case "smn":
+		return &smn_Locale, true
+	case "sn":
+		return &sn_Locale, true
+	case "so":
+		return &so_Locale, true
+	case "so-DJ":
+		return &so_DJ_Locale, true
+	case "so-ET":
+		return &so_ET_Locale, true
+	case "so-KE":
+		return &so_KE_Locale, true
+	case "sq":
+		return &sq_Locale, true
+	case "sq-MK":
+		return &sq_MK_Locale, true
+	case "sq-XK":
+		return &sq_XK_Locale, true
+	case "sr":
+		return &sr_Locale, true
+	case "sr-Cyrl":
+		return &sr_Cyrl_Locale, true
+	case "sr-Cyrl-BA":
+		return &sr_Cyrl_BA_Locale, true
+	case "sr-Cyrl-ME":
+		return &sr_Cyrl_ME_Locale, true
+	case "sr-Cyrl-XK":
+		return &sr_Cyrl_XK_Locale, true
+	case "sr-Latn":
+		return &sr_Latn_Locale, true
+	case "sr-Latn-BA":
+		return &sr_Latn_BA_Locale, true
+	case "sr-Latn-ME":
+		return &sr_Latn_ME_Locale, true
+	case "sr-Latn-XK":
+		return &sr_Latn_XK_Locale, true
+	case "sv":
+		return &sv_Locale, true
+	case "sv-AX":
+		return &sv_AX_Locale, true
+	case "sv-FI":
+		return &sv_FI_Locale, true
+	case "sw":
+		return &sw_Locale, true
+	case "sw-CD":
+		return &sw_CD_Locale, true
+	case "sw-KE":
+		return &sw_KE_Locale, true
+	case "sw-UG":
+		return &sw_UG_Locale, true
+	case "ta":
+		return &ta_Locale, true
+	case "ta-LK":
+		return &ta_LK_Locale, true
+	case "ta-MY":
+		return &ta_MY_Locale, true
+	case "ta-SG":
+		return &ta_SG_Locale, true
+	case "te":
+		return &te_Locale, true
+	case "teo":
+		return &teo_Locale, true
+	case "teo-KE":
+		return &teo_KE_Locale, true
+	case "th":
+		return &th_Locale, true
+	case "ti":
+		return &ti_Locale, true
+	case "ti-ER":
+		return &ti_ER_Locale, true
+	case "tl":
+		return &tl_Locale, true
+	case "to":
+		return &to_Locale, true
+	case "tr":
+		return &tr_Locale, true
+	case "tr-CY":
+		return &tr_CY_Locale, true
+	case "twq":
+		return &twq_Locale, true
+	case "tzm":
+		return &tzm_Locale, true
+	case "ug":
+		return &ug_Locale, true
+	case "uk":
+		return &uk_Locale, true
+	case "ur":
+		return &ur_Locale, true
+	case "ur-IN":
+		return &ur_IN_Locale, true
+	case "uz":
+		return &uz_Locale, true
+	case "uz-Arab":
+		return &uz_Arab_Locale, true
+	case "uz-Cyrl":
+		return &uz_Cyrl_Locale, true
+	case "uz-Latn":
+		return &uz_Latn_Locale, true
+	case "vi":
+		return &vi_Locale, true
+	case "vun":
+		return &vun_Locale, true
+	case "wae":
+		return &wae_Locale, true
+	case "xog":
+		return &xog_Locale, true
+	case "yav":
+		return &yav_Locale, true
+	case "yi":
+		return &yi_Locale, true
+	case "yo":
+		return &yo_Locale, true
+	case "yo-BJ":
+		return &yo_BJ_Locale, true
+	case "yue":
+		return &yue_Locale, true
+	case "zgh":
+		return &zgh_Locale, true
+	case "zh":
+		return &zh_Locale, true
+	case "zh-Hans":
+		return &zh_Hans_Locale, true
+	case "zh-Hans-HK":
+		return &zh_Hans_HK_Locale, true
+	case "zh-Hans-MO":
+		return &zh_Hans_MO_Locale, true
+	case "zh-Hans-SG":
+		return &zh_Hans_SG_Locale, true
+	case "zh-Hant":
+		return &zh_Hant_Locale, true
+	case "zh-Hant-HK":
+		return &zh_Hant_HK_Locale, true
+	case "zh-Hant-MO":
+		return &zh_Hant_MO_Locale, true
+	case "zu":
+		return &zu_Locale, true
+	}
+
+	return nil, false
 }

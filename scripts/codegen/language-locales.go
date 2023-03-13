@@ -4,6 +4,8 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"strings"
+
+	"github.com/zyedidia/generic/mapset"
 )
 
 func createLanguageLocales() (map[string][]string, error) {
@@ -15,34 +17,35 @@ func createLanguageLocales() (map[string][]string, error) {
 		return nil, err
 	}
 
-	languageNames := map[string]struct{}{}
-	languageLocaleMap := map[string][]string{}
+	languageNames := mapset.New[string]()
+	languageLocales := map[string][]string{}
 	for _, item := range dirItems {
 		if !item.IsDir() {
 			continue
 		}
 
-		// Check if dir name contains locale
+		// Check if dir name contains locale. If false, then this locale is the
+		// "language" which will become parents for several sub-locales.
 		name := item.Name()
 		locale := rxLocale.FindString(name)
 
 		if locale == "" {
-			languageNames[name] = struct{}{}
-			if _, exist := languageLocaleMap[name]; !exist {
-				languageLocaleMap[name] = []string{}
+			languageNames.Put(name)
+			if _, exist := languageLocales[name]; !exist {
+				languageLocales[name] = []string{}
 			}
 		} else {
 			language := strings.TrimSuffix(name, locale)
-			languageLocaleMap[language] = append(languageLocaleMap[language], name)
+			languageLocales[language] = append(languageLocales[language], name)
 		}
 	}
 
 	// Remove invalid or excluded language
-	for language := range languageLocaleMap {
-		_, isValid := languageNames[language]
+	for language := range languageLocales {
+		isValid := languageNames.Has(language)
 		_, isExcluded := excludedLanguages[language]
 		if !isValid || isExcluded || language == "root" {
-			delete(languageLocaleMap, language)
+			delete(languageLocales, language)
 		}
 	}
 
@@ -53,12 +56,12 @@ func createLanguageLocales() (map[string][]string, error) {
 	}
 
 	for _, language := range supplementaryLanguages {
-		if _, exist := languageLocaleMap[language]; !exist {
-			languageLocaleMap[language] = []string{}
+		if _, exist := languageLocales[language]; !exist {
+			languageLocales[language] = []string{}
 		}
 	}
 
-	return languageLocaleMap, nil
+	return languageLocales, nil
 }
 
 func getSupplementaryLanguages() ([]string, error) {

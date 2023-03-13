@@ -22,7 +22,11 @@ var (
 	DMY = func(_ string) string { return "DMY" }
 
 	DefaultDateOrder = func(locale string) string {
-		return data.LocaleDataMap[locale].DateOrder
+		if ld, exist := data.GetLocaleData(locale); exist {
+			return ld.DateOrder
+		} else {
+			return "YMD"
+		}
 	}
 )
 

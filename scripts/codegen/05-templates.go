@@ -236,10 +236,14 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	return child
 }
 
-var LocaleDataMap = map[string]*LocaleData {
-	{{range $language, $data := . -}}
-	"{{$language}}": &{{localeName $language}},
-	{{end}}
+func GetLocaleData(locale string) (*LocaleData, bool) {
+	switch locale {
+		{{- range $language, $data := .}}
+		case "{{$language}}": return &{{localeName $language}}, true
+		{{- end}}
+	}
+
+	return nil, false
 }
 `
 

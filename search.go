@@ -83,8 +83,8 @@ func (p *Parser) SearchWithLanguage(cfg *Configuration, lang string, text string
 	iCfg := cfg.toInternalConfig()
 
 	// Find the locale data
-	ld := data.LocaleDataMap[lang]
-	if ld == nil {
+	ld, exist := data.GetLocaleData(lang)
+	if ld == nil || !exist {
 		return nil, fmt.Errorf("unknown language: %s", lang)
 	}
 

@@ -7,6 +7,8 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/elliotchance/pie/v2"
+	"github.com/zyedidia/generic/mapset"
 	"golang.org/x/text/transform"
 	"gopkg.in/yaml.v2"
 )
@@ -97,39 +99,115 @@ func filterList(fnFilter func(string) bool, items ...string) []string {
 
 func cleanList(useStringCleaner bool, items ...string) []string {
 	var cleanedList []string
-	tracker := map[string]struct{}{}
-
 	for _, item := range items {
 		if useStringCleaner {
 			item = cleanString(item)
 		} else {
 			item = normalizeString(item)
 		}
-
-		_, itemExist := tracker[item]
-		if item != "" && !itemExist {
-			tracker[item] = struct{}{}
-			cleanedList = append(cleanedList, item)
-		}
+		cleanedList = append(cleanedList, item)
 	}
 
+	cleanedList = pie.Unique(cleanedList)
 	sort.Strings(cleanedList)
 	return cleanedList
 }
 
 func cleanSimplifications(items ...SimplificationData) []SimplificationData {
 	var cleanedSimplifications []SimplificationData
-	tracker := map[string]struct{}{}
+	tracker := mapset.New[string]()
 
 	for _, data := range items {
 		key := data.Pattern + "==" + data.Replacement
-		_, itemExist := tracker[key]
-
-		if data.Pattern != "" && !itemExist {
-			tracker[key] = struct{}{}
+		if data.Pattern != "" && !tracker.Has(key) {
+			tracker.Put(key)
 			cleanedSimplifications = append(cleanedSimplifications, data)
 		}
 	}
 
 	return cleanedSimplifications
+}
+
+func cloneSlice[T any](source []T) []T {
+	return append([]T{}, source...)
+}
+
+func cloneMap[K comparable, V any](source map[K]V) map[K]V {
+	clone := make(map[K]V)
+	for k, v := range source {
+		clone[k] = v
+	}
+	return clone
+}
+
+func cloneMapSlice[K comparable, V any](source map[K][]V) map[K][]V {
+	clone := make(map[K][]V)
+	for k, v := range source {
+		clone[k] = cloneSlice(v)
+	}
+	return clone
+}
+
+// reduceSlice removes item in current that already exist in input
+func reduceSlice[T comparable](current, input []T) []T {
+	tracker := mapset.New[T]()
+	for _, i := range input {
+		tracker.Put(i)
+	}
+
+	var result []T
+	for _, c := range current {
+		if !tracker.Has(c) {
+			result = append(result, c)
+		}
+	}
+
+	return result
+}
+
+// reduceMap removes item in current that already exist in input
+func reduceMap[K comparable, V comparable](current, input map[K]V) map[K]V {
+	result := make(map[K]V)
+	for ck, cv := range current {
+		if _, exist := input[ck]; !exist {
+			result[ck] = cv
+		}
+	}
+	return result
+}
+
+// reduceMapSlice removes item from slice in current that already exist in input
+func reduceMapSlice[K comparable, V comparable](current, input map[K][]V) map[K][]V {
+	result := make(map[K][]V)
+	for ck, cv := range current {
+		// If not exist in input, we can use as it is
+		if iv, exist := input[ck]; !exist {
+			result[ck] = append([]V{}, cv...)
+		} else {
+			// If already exist, we need to reduce the slice
+			reduced := reduceSlice(cv, iv)
+			if len(reduced) > 0 {
+				result[ck] = reduced
+			}
+		}
+	}
+	return result
+}
+
+func reduceSimplifications(current, input []SimplificationData) []SimplificationData {
+	tracker := mapset.New[string]()
+	for _, data := range input {
+		key := data.Pattern + "==" + data.Replacement
+		tracker.Put(key)
+	}
+
+	var reducedSimplifications []SimplificationData
+	for _, data := range current {
+		key := data.Pattern + "==" + data.Replacement
+		if !tracker.Has(key) {
+			reducedSimplifications = append(reducedSimplifications, data)
+		}
+	}
+
+	return reducedSimplifications
 }

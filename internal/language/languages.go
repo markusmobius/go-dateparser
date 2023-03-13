@@ -61,9 +61,15 @@ func GetUniqueCharsets(languages []string) map[string][]rune {
 
 	// Process each charset
 	for _, language := range languages {
+		// Fetch locale data
+		ld, exist := data.GetLocaleData(language)
+		if !exist {
+			continue
+		}
+
 		// Initiate map to contain the unique chars for this language
 		mapUniqueChar := map[rune]struct{}{}
-		for _, char := range data.LocaleDataMap[language].Charset {
+		for _, char := range ld.Charset {
 			mapUniqueChar[char] = struct{}{}
 		}
 
@@ -73,11 +79,14 @@ func GetUniqueCharsets(languages []string) map[string][]rune {
 				continue
 			}
 
+			ld, exist := data.GetLocaleData(otherLanguage)
+			if !exist {
+				continue
+			}
+
 			// If the charset of this language exist in map, remove it
-			for _, char := range data.LocaleDataMap[otherLanguage].Charset {
-				if _, exist := mapUniqueChar[char]; exist {
-					delete(mapUniqueChar, char)
-				}
+			for _, char := range ld.Charset {
+				delete(mapUniqueChar, char)
 			}
 		}
 

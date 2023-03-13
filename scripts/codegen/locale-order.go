@@ -1,20 +1,20 @@
 package main
 
-func createLocaleOrder(languageLocalesMap map[string][]string, languageOrder []string) map[string]int {
+func createLocaleOrder(languageLocales map[string][]string, languageOrder []string) map[string]int {
 	// Create language order map
-	languageOrderMap := map[string]int{}
+	languageOrders := map[string]int{}
 	for i, language := range languageOrder {
-		languageOrderMap[language] = i
+		languageOrders[language] = i
 	}
 
 	// Create locale order
-	localeOrderMap := map[string]int{}
-	for language, locales := range languageLocalesMap {
-		localeOrderMap[language] = languageOrderMap[language]
+	localeOrders := map[string]int{}
+	for language, locales := range languageLocales {
+		localeOrders[language] = languageOrders[language]
 		for _, locale := range locales {
-			localeOrderMap[locale] = languageOrderMap[language]
+			localeOrders[locale] = languageOrders[language]
 		}
 	}
 
-	return localeOrderMap
+	return localeOrders
 }

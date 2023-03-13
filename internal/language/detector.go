@@ -42,7 +42,11 @@ func DetectLanguage(cfg *setting.Configuration, str string, languages []string,
 	var finalCandidates []string
 	candidateScores := map[string][]int{}
 	for _, candidate := range candidates {
-		ld := data.LocaleDataMap[candidate]
+		ld, exist := data.GetLocaleData(candidate)
+		if !exist {
+			continue
+		}
+
 		nWord, nSkipped := CountApplicability(cfg, ld, str, false)
 		if nWord > 0 || nSkipped > 0 {
 			finalCandidates = append(finalCandidates, candidate)
@@ -114,8 +118,13 @@ func getLanguageCandidates(str string, languages []string, uniqueCharsets map[st
 	// Finally, use any languages whose chars used in string
 	var usedLanguages []string
 	for _, language := range languages {
+		ld, exist := data.GetLocaleData(language)
+		if !exist {
+			continue
+		}
+
 		var charsetUsed bool
-		for _, char := range data.LocaleDataMap[language].Charset {
+		for _, char := range ld.Charset {
 			if _, exist := strCharset[char]; exist {
 				charsetUsed = true
 				break

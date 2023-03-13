@@ -194,7 +194,7 @@ func TestTranslateSearch(t *testing.T) {
 		message := fmt.Sprintf("%s \"%s\" => \"%s\"", test.Language, test.Text, test.Translation)
 
 		// Translate text
-		ld := data.LocaleDataMap[test.Language]
+		ld, _ := data.GetLocaleData(test.Language)
 		translation, original := TranslateSearch(cfg, ld, test.Text)
 
 		// Assert result

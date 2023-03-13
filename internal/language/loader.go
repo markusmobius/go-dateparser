@@ -37,7 +37,7 @@ func GetLocales(locales []string, languages []string, region string, useGivenOrd
 			}
 
 			// Check if the locale valid
-			if _, exist := data.LocaleDataMap[locale]; !exist {
+			if _, exist := data.GetLocaleData(locale); !exist {
 				invalidLocales = append(invalidLocales, locale)
 				continue
 			}
@@ -103,7 +103,7 @@ func GetLocales(locales []string, languages []string, region string, useGivenOrd
 			}
 
 			// Make sure generated locale is valid
-			if _, exist := data.LocaleDataMap[locale]; !exist {
+			if _, exist := data.GetLocaleData(locale); !exist {
 				continue
 			}
 
@@ -137,7 +137,8 @@ func GetLocales(locales []string, languages []string, region string, useGivenOrd
 	// Fetch the locale data
 	listLocaleData := make([]*data.LocaleData, len(validLocales))
 	for i, locale := range validLocales {
-		listLocaleData[i] = data.LocaleDataMap[locale]
+		ld, _ := data.GetLocaleData(locale)
+		listLocaleData[i] = ld
 	}
 
 	if len(listLocaleData) == 0 {

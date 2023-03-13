@@ -8,6 +8,9 @@ import (
 	"strings"
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/elliotchance/pie/v2"
+	"github.com/zyedidia/generic/mapset"
 )
 
 type LocaleData struct {
@@ -28,7 +31,7 @@ type LocaleData struct {
 	ExactCombinedRegexPattern string               `json:",omitempty"`
 	KnownWords                []string             `json:",omitempty"`
 
-	charsetTracker map[rune]struct{}
+	charsetTracker mapset.Set[rune]
 }
 
 type SimplificationData struct {
@@ -38,8 +41,8 @@ type SimplificationData struct {
 
 func (ld *LocaleData) AddCharset(str string) {
 	// Prepare tracker
-	if ld.charsetTracker == nil {
-		ld.charsetTracker = map[rune]struct{}{}
+	if ld.charsetTracker.Size() == 0 {
+		ld.charsetTracker = mapset.New[rune]()
 	}
 
 	// Prepare strings to save
@@ -60,8 +63,8 @@ func (ld *LocaleData) AddCharset(str string) {
 				continue
 			}
 
-			if _, exist := ld.charsetTracker[r]; !exist {
-				ld.charsetTracker[r] = struct{}{}
+			if !ld.charsetTracker.Has(r) {
+				ld.charsetTracker.Put(r)
 				ld.Charset = append(ld.Charset, r)
 			}
 		}
@@ -122,7 +125,8 @@ func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord 
 
 	// Save translation if word not empty
 	if word != "" {
-		ld.Translations[word] = normalizeString(translation)
+		translation := normalizeString(translation)
+		ld.Translations[word] = translation
 	}
 }
 
@@ -200,54 +204,49 @@ func (ld *LocaleData) CombineRegexPatterns() {
 }
 
 func (ld *LocaleData) GenerateKnownWords() {
-	// Fetch all texts
-	var texts []string
+	// Fetch all words
+	translationWords := pie.Keys(ld.Translations)
+	relativeWords := pie.Keys(ld.RelativeType)
 
-	for text := range ld.Translations {
-		texts = append(texts, text)
-	}
+	var words []string
+	words = append(words, translationWords...)
+	words = append(words, relativeWords...)
+	words = pie.Unique(words)
 
-	for text := range ld.RelativeType {
-		texts = append(texts, text)
-	}
-
-	// Sort texts by the longest
-	sort.Slice(texts, func(a, b int) bool {
-		textA, textB := texts[a], texts[b]
-		lenA := utf8.RuneCountInString(textA)
-		lenB := utf8.RuneCountInString(textB)
+	// Sort words by the longest
+	sort.Slice(words, func(a, b int) bool {
+		wordA, wordB := words[a], words[b]
+		lenA := utf8.RuneCountInString(wordA)
+		lenB := utf8.RuneCountInString(wordB)
 		if lenA != lenB {
 			return lenA > lenB
 		}
-		return textA < textB
+		return wordA < wordB
 	})
 
-	ld.KnownWords = texts
+	ld.KnownWords = words
 }
 
 func (ld *LocaleData) GenerateAbbreviations() {
-	// Prepare variables and helper function
-	var abbreviations []string
-	tracker := map[string]struct{}{}
-	fnSaveAbbrs := func(texts map[string]string) {
-		for text := range texts {
-			trimmed := strings.TrimSuffix(text, ".")
-			if text == trimmed || len(trimmed) == 0 {
-				continue
-			}
+	// Extract words
+	translationWords := pie.Keys(ld.Translations)
+	relativeWords := pie.Keys(ld.RelativeType)
 
-			if _, exist := tracker[trimmed]; !exist {
-				tracker[trimmed] = struct{}{}
-				abbreviations = append(abbreviations, trimmed)
-			}
+	var words []string
+	words = append(words, translationWords...)
+	words = append(words, relativeWords...)
+
+	// Filter abbreviations from words
+	var abbreviations []string
+	for _, word := range words {
+		trimmedWord := strings.TrimSuffix(word, ".")
+		if trimmedWord != word && trimmedWord != "" {
+			abbreviations = append(abbreviations, trimmedWord)
 		}
 	}
 
-	// Save all abbreviations
-	fnSaveAbbrs(ld.Translations)
-	fnSaveAbbrs(ld.RelativeType)
-
 	// Sort the abbreviations
+	abbreviations = pie.Unique(abbreviations)
 	sort.Slice(abbreviations, func(i, j int) bool {
 		return abbreviations[i] < abbreviations[j]
 	})
@@ -256,41 +255,31 @@ func (ld *LocaleData) GenerateAbbreviations() {
 }
 
 func (ld LocaleData) Clone() LocaleData {
-	cloneMap := func(m map[string]string) map[string]string {
-		newMap := map[string]string{}
-		for k, v := range m {
-			newMap[k] = v
-		}
-		return newMap
-	}
-
-	cloneRuneMap := func(m map[rune]struct{}) map[rune]struct{} {
-		newMap := map[rune]struct{}{}
-		for k := range m {
-			newMap[k] = struct{}{}
-		}
-		return newMap
-	}
-
-	return LocaleData{
+	clone := LocaleData{
 		Name:                      ld.Name,
 		DateOrder:                 ld.DateOrder,
 		NoWordSpacing:             ld.NoWordSpacing,
 		SentenceSplitterGroup:     ld.SentenceSplitterGroup,
-		Charset:                   append([]rune{}, ld.Charset...),
-		SkipWords:                 append([]string{}, ld.SkipWords...),
-		PertainWords:              append([]string{}, ld.PertainWords...),
-		Abbreviations:             append([]string{}, ld.Abbreviations...),
-		Simplifications:           append([]SimplificationData{}, ld.Simplifications...),
+		Charset:                   cloneSlice(ld.Charset),
+		SkipWords:                 cloneSlice(ld.SkipWords),
+		PertainWords:              cloneSlice(ld.PertainWords),
+		Abbreviations:             cloneSlice(ld.Abbreviations),
+		Simplifications:           cloneSlice(ld.Simplifications),
 		Translations:              cloneMap(ld.Translations),
 		RelativeType:              cloneMap(ld.RelativeType),
 		RelativeTypeRegexes:       cloneMap(ld.RelativeTypeRegexes),
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
 		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
-		KnownWords:                append([]string{}, ld.KnownWords...),
+		KnownWords:                cloneSlice(ld.KnownWords),
 
-		charsetTracker: cloneRuneMap(ld.charsetTracker),
+		charsetTracker: mapset.New[rune](),
 	}
+
+	for _, r := range clone.Charset {
+		clone.charsetTracker.Put(r)
+	}
+
+	return clone
 }
 
 func (ld LocaleData) Merge(input LocaleData) LocaleData {
@@ -314,8 +303,8 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 	clone.Abbreviations = cleanList(false, append(clone.Abbreviations, input.Abbreviations...)...)
 	clone.Simplifications = cleanSimplifications(append(clone.Simplifications, input.Simplifications...)...)
 
-	for word, translation := range input.Translations {
-		clone.Translations[word] = translation
+	for word, translations := range input.Translations {
+		clone.Translations[word] = translations
 	}
 
 	for pattern, translation := range input.RelativeType {
@@ -328,8 +317,8 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 
 	for _, r := range input.Charset {
 		if !unicode.Is(commonChars, r) {
-			if _, exist := clone.charsetTracker[r]; !exist {
-				clone.charsetTracker[r] = struct{}{}
+			if !clone.charsetTracker.Has(r) {
+				clone.charsetTracker.Put(r)
 				clone.Charset = append(clone.Charset, r)
 			}
 		}
@@ -340,62 +329,6 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 
 func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	// Helper function
-	reduceStrings := func(base, input []string) []string {
-		tracker := map[string]struct{}{}
-		for _, s := range input {
-			tracker[s] = struct{}{}
-		}
-
-		var reducedStrings []string
-		for _, s := range base {
-			if _, exist := tracker[s]; !exist {
-				reducedStrings = append(reducedStrings, s)
-			}
-		}
-
-		return reducedStrings
-	}
-
-	reduceSimplifications := func(base, input []SimplificationData) []SimplificationData {
-		tracker := map[string]struct{}{}
-		for _, data := range input {
-			key := data.Pattern + "==" + data.Replacement
-			tracker[key] = struct{}{}
-		}
-
-		var reducedSimplifications []SimplificationData
-		for _, data := range base {
-			key := data.Pattern + "==" + data.Replacement
-			if _, exist := tracker[key]; !exist {
-				reducedSimplifications = append(reducedSimplifications, data)
-			}
-		}
-
-		return reducedSimplifications
-	}
-
-	reduceMap := func(base, input map[string]string) map[string]string {
-		newMap := map[string]string{}
-		for k, v := range base {
-			if _, exist := input[k]; !exist {
-				newMap[k] = v
-			}
-		}
-		return newMap
-	}
-
-	reduceCharset := func(base, input map[rune]struct{}) ([]rune, map[rune]struct{}) {
-		newCharset := []rune{}
-		newTracker := map[rune]struct{}{}
-		for r := range base {
-			if _, exist := input[r]; !exist {
-				newTracker[r] = struct{}{}
-				newCharset = append(newCharset, r)
-			}
-		}
-		return newCharset, newTracker
-	}
-
 	reducePattern := func(base, input string) string {
 		if base == input {
 			return ""
@@ -417,20 +350,28 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 		return nil
 	}
 
-	// Reduce data
+	// Reduce common data
 	clone := ld.Clone()
-	clone.SkipWords = reduceStrings(clone.SkipWords, input.SkipWords)
-	clone.PertainWords = reduceStrings(clone.PertainWords, input.PertainWords)
-	clone.Abbreviations = reduceStrings(clone.Abbreviations, input.Abbreviations)
+	clone.SkipWords = reduceSlice(clone.SkipWords, input.SkipWords)
+	clone.PertainWords = reduceSlice(clone.PertainWords, input.PertainWords)
+	clone.Abbreviations = reduceSlice(clone.Abbreviations, input.Abbreviations)
 	clone.Simplifications = reduceSimplifications(clone.Simplifications, input.Simplifications)
 	clone.Translations = reduceMap(clone.Translations, input.Translations)
 	clone.RelativeType = reduceMap(clone.RelativeType, input.RelativeType)
 	clone.RelativeTypeRegexes = reduceMap(clone.RelativeTypeRegexes, input.RelativeTypeRegexes)
-	clone.Charset, clone.charsetTracker = reduceCharset(clone.charsetTracker, input.charsetTracker)
 	clone.CombinedRegexPattern = reducePattern(clone.CombinedRegexPattern, input.CombinedRegexPattern)
 	clone.ExactCombinedRegexPattern = reducePattern(clone.ExactCombinedRegexPattern, input.ExactCombinedRegexPattern)
+
+	// Merge known words
 	clone.KnownWords = reduceKnownWords(clone.KnownWords, input.KnownWords)
 
+	// Reduce charset
+	clone.Charset = reduceSlice(clone.Charset, input.Charset)
+	input.charsetTracker.Each(func(r rune) {
+		clone.charsetTracker.Put(r)
+	})
+
+	// Apply sentence splitter group
 	if clone.SentenceSplitterGroup == input.SentenceSplitterGroup {
 		clone.SentenceSplitterGroup = 0
 	}
@@ -568,6 +509,11 @@ type SupplementaryData struct {
 type MapEntry struct {
 	Key   string
 	Value string
+}
+
+type MapSliceEntry struct {
+	Key    string
+	Values []string
 }
 
 type OrderEntry struct {
