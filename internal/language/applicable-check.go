@@ -90,9 +90,9 @@ func CountApplicability(cfg *setting.Configuration, ld *data.LocaleData, str str
 	// Count token that exist in dictionary
 	var nExist, nSkipped int
 	for token := range tokens {
-		trans, exist := ld.Translations[token]
+		translations, exist := ld.Translations[token]
 		if exist && utf8.RuneCountInString(token) >= 2 {
-			if trans != "" {
+			if len(translations) > 0 {
 				nExist++
 			} else {
 				nSkipped++

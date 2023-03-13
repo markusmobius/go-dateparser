@@ -15,6 +15,7 @@ var (
 		"localeName":   localeName,
 		"parentLocale": parentLocale,
 		"sortMap":      sortMap,
+		"sortMapSlice": sortMapSlice,
 		"sortMapOrder": sortMapOrder,
 	}
 
@@ -72,6 +73,27 @@ func sortMap(m map[string]string) []MapEntry {
 	var entries []MapEntry
 	for k, v := range m {
 		entries = append(entries, MapEntry{Key: k, Value: v})
+	}
+
+	sort.Slice(entries, func(a, b int) bool {
+		eA, eB := entries[a], entries[b]
+		lenKeyA := utf8.RuneCountInString(eA.Key)
+		lenKeyB := utf8.RuneCountInString(eB.Key)
+
+		if lenKeyA != lenKeyB {
+			return lenKeyA > lenKeyB
+		}
+
+		return eA.Key < eB.Key
+	})
+
+	return entries
+}
+
+func sortMapSlice(m map[string][]string) []MapSliceEntry {
+	var entries []MapSliceEntry
+	for k, v := range m {
+		entries = append(entries, MapSliceEntry{Key: k, Values: v})
 	}
 
 	sort.Slice(entries, func(a, b int) bool {
@@ -167,7 +189,12 @@ const localeDataMapTemplate = `
 
 package data
 
-import "regexp"
+import (
+	"regexp"
+	"sort"
+
+	"github.com/elliotchance/pie/v2"
+)
 
 type LocaleData struct {
 	Name                  string
@@ -177,7 +204,7 @@ type LocaleData struct {
 	Charset               []rune
 	Abbreviations         []string
 	Simplifications       []ReplacementData
-	Translations          map[string]string
+	Translations          map[string][]string
 	RelativeType          map[string]string
 	RelativeTypeRegexes   []ReplacementData
 	RxCombined            *regexp.Regexp
@@ -208,7 +235,7 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 
 	// Prepare maps
 	if len(child.Translations) == 0 {
-		child.Translations = map[string]string{}
+		child.Translations = map[string][]string{}
 	}
 
 	if len(child.RelativeType) == 0 {
@@ -216,8 +243,12 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	}
 
 	// Merge maps
-	for word, translation := range parent.Translations {
-		child.Translations[word] = translation
+	for word, translations := range parent.Translations {
+		merged := append(child.Translations[word], translations...)
+		merged = pie.Unique(merged)
+		sort.Strings(merged)
+
+		child.Translations[word] = merged
 	}
 
 	for pattern, translation := range parent.RelativeType {
@@ -260,9 +291,9 @@ var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
 		{ {{regex $data.Pattern}}, "{{$data.Replacement}}" },
 		{{end}}
 	},
-	Translations: map[string]string{
-		{{range $e := (sortMap .Translations) -}}
-		"{{$e.Key}}": "{{$e.Value}}",
+	Translations: map[string][]string{
+		{{range $e := (sortMapSlice .Translations) -}}
+		"{{$e.Key}}": { {{- range $v := $e.Values -}}"{{$v}}",{{- end -}} },
 		{{end}}
 	},
 	RelativeType: map[string]string{

@@ -22,7 +22,7 @@ func TranslateSearch(cfg *setting.Configuration, ld *data.LocaleData, str string
 
 	for _, sentence := range sentences {
 		var originalChunk []string
-		var translatedChunk []string
+		var translatedChunk [][]string
 		var skipNextToken bool
 
 		originalTokens, simplifiedTokens := simplifySplitAlign(ld, sentence, skippedTokens)
@@ -43,44 +43,51 @@ func TranslateSearch(cfg *setting.Configuration, ld *data.LocaleData, str string
 			cleanedWord := strutil.TrimChars(word, `()"'{}[],.،`)
 
 			if word == "" || word == " " {
-				translatedChunk = append(translatedChunk, word)
+				translatedChunk = append(translatedChunk, []string{word})
 				originalChunk = append(originalChunk, originalTokens[i])
 			} else if isInDictionary(ld, currentAndNextJoined) && !dashes.Contain(word) && !joinUnusable {
-				translation, _ := translateWord(ld, currentAndNextJoined)
+				translations, _ := translateWord(ld, currentAndNextJoined)
 				joinedOriginalToken := joinChunk(ld, originalTokens[i], originalTokens[i+1])
 
 				skipNextToken = true
-				translatedChunk = append(translatedChunk, translation)
+				translatedChunk = append(translatedChunk, translations)
 				originalChunk = append(originalChunk, joinedOriginalToken)
 			} else if isInDictionary(ld, word) && !dashes.Contain(word) {
-				translation, _ := translateWord(ld, word)
-				translatedChunk = append(translatedChunk, translation)
+				translations, _ := translateWord(ld, word)
+				translatedChunk = append(translatedChunk, translations)
 				originalChunk = append(originalChunk, originalTokens[i])
 			} else if isInDictionary(ld, cleanedWord) && !dashes.Contain(word) {
 				punct := word[len(cleanedWord):]
-				translation, _ := translateWord(ld, cleanedWord)
-				if punct != "" && translation != "" {
-					translatedChunk = append(translatedChunk, translation+punct)
-				} else {
-					translatedChunk = append(translatedChunk, translation)
+				translations, _ := translateWord(ld, cleanedWord)
+				for i, translation := range translations {
+					translations[i] = translation + punct
 				}
+
+				translatedChunk = append(translatedChunk, translations)
 				originalChunk = append(originalChunk, originalTokens[i])
 			} else if tokenWithDigitsIsOk(ld, word) {
-				translatedChunk = append(translatedChunk, word)
+				translatedChunk = append(translatedChunk, []string{word})
 				originalChunk = append(originalChunk, originalTokens[i])
 			} else if len(translatedChunk) > 0 && timezone.WordIsTz(originalTokens[i]) {
-				translatedChunk = append(translatedChunk, word)
+				translatedChunk = append(translatedChunk, []string{word})
 				originalChunk = append(originalChunk, originalTokens[i])
 			} else if len(translatedChunk) > 0 {
-				original = append(original, originalChunk)
-				translated = append(translated, translatedChunk)
-				originalChunk, translatedChunk = []string{}, []string{}
+				translatedChunkPermutations := createPermutation(translatedChunk)
+				translated = append(translated, translatedChunkPermutations...)
+				for i := 0; i < len(translatedChunkPermutations); i++ {
+					original = append(original, originalChunk)
+				}
+
+				originalChunk, translatedChunk = []string{}, [][]string{}
 			}
 		}
 
 		if len(translatedChunk) > 0 {
-			original = append(original, originalChunk)
-			translated = append(translated, translatedChunk)
+			translatedChunkPermutations := createPermutation(translatedChunk)
+			translated = append(translated, translatedChunkPermutations...)
+			for i := 0; i < len(translatedChunkPermutations); i++ {
+				original = append(original, originalChunk)
+			}
 		}
 	}
 

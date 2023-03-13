@@ -2,7 +2,12 @@
 
 package data
 
-import "regexp"
+import (
+	"regexp"
+	"sort"
+
+	"github.com/elliotchance/pie/v2"
+)
 
 type LocaleData struct {
 	Name                  string
@@ -12,7 +17,7 @@ type LocaleData struct {
 	Charset               []rune
 	Abbreviations         []string
 	Simplifications       []ReplacementData
-	Translations          map[string]string
+	Translations          map[string][]string
 	RelativeType          map[string]string
 	RelativeTypeRegexes   []ReplacementData
 	RxCombined            *regexp.Regexp
@@ -43,7 +48,7 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 
 	// Prepare maps
 	if len(child.Translations) == 0 {
-		child.Translations = map[string]string{}
+		child.Translations = map[string][]string{}
 	}
 
 	if len(child.RelativeType) == 0 {
@@ -51,8 +56,12 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	}
 
 	// Merge maps
-	for word, translation := range parent.Translations {
-		child.Translations[word] = translation
+	for word, translations := range parent.Translations {
+		merged := append(child.Translations[word], translations...)
+		merged = pie.Unique(merged)
+		sort.Strings(merged)
+
+		child.Translations[word] = merged
 	}
 
 	for pattern, translation := range parent.RelativeType {

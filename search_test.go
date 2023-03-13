@@ -216,7 +216,7 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime: tt(2000, 1, 1),
 			ExtractedText: []string{
 				"1 września 1939",
-				"2 września 1945 (w",
+				"2 września 1945",
 				"8 maja 1945",
 			},
 			ExtractedTime: []time.Time{

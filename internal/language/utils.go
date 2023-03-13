@@ -42,19 +42,61 @@ func join(tokens []string, separator string) string {
 	return joined
 }
 
-func translateWord(ld *data.LocaleData, word string) (string, bool) {
+func translateWord(ld *data.LocaleData, word string) ([]string, bool) {
 	if translation, exist := ld.RelativeType[word]; exist {
-		return translation, true
+		return []string{translation}, true
 	}
 
-	if translation, exist := ld.Translations[word]; exist {
-		return translation, true
+	if translations, exist := ld.Translations[word]; exist {
+		clone := append([]string{}, translations...)
+		return clone, true
 	}
 
-	return "", false
+	return nil, false
 }
 
 func isInDictionary(ld *data.LocaleData, word string) bool {
 	_, exist := translateWord(ld, word)
 	return exist
+}
+
+func createPermutation[T comparable](input [][]T) [][]T {
+	// Calculate count of possible permutation
+	nPermutation := 1
+	for _, entries := range input {
+		nPermutation *= len(entries)
+	}
+
+	// Create result container
+	inputSize := len(input)
+	results := make([][]T, nPermutation)
+	for i := range results {
+		results[i] = make([]T, inputSize)
+	}
+
+	// Fill the permutation
+	currentTotal := nPermutation
+	for i, entries := range input {
+		nEntry := len(entries)
+		maxEntrySubmission := currentTotal / nEntry
+
+		var entryIdx, nEntrySubmitted int
+		for permutationIdx := 0; permutationIdx < nPermutation; permutationIdx++ {
+			if nEntrySubmitted >= maxEntrySubmission {
+				entryIdx++
+				nEntrySubmitted = 0
+			}
+
+			if entryIdx >= nEntry {
+				entryIdx = 0
+			}
+
+			results[permutationIdx][i] = entries[entryIdx]
+			nEntrySubmitted++
+		}
+
+		currentTotal /= nEntry
+	}
+
+	return results
 }

@@ -24,7 +24,7 @@ type LocaleData struct {
 	PertainWords              []string             `json:",omitempty"`
 	Abbreviations             []string             `json:",omitempty"`
 	Simplifications           []SimplificationData `json:",omitempty"`
-	Translations              map[string]string    `json:",omitempty"`
+	Translations              map[string][]string  `json:",omitempty"`
 	RelativeType              map[string]string    `json:",omitempty"`
 	RelativeTypeRegexes       map[string]string    `json:",omitempty"`
 	CombinedRegexPattern      string               `json:",omitempty"`
@@ -110,7 +110,7 @@ func (ld *LocaleData) AddSimplification(pattern string, replacement string) {
 func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord bool) {
 	// Prepare map
 	if ld.Translations == nil {
-		ld.Translations = map[string]string{}
+		ld.Translations = map[string][]string{}
 	}
 
 	// Save the charset before word normalized
@@ -126,7 +126,9 @@ func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord 
 	// Save translation if word not empty
 	if word != "" {
 		translation := normalizeString(translation)
-		ld.Translations[word] = translation
+		if !pie.Contains(ld.Translations[word], translation) {
+			ld.Translations[word] = append(ld.Translations[word], translation)
+		}
 	}
 }
 
@@ -265,7 +267,7 @@ func (ld LocaleData) Clone() LocaleData {
 		PertainWords:              cloneSlice(ld.PertainWords),
 		Abbreviations:             cloneSlice(ld.Abbreviations),
 		Simplifications:           cloneSlice(ld.Simplifications),
-		Translations:              cloneMap(ld.Translations),
+		Translations:              cloneMapSlice(ld.Translations),
 		RelativeType:              cloneMap(ld.RelativeType),
 		RelativeTypeRegexes:       cloneMap(ld.RelativeTypeRegexes),
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
@@ -304,7 +306,11 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 	clone.Simplifications = cleanSimplifications(append(clone.Simplifications, input.Simplifications...)...)
 
 	for word, translations := range input.Translations {
-		clone.Translations[word] = translations
+		merged := append(clone.Translations[word], translations...)
+		merged = pie.Unique(merged)
+		sort.Strings(merged)
+
+		clone.Translations[word] = merged
 	}
 
 	for pattern, translation := range input.RelativeType {
@@ -356,7 +362,7 @@ func (ld LocaleData) Reduce(input LocaleData) LocaleData {
 	clone.PertainWords = reduceSlice(clone.PertainWords, input.PertainWords)
 	clone.Abbreviations = reduceSlice(clone.Abbreviations, input.Abbreviations)
 	clone.Simplifications = reduceSimplifications(clone.Simplifications, input.Simplifications)
-	clone.Translations = reduceMap(clone.Translations, input.Translations)
+	clone.Translations = reduceMapSlice(clone.Translations, input.Translations)
 	clone.RelativeType = reduceMap(clone.RelativeType, input.RelativeType)
 	clone.RelativeTypeRegexes = reduceMap(clone.RelativeTypeRegexes, input.RelativeTypeRegexes)
 	clone.CombinedRegexPattern = reducePattern(clone.CombinedRegexPattern, input.CombinedRegexPattern)

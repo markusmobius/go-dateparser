@@ -653,7 +653,12 @@ func TestTranslate(t *testing.T) {
 		assert.Nil(t, err, message)
 
 		// Translate string
-		translation := Translate(cfg, ld, test.String, false)
+		var translation string
+		translations := Translate(cfg, ld, test.String, false)
+		if len(translations) > 0 {
+			translation = translations[0]
+		}
+
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++
@@ -1543,7 +1548,12 @@ func TestTranslate_relative(t *testing.T) {
 		assert.Nil(t, err, message)
 
 		// Translate string
-		translation := Translate(cfg, ld, test.String, false)
+		var translation string
+		translations := Translate(cfg, ld, test.String, false)
+		if len(translations) > 0 {
+			translation = translations[0]
+		}
+
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++

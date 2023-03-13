@@ -4,6 +4,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/elliotchance/pie/v2"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -72,11 +74,6 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		SentenceSplitterGroup: yamlData.SentenceSplitterGroup,
 	}
 
-	skipWords := cleanList(false, yamlData.SkipWords...)
-	pertainWords := cleanList(false, yamlData.PertainWords...)
-	addTranslationFromStrings(&data, "", skipWords)
-	addTranslationFromStrings(&data, "", pertainWords)
-
 	addTranslationFromStrings(&data, "monday", yamlData.Monday)
 	addTranslationFromStrings(&data, "tuesday", yamlData.Tuesday)
 	addTranslationFromStrings(&data, "wednesday", yamlData.Wednesday)
@@ -120,6 +117,23 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 			data.AddSimplification(pattern, replacement)
 		}
 	}
+
+	// If skip words for some reason redefined again, then it's not skipped
+	var checkedSkipWords []string
+	for _, w := range data.SkipWords {
+		_, transExist := data.Translations[w]
+		isPertained := pie.Contains(data.PertainWords, w)
+		if !isPertained && !transExist {
+			checkedSkipWords = append(checkedSkipWords, w)
+		}
+	}
+	data.SkipWords = checkedSkipWords
+
+	// Save the skipped and pertained words to dictionary
+	skipWords := cloneSlice(data.SkipWords)
+	pertainWords := cloneSlice(data.PertainWords)
+	addTranslationFromStrings(&data, "", skipWords)
+	addTranslationFromStrings(&data, "", pertainWords)
 
 	return &data, nil
 }
