@@ -635,15 +635,11 @@ func TestParser_Search(t *testing.T) {
 		message := fmt.Sprintf("%v \"%s\"", test.Languages, test.Text)
 
 		// Search for dates
-		lang, result, err := dps.Search(&dps.Configuration{
+		lang, result, _ := dps.Search(&dps.Configuration{
 			Languages:     test.Languages,
 			CurrentTime:   test.CurrentTime,
 			StrictParsing: test.StrictParsing,
 		}, test.Text)
-
-		if err != nil {
-			fmt.Println(message, err)
-		}
 
 		// Assert result
 		passed := assert.Len(t, result, len(test.ExtractedTime), message)
