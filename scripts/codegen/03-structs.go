@@ -147,7 +147,6 @@ func (ld *LocaleData) AddRelativeType(pattern string, translation string, cleanP
 	}
 
 	// Convert CLDR pattern to regex pattern
-	// pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
 	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+[.,]?\d*)`)
 
 	// Specify target map

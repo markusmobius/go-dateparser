@@ -104,6 +104,9 @@ func TestTranslate(t *testing.T) {
 		// Indonesian
 		{"id", "06 Sep 2015", "06 september 2015"},
 		{"id", "07 Feb 2015 20:15", "07 february 2015 20:15"},
+		{"id", "Minggu, 18 Mar 2018 07:30", "sunday 18 march 2018 07:30"},
+		{"id", "3 minggu yang lalu", "3 week ago"},
+		{"id", "5 minggu", "5 week"},
 		// Miscellaneous
 		{"en", "2014-12-12T12:33:39-08:00", "2014-12-12 12:33:39-08:00"},
 		{"en", "2014-10-15T16:12:20+00:00", "2014-10-15 16:12:20+00:00"},
