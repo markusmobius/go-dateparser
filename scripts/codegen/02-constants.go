@@ -61,7 +61,7 @@ var (
 	rxNbsp                = regexp.MustCompile(`\x{a0}`)
 
 	importantTokens = []string{"+", ":", ".", " ", "-", "/", "am", "pm", "utc", "gmt", "z"}
-	commonChars     = rangetable.New([]rune("0123456789:()'.qamp ")...)
+	commonChars     = rangetable.New([]rune("0123456789:(){}'.qamp ")...)
 
 	// Languages with insufficient translation data are excluded
 	excludedLanguages = map[string]struct{}{

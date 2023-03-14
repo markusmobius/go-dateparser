@@ -1,8 +1,10 @@
 package relative
 
 import (
+	"math"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/markusmobius/go-dateparser/date"
@@ -17,7 +19,7 @@ var (
 	rxIn               = regexp.MustCompile(`(?i)\bin\b`)
 	rxAgo              = regexp.MustCompile(`(?i)\bago\b`)
 	rxInAgo            = regexp.MustCompile(`(?i)\b(?:ago|in)\b`)
-	rxRelativePattern  = regexp.MustCompile(`(?i)(\d+)\s*(` + relativeUnits + `)\b`)
+	rxRelativePattern  = regexp.MustCompile(`(?i)(\d+[.,]?\d*)\s*(` + relativeUnits + `)\b`)
 	rxRelativeSkipWord = regexp.MustCompile(`(?i)^(?:` + relativeUnits + `|ago|in|\d+|:|[ap]m)`)
 	relativeUnits      = `decade|year|month|week|day|hour|minute|second`
 )
@@ -69,31 +71,41 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 		return time.Time{}, 0
 	}
 
-	relTimes := getRelativeTimes(str)
-	if len(relTimes) == 0 {
+	// Retrieve relative durations
+	relDurations := getRelativeDurations(str)
+	if len(relDurations) == 0 {
 		return time.Time{}, 0
 	}
 
+	// Extract period from relative durations
 	period := date.Day
-	if _, dayExist := relTimes["day"]; !dayExist {
-		if _, monthExist := relTimes["month"]; monthExist {
+	if _, dayExist := relDurations["day"]; !dayExist {
+		if _, monthExist := relDurations["month"]; monthExist {
 			period = date.Month
-		} else if _, yearExist := relTimes["year"]; yearExist {
+		} else if _, yearExist := relDurations["year"]; yearExist {
 			period = date.Year
 		}
 	}
 
+	// Convert relative durations (which in float64) to usable format
+	year := int(relDurations["year"])
+	month := int(relDurations["month"])
+	day := int(relDurations["day"])
+	hour := time.Duration(relDurations["hour"]) * time.Hour
+	minute := time.Duration(relDurations["minute"]) * time.Minute
+	second := time.Duration(relDurations["second"]) * time.Second
+
 	date := now
 	if (rxIn.MatchString(str) || cfg.PreferredDateSource == setting.Future) && !rxAgo.MatchString(str) {
-		date = date.AddDate(relTimes["year"], relTimes["month"], relTimes["day"])
-		date = date.Add(time.Duration(relTimes["hour"]) * time.Hour)
-		date = date.Add(time.Duration(relTimes["minute"]) * time.Minute)
-		date = date.Add(time.Duration(relTimes["second"]) * time.Second)
+		date = date.AddDate(year, month, day)
+		date = date.Add(hour)
+		date = date.Add(minute)
+		date = date.Add(second)
 	} else {
-		date = date.AddDate(-relTimes["year"], -relTimes["month"], -relTimes["day"])
-		date = date.Add(-time.Duration(relTimes["hour"]) * time.Hour)
-		date = date.Add(-time.Duration(relTimes["minute"]) * time.Minute)
-		date = date.Add(-time.Duration(relTimes["second"]) * time.Second)
+		date = date.AddDate(-year, -month, -day)
+		date = date.Add(-hour)
+		date = date.Add(-minute)
+		date = date.Add(-second)
 	}
 
 	return date, period
@@ -116,24 +128,141 @@ func allWordsAreUnits(s string) bool {
 	return wordCount == 0
 }
 
-func getRelativeTimes(s string) map[string]int {
-	relativeTimes := map[string]int{}
-
+func getRelativeDurations(s string) map[string]float64 {
+	// Extract durations using regex
+	floatDurations := map[string]float64{}
 	for _, parts := range rxRelativePattern.FindAllStringSubmatch(s, -1) {
 		period := parts[2]
-		value, _ := strconv.Atoi(parts[1])
-		relativeTimes[period] = value
+		strValue := strings.Replace(parts[1], ",", ".", -1)
+		value, _ := strconv.ParseFloat(strValue, 64)
+		floatDurations[period] = value
 	}
 
-	if decades, exist := relativeTimes["decade"]; exist {
-		relativeTimes["year"] += decades * 10
-		delete(relativeTimes, "decade")
+	// Convert decade to year
+	if decades, exist := floatDurations["decade"]; exist {
+		floatDurations["year"] += decades * 10
+		delete(floatDurations, "decade")
 	}
 
-	if week, exist := relativeTimes["week"]; exist {
-		relativeTimes["day"] += week * 7
-		delete(relativeTimes, "week")
+	// Convert week to days
+	if week, exist := floatDurations["week"]; exist {
+		floatDurations["day"] += week * 7
+		delete(floatDurations, "week")
 	}
 
-	return relativeTimes
+	// Convert fractional year, month and day to lower unit
+	for _, unit := range strings.Split(relativeUnits, "|") {
+		// Make sure duration exist
+		value, exist := floatDurations[unit]
+		if !exist {
+			continue
+		}
+
+		// If value doesn't have fractional unit, don't change anything
+		isNegative := value < 0
+		value, fraction, hasFraction := splitFraction(value)
+		if !hasFraction {
+			continue
+		}
+
+		switch unit {
+		case "year":
+			year := value
+			month, fraction, _ := splitFraction(fraction * 12)
+			day, fraction, _ := splitFraction(fraction * 30)
+			hour, fraction, _ := splitFraction(fraction * 24)
+			minute, fraction, _ := splitFraction(fraction * 60)
+			second, _, _ := splitFraction(fraction * 60)
+
+			if isNegative {
+				year, month, day = -year, -month, -day
+				hour, minute, second = -hour, -minute, -second
+			}
+
+			floatDurations["year"] = year
+			floatDurations["month"] += month
+			floatDurations["day"] += day
+			floatDurations["hour"] += hour
+			floatDurations["minute"] += minute
+			floatDurations["second"] += second
+
+		case "month":
+			month := value
+			day, fraction, _ := splitFraction(fraction * 30)
+			hour, fraction, _ := splitFraction(fraction * 24)
+			minute, fraction, _ := splitFraction(fraction * 60)
+			second, _, _ := splitFraction(fraction * 60)
+
+			if isNegative {
+				month, day = -month, -day
+				hour, minute, second = -hour, -minute, -second
+			}
+
+			floatDurations["month"] = month
+			floatDurations["day"] += day
+			floatDurations["hour"] += hour
+			floatDurations["minute"] += minute
+			floatDurations["second"] += second
+
+		case "day":
+			day := value
+			hour, fraction, _ := splitFraction(fraction * 24)
+			minute, fraction, _ := splitFraction(fraction * 60)
+			second, _, _ := splitFraction(fraction * 60)
+
+			if isNegative {
+				day = -day
+				hour, minute, second = -hour, -minute, -second
+			}
+
+			floatDurations["day"] = day
+			floatDurations["hour"] += hour
+			floatDurations["minute"] += minute
+			floatDurations["second"] += second
+
+		case "hour":
+			hour := value
+			minute, fraction, _ := splitFraction(fraction * 60)
+			second, _, _ := splitFraction(fraction * 60)
+
+			if isNegative {
+				hour, minute, second = -hour, -minute, -second
+			}
+
+			floatDurations["hour"] = hour
+			floatDurations["minute"] += minute
+			floatDurations["second"] += second
+
+		case "minute":
+			minute := value
+			second, _, _ := splitFraction(fraction * 60)
+
+			if isNegative {
+				minute, second = -minute, -second
+			}
+
+			floatDurations["minute"] = minute
+			floatDurations["second"] += second
+
+		case "second":
+			second, _, _ := splitFraction(fraction * 60)
+			if isNegative {
+				second = -second
+			}
+
+			floatDurations["second"] = second
+		}
+	}
+
+	return floatDurations
+}
+
+func splitFraction(fl float64) (intPart, fractionPart float64, hasFraction bool) {
+	if fl == 0 {
+		return 0, 0, false
+	}
+
+	value := math.Abs(fl)
+	floorValue := math.Floor(value)
+	return floorValue, value - floorValue, value != floorValue
 }

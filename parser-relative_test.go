@@ -102,6 +102,11 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"six days ago", pfpDiff{"day": -6}, Day},
 		{"five years ago", pfpDiff{"year": -5}, Year},
 
+		// Fractional English units
+		{"2.5 hours", pfpDiff{"hour": -2, "minute": -30}, Day},
+		{"10.75 minutes", pfpDiff{"minute": -10, "second": -45}, Day},
+		{"1.5 days", pfpDiff{"day": -1, "hour": -12}, Day},
+
 		// French dates
 		{"Aujourd'hui", nil, Day},
 		{"Aujourd’hui", nil, Day},
@@ -559,6 +564,12 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{fmt.Sprintf("in %d months", 2013*12+8), pfpDiff{"year": 2013, "month": 8}, Month},
 		{"in 1 year, 1 month, 1 week, 1 day, 1 hour and 1 minute", pfpDiff{"year": 1, "month": 1, "week": 1, "day": 1, "hour": 1, "minute": 1}, Day},
 		{"just now", pfpDiff{"second": 0}, Day},
+
+		// Fractional units
+		{"in 2.5 hours", pfpDiff{"hour": 2, "minute": 30}, Day},
+		{"in 10.75 minutes", pfpDiff{"minute": 10, "second": 45}, Day},
+		{"in 1.5 days", pfpDiff{"day": 1, "hour": 12}, Day},
+		{"in 0,5 hours", pfpDiff{"minute": 30}, Day},
 
 		// French dates
 		{"Aujourd'hui", pfpDiff{"day": 0}, Day},
@@ -1056,6 +1067,12 @@ func TestParser_Parse_relative_hasSpecificTime(t *testing.T) {
 		ctTs(fmt.Sprintf("%d months ago", 2008*12+8), ct, tt(1, 10, 4, 13, 15)),
 		ctTs("1 year, 1 month, 1 week, 1 day, 1 hour and 1 minute ago", ct, tt(2009, 4, 26, 12, 14)),
 		ctTs("just now", ct, tt(2010, 6, 4, 13, 15)),
+
+		// Fractional units
+		ctTs("2.5 hours ago", ct, tt(2010, 6, 4, 10, 45)),
+		ctTs("in 10.75 minutes", ct, tt(2010, 6, 4, 13, 25).Add(45*time.Second)),
+		ctTs("in 1.5 days", ct, tt(2010, 6, 6, 1, 15)),
+		ctTs("0,5 hours ago", ct, tt(2010, 6, 4, 12, 45)),
 	}
 
 	// Prepare parser

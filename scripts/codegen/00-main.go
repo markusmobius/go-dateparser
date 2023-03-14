@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
@@ -162,7 +163,7 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		path = filepath.Join(GO_CODE_DIR, fName+".go")
 		err = generateLocaleDataCode(path, listLocaleData)
 		if err != nil {
-			return err
+			return fmt.Errorf("gen locale %q failed: %w", language, err)
 		}
 	}
 

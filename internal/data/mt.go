@@ -91,10 +91,10 @@ var mt_Locale = merge(nil, LocaleData{
 		"now":                   "0 second ago",
 	},
 	RelativeTypeRegexes: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\d+) sena ilu`), "$1 year ago"},
-		{regexp.MustCompile(`(?i)(\d+) snin ilu`), "$1 year ago"},
+		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) sena ilu`), "$1 year ago"},
+		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) snin ilu`), "$1 year ago"},
 	},
-	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+ sena ilu|\d+ snin ilu)(\z|[^\pL\pM\d]|_)`),
-	RxExactCombined: regexp.MustCompile(`(?i)^(\d+ sena ilu|\d+ snin ilu)$`),
+	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* sena ilu|\d+[.,]?\d* snin ilu)(\z|[^\pL\pM\d]|_)`),
+	RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* sena ilu|\d+[.,]?\d* snin ilu)$`),
 	KnownWords:      []string{"il-gimgħa li għaddiet", "is-sena li għaddiet", "il-gimgħa d-dieħla", "ix-xahar id-dieħel", "ix-xahar li għadda", "is-sena d-dieħla", "din il-gimgħa", "dan ix-xahar", "din is-sena", "this minute", "il-gimgħa", "it-tlieta", "settembru", "this hour", "dicembru", "il-ħamis", "ilbieraħ", "it-tnejn", "l-erbgħa", "novembru", "awwissu", "il-ħadd", "is-sibt", "ottubru", "sekonda", "gimgħa", "jannar", "minuta", "siegħa", "april", "gunju", "għada", "illum", "lulju", "marzu", "mejju", "xahar", "frar", "sena", "apr", "aww", "dic", "erb", "fra", "gim", "gmt", "gun", "jan", "jum", "lul", "mar", "mej", "nov", "now", "ott", "set", "sib", "tli", "tne", "utc", "ħad", "ħam", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 })

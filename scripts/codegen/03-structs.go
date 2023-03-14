@@ -134,16 +134,9 @@ func (ld *LocaleData) AddRelativeType(pattern string, translation string, cleanP
 		ld.RelativeTypeRegexes = map[string]string{}
 	}
 
-	// Specify target map
-	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
-
-	var targetMap map[string]string
-	if strings.Contains(pattern, `(\d+)`) {
-		targetMap = ld.RelativeTypeRegexes
-	} else {
-		// Save the charset before pattern normalized
+	// If not regex, save the pattern's charset
+	if !strings.Contains(pattern, `\d+`) && !strings.Contains(pattern, `{0}`) {
 		ld.AddCharset(pattern)
-		targetMap = ld.RelativeType
 	}
 
 	// Sanitize pattern
@@ -151,6 +144,18 @@ func (ld *LocaleData) AddRelativeType(pattern string, translation string, cleanP
 		pattern = cleanString(pattern)
 	} else {
 		pattern = normalizeString(pattern)
+	}
+
+	// Convert CLDR pattern to regex pattern
+	// pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
+	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+[.,]?\d*)`)
+
+	// Specify target map
+	var targetMap map[string]string
+	if strings.Contains(pattern, `\d+`) {
+		targetMap = ld.RelativeTypeRegexes
+	} else {
+		targetMap = ld.RelativeType
 	}
 
 	// Save if pattern not empty

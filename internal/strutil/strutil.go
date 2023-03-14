@@ -40,10 +40,11 @@ var (
 		'[', ']',
 	)))
 
-	rxSanitizeSkip    = regexp.MustCompile(`\t|\n|\r|\x{00bb}|,\s\x{0432}\b|\x{200e}|\x{b7}|\x{200f}|\x{064e}|\x{064f}`)
-	rxSanitizeRussian = regexp.MustCompile(`(?i)([\PL\pN])\x{0433}\.`)
-	rxSanitizePeriod  = regexp.MustCompile(`(?i)([^\pN\.\s])\.`)
-	rxSanitizeOn      = regexp.MustCompile(`(?i)^.*?on:\s+(.*)`)
+	rxSanitizeSkip     = regexp.MustCompile(`\t|\n|\r|\x{00bb}|,\s\x{0432}\b|\x{200e}|\x{b7}|\x{200f}|\x{064e}|\x{064f}`)
+	rxSanitizeRussian  = regexp.MustCompile(`(?i)([\PL\pN])\x{0433}\.`)
+	rxSanitizeCroatian = regexp.MustCompile(`(?i)(\pN+)\.\s?(\pN+)\.\s?(\pN+)\.( u)?`)
+	rxSanitizePeriod   = regexp.MustCompile(`(?i)([^\pN\.\s])\.`)
+	rxSanitizeOn       = regexp.MustCompile(`(?i)^.*?on:\s+(.*)`)
 )
 
 // SanitizeSpaces replaces non-breaking spaces into a normal one,
@@ -99,7 +100,8 @@ func NormalizeString(str string) string {
 // it parsed by the parser.
 func SanitizeDate(s string) string {
 	s = rxSanitizeSkip.ReplaceAllString(s, " ")
-	s = rxSanitizeRussian.ReplaceAllString(s, "$1 ") // remove 'г.' (Russian for year) but not in words
+	s = rxSanitizeRussian.ReplaceAllString(s, "$1 ")        // remove 'г.' (Russian for year) but not in words
+	s = rxSanitizeCroatian.ReplaceAllString(s, "$1.$2.$3 ") // extra '.' and 'u' interferes with parsing relative fractional dates
 	s = SanitizeSpaces(s)
 	s = rxSanitizePeriod.ReplaceAllString(s, "$1")
 	s = rxSanitizeOn.ReplaceAllString(s, "$1")
