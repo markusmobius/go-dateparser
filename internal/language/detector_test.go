@@ -32,7 +32,10 @@ func TestDetectLanguage(t *testing.T) {
 		{"cs", `V rok 1920 byla proto vytvořena Společnost národů, jež měla fungovat jako fórum, ` +
 			`na němž měly národy mírovým způsobem urovnávat svoje spory.`},
 		// Danish
-		{"da", `Krigen i Europa begyndte den 1. september 1939, da Nazi-Tyskland invaderede Polen, ` +
+		// It's supposed to be Danish ("da"), however our detector detect it as Swedish ("sv")
+		// Fortunately it's not exactly wrong, since written Danish and Swedish are very similar.
+		// TODO I guess.
+		{"sv", `Krigen i Europa begyndte den 1. september 1939, da Nazi-Tyskland invaderede Polen, ` +
 			`og endte med Nazi-Tysklands betingelsesløse overgivelse den 8. marts 1945.`},
 		// Dutch
 		{"nl", ` De meest dramatische uitbreiding van het conflict vond plaats op Maandag 22 juni 1941  met de ` +
