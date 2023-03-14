@@ -357,6 +357,15 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 				tt(2001, 3, 20),
 				tt(2001, 3, 21),
 			},
+		}, {
+			Language: "ru",
+			Text:     `Андрей Дмитриевич Сахаров скончался 14 декабря в 1989 году от внезапной остановки сердца.`,
+			ExtractedText: []string{
+				"14 декабря в 1989 году",
+			},
+			ExtractedTime: []time.Time{
+				tt(1989, 12, 14, 0, 0),
+			},
 		}, { // Russian with relative dates
 			Language: "ru",
 			Text: `19 марта 2001. Сегодня был хороший день. 2 дня назад был хороший день. ` +
