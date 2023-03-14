@@ -7,19 +7,19 @@ import (
 	"strings"
 )
 
-type TimezoneOffsetData struct {
+type OffsetData struct {
 	Name   string
 	Regex  *regexp.Regexp
 	Offset int
 }
 
-func (tod TimezoneOffsetData) IsZero() bool {
+func (tod OffsetData) IsZero() bool {
 	return tod.Name == "" && tod.Regex == nil && tod.Offset == 0
 }
 
-var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData, *regexp.Regexp, *regexp.Regexp) {
+var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]OffsetData, *regexp.Regexp, *regexp.Regexp) {
 	// Process timezone info list
-	offsets := []TimezoneOffsetData{}
+	offsets := []OffsetData{}
 	regexPatterns := map[string]struct{}{}
 	searchPatterns := map[string]struct{}{}
 
@@ -34,7 +34,7 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData
 				}
 
 				searchPatterns[searchPattern] = struct{}{}
-				offsets = append(offsets, TimezoneOffsetData{
+				offsets = append(offsets, OffsetData{
 					Name:   tzName,
 					Regex:  regexp.MustCompile(`(?i)` + regexPattern),
 					Offset: offset,
@@ -52,7 +52,7 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]TimezoneOffsetData
 					}
 
 					searchPatterns[searchPattern] = struct{}{}
-					offsets = append(offsets, TimezoneOffsetData{
+					offsets = append(offsets, OffsetData{
 						Name:   tzName,
 						Regex:  regexp.MustCompile(`(?i)` + regexPattern),
 						Offset: offset,

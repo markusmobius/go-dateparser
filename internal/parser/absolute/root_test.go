@@ -71,7 +71,7 @@ func TestParse_error(t *testing.T) {
 
 	// Start test
 	var nFailed int
-	var tz timezone.TimezoneOffsetData
+	var tz timezone.OffsetData
 	for _, test := range tests {
 		_, err := Parse(test.Config, test.Text, tz)
 		passed := assert.Error(t, err, test.Text)

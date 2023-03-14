@@ -263,7 +263,7 @@ func (p *Parser) Init(str string) error {
 	return nil
 }
 
-func (p *Parser) Parse(tz timezone.TimezoneOffsetData) (date.Date, error) {
+func (p *Parser) Parse(tz timezone.OffsetData) (date.Date, error) {
 	// Find missing date fields
 	missingParts := strutil.NewDict()
 	for _, field := range []string{"day", "month", "year"} {
@@ -431,7 +431,7 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 	return nil, fmt.Errorf("unable to parse %s", tokenText)
 }
 
-func (p *Parser) correctForTimeFrame(t time.Time, tz timezone.TimezoneOffsetData) time.Time {
+func (p *Parser) correctForTimeFrame(t time.Time, tz timezone.OffsetData) time.Time {
 	_, yearExist := p.ComponentValues["year"]
 	_, monthExist := p.ComponentValues["month"]
 	_, tokenTimeExist := p.ComponentTokens["time"]

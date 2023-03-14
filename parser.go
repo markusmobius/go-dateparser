@@ -305,12 +305,12 @@ func (p *Parser) localeIsApplicable(iCfg *setting.Configuration, ld *data.Locale
 	return language.IsApplicable(iCfg, ld, s, false)
 }
 
-func (p *Parser) stripBracesAndTimezones(s string) (string, timezone.TimezoneOffsetData) {
+func (p *Parser) stripBracesAndTimezones(s string) (string, timezone.OffsetData) {
 	s = strutil.StripBraces(s)
 	return timezone.PopTzOffset(s)
 }
 
-func (p *Parser) applyTimezone(dt date.Date, tz timezone.TimezoneOffsetData) date.Date {
+func (p *Parser) applyTimezone(dt date.Date, tz timezone.OffsetData) date.Date {
 	if dt.IsZero() || tz.IsZero() {
 		return dt
 	}

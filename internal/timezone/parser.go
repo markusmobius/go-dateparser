@@ -2,7 +2,7 @@ package timezone
 
 // PopTzOffset extracts timezone data from str then return the
 // str with the timezone code removed.
-func PopTzOffset(str string) (string, TimezoneOffsetData) {
+func PopTzOffset(str string) (string, OffsetData) {
 	if rxSearchIgnoreCase.MatchString(str) {
 		for _, offsetData := range timezoneOffsets {
 			idxs := offsetData.Regex.FindStringIndex(str)
@@ -15,7 +15,7 @@ func PopTzOffset(str string) (string, TimezoneOffsetData) {
 		}
 	}
 
-	return str, TimezoneOffsetData{}
+	return str, OffsetData{}
 }
 
 // WordIsTz check if the specified word is a timezone code.

@@ -10,7 +10,7 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-func Parse(cfg *setting.Configuration, str string, tz timezone.TimezoneOffsetData) (date.Date, error) {
+func Parse(cfg *setting.Configuration, str string, tz timezone.OffsetData) (date.Date, error) {
 	parser := &Parser{
 		Config:              cfg,
 		FnGetDateTimeParams: getDateTimeParams,
