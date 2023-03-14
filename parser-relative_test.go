@@ -509,6 +509,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"32 dakika önce", pfpDiff{"minute": -32}, Day},
 		// uk
 		{"3 року тому", pfpDiff{"year": -3}, Year},
+		{"5 років тому", pfpDiff{"year": -5}, Year},
 		// uz-Cyrl
 		{"10 ҳафта олдин", pfpDiff{"week": -10}, Day},
 		// uz-Latn
@@ -863,6 +864,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		// uk
 		{"через 8 хвилини", pfpDiff{"minute": 8}, Day},
 		{"через 10 тижня", pfpDiff{"week": 10}, Day},
+		{"через 10 днів", pfpDiff{"day": 10}, Day},
 		// uz-Cyrl
 		{"12 кундан сўнг", pfpDiff{"day": 12}, Day},
 		{"10 дақиқадан сўнг", pfpDiff{"minute": 10}, Day},
