@@ -51,9 +51,11 @@ second:
 
 ago:
   - ago
+  - before
 in:
   - in
   - from now
+  - after
 
 relative-type:
   2 day ago:
@@ -63,6 +65,8 @@ relative-type:
     - this decade
   in 1 decade:
     - next decade
+  in 2 day:
+    - day after tomorrow
   0 day ago:
     - till date
 
