@@ -1658,3 +1658,51 @@ func TestTranslate_relative(t *testing.T) {
 		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
 	}
 }
+
+func TestTranslate_keepFormatting(t *testing.T) {
+	type testScenario struct {
+		Locale         string
+		String         string
+		Expected       string
+		KeepFormatting bool
+	}
+
+	tests := []testScenario{
+		{"en", "December 04, 1999, 11:04:59 PM", "december 04, 1999, 11:04:59 pm", true},
+		{"en", "December 04, 1999, 11:04:59 PM", "december 04 1999 11:04:59 pm", false},
+		{"de", "23 März, 18:37", "23 march, 18:37", true},
+		{"de", "23 März 18:37", "23 march 18:37", false},
+	}
+
+	// Prepare config
+	cfg := &setting.Configuration{
+		SkipTokens: []string{"t"},
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("keep formatting %s, \"%s\"", test.Locale, test.String)
+
+		// Load locale
+		ld, err := GetLocale(test.Locale)
+		assert.Nil(t, err, message)
+
+		// Translate string
+		var translation string
+		translations := Translate(cfg, ld, test.String, test.KeepFormatting)
+		if len(translations) > 0 {
+			translation = translations[0]
+		}
+
+		passed := assert.Equal(t, test.Expected, translation, message)
+		if !passed {
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}

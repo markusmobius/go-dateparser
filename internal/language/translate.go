@@ -45,6 +45,14 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 		// If not found, look in dictionary
 		if !translationFound {
 			if translations, exist := translateWord(ld, token); exist {
+				// If keep formatting, empty translation is replaced
+				// with current token
+				for j, t := range translations {
+					if t == "" && keepFormatting {
+						translations[j] = token
+					}
+				}
+
 				translatedTokens[i] = translations
 				translationFound = true
 			}
