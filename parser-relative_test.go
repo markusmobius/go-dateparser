@@ -334,6 +334,8 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"1 वर्ष, 8 महीने, 2 सप्ताह", pfpDiff{"year": -1, "month": -8, "week": -2}, Day},
 		{"1 वर्ष 7 महीने", pfpDiff{"year": -1, "month": -7}, Month},
 		{"आज", nil, Day},
+		{"1 दशक", pfpDiff{"year": -10}, Year},
+		{"1 दशक पहले", pfpDiff{"year": -10}, Year},
 
 		// af
 		{"2 uur gelede", pfpDiff{"hour": -2}, Day},
@@ -643,6 +645,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"2 मिनट में", pfpDiff{"minute": 2}, Day},
 		{"17 सेकंड बाद", pfpDiff{"second": 17}, Day},
 		{"1 वर्ष, 5 महीने, 1 सप्ताह में", pfpDiff{"year": 1, "month": 5, "week": 1}, Day},
+		{"1 दशक में", pfpDiff{"year": 10}, Year},
 
 		// af
 		{"oor 10 jaar", pfpDiff{"year": 10}, Year},

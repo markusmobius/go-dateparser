@@ -1,35 +1,47 @@
-skip: ["के", "को", "बजे", "सन्", "से"]
+skip: ['के', 'को', 'बजे', 'सन्', 'से']
 
-sentence_splitter_group : 3
+sentence_splitter_group: 3
 
 september:
-    - सितम्बर
+  - सितम्बर
 october:
-    - अक्टूबर
+  - अक्टूबर
 november:
-    - नवम्बर
+  - नवम्बर
 december:
-    - दिसम्बर
+  - दिसम्बर
+decade:
+  - दशक
 
 year:
-    - साल
-    - वर्षों
+  - साल
+  - वर्षों
 month:
-    - महीना
-    - मास
-    - महीने
+  - महीना
+  - मास
+  - महीने
 day:
-    - दिवस
+  - दिवस
 hour:
-    - घंटे
+  - घंटे
 
 ago:
-    - पहले
-    - पूर्व
+  - पहले
+  - पूर्व
 in:
-    - में
-    - बाद
+  - में
+  - बाद
 
 relative-type:
-    2 day ago:
-        - परसों
+  2 day ago:
+    - परसों
+  1 decade ago:
+    - पिछला दशक
+  in 1 decade:
+    - अगला दशक
+
+relative-type-regex:
+  in \1 decade:
+    - (\d+[.,]?\d*) दशक में
+  \1 decade ago:
+    - (\d+[.,]?\d*) दशक पहले
