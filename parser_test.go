@@ -201,7 +201,6 @@ func TestParser_Parse(t *testing.T) {
 		{"20. studenoga 2010. @ 07:28", tt(2010, 11, 20, 7, 28)},
 		{"13. studenog 1989.", tt(1989, 11, 13, 0, 0)},
 		{"29.01.2008. 00:00", tt(2008, 1, 29, 0, 0)},
-		{"02/10/2016 u 17:20", tt(2016, 10, 2, 17, 20)},
 		{"27. 05. 2022. u 14:34", tt(2022, 5, 27, 14, 34)},
 		{"28. u studenom 2017.", tt(2017, 11, 28, 0, 0)},
 		{"13. veljače 1999. u podne", tt(1999, 2, 13, 12, 0)},
@@ -262,6 +261,46 @@ func TestParser_Parse(t *testing.T) {
 
 		// Parse text
 		dt, _ := dps.Parse(&cfg, test.Text)
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestParser_Parse_withLanguage(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Language     string
+		Text         string
+		ExpectedTime time.Time
+	}
+
+	tests := []testScenario{
+		{"hr", "02/10/2016 u 17:20", tt(2016, 10, 2, 17, 20)},
+	}
+
+	// Prepare config
+	cfg := dps.Configuration{CurrentTime: tt(2012, 11, 13)}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare config
+		iCfg := cfg.Clone()
+		iCfg.Languages = []string{test.Language}
+
+		// Prepare log message
+		message := fmt.Sprintf("%s, \"%s\" => \"%s\"",
+			test.Language, test.Text,
+			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
+
+		// Parse text
+		dt, _ := dps.Parse(iCfg, test.Text)
 		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
