@@ -9,6 +9,9 @@ var cs_Locale = merge(nil, LocaleData{
 	DateOrder:             "DMY",
 	Charset:               []rune(`bcdeghijklnorstuvyzáíúýčěřšů`),
 	SentenceSplitterGroup: 1,
+	Simplifications: []ReplacementData{
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ted(\z|[^\pL\pM\d]|_)`), "${1}0 sekunda${2}"},
+	},
 	Translations: map[string][]string{
 		"listopadu": {"november"},
 		"priblizne": {""},
@@ -16,9 +19,12 @@ var cs_Locale = merge(nil, LocaleData{
 		"cervenec":  {"july"},
 		"hodinami":  {"hour"},
 		"listopad":  {"november"},
+		"minutami":  {"minute"},
 		"prosince":  {"december"},
 		"prosinec":  {"december"},
 		"ctvrtek":   {"thursday"},
+		"hodinou":   {"hour"},
+		"mesicem":   {"month"},
 		"pondeli":   {"monday"},
 		"sekunda":   {"second"},
 		"sekundy":   {"second"},
@@ -44,6 +50,7 @@ var cs_Locale = merge(nil, LocaleData{
 		"sobotu":    {"saturday"},
 		"streda":    {"wednesday"},
 		"stredu":    {"wednesday"},
+		"tydnem":    {"week"},
 		"vterin":    {"second"},
 		"duben":     {"april"},
 		"dubna":     {"april"},
@@ -195,5 +202,5 @@ var cs_Locale = merge(nil, LocaleData{
 	},
 	RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(pred \d+[.,]?\d* sekundami|pred \d+[.,]?\d* hodinami|pred \d+[.,]?\d* minutami|pred \d+[.,]?\d* sekundou|pred \d+[.,]?\d* hodinou|pred \d+[.,]?\d* mesicem|pred \d+[.,]?\d* minutou|pred \d+[.,]?\d* mesici|pred \d+[.,]?\d* tydnem|pred \d+[.,]?\d* rokem|pred \d+[.,]?\d* tydny|za \d+[.,]?\d* sekundu|pred \d+[.,]?\d* dnem|pred \d+[.,]?\d* lety|za \d+[.,]?\d* hodinu|za \d+[.,]?\d* mesicu|za \d+[.,]?\d* minutu|za \d+[.,]?\d* sekund|pred \d+[.,]?\d* dny|pred \d+[.,]?\d* mes|pred \d+[.,]?\d* min|pred \d+[.,]?\d* tyd|za \d+[.,]?\d* hodin|za \d+[.,]?\d* mesic|za \d+[.,]?\d* minut|za \d+[.,]?\d* tyden|za \d+[.,]?\d* tydnu|pred \d+[.,]?\d* h|pred \d+[.,]?\d* l|pred \d+[.,]?\d* r|pred \d+[.,]?\d* s|za \d+[.,]?\d* den|za \d+[.,]?\d* dni|za \d+[.,]?\d* let|za \d+[.,]?\d* mes|za \d+[.,]?\d* min|za \d+[.,]?\d* rok|za \d+[.,]?\d* tyd|za \d+[.,]?\d* h|za \d+[.,]?\d* l|za \d+[.,]?\d* r|za \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
 	RxExactCombined: regexp.MustCompile(`(?i)^(pred \d+[.,]?\d* sekundami|pred \d+[.,]?\d* hodinami|pred \d+[.,]?\d* minutami|pred \d+[.,]?\d* sekundou|pred \d+[.,]?\d* hodinou|pred \d+[.,]?\d* mesicem|pred \d+[.,]?\d* minutou|pred \d+[.,]?\d* mesici|pred \d+[.,]?\d* tydnem|pred \d+[.,]?\d* rokem|pred \d+[.,]?\d* tydny|za \d+[.,]?\d* sekundu|pred \d+[.,]?\d* dnem|pred \d+[.,]?\d* lety|za \d+[.,]?\d* hodinu|za \d+[.,]?\d* mesicu|za \d+[.,]?\d* minutu|za \d+[.,]?\d* sekund|pred \d+[.,]?\d* dny|pred \d+[.,]?\d* mes|pred \d+[.,]?\d* min|pred \d+[.,]?\d* tyd|za \d+[.,]?\d* hodin|za \d+[.,]?\d* mesic|za \d+[.,]?\d* minut|za \d+[.,]?\d* tyden|za \d+[.,]?\d* tydnu|pred \d+[.,]?\d* h|pred \d+[.,]?\d* l|pred \d+[.,]?\d* r|pred \d+[.,]?\d* s|za \d+[.,]?\d* den|za \d+[.,]?\d* dni|za \d+[.,]?\d* let|za \d+[.,]?\d* mes|za \d+[.,]?\d* min|za \d+[.,]?\d* rok|za \d+[.,]?\d* tyd|za \d+[.,]?\d* h|za \d+[.,]?\d* l|za \d+[.,]?\d* r|za \d+[.,]?\d* s)$`),
-	KnownWords:      []string{"minuly mesic", "minuly tyden", "pristi mesic", "pristi tyden", "predevcirem", "tento mesic", "tento tyden", "tuto hodinu", "tuto minutu", "minuly rok", "minuly tyd", "pristi rok", "pristi tyd", "listopadu", "priblizne", "tento rok", "tento tyd", "cervence", "cervenec", "hodinami", "listopad", "prosince", "prosinec", "ctvrtek", "pondeli", "sekunda", "sekundy", "vterina", "vteriny", "brezen", "brezna", "cerven", "cervna", "hodina", "hodinu", "hodiny", "kveten", "kvetna", "mesice", "mesicu", "minuta", "minuty", "nedele", "nedeli", "sekund", "sobota", "sobotu", "streda", "stredu", "vterin", "duben", "dubna", "hodin", "leden", "ledna", "mesic", "minut", "patek", "rijen", "rijna", "srpen", "srpna", "tyden", "tydnu", "tydny", "unora", "utery", "vcera", "zitra", "dnes", "nyni", "pred", "roku", "roky", "unor", "zari", "bre", "cer", "crc", "ctv", "cvc", "cvn", "den", "dnu", "dny", "dop", "dub", "gmt", "kve", "led", "lis", "mes", "min", "ned", "odp", "pat", "pon", "pro", "rij", "rok", "sob", "srp", "str", "tyd", "uno", "utc", "ute", "zar", "am", "ct", "ne", "pa", "pm", "po", "so", "st", "ut", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "r", "s", "v", "z", "|"},
+	KnownWords:      []string{"minuly mesic", "minuly tyden", "pristi mesic", "pristi tyden", "predevcirem", "tento mesic", "tento tyden", "tuto hodinu", "tuto minutu", "minuly rok", "minuly tyd", "pristi rok", "pristi tyd", "listopadu", "priblizne", "tento rok", "tento tyd", "cervence", "cervenec", "hodinami", "listopad", "minutami", "prosince", "prosinec", "ctvrtek", "hodinou", "mesicem", "pondeli", "sekunda", "sekundy", "vterina", "vteriny", "brezen", "brezna", "cerven", "cervna", "hodina", "hodinu", "hodiny", "kveten", "kvetna", "mesice", "mesicu", "minuta", "minuty", "nedele", "nedeli", "sekund", "sobota", "sobotu", "streda", "stredu", "tydnem", "vterin", "duben", "dubna", "hodin", "leden", "ledna", "mesic", "minut", "patek", "rijen", "rijna", "srpen", "srpna", "tyden", "tydnu", "tydny", "unora", "utery", "vcera", "zitra", "dnes", "nyni", "pred", "roku", "roky", "unor", "zari", "bre", "cer", "crc", "ctv", "cvc", "cvn", "den", "dnu", "dny", "dop", "dub", "gmt", "kve", "led", "lis", "mes", "min", "ned", "odp", "pat", "pon", "pro", "rij", "rok", "sob", "srp", "str", "tyd", "uno", "utc", "ute", "zar", "am", "ct", "ne", "pa", "pm", "po", "so", "st", "ut", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "r", "s", "v", "z", "|"},
 })
