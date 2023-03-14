@@ -37,7 +37,7 @@ var (
 		// The most common splitter, used in European, Tagalog, Hebrew, Georgian, Indonesian, Vietnamese
 		1: regexp.MustCompile(`([^\s.]*)[\.!?;…\r\n]+(?:\s|$)*`),
 		// Splitter for Spanish
-		2: regexp.MustCompile(`([^\s.]*)(?:[¡¿]+|[\.!?;…\r\n]+(?:\s|$))+`),
+		2: regexp.MustCompile(`([^\s.]*)[\.!?;…\r\n]+(\s*[¡¿]*|$)|[¡¿]+`),
 		// Splitter for Hindi and Bangla
 		3: regexp.MustCompile(`([^\s.]*)[|!?;\r\n]+(?:\s|$)+`),
 		// Splitter for Japanese and Chinese

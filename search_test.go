@@ -258,6 +258,12 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime:   tt(2000, 1, 1),
 			ExtractedText: []string{"de 1939", "de 1941"},
 			ExtractedTime: []time.Time{tt(1939, 1, 1), tt(1941, 1, 1)},
+		}, {
+			Language:      "es",
+			Text:          `¡¡Ay!! En Madrid, a 17 de marzo de 1615. ¿Vos bueno?`,
+			CurrentTime:   tt(2000, 1, 1),
+			ExtractedText: []string{"a 17 de marzo de 1615"},
+			ExtractedTime: []time.Time{tt(1615, 3, 17)},
 		}, { // Swedish
 			Language:      "sv",
 			Text:          `Efter kommunisternas seger 1922 drog de allierade och Japan bort sina trupper.`,

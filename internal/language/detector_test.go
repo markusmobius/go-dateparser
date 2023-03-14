@@ -86,6 +86,7 @@ func TestDetectLanguage(t *testing.T) {
 			`конфликтом в истории человечества.`},
 		// Spanish
 		{"es", `11 junio 2010`},
+		{"es", `¡¡Ay!! En Madrid, a 17 de marzo de 1615. ¿Vos bueno?`},
 		// Swedish
 		{"sv", ` den 15 augusti 1945 då Kejsardömet`},
 		// Thai
