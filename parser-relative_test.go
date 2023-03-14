@@ -495,6 +495,14 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"මිනිත්තු 6කට පෙර", pfpDiff{"minute": -6}, Day},
 		// sk
 		{"pred 20 hodinami 45 min", pfpDiff{"hour": -20, "minute": -45}, Day},
+		{"dnes", pfpDiff{"day": -0}, Day},
+		{"včera", pfpDiff{"day": -1}, Day},
+		{"predvčerom", pfpDiff{"day": -2}, Day},
+		{"pred 2 hodinami", pfpDiff{"hour": -2}, Day},
+		{"pred rokom", pfpDiff{"year": -1}, Year},
+		{"pred týždňom", pfpDiff{"week": -1}, Day},
+		{"pred 3 dňami", pfpDiff{"day": -3}, Day},
+		{"pred hodinou", pfpDiff{"hour": -1}, Day},
 		// sl
 		{"pred 15 tednom 10 dan", pfpDiff{"week": -15, "day": -10}, Day},
 		// sq

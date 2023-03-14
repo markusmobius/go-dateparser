@@ -572,6 +572,10 @@ func TestTranslate(t *testing.T) {
 		// sk
 		{"sk", "15 marec 1987 utorok", "15 march 1987 tuesday"},
 		{"sk", "streda 17 mája 2003", "wednesday 17 may 2003"},
+		{"sk", "o 2 mesiace", "in 2 month"},
+		{"sk", "o týždeň", "in 1 week"},
+		{"sk", "predvčerom", "2 day ago"},
+		{"sk", "v sobotu", "saturday"},
 		// sl
 		{"sl", "12 junij 2003 petek 10:09 pop", "12 june 2003 friday 10:09 pm"},
 		{"sl", "ponedeljek 15 okt 1997 09:07 dopoldne", "monday 15 october 1997 09:07 am"},
