@@ -80,6 +80,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"an hour ago", pfpDiff{"hour": -1}, Day},
 		{"about an hour ago", pfpDiff{"hour": -1}, Day},
 		{"a day ago", pfpDiff{"day": -1}, Day},
+		{"1d ago", pfpDiff{"day": -1}, Day},
 		{"a week ago", pfpDiff{"week": -1}, Day},
 		{"2 hours ago", pfpDiff{"hour": -2}, Day},
 		{"about 23 hours ago", pfpDiff{"hour": -23}, Day},
@@ -102,8 +103,10 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"nine hours ago", pfpDiff{"hour": -9}, Day},
 		{"three week ago", pfpDiff{"week": -3}, Day},
 		{"eight months ago", pfpDiff{"month": -8}, Month},
+		{"1mon ago", pfpDiff{"month": -1}, Month},
 		{"six days ago", pfpDiff{"day": -6}, Day},
 		{"five years ago", pfpDiff{"year": -5}, Year},
+		{"2y ago", pfpDiff{"year": -2}, Year},
 
 		// Fractional English units
 		{"2.5 hours", pfpDiff{"hour": -2, "minute": -30}, Day},
