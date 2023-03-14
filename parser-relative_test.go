@@ -429,6 +429,11 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"před 12 lětom 15 měsac", pfpDiff{"year": -12, "month": -15}, Month},
 		// hy
 		{"15 րոպե առաջ", pfpDiff{"minute": -15}, Day},
+		// id
+		{"4 tahun lalu", pfpDiff{"year": -4}, Year},
+		{"4 thn lalu", pfpDiff{"year": -4}, Year},
+		{"4 bulan lalu", pfpDiff{"month": -4}, Month},
+		{"4 bln lalu", pfpDiff{"month": -4}, Month},
 		// is
 		{"fyrir 3 ári fyrir 2 mánuði", pfpDiff{"year": -3, "month": -2}, Month},
 		// it
