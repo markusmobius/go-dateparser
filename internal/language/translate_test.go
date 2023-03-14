@@ -157,6 +157,8 @@ func TestTranslate(t *testing.T) {
 		{"ja", "2016年3月21日(月) 14時48分", "2016-3-21 monday 14:48"},
 		{"ja", "2016年3月20日(日) 21時40分", "2016-3-20 sunday 21:40"},
 		{"ja", "2016年3月20日 (日) 21時40分", "2016-3-20 sunday 21:40"},
+		{"ja", "正午", "12:00"},
+		{"ja", "明日の13時20分", "in 1 day 13:20"},
 		// Hebrew
 		{"he", "20 לאפריל 2012", "20 april 2012"},
 		{"he", "יום רביעי ה-19 בנובמבר 2013", "wednesday 19 november 2013"},
@@ -911,6 +913,7 @@ func TestTranslate_relative(t *testing.T) {
 		{"ja", "60秒", "60 second"},
 		{"ja", "3秒前", "3 second ago"},
 		{"ja", "現在", "0 second ago"},
+		{"ja", "明後日", "in 2 day"},
 		// Hebrew
 		{"he", "אתמול", "1 day ago"},
 		{"he", "אתמול בשעה 3", "1 day ago  3"},
