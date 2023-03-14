@@ -319,22 +319,22 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 		}, {
 			Language: "en",
 			Text: "May 2020\n" +
-				"June 2020\n" +
+				"July 2020\n" +
 				"2023\n" +
 				"January UTC\n" +
 				"June 5 am utc\n" +
 				"June 23th 5 pm EST\n" +
 				"May 31, 8am UTC",
 			ExtractedText: []string{
-				"May 2020", "June 2020",
+				"May 2020", "July 2020",
 				"2023", "January UTC",
 				"June 5 am utc",
 				"June 23th 5 pm EST",
 				"May 31", "8am UTC",
 			},
 			ExtractedTime: []time.Time{
-				tt(2020, 5, utcDay), tt(2020, 6, utcDay),
-				tt(2023, 6, utcDay), tt(2023, 1, utcDay),
+				tt(2020, 5, utcDay), tt(2020, 7, utcDay),
+				tt(2023, 7, utcDay), tt(2023, 1, utcDay),
 				tt(2023, 6, 5),
 				tt(2023, 6, 23, 17, 0, 18_000), // +18_000 second for EST
 				// Note for result below: in original the returned time is in UTC,
