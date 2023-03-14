@@ -982,6 +982,10 @@ func TestParser_Parse_relative_invalidDates(t *testing.T) {
 	dt, err := relativeTestParser.Parse(&relativeTestConfig, "15th of Aug, 2014 Diane Bennett")
 	assert.Error(t, err)
 	assert.True(t, dt.IsZero())
+
+	dt, err = relativeTestParser.Parse(&relativeTestConfig, "4 heures ago")
+	assert.Error(t, err)
+	assert.True(t, dt.IsZero())
 }
 
 func TestParser_Parse_relative_hasSpecificTime(t *testing.T) {
