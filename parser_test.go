@@ -344,6 +344,7 @@ func TestParser_Parse_hasPreferredDateSource(t *testing.T) {
 		ts(past, "March", tt(2014, 3, 15)),
 		ts(past, "Friday", tt(2015, 2, 13)),
 		ts(past, "Monday", tt(2015, 2, 9)),
+		ts(past, "Mon", tt(2015, 2, 9)),
 		ts(past, "Sunday", tt(2015, 2, 8)), // current day
 		ts(past, "10:00PM", tt(2015, 2, 14, 22, 0)),
 		ts(past, "16:10", tt(2015, 2, 14, 16, 10)),
@@ -358,6 +359,7 @@ func TestParser_Parse_hasPreferredDateSource(t *testing.T) {
 		ts(future, "Friday", tt(2015, 2, 20)),
 		ts(future, "Sunday", tt(2015, 2, 22)), // current day
 		ts(future, "Monday", tt(2015, 2, 16)),
+		ts(future, "Mon", tt(2015, 2, 16)),
 		ts(future, "10:00PM", tt(2015, 2, 15, 22, 0)),
 		ts(future, "16:10", tt(2015, 2, 15, 16, 10)),
 		ts(future, "14:05", tt(2015, 2, 16, 14, 5)),
@@ -545,6 +547,7 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		ts("10:04am EDT", tt(2020, 7, 19, 14, 4), tt(2020, 7, 19)),
 		ts("16:00", tt(2018, 12, 13, 16, 0), tt(2018, 12, 13, 15, 15)),
 		ts("Monday 7:15 AM", tt(2018, 12, 10, 7, 15), tt(2018, 12, 13, 15, 15)),
+		ts("Mon 19:43", tt(2018, 12, 10, 19, 43), tt(2018, 12, 13, 15, 15)),
 
 		// Period is day when time is not present
 		tsd("12th March 2010", tt(2010, 3, 12, 0, 0)),

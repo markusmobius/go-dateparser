@@ -103,7 +103,6 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"nine hours ago", pfpDiff{"hour": -9}, Day},
 		{"three week ago", pfpDiff{"week": -3}, Day},
 		{"eight months ago", pfpDiff{"month": -8}, Month},
-		{"1mon ago", pfpDiff{"month": -1}, Month},
 		{"six days ago", pfpDiff{"day": -6}, Day},
 		{"five years ago", pfpDiff{"year": -5}, Year},
 		{"2y ago", pfpDiff{"year": -2}, Year},
@@ -1194,4 +1193,11 @@ func TestParser_Parse_relative_hasPreferredTimes(t *testing.T) {
 	if nFailed > 0 {
 		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
 	}
+}
+
+func TestParser_Parse_relative_knownIssues(t *testing.T) {
+	str := "1mon ago" // issue #1116 in original library
+	dt, err := relativeTestParser.Parse(&relativeTestConfig, str)
+	assert.Error(t, err)
+	assert.True(t, dt.IsZero())
 }

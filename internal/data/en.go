@@ -89,7 +89,7 @@ var en_Locale = merge(nil, LocaleData{
 		"mar":       {"march"},
 		"may":       {"may"},
 		"min":       {"minute"},
-		"mon":       {"month", "monday"},
+		"mon":       {"monday"},
 		"nov":       {"november"},
 		"oct":       {"october"},
 		"sat":       {"saturday"},
