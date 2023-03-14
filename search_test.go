@@ -131,6 +131,12 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime:   tt(2000, 1, 1),
 			ExtractedText: []string{"25th march 2015", "today"},
 			ExtractedTime: []time.Time{tt(2015, 3, 25), tt(2000, 1, 1)},
+		}, {
+			Language:      "en",
+			Text:          "The employee has not submitted their documents till date",
+			CurrentTime:   tt(2000, 1, 1),
+			ExtractedText: []string{"till date"},
+			ExtractedTime: []time.Time{tt(2000, 1, 1)},
 		}, { // Filipino / Tagalog
 			Language:      "tl",
 			Text:          `Maraming namatay sa mga Hapon hanggang sila'y sumuko noong Agosto 15, 1945.`,
