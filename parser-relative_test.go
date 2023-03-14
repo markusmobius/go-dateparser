@@ -571,6 +571,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"in an hour", pfpDiff{"hour": 1}, Day},
 		{"in about an hour", pfpDiff{"hour": 1}, Day},
 		{"in 1 day", pfpDiff{"day": 1}, Day},
+		{"in 1d", pfpDiff{"day": 1}, Day},
 		{"in a week", pfpDiff{"week": 1}, Day},
 		{"in 2 hours", pfpDiff{"hour": 2}, Day},
 		{"in about 23 hours", pfpDiff{"hour": 23}, Day},
