@@ -13,6 +13,7 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/parser/tokenizer"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
+	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
 var (
@@ -262,7 +263,7 @@ func (p *Parser) Init(str string) error {
 	return nil
 }
 
-func (p *Parser) Parse() (date.Date, error) {
+func (p *Parser) Parse(tz timezone.TimezoneOffsetData) (date.Date, error) {
 	// Find missing date fields
 	missingParts := strutil.NewDict()
 	for _, field := range []string{"day", "month", "year"} {
@@ -301,7 +302,7 @@ func (p *Parser) Parse() (date.Date, error) {
 	}
 
 	// Apply correction for past and future
-	dt = p.correctForTimeFrame(dt)
+	dt = p.correctForTimeFrame(dt, tz)
 
 	// Apply correction for preference of day: beginning, current, end
 	dt = p.correctForDay(dt)
@@ -430,7 +431,7 @@ func (p *Parser) parseLetterToken(tokenText string, skippedComponent string) ([]
 	return nil, fmt.Errorf("unable to parse %s", tokenText)
 }
 
-func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
+func (p *Parser) correctForTimeFrame(t time.Time, tz timezone.TimezoneOffsetData) time.Time {
 	_, yearExist := p.ComponentValues["year"]
 	_, monthExist := p.ComponentValues["month"]
 	_, tokenTimeExist := p.ComponentTokens["time"]
@@ -515,11 +516,13 @@ func (p *Parser) correctForTimeFrame(t time.Time) time.Time {
 	}
 
 	if tokenTimeExist && !tokenYearExist && !tokenMonthExist && !tokenDayExist && !tokenWeekdayExist {
-		if dateSource == setting.Past && p.Now.Before(t) {
+		tmp := t.Add(-time.Duration(tz.Offset) * time.Second)
+
+		if dateSource == setting.Past && p.Now.Before(tmp) {
 			t = t.AddDate(0, 0, -1)
 		}
 
-		if dateSource == setting.Future && p.Now.After(t) {
+		if dateSource == setting.Future && p.Now.After(tmp) {
 			t = t.AddDate(0, 0, 1)
 		}
 	}

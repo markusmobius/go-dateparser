@@ -706,6 +706,80 @@ func TestParser_Parse_onlySeparatorTokens(t *testing.T) {
 	}
 }
 
+func TestParser_Parse_dateSkipAhead(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text         string
+		ExpectedTime time.Time
+	}
+
+	tests := []testScenario{
+		{"4pm EDT", tt(2021, 10, 19, 20, 0)},
+	}
+
+	// Prepare config
+	cfg := dps.Configuration{
+		PreferredDateSource: dps.Future,
+		CurrentTime:         tt(2021, 10, 19, 18, 0),
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("Skip ahead \"%s\" => \"%s\"", test.Text,
+			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
+
+		// Parse text
+		dt, _ := dps.Parse(&cfg, test.Text)
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestParser_Parse_dateStepBack(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text         string
+		ExpectedTime time.Time
+	}
+
+	tests := []testScenario{
+		{"11pm AEDT", tt(2021, 10, 19, 12, 0)},
+	}
+
+	// Prepare config
+	cfg := dps.Configuration{
+		PreferredDateSource: dps.Past,
+		CurrentTime:         tt(2021, 10, 19, 18, 0),
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("Step back \"%s\" => \"%s\"", test.Text,
+			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
+
+		// Parse text
+		dt, _ := dps.Parse(&cfg, test.Text)
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
 func TestParser_Parse_successWhenSkipTokensSpecified(t *testing.T) {
 	cfg := dps.Configuration{
 		CurrentTime: tt(2015, 2, 12),

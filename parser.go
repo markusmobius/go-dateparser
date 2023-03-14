@@ -188,7 +188,7 @@ func (p *Parser) tryCustomFormat(iCfg *setting.Configuration, translations []str
 func (p *Parser) tryAbsoluteTime(iCfg *setting.Configuration, translations []string) date.Date {
 	for _, translation := range translations {
 		if t, tz := p.stripBracesAndTimezones(translation); t != "" {
-			dt, _ := absolute.Parse(iCfg, t)
+			dt, _ := absolute.Parse(iCfg, t, tz)
 			dt = p.applyTimezone(dt, tz)
 			if !dt.IsZero() {
 				return dt

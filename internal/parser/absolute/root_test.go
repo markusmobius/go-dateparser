@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/timezone"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -70,8 +71,9 @@ func TestParse_error(t *testing.T) {
 
 	// Start test
 	var nFailed int
+	var tz timezone.TimezoneOffsetData
 	for _, test := range tests {
-		_, err := Parse(test.Config, test.Text)
+		_, err := Parse(test.Config, test.Text, tz)
 		passed := assert.Error(t, err, test.Text)
 		if !passed {
 			nFailed++
