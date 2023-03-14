@@ -93,11 +93,11 @@ func TestGetLocales(t *testing.T) {
 			NoGivenOrder: true,
 		}, {
 			Locales:      sp("pt-AO", "hi", "zh-Hans-SG", "vi"),
-			Expected:     sp("pt-AO", "vi", "zh-Hans-SG", "hi"),
+			Expected:     sp("pt-AO", "zh-Hans-SG", "vi", "hi"),
 			NoGivenOrder: true,
 		}, {
 			Locales:      sp("gsw-FR", "es-BZ", "ca-IT", "qu-EC"),
-			Expected:     sp("es-BZ", "qu-EC", "ca-IT", "gsw-FR"),
+			Expected:     sp("es-BZ", "ca-IT", "qu-EC", "gsw-FR"),
 			NoGivenOrder: true,
 		},
 	}

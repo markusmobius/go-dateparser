@@ -2,42 +2,30 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"math"
 	"os"
+	"path"
 	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
 
 	"github.com/elliotchance/pie/v2"
+	"github.com/go-shiori/dom"
 )
 
 func createLanguageOrder(languageLocales map[string][]string) ([]string, error) {
-	// Open territory info file
-	fPath := filepath.Join(RAW_DIR, "cldr-core/supplemental/territoryInfo.json")
-	f, err := os.Open(fPath)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	// Decode JSON
-	var data CldrTerritoryData
-	err = json.NewDecoder(f).Decode(&data)
+	// Parse CLDR territory info
+	languagePopulationMap, err := parseCldrTerritory()
 	if err != nil {
 		return nil, err
 	}
 
-	// Get population per language
-	languagePopulationMap := map[string]int{}
-	for _, territoryData := range data.Supplemental.TerritoryInfo {
-		population, _ := strconv.ParseFloat(territoryData.Population, 64)
-		for language, languageData := range territoryData.LanguagePopulation {
-			language = strings.ReplaceAll(language, "_", "-")
-			percentage, _ := strconv.ParseFloat(languageData.PopulationPercent, 64)
-			languagePopulation := math.Round(population * percentage)
-			languagePopulationMap[language] += int(languagePopulation)
-		}
+	// Parse most common languages from W3Techs
+	mostCommonLanguages, err := parseW3CommonLanguages()
+	if err != nil {
+		return nil, err
 	}
 
 	// Separate between languages that has population data or not
@@ -58,8 +46,8 @@ func createLanguageOrder(languageLocales map[string][]string) ([]string, error) 
 		langJ := languages[j]
 
 		// Check for common language
-		iIdx, iIsCommon := mostCommonLocales[langI]
-		jIdx, jIsCommon := mostCommonLocales[langJ]
+		iIdx, iIsCommon := mostCommonLanguages[langI]
+		jIdx, jIsCommon := mostCommonLanguages[langJ]
 
 		switch {
 		case iIsCommon && jIsCommon:
@@ -97,4 +85,69 @@ func createLanguageOrder(languageLocales map[string][]string) ([]string, error) 
 	}
 
 	return languages, nil
+}
+
+func parseCldrTerritory() (map[string]int, error) {
+	// Open territory info file
+	fPath := filepath.Join(RAW_DIR, "cldr-core/supplemental/territoryInfo.json")
+	f, err := os.Open(fPath)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	// Decode JSON
+	var data CldrTerritoryData
+	err = json.NewDecoder(f).Decode(&data)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get population per language
+	languagePopulations := map[string]int{}
+	for _, territoryData := range data.Supplemental.TerritoryInfo {
+		population, _ := strconv.ParseFloat(territoryData.Population, 64)
+		for language, languageData := range territoryData.LanguagePopulation {
+			language = strings.ReplaceAll(language, "_", "-")
+			percentage, _ := strconv.ParseFloat(languageData.PopulationPercent, 64)
+			languagePopulation := math.Round(population * percentage)
+			languagePopulations[language] += int(languagePopulation)
+		}
+	}
+
+	return languagePopulations, nil
+}
+
+func parseW3CommonLanguages() (map[string]int, error) {
+	// Open HTML file
+	fPath := filepath.Join(RAW_DIR, "w3techs", "content_language.html")
+	f, err := os.Open(fPath)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	// Parse HTML
+	doc, err := dom.Parse(f)
+	if err != nil {
+		return nil, err
+	}
+
+	// Fetch the common languages
+	commonLanguages := map[string]int{}
+	for i, a := range dom.QuerySelectorAll(doc, "table.bars th a") {
+		href := dom.GetAttribute(a, "href")
+		langCode := path.Base(href)
+		langCode = strings.ToLower(langCode)
+		langCode = strings.TrimPrefix(langCode, "cl")
+		langCode = strings.Trim(langCode, "-")
+		commonLanguages[langCode] = i
+	}
+
+	// If English is not the most common language, it's error
+	if commonLanguages["en"] != 0 {
+		return nil, fmt.Errorf("english is not the first language")
+	}
+
+	return commonLanguages, nil
 }
