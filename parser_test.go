@@ -114,6 +114,7 @@ func TestParser_Parse(t *testing.T) {
 		{"21. Dezember 2013", tt(2013, 12, 21)},
 		{"19. Februar 2012", tt(2012, 2, 19)},
 		{"26. Juli 2014", tt(2014, 7, 26)},
+		{"1. Sept 2000", tt(2000, 9, 1)},
 		{"18.10.14 um 22:56 Uhr", tt(2014, 10, 18, 22, 56)},
 		{"12-Mär-2014", tt(2014, 3, 12)},
 		{"Mit 13:14", tt(2012, 11, 7, 13, 14)},
@@ -282,6 +283,7 @@ func TestParser_Parse_withLanguage(t *testing.T) {
 
 	tests := []testScenario{
 		{"hr", "02/10/2016 u 17:20", tt(2016, 10, 2, 17, 20)},
+		{"de", "1. Sept 2000", tt(2000, 9, 1)},
 	}
 
 	// Prepare config
