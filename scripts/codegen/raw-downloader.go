@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io/ioutil"
+	"net/http"
 	"os"
 	"path"
 	"path/filepath"
@@ -11,9 +13,18 @@ import (
 )
 
 func downloadRawData() error {
-	// Clean current dst dir
 	os.RemoveAll(RAW_DIR)
 
+	err := downloadCldrData()
+	if err != nil {
+		return err
+	}
+
+	err = downloadW3ContentLanguage()
+	return err
+}
+
+func downloadCldrData() error {
 	// Fetch data from CLDR repository
 	repos := []string{
 		"https://github.com/unicode-cldr/cldr-dates-full.git",
@@ -37,4 +48,30 @@ func downloadRawData() error {
 	}
 
 	return nil
+}
+
+func downloadW3ContentLanguage() error {
+	// Prepare dst dir
+	dstDir := filepath.Join(RAW_DIR, "w3techs")
+	err := os.MkdirAll(dstDir, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	// Download page
+	url := "https://w3techs.com/technologies/overview/content_language"
+	resp, err := http.DefaultClient.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Save to file
+	bt, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	dstPath := filepath.Join(dstDir, "content_language.html")
+	return os.WriteFile(dstPath, bt, os.ModePerm)
 }

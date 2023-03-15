@@ -3,7 +3,8 @@ package main
 import (
 	"os"
 	"path/filepath"
-	"strings"
+
+	"github.com/elliotchance/pie/v2"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -45,21 +46,16 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	}
 
 	// Prepare helper function
-	addTranslationFromStrings := func(data *LocaleData, translation string, entries []string) {
+	addTranslations := func(data *LocaleData, translation string, entries []string) {
 		for _, entry := range entries {
 			data.AddTranslation(entry, translation, false)
 		}
 	}
 
-	addTranslationFromMapStrings := func(data *LocaleData, mapStrings map[string][]string) {
+	addRelativeTypes := func(data *LocaleData, mapStrings map[string][]string, isRegex bool) {
 		for translation, entries := range mapStrings {
-			fnAdder := data.AddTranslation
-			if strings.HasPrefix(translation, "in ") || strings.HasSuffix(translation, " ago") {
-				fnAdder = data.AddRelativeType
-			}
-
 			for _, entry := range entries {
-				fnAdder(entry, translation, false)
+				data.AddRelativeType(entry, translation, false)
 			}
 		}
 	}
@@ -72,54 +68,66 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		SentenceSplitterGroup: yamlData.SentenceSplitterGroup,
 	}
 
-	skipWords := cleanList(false, yamlData.SkipWords...)
-	pertainWords := cleanList(false, yamlData.PertainWords...)
-	addTranslationFromStrings(&data, "", skipWords)
-	addTranslationFromStrings(&data, "", pertainWords)
+	addTranslations(&data, "monday", yamlData.Monday)
+	addTranslations(&data, "tuesday", yamlData.Tuesday)
+	addTranslations(&data, "wednesday", yamlData.Wednesday)
+	addTranslations(&data, "thursday", yamlData.Thursday)
+	addTranslations(&data, "friday", yamlData.Friday)
+	addTranslations(&data, "saturday", yamlData.Saturday)
+	addTranslations(&data, "sunday", yamlData.Sunday)
 
-	addTranslationFromStrings(&data, "monday", yamlData.Monday)
-	addTranslationFromStrings(&data, "tuesday", yamlData.Tuesday)
-	addTranslationFromStrings(&data, "wednesday", yamlData.Wednesday)
-	addTranslationFromStrings(&data, "thursday", yamlData.Thursday)
-	addTranslationFromStrings(&data, "friday", yamlData.Friday)
-	addTranslationFromStrings(&data, "saturday", yamlData.Saturday)
-	addTranslationFromStrings(&data, "sunday", yamlData.Sunday)
+	addTranslations(&data, "january", yamlData.January)
+	addTranslations(&data, "february", yamlData.February)
+	addTranslations(&data, "march", yamlData.March)
+	addTranslations(&data, "april", yamlData.April)
+	addTranslations(&data, "may", yamlData.May)
+	addTranslations(&data, "june", yamlData.June)
+	addTranslations(&data, "july", yamlData.July)
+	addTranslations(&data, "august", yamlData.August)
+	addTranslations(&data, "september", yamlData.September)
+	addTranslations(&data, "october", yamlData.October)
+	addTranslations(&data, "november", yamlData.November)
+	addTranslations(&data, "december", yamlData.December)
 
-	addTranslationFromStrings(&data, "january", yamlData.January)
-	addTranslationFromStrings(&data, "february", yamlData.February)
-	addTranslationFromStrings(&data, "march", yamlData.March)
-	addTranslationFromStrings(&data, "april", yamlData.April)
-	addTranslationFromStrings(&data, "may", yamlData.May)
-	addTranslationFromStrings(&data, "june", yamlData.June)
-	addTranslationFromStrings(&data, "july", yamlData.July)
-	addTranslationFromStrings(&data, "august", yamlData.August)
-	addTranslationFromStrings(&data, "september", yamlData.September)
-	addTranslationFromStrings(&data, "october", yamlData.October)
-	addTranslationFromStrings(&data, "november", yamlData.November)
-	addTranslationFromStrings(&data, "december", yamlData.December)
+	addTranslations(&data, "decade", yamlData.Decade)
+	addTranslations(&data, "year", yamlData.Year)
+	addTranslations(&data, "month", yamlData.Month)
+	addTranslations(&data, "week", yamlData.Week)
+	addTranslations(&data, "day", yamlData.Day)
+	addTranslations(&data, "hour", yamlData.Hour)
+	addTranslations(&data, "minute", yamlData.Minute)
+	addTranslations(&data, "second", yamlData.Second)
+	addTranslations(&data, "ago", yamlData.Ago)
+	addTranslations(&data, "in", yamlData.In)
 
-	addTranslationFromStrings(&data, "decade", yamlData.Decade)
-	addTranslationFromStrings(&data, "year", yamlData.Year)
-	addTranslationFromStrings(&data, "month", yamlData.Month)
-	addTranslationFromStrings(&data, "week", yamlData.Week)
-	addTranslationFromStrings(&data, "day", yamlData.Day)
-	addTranslationFromStrings(&data, "hour", yamlData.Hour)
-	addTranslationFromStrings(&data, "minute", yamlData.Minute)
-	addTranslationFromStrings(&data, "second", yamlData.Second)
-	addTranslationFromStrings(&data, "ago", yamlData.Ago)
-	addTranslationFromStrings(&data, "in", yamlData.In)
+	addTranslations(&data, "am", yamlData.AM)
+	addTranslations(&data, "pm", yamlData.PM)
 
-	addTranslationFromStrings(&data, "am", yamlData.AM)
-	addTranslationFromStrings(&data, "pm", yamlData.PM)
-
-	addTranslationFromMapStrings(&data, yamlData.RelativeType)
-	addTranslationFromMapStrings(&data, yamlData.RelativeTypeRegex)
+	addRelativeTypes(&data, yamlData.RelativeType, false)
+	addRelativeTypes(&data, yamlData.RelativeTypeRegex, true)
 
 	for _, simplification := range yamlData.Simplifications {
 		for pattern, replacement := range simplification {
 			data.AddSimplification(pattern, replacement)
 		}
 	}
+
+	// If skip words for some reason redefined again, then it's not skipped
+	var checkedSkipWords []string
+	for _, w := range data.SkipWords {
+		_, transExist := data.Translations[w]
+		isPertained := pie.Contains(data.PertainWords, w)
+		if !isPertained && !transExist {
+			checkedSkipWords = append(checkedSkipWords, w)
+		}
+	}
+	data.SkipWords = checkedSkipWords
+
+	// Save the skipped and pertained words to dictionary
+	skipWords := cloneSlice(data.SkipWords)
+	pertainWords := cloneSlice(data.PertainWords)
+	addTranslations(&data, "", skipWords)
+	addTranslations(&data, "", pertainWords)
 
 	return &data, nil
 }

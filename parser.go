@@ -46,6 +46,8 @@ type ParserType uint8
 const (
 	// Timestamp is parser to parse Unix timestamp.
 	Timestamp ParserType = iota
+	// NegativeTimestamp is parser to parse Unix timestamp in negative value.
+	NegativeTimestamp
 	// RelativeTime is parser to parse date string with relative value like
 	// "1 year, 2 months ago" and "3 hours, 50 minutes ago".
 	RelativeTime
@@ -68,13 +70,20 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 
 	// Validate and initiate parsers
 	for _, parser := range p.ParserTypes {
-		if parser < 0 || parser > NoSpacesTime {
+		if parser > NoSpacesTime {
 			return date.Date{}, fmt.Errorf("invalid parser type: %d", parser)
 		}
 	}
 
 	if len(p.ParserTypes) == 0 {
-		p.ParserTypes = []ParserType{Timestamp, RelativeTime, CustomFormat, AbsoluteTime, NoSpacesTime}
+		p.ParserTypes = []ParserType{
+			Timestamp,
+			NegativeTimestamp,
+			RelativeTime,
+			CustomFormat,
+			AbsoluteTime,
+			NoSpacesTime,
+		}
 	}
 
 	// Initiate and validate config
@@ -123,27 +132,23 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 		lCfg.DateOrder = dateOrder
 
 		// Translate string
-		translation := language.Translate(lCfg, locale, str, false)
-		translationWithFormat := language.Translate(lCfg, locale, str, true)
+		translations := language.Translate(lCfg, locale, str, false)
+		translationsWithFormat := language.Translate(lCfg, locale, str, true)
 
 		for _, parserType := range p.ParserTypes {
 			switch parserType {
 			case Timestamp:
-				dt = timestamp.Parse(lCfg, str)
+				dt = timestamp.Parse(lCfg, str, false)
+			case NegativeTimestamp:
+				dt = timestamp.Parse(lCfg, str, true)
 			case RelativeTime:
-				dt = relative.Parse(lCfg, translation)
+				dt = p.tryRelativeTime(lCfg, translations)
 			case CustomFormat:
-				dt = formatted.Parse(lCfg, translationWithFormat, formats...)
+				dt = p.tryCustomFormat(lCfg, translationsWithFormat, formats...)
 			case AbsoluteTime:
-				if t, tz := p.stripBracesAndTimezones(translation); t != "" {
-					dt, _ = absolute.Parse(lCfg, t)
-					dt = p.applyTimezone(dt, tz)
-				}
+				dt = p.tryAbsoluteTime(lCfg, translations)
 			case NoSpacesTime:
-				if t, tz := p.stripBracesAndTimezones(translation); t != "" {
-					dt, _ = nospace.Parse(lCfg, t)
-					dt = p.applyTimezone(dt, tz)
-				}
+				dt = p.tryNoSpacesTime(lCfg, translations)
 			}
 
 			if !dt.IsZero() {
@@ -158,6 +163,52 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 	}
 
 	return date.Date{}, fmt.Errorf("failed to parse \"%s\": unknown format", originalStr)
+}
+
+func (p *Parser) tryRelativeTime(iCfg *setting.Configuration, translations []string) date.Date {
+	for _, translation := range translations {
+		dt := relative.Parse(iCfg, translation)
+		if !dt.IsZero() {
+			return dt
+		}
+	}
+	return date.Date{}
+}
+
+func (p *Parser) tryCustomFormat(iCfg *setting.Configuration, translations []string, formats ...string) date.Date {
+	for _, translation := range translations {
+		dt := formatted.Parse(iCfg, translation, formats...)
+		if !dt.IsZero() {
+			return dt
+		}
+	}
+	return date.Date{}
+}
+
+func (p *Parser) tryAbsoluteTime(iCfg *setting.Configuration, translations []string) date.Date {
+	for _, translation := range translations {
+		if t, tz := p.stripBracesAndTimezones(translation); t != "" {
+			dt, _ := absolute.Parse(iCfg, t, tz)
+			dt = p.applyTimezone(dt, tz)
+			if !dt.IsZero() {
+				return dt
+			}
+		}
+	}
+	return date.Date{}
+}
+
+func (p *Parser) tryNoSpacesTime(iCfg *setting.Configuration, translations []string) date.Date {
+	for _, translation := range translations {
+		if t, tz := p.stripBracesAndTimezones(translation); t != "" {
+			dt, _ := nospace.Parse(iCfg, t)
+			dt = p.applyTimezone(dt, tz)
+			if !dt.IsZero() {
+				return dt
+			}
+		}
+	}
+	return date.Date{}
 }
 
 func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configuration, str string) ([]*data.LocaleData, error) {
@@ -254,12 +305,12 @@ func (p *Parser) localeIsApplicable(iCfg *setting.Configuration, ld *data.Locale
 	return language.IsApplicable(iCfg, ld, s, false)
 }
 
-func (p *Parser) stripBracesAndTimezones(s string) (string, timezone.TimezoneOffsetData) {
+func (p *Parser) stripBracesAndTimezones(s string) (string, timezone.OffsetData) {
 	s = strutil.StripBraces(s)
 	return timezone.PopTzOffset(s)
 }
 
-func (p *Parser) applyTimezone(dt date.Date, tz timezone.TimezoneOffsetData) date.Date {
+func (p *Parser) applyTimezone(dt date.Date, tz timezone.OffsetData) date.Date {
 	if dt.IsZero() || tz.IsZero() {
 		return dt
 	}

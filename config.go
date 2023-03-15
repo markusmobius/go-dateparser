@@ -22,7 +22,11 @@ var (
 	DMY = func(_ string) string { return "DMY" }
 
 	DefaultDateOrder = func(locale string) string {
-		return data.LocaleDataMap[locale].DateOrder
+		if ld, exist := data.GetLocaleData(locale); exist {
+			return ld.DateOrder
+		} else {
+			return "YMD"
+		}
 	}
 )
 
@@ -141,12 +145,12 @@ func (c Configuration) Clone() *Configuration {
 // validate validates the configuration and return error if it's not valid.
 func (c Configuration) validate() error {
 	// Validate preferred day of month
-	if dom := c.PreferredDayOfMonth; dom < 0 || dom > Last {
+	if dom := c.PreferredDayOfMonth; dom > Last {
 		return fmt.Errorf("invalid preferred day of month: %d", dom)
 	}
 
 	// Validate preferred date source
-	if ds := c.PreferredDateSource; ds < 0 || ds > Future {
+	if ds := c.PreferredDateSource; ds > Future {
 		return fmt.Errorf("invalid preferred date source: %d", ds)
 	}
 

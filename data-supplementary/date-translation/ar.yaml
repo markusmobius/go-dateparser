@@ -1,6 +1,6 @@
 sentence_splitter_group: 6
 
-skip: ['الساعة', 'في', 'مساءً', 'هـ']
+skip: ['الساعة', 'في', 'هـ']
 
 monday:
   - الإثنين
@@ -25,14 +25,12 @@ second:
 
 ago:
   - منذ
+  - مضت
 in:
   - خلال
 
 am:
   - صباحاً
-
-pm:
-  - مساءً
 
 relative-type:
   1 day ago:

@@ -131,6 +131,12 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime:   tt(2000, 1, 1),
 			ExtractedText: []string{"25th march 2015", "today"},
 			ExtractedTime: []time.Time{tt(2015, 3, 25), tt(2000, 1, 1)},
+		}, {
+			Language:      "en",
+			Text:          "The employee has not submitted their documents till date",
+			CurrentTime:   tt(2000, 1, 1),
+			ExtractedText: []string{"till date"},
+			ExtractedTime: []time.Time{tt(2000, 1, 1)},
 		}, { // Filipino / Tagalog
 			Language:      "tl",
 			Text:          `Maraming namatay sa mga Hapon hanggang sila'y sumuko noong Agosto 15, 1945.`,
@@ -216,7 +222,7 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime: tt(2000, 1, 1),
 			ExtractedText: []string{
 				"1 września 1939",
-				"2 września 1945 (w",
+				"2 września 1945",
 				"8 maja 1945",
 			},
 			ExtractedTime: []time.Time{
@@ -252,6 +258,12 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime:   tt(2000, 1, 1),
 			ExtractedText: []string{"de 1939", "de 1941"},
 			ExtractedTime: []time.Time{tt(1939, 1, 1), tt(1941, 1, 1)},
+		}, {
+			Language:      "es",
+			Text:          `¡¡Ay!! En Madrid, a 17 de marzo de 1615. ¿Vos bueno?`,
+			CurrentTime:   tt(2000, 1, 1),
+			ExtractedText: []string{"a 17 de marzo de 1615"},
+			ExtractedTime: []time.Time{tt(1615, 3, 17)},
 		}, { // Swedish
 			Language:      "sv",
 			Text:          `Efter kommunisternas seger 1922 drog de allierade och Japan bort sina trupper.`,
@@ -280,8 +292,8 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			CurrentTime: tt(2000, 1, 1),
 			ExtractedText: []string{
 				"13 вересня 1931",
-				"7 липня 1937",
-				"14 березня 1939",
+				"7 липня 1937 року",
+				"14 березня 1939 року",
 			},
 			ExtractedTime: []time.Time{
 				tt(1931, 9, 13),
@@ -319,22 +331,22 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 		}, {
 			Language: "en",
 			Text: "May 2020\n" +
-				"June 2020\n" +
+				"July 2020\n" +
 				"2023\n" +
 				"January UTC\n" +
 				"June 5 am utc\n" +
 				"June 23th 5 pm EST\n" +
 				"May 31, 8am UTC",
 			ExtractedText: []string{
-				"May 2020", "June 2020",
+				"May 2020", "July 2020",
 				"2023", "January UTC",
 				"June 5 am utc",
 				"June 23th 5 pm EST",
 				"May 31", "8am UTC",
 			},
 			ExtractedTime: []time.Time{
-				tt(2020, 5, utcDay), tt(2020, 6, utcDay),
-				tt(2023, 6, utcDay), tt(2023, 1, utcDay),
+				tt(2020, 5, utcDay), tt(2020, 7, utcDay),
+				tt(2023, 7, utcDay), tt(2023, 1, utcDay),
 				tt(2023, 6, 5),
 				tt(2023, 6, 23, 17, 0, 18_000), // +18_000 second for EST
 				// Note for result below: in original the returned time is in UTC,
@@ -356,6 +368,15 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 				tt(2001, 3, 19),
 				tt(2001, 3, 20),
 				tt(2001, 3, 21),
+			},
+		}, {
+			Language: "ru",
+			Text:     `Андрей Дмитриевич Сахаров скончался 14 декабря в 1989 году от внезапной остановки сердца.`,
+			ExtractedText: []string{
+				"14 декабря в 1989 году",
+			},
+			ExtractedTime: []time.Time{
+				tt(1989, 12, 14, 0, 0),
 			},
 		}, { // Russian with relative dates
 			Language: "ru",
@@ -614,15 +635,11 @@ func TestParser_Search(t *testing.T) {
 		message := fmt.Sprintf("%v \"%s\"", test.Languages, test.Text)
 
 		// Search for dates
-		lang, result, err := dps.Search(&dps.Configuration{
+		lang, result, _ := dps.Search(&dps.Configuration{
 			Languages:     test.Languages,
 			CurrentTime:   test.CurrentTime,
 			StrictParsing: test.StrictParsing,
 		}, test.Text)
-
-		if err != nil {
-			fmt.Println(message, err)
-		}
 
 		// Assert result
 		passed := assert.Len(t, result, len(test.ExtractedTime), message)

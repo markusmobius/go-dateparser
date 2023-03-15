@@ -44,7 +44,7 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 	}
 
 	// Parse the string
-	dt, err := parser.Parse()
+	dt, err := parser.Parse(tz)
 	if err != nil {
 		return date.Date{}, err
 	}

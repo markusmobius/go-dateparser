@@ -82,19 +82,17 @@ func CountApplicability(cfg *setting.Configuration, ld *data.LocaleData, str str
 
 	// Extract tokens from sentences
 	tokens := strutil.NewDict()
-	tokenList := []string{}
 	for _, sentence := range sentences {
 		sentenceTokens := simpleSplit(ld, sentence, false, skippedTokens)
 		tokens.Add(sentenceTokens...)
-		tokenList = append(tokenList, sentenceTokens...)
 	}
 
 	// Count token that exist in dictionary
 	var nExist, nSkipped int
 	for token := range tokens {
-		trans, exist := ld.Translations[token]
+		translations, exist := ld.Translations[token]
 		if exist && utf8.RuneCountInString(token) >= 2 {
-			if trans != "" {
+			if len(translations) > 0 {
 				nExist++
 			} else {
 				nSkipped++

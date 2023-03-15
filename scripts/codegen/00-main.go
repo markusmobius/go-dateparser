@@ -1,11 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
+	"unicode/utf8"
 
+	"github.com/elliotchance/pie/v2"
 	"github.com/spf13/cobra"
+	"github.com/zyedidia/generic/mapset"
 )
 
 func main() {
@@ -158,7 +163,7 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		path = filepath.Join(GO_CODE_DIR, fName+".go")
 		err = generateLocaleDataCode(path, listLocaleData)
 		if err != nil {
-			return err
+			return fmt.Errorf("gen locale %q failed: %w", language, err)
 		}
 	}
 
@@ -191,12 +196,45 @@ func finalizeData(ld LocaleData) (LocaleData, error) {
 		return ld, err
 	}
 
-	// Save words that is known or always kept no matter what the language is
-	if len(ld.Translations) > 0 {
-		for _, token := range importantTokens {
-			ld.AddCharset(token)
-			ld.Translations[token] = token
+	// Clean up translations
+	skipWords := mapset.New[string]()
+	for _, w := range ld.SkipWords {
+		skipWords.Put(w)
+	}
+
+	for word, translations := range ld.Translations {
+		// If this word is supposed to be skipped, clear its translation
+		if skipWords.Has(word) {
+			translations = []string{""}
+		} else {
+			// If there are non empty translations, remove the empty ones
+			nonEmptyTranslations := pie.Filter(translations, func(t string) bool {
+				return t != ""
+			})
+
+			if len(nonEmptyTranslations) > 0 {
+				translations = nonEmptyTranslations
+			}
 		}
+
+		// Sort by the shortest
+		sort.Slice(translations, func(i, j int) bool {
+			transI, transJ := translations[i], translations[j]
+			lenI := utf8.RuneCountInString(transI)
+			lenJ := utf8.RuneCountInString(transJ)
+			if lenI != lenJ {
+				return lenI < lenJ
+			}
+			return transI < transJ
+		})
+
+		ld.Translations[word] = translations
+	}
+
+	// Save words that is known or always kept no matter what the language is
+	for _, token := range importantTokens {
+		ld.AddCharset(token)
+		ld.Translations[token] = []string{token}
 	}
 
 	// Generate combined patterns

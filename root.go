@@ -23,6 +23,6 @@ func Search(cfg *Configuration, text string) (string, []SearchResult, error) {
 // IsKnownLocale is helper function to check if the specified locale or language can be parsed
 // by the Parser. The code must be in ISO639 format.
 func IsKnownLocale(code string) bool {
-	_, exist := data.LocaleDataMap[code]
+	_, exist := data.GetLocaleData(code)
 	return exist
 }

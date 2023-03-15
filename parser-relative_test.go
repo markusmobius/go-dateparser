@@ -73,10 +73,14 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"100 decades", pfpDiff{"year": -1000}, Year},
 		{"yesterday", pfpDiff{"day": -1}, Day},
 		{"the day before yesterday", pfpDiff{"day": -2}, Day},
+		{"4 days before", pfpDiff{"day": -4}, Day},
+		{"10 days before", pfpDiff{"day": -10}, Day},
 		{"today", pfpDiff{"day": -0}, Day},
+		{"till date", pfpDiff{"day": -0}, Day},
 		{"an hour ago", pfpDiff{"hour": -1}, Day},
 		{"about an hour ago", pfpDiff{"hour": -1}, Day},
 		{"a day ago", pfpDiff{"day": -1}, Day},
+		{"1d ago", pfpDiff{"day": -1}, Day},
 		{"a week ago", pfpDiff{"week": -1}, Day},
 		{"2 hours ago", pfpDiff{"hour": -2}, Day},
 		{"about 23 hours ago", pfpDiff{"hour": -23}, Day},
@@ -101,6 +105,12 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"eight months ago", pfpDiff{"month": -8}, Month},
 		{"six days ago", pfpDiff{"day": -6}, Day},
 		{"five years ago", pfpDiff{"year": -5}, Year},
+		{"2y ago", pfpDiff{"year": -2}, Year},
+
+		// Fractional English units
+		{"2.5 hours", pfpDiff{"hour": -2, "minute": -30}, Day},
+		{"10.75 minutes", pfpDiff{"minute": -10, "second": -45}, Day},
+		{"1.5 days", pfpDiff{"day": -1, "hour": -12}, Day},
 
 		// French dates
 		{"Aujourd'hui", nil, Day},
@@ -326,6 +336,8 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"1 वर्ष, 8 महीने, 2 सप्ताह", pfpDiff{"year": -1, "month": -8, "week": -2}, Day},
 		{"1 वर्ष 7 महीने", pfpDiff{"year": -1, "month": -7}, Month},
 		{"आज", nil, Day},
+		{"1 दशक", pfpDiff{"year": -10}, Year},
+		{"1 दशक पहले", pfpDiff{"year": -10}, Year},
 
 		// af
 		{"2 uur gelede", pfpDiff{"hour": -2}, Day},
@@ -421,6 +433,11 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"před 12 lětom 15 měsac", pfpDiff{"year": -12, "month": -15}, Month},
 		// hy
 		{"15 րոպե առաջ", pfpDiff{"minute": -15}, Day},
+		// id
+		{"4 tahun lalu", pfpDiff{"year": -4}, Year},
+		{"4 thn lalu", pfpDiff{"year": -4}, Year},
+		{"4 bulan lalu", pfpDiff{"month": -4}, Month},
+		{"4 bln lalu", pfpDiff{"month": -4}, Month},
 		// is
 		{"fyrir 3 ári fyrir 2 mánuði", pfpDiff{"year": -3, "month": -2}, Month},
 		// it
@@ -487,6 +504,14 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"මිනිත්තු 6කට පෙර", pfpDiff{"minute": -6}, Day},
 		// sk
 		{"pred 20 hodinami 45 min", pfpDiff{"hour": -20, "minute": -45}, Day},
+		{"dnes", pfpDiff{"day": -0}, Day},
+		{"včera", pfpDiff{"day": -1}, Day},
+		{"predvčerom", pfpDiff{"day": -2}, Day},
+		{"pred 2 hodinami", pfpDiff{"hour": -2}, Day},
+		{"pred rokom", pfpDiff{"year": -1}, Year},
+		{"pred týždňom", pfpDiff{"week": -1}, Day},
+		{"pred 3 dňami", pfpDiff{"day": -3}, Day},
+		{"pred hodinou", pfpDiff{"hour": -1}, Day},
 		// sl
 		{"pred 15 tednom 10 dan", pfpDiff{"week": -15, "day": -10}, Day},
 		// sq
@@ -509,6 +534,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"32 dakika önce", pfpDiff{"minute": -32}, Day},
 		// uk
 		{"3 року тому", pfpDiff{"year": -3}, Year},
+		{"5 років тому", pfpDiff{"year": -5}, Year},
 		// uz-Cyrl
 		{"10 ҳафта олдин", pfpDiff{"week": -10}, Day},
 		// uz-Latn
@@ -537,10 +563,14 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"next decade", pfpDiff{"year": 10}, Year},
 		{"in a decade", pfpDiff{"year": 10}, Year},
 		{"tomorrow", pfpDiff{"day": 1}, Day},
+		{"day after tomorrow", pfpDiff{"day": 2}, Day},
+		{"after 4 days", pfpDiff{"day": 4}, Day},
 		{"today", pfpDiff{"day": 0}, Day},
+		{"till date", pfpDiff{"hour": 0}, Day},
 		{"in an hour", pfpDiff{"hour": 1}, Day},
 		{"in about an hour", pfpDiff{"hour": 1}, Day},
 		{"in 1 day", pfpDiff{"day": 1}, Day},
+		{"in 1d", pfpDiff{"day": 1}, Day},
 		{"in a week", pfpDiff{"week": 1}, Day},
 		{"in 2 hours", pfpDiff{"hour": 2}, Day},
 		{"in about 23 hours", pfpDiff{"hour": 23}, Day},
@@ -558,6 +588,12 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{fmt.Sprintf("in %d months", 2013*12+8), pfpDiff{"year": 2013, "month": 8}, Month},
 		{"in 1 year, 1 month, 1 week, 1 day, 1 hour and 1 minute", pfpDiff{"year": 1, "month": 1, "week": 1, "day": 1, "hour": 1, "minute": 1}, Day},
 		{"just now", pfpDiff{"second": 0}, Day},
+
+		// Fractional units
+		{"in 2.5 hours", pfpDiff{"hour": 2, "minute": 30}, Day},
+		{"in 10.75 minutes", pfpDiff{"minute": 10, "second": 45}, Day},
+		{"in 1.5 days", pfpDiff{"day": 1, "hour": 12}, Day},
+		{"in 0,5 hours", pfpDiff{"minute": 30}, Day},
 
 		// French dates
 		{"Aujourd'hui", pfpDiff{"day": 0}, Day},
@@ -612,6 +648,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"2 मिनट में", pfpDiff{"minute": 2}, Day},
 		{"17 सेकंड बाद", pfpDiff{"second": 17}, Day},
 		{"1 वर्ष, 5 महीने, 1 सप्ताह में", pfpDiff{"year": 1, "month": 5, "week": 1}, Day},
+		{"1 दशक में", pfpDiff{"year": 10}, Year},
 
 		// af
 		{"oor 10 jaar", pfpDiff{"year": 10}, Year},
@@ -832,7 +869,6 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"pas 2 muajsh", pfpDiff{"month": 2}, Month},
 		{"pas 15 ditësh", pfpDiff{"day": 15}, Day},
 		// sr-Cyrl
-		{"за 3 годину", pfpDiff{"year": 3}, Year},
 		{"за 10 мин 20 сек", pfpDiff{"minute": 10, "second": 20}, Day},
 		// sr-Latn
 		{"za 2 god 6 mes", pfpDiff{"year": 2, "month": 6}, Month},
@@ -864,6 +900,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		// uk
 		{"через 8 хвилини", pfpDiff{"minute": 8}, Day},
 		{"через 10 тижня", pfpDiff{"week": 10}, Day},
+		{"через 10 днів", pfpDiff{"day": 10}, Day},
 		// uz-Cyrl
 		{"12 кундан сўнг", pfpDiff{"day": 12}, Day},
 		{"10 дақиқадан сўнг", pfpDiff{"minute": 10}, Day},
@@ -942,6 +979,10 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 
 func TestParser_Parse_relative_invalidDates(t *testing.T) {
 	dt, err := relativeTestParser.Parse(&relativeTestConfig, "15th of Aug, 2014 Diane Bennett")
+	assert.Error(t, err)
+	assert.True(t, dt.IsZero())
+
+	dt, err = relativeTestParser.Parse(&relativeTestConfig, "4 heures ago")
 	assert.Error(t, err)
 	assert.True(t, dt.IsZero())
 }
@@ -1055,6 +1096,12 @@ func TestParser_Parse_relative_hasSpecificTime(t *testing.T) {
 		ctTs(fmt.Sprintf("%d months ago", 2008*12+8), ct, tt(1, 10, 4, 13, 15)),
 		ctTs("1 year, 1 month, 1 week, 1 day, 1 hour and 1 minute ago", ct, tt(2009, 4, 26, 12, 14)),
 		ctTs("just now", ct, tt(2010, 6, 4, 13, 15)),
+
+		// Fractional units
+		ctTs("2.5 hours ago", ct, tt(2010, 6, 4, 10, 45)),
+		ctTs("in 10.75 minutes", ct, tt(2010, 6, 4, 13, 25).Add(45*time.Second)),
+		ctTs("in 1.5 days", ct, tt(2010, 6, 6, 1, 15)),
+		ctTs("0,5 hours ago", ct, tt(2010, 6, 4, 12, 45)),
 	}
 
 	// Prepare parser
@@ -1146,4 +1193,11 @@ func TestParser_Parse_relative_hasPreferredTimes(t *testing.T) {
 	if nFailed > 0 {
 		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
 	}
+}
+
+func TestParser_Parse_relative_knownIssues(t *testing.T) {
+	str := "1mon ago" // issue #1116 in original library
+	dt, err := relativeTestParser.Parse(&relativeTestConfig, str)
+	assert.Error(t, err)
+	assert.True(t, dt.IsZero())
 }

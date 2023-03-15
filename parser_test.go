@@ -41,6 +41,11 @@ func TestParser_Parse(t *testing.T) {
 		{"21 January 2012 13:11:23.678", tt(2012, 1, 21, 13, 11, 23, 678000)},
 		{"1/1/16 9:02:43.1", tt(2016, 1, 1, 9, 2, 43, 100000)},
 		{"29.02.2020 13.12", tt(2020, 2, 29, 13, 12)},
+		{"26. 10.21", tt(2021, 10, 26, 0, 0)},
+		{"26. 10.21 14.12", tt(2021, 10, 26, 14, 12)},
+		{"26 . 10.21", tt(2021, 10, 26, 0, 0)},
+		{"30 . 09 . 22 12.12", tt(2022, 9, 30, 12, 12)},
+		{"1 a.m 20.07.2021", tt(2021, 7, 20, 1, 0)},
 		{"Wednesday, 22nd June, 2016, 12.16 pm.", tt(2016, 6, 22, 12, 16)},
 		{"16:00", tt(2012, 11, 13, 16, 0)},
 		{"Monday 7:15 AM", tt(2012, 11, 12, 7, 15)},
@@ -89,6 +94,12 @@ func TestParser_Parse(t *testing.T) {
 		{"13 авг. 2005г. 19:13", tt(2005, 8, 13, 19, 13)},
 		{"13 авг. 2005 г. 19:13", tt(2005, 8, 13, 19, 13)},
 		{"21 сентября 2021г., вторник", tt(2021, 9, 21, 0, 0)},
+		{"Пнд, 07 янв. 2019 г. 12:15", tt(2019, 1, 7, 12, 15)},
+		{"Срд, 09 янв. 2019 г. 12:15", tt(2019, 1, 9, 12, 15)},
+		{"чтв, 1 сентября 2022 г. 09:00", tt(2022, 9, 1, 9, 00)},
+		{"Птн, 11 янв. 2019 г. 12:15", tt(2019, 1, 11, 12, 15)},
+		{"сбт, 1 окт. 2022 г. 10:22", tt(2022, 10, 1, 10, 22)},
+		{"вск, 2 окт. 2022 г. 11:17", tt(2022, 10, 2, 11, 17)},
 		// Turkish dates
 		{"11 Ağustos, 2014", tt(2014, 8, 11)},
 		{"08.Haziran.2014, 11:07", tt(2014, 6, 8, 11, 7)}, // forum.andronova.net
@@ -103,6 +114,7 @@ func TestParser_Parse(t *testing.T) {
 		{"21. Dezember 2013", tt(2013, 12, 21)},
 		{"19. Februar 2012", tt(2012, 2, 19)},
 		{"26. Juli 2014", tt(2014, 7, 26)},
+		{"1. Sept 2000", tt(2000, 9, 1)},
 		{"18.10.14 um 22:56 Uhr", tt(2014, 10, 18, 22, 56)},
 		{"12-Mär-2014", tt(2014, 3, 12)},
 		{"Mit 13:14", tt(2012, 11, 7, 13, 14)},
@@ -130,8 +142,11 @@ func TestParser_Parse(t *testing.T) {
 		{"5 жніўня 2015 года у 13:34", tt(2015, 8, 5, 13, 34)},
 		// Ukrainian dates
 		{"2015-кві-12", tt(2015, 4, 12)},
+		{"2020-берез-11", tt(2020, 3, 11)},
 		{"21 чер 2013 3:13", tt(2013, 6, 21, 3, 13)},
+		{"17 верес 2015 6:17", tt(2015, 9, 17, 6, 17)},
 		{"12 лютого 2012, 13:12:23", tt(2012, 2, 12, 13, 12, 23)},
+		{"10 листоп 2017, 10:00:00", tt(2017, 11, 10, 10, 00, 00)},
 		{"вів о 14:04", tt(2012, 11, 13, 14, 4)},
 		// Tagalog dates
 		{"12 Hulyo 2003 13:01", tt(2003, 7, 12, 13, 1)},
@@ -179,6 +194,18 @@ func TestParser_Parse(t *testing.T) {
 		{"2015 წ. 12 ივნ, 15:34", tt(2015, 6, 12, 15, 34)},
 		// Finnish dates
 		{"5.7.2018 5.45 ip.", tt(2018, 7, 5, 17, 45)},
+		{"5 .7 .2018 5.45 ip.", tt(2018, 7, 5, 17, 45)},
+		// Croatian dates
+		{"06. travnja 2021.", tt(2021, 4, 6, 0, 0)},
+		{"13. svibanj 2022.", tt(2022, 5, 13, 0, 0)},
+		{"24.03.2019. u 22:22", tt(2019, 3, 24, 22, 22)},
+		{"20. studenoga 2010. @ 07:28", tt(2010, 11, 20, 7, 28)},
+		{"13. studenog 1989.", tt(1989, 11, 13, 0, 0)},
+		{"29.01.2008. 00:00", tt(2008, 1, 29, 0, 0)},
+		{"27. 05. 2022. u 14:34", tt(2022, 5, 27, 14, 34)},
+		{"28. u studenom 2017.", tt(2017, 11, 28, 0, 0)},
+		{"13. veljače 1999. u podne", tt(1999, 2, 13, 12, 0)},
+		{"27. siječnja 1994. u ponoć", tt(1994, 1, 27, 0, 0)},
 		// Others (from `test_clean_api.py`)
 		{"24 de Janeiro de 2014", tt(2014, 1, 24)},
 		{"2 de Enero de 2013", tt(2013, 1, 2)},
@@ -216,6 +243,11 @@ func TestParser_Parse(t *testing.T) {
 		{"1436745600000", tt(2015, 7, 13, 0, 0)},
 		{"1015673450", tt(2002, 3, 9, 11, 30, 50)},
 		{"2016-09-23T02:54:32.845Z", tt(2016, 9, 23, 2, 54, 32, 845000)},
+
+		// === NEGATIVE TIMESTAMP ===
+		{"-1484823450", tt(1922, 12, 13, 13, 2, 30)},
+		{"-1436745600000", tt(1924, 6, 22, 0, 0)},
+		{"-1015673450000001", tt(1937, 10, 25, 12, 29, 10, 1)},
 	}
 
 	// Prepare config
@@ -230,6 +262,47 @@ func TestParser_Parse(t *testing.T) {
 
 		// Parse text
 		dt, _ := dps.Parse(&cfg, test.Text)
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestParser_Parse_withLanguage(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Language     string
+		Text         string
+		ExpectedTime time.Time
+	}
+
+	tests := []testScenario{
+		{"hr", "02/10/2016 u 17:20", tt(2016, 10, 2, 17, 20)},
+		{"de", "1. Sept 2000", tt(2000, 9, 1)},
+	}
+
+	// Prepare config
+	cfg := dps.Configuration{CurrentTime: tt(2012, 11, 13)}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare config
+		iCfg := cfg.Clone()
+		iCfg.Languages = []string{test.Language}
+
+		// Prepare log message
+		message := fmt.Sprintf("%s, \"%s\" => \"%s\"",
+			test.Language, test.Text,
+			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
+
+		// Parse text
+		dt, _ := dps.Parse(iCfg, test.Text)
 		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
@@ -271,6 +344,7 @@ func TestParser_Parse_hasPreferredDateSource(t *testing.T) {
 		ts(past, "March", tt(2014, 3, 15)),
 		ts(past, "Friday", tt(2015, 2, 13)),
 		ts(past, "Monday", tt(2015, 2, 9)),
+		ts(past, "Mon", tt(2015, 2, 9)),
 		ts(past, "Sunday", tt(2015, 2, 8)), // current day
 		ts(past, "10:00PM", tt(2015, 2, 14, 22, 0)),
 		ts(past, "16:10", tt(2015, 2, 14, 16, 10)),
@@ -285,6 +359,7 @@ func TestParser_Parse_hasPreferredDateSource(t *testing.T) {
 		ts(future, "Friday", tt(2015, 2, 20)),
 		ts(future, "Sunday", tt(2015, 2, 22)), // current day
 		ts(future, "Monday", tt(2015, 2, 16)),
+		ts(future, "Mon", tt(2015, 2, 16)),
 		ts(future, "10:00PM", tt(2015, 2, 15, 22, 0)),
 		ts(future, "16:10", tt(2015, 2, 15, 16, 10)),
 		ts(future, "14:05", tt(2015, 2, 16, 14, 5)),
@@ -472,6 +547,7 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		ts("10:04am EDT", tt(2020, 7, 19, 14, 4), tt(2020, 7, 19)),
 		ts("16:00", tt(2018, 12, 13, 16, 0), tt(2018, 12, 13, 15, 15)),
 		ts("Monday 7:15 AM", tt(2018, 12, 10, 7, 15), tt(2018, 12, 13, 15, 15)),
+		ts("Mon 19:43", tt(2018, 12, 10, 19, 43), tt(2018, 12, 13, 15, 15)),
 
 		// Period is day when time is not present
 		tsd("12th March 2010", tt(2010, 3, 12, 0, 0)),
@@ -635,6 +711,80 @@ func TestParser_Parse_onlySeparatorTokens(t *testing.T) {
 	}
 }
 
+func TestParser_Parse_dateSkipAhead(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text         string
+		ExpectedTime time.Time
+	}
+
+	tests := []testScenario{
+		{"4pm EDT", tt(2021, 10, 19, 20, 0)},
+	}
+
+	// Prepare config
+	cfg := dps.Configuration{
+		PreferredDateSource: dps.Future,
+		CurrentTime:         tt(2021, 10, 19, 18, 0),
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("Skip ahead \"%s\" => \"%s\"", test.Text,
+			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
+
+		// Parse text
+		dt, _ := dps.Parse(&cfg, test.Text)
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestParser_Parse_dateStepBack(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text         string
+		ExpectedTime time.Time
+	}
+
+	tests := []testScenario{
+		{"11pm AEDT", tt(2021, 10, 19, 12, 0)},
+	}
+
+	// Prepare config
+	cfg := dps.Configuration{
+		PreferredDateSource: dps.Past,
+		CurrentTime:         tt(2021, 10, 19, 18, 0),
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("Step back \"%s\" => \"%s\"", test.Text,
+			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
+
+		// Parse text
+		dt, _ := dps.Parse(&cfg, test.Text)
+		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
 func TestParser_Parse_successWhenSkipTokensSpecified(t *testing.T) {
 	cfg := dps.Configuration{
 		CurrentTime: tt(2015, 2, 12),
@@ -658,7 +808,7 @@ func TestParser_Parse_format(t *testing.T) {
 		{"14 giu 13", tt(2014, 6, 13), "06 January 02"},
 		{"14_luglio_15", tt(2014, 7, 15), "06_January_02"},
 		{"14_LUGLIO_15", tt(2014, 7, 15), "06_January_02"},
-		{"10.01.2016, 20:35", tt(2016, 1, 10, 20, 35), "02.01.2006 15:04"},
+		{"10.01.2016, 20:35", tt(2016, 1, 10, 20, 35), "02.01.2006, 15:04"},
 		{"2014/11/17 14:56 EDT", tt(2014, 11, 17, 18, 56), "2006/01/02 15:04 MST"},
 	}
 

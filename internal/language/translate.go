@@ -1,6 +1,7 @@
 package language
 
 import (
+	"github.com/elliotchance/pie/v2"
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
@@ -9,7 +10,7 @@ import (
 
 // Translate the date string `str` to its English equivalent using information from the locale data.
 // If `keepFormatting` is set to true, retain formatting of the date string after translation.
-func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keepFormatting bool) string {
+func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keepFormatting bool) []string {
 	// Parse config
 	skippedTokens := mapSkippedTokens(cfg, ld)
 
@@ -19,14 +20,14 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 	str = Simplify(ld, str)
 
 	// Split string to tokens
-	inInTokens := false
 	tokens := Split(ld, str, keepFormatting, skippedTokens)
 
-	// Translate
+	// Translate each token
+	translatedTokens := make([][]string, len(tokens))
 	for i, token := range tokens {
 		// Check if token skipped
 		if skippedTokens.Contain(token) {
-			tokens[i] = ""
+			translatedTokens[i] = []string{""}
 			continue
 		}
 
@@ -34,7 +35,8 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 		var translationFound bool
 		for _, data := range ld.RelativeTypeRegexes {
 			if data.Rx.MatchString(token) {
-				token = data.Rx.ReplaceAllString(token, data.Replacement)
+				translation := data.Rx.ReplaceAllString(token, data.Replacement)
+				translatedTokens[i] = []string{translation}
 				translationFound = true
 				break
 			}
@@ -42,34 +44,53 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 
 		// If not found, look in dictionary
 		if !translationFound {
-			if translation, exist := translateWord(ld, token); exist {
-				token = translation
+			if translations, exist := translateWord(ld, token); exist {
+				// If keep formatting, empty translation is replaced
+				// with current token
+				for j, t := range translations {
+					if t == "" && keepFormatting {
+						translations[j] = token
+					}
+				}
+
+				translatedTokens[i] = translations
+				translationFound = true
 			}
 		}
 
-		inInTokens = inInTokens || token == "in"
-		tokens[i] = token
-	}
-
-	// Handle future words
-	if inInTokens {
-		tokens = clearFutureWords(tokens)
-	}
-
-	// Join the tokens
-	var validTokens []string
-	for _, token := range tokens {
-		if token != "" {
-			validTokens = append(validTokens, token)
+		// If still not found, use token as is
+		if !translationFound {
+			translatedTokens[i] = []string{token}
 		}
 	}
 
-	joinSeparator := ""
-	if !keepFormatting {
-		joinSeparator = " "
+	// Create token permutations from translated tokens
+	tokenPermutations := createPermutation(translatedTokens)
+
+	// Clean up and finalize translations
+	var translations []string
+	for _, tokens := range tokenPermutations {
+		// Handle future words
+		if pie.Contains(tokens, "in") {
+			tokens = clearFutureWords(tokens)
+		}
+
+		// Exclude empty tokens
+		tokens = pie.Filter(tokens, func(t string) bool {
+			return t != ""
+		})
+
+		// Join the tokens to get final translations
+		joinSeparator := ""
+		if !keepFormatting {
+			joinSeparator = " "
+		}
+
+		translation := join(tokens, joinSeparator)
+		translations = append(translations, translation)
 	}
 
-	return join(validTokens, joinSeparator)
+	return translations
 }
 
 func Simplify(ld *data.LocaleData, str string) string {

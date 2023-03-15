@@ -78,6 +78,10 @@ func TestTranslate(t *testing.T) {
 		{"pl", "29 listopada 2014 o 08:40", "29 november 2014  08:40"},
 		// Ukrainian
 		{"uk", "30 листопада 2013 о 04:27", "30 november 2013  04:27"},
+		{"uk", "22 верес 2021 о 07:37", "22 september 2021  07:37"},
+		{"uk", "28 лютого 2020 року об 11:57", "28 february 2020 year  11:57"},
+		{"uk", "середу, 28 лютого 2020 року об 11:57", "wednesday 28 february 2020 year  11:57"},
+		{"uk", "понед, 12 вересня 2022 року об 09:22", "monday 12 september 2022 year  09:22"},
 		// Belarusian
 		{"be", "5 снежня 2015 г. у 12:00", "5 december 2015 year.  12:00"},
 		{"be", "11 верасня 2015 г. у 12:11", "11 september 2015 year.  12:11"},
@@ -100,6 +104,9 @@ func TestTranslate(t *testing.T) {
 		// Indonesian
 		{"id", "06 Sep 2015", "06 september 2015"},
 		{"id", "07 Feb 2015 20:15", "07 february 2015 20:15"},
+		{"id", "Minggu, 18 Mar 2018 07:30", "sunday 18 march 2018 07:30"},
+		{"id", "3 minggu yang lalu", "3 week ago"},
+		{"id", "5 minggu", "5 week"},
 		// Miscellaneous
 		{"en", "2014-12-12T12:33:39-08:00", "2014-12-12 12:33:39-08:00"},
 		{"en", "2014-10-15T16:12:20+00:00", "2014-10-15 16:12:20+00:00"},
@@ -153,6 +160,8 @@ func TestTranslate(t *testing.T) {
 		{"ja", "2016年3月21日(月) 14時48分", "2016-3-21 monday 14:48"},
 		{"ja", "2016年3月20日(日) 21時40分", "2016-3-20 sunday 21:40"},
 		{"ja", "2016年3月20日 (日) 21時40分", "2016-3-20 sunday 21:40"},
+		{"ja", "正午", "12:00"},
+		{"ja", "明日の13時20分", "in 1 day 13:20"},
 		// Hebrew
 		{"he", "20 לאפריל 2012", "20 april 2012"},
 		{"he", "יום רביעי ה-19 בנובמבר 2013", "wednesday 19 november 2013"},
@@ -338,6 +347,14 @@ func TestTranslate(t *testing.T) {
 		// hr
 		{"hr", "2 ožujak 1980 pet", "2 march 1980 friday"},
 		{"hr", "nedjelja 3 lis 1879", "sunday 3 october 1879"},
+		{"hr", "06. travnja 2021.", "06. april 2021."},
+		{"hr", "13. svibanj 2022. u 14:34", "13. may 2022.  14:34"},
+		{"hr", "20. studenoga 2010. @ 07:28", "20. november 2010.  07:28"},
+		{"hr", "13. studenog 1989.", "13. november 1989."},
+		{"hr", "u listopadu 2056.", "october 2056."},
+		{"hr", "u studenome 1654.", "november 1654."},
+		{"hr", "u studenomu 2001.", "november 2001."},
+		{"hr", "15. studenog 2007.", "15. november 2007."},
 		// hsb
 		{"hsb", "5 měrc 1789 póndźela 11:13 popołdnju", "5 march 1789 monday 11:13 pm"},
 		{"hsb", "štwórtk 2000 awg 14", "thursday 2000 august 14"},
@@ -560,6 +577,10 @@ func TestTranslate(t *testing.T) {
 		// sk
 		{"sk", "15 marec 1987 utorok", "15 march 1987 tuesday"},
 		{"sk", "streda 17 mája 2003", "wednesday 17 may 2003"},
+		{"sk", "o 2 mesiace", "in 2 month"},
+		{"sk", "o týždeň", "in 1 week"},
+		{"sk", "predvčerom", "2 day ago"},
+		{"sk", "v sobotu", "saturday"},
 		// sl
 		{"sl", "12 junij 2003 petek 10:09 pop", "12 june 2003 friday 10:09 pm"},
 		{"sl", "ponedeljek 15 okt 1997 09:07 dopoldne", "monday 15 october 1997 09:07 am"},
@@ -651,7 +672,12 @@ func TestTranslate(t *testing.T) {
 		assert.Nil(t, err, message)
 
 		// Translate string
-		translation := Translate(cfg, ld, test.String, false)
+		var translation string
+		translations := Translate(cfg, ld, test.String, false)
+		if len(translations) > 0 {
+			translation = translations[0]
+		}
+
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++
@@ -721,8 +747,11 @@ func TestTranslate_relative(t *testing.T) {
 		{"ru", "сегодня", "0 day ago"},
 		{"ru", "завтра", "in 1 day"},
 		{"ru", "послезавтра", "in 2 day"},
+		{"ru", "послепослезавтра", "in 3 day"},
 		{"ru", "во вторник", "tuesday"},
 		{"ru", "в воскресенье", "sunday"},
+		{"ru", "в воскресение", "sunday"},
+		{"ru", "в вск", "sunday"},
 		{"ru", "несколько секунд", "44 second"},
 		{"ru", "через пару секунд", "in 2 second"},
 		{"ru", "одну минуту назад", "1 minute ago"},
@@ -796,6 +825,13 @@ func TestTranslate_relative(t *testing.T) {
 		{"tl", "ngayon", "0 second ago"},
 		// Ukrainian
 		{"uk", "позавчора", "2 day ago"},
+		{"uk", "післязавтра", "in 2 day"},
+		{"uk", "через 2 дні", "in 2 day"},
+		{"uk", "через 2 доби", "in 2 day"},
+		{"uk", "через 5 діб", "in 5 day"},
+		{"uk", "через п'ять діб", "in 5 day"},
+		{"uk", "за вісім днів", "in 8 day"},
+		{"uk", "2 роки", "2 year"},
 		// Belarusian
 		{"be", "9 месяцаў", "9 month"},
 		{"be", "8 тыдняў", "8 week"},
@@ -880,6 +916,7 @@ func TestTranslate_relative(t *testing.T) {
 		{"ja", "60秒", "60 second"},
 		{"ja", "3秒前", "3 second ago"},
 		{"ja", "現在", "0 second ago"},
+		{"ja", "明後日", "in 2 day"},
 		// Hebrew
 		{"he", "אתמול", "1 day ago"},
 		{"he", "אתמול בשעה 3", "1 day ago  3"},
@@ -1108,9 +1145,90 @@ func TestTranslate_relative(t *testing.T) {
 		{"ha", "gobe", "in 1 day"},
 		{"ha", "jiya", "1 day ago"},
 		// hr
-		{"hr", "prije 3 dana", "3 day ago"},
+		{"hr", "sljedeća godina", "in 1 year"},
+		{"hr", "sljedeće godine", "in 1 year"},
+		{"hr", "sljedećoj godini", "in 1 year"},
+		{"hr", "iduća godina", "in 1 year"},
+		{"hr", "iduće godine", "in 1 year"},
+		{"hr", "idućoj godini", "in 1 year"},
+		{"hr", "prošla godina", "1 year ago"},
+		{"hr", "prošle godine", "1 year ago"},
+		{"hr", "prošloj godini", "1 year ago"},
+
 		{"hr", "sljedeći mjesec", "in 1 month"},
-		{"hr", "za 2 sati", "in 2 hour"},
+		{"hr", "sljedećeg mjeseca", "in 1 month"},
+		{"hr", "sljedećem mjesecu", "in 1 month"},
+		{"hr", "idući mjesec", "in 1 month"},
+		{"hr", "idućeg mjeseca", "in 1 month"},
+		{"hr", "idućem mjesecu", "in 1 month"},
+		{"hr", "prošli mjesec", "1 month ago"},
+		{"hr", "prošlog mjeseca", "1 month ago"},
+		{"hr", "prošlom mjesecu", "1 month ago"},
+
+		{"hr", "sljedeći tjedan", "in 1 week"},
+		{"hr", "sljedećeg tjedna", "in 1 week"},
+		{"hr", "sljedećem tjednu", "in 1 week"},
+		{"hr", "idući tjedan", "in 1 week"},
+		{"hr", "idućeg tjedna", "in 1 week"},
+		{"hr", "idućem tjednu", "in 1 week"},
+		{"hr", "prošli tjedan", "1 week ago"},
+		{"hr", "prošlog tjedna", "1 week ago"},
+		{"hr", "prošlom tjednu", "1 week ago"},
+
+		{"hr", "prije 7 godina", "7 year ago"},
+		{"hr", "za 7 godina", "in 7 year"},
+		{"hr", "prije 2 godine", "2 year ago"},
+		{"hr", "za 2 godine", "in 2 year"},
+		{"hr", "prije 1 godinu", "1 year ago"},
+		{"hr", "za 1 godinu", "in 1 year"},
+
+		{"hr", "prije 7 mjeseci", "7 month ago"},
+		{"hr", "za 7 mjeseci", "in 7 month"},
+		{"hr", "prije 2 mjeseca", "2 month ago"},
+		{"hr", "za 2 mjeseca", "in 2 month"},
+		{"hr", "prije 1 mjesec", "1 month ago"},
+		{"hr", "za 1 mjesec", "in 1 month"},
+
+		{"hr", "prije 7 tjedana", "7 week ago"},
+		{"hr", "za 7 tjedana", "in 7 week"},
+		{"hr", "prije 2 tjedna", "2 week ago"},
+		{"hr", "za 2 tjedna", "in 2 week"},
+		{"hr", "prije 1 tjedan", "1 week ago"},
+		{"hr", "za 1 tjedan", "in 1 week"},
+
+		{"hr", "prije 7 dana", "7 day ago"},
+		{"hr", "za 7 dana", "in 7 day"},
+		{"hr", "prije 1 dan", "1 day ago"},
+		{"hr", "za 1 dan", "in 1 day"},
+
+		{"hr", "prije 7 sati", "7 hour ago"},
+		{"hr", "za 7 sati", "in 7 hour"},
+		{"hr", "prije 2 sata", "2 hour ago"},
+		{"hr", "za 2 sata", "in 2 hour"},
+		{"hr", "prije 1 sat", "1 hour ago"},
+		{"hr", "za 1 sat", "in 1 hour"},
+
+		{"hr", "prije 7 minuta", "7 minute ago"},
+		{"hr", "za 7 minuta", "in 7 minute"},
+		{"hr", "prije 2 minute", "2 minute ago"},
+		{"hr", "za 2 minute", "in 2 minute"},
+
+		{"hr", "prije 7 sekundi", "7 second ago"},
+		{"hr", "za 7 sekundi", "in 7 second"},
+		{"hr", "prije 2 sekunde", "2 second ago"},
+		{"hr", "za 2 sekunde", "in 2 second"},
+		{"hr", "prije 1 sekundu", "1 second ago"},
+		{"hr", "za 1 sekundu", "in 1 second"},
+
+		{"hr", "jučer", "1 day ago"},
+		{"hr", "prekjučer", "2 day ago"},
+		{"hr", "sutra", "in 1 day"},
+		{"hr", "prekosutra", "in 2 day"},
+		{"hr", "lani", "1 year ago"},
+		{"hr", "preklani", "2 year ago"},
+		{"hr", "dogodine", "in 1 year"},
+		{"hr", "nagodinu", "in 1 year"},
+
 		// hsb
 		{"hsb", "před 5 tydźenjemi", "5 week ago"},
 		{"hsb", "za 60 sekundow", "in 60 second"},
@@ -1415,6 +1533,7 @@ func TestTranslate_relative(t *testing.T) {
 		{"sr-Cyrl", "пре 5 година", "5 year ago"},
 		{"sr-Cyrl", "за 52 нед", "in 52 week"},
 		{"sr-Cyrl", "данас", "0 day ago"},
+		{"sr-Cyrl", "за 3 годину", "in 3 year"},
 		// sr-Latn
 		{"sr-Latn", "za 120 sekundi", "in 120 second"},
 		{"sr-Latn", "pre 365 dana", "365 day ago"},
@@ -1457,9 +1576,13 @@ func TestTranslate_relative(t *testing.T) {
 		{"tzm", "assenaṭ", "1 day ago"},
 		{"tzm", "asekka", "in 1 day"},
 		// uk
-		{"uk", "18 хвилину тому", "18 minute ago"},
-		{"uk", "через 22 року", "in 22 year"},
+		{"uk", "18 хвилин тому", "18 minute ago"},
+		{"uk", "через 22 роки", "in 22 year"},
 		{"uk", "цього тижня", "0 week ago"},
+		{"uk", "півгодини тому", "30 minute ago"},
+		{"uk", "пів години тому", "30 minute ago"},
+		{"uk", "півроку тому", "6 month ago"},
+		{"uk", "за півтора року", "in 18 month"},
 		// uz-Cyrl
 		{"uz-Cyrl", "кейинги ой", "in 1 month"},
 		{"uz-Cyrl", "30 йил аввал", "30 year ago"},
@@ -1529,7 +1652,60 @@ func TestTranslate_relative(t *testing.T) {
 		assert.Nil(t, err, message)
 
 		// Translate string
-		translation := Translate(cfg, ld, test.String, false)
+		var translation string
+		translations := Translate(cfg, ld, test.String, false)
+		if len(translations) > 0 {
+			translation = translations[0]
+		}
+
+		passed := assert.Equal(t, test.Expected, translation, message)
+		if !passed {
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestTranslate_keepFormatting(t *testing.T) {
+	type testScenario struct {
+		Locale         string
+		String         string
+		Expected       string
+		KeepFormatting bool
+	}
+
+	tests := []testScenario{
+		{"en", "December 04, 1999, 11:04:59 PM", "december 04, 1999, 11:04:59 pm", true},
+		{"en", "December 04, 1999, 11:04:59 PM", "december 04 1999 11:04:59 pm", false},
+		{"de", "23 März, 18:37", "23 march, 18:37", true},
+		{"de", "23 März 18:37", "23 march 18:37", false},
+	}
+
+	// Prepare config
+	cfg := &setting.Configuration{
+		SkipTokens: []string{"t"},
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("keep formatting %s, \"%s\"", test.Locale, test.String)
+
+		// Load locale
+		ld, err := GetLocale(test.Locale)
+		assert.Nil(t, err, message)
+
+		// Translate string
+		var translation string
+		translations := Translate(cfg, ld, test.String, test.KeepFormatting)
+		if len(translations) > 0 {
+			translation = translations[0]
+		}
+
 		passed := assert.Equal(t, test.Expected, translation, message)
 		if !passed {
 			nFailed++

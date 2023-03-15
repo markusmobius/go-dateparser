@@ -7,9 +7,10 @@ import (
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/setting"
+	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
+func Parse(cfg *setting.Configuration, str string, tz timezone.OffsetData) (date.Date, error) {
 	parser := &Parser{
 		Config:              cfg,
 		FnGetDateTimeParams: getDateTimeParams,
@@ -21,7 +22,7 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 		return date.Date{}, err
 	}
 
-	return parser.Parse()
+	return parser.Parse(tz)
 }
 
 func getDateTimeParams(p *Parser) map[string]int {
