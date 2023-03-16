@@ -73,9 +73,9 @@ relative-type:
     - till date
 
 relative-type-regex:
-  in $1 decade:
+  in \1 decade:
     - in (\d+[.,]?\d*) decades?
-  $1 decade ago:
+  \1 decade ago:
     - (\d+[.,]?\d*) decades? ago
 
 simplifications:
@@ -83,8 +83,8 @@ simplifications:
   - a: '1'
   - (?:12\s+)?noon: '12:00'
   - (?:12\s+)?midnight: '00:00'
-  - (\d+[.,]?\d*)h(\d+[.,]?\d*)m?: $1:$2
-  - (from\s+)now: $1in
+  - (\d+[.,]?\d*)h(\d+[.,]?\d*)m?: \1:\2
+  - (from\s+)now: \1in
   - less than 1 minute ago: 45 second ago
   - one: '1'
   - two: '2'

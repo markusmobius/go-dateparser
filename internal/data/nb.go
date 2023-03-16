@@ -112,7 +112,7 @@ var nb_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) maneder siden`), "$1 month ago"},
 		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) minutt siden`), "$1 minute ago"},
 		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) sekund siden`), "$1 second ago"},
-		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) dager siden`), "$1 day ago"},
+		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) dager siden`), "${1} day ago"},
 		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) maned siden`), "$1 month ago"},
 		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) timer siden`), "$1 hour ago"},
 		{regexp.MustCompile(`(?i)for (\d+[.,]?\d*) døgn siden`), "$1 day ago"},

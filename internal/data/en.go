@@ -170,10 +170,10 @@ var en_Locale = merge(nil, LocaleData{
 		"now":                  "0 second ago",
 	},
 	RelativeTypeRegexes: []ReplacementData{
-		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) decades? ago`), "$1 decade ago"},
+		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) decades? ago`), "${1} decade ago"},
 		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) minutes ago`), "$1 minute ago"},
 		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) seconds ago`), "$1 second ago"},
-		{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) decades?`), "in $1 decade"},
+		{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) decades?`), "in ${1} decade"},
 		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) minute ago`), "$1 minute ago"},
 		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) months ago`), "$1 month ago"},
 		{regexp.MustCompile(`(?i)(\d+[.,]?\d*) second ago`), "$1 second ago"},
