@@ -57,11 +57,11 @@ relative-type:
     - übermorgen
 
 relative-type-regex:
-  $1 hour ago:
+  \1 hour ago:
     - vor (\d+[.,]?\d*)\s*h
-  $1 minute ago:
+  \1 minute ago:
     - vor (\d+[.,]?\d*)\s*m
-  $1 second ago:
+  \1 second ago:
     - vor (\d+[.,]?\d*)\s*s
 
 simplifications:

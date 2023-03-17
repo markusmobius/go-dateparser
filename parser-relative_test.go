@@ -588,12 +588,22 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{fmt.Sprintf("in %d months", 2013*12+8), pfpDiff{"year": 2013, "month": 8}, Month},
 		{"in 1 year, 1 month, 1 week, 1 day, 1 hour and 1 minute", pfpDiff{"year": 1, "month": 1, "week": 1, "day": 1, "hour": 1, "minute": 1}, Day},
 		{"just now", pfpDiff{"second": 0}, Day},
+		{"1 decade later", pfpDiff{"year": 10}, Year},
+		{"2 years later", pfpDiff{"year": 2}, Year},
+		{"3 months later", pfpDiff{"month": 3}, Month},
+		{"1 week later", pfpDiff{"week": 1}, Day},
+		{"2 days later", pfpDiff{"day": 2}, Day},
+		{"3 hours later", pfpDiff{"hour": 3}, Day},
+		{"4 minutes later", pfpDiff{"minute": 4}, Day},
+		{"5 seconds later", pfpDiff{"second": 5}, Day},
 
 		// Fractional units
 		{"in 2.5 hours", pfpDiff{"hour": 2, "minute": 30}, Day},
 		{"in 10.75 minutes", pfpDiff{"minute": 10, "second": 45}, Day},
 		{"in 1.5 days", pfpDiff{"day": 1, "hour": 12}, Day},
 		{"in 0,5 hours", pfpDiff{"minute": 30}, Day},
+		{"1.5 days later", pfpDiff{"day": 1, "hour": 12}, Day},
+		{"0,5 hours later", pfpDiff{"minute": 30}, Day},
 
 		// French dates
 		{"Aujourd'hui", pfpDiff{"day": 0}, Day},
