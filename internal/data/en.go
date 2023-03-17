@@ -17,6 +17,7 @@ var en_Locale = merge(nil, LocaleData{
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d*)h(\d+[.,]?\d*)m?(\z|[^\pL\pM\d]|_)`), "${1}${2}:${3}${4}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(from\s+)now(\z|[^\pL\pM\d]|_)`), "${1}${2}in${3}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)less than 1 minute ago(\z|[^\pL\pM\d]|_)`), "${1}45 second ago${2}"},
+		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d*) (decade|year|month|week|day|hour|minute|second)s? later(\z|[^\pL\pM\d]|_)`), "${1}in ${2} ${3}${4}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)one(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)two(\z|[^\pL\pM\d]|_)`), "${1}2${2}"},
 		{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)three(\z|[^\pL\pM\d]|_)`), "${1}3${2}"},
