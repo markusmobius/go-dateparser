@@ -40,7 +40,7 @@ go get -u -v github.com/markusmobius/go-dateparser
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-This package is up to date with the original dateparser until commit [4749e3e][original-commit] ([v1.1.7][original-tag]). There are several behavior and implementation differences between this port and the original:
+This package is up to date with the original dateparser until commit [b368edd][original-commit] ([v1.1.7][original-tag]). There are several behavior and implementation differences between this port and the original:
 
 - In Python, timezone data is not included in date and time objects. Meanwhile in Go timezone data is required.
 - Regex in Go is pretty slow, so in this port whenever possible we use basic strings or runes operations instead of regex to improve the performance.
@@ -414,7 +414,7 @@ Just like the original, this package is licensed under [BSD-3 License][bsd3].
 [go-ref-icon]: https://pkg.go.dev/badge/github.com/markusmobius/go-dateparser.svg
 [go-ref]: https://pkg.go.dev/github.com/markusmobius/go-dateparser
 [original]: https://github.com/scrapinghub/dateparser
-[original-commit]: https://github.com/scrapinghub/dateparser/tree/4749e3e
+[original-commit]: https://github.com/scrapinghub/dateparser/tree/b368edd
 [original-tag]: https://github.com/scrapinghub/dateparser/tree/v1.1.7
 [dps-parse]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Parse
 [dps-jalali]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseJalali
