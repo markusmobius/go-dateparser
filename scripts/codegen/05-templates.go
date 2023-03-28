@@ -282,35 +282,45 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 `
 
 const localeDataTemplate = `
-var {{localeName .Name}} = merge({{parentLocale .}}, LocaleData {
-	Name:                  "{{.Name}}",
-	DateOrder:             "{{.DateOrder}}",
-	NoWordSpacing:         {{.NoWordSpacing}},
-	Charset:               {{charset .Charset}},
-	Abbreviations:         []string{ {{range $v := .Abbreviations}}"{{$v}}", {{end}} },
-	SentenceSplitterGroup: {{.SentenceSplitterGroup}},
-	Simplifications: []ReplacementData{
-		{{range $data := .Simplifications -}}
-		{ {{regex $data.Pattern}}, "{{$data.Replacement}}" },
-		{{end}}
-	},
-	Translations: map[string][]string{
-		{{range $e := (sortMapSlice .Translations) -}}
-		"{{$e.Key}}": { {{- range $v := $e.Values -}}"{{$v}}",{{- end -}} },
-		{{end}}
-	},
-	RelativeType: map[string]string{
-		{{range $e := (sortMap .RelativeType) -}}
-		"{{$e.Key}}": "{{$e.Value}}",
-		{{end}}
-	},
-	RelativeTypeRegexes: []ReplacementData{
-		{{range $e := (sortMap .RelativeTypeRegexes) -}}
-		{ {{regex $e.Key}}, "{{$e.Value}}" },
-		{{end}}
-	},
-	RxCombined: {{regex .CombinedRegexPattern}},
-	RxExactCombined: {{regex .ExactCombinedRegexPattern}},
-	KnownWords:   []string{ {{range $v := .KnownWords}}"{{$v}}", {{end}} },
-})
+var (
+	{{range $loc := .}}
+	{{localeName $loc.Name}} LocaleData
+	{{- end}}
+)
+
+func init() {
+{{- range $loc := .}}
+	{{localeName $loc.Name}} = merge({{parentLocale $loc}}, LocaleData {
+		Name:                  "{{$loc.Name}}",
+		DateOrder:             "{{$loc.DateOrder}}",
+		NoWordSpacing:         {{$loc.NoWordSpacing}},
+		Charset:               {{charset $loc.Charset}},
+		Abbreviations:         []string{ {{range $v := $loc.Abbreviations}}"{{$v}}", {{end}} },
+		SentenceSplitterGroup: {{$loc.SentenceSplitterGroup}},
+		Simplifications: []ReplacementData{
+			{{range $data := $loc.Simplifications -}}
+			{ {{regex $data.Pattern}}, "{{$data.Replacement}}" },
+			{{end}}
+		},
+		Translations: map[string][]string{
+			{{range $e := (sortMapSlice $loc.Translations) -}}
+			"{{$e.Key}}": { {{- range $v := $e.Values -}}"{{$v}}",{{- end -}} },
+			{{end}}
+		},
+		RelativeType: map[string]string{
+			{{range $e := (sortMap $loc.RelativeType) -}}
+			"{{$e.Key}}": "{{$e.Value}}",
+			{{end}}
+		},
+		RelativeTypeRegexes: []ReplacementData{
+			{{range $e := (sortMap $loc.RelativeTypeRegexes) -}}
+			{ {{regex $e.Key}}, "{{$e.Value}}" },
+			{{end}}
+		},
+		RxCombined: {{regex $loc.CombinedRegexPattern}},
+		RxExactCombined: {{regex $loc.ExactCombinedRegexPattern}},
+		KnownWords:   []string{ {{range $v := $loc.KnownWords}}"{{$v}}", {{end}} },
+	})
+{{end -}}
+}
 `
