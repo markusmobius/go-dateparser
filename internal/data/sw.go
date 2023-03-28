@@ -4,7 +4,12 @@ package data
 
 import "regexp"
 
-var sw_Locale LocaleData
+var (
+	sw_Locale    LocaleData
+	sw_CD_Locale LocaleData
+	sw_KE_Locale LocaleData
+	sw_UG_Locale LocaleData
+)
 
 func init() {
 	sw_Locale = merge(nil, LocaleData{
@@ -118,11 +123,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(sekunde \d+[.,]?\d* zilizopita|dakika \d+[.,]?\d* zilizopita|sekunde \d+[.,]?\d* iliyopita|baada ya sekunde \d+[.,]?\d*|dakika \d+[.,]?\d* iliyopita|baada ya dakika \d+[.,]?\d*|miaka \d+[.,]?\d* iliyopita|miezi \d+[.,]?\d* iliyopita|siku \d+[.,]?\d* zilizopita|wiki \d+[.,]?\d* zilizopita|baada ya miaka \d+[.,]?\d*|baada ya miezi \d+[.,]?\d*|baada ya mwaka \d+[.,]?\d*|baada ya mwezi \d+[.,]?\d*|mwaka \d+[.,]?\d* uliopita|mwezi \d+[.,]?\d* uliopita|saa \d+[.,]?\d* zilizopita|siku \d+[.,]?\d* iliyopita|wiki \d+[.,]?\d* iliyopita|baada ya siku \d+[.,]?\d*|baada ya wiki \d+[.,]?\d*|saa \d+[.,]?\d* iliyopita|baada ya saa \d+[.,]?\d*)$`),
 		KnownWords:      []string{"mwaka uliopita", "mwezi uliopita", "wiki iliyopita", "dakika hii", "mwaka ujao", "mwezi ujao", "wiki ijayo", "mwaka huu", "mwezi huu", "sasa hivi", "alhamisi", "februari", "jumamosi", "jumapili", "jumatano", "jumatatu", "septemba", "wiki hii", "asubuhi", "desemba", "januari", "jumanne", "novemba", "saa hii", "sekunde", "agosti", "aprili", "dakika", "ijumaa", "mchana", "oktoba", "julai", "kesho", "machi", "mwaka", "mwezi", "jana", "juni", "siku", "wiki", "ago", "apr", "dak", "des", "feb", "gmt", "jan", "jul", "jun", "leo", "mac", "mei", "nov", "okt", "saa", "sek", "sep", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var sw_CD_Locale LocaleData
-
-func init() {
 	sw_CD_Locale = merge(&sw_Locale, LocaleData{
 		Name:      "sw-CD",
 		DateOrder: "DMY",
@@ -131,20 +132,12 @@ func init() {
 		},
 		KnownWords: []string{"mwaka uliopita", "mwezi uliopita", "wiki iliyopita", "dakika hii", "mwaka ujao", "mwezi ujao", "wiki ijayo", "mwaka huu", "mwezi huu", "sasa hivi", "alhamisi", "februari", "jumamosi", "jumapili", "jumatano", "jumatatu", "septemba", "wiki hii", "asubuhi", "desemba", "januari", "jumanne", "novemba", "saa hii", "sekunde", "agosti", "aprili", "dakika", "ijumaa", "mchana", "oktoba", "julai", "kesho", "machi", "mwaka", "mwezi", "jana", "juma", "juni", "siku", "wiki", "ago", "apr", "dak", "des", "feb", "gmt", "jan", "jul", "jun", "leo", "mac", "mei", "nov", "okt", "saa", "sek", "sep", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var sw_KE_Locale LocaleData
-
-func init() {
 	sw_KE_Locale = merge(&sw_Locale, LocaleData{
 		Name:      "sw-KE",
 		DateOrder: "DMY",
 	})
-}
 
-var sw_UG_Locale LocaleData
-
-func init() {
 	sw_UG_Locale = merge(&sw_Locale, LocaleData{
 		Name:      "sw-UG",
 		DateOrder: "DMY",

@@ -2,7 +2,10 @@
 
 package data
 
-var mas_Locale LocaleData
+var (
+	mas_Locale    LocaleData
+	mas_TZ_Locale LocaleData
+)
 
 func init() {
 	mas_Locale = merge(nil, LocaleData{
@@ -95,11 +98,7 @@ func init() {
 		},
 		KnownWords: []string{"oloilepunyie inkokua", "olodoyiorie inkokua", "this minute", "last month", "next month", "this month", "ɔlɔɨbɔrarɛ", "last week", "last year", "morusasin", "next week", "next year", "oldakikae", "this hour", "this week", "this year", "ɔɛnɨɔɨŋɔk", "ɛnkakɛnya", "alaamisi", "jumamosi", "jumapili", "jumatanɔ", "jumatatu", "kujuɔrɔk", "taaisere", "oladalʉ", "olgisan", "pʉshʉka", "sekunde", "ɛnkɔlɔŋ", "jumane", "kushin", "ntʉŋʉs", "ɛndama", "ewiki", "jumaa", "taata", "ɔlapa", "ɔlari", "arat", "ŋole", "ɛsaa", "alh", "ara", "bɔr", "dal", "doy", "gis", "gmt", "iju", "jmo", "jnn", "jpi", "jtn", "jtt", "kus", "lep", "now", "ntʉ", "rok", "sas", "shʉ", "utc", "ɔɛn", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var mas_TZ_Locale LocaleData
-
-func init() {
 	mas_TZ_Locale = merge(&mas_Locale, LocaleData{
 		Name:      "mas-TZ",
 		DateOrder: "DMY",

@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var da_Locale LocaleData
+var (
+	da_Locale    LocaleData
+	da_GL_Locale LocaleData
+)
 
 func init() {
 	da_Locale = merge(nil, LocaleData{
@@ -171,11 +174,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(for \d+[.,]?\d* minutter siden|for \d+[.,]?\d* sekunder siden|for \d+[.,]?\d* maneder siden|for \d+[.,]?\d* sekund siden|for \d+[.,]?\d* maned siden|for \d+[.,]?\d* minut siden|for \d+[.,]?\d* timer siden|for \d+[.,]?\d* dage siden|for \d+[.,]?\d* time siden|for \d+[.,]?\d* uger siden|for \d+[.,]?\d* dag siden|for \d+[.,]?\d* mdr siden|for \d+[.,]?\d* min siden|for \d+[.,]?\d* sek siden|for \d+[.,]?\d* uge siden|for \d+[.,]?\d* ar siden|for \d+[.,]?\d* md siden|for \d+[.,]?\d* minutter|for \d+[.,]?\d* sekunder|om \d+[.,]?\d* minutter|om \d+[.,]?\d* sekunder|om \d+[.,]?\d* maneder|for \d+[.,]?\d* timer|om \d+[.,]?\d* sekund|om \d+[.,]?\d* maned|om \d+[.,]?\d* minut|om \d+[.,]?\d* timer|for \d+[.,]?\d*\s*h|for \d+[.,]?\d*\s*m|for \d+[.,]?\d*\s*s|om \d+[.,]?\d* dage|om \d+[.,]?\d* time|om \d+[.,]?\d* uger|om \d+[.,]?\d* dag|om \d+[.,]?\d* mdr|om \d+[.,]?\d* min|om \d+[.,]?\d* sek|om \d+[.,]?\d* uge|om \d+[.,]?\d* ar|om \d+[.,]?\d* md)$`),
 		KnownWords:      []string{"i det kommende minut", "i den kommende time", "sidste maned", "denne maned", "næste maned", "sidste uge", "denne uge", "næste uge", "september", "sidste ar", "sidste md", "december", "denne md", "i morgen", "minutter", "november", "næste ar", "næste md", "sekunder", "februar", "maneder", "oktober", "tirsdag", "torsdag", "august", "fredag", "januar", "lørdag", "mandag", "onsdag", "sekund", "søndag", "april", "cirka", "i dag", "i gar", "maned", "marts", "minut", "siden", "timer", "dage", "i ar", "juli", "juni", "time", "uger", "apr", "aug", "dag", "dec", "feb", "fre", "gmt", "jan", "jul", "jun", "kl.", "lør", "maj", "man", "mar", "min", "nov", "okt", "ons", "sek", "sep", "søn", "tir", "tor", "uge", "utc", "am", "ar", "d.", "kl", "md", "nu", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "i", "s", "t", "z", "|"},
 	})
-}
 
-var da_GL_Locale LocaleData
-
-func init() {
 	da_GL_Locale = merge(&da_Locale, LocaleData{
 		Name:      "da-GL",
 		DateOrder: "DMY",

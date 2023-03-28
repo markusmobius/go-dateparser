@@ -4,7 +4,12 @@ package data
 
 import "regexp"
 
-var sr_Latn_Locale LocaleData
+var (
+	sr_Latn_Locale    LocaleData
+	sr_Latn_BA_Locale LocaleData
+	sr_Latn_ME_Locale LocaleData
+	sr_Latn_XK_Locale LocaleData
+)
 
 func init() {
 	sr_Latn_Locale = merge(nil, LocaleData{
@@ -155,11 +160,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(pre \d+[.,]?\d* nedelja|pre \d+[.,]?\d* nedelje|pre \d+[.,]?\d* sekunde|pre \d+[.,]?\d* sekundi|pre \d+[.,]?\d* godina|pre \d+[.,]?\d* godine|pre \d+[.,]?\d* meseca|pre \d+[.,]?\d* meseci|pre \d+[.,]?\d* minuta|za \d+[.,]?\d* nedelja|za \d+[.,]?\d* nedelju|za \d+[.,]?\d* sekundi|za \d+[.,]?\d* sekundu|za \d+[.,]?\d* godina|za \d+[.,]?\d* godinu|za \d+[.,]?\d* meseci|za \d+[.,]?\d* minuta|pre \d+[.,]?\d* dana|pre \d+[.,]?\d* sata|pre \d+[.,]?\d* sati|za \d+[.,]?\d* mesec|za \d+[.,]?\d* minut|pre \d+[.,]?\d* god|pre \d+[.,]?\d* mes|pre \d+[.,]?\d* min|pre \d+[.,]?\d* ned|pre \d+[.,]?\d* sek|za \d+[.,]?\d* dana|za \d+[.,]?\d* sati|za \d+[.,]?\d* dan|za \d+[.,]?\d* god|za \d+[.,]?\d* mes|za \d+[.,]?\d* min|za \d+[.,]?\d* ned|za \d+[.,]?\d* sat|za \d+[.,]?\d* sek|pre \d+[.,]?\d* c|pre \d+[.,]?\d* d|pre \d+[.,]?\d* g|pre \d+[.,]?\d* m|pre \d+[.,]?\d* n|pre \d+[.,]?\d* s|za \d+[.,]?\d* c|za \d+[.,]?\d* d|za \d+[.,]?\d* g|za \d+[.,]?\d* m|za \d+[.,]?\d* n|za \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"sledece nedelje", "sledeceg meseca", "prosle nedelje", "proslog meseca", "sledece godine", "prosle godine", "ove nedelje", "ovog meseca", "ovog minuta", "ove godine", "ponedeljak", "ovog sata", "pre podne", "septembar", "cetvrtak", "decembar", "novembar", "po podne", "februar", "nedelja", "oktobar", "avgust", "godina", "januar", "sekund", "subota", "utorak", "april", "danas", "mesec", "minut", "petak", "sreda", "sutra", "juce", "mart", "sada", "apr", "avg", "cet", "dan", "dec", "feb", "gmt", "god", "jan", "jul", "jun", "maj", "mar", "mes", "min", "ned", "nov", "okt", "pet", "pon", "sat", "sek", "sep", "sre", "sub", "utc", "uto", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "c", "d", "g", "m", "n", "s", "z", "|"},
 	})
-}
 
-var sr_Latn_BA_Locale LocaleData
-
-func init() {
 	sr_Latn_BA_Locale = merge(&sr_Latn_Locale, LocaleData{
 		Name:      "sr-Latn-BA",
 		DateOrder: "DMY.",
@@ -173,11 +174,7 @@ func init() {
 		},
 		KnownWords: []string{"sledece nedelje", "sledeceg meseca", "prosle nedelje", "proslog meseca", "sledece godine", "prosle godine", "ove nedelje", "ovog meseca", "ovog minuta", "prije podne", "ove godine", "ponedeljak", "ovog sata", "pre podne", "septembar", "cetvrtak", "decembar", "nedjelja", "novembar", "po podne", "februar", "nedelja", "oktobar", "srijeda", "avgust", "godina", "januar", "sekund", "subota", "utorak", "april", "danas", "mesec", "minut", "petak", "sreda", "sutra", "juce", "mart", "sada", "sept", "apr", "avg", "cet", "dan", "dec", "feb", "gmt", "god", "jan", "jul", "jun", "maj", "mar", "mes", "min", "ned", "nov", "okt", "pet", "pon", "sat", "sek", "sep", "sre", "sub", "utc", "uto", "am", "pm", "sr", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "c", "d", "g", "m", "n", "s", "z", "|"},
 	})
-}
 
-var sr_Latn_ME_Locale LocaleData
-
-func init() {
 	sr_Latn_ME_Locale = merge(&sr_Latn_Locale, LocaleData{
 		Name:      "sr-Latn-ME",
 		DateOrder: "DMY.",
@@ -191,11 +188,7 @@ func init() {
 		},
 		KnownWords: []string{"sledece nedelje", "sledeceg meseca", "prosle nedelje", "proslog meseca", "sledece godine", "prosle godine", "ove nedelje", "ovog meseca", "ovog minuta", "prije podne", "ove godine", "ponedeljak", "ovog sata", "pre podne", "septembar", "cetvrtak", "decembar", "nedjelja", "novembar", "po podne", "februar", "nedelja", "oktobar", "srijeda", "avgust", "godina", "januar", "sekund", "subota", "utorak", "april", "danas", "mesec", "minut", "petak", "sreda", "sutra", "juce", "mart", "sada", "sept", "apr", "avg", "cet", "dan", "dec", "feb", "gmt", "god", "jan", "jul", "jun", "maj", "mar", "mes", "min", "ned", "nov", "okt", "pet", "pon", "sat", "sek", "sep", "sre", "sub", "utc", "uto", "am", "pm", "sr", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "c", "d", "g", "m", "n", "s", "z", "|"},
 	})
-}
 
-var sr_Latn_XK_Locale LocaleData
-
-func init() {
 	sr_Latn_XK_Locale = merge(&sr_Latn_Locale, LocaleData{
 		Name:      "sr-Latn-XK",
 		DateOrder: "DMY.",

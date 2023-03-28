@@ -4,7 +4,15 @@ package data
 
 import "regexp"
 
-var de_Locale LocaleData
+var (
+	de_Locale    LocaleData
+	de_AT_Locale LocaleData
+	de_BE_Locale LocaleData
+	de_CH_Locale LocaleData
+	de_IT_Locale LocaleData
+	de_LI_Locale LocaleData
+	de_LU_Locale LocaleData
+)
 
 func init() {
 	de_Locale = merge(nil, LocaleData{
@@ -196,56 +204,32 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(vor \d+[.,]?\d* sekunden|in \d+[.,]?\d* sekunden|vor \d+[.,]?\d* minuten|vor \d+[.,]?\d* monaten|vor \d+[.,]?\d* sekunde|vor \d+[.,]?\d* stunden|in \d+[.,]?\d* minuten|in \d+[.,]?\d* monaten|in \d+[.,]?\d* sekunde|in \d+[.,]?\d* stunden|vor \d+[.,]?\d* jahren|vor \d+[.,]?\d* minute|vor \d+[.,]?\d* stunde|vor \d+[.,]?\d* wochen|in \d+[.,]?\d* jahren|in \d+[.,]?\d* minute|in \d+[.,]?\d* stunde|in \d+[.,]?\d* wochen|vor \d+[.,]?\d* monat|vor \d+[.,]?\d* tagen|vor \d+[.,]?\d* woche|in \d+[.,]?\d* monat|in \d+[.,]?\d* tagen|in \d+[.,]?\d* woche|vor \d+[.,]?\d* jahr|in \d+[.,]?\d* jahr|vor \d+[.,]?\d* min|vor \d+[.,]?\d* sek|vor \d+[.,]?\d* std|vor \d+[.,]?\d* tag|vor \d+[.,]?\d*\s*h|vor \d+[.,]?\d*\s*m|vor \d+[.,]?\d*\s*s|in \d+[.,]?\d* min|in \d+[.,]?\d* sek|in \d+[.,]?\d* std|in \d+[.,]?\d* tag|vor \d+[.,]?\d* wo|in \d+[.,]?\d* wo|vor \d+[.,]?\d* m|vor \d+[.,]?\d* s|in \d+[.,]?\d* m|in \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"in dieser minute", "in dieser stunde", "nachsten monat", "letzten monat", "nachste woche", "nachstes jahr", "diesen monat", "letzte woche", "letztes jahr", "diese woche", "dieses jahr", "donnerstag", "ubermorgen", "vorgestern", "september", "dezember", "dienstag", "mittwoch", "november", "sekunden", "februar", "freitag", "gestern", "minuten", "monaten", "oktober", "samstag", "sekunde", "sonntag", "stunden", "august", "jahren", "janner", "januar", "minute", "monate", "montag", "morgen", "stunde", "wochen", "april", "feber", "heute", "jahre", "jetzt", "monat", "nachm", "tagen", "woche", "etwa", "jahr", "juli", "juni", "marz", "sept", "tage", "vorm", "apr", "aug", "dez", "die", "don", "feb", "fre", "gmt", "jan", "jul", "jun", "mai", "mar", "min", "mit", "mon", "mrz", "nov", "okt", "sam", "sek", "sep", "son", "std", "tag", "uhr", "und", "utc", "vor", "am", "di", "do", "fr", "im", "in", "mi", "mo", "pm", "sa", "so", "um", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "j", "m", "w", "z", "|"},
 	})
-}
 
-var de_AT_Locale LocaleData
-
-func init() {
 	de_AT_Locale = merge(&de_Locale, LocaleData{
 		Name:      "de-AT",
 		DateOrder: "DMY",
 	})
-}
 
-var de_BE_Locale LocaleData
-
-func init() {
 	de_BE_Locale = merge(&de_Locale, LocaleData{
 		Name:      "de-BE",
 		DateOrder: "DMY",
 	})
-}
 
-var de_CH_Locale LocaleData
-
-func init() {
 	de_CH_Locale = merge(&de_Locale, LocaleData{
 		Name:      "de-CH",
 		DateOrder: "DMY",
 	})
-}
 
-var de_IT_Locale LocaleData
-
-func init() {
 	de_IT_Locale = merge(&de_Locale, LocaleData{
 		Name:      "de-IT",
 		DateOrder: "DMY",
 	})
-}
 
-var de_LI_Locale LocaleData
-
-func init() {
 	de_LI_Locale = merge(&de_Locale, LocaleData{
 		Name:      "de-LI",
 		DateOrder: "DMY",
 	})
-}
 
-var de_LU_Locale LocaleData
-
-func init() {
 	de_LU_Locale = merge(&de_Locale, LocaleData{
 		Name:      "de-LU",
 		DateOrder: "DMY",

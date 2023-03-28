@@ -2,7 +2,9 @@
 
 package data
 
-var rof_Locale LocaleData
+var (
+	rof_Locale LocaleData
+)
 
 func init() {
 	rof_Locale = merge(nil, LocaleData{

@@ -2,7 +2,12 @@
 
 package data
 
-var ln_Locale LocaleData
+var (
+	ln_Locale    LocaleData
+	ln_AO_Locale LocaleData
+	ln_CF_Locale LocaleData
+	ln_CG_Locale LocaleData
+)
 
 func init() {
 	ln_Locale = merge(nil, LocaleData{
@@ -95,29 +100,17 @@ func init() {
 		},
 		KnownWords: []string{"sanza ya zomi na mibale", "sanza ya zomi na mɔkɔ", "mokɔlɔ mwa mibale", "mokɔlɔ mwa misato", "mokɔlɔ mwa yambo", "mokɔlɔ ya mitano", "mokɔlɔ ya minei", "sanza ya mibale", "sanza ya misato", "sanza ya mitano", "sanza ya motoba", "sanza ya mwambe", "sanza ya nsambo", "sanza ya libwa", "sanza ya minei", "sanza ya yambo", "sanza ya zomi", "this minute", "last month", "lobi ekoya", "lobi eleki", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "sɛkɔndɛ", "eyenga", "mokɔlɔ", "monuti", "mpokwa", "ngonga", "ntɔngɔ", "mpɔsɔ", "sanza", "lɛlɔ", "mobu", "pɔsɔ", "agt", "apl", "dsb", "eye", "fbl", "gmt", "mai", "mbl", "min", "mps", "msi", "mst", "mtn", "now", "nvb", "stb", "utc", "yan", "ybo", "yul", "yun", "ɔtb", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var ln_AO_Locale LocaleData
-
-func init() {
 	ln_AO_Locale = merge(&ln_Locale, LocaleData{
 		Name:      "ln-AO",
 		DateOrder: "DMY",
 	})
-}
 
-var ln_CF_Locale LocaleData
-
-func init() {
 	ln_CF_Locale = merge(&ln_Locale, LocaleData{
 		Name:      "ln-CF",
 		DateOrder: "DMY",
 	})
-}
 
-var ln_CG_Locale LocaleData
-
-func init() {
 	ln_CG_Locale = merge(&ln_Locale, LocaleData{
 		Name:      "ln-CG",
 		DateOrder: "DMY",

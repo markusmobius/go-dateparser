@@ -4,7 +4,12 @@ package data
 
 import "regexp"
 
-var it_Locale LocaleData
+var (
+	it_Locale    LocaleData
+	it_CH_Locale LocaleData
+	it_SM_Locale LocaleData
+	it_VA_Locale LocaleData
+)
 
 func init() {
 	it_Locale = merge(nil, LocaleData{
@@ -163,29 +168,17 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(tra \d+[.,]?\d* settimana|tra \d+[.,]?\d* settimane|\d+[.,]?\d* settimana fa|\d+[.,]?\d* settimane fa|tra \d+[.,]?\d* secondi|tra \d+[.,]?\d* secondo|\d+[.,]?\d* secondi fa|\d+[.,]?\d* secondo fa|tra \d+[.,]?\d* giorni|tra \d+[.,]?\d* giorno|tra \d+[.,]?\d* minuti|tra \d+[.,]?\d* minuto|\d+[.,]?\d* giorni fa|\d+[.,]?\d* giorno fa|\d+[.,]?\d* minuti fa|\d+[.,]?\d* minuto fa|tra \d+[.,]?\d* anni|tra \d+[.,]?\d* anno|tra \d+[.,]?\d* mese|tra \d+[.,]?\d* mesi|tra \d+[.,]?\d* sett|\d+[.,]?\d* anni fa|\d+[.,]?\d* anno fa|\d+[.,]?\d* mese fa|\d+[.,]?\d* mesi fa|\d+[.,]?\d* sett fa|tra \d+[.,]?\d* min|tra \d+[.,]?\d* ora|tra \d+[.,]?\d* ore|tra \d+[.,]?\d* sec|\d+[.,]?\d* min fa|\d+[.,]?\d* ora fa|\d+[.,]?\d* ore fa|\d+[.,]?\d* sec fa|tra \d+[.,]?\d* gg|\d+[.,]?\d* gg fa|tra \d+[.,]?\d* g|tra \d+[.,]?\d* h|tra \d+[.,]?\d* s|\d+[.,]?\d* g fa|\d+[.,]?\d* h fa|\d+[.,]?\d* s fa)$`),
 		KnownWords:      []string{"settimana prossima", "questa settimana", "settimana scorsa", "anno prossimo", "mese prossimo", "questo minuto", "anno scorso", "mese scorso", "questo mese", "altro ieri", "quest'anno", "mercoledi", "quest'ora", "settembre", "settimana", "settimane", "dicembre", "domenica", "febbraio", "novembre", "gennaio", "giovedi", "martedi", "ottobre", "secondi", "secondo", "venerdi", "agosto", "aprile", "domani", "giorni", "giorno", "giugno", "luglio", "lunedi", "maggio", "minuti", "minuto", "sabato", "circa", "marzo", "anni", "anno", "ieri", "mese", "mesi", "oggi", "sett", "ago", "apr", "dic", "dom", "feb", "gen", "gio", "giu", "gmt", "lug", "lun", "mag", "mar", "mer", "min", "nov", "ora", "ore", "ott", "sab", "sec", "set", "utc", "ven", "am", "fa", "in", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "g", "h", "m", "s", "z", "|"},
 	})
-}
 
-var it_CH_Locale LocaleData
-
-func init() {
 	it_CH_Locale = merge(&it_Locale, LocaleData{
 		Name:      "it-CH",
 		DateOrder: "DMY",
 	})
-}
 
-var it_SM_Locale LocaleData
-
-func init() {
 	it_SM_Locale = merge(&it_Locale, LocaleData{
 		Name:      "it-SM",
 		DateOrder: "DMY",
 	})
-}
 
-var it_VA_Locale LocaleData
-
-func init() {
 	it_VA_Locale = merge(&it_Locale, LocaleData{
 		Name:      "it-VA",
 		DateOrder: "DMY",

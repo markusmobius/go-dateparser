@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var os_Locale LocaleData
+var (
+	os_Locale    LocaleData
+	os_RU_Locale LocaleData
+)
 
 func init() {
 	os_Locale = merge(nil, LocaleData{
@@ -119,11 +122,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* сахаты размӕ|\d+[.,]?\d* сахаты фӕстӕ|\d+[.,]?\d* бон раздӕр|\d+[.,]?\d* боны размӕ|\d+[.,]?\d* боны фӕстӕ)$`),
 		KnownWords:      []string{"ӕмбисбоны размӕ", "ӕмбисбоны фӕстӕ", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "къуырисӕр", "маирӕмбон", "хуыцаубон", "мартъииы", "сентябры", "сентябрь", "цыппӕрӕм", "ӕртыццӕг", "августы", "декабры", "декабрь", "октябры", "октябрь", "февралы", "февраль", "август", "апрелы", "апрель", "дыццӕг", "къуыри", "мартъи", "ноябры", "ноябрь", "секунд", "январы", "январь", "минут", "сабат", "сахат", "абон", "знон", "июлы", "июль", "июны", "июнь", "маиы", "март", "нояб", "сент", "февр", "gmt", "now", "utc", "авг", "апр", "бон", "дек", "дцг", "крс", "маи", "мар", "мрб", "мӕи", "ноя", "окт", "сбт", "сен", "сом", "фев", "хцб", "цпр", "янв", "ӕрт", "am", "pm", "аз", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var os_RU_Locale LocaleData
-
-func init() {
 	os_RU_Locale = merge(&os_Locale, LocaleData{
 		Name:      "os-RU",
 		DateOrder: "DMY",

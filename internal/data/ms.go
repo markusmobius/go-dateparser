@@ -4,7 +4,11 @@ package data
 
 import "regexp"
 
-var ms_Locale LocaleData
+var (
+	ms_Locale    LocaleData
+	ms_BN_Locale LocaleData
+	ms_SG_Locale LocaleData
+)
 
 func init() {
 	ms_Locale = merge(nil, LocaleData{
@@ -136,20 +140,12 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dalam \d+[.,]?\d* minggu|\d+[.,]?\d* minggu lalu|dalam \d+[.,]?\d* bulan|dalam \d+[.,]?\d* minit|\d+[.,]?\d* bulan lalu|\d+[.,]?\d* minit lalu|\d+[.,]?\d* tahun lalu|dalam \d+[.,]?\d* hari|dalam \d+[.,]?\d* saat|\d+[.,]?\d* hari lalu|\d+[.,]?\d* saat lalu|dalam \d+[.,]?\d* jam|dalam \d+[.,]?\d* thn|\d+[.,]?\d* bln lalu|\d+[.,]?\d* jam lalu|\d+[.,]?\d* mgu lalu|\d+[.,]?\d* min lalu|\d+[.,]?\d* thn lalu|dlm \d+[.,]?\d* hari|dlm \d+[.,]?\d* saat|dlm \d+[.,]?\d* bln|dlm \d+[.,]?\d* jam|dlm \d+[.,]?\d* mgu|dlm \d+[.,]?\d* min)$`),
 		KnownWords:      []string{"pada minit ini", "minggu depan", "bulan depan", "minggu lalu", "tahun depan", "bulan lalu", "minggu ini", "tahun lalu", "bln depan", "bulan ini", "mng depan", "mng lepas", "september", "tahun ini", "thn depan", "thn lepas", "bln lalu", "disember", "februari", "hari ini", "november", "sekarang", "bln ini", "jam ini", "januari", "mng ini", "oktober", "semalam", "thn ini", "jumaat", "khamis", "minggu", "selasa", "april", "bulan", "isnin", "julai", "minit", "sabtu", "semlm", "tahun", "ahad", "esok", "hari", "ogos", "rabu", "saat", "ahd", "apr", "bln", "dis", "feb", "gmt", "isn", "jam", "jan", "jul", "jum", "jun", "kha", "mac", "mei", "mgu", "min", "nov", "ogo", "okt", "ptg", "rab", "sab", "sel", "sep", "thn", "utc", "am", "pg", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var ms_BN_Locale LocaleData
-
-func init() {
 	ms_BN_Locale = merge(&ms_Locale, LocaleData{
 		Name:      "ms-BN",
 		DateOrder: "DMY",
 	})
-}
 
-var ms_SG_Locale LocaleData
-
-func init() {
 	ms_SG_Locale = merge(&ms_Locale, LocaleData{
 		Name:      "ms-SG",
 		DateOrder: "DMY",

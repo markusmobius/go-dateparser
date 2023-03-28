@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var nb_Locale LocaleData
+var (
+	nb_Locale    LocaleData
+	nb_SJ_Locale LocaleData
+)
 
 func init() {
 	nb_Locale = merge(nil, LocaleData{
@@ -153,11 +156,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(for \d+[.,]?\d* minutter siden|for \d+[.,]?\d* sekunder siden|for \d+[.,]?\d* maneder siden|for \d+[.,]?\d* minutt siden|for \d+[.,]?\d* sekund siden|for \d+[.,]?\d* dager siden|for \d+[.,]?\d* maned siden|for \d+[.,]?\d* timer siden|for \d+[.,]?\d* døgn siden|for \d+[.,]?\d* time siden|for \d+[.,]?\d* uker siden|for \d+[.,]?\d* min siden|for \d+[.,]?\d* sek siden|for \d+[.,]?\d* uke siden|for \d+[.,]?\d* ar siden|for \d+[.,]?\d* md siden|for \d+[.,]?\d* d siden|for \d+[.,]?\d* t siden|for \d+[.,]?\d* u siden|om \d+[.,]?\d* minutter|om \d+[.,]?\d* sekunder|om \d+[.,]?\d* maneder|om \d+[.,]?\d* minutt|om \d+[.,]?\d* sekund|om \d+[.,]?\d* maned|om \d+[.,]?\d* timer|om \d+[.,]?\d* døgn|om \d+[.,]?\d* time|om \d+[.,]?\d* uker|om \d+[.,]?\d* min|om \d+[.,]?\d* sek|om \d+[.,]?\d* uke|om \d+[.,]?\d* ar|om \d+[.,]?\d* md|om \d+[.,]?\d* d|om \d+[.,]?\d* t|om \d+[.,]?\d* u|–\d+[.,]?\d* ar)$`),
 		KnownWords:      []string{"dette minuttet", "denne maneden", "forrige maned", "denne timen", "forrige uke", "neste maned", "denne uken", "forrige md", "neste uke", "september", "denne md", "desember", "i morgen", "neste ar", "neste md", "november", "februar", "oktober", "tirsdag", "torsdag", "august", "fredag", "i fjor", "januar", "lørdag", "mandag", "minutt", "onsdag", "sekund", "søndag", "april", "dager", "i dag", "i gar", "maned", "siden", "timer", "i ar", "juli", "juni", "mars", "time", "uker", "apr", "aug", "dag", "des", "feb", "fre", "gmt", "jan", "jul", "jun", "lør", "mai", "man", "mar", "min", "mnd", "nov", "okt", "ons", "sek", "sep", "søn", "tir", "tor", "uke", "utc", "am", "ar", "md", "na", "om", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "m", "s", "t", "u", "z", "|"},
 	})
-}
 
-var nb_SJ_Locale LocaleData
-
-func init() {
 	nb_SJ_Locale = merge(&nb_Locale, LocaleData{
 		Name:      "nb-SJ",
 		DateOrder: "DMY",

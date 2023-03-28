@@ -4,7 +4,12 @@ package data
 
 import "regexp"
 
-var ca_Locale LocaleData
+var (
+	ca_Locale    LocaleData
+	ca_AD_Locale LocaleData
+	ca_FR_Locale LocaleData
+	ca_IT_Locale LocaleData
+)
 
 func init() {
 	ca_Locale = merge(nil, LocaleData{
@@ -187,29 +192,17 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(d'aqui a \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* setmana|d'aqui a \d+[.,]?\d* minuts|d'aqui a \d+[.,]?\d* segons|d'aqui a \d+[.,]?\d* hores|d'aqui a \d+[.,]?\d* mesos|d'aqui a \d+[.,]?\d* minut|d'aqui a \d+[.,]?\d* segon|d'aqui a \d+[.,]?\d* anys|d'aqui a \d+[.,]?\d* dies|d'aqui a \d+[.,]?\d* hora|d'aqui a \d+[.,]?\d* setm|d'aqui a \d+[.,]?\d* any|d'aqui a \d+[.,]?\d* dia|d'aqui a \d+[.,]?\d* mes|d'aqui a \d+[.,]?\d* min|fa \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* h|d'aqui a \d+[.,]?\d* s|d‘aqui a \d+[.,]?\d* h|fa \d+[.,]?\d* setmana|fa \d+[.,]?\d* minuts|fa \d+[.,]?\d* segons|fa \d+[.,]?\d* hores|fa \d+[.,]?\d* mesos|fa \d+[.,]?\d* minut|fa \d+[.,]?\d* segon|fa \d+[.,]?\d* anys|fa \d+[.,]?\d* dies|fa \d+[.,]?\d* hora|fa \d+[.,]?\d* setm|fa \d+[.,]?\d* any|fa \d+[.,]?\d* dia|fa \d+[.,]?\d* mes|fa \d+[.,]?\d* min|fa \d+[.,]?\d* h|fa \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"la propera setmana", "la proxima setmana", "la setmana passada", "la setmana que ve", "la setmana vinent", "aquesta setmana", "la setm passada", "la setm que ve", "el mes passat", "el mes que ve", "endema passat", "abans-d’ahir", "aquest minut", "aquesta hora", "aquesta setm", "l'any passat", "l'any que ve", "setm passada", "de desembre", "de novembre", "de setembre", "dema passat", "despus-ahir", "despus-dema", "passat dema", "setm vinent", "aquest mes", "della-ahir", "mes passat", "mes vinent", "d'octubre", "de febrer", "de juliol", "divendres", "de gener", "desembre", "dimecres", "dissabte", "diumenge", "novembre", "setembre", "d'abril", "d'agost", "de febr", "de juny", "de maig", "de marc", "dilluns", "dimarts", "enguany", "octubre", "sendema", "setmana", "de des", "de gen", "de jul", "de nov", "de set", "dijous", "endema", "febrer", "juliol", "abril", "agost", "d'abr", "d'oct", "gener", "minut", "segon", "ahir", "avui", "d'ag", "dema", "febr", "hora", "juny", "maig", "marc", "setm", "abr", "any", "ara", "del", "des", "dia", "gen", "gmt", "hui", "jul", "mes", "min", "nov", "oct", "set", "utc", "ag", "am", "dc", "de", "dg", "dj", "dl", "ds", "dt", "dv", "en", "l'", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "i", "s", "z", "|"},
 	})
-}
 
-var ca_AD_Locale LocaleData
-
-func init() {
 	ca_AD_Locale = merge(&ca_Locale, LocaleData{
 		Name:      "ca-AD",
 		DateOrder: "DMY",
 	})
-}
 
-var ca_FR_Locale LocaleData
-
-func init() {
 	ca_FR_Locale = merge(&ca_Locale, LocaleData{
 		Name:      "ca-FR",
 		DateOrder: "DMY",
 	})
-}
 
-var ca_IT_Locale LocaleData
-
-func init() {
 	ca_IT_Locale = merge(&ca_Locale, LocaleData{
 		Name:      "ca-IT",
 		DateOrder: "DMY",

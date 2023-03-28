@@ -4,7 +4,20 @@ package data
 
 import "regexp"
 
-var pt_Locale LocaleData
+var (
+	pt_Locale    LocaleData
+	pt_AO_Locale LocaleData
+	pt_CH_Locale LocaleData
+	pt_CV_Locale LocaleData
+	pt_GQ_Locale LocaleData
+	pt_GW_Locale LocaleData
+	pt_LU_Locale LocaleData
+	pt_MO_Locale LocaleData
+	pt_MZ_Locale LocaleData
+	pt_PT_Locale LocaleData
+	pt_ST_Locale LocaleData
+	pt_TL_Locale LocaleData
+)
 
 func init() {
 	pt_Locale = merge(nil, LocaleData{
@@ -170,11 +183,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "marco", "meses", "ontem", "sexta", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_AO_Locale LocaleData
-
-func init() {
 	pt_AO_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-AO",
 		DateOrder: "DMY",
@@ -209,11 +218,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_CH_Locale LocaleData
-
-func init() {
 	pt_CH_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-CH",
 		DateOrder: "DMY",
@@ -248,11 +253,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_CV_Locale LocaleData
-
-func init() {
 	pt_CV_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-CV",
 		DateOrder: "DMY",
@@ -287,11 +288,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_GQ_Locale LocaleData
-
-func init() {
 	pt_GQ_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-GQ",
 		DateOrder: "DMY",
@@ -326,11 +323,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_GW_Locale LocaleData
-
-func init() {
 	pt_GW_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-GW",
 		DateOrder: "DMY",
@@ -365,11 +358,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_LU_Locale LocaleData
-
-func init() {
 	pt_LU_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-LU",
 		DateOrder: "DMY",
@@ -404,11 +393,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_MO_Locale LocaleData
-
-func init() {
 	pt_MO_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-MO",
 		DateOrder: "DMY",
@@ -443,11 +428,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_MZ_Locale LocaleData
-
-func init() {
 	pt_MZ_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-MZ",
 		DateOrder: "DMY",
@@ -482,11 +463,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_PT_Locale LocaleData
-
-func init() {
 	pt_PT_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-PT",
 		DateOrder: "DMY",
@@ -521,11 +498,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_ST_Locale LocaleData
-
-func init() {
 	pt_ST_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-ST",
 		DateOrder: "DMY",
@@ -560,11 +533,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* s|em \d+[.,]?\d* segundos|ha \d+[.,]?\d* segundos|em \d+[.,]?\d* minutos|em \d+[.,]?\d* segundo|em \d+[.,]?\d* semanas|ha \d+[.,]?\d* minutos|ha \d+[.,]?\d* segundo|ha \d+[.,]?\d* semanas|em \d+[.,]?\d* minuto|em \d+[.,]?\d* semana|ha \d+[.,]?\d* minuto|ha \d+[.,]?\d* semana|em \d+[.,]?\d* horas|em \d+[.,]?\d* meses|ha \d+[.,]?\d* horas|ha \d+[.,]?\d* meses|em \d+[.,]?\d* anos|em \d+[.,]?\d* dias|em \d+[.,]?\d* hora|em \d+[.,]?\d* mins|em \d+[.,]?\d* segs|ha \d+[.,]?\d* anos|ha \d+[.,]?\d* dias|ha \d+[.,]?\d* hora|ha \d+[.,]?\d* mins|em \d+[.,]?\d* ano|em \d+[.,]?\d* dia|em \d+[.,]?\d* mes|em \d+[.,]?\d* min|em \d+[.,]?\d* seg|em \d+[.,]?\d* sem|ha \d+[.,]?\d* ano|ha \d+[.,]?\d* dia|ha \d+[.,]?\d* mes|ha \d+[.,]?\d* min|ha \d+[.,]?\d* seg|ha \d+[.,]?\d* sem|em \d+[.,]?\d* h|ha \d+[.,]?\d* h|ha \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"proxima semana", "semana passada", "segunda-feira", "quarta-feira", "quinta-feira", "ano passado", "esta semana", "este minuto", "mes passado", "proximo ano", "proximo mes", "sexta-feira", "terca-feira", "anteontem", "esta hora", "fevereiro", "septembro", "da manha", "da tarde", "dezembro", "este ano", "este mes", "novembro", "segundos", "setembro", "domingo", "janeiro", "minutos", "outubro", "segunda", "segundo", "semanas", "agosto", "amanha", "minuto", "quarta", "quinta", "sabado", "semana", "abril", "agora", "atras", "cerca", "horas", "julho", "junho", "manha", "marco", "meses", "ontem", "sexta", "tarde", "terca", "anos", "dias", "hoje", "hora", "maio", "abr", "ago", "ano", "dez", "dia", "dom", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "mes", "min", "nov", "out", "qua", "qui", "sab", "seg", "sem", "set", "sex", "ter", "utc", "am", "as", "de", "em", "ha", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "h", "m", "s", "z", "|"},
 	})
-}
 
-var pt_TL_Locale LocaleData
-
-func init() {
 	pt_TL_Locale = merge(&pt_Locale, LocaleData{
 		Name:      "pt-TL",
 		DateOrder: "DMY",

@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var ee_Locale LocaleData
+var (
+	ee_Locale    LocaleData
+	ee_TG_Locale LocaleData
+)
 
 func init() {
 	ee_Locale = merge(nil, LocaleData{
@@ -131,11 +134,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(aɖabaƒoƒo \d+[.,]?\d* si wo va yi|aɖabaƒoƒo \d+[.,]?\d* si va yi|gaƒoƒo \d+[.,]?\d* si wo va yi|kɔsiɖa \d+[.,]?\d* si wo va yi|le aɖabaƒoƒo \d+[.,]?\d* wo me|sekend \d+[.,]?\d* si wo va yi|le ƒe \d+[.,]?\d* si gbɔna me|le ƒe \d+[.,]?\d* si va yi me|ŋkeke \d+[.,]?\d* si wo va yi|ɣleti \d+[.,]?\d* si wo va yi|gaƒoƒo \d+[.,]?\d* si va yi|kɔsiɖa \d+[.,]?\d* si va yi|le aɖabaƒoƒo \d+[.,]?\d* me|le gaƒoƒo \d+[.,]?\d* wo me|le kɔsiɖa \d+[.,]?\d* wo me|le sekend \d+[.,]?\d* wo me|sekend \d+[.,]?\d* si va yi|le ŋkeke \d+[.,]?\d* wo me|le ɣleti \d+[.,]?\d* wo me|ŋkeke \d+[.,]?\d* si va yi|ƒe \d+[.,]?\d* si va yi me|ƒe \d+[.,]?\d* si wo va yi|ɣleti \d+[.,]?\d* si va yi|le gaƒoƒo \d+[.,]?\d* me|le kɔsiɖa \d+[.,]?\d* me|le sekend \d+[.,]?\d* me|le ŋkeke \d+[.,]?\d* me|le ɣleti \d+[.,]?\d* me|ƒe \d+[.,]?\d* si va yi|le ƒe \d+[.,]?\d* me)$`),
 		KnownWords:      []string{"kɔsiɖa si gbɔ na", "kɔsiɖa si va yi", "ɣleti si gbɔ na", "ɣleti si va yi", "etsɔ si gbɔna", "etsɔ si va yi", "ƒe si gbɔ na", "adeɛmekpɔxe", "kɔsiɖa ɖeka", "this minute", "ƒe si va yi", "deasiamime", "kɔsiɖa sia", "aɖabaƒoƒo", "this hour", "ɣleti sia", "anyɔnyɔ", "memleɖa", "siamlɔm", "afɔfie", "dzodze", "gaƒoƒo", "kɔsiɖa", "sekend", "tedoxe", "yawoɖa", "ƒe sia", "blaɖa", "dzome", "dzove", "dzoɖa", "ŋkeke", "ɣetrɔ", "ɣleti", "dama", "egbe", "fifi", "fiɖa", "kele", "kuɖa", "masa", "ade", "afɔ", "any", "bla", "dam", "dea", "dzd", "dzm", "dzo", "dzv", "fiɖ", "gmt", "kel", "kuɖ", "kɔs", "mas", "mem", "sia", "ted", "utc", "yaw", "ŋdi", "am", "pm", "ƒe", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var ee_TG_Locale LocaleData
-
-func init() {
 	ee_TG_Locale = merge(&ee_Locale, LocaleData{
 		Name:      "ee-TG",
 		DateOrder: "MDY",

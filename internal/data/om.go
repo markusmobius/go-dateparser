@@ -2,7 +2,10 @@
 
 package data
 
-var om_Locale LocaleData
+var (
+	om_Locale    LocaleData
+	om_KE_Locale LocaleData
+)
 
 func init() {
 	om_Locale = merge(nil, LocaleData{
@@ -95,11 +98,7 @@ func init() {
 		},
 		KnownWords: []string{"onkololeessa", "bitooteessa", "guraandhala", "this minute", "adooleessa", "last month", "next month", "this month", "waxabajjii", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "fuulbana", "tomorrow", "amajjii", "dilbata", "hagayya", "jimaata", "kamiisa", "qibxata", "sadaasa", "sanbata", "wiixata", "caamsa", "minute", "muddee", "roobii", "second", "month", "today", "elba", "hour", "week", "year", "ado", "ama", "bit", "cam", "day", "dil", "elb", "ful", "gmt", "gur", "hag", "jim", "kam", "mud", "now", "onk", "qib", "rob", "sad", "san", "utc", "wax", "wix", "am", "pm", "wb", "wd", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var om_KE_Locale LocaleData
-
-func init() {
 	om_KE_Locale = merge(&om_Locale, LocaleData{
 		Name:      "om-KE",
 		DateOrder: "DMY",

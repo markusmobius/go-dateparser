@@ -2,7 +2,10 @@
 
 package data
 
-var ckb_Locale LocaleData
+var (
+	ckb_Locale    LocaleData
+	ckb_IR_Locale LocaleData
+)
 
 func init() {
 	ckb_Locale = merge(nil, LocaleData{
@@ -76,11 +79,7 @@ func init() {
 		},
 		KnownWords: []string{"کانوونی دووەم", "تشرینی دووەم", "تشرینی یەکەم", "کانونی یەکەم", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "پێنجشەممە", "چوارشەممە", "tomorrow", "حوزەیران", "دووشەممە", "یەکشەممە", "سێشەممە", "يەیلوول", "minute", "second", "تەمووز", "month", "today", "شوبات", "شەممە", "نیسان", "يازار", "يایار", "ھەینی", "hour", "week", "year", "day", "gmt", "now", "utc", "ياب", "am", "pm", "بن", "دن", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var ckb_IR_Locale LocaleData
-
-func init() {
 	ckb_IR_Locale = merge(&ckb_Locale, LocaleData{
 		Name:      "ckb-IR",
 		DateOrder: "YMD",

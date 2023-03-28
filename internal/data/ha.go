@@ -2,7 +2,11 @@
 
 package data
 
-var ha_Locale LocaleData
+var (
+	ha_Locale    LocaleData
+	ha_GH_Locale LocaleData
+	ha_NE_Locale LocaleData
+)
 
 func init() {
 	ha_Locale = merge(nil, LocaleData{
@@ -93,20 +97,12 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "faburairu", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "afirilu", "alhamis", "disamba", "janairu", "jumma'a", "litinin", "nuwamba", "satumba", "shekara", "agusta", "asabar", "daƙiƙa", "lahadi", "laraba", "oktoba", "talata", "kwana", "maris", "minti", "gobe", "jiya", "mako", "mayu", "wata", "yuli", "yuni", "afi", "agu", "alh", "asa", "awa", "dis", "fab", "gmt", "jan", "jum", "lah", "lar", "lit", "mar", "may", "now", "nuw", "okt", "sat", "tal", "utc", "yau", "yul", "yun", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var ha_GH_Locale LocaleData
-
-func init() {
 	ha_GH_Locale = merge(&ha_Locale, LocaleData{
 		Name:      "ha-GH",
 		DateOrder: "DMY",
 	})
-}
 
-var ha_NE_Locale LocaleData
-
-func init() {
 	ha_NE_Locale = merge(&ha_Locale, LocaleData{
 		Name:      "ha-NE",
 		DateOrder: "DMY",

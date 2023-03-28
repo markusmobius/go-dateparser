@@ -4,7 +4,12 @@ package data
 
 import "regexp"
 
-var zh_Hans_Locale LocaleData
+var (
+	zh_Hans_Locale    LocaleData
+	zh_Hans_HK_Locale LocaleData
+	zh_Hans_MO_Locale LocaleData
+	zh_Hans_SG_Locale LocaleData
+)
 
 func init() {
 	zh_Hans_Locale = merge(nil, LocaleData{
@@ -125,31 +130,19 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d*个月前|\d+[.,]?\d*个月后|\d+[.,]?\d*分钟前|\d+[.,]?\d*分钟后|\d+[.,]?\d*小时前|\d+[.,]?\d*小时后|\d+[.,]?\d*秒钟前|\d+[.,]?\d*秒钟后|\d+[.,]?\d*周前|\d+[.,]?\d*周后|\d+[.,]?\d*天前|\d+[.,]?\d*天后|\d+[.,]?\d*年前|\d+[.,]?\d*年后|\d+[.,]?\d*秒前|\d+[.,]?\d*秒后)$`),
 		KnownWords:      []string{"这一时间 / 此时", "这一时间", "10月", "11月", "12月", "gmt", "utc", "上个月", "下个月", "十一月", "十二月", "星期一", "星期三", "星期二", "星期五", "星期六", "星期四", "星期日", "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "am", "pm", "一月", "七月", "三月", "上午", "上周", "下午", "下周", "九月", "二月", "五月", "今天", "今年", "八月", "六月", "分钟", "刚刚", "前天", "十月", "去年", "后天", "周一", "周三", "周二", "周五", "周六", "周四", "周日", "四月", "小时", "明天", "明年", "昨天", "本周", "本月", "此刻", "此时", "现在", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "分", "周", "年", "日", "月", "秒"},
 	})
-}
 
-var zh_Hans_HK_Locale LocaleData
-
-func init() {
 	zh_Hans_HK_Locale = merge(&zh_Hans_Locale, LocaleData{
 		Name:          "zh-Hans-HK",
 		DateOrder:     "DMY",
 		NoWordSpacing: true,
 	})
-}
 
-var zh_Hans_MO_Locale LocaleData
-
-func init() {
 	zh_Hans_MO_Locale = merge(&zh_Hans_Locale, LocaleData{
 		Name:          "zh-Hans-MO",
 		DateOrder:     "DMY",
 		NoWordSpacing: true,
 	})
-}
 
-var zh_Hans_SG_Locale LocaleData
-
-func init() {
 	zh_Hans_SG_Locale = merge(&zh_Hans_Locale, LocaleData{
 		Name:          "zh-Hans-SG",
 		DateOrder:     "DMY",

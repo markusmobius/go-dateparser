@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var ro_Locale LocaleData
+var (
+	ro_Locale    LocaleData
+	ro_MD_Locale LocaleData
+)
 
 func init() {
 	ro_Locale = merge(nil, LocaleData{
@@ -159,11 +162,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(peste \d+[.,]?\d* de saptamani|acum \d+[.,]?\d* de saptamani|peste \d+[.,]?\d* de secunde|acum \d+[.,]?\d* de secunde|peste \d+[.,]?\d* de minute|peste \d+[.,]?\d* saptamana|acum \d+[.,]?\d* de minute|acum \d+[.,]?\d* saptamana|peste \d+[.,]?\d* de luni|peste \d+[.,]?\d* de zile|peste \d+[.,]?\d* secunda|acum \d+[.,]?\d* de luni|acum \d+[.,]?\d* de zile|acum \d+[.,]?\d* secunda|peste \d+[.,]?\d* de ani|peste \d+[.,]?\d* de ore|acum \d+[.,]?\d* de ani|acum \d+[.,]?\d* de ore|peste \d+[.,]?\d* minut|acum \d+[.,]?\d* minut|peste \d+[.,]?\d* luna|peste \d+[.,]?\d* luni|peste \d+[.,]?\d* sapt|peste \d+[.,]?\d* zile|acum \d+[.,]?\d* luna|acum \d+[.,]?\d* luni|acum \d+[.,]?\d* sapt|acum \d+[.,]?\d* zile|peste \d+[.,]?\d* ani|peste \d+[.,]?\d* min|peste \d+[.,]?\d* ora|peste \d+[.,]?\d* sec|acum \d+[.,]?\d* min|acum \d+[.,]?\d* ora|acum \d+[.,]?\d* sec|peste \d+[.,]?\d* an|peste \d+[.,]?\d* zi|acum \d+[.,]?\d* an|acum \d+[.,]?\d* zi|peste \d+[.,]?\d* h|acum \d+[.,]?\d* h)$`),
 		KnownWords:      []string{"saptamana viitoare", "saptamana aceasta", "saptamana trecuta", "minutul acesta", "luna viitoare", "luna aceasta", "luna trecuta", "anul acesta", "anul trecut", "anul viitor", "ora aceasta", "septembrie", "decembrie", "februarie", "noiembrie", "octombrie", "saptamana", "saptamani", "duminica", "ianuarie", "miercuri", "aprilie", "in urma", "sambata", "secunda", "secunde", "august", "martie", "minute", "vineri", "iulie", "iunie", "maine", "marti", "minut", "noiem", "acum", "febr", "ieri", "luna", "luni", "mart", "sapt", "sept", "zile", "ani", "apr", "aug", "azi", "dec", "dum", "feb", "gmt", "ian", "iul", "iun", "joi", "lun", "mai", "mar", "mie", "min", "nov", "oct", "ora", "ore", "sam", "sec", "sep", "utc", "vin", "am", "an", "de", "in", "la", "mi", "pm", "zi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "m", "s", "z", "|"},
 	})
-}
 
-var ro_MD_Locale LocaleData
-
-func init() {
 	ro_MD_Locale = merge(&ro_Locale, LocaleData{
 		Name:      "ro-MD",
 		DateOrder: "DMY",

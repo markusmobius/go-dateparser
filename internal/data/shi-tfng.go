@@ -2,7 +2,9 @@
 
 package data
 
-var shi_Tfng_Locale LocaleData
+var (
+	shi_Tfng_Locale LocaleData
+)
 
 func init() {
 	shi_Tfng_Locale = merge(nil, LocaleData{

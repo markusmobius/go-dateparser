@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var tr_Locale LocaleData
+var (
+	tr_Locale    LocaleData
+	tr_CY_Locale LocaleData
+)
 
 func init() {
 	tr_Locale = merge(nil, LocaleData{
@@ -153,11 +156,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* dakika sonra|\d+[.,]?\d* saniye sonra|\d+[.,]?\d* dakika once|\d+[.,]?\d* hafta sonra|\d+[.,]?\d* saniye once|\d+[.,]?\d* hafta once|\d+[.,]?\d* saat sonra|\d+[.,]?\d* gun sonra|\d+[.,]?\d* saat once|\d+[.,]?\d* yıl sonra|\d+[.,]?\d* ay sonra|\d+[.,]?\d* dk sonra|\d+[.,]?\d* gun once|\d+[.,]?\d* hf sonra|\d+[.,]?\d* sa sonra|\d+[.,]?\d* sn sonra|\d+[.,]?\d* yıl once|\d+[.,]?\d* ay once|\d+[.,]?\d* dk once|\d+[.,]?\d* hf once|\d+[.,]?\d* sa once|\d+[.,]?\d* sn once)$`),
 		KnownWords:      []string{"onumuzdeki hafta", "onumuzdeki gun", "onumuzdeki yıl", "gelecek hafta", "onumuzdeki ay", "gecen hafta", "gelecek yıl", "gelecek ay", "icerisinde", "bu dakika", "cumartesi", "gecen gun", "gecen yıl", "pazartesi", "bu hafta", "carsamba", "gecen ay", "persembe", "yaklasık", "agustos", "bu saat", "haftaya", "haziran", "aralık", "bu yıl", "dakika", "icinde", "saniye", "temmuz", "bu ay", "bugun", "eylul", "hafta", "kasım", "mayıs", "nisan", "pazar", "simdi", "sonra", "subat", "yarın", "cuma", "ekim", "mart", "ocak", "once", "saat", "salı", "sene", "agu", "ara", "car", "cmt", "crs", "cum", "dun", "eki", "eyl", "gmt", "gun", "haz", "kas", "mar", "may", "nis", "oca", "paz", "per", "prs", "pzt", "sal", "sub", "tem", "utc", "yıl", "ag", "am", "ar", "ay", "dk", "ek", "ey", "ha", "hf", "ka", "ni", "oc", "oo", "os", "pm", "sa", "sn", "su", "te", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var tr_CY_Locale LocaleData
-
-func init() {
 	tr_CY_Locale = merge(&tr_Locale, LocaleData{
 		Name:      "tr-CY",
 		DateOrder: "DMY",

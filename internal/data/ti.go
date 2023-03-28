@@ -2,7 +2,10 @@
 
 package data
 
-var ti_Locale LocaleData
+var (
+	ti_Locale    LocaleData
+	ti_ER_Locale LocaleData
+)
 
 func init() {
 	ti_Locale = merge(nil, LocaleData{
@@ -95,11 +98,7 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "ንጉሆ ሰዓተ", "ድሕር ሰዓት", "minute", "second", "month", "today", "መስከረም", "hour", "week", "year", "ለካቲት", "መጋቢት", "ሚያዝያ", "ሰንበት", "ታሕሳስ", "ግንቦት", "ጥቅምቲ", "day", "gmt", "now", "utc", "ሓሙስ", "ሓምለ", "ሕዳር", "ሠሉስ", "ረቡዕ", "ሰሉስ", "ሰኑይ", "ቀዳም", "ኃሙስ", "ነሓሰ", "ዓርቢ", "am", "pm", "ለካ", "ሓሙ", "ሓም", "ሕዳ", "መስ", "መጋ", "ሚያ", "ረቡ", "ሰሉ", "ሰነ", "ሰኑ", "ሰን", "ቀዳ", "ታሕ", "ነሓ", "ዓር", "ግን", "ጥሪ", "ጥቅ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var ti_ER_Locale LocaleData
-
-func init() {
 	ti_ER_Locale = merge(&ti_Locale, LocaleData{
 		Name:      "ti-ER",
 		DateOrder: "DMY",

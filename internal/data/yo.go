@@ -2,7 +2,10 @@
 
 package data
 
-var yo_Locale LocaleData
+var (
+	yo_Locale    LocaleData
+	yo_BJ_Locale LocaleData
+)
 
 func init() {
 	yo_Locale = merge(nil, LocaleData{
@@ -93,11 +96,7 @@ func init() {
 		},
 		KnownWords: []string{"ojo abameta", "this minute", "iseju aaya", "last month", "next month", "ojo isegun", "this month", "last week", "last year", "next week", "next year", "osu agemo", "osu ebibi", "osu erele", "osu erena", "osu okudu", "osu owara", "osu owewe", "this hour", "this week", "this year", "ojo aiku", "osu belu", "osu igbe", "osu ogun", "osu sere", "abameta", "ojo aje", "ojo eti", "osu ope", "isegun", "wakati", "agemo", "ebibi", "erele", "erena", "iseju", "ojobo", "ojoru", "okudu", "owara", "owewe", "aaro", "aiku", "belu", "igbe", "odun", "ogun", "osan", "sere", "aje", "ana", "eti", "gmt", "now", "ojo", "ola", "oni", "ope", "ose", "osu", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var yo_BJ_Locale LocaleData
-
-func init() {
 	yo_BJ_Locale = merge(&yo_Locale, LocaleData{
 		Name:      "yo-BJ",
 		DateOrder: "DMY",

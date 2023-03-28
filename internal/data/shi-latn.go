@@ -2,7 +2,9 @@
 
 package data
 
-var shi_Latn_Locale LocaleData
+var (
+	shi_Latn_Locale LocaleData
+)
 
 func init() {
 	shi_Latn_Locale = merge(nil, LocaleData{

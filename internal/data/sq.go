@@ -4,7 +4,11 @@ package data
 
 import "regexp"
 
-var sq_Locale LocaleData
+var (
+	sq_Locale    LocaleData
+	sq_MK_Locale LocaleData
+	sq_XK_Locale LocaleData
+)
 
 func init() {
 	sq_Locale = merge(nil, LocaleData{
@@ -130,20 +134,12 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* sekonda me pare|\d+[.,]?\d* sekonde me pare|\d+[.,]?\d* minuta me pare|\d+[.,]?\d* minute me pare|pas \d+[.,]?\d* sekondash|\d+[.,]?\d* dite me pare|\d+[.,]?\d* jave me pare|\d+[.,]?\d* muaj me pare|\d+[.,]?\d* vjet me pare|pas \d+[.,]?\d* minutash|\d+[.,]?\d* min me pare|\d+[.,]?\d* ore me pare|\d+[.,]?\d* sek me pare|\d+[.,]?\d* vit me pare|pas \d+[.,]?\d* sekonde|pas \d+[.,]?\d* vjetesh|pas \d+[.,]?\d* ditesh|pas \d+[.,]?\d* javesh|pas \d+[.,]?\d* minute|pas \d+[.,]?\d* muajsh|pas \d+[.,]?\d* muaji|pas \d+[.,]?\d* oresh|pas \d+[.,]?\d* dite|pas \d+[.,]?\d* jave|pas \d+[.,]?\d* viti|pas \d+[.,]?\d* min|pas \d+[.,]?\d* ore|pas \d+[.,]?\d* sek)$`),
 		KnownWords:      []string{"muajin e ardhshem", "javen e ardhshme", "vitin e ardhshem", "muajin e kaluar", "javen e kaluar", "vitin e kaluar", "e paradites", "kete minute", "e pasdites", "e merkure", "kete jave", "kete muaj", "e premte", "e shtune", "kete ore", "kete vit", "paradite", "dhjetor", "e enjte", "e marte", "pasdite", "qershor", "sekonde", "shtator", "e diel", "e hene", "korrik", "minute", "nentor", "shkurt", "gusht", "janar", "neser", "prill", "tetor", "dite", "jave", "mars", "muaj", "tani", "dhj", "die", "dje", "enj", "gmt", "gsh", "hen", "jan", "kor", "maj", "mar", "mer", "min", "nen", "ore", "pre", "pri", "qer", "sek", "shk", "sht", "sot", "tet", "utc", "vit", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var sq_MK_Locale LocaleData
-
-func init() {
 	sq_MK_Locale = merge(&sq_Locale, LocaleData{
 		Name:      "sq-MK",
 		DateOrder: "DMY",
 	})
-}
 
-var sq_XK_Locale LocaleData
-
-func init() {
 	sq_XK_Locale = merge(&sq_Locale, LocaleData{
 		Name:      "sq-XK",
 		DateOrder: "DMY",

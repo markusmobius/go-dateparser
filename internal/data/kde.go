@@ -2,7 +2,9 @@
 
 package data
 
-var kde_Locale LocaleData
+var (
+	kde_Locale LocaleData
+)
 
 func init() {
 	kde_Locale = merge(nil, LocaleData{

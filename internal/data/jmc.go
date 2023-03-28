@@ -2,7 +2,9 @@
 
 package data
 
-var jmc_Locale LocaleData
+var (
+	jmc_Locale LocaleData
+)
 
 func init() {
 	jmc_Locale = merge(nil, LocaleData{

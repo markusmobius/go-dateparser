@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var af_Locale LocaleData
+var (
+	af_Locale    LocaleData
+	af_NA_Locale LocaleData
+)
 
 func init() {
 	af_Locale = merge(nil, LocaleData{
@@ -138,11 +141,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* sekondes gelede|\d+[.,]?\d* sekonde gelede|\d+[.,]?\d* maande gelede|\d+[.,]?\d* minute gelede|\d+[.,]?\d* minuut gelede|\d+[.,]?\d* maand gelede|oor \d+[.,]?\d* sekondes|\d+[.,]?\d* jaar gelede|\d+[.,]?\d* week gelede|\d+[.,]?\d* weke gelede|oor \d+[.,]?\d* sekonde|\d+[.,]?\d* dae gelede|\d+[.,]?\d* dag gelede|\d+[.,]?\d* min gelede|\d+[.,]?\d* sek gelede|\d+[.,]?\d* uur gelede|oor \d+[.,]?\d* minuut|\d+[.,]?\d* md gelede|\d+[.,]?\d* w gelede|oor \d+[.,]?\d* jaar|oor \d+[.,]?\d* week|oor \d+[.,]?\d* weke|oor \d+[.,]?\d* dae|oor \d+[.,]?\d* dag|oor \d+[.,]?\d* min|oor \d+[.,]?\d* sek|oor \d+[.,]?\d* uur|oor \d+[.,]?\d* md|oor \d+[.,]?\d* w)$`),
 		KnownWords:      []string{"hierdie minuut", "volgende maand", "verlede maand", "volgende jaar", "volgende week", "hierdie jaar", "vandeesmaand", "verlede jaar", "verlede week", "hierdie uur", "vandeesweek", "donderdag", "februarie", "september", "augustus", "desember", "januarie", "november", "saterdag", "woensdag", "dinsdag", "maandag", "oktober", "sekonde", "gister", "minuut", "sondag", "vandag", "vrydag", "april", "julie", "junie", "maand", "maart", "jaar", "more", "week", "apr", "aug", "dag", "des", "feb", "gmt", "jan", "jul", "jun", "mei", "min", "mrt", "nou", "nov", "okt", "sek", "sep", "utc", "uur", "am", "di", "do", "ma", "md", "nm", "pm", "sa", "so", "vm", "vr", "wk", "wo", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "j", "m", "s", "u", "z", "|"},
 	})
-}
 
-var af_NA_Locale LocaleData
-
-func init() {
 	af_NA_Locale = merge(&af_Locale, LocaleData{
 		Name:      "af-NA",
 		DateOrder: "YMD",

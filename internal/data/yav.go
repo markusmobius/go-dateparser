@@ -2,7 +2,9 @@
 
 package data
 
-var yav_Locale LocaleData
+var (
+	yav_Locale LocaleData
+)
 
 func init() {
 	yav_Locale = merge(nil, LocaleData{

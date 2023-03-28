@@ -4,7 +4,11 @@ package data
 
 import "regexp"
 
-var sv_Locale LocaleData
+var (
+	sv_Locale    LocaleData
+	sv_AX_Locale LocaleData
+	sv_FI_Locale LocaleData
+)
 
 func init() {
 	sv_Locale = merge(nil, LocaleData{
@@ -191,20 +195,12 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(for \d+[.,]?\d* sekunder sedan|for \d+[.,]?\d* manader sedan|for \d+[.,]?\d* minuter sedan|for \d+[.,]?\d* sekund sedan|for \d+[.,]?\d* timmar sedan|for \d+[.,]?\d* veckor sedan|for \d+[.,]?\d* dagar sedan|for \d+[.,]?\d* manad sedan|for \d+[.,]?\d* minut sedan|for \d+[.,]?\d* timme sedan|for \d+[.,]?\d* vecka sedan|for \d+[.,]?\d* dag sedan|for \d+[.,]?\d* man sedan|for \d+[.,]?\d* min sedan|for \d+[.,]?\d* sek sedan|for \d+[.,]?\d* tim sedan|for \d+[.,]?\d* ar sedan|for \d+[.,]?\d* d sedan|for \d+[.,]?\d* v sedan|om \d+[.,]?\d* sekunder|om \d+[.,]?\d* manader|om \d+[.,]?\d* minuter|om \d+[.,]?\d* sekund|om \d+[.,]?\d* timmar|om \d+[.,]?\d* veckor|om \d+[.,]?\d* dagar|om \d+[.,]?\d* manad|om \d+[.,]?\d* minut|om \d+[.,]?\d* timme|om \d+[.,]?\d* vecka|om \d+[.,]?\d* dag|om \d+[.,]?\d* man|om \d+[.,]?\d* min|om \d+[.,]?\d* sek|om \d+[.,]?\d* tim|om \d+[.,]?\d* ar|om \d+[.,]?\d* d|om \d+[.,]?\d* v|−\d+[.,]?\d* man|−\d+[.,]?\d* min|−\d+[.,]?\d* ar|−\d+[.,]?\d* d|−\d+[.,]?\d* h|−\d+[.,]?\d* s|−\d+[.,]?\d* v)$`),
 		KnownWords:      []string{"forra manaden", "forra veckan", "denna manad", "denna minut", "denna timme", "denna vecka", "eftermiddag", "nasta manad", "nasta vecka", "forra aret", "denna man", "formiddag", "forra man", "nasta man", "september", "december", "februari", "i morgon", "nasta ar", "november", "sekunder", "augusti", "denna v", "forra v", "forrgar", "fran nu", "imorgon", "januari", "manaden", "manader", "minuter", "nasta v", "oktober", "torsdag", "fredag", "i fjol", "lordag", "mandag", "onsdag", "sekund", "sondag", "timmar", "tisdag", "veckor", "april", "dagar", "i dag", "i gar", "manad", "minut", "sedan", "timme", "torsd", "vecka", "aret", "fred", "i ar", "idag", "igar", "juli", "juni", "lord", "mand", "mars", "onsd", "sept", "sond", "tisd", "tors", "apr", "aug", "dag", "dec", "den", "feb", "fre", "gmt", "jan", "jul", "jun", "lor", "maj", "man", "min", "nov", "okt", "ons", "sek", "sep", "son", "tim", "tis", "utc", "am", "ar", "em", "fm", "nu", "om", "pa", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "m", "s", "t", "v", "z", "|"},
 	})
-}
 
-var sv_AX_Locale LocaleData
-
-func init() {
 	sv_AX_Locale = merge(&sv_Locale, LocaleData{
 		Name:      "sv-AX",
 		DateOrder: "YMD",
 	})
-}
 
-var sv_FI_Locale LocaleData
-
-func init() {
 	sv_FI_Locale = merge(&sv_Locale, LocaleData{
 		Name:      "sv-FI",
 		DateOrder: "DMY",

@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var fo_Locale LocaleData
+var (
+	fo_Locale    LocaleData
+	fo_DK_Locale LocaleData
+)
 
 func init() {
 	fo_Locale = merge(nil, LocaleData{
@@ -152,11 +155,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* minuttir siðan|\d+[.,]?\d* manaðir siðan|\d+[.,]?\d* minutt siðan|\d+[.,]?\d* sekund siðan|\d+[.,]?\d* dagar siðan|\d+[.,]?\d* dagur siðan|\d+[.,]?\d* manað siðan|\d+[.,]?\d* timar siðan|\d+[.,]?\d* vikur siðan|um \d+[.,]?\d* minuttir|\d+[.,]?\d* timi siðan|\d+[.,]?\d* vika siðan|um \d+[.,]?\d* manaðir|\d+[.,]?\d* min siðan|\d+[.,]?\d* mnð siðan|\d+[.,]?\d* sek siðan|um \d+[.,]?\d* minutt|um \d+[.,]?\d* sekund|\d+[.,]?\d* ar siðan|\d+[.,]?\d* da siðan|\d+[.,]?\d* vi siðan|um \d+[.,]?\d* dagar|um \d+[.,]?\d* manað|um \d+[.,]?\d* timar|um \d+[.,]?\d* vikur|\d+[.,]?\d* d siðan|\d+[.,]?\d* m siðan|\d+[.,]?\d* s siðan|\d+[.,]?\d* t siðan|\d+[.,]?\d* v siðan|um \d+[.,]?\d* tima|um \d+[.,]?\d* viku|um \d+[.,]?\d* dag|um \d+[.,]?\d* min|um \d+[.,]?\d* mnð|um \d+[.,]?\d* sek|um \d+[.,]?\d* ar|um \d+[.,]?\d* da|um \d+[.,]?\d* vi|um \d+[.,]?\d* d|um \d+[.,]?\d* m|um \d+[.,]?\d* s|um \d+[.,]?\d* t|um \d+[.,]?\d* v)$`),
 		KnownWords:      []string{"hendan minuttin", "seinasta manað", "henda manaðin", "seinastu viku", "friggjadagur", "hendan timan", "leygardagur", "næsta manað", "næstu viku", "sunnudagur", "hesu viku", "manadagur", "mikudagur", "september", "desember", "hosdagur", "i morgin", "minuttur", "november", "næsta ar", "tysdagur", "februar", "manaður", "oktober", "august", "i fjør", "i gjar", "januar", "sekund", "april", "dagur", "i dag", "i ar", "juli", "juni", "mars", "timi", "vika", "apr", "aug", "des", "feb", "fri", "gmt", "hos", "jan", "jul", "jun", "ley", "mai", "man", "mar", "mik", "min", "mnð", "nov", "okt", "sek", "sep", "sun", "tys", "utc", "am", "ar", "da", "nu", "pm", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "m", "s", "t", "v", "z", "|"},
 	})
-}
 
-var fo_DK_Locale LocaleData
-
-func init() {
 	fo_DK_Locale = merge(&fo_Locale, LocaleData{
 		Name:      "fo-DK",
 		DateOrder: "DMY",

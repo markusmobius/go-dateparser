@@ -4,7 +4,54 @@ package data
 
 import "regexp"
 
-var fr_Locale LocaleData
+var (
+	fr_Locale    LocaleData
+	fr_BE_Locale LocaleData
+	fr_BF_Locale LocaleData
+	fr_BI_Locale LocaleData
+	fr_BJ_Locale LocaleData
+	fr_BL_Locale LocaleData
+	fr_CA_Locale LocaleData
+	fr_CD_Locale LocaleData
+	fr_CF_Locale LocaleData
+	fr_CG_Locale LocaleData
+	fr_CH_Locale LocaleData
+	fr_CI_Locale LocaleData
+	fr_CM_Locale LocaleData
+	fr_DJ_Locale LocaleData
+	fr_DZ_Locale LocaleData
+	fr_GA_Locale LocaleData
+	fr_GF_Locale LocaleData
+	fr_GN_Locale LocaleData
+	fr_GP_Locale LocaleData
+	fr_GQ_Locale LocaleData
+	fr_HT_Locale LocaleData
+	fr_KM_Locale LocaleData
+	fr_LU_Locale LocaleData
+	fr_MA_Locale LocaleData
+	fr_MC_Locale LocaleData
+	fr_MF_Locale LocaleData
+	fr_MG_Locale LocaleData
+	fr_ML_Locale LocaleData
+	fr_MQ_Locale LocaleData
+	fr_MR_Locale LocaleData
+	fr_MU_Locale LocaleData
+	fr_NC_Locale LocaleData
+	fr_NE_Locale LocaleData
+	fr_PF_Locale LocaleData
+	fr_PM_Locale LocaleData
+	fr_RE_Locale LocaleData
+	fr_RW_Locale LocaleData
+	fr_SC_Locale LocaleData
+	fr_SN_Locale LocaleData
+	fr_SY_Locale LocaleData
+	fr_TD_Locale LocaleData
+	fr_TG_Locale LocaleData
+	fr_TN_Locale LocaleData
+	fr_VU_Locale LocaleData
+	fr_WF_Locale LocaleData
+	fr_YT_Locale LocaleData
+)
 
 func init() {
 	fr_Locale = merge(nil, LocaleData{
@@ -201,56 +248,32 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(il y a \d+[.,]?\d* secondes|il y a \d+[.,]?\d* semaines|il y a \d+[.,]?\d* minutes|il y a \d+[.,]?\d* seconde|il y a \d+[.,]?\d* semaine|dans \d+[.,]?\d* secondes|dans \d+[.,]?\d* semaines|il y a \d+[.,]?\d* heures|il y a \d+[.,]?\d* minute|dans \d+[.,]?\d* minutes|dans \d+[.,]?\d* seconde|dans \d+[.,]?\d* semaine|il y a \d+[.,]?\d* heure|il y a \d+[.,]?\d* jours|dans \d+[.,]?\d* heures|dans \d+[.,]?\d* minute|il y a \d+[.,]?\d* jour|il y a \d+[.,]?\d* mois|dans \d+[.,]?\d* heure|dans \d+[.,]?\d* jours|il y a \d+[.,]?\d* ans|il y a \d+[.,]?\d* min|il y a \d+[.,]?\d* sem|dans \d+[.,]?\d* jour|dans \d+[.,]?\d* mois|il y a \d+[.,]?\d* an|il y a \d+[.,]?\d*min|dans \d+[.,]?\d* ans|dans \d+[.,]?\d* min|dans \d+[.,]?\d* sem|il y a \d+[.,]?\d* a|il y a \d+[.,]?\d* h|il y a \d+[.,]?\d* j|il y a \d+[.,]?\d* m|il y a \d+[.,]?\d* s|dans \d+[.,]?\d* an|il y a \d+[.,]?\d*h|dans \d+[.,]?\d* a|dans \d+[.,]?\d* h|dans \d+[.,]?\d* j|dans \d+[.,]?\d* m|dans \d+[.,]?\d* s|dans \d+[.,]?\d*h)$`),
 		KnownWords:      []string{"la semaine prochaine", "la semaine derniere", "l'annee prochaine", "l'annee derniere", "le mois prochain", "cette minute-ci", "le mois dernier", "cette heure-ci", "cette semaine", "apres-demain", "aujourd'hui", "cette annee", "avant-hier", "ce mois-ci", "maintenant", "septembre", "decembre", "dimanche", "mercredi", "novembre", "secondes", "semaines", "vendredi", "environ", "fevrier", "janvier", "juillet", "minutes", "octobre", "seconde", "semaine", "annees", "demain", "heures", "il y a", "minute", "samedi", "annee", "apres", "avril", "heure", "il ya", "jeudi", "jours", "lundi", "mardi", "aout", "dans", "fevr", "hier", "janv", "jour", "juil", "juin", "mars", "mois", "sept", "ans", "aou", "avr", "dec", "dim", "fev", "gmt", "jan", "jeu", "jul", "jun", "lun", "mai", "mar", "mer", "min", "nov", "oct", "sam", "sem", "sep", "utc", "ven", "am", "an", "di", "en", "er", "et", "je", "le", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "h", "j", "m", "s", "z", "|"},
 	})
-}
 
-var fr_BE_Locale LocaleData
-
-func init() {
 	fr_BE_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-BE",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_BF_Locale LocaleData
-
-func init() {
 	fr_BF_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-BF",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_BI_Locale LocaleData
-
-func init() {
 	fr_BI_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-BI",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_BJ_Locale LocaleData
-
-func init() {
 	fr_BJ_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-BJ",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_BL_Locale LocaleData
-
-func init() {
 	fr_BL_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-BL",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_CA_Locale LocaleData
-
-func init() {
 	fr_CA_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-CA",
 		DateOrder: "YMD",
@@ -259,56 +282,32 @@ func init() {
 		},
 		KnownWords: []string{"la semaine prochaine", "la semaine derniere", "l'annee prochaine", "l'annee derniere", "le mois prochain", "cette minute-ci", "le mois dernier", "cette heure-ci", "cette semaine", "apres-demain", "aujourd'hui", "cette annee", "avant-hier", "ce mois-ci", "maintenant", "septembre", "decembre", "dimanche", "mercredi", "novembre", "secondes", "semaines", "vendredi", "environ", "fevrier", "janvier", "juillet", "minutes", "octobre", "seconde", "semaine", "annees", "demain", "heures", "il y a", "minute", "samedi", "annee", "apres", "avril", "heure", "il ya", "jeudi", "jours", "juill", "lundi", "mardi", "aout", "dans", "fevr", "hier", "janv", "jour", "juil", "juin", "mars", "mois", "sept", "ans", "aou", "avr", "dec", "dim", "fev", "gmt", "jan", "jeu", "jul", "jun", "lun", "mai", "mar", "mer", "min", "nov", "oct", "sam", "sem", "sep", "utc", "ven", "am", "an", "di", "en", "er", "et", "je", "le", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "h", "j", "m", "s", "z", "|"},
 	})
-}
 
-var fr_CD_Locale LocaleData
-
-func init() {
 	fr_CD_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-CD",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_CF_Locale LocaleData
-
-func init() {
 	fr_CF_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-CF",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_CG_Locale LocaleData
-
-func init() {
 	fr_CG_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-CG",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_CH_Locale LocaleData
-
-func init() {
 	fr_CH_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-CH",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_CI_Locale LocaleData
-
-func init() {
 	fr_CI_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-CI",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_CM_Locale LocaleData
-
-func init() {
 	fr_CM_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-CM",
 		DateOrder: "DMY",
@@ -319,74 +318,42 @@ func init() {
 		},
 		KnownWords: []string{"la semaine prochaine", "la semaine derniere", "l'annee prochaine", "l'annee derniere", "le mois prochain", "cette minute-ci", "le mois dernier", "cette heure-ci", "cette semaine", "apres-demain", "aujourd'hui", "cette annee", "avant-hier", "ce mois-ci", "maintenant", "septembre", "decembre", "dimanche", "mercredi", "novembre", "secondes", "semaines", "vendredi", "environ", "fevrier", "janvier", "juillet", "minutes", "octobre", "seconde", "semaine", "annees", "demain", "heures", "il y a", "minute", "samedi", "annee", "apres", "avril", "heure", "il ya", "jeudi", "jours", "lundi", "mardi", "matin", "aout", "dans", "fevr", "hier", "janv", "jour", "juil", "juin", "mars", "mois", "sept", "soir", "ans", "aou", "avr", "dec", "dim", "fev", "gmt", "jan", "jeu", "jul", "jun", "lun", "mai", "mar", "mat", "mer", "min", "nov", "oct", "sam", "sem", "sep", "utc", "ven", "am", "an", "di", "en", "er", "et", "je", "le", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "h", "j", "m", "s", "z", "|"},
 	})
-}
 
-var fr_DJ_Locale LocaleData
-
-func init() {
 	fr_DJ_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-DJ",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_DZ_Locale LocaleData
-
-func init() {
 	fr_DZ_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-DZ",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_GA_Locale LocaleData
-
-func init() {
 	fr_GA_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-GA",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_GF_Locale LocaleData
-
-func init() {
 	fr_GF_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-GF",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_GN_Locale LocaleData
-
-func init() {
 	fr_GN_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-GN",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_GP_Locale LocaleData
-
-func init() {
 	fr_GP_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-GP",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_GQ_Locale LocaleData
-
-func init() {
 	fr_GQ_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-GQ",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_HT_Locale LocaleData
-
-func init() {
 	fr_HT_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-HT",
 		DateOrder: "DMY",
@@ -397,29 +364,17 @@ func init() {
 		},
 		KnownWords: []string{"la semaine prochaine", "la semaine derniere", "l'annee prochaine", "l'annee derniere", "le mois prochain", "cette minute-ci", "le mois dernier", "cette heure-ci", "cette semaine", "apres-demain", "aujourd'hui", "cette annee", "avant-hier", "ce mois-ci", "maintenant", "septembre", "decembre", "dimanche", "mercredi", "novembre", "secondes", "semaines", "vendredi", "environ", "fevrier", "janvier", "juillet", "minutes", "octobre", "seconde", "semaine", "annees", "demain", "heures", "il y a", "minute", "samedi", "annee", "apres", "avril", "heure", "il ya", "jeudi", "jours", "lundi", "mardi", "aout", "dans", "fevr", "hier", "janv", "jour", "juil", "juin", "mars", "mois", "sept", "ans", "aou", "avr", "dec", "dim", "fev", "gmt", "jan", "jeu", "jul", "jun", "lun", "mai", "mar", "mer", "min", "nov", "oct", "sam", "sec", "sem", "sep", "utc", "ven", "am", "an", "di", "en", "er", "et", "hr", "je", "jr", "le", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "h", "j", "m", "s", "z", "|"},
 	})
-}
 
-var fr_KM_Locale LocaleData
-
-func init() {
 	fr_KM_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-KM",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_LU_Locale LocaleData
-
-func init() {
 	fr_LU_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-LU",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_MA_Locale LocaleData
-
-func init() {
 	fr_MA_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-MA",
 		DateOrder: "DMY",
@@ -429,200 +384,112 @@ func init() {
 		},
 		KnownWords: []string{"la semaine prochaine", "la semaine derniere", "l'annee prochaine", "l'annee derniere", "le mois prochain", "cette minute-ci", "le mois dernier", "cette heure-ci", "cette semaine", "apres-demain", "aujourd'hui", "cette annee", "avant-hier", "ce mois-ci", "maintenant", "septembre", "decembre", "dimanche", "mercredi", "novembre", "secondes", "semaines", "vendredi", "environ", "fevrier", "janvier", "juillet", "minutes", "octobre", "seconde", "semaine", "annees", "demain", "heures", "il y a", "minute", "samedi", "annee", "apres", "avril", "heure", "il ya", "jeudi", "jours", "lundi", "mardi", "aout", "dans", "fevr", "hier", "janv", "jour", "juil", "juin", "mars", "mois", "sept", "ans", "aou", "avr", "dec", "dim", "fev", "gmt", "jan", "jeu", "jui", "jul", "jun", "lun", "mai", "mar", "mer", "min", "nov", "oct", "sam", "sem", "sep", "utc", "ven", "am", "an", "di", "en", "er", "et", "je", "le", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "h", "j", "m", "s", "z", "|"},
 	})
-}
 
-var fr_MC_Locale LocaleData
-
-func init() {
 	fr_MC_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-MC",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_MF_Locale LocaleData
-
-func init() {
 	fr_MF_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-MF",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_MG_Locale LocaleData
-
-func init() {
 	fr_MG_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-MG",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_ML_Locale LocaleData
-
-func init() {
 	fr_ML_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-ML",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_MQ_Locale LocaleData
-
-func init() {
 	fr_MQ_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-MQ",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_MR_Locale LocaleData
-
-func init() {
 	fr_MR_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-MR",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_MU_Locale LocaleData
-
-func init() {
 	fr_MU_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-MU",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_NC_Locale LocaleData
-
-func init() {
 	fr_NC_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-NC",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_NE_Locale LocaleData
-
-func init() {
 	fr_NE_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-NE",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_PF_Locale LocaleData
-
-func init() {
 	fr_PF_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-PF",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_PM_Locale LocaleData
-
-func init() {
 	fr_PM_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-PM",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_RE_Locale LocaleData
-
-func init() {
 	fr_RE_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-RE",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_RW_Locale LocaleData
-
-func init() {
 	fr_RW_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-RW",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_SC_Locale LocaleData
-
-func init() {
 	fr_SC_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-SC",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_SN_Locale LocaleData
-
-func init() {
 	fr_SN_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-SN",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_SY_Locale LocaleData
-
-func init() {
 	fr_SY_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-SY",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_TD_Locale LocaleData
-
-func init() {
 	fr_TD_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-TD",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_TG_Locale LocaleData
-
-func init() {
 	fr_TG_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-TG",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_TN_Locale LocaleData
-
-func init() {
 	fr_TN_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-TN",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_VU_Locale LocaleData
-
-func init() {
 	fr_VU_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-VU",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_WF_Locale LocaleData
-
-func init() {
 	fr_WF_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-WF",
 		DateOrder: "DMY",
 	})
-}
 
-var fr_YT_Locale LocaleData
-
-func init() {
 	fr_YT_Locale = merge(&fr_Locale, LocaleData{
 		Name:      "fr-YT",
 		DateOrder: "DMY",

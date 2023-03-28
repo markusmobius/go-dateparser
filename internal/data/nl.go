@@ -4,7 +4,15 @@ package data
 
 import "regexp"
 
-var nl_Locale LocaleData
+var (
+	nl_Locale    LocaleData
+	nl_AW_Locale LocaleData
+	nl_BE_Locale LocaleData
+	nl_BQ_Locale LocaleData
+	nl_CW_Locale LocaleData
+	nl_SR_Locale LocaleData
+	nl_SX_Locale LocaleData
+)
 
 func init() {
 	nl_Locale = merge(nil, LocaleData{
@@ -146,56 +154,32 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* seconden geleden|\d+[.,]?\d* maanden geleden|\d+[.,]?\d* minuten geleden|\d+[.,]?\d* seconde geleden|\d+[.,]?\d* minuut geleden|\d+[.,]?\d* dagen geleden|\d+[.,]?\d* maand geleden|\d+[.,]?\d* weken geleden|over \d+[.,]?\d* seconden|\d+[.,]?\d* jaar geleden|\d+[.,]?\d* week geleden|over \d+[.,]?\d* maanden|over \d+[.,]?\d* minuten|over \d+[.,]?\d* seconde|\d+[.,]?\d* dag geleden|\d+[.,]?\d* dgn geleden|\d+[.,]?\d* min geleden|\d+[.,]?\d* sec geleden|\d+[.,]?\d* uur geleden|over \d+[.,]?\d* minuut|over \d+[.,]?\d* dagen|over \d+[.,]?\d* maand|over \d+[.,]?\d* weken|over \d+[.,]?\d* jaar|over \d+[.,]?\d* week|over \d+[.,]?\d* dag|over \d+[.,]?\d* dgn|over \d+[.,]?\d* min|over \d+[.,]?\d* sec|over \d+[.,]?\d* uur)$`),
 		KnownWords:      []string{"binnen een minuut", "binnen een uur", "volgende maand", "volgende week", "volgend jaar", "vorige maand", "eergisteren", "vorige jaar", "vorige week", "deze maand", "overmorgen", "vorig jaar", "deze week", "donderdag", "september", "augustus", "december", "dit jaar", "februari", "gisteren", "november", "seconden", "woensdag", "zaterdag", "dinsdag", "geleden", "januari", "maandag", "maanden", "minuten", "oktober", "seconde", "vandaag", "vrijdag", "minuut", "morgen", "zondag", "april", "dagen", "maand", "maart", "weken", "jaar", "juli", "juni", "week", "apr", "aug", "dag", "dec", "feb", "gmt", "jan", "jul", "jun", "mei", "min", "mnd", "mrt", "nov", "okt", "sec", "sep", "utc", "uur", "am", "di", "do", "in", "jr", "ma", "nu", "om", "pm", "vr", "wk", "wo", "za", "zo", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "s", "z", "|"},
 	})
-}
 
-var nl_AW_Locale LocaleData
-
-func init() {
 	nl_AW_Locale = merge(&nl_Locale, LocaleData{
 		Name:      "nl-AW",
 		DateOrder: "DMY",
 	})
-}
 
-var nl_BE_Locale LocaleData
-
-func init() {
 	nl_BE_Locale = merge(&nl_Locale, LocaleData{
 		Name:      "nl-BE",
 		DateOrder: "DMY",
 	})
-}
 
-var nl_BQ_Locale LocaleData
-
-func init() {
 	nl_BQ_Locale = merge(&nl_Locale, LocaleData{
 		Name:      "nl-BQ",
 		DateOrder: "DMY",
 	})
-}
 
-var nl_CW_Locale LocaleData
-
-func init() {
 	nl_CW_Locale = merge(&nl_Locale, LocaleData{
 		Name:      "nl-CW",
 		DateOrder: "DMY",
 	})
-}
 
-var nl_SR_Locale LocaleData
-
-func init() {
 	nl_SR_Locale = merge(&nl_Locale, LocaleData{
 		Name:      "nl-SR",
 		DateOrder: "DMY",
 	})
-}
 
-var nl_SX_Locale LocaleData
-
-func init() {
 	nl_SX_Locale = merge(&nl_Locale, LocaleData{
 		Name:      "nl-SX",
 		DateOrder: "DMY",

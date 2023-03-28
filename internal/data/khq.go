@@ -2,7 +2,9 @@
 
 package data
 
-var khq_Locale LocaleData
+var (
+	khq_Locale LocaleData
+)
 
 func init() {
 	khq_Locale = merge(nil, LocaleData{

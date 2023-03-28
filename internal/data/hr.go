@@ -4,7 +4,10 @@ package data
 
 import "regexp"
 
-var hr_Locale LocaleData
+var (
+	hr_Locale    LocaleData
+	hr_BA_Locale LocaleData
+)
 
 func init() {
 	hr_Locale = merge(nil, LocaleData{
@@ -258,11 +261,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(prije \d+[.,]?\d* mjeseca|prije \d+[.,]?\d* mjeseci|prije \d+[.,]?\d* sekunde|prije \d+[.,]?\d* sekundi|prije \d+[.,]?\d* sekundu|prije \d+[.,]?\d* tjedana|prije \d+[.,]?\d* godina|prije \d+[.,]?\d* godine|prije \d+[.,]?\d* godinu|prije \d+[.,]?\d* minuta|prije \d+[.,]?\d* minute|prije \d+[.,]?\d* minutu|prije \d+[.,]?\d* mjesec|prije \d+[.,]?\d* tjedan|prije \d+[.,]?\d* tjedna|prije \d+[.,]?\d* dana|prije \d+[.,]?\d* sata|prije \d+[.,]?\d* sati|za \d+[.,]?\d* mjeseca|za \d+[.,]?\d* mjeseci|za \d+[.,]?\d* sekunde|za \d+[.,]?\d* sekundi|za \d+[.,]?\d* sekundu|za \d+[.,]?\d* tjedana|prije \d+[.,]?\d* dan|prije \d+[.,]?\d* min|prije \d+[.,]?\d* sat|za \d+[.,]?\d* godina|za \d+[.,]?\d* godine|za \d+[.,]?\d* godinu|za \d+[.,]?\d* minuta|za \d+[.,]?\d* minute|za \d+[.,]?\d* minutu|za \d+[.,]?\d* mjesec|za \d+[.,]?\d* tjedan|za \d+[.,]?\d* tjedna|prije \d+[.,]?\d* mj|prije \d+[.,]?\d* tj|prije \d+[.,]?\d* d|prije \d+[.,]?\d* g|prije \d+[.,]?\d* h|prije \d+[.,]?\d* s|za \d+[.,]?\d* dana|za \d+[.,]?\d* sata|za \d+[.,]?\d* sati|za \d+[.,]?\d* dan|za \d+[.,]?\d* min|za \d+[.,]?\d* sat|za \d+[.,]?\d* mj|za \d+[.,]?\d* tj|za \d+[.,]?\d* d|za \d+[.,]?\d* g|za \d+[.,]?\d* h|za \d+[.,]?\d* s)$`),
 		KnownWords:      []string{"sljedeceg mjeseca", "sljedecem mjesecu", "sljedeceg tjedna", "sljedecem tjednu", "sljedecoj godini", "proslog mjeseca", "proslom mjesecu", "sljedeca godina", "sljedece godine", "sljedeci mjesec", "sljedeci tjedan", "iduceg mjeseca", "iducem mjesecu", "proslog tjedna", "prosloj godini", "proslom tjednu", "iduceg tjedna", "iducem tjednu", "iducoj godini", "prosla godina", "prosle godine", "prosli mjesec", "prosli tjedan", "iduca godina", "iduce godine", "iduci mjesec", "iduci tjedan", "sljedeca god", "sljedece god", "ovaj mjesec", "ovaj tjedan", "ponedjeljak", "sljedeci mj", "sljedeci tj", "iducoj god", "listopadom", "ova minuta", "ove godine", "prekosutra", "prosle god", "sljedeca g", "sljedece g", "iduca god", "iduce god", "iduceg mj", "iduceg tj", "iducem mj", "iducem tj", "kolovozom", "listopada", "listopadu", "prekjucer", "prosincem", "prosli mj", "prosli tj", "sijecnjem", "studenoga", "studenome", "studenomu", "cetvrtak", "dogodine", "iduci mj", "iduci tj", "iducoj g", "kolovoza", "kolovozu", "listopad", "nagodinu", "nedjelja", "ovaj sat", "preklani", "prosinac", "prosinca", "prosincu", "prosle g", "sijecanj", "sijecnja", "sijecnju", "studenim", "studenog", "studenom", "svibnjem", "travnjem", "veljacom", "iduca g", "iduce g", "kolovoz", "lipnjem", "ovaj mj", "ovaj tj", "ove god", "ozujkom", "sekunda", "srijeda", "srpnjem", "studeni", "svibanj", "svibnja", "svibnju", "travanj", "travnja", "travnju", "veljaca", "veljace", "veljaci", "godina", "lipanj", "lipnja", "lipnju", "minuta", "mjesec", "ozujak", "ozujka", "ozujku", "rujnom", "srpanj", "srpnja", "srpnju", "subota", "tjedan", "utorak", "danas", "jucer", "ove g", "petak", "rujan", "rujna", "rujnu", "sutra", "lani", "velj", "cet", "dan", "gmt", "kol", "lip", "lis", "min", "ned", "ozu", "pet", "pon", "pro", "ruj", "sad", "sat", "sij", "sri", "srp", "stu", "sub", "svi", "tra", "utc", "uto", "am", "mj", "pm", "tj", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "g", "h", "m", "s", "u", "z", "|"},
 	})
-}
 
-var hr_BA_Locale LocaleData
-
-func init() {
 	hr_BA_Locale = merge(&hr_Locale, LocaleData{
 		Name:      "hr-BA",
 		DateOrder: "DMY.",

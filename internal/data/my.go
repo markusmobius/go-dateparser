@@ -4,7 +4,9 @@ package data
 
 import "regexp"
 
-var my_Locale LocaleData
+var (
+	my_Locale LocaleData
+)
 
 func init() {
 	my_Locale = merge(nil, LocaleData{

@@ -4,7 +4,11 @@ package data
 
 import "regexp"
 
-var se_Locale LocaleData
+var (
+	se_Locale    LocaleData
+	se_FI_Locale LocaleData
+	se_SE_Locale LocaleData
+)
 
 func init() {
 	se_Locale = merge(nil, LocaleData{
@@ -131,11 +135,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* manotbadji maŋŋilit|\d+[.,]?\d* minuhtta maŋŋilit|\d+[.,]?\d* sekundda maŋŋilit|\d+[.,]?\d* diibmur maŋŋilit|\d+[.,]?\d* jandora maŋŋilit|\d+[.,]?\d* minuhta maŋŋilit|\d+[.,]?\d* sekunda maŋŋilit|\d+[.,]?\d* diibmu maŋŋilit|\d+[.,]?\d* jahkki maŋŋilit|\d+[.,]?\d* jandor maŋŋilit|\d+[.,]?\d* manotbadji arat|\d+[.,]?\d* vahkku maŋŋilit|\d+[.,]?\d* jahki maŋŋilit|\d+[.,]?\d* vahku maŋŋilit|\d+[.,]?\d* minuhtta arat|\d+[.,]?\d* sekundda arat|\d+[.,]?\d* diibmur arat|\d+[.,]?\d* jandora arat|\d+[.,]?\d* minuhta arat|\d+[.,]?\d* sekunda arat|\d+[.,]?\d* diibmu arat|\d+[.,]?\d* jahkki arat|\d+[.,]?\d* jandor arat|\d+[.,]?\d* vahkku arat|\d+[.,]?\d* jahki arat|\d+[.,]?\d* vahku arat)$`),
 		KnownWords:      []string{"eahketbeaivet", "ođđajagemannu", "eahketbeaivi", "golggotmannu", "suoidnemannu", "gaskavahkku", "geassemannu", "guovvamannu", "iđitbeaivet", "juovlamannu", "miessemannu", "njukcamannu", "skabmamannu", "sotnabeaivi", "this minute", "borgemannu", "cakcamannu", "cuoŋomannu", "iđitbeaivi", "last month", "maŋŋebarga", "next month", "this month", "bearjadat", "duorasdat", "last week", "last year", "lavvardat", "next week", "next year", "this hour", "this week", "this year", "vuossarga", "minuhtta", "sekunda", "beaivi", "diibmu", "ihttin", "vahkku", "jahki", "mannu", "bear", "borg", "cakc", "duor", "gask", "geas", "golg", "guov", "ikte", "juov", "mies", "njuk", "odne", "ođđj", "skab", "sotn", "suoi", "vuos", "cuo", "gmt", "lav", "maŋ", "now", "utc", "am", "eb", "ib", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
 
-var se_FI_Locale LocaleData
-
-func init() {
 	se_FI_Locale = merge(&se_Locale, LocaleData{
 		Name:      "se-FI",
 		DateOrder: "YMD",
@@ -161,11 +161,7 @@ func init() {
 		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* manotbadji maŋŋilit|\d+[.,]?\d* minuhtta maŋŋilit|\d+[.,]?\d* sekundda maŋŋilit|\d+[.,]?\d* diibmur maŋŋilit|\d+[.,]?\d* jandora maŋŋilit|\d+[.,]?\d* minuhta maŋŋilit|\d+[.,]?\d* sekunda maŋŋilit|\d+[.,]?\d* diibmu maŋŋilit|\d+[.,]?\d* jahkki maŋŋilit|\d+[.,]?\d* jandor maŋŋilit|\d+[.,]?\d* manotbadji arat|\d+[.,]?\d* vahkku maŋŋilit|\d+[.,]?\d* jahki maŋŋilit|\d+[.,]?\d* vahku maŋŋilit|\d+[.,]?\d* minuhtta arat|\d+[.,]?\d* sekundda arat|\d+[.,]?\d* diibmur arat|\d+[.,]?\d* jandora arat|\d+[.,]?\d* minuhta arat|\d+[.,]?\d* sekunda arat|\d+[.,]?\d* diibmu arat|\d+[.,]?\d* jahkki arat|\d+[.,]?\d* jandor arat|\d+[.,]?\d* vahkku arat|\d+[.,]?\d* jagi siste|\d+[.,]?\d* jahki arat|\d+[.,]?\d* vahku arat|\d+[.,]?\d* jagi arat)$`),
 		KnownWords:      []string{"eahketbeaivet", "ođđajagemannu", "boahtte jagi", "eahketbeaivi", "golggotmannu", "suoidnemannu", "gaskavahkku", "geassemannu", "guovvamannu", "iđitbeaivet", "juovlamannu", "mannan jagi", "maŋŋebargga", "miessemannu", "njukcamannu", "skabmamannu", "sotnabeaivi", "this minute", "bearjadaga", "borgemannu", "cakcamannu", "cuoŋomannu", "duorastaga", "gaskavahku", "iđitbeaivi", "last month", "lavvardaga", "maŋŋebarga", "next month", "this month", "vuossargga", "bearjadat", "duorasdat", "last week", "last year", "lavvardat", "next week", "next year", "this hour", "this week", "this year", "vuossarga", "dan jagi", "minuhtta", "sekunda", "beaivi", "diibmu", "ihttin", "vahkku", "jahki", "mannu", "bear", "borg", "cakc", "duor", "gask", "geas", "golg", "guov", "ikte", "juov", "mies", "njuk", "odne", "ođđj", "skab", "sotn", "suoi", "vuos", "cuo", "gmt", "lav", "maŋ", "now", "utc", "am", "eb", "ib", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "j", "z", "|"},
 	})
-}
 
-var se_SE_Locale LocaleData
-
-func init() {
 	se_SE_Locale = merge(&se_Locale, LocaleData{
 		Name:      "se-SE",
 		DateOrder: "YMD",

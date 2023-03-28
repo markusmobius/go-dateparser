@@ -2,7 +2,9 @@
 
 package data
 
-var kab_Locale LocaleData
+var (
+	kab_Locale LocaleData
+)
 
 func init() {
 	kab_Locale = merge(nil, LocaleData{

@@ -2,7 +2,9 @@
 
 package data
 
-var az_Cyrl_Locale LocaleData
+var (
+	az_Cyrl_Locale LocaleData
+)
 
 func init() {
 	az_Cyrl_Locale = merge(nil, LocaleData{
