@@ -36,11 +36,9 @@ func generateLocaleDataCode(dstPath string, listData []LocaleData) error {
 	`)
 
 	// Generate locale data
-	for _, data := range listData {
-		err := templates["locale-data"].Execute(b, &data)
-		if err != nil {
-			return err
-		}
+	err := templates["locale-data"].Execute(b, &listData)
+	if err != nil {
+		return err
 	}
 
 	// Remove empty fields
@@ -49,7 +47,7 @@ func generateLocaleDataCode(dstPath string, listData []LocaleData) error {
 	code = rxGoZeroField.ReplaceAll(code, []byte(""))
 
 	// Format code
-	code, err := format.Source(code)
+	code, err = format.Source(code)
 	if err != nil {
 		return err
 	}
