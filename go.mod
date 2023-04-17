@@ -3,21 +3,21 @@ module github.com/markusmobius/go-dateparser
 go 1.18
 
 require (
-	github.com/elliotchance/pie/v2 v2.5.1
+	github.com/elliotchance/pie/v2 v2.5.2
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-shiori/dom v0.0.0-20210627111528-4e4722cd0d65
 	github.com/rs/zerolog v1.26.0
 	github.com/spf13/cobra v1.2.1
 	github.com/stretchr/testify v1.7.1
 	github.com/zyedidia/generic v1.2.1
-	golang.org/x/text v0.8.0
+	golang.org/x/text v0.9.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
 	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/gogs/chardet v0.0.0-20211120154057-b7413eaefb8f // indirect
-	golang.org/x/exp v0.0.0-20220321173239-a90fa8a75705 // indirect
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
 )
 
 require (
