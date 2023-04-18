@@ -53,7 +53,7 @@ var (
 	rxParenthesisPattern  = regexp.MustCompile(`[\(\)]`)
 	rxGoEmptyField        = regexp.MustCompile(`(?m)^.*\{\s*\},?$\n*`)
 	rxGoZeroField         = regexp.MustCompile(`(?m)^.*(false|0|nil),?$\n*`)
-	rxGoRegexImport       = regexp.MustCompile(`(?m)^\s*import "regexp"\s*$`)
+	rxGoRegexImport       = regexp.MustCompile(`(?m)^\s*import "github.com/markusmobius/go-dateparser/internal/regexp"\s*$`)
 	rxPythonCaptureGroup  = regexp.MustCompile(`\\(\d+)`)
 	rxGoCaptureGroup      = regexp.MustCompile(`\$\{?(\d+)\}?`)
 	rxParentheses         = regexp.MustCompile(`[\(\)]`)

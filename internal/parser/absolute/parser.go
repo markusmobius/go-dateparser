@@ -2,7 +2,6 @@ package absolute
 
 import (
 	"fmt"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -11,6 +10,7 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
 	"github.com/markusmobius/go-dateparser/internal/parser/tokenizer"
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"

@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
 
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/rs/zerolog"
 	"github.com/spf13/cobra"
 )
