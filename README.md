@@ -27,7 +27,8 @@ go get -u -v github.com/markusmobius/go-dateparser
 - [ 10. Incomplete Date Handling ▲](#-10-incomplete-date-handling-)
 - [ 11. Custom Language Detector ▲](#-11-custom-language-detector-)
 - [ 12. Handling False Positives ▲](#-12-handling-false-positives-)
-- [ 13. License ▲](#-13-license-)
+- [ 13. Performance ▲](#-13-performance-)
+- [ 14. License ▲](#-14-license-)
 
 ## <a name="features"></a> 1. Features [▲](#table-of-contents)
 
@@ -407,7 +408,28 @@ To reduce the possibility of receiving false positives, make sure that:
 
 Besides those, you also could exclude any of the [parser method][dps-parser-type] (timestamp, relative-time...) or change the order in which they are executed.
 
-## <a name="license"></a> 13. License [▲](#table-of-contents)
+## <a name="performance"></a> 13. Performance [▲](#table-of-contents)
+
+This library heavily uses regular expression for various purposes, from detecting language, extracting relevant content, and translating the date value. Unfortunately, as commonly known, Go's regular expression is pretty slow. This is because:
+
+- The regex engine in other language usually implemented in C, while in Go it's implemented from scratch in Go language. As expected, C implementation is still faster than Go's.
+- Since Go is usually used for web service, its regex is designed to finish in time linear to the length of the input, which useful for protecting server from ReDoS attack. However, this comes with performance cost.
+
+If you want to parse a huge amount of data, it would be preferrable to have a better performance. So, this package provides C++ [`re2`][re2] as an alternative regex engine using binding from [go-re2]. To activate it, you can build your app using tag `re2_wasm` or `re2_cgo`, for example:
+
+```
+go build -tags re2_cgo .
+```
+
+When using `re2_wasm` tag, it will make your app uses `re2` that packaged as WebAssembly module so it should be runnable even without cgo. However, if your input is too small, it might be even slower than using Go's standard regex engine.
+
+When using `re2_cgo` tag, it will make your app uses `re2` library that wrapped using cgo. It's a lot faster than Go's standard regex and `re2_wasm`, however to use it cgo must be available and `re2` should be installed in your system.
+
+In my test, `re2_cgo` will always be faster than the standard library, however `re2_wasm` only faster than standard regex when processing more than 10,000 short strings (e.g. "26 gennaio 2014"). So, when possible you might be better using `re2_cgo`. You could run `scripts/speedtest` to test it yourself.
+
+Do note that this alternative regex engine is experimental, so use on your own risk.
+
+## <a name="license"></a> 14. License [▲](#table-of-contents)
 
 Just like the original, this package is licensed under [BSD-3 License][bsd3].
 
@@ -429,3 +451,5 @@ Just like the original, this package is licensed under [BSD-3 License][bsd3].
 [umm-al-qura]: https://webspace.science.uu.nl/~gent0113/islam/ummalqura.htm
 [lingua-go]: https://github.com/pemistahl/lingua-go
 [bsd3]: https://tldrlegal.com/license/bsd-3-clause-license-(revised)
+[re2]: https://github.com/google/re2
+[go-re2]: https://github.com/wasilibs/go-re2
