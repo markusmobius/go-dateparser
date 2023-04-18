@@ -2,7 +2,7 @@
 
 package data
 
-import "regexp"
+import "github.com/markusmobius/go-dateparser/internal/regexp"
 
 var (
 	en_Locale     LocaleData

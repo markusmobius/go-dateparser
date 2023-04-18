@@ -2,9 +2,9 @@ package language
 
 import (
 	"errors"
-	"regexp"
 	"unicode"
 
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"golang.org/x/text/unicode/rangetable"
 )

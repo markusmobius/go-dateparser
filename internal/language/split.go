@@ -2,12 +2,12 @@ package language
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
 	"unicode"
 	"unicode/utf8"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 

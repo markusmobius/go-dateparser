@@ -1,15 +1,18 @@
 package jalali
 
 import (
-	"regexp"
+	stdregex "regexp"
 	"strconv"
 	"strings"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
 
 var (
-	rxHourPattern    = regexp.MustCompile(`ساعت\s+\d{2}`)
-	rxMinutePattern  = regexp.MustCompile(`\d{2}\s+دقیقه`)
-	rxSecondPattern  = regexp.MustCompile(`\d{2}\s+ثانیه`)
+	rxHourPattern   = stdregex.MustCompile(`ساعت\s+\d{2}`)
+	rxMinutePattern = stdregex.MustCompile(`\d{2}\s+دقیقه`)
+	rxSecondPattern = stdregex.MustCompile(`\d{2}\s+ثانیه`)
+
 	rxColonPattern   = regexp.MustCompile(`\s+و\s+`)
 	rxOrdinalPattern = regexp.MustCompile(`ام|م|ین`)
 	rxNonDigit       = regexp.MustCompile(`\D`)

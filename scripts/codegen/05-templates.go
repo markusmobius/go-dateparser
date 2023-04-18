@@ -193,10 +193,10 @@ const localeDataMapTemplate = `
 package data
 
 import (
-	"regexp"
 	"sort"
 
 	"github.com/elliotchance/pie/v2"
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
 
 type LocaleData struct {

@@ -2,13 +2,13 @@ package relative
 
 import (
 	"math"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"

@@ -2,9 +2,10 @@ package timezone
 
 import (
 	"fmt"
-	"regexp"
 	"sort"
 	"strings"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
 
 type OffsetData struct {

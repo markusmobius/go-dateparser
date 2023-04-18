@@ -1,6 +1,6 @@
 package timezone
 
-import "regexp"
+import "github.com/markusmobius/go-dateparser/internal/regexp"
 
 // Info is the data for parsing timezone from a string.
 type Info struct {
