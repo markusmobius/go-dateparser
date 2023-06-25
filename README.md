@@ -439,7 +439,7 @@ sudo apt install build-essential
 sudo apt-get install -y libre2-dev
 ```
 
-#### Compiling with cgo under Windows
+### Compiling with cgo under Windows
 On Windows start by installing [MSYS2][msys2]. Then open the MINGW64 terminal and install the gcc toolchain and re2 via pacman:
 
 ```bash
