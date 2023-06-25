@@ -420,6 +420,7 @@ If you want to parse a huge amount of data, it would be preferrable to have a be
 ```
 go build -tags re2_cgo .
 ```
+More detailed instructions in how to prepare your system for compiling with cgo are provided below.
 
 When using `re2_wasm` tag, it will make your app uses `re2` that packaged as WebAssembly module so it should be runnable even without cgo. However, if your input is too small, it might be even slower than using Go's standard regex engine.
 
