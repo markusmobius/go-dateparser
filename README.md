@@ -429,6 +429,28 @@ In my test, `re2_cgo` will always be faster than the standard library, however `
 
 Do note that this alternative regex engine is experimental, so use on your own risk.
 
+### Compiling with cgo under Linux
+
+On Ubuntu install the gcc tool chain and the re2 library as follows:
+
+```bash
+sudo apt install build-essential
+sudo apt-get install -y libre2-dev
+```
+
+#### Compiling with cgo under Windows
+On Windows start by installing [MSYS2][msys2]. Then open the MINGW64 terminal and install the gcc toolchain and re2 via pacman:
+
+```bash
+pacman -S mingw-w64-x86_64-gcc
+pacman -S mingw-w64-x86_64-re2
+```
+If you want to run the resulting exe program outside the MINGW64 terminal you need to add a path to the MinGW-w64 libraries to the PATH environmental variable (adjust as needed for your system):
+
+```cmd
+SET PATH=C:\msys64\mingw64\bin;%PATH%
+```
+
 ## <a name="license"></a> 14. License [▲](#table-of-contents)
 
 Just like the original, this package is licensed under [BSD-3 License][bsd3].
@@ -453,3 +475,4 @@ Just like the original, this package is licensed under [BSD-3 License][bsd3].
 [bsd3]: https://tldrlegal.com/license/bsd-3-clause-license-(revised)
 [re2]: https://github.com/google/re2
 [go-re2]: https://github.com/wasilibs/go-re2
+[msys2]: https://www.msys2.org/
