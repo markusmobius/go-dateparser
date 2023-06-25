@@ -6,7 +6,7 @@ require (
 	github.com/elliotchance/pie/v2 v2.7.0
 	github.com/hablullah/go-hijri v1.0.2
 	github.com/jalaali/go-jalaali v0.0.0-20210801064154-80525e88d958
-	github.com/markusmobius/go-re2 v1.7.1
+	github.com/markusmobius/go-re2 v1.7.3
 	github.com/stretchr/testify v1.7.1
 	golang.org/x/text v0.10.0
 )
