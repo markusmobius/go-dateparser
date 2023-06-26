@@ -26,6 +26,8 @@ github.com/tetratelabs/wazero v1.2.1 h1:J4X2hrGzJvt+wqltuvcSjHQ7ujQxA9gb6PeMs4ql
 github.com/tetratelabs/wazero v1.2.1/go.mod h1:wYx2gNRg8/WihJfSDxA1TIL8H+GkfLYm+bIfbblu9VQ=
 github.com/wasilibs/go-re2 v1.2.0 h1:EBE8PqqetncIYi4HyQiH3q73ZVWcrL2UATSm8+jL6Ng=
 github.com/wasilibs/go-re2 v1.2.0/go.mod h1:NdBnojD1uYA206Q0pBK/OKX12YZjIxg3fkvK75AbXIo=
+github.com/wasilibs/go-re2 v1.3.0 h1:LFhBNzoStM3wMie6rN2slD1cuYH2CGiHpvNL3UtcsMw=
+github.com/wasilibs/go-re2 v1.3.0/go.mod h1:AafrCXVvGRJJOImMajgJ2M7rVmWyisVK7sFshbxnVrg=
 golang.org/x/exp v0.0.0-20220321173239-a90fa8a75705 h1:ba9YlqfDGTTQ5aZ2fwOoQ1hf32QySyQkR6ODGDzHlnE=
 golang.org/x/exp v0.0.0-20220321173239-a90fa8a75705/go.mod h1:lgLbSvA5ygNOMpwM/9anMpWVlVJ7Z+cHWq/eFuinpGE=
 golang.org/x/text v0.10.0 h1:UpjohKhiEgNc0CSauXmwYftY1+LlaC75SJwh0SgCX58=
