@@ -16,12 +16,21 @@ const (
 	Day
 	Month
 	Year
+	Hour
+	Minute
+	Second
 )
 
 func (p Period) String() string {
 	switch p {
 	case Time:
 		return "Time"
+	case Second:
+		return "Second"
+	case Minute:
+		return "Minute"
+	case Hour:
+		return "Hour"
 	case Day:
 		return "Day"
 	case Month:

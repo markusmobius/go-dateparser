@@ -72,17 +72,23 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	}
 
 	// Retrieve relative durations
-	relDurations := getRelativeDurations(str)
+	relDurations, foundDurations := getRelativeDurations(str)
 	if len(relDurations) == 0 {
 		return time.Time{}, 0
 	}
 
 	// Extract period from relative durations
 	period := date.Day
-	if _, dayExist := relDurations["day"]; !dayExist {
-		if _, monthExist := relDurations["month"]; monthExist {
+	if foundDurations["second"] {
+		period = date.Second
+	} else if foundDurations["minute"] {
+		period = date.Minute
+	} else if foundDurations["hour"] {
+		period = date.Hour
+	} else if !foundDurations["day"] {
+		if foundDurations["month"] {
 			period = date.Month
-		} else if _, yearExist := relDurations["year"]; yearExist {
+		} else if foundDurations["year"] {
 			period = date.Year
 		}
 	}
@@ -128,7 +134,7 @@ func allWordsAreUnits(s string) bool {
 	return wordCount == 0
 }
 
-func getRelativeDurations(s string) map[string]float64 {
+func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 	// Extract durations using regex
 	floatDurations := map[string]float64{}
 	for _, parts := range rxRelativePattern.FindAllStringSubmatch(s, -1) {
@@ -148,6 +154,11 @@ func getRelativeDurations(s string) map[string]float64 {
 	if week, exist := floatDurations["week"]; exist {
 		floatDurations["day"] += week * 7
 		delete(floatDurations, "week")
+	}
+
+	foundDurations := map[string]bool{}
+	for duration, _ := range floatDurations {
+		foundDurations[duration] = true
 	}
 
 	// Convert fractional year, month and day to lower unit
@@ -254,7 +265,7 @@ func getRelativeDurations(s string) map[string]float64 {
 		}
 	}
 
-	return floatDurations
+	return floatDurations, foundDurations
 }
 
 func splitFraction(fl float64) (intPart, fractionPart float64, hasFraction bool) {
