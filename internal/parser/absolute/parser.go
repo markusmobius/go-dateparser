@@ -516,7 +516,12 @@ func (p *Parser) correctForTimeFrame(t time.Time, tz timezone.OffsetData) time.T
 	}
 
 	if tokenTimeExist && !tokenYearExist && !tokenMonthExist && !tokenDayExist && !tokenWeekdayExist {
-		tmp := t.Add(-time.Duration(tz.Offset) * time.Second)
+		tzOffset := tz.Offset
+		if tz.IsZero() && p.Config.DefaultTimezone != nil {
+			_, tzOffset = t.In(p.Config.DefaultTimezone).Zone()
+		}
+
+		tmp := t.Add(-time.Duration(tzOffset) * time.Second)
 
 		if dateSource == setting.Past && p.Now.Before(tmp) {
 			t = t.AddDate(0, 0, -1)

@@ -24,6 +24,7 @@ type Configuration struct {
 
 	// Incomplete dates
 	CurrentTime         time.Time
+	DefaultTimezone     *time.Location
 	PreferredDayOfMonth PreferredDayOfMonth
 	PreferredDateSource PreferredDateSource
 	StrictParsing       bool
@@ -41,6 +42,7 @@ func (c Configuration) Clone() *Configuration {
 	return &Configuration{
 		DateOrder:           c.DateOrder,
 		CurrentTime:         c.CurrentTime,
+		DefaultTimezone:     c.DefaultTimezone,
 		PreferredDayOfMonth: c.PreferredDayOfMonth,
 		PreferredDateSource: c.PreferredDateSource,
 		StrictParsing:       c.StrictParsing,

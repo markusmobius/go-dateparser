@@ -98,6 +98,9 @@ type Configuration struct {
 	// strings. Defaults to the current date and time in UTC.
 	CurrentTime time.Time
 
+	// DefaultTimezone is the default timezone to use when string doesn't contains any timezone.
+	DefaultTimezone *time.Location
+
 	// PreferredDayOfMonth specify the day for date with missing day. Defaults to `Current`.
 	PreferredDayOfMonth PreferredDayOfMonth
 
@@ -133,6 +136,7 @@ func (c Configuration) Clone() *Configuration {
 		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
 		DateOrder:           c.DateOrder,
 		CurrentTime:         c.CurrentTime,
+		DefaultTimezone:     c.DefaultTimezone,
 		PreferredDayOfMonth: c.PreferredDayOfMonth,
 		PreferredDateSource: c.PreferredDateSource,
 		StrictParsing:       c.StrictParsing,
@@ -183,6 +187,7 @@ func (c *Configuration) initiate() *Configuration {
 func (c Configuration) toInternalConfig() *setting.Configuration {
 	return &setting.Configuration{
 		CurrentTime:         c.CurrentTime,
+		DefaultTimezone:     c.DefaultTimezone,
 		PreferredDayOfMonth: setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
 		PreferredDateSource: setting.PreferredDateSource(c.PreferredDateSource),
 		StrictParsing:       c.StrictParsing,
@@ -196,6 +201,7 @@ func (c Configuration) toInternalConfig() *setting.Configuration {
 func configFromInternal(c *setting.Configuration) *Configuration {
 	return &Configuration{
 		CurrentTime:         c.CurrentTime,
+		DefaultTimezone:     c.DefaultTimezone,
 		PreferredDayOfMonth: PreferredDayOfMonth(c.PreferredDayOfMonth),
 		PreferredDateSource: PreferredDateSource(c.PreferredDateSource),
 		StrictParsing:       c.StrictParsing,
