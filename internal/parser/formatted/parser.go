@@ -22,7 +22,11 @@ func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date 
 	// Check if string contain timezone
 	var timeLoc *time.Location
 	if _, tzData := timezone.PopTzOffset(str); tzData.IsZero() {
-		timeLoc = time.UTC
+		if cfg.DefaultTimezone != nil {
+			timeLoc = cfg.DefaultTimezone
+		} else {
+			timeLoc = time.UTC
+		}
 	} else {
 		timeLoc = time.FixedZone(tzData.Name, tzData.Offset)
 	}
