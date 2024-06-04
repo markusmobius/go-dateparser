@@ -10,7 +10,6 @@ go get -u -v github.com/markusmobius/go-dateparser
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [ 1. Features ▲](#-1-features-)
 - [ 2. Status ▲](#-2-status-)
 - [ 3. Common Use Cases ▲](#-3-common-use-cases-)
@@ -28,6 +27,8 @@ go get -u -v github.com/markusmobius/go-dateparser
 - [ 11. Custom Language Detector ▲](#-11-custom-language-detector-)
 - [ 12. Handling False Positives ▲](#-12-handling-false-positives-)
 - [ 13. Performance ▲](#-13-performance-)
+  - [Compiling with cgo under Linux](#compiling-with-cgo-under-linux)
+  - [Compiling with cgo under Windows](#compiling-with-cgo-under-windows)
 - [ 14. License ▲](#-14-license-)
 
 ## <a name="features"></a> 1. Features [▲](#table-of-contents)
@@ -41,7 +42,7 @@ go get -u -v github.com/markusmobius/go-dateparser
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-This package is up to date with the original dateparser until commit [b368edd][original-commit] ([v1.1.7][original-tag]). There are several behavior and implementation differences between this port and the original:
+This package is up to date with the original dateparser until commit [748e48a][original-commit] (several commits after [v1.2.0][original-tag]). There are several behavior and implementation differences between this port and the original:
 
 - In Python, timezone data is not included in date and time objects. Meanwhile in Go timezone data is required.
 - Regex in Go is pretty slow, so in this port whenever possible we use basic strings or runes operations instead of regex to improve the performance.
@@ -181,7 +182,7 @@ Persian Jalali calendar is also often called Solar Hijri calendar and commonly u
 
 Hijri calendar is a Lunar calendar which commonly used in Islamic countries. Some only use it for religious purposes (e.g. calculating when Ramadhan or Hajj started) while some also use it for both administrative purposes.
 
-There are several variations of Hijri calendar, e.g. [Tabular][tabular-hijri] and [Umm al-Qura][umm-al-qura]. In **dateparser** we use Umm al-Qura calendar since it's the one that apparently mpstly used by Islamic world.
+There are several variations of Hijri calendar, e.g. [Tabular][tabular-hijri] and [Umm al-Qura][umm-al-qura]. In **dateparser** we use Umm al-Qura calendar since it's the one that apparently mostly used by Islamic world.
 
 ```go
 dt, _ = dps.ParseJalali(nil, "جمعه سی ام اسفند ۱۳۸۷")
@@ -420,6 +421,7 @@ If you want to parse a huge amount of data, it would be preferrable to have a be
 ```
 go build -tags re2_cgo .
 ```
+
 More detailed instructions in how to prepare your system for compiling with cgo are provided below.
 
 When using `re2_wasm` tag, it will make your app uses `re2` that packaged as WebAssembly module so it should be runnable even without cgo. However, if your input is too small, it might be even slower than using Go's standard regex engine.
@@ -440,12 +442,14 @@ sudo apt-get install -y libre2-dev
 ```
 
 ### Compiling with cgo under Windows
+
 On Windows start by installing [MSYS2][msys2]. Then open the MINGW64 terminal and install the gcc toolchain and re2 via pacman:
 
 ```bash
 pacman -S mingw-w64-x86_64-gcc
 pacman -S mingw-w64-x86_64-re2
 ```
+
 If you want to run the resulting exe program outside the MINGW64 terminal you need to add a path to the MinGW-w64 libraries to the PATH environmental variable (adjust as needed for your system):
 
 ```cmd
@@ -459,8 +463,8 @@ Just like the original, this package is licensed under [BSD-3 License][bsd3].
 [go-ref-icon]: https://pkg.go.dev/badge/github.com/markusmobius/go-dateparser.svg
 [go-ref]: https://pkg.go.dev/github.com/markusmobius/go-dateparser
 [original]: https://github.com/scrapinghub/dateparser
-[original-commit]: https://github.com/scrapinghub/dateparser/tree/b368edd
-[original-tag]: https://github.com/scrapinghub/dateparser/tree/v1.1.7
+[original-commit]: https://github.com/scrapinghub/dateparser/tree/748e48a
+[original-tag]: https://github.com/scrapinghub/dateparser/releases/tag/v1.2.0
 [dps-parse]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Parse
 [dps-jalali]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseJalali
 [dps-hijri]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseHijri
