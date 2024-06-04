@@ -15,7 +15,7 @@ func init() {
 		Charset:               []rune(`-bcdefghijklnorstuvxzáéóöúüő`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)egy(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])egy(\z|[^\pL\pM\d_])`), "${1}1${2}"},
 		},
 		Translations: map[string][]string{
 			"masodperccel": {"second"},

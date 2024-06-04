@@ -16,12 +16,12 @@ func init() {
 		Abbreviations:         []string{"น"},
 		SentenceSplitterGroup: 5,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)วนน(\z|[^\pL\pM\d]|_)`), "${1}0 วน${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)เมอวานน(\z|[^\pL\pM\d]|_)`), "${1}1 วน${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)1 วนทแลว(\z|[^\pL\pM\d]|_)`), "${1}1 วน${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)เมอวานซน(\z|[^\pL\pM\d]|_)`), "${1}2 วน${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)2 วนทแลว(\z|[^\pL\pM\d]|_)`), "${1}2 วน${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)เมอสกครน(\z|[^\pL\pM\d]|_)`), "${1}0 วนาท${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])วนน(\z|[^\pL\pM\d_])`), "${1}0 วน${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])เมอวานน(\z|[^\pL\pM\d_])`), "${1}1 วน${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])1 วนทแลว(\z|[^\pL\pM\d_])`), "${1}1 วน${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])เมอวานซน(\z|[^\pL\pM\d_])`), "${1}2 วน${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])2 วนทแลว(\z|[^\pL\pM\d_])`), "${1}2 วน${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])เมอสกครน(\z|[^\pL\pM\d_])`), "${1}0 วนาท${2}"},
 		},
 		Translations: map[string][]string{
 			"เดอนพฤศจกายน": {"november"},

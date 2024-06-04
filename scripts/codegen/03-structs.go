@@ -71,7 +71,7 @@ func (ld *LocaleData) AddSimplification(pattern string, replacement string) {
 	pattern = strings.ReplaceAll(pattern, `\W`, `[^\pL\pM\d_]`)
 	pattern = strings.ReplaceAll(pattern, `\b`, `(?:\z|[^\pL\pM\d_])`)
 	if !ld.NoWordSpacing {
-		pattern = `(\A|[^\pL\pM\d]|_)` + pattern + `(\z|[^\pL\pM\d]|_)`
+		pattern = `(\A|[^\pL\pM\d_])` + pattern + `(\z|[^\pL\pM\d_])`
 	}
 
 	// Sanitize replacement

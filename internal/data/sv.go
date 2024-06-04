@@ -17,8 +17,8 @@ func init() {
 		Charset:               []rune(`bcdefghijklnorstuvzäåö`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)en(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)tva(\z|[^\pL\pM\d]|_)`), "${1}2${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])en(\z|[^\pL\pM\d_])`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])tva(\z|[^\pL\pM\d_])`), "${1}2${2}"},
 		},
 		Translations: map[string][]string{
 			"eftermiddag": {"pm"},

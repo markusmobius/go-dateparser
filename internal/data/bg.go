@@ -15,9 +15,9 @@ func init() {
 		Charset:               []rune(`cgtuzабвгдезийклмнопрстуфхцчщъюя`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)един(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)два(\z|[^\pL\pM\d]|_)`), "${1}2${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)три(\z|[^\pL\pM\d]|_)`), "${1}3${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])един(\z|[^\pL\pM\d_])`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])два(\z|[^\pL\pM\d_])`), "${1}2${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])три(\z|[^\pL\pM\d_])`), "${1}3${2}"},
 		},
 		Translations: map[string][]string{
 			"понеделник": {"monday"},

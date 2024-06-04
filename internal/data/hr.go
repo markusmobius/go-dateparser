@@ -15,8 +15,8 @@ func init() {
 		DateOrder: "DMY.",
 		Charset:   []rune(`bcdeghijklnorstuvzćčšž`),
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)podne(\z|[^\pL\pM\d]|_)`), "${1}12:00${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ponoc(\z|[^\pL\pM\d]|_)`), "${1}00:00${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])podne(\z|[^\pL\pM\d_])`), "${1}12:00${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])ponoc(\z|[^\pL\pM\d_])`), "${1}00:00${2}"},
 		},
 		Translations: map[string][]string{
 			"ponedjeljak": {"monday"},

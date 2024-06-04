@@ -16,8 +16,8 @@ func init() {
 		Charset:               []rune(`cgtuzংঅআইএকখগঘঙচছজটডণতদধনপফবভমযরলশষসহ়ািীুৃেো্ৎ`),
 		SentenceSplitterGroup: 3,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)মধযাহন(\z|[^\pL\pM\d]|_)`), "${1}12:00${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)মধযরাত(\z|[^\pL\pM\d]|_)`), "${1}00:00${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])মধযাহন(\z|[^\pL\pM\d_])`), "${1}12:00${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])মধযরাত(\z|[^\pL\pM\d_])`), "${1}00:00${2}"},
 		},
 		Translations: map[string][]string{
 			"বহষপতিবার": {"thursday"},

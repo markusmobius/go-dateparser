@@ -15,7 +15,7 @@ func init() {
 		Charset:               []rune(`bcdeghijklnorstuvyzáíúýčěřšů`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ted(\z|[^\pL\pM\d]|_)`), "${1}0 sekunda${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])ted(\z|[^\pL\pM\d_])`), "${1}0 sekunda${2}"},
 		},
 		Translations: map[string][]string{
 			"listopadu": {"november"},
