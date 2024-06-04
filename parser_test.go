@@ -51,6 +51,7 @@ func TestParser_Parse(t *testing.T) {
 		{"Monday 7:15 AM", tt(2012, 11, 12, 7, 15)},
 		// French dates
 		{"11 Mai 2014", tt(2014, 5, 11)},
+		{"11 sept. 2014", tt(2014, 9, 11)},
 		{"dimanche, 11 Mai 2014", tt(2014, 5, 11)},
 		{"22 janvier 2015 à 14h40", tt(2015, 1, 22, 14, 40)},
 		{"Dimanche 1er Février à 21:24", tt(2012, 2, 1, 21, 24)},

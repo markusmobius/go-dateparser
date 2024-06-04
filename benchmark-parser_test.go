@@ -47,6 +47,7 @@ var benchmarkParserTexts = []string{
 	"Monday 7:15 AM",
 	// French dates
 	"11 Mai 2014",
+	"11 sept. 2014",
 	"dimanche, 11 Mai 2014",
 	"22 janvier 2015 à 14h40",
 	"Dimanche 1er Février à 21:24",
