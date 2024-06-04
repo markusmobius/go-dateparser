@@ -122,7 +122,7 @@ func init() {
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])a(\z|[^\pL\pM\d_])`), "${1}1${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(?:12\s+)?noon(\z|[^\pL\pM\d_])`), "${1}12:00${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(?:12\s+)?midnight(\z|[^\pL\pM\d_])`), "${1}00:00${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*)h(\d+[.,]?\d*)m?(\z|[^\pL\pM\d_])`), "${1}${2}:${3}${4}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*)h(\d+[.,]?\d*)(\z|[^\pL\pM\d_])`), "${1}${2}:${3}${4}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(from\s+)now(\z|[^\pL\pM\d_])`), "${1}${2}in${3}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])less than 1 minute ago(\z|[^\pL\pM\d_])`), "${1}45 second ago${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*) (decade|year|month|week|day|hour|minute|second)s? later(\z|[^\pL\pM\d_])`), "${1}in ${2} ${3}${4}"},
