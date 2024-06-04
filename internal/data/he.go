@@ -19,7 +19,7 @@ func init() {
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ושבוע(\z|[^\pL\pM\d]|_)`), "${1}1 שבוע${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)וחודש(\z|[^\pL\pM\d]|_)`), "${1}1 חודש${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ושנה(\z|[^\pL\pM\d]|_)`), "${1}1 שנה${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ו(\w+)(\z|[^\pL\pM\d]|_)`), "${1}${2}${3}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ו([\pL\pM\d_]+)(\z|[^\pL\pM\d]|_)`), "${1}${2}${3}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)שנתיי?ם(\z|[^\pL\pM\d]|_)`), "${1}2 שנים${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)חודשיים(\z|[^\pL\pM\d]|_)`), "${1}2 חודשים${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)שבועיי?ם(\z|[^\pL\pM\d]|_)`), "${1}2 שבועות${2}"},

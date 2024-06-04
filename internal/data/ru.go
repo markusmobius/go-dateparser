@@ -59,6 +59,8 @@ func init() {
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)([^\d]\s+|^)неделю(\s+назад)(\z|[^\pL\pM\d]|_)`), "${1}${2}1 неделю${3}${4}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)([^\d]\s+|^)месяц(\s+назад)(\z|[^\pL\pM\d]|_)`), "${1}${2}1 месяц${3}${4}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)([^\d]\s+|^)год(\s+назад)(\z|[^\pL\pM\d]|_)`), "${1}${2}1 год${3}${4}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d{3,}1)\s*год\s*$(\z|[^\pL\pM\d]|_)`), "${1}${2}${3}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d*[02-9])\s*год(?:\z|[^\pL\pM\d_])(\z|[^\pL\pM\d]|_)`), "${1}${2}${3}"},
 		},
 		Translations: map[string][]string{
 			"воскресение": {"sunday"},

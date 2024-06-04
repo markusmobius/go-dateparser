@@ -599,13 +599,25 @@ func TestParser_Parse_checkPeriod(t *testing.T) {
 		{"Monday", tt(2015, 2, 9), date.Day},
 		{"10:00PM", tt(2015, 2, 15, 22, 00), date.Day},
 		{"16:10", tt(2015, 2, 15, 16, 10), date.Day},
-		{"2014", tt(2014, 2, 15), date.Year},
+		{"1000", tt(1000, 2, 15), date.Year},
 		{"2008", tt(2008, 2, 15), date.Year},
+		{"2014", tt(2014, 2, 15), date.Year},
 		// Subscript and superscript dates
 		{"²⁰¹⁵", tt(2015, 2, 15), date.Year},
 		{"²⁹/⁰⁵/²⁰¹⁵", tt(2015, 5, 29), date.Day},
 		{"₁₅/₀₂/₂₀₂₀", tt(2020, 2, 15), date.Day},
 		{"₃₁ December", tt(2015, 12, 31), date.Day},
+		// Russian
+		{"1000 год", tt(1000, 2, 15), date.Year},
+		{"1001 год", tt(1001, 2, 15), date.Year},
+		{"2000 год", tt(2000, 2, 15), date.Year},
+		{"2000год", tt(2000, 2, 15), date.Year},
+		{"год2000", tt(2000, 2, 15), date.Year},
+		{"год 2000", tt(2000, 2, 15), date.Year},
+		{"2000г.", tt(2000, 2, 15), date.Year},
+		{"2000 г.", tt(2000, 2, 15), date.Year},
+		{"2001 год", tt(2001, 2, 15), date.Year},
+		{"2001год", tt(2001, 2, 15), date.Year},
 	}
 
 	// Prepare config
