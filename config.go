@@ -61,6 +61,22 @@ const (
 	Last
 )
 
+// PreferredMonthOfYear is the variable to set month value for date that has year, but
+// missing the month value. For example, date like "2021".
+type PreferredMonthOfYear uint8
+
+const (
+	// CurrentMonth means parser will use current month to fill the month value. So,
+	// if today is 2022-05-20 and date string is "2020", parser will return 2020-05-20.
+	CurrentMonth PreferredMonthOfYear = iota
+	// FirstMonth means parser will use January to fill the month value. So, if date
+	// string is "2020", parser will return 2020-01-20.
+	FirstMonth
+	// LastMonth means parser will use December to fill the month value. So, if date
+	// string is "2020", parser will return 2020-12-20.
+	LastMonth
+)
+
 // Configuration is object to control and configure parsing behavior of date parser.
 type Configuration struct {
 	// Locales is a list of locale codes, e.g. ['fr-PF', 'qu-EC', 'af-NA'].
@@ -101,8 +117,11 @@ type Configuration struct {
 	// DefaultTimezone is the default timezone to use when string doesn't contains any timezone.
 	DefaultTimezone *time.Location
 
-	// PreferredDayOfMonth specify the day for date with missing day. Defaults to `Current`.
+	// PreferredDayOfMonth specify the day for string with missing day. Defaults to `Current`.
 	PreferredDayOfMonth PreferredDayOfMonth
+
+	// PreferredMonthOfYear specify the month for string with missing month. Defaults to `CurrentMonth`.
+	PreferredMonthOfYear PreferredMonthOfYear
 
 	// PreferredDateSource specify the date source to fill incomplete date values. Defaults
 	// to `CurrentPeriod`.
@@ -128,21 +147,22 @@ type Configuration struct {
 // Clone clones the config to a new, separate one.
 func (c Configuration) Clone() *Configuration {
 	return &Configuration{
-		Locales:             append([]string{}, c.Locales...),
-		Languages:           append([]string{}, c.Languages...),
-		Region:              c.Region,
-		TryPreviousLocales:  c.TryPreviousLocales,
-		UseGivenOrder:       c.UseGivenOrder,
-		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
-		DateOrder:           c.DateOrder,
-		CurrentTime:         c.CurrentTime,
-		DefaultTimezone:     c.DefaultTimezone,
-		PreferredDayOfMonth: c.PreferredDayOfMonth,
-		PreferredDateSource: c.PreferredDateSource,
-		StrictParsing:       c.StrictParsing,
-		RequiredParts:       append([]string{}, c.RequiredParts...),
-		SkipTokens:          append([]string{}, c.SkipTokens...),
-		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
+		Locales:              append([]string{}, c.Locales...),
+		Languages:            append([]string{}, c.Languages...),
+		Region:               c.Region,
+		TryPreviousLocales:   c.TryPreviousLocales,
+		UseGivenOrder:        c.UseGivenOrder,
+		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
+		DateOrder:            c.DateOrder,
+		CurrentTime:          c.CurrentTime,
+		DefaultTimezone:      c.DefaultTimezone,
+		PreferredDayOfMonth:  c.PreferredDayOfMonth,
+		PreferredMonthOfYear: c.PreferredMonthOfYear,
+		PreferredDateSource:  c.PreferredDateSource,
+		StrictParsing:        c.StrictParsing,
+		RequiredParts:        append([]string{}, c.RequiredParts...),
+		SkipTokens:           append([]string{}, c.SkipTokens...),
+		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
 	}
 }
 
@@ -151,6 +171,11 @@ func (c Configuration) validate() error {
 	// Validate preferred day of month
 	if dom := c.PreferredDayOfMonth; dom > Last {
 		return fmt.Errorf("invalid preferred day of month: %d", dom)
+	}
+
+	// Validate preferred month of year
+	if moy := c.PreferredMonthOfYear; moy > LastMonth {
+		return fmt.Errorf("invalid preferred month of year: %d", moy)
 	}
 
 	// Validate preferred date source
@@ -186,28 +211,30 @@ func (c *Configuration) initiate() *Configuration {
 
 func (c Configuration) toInternalConfig() *setting.Configuration {
 	return &setting.Configuration{
-		CurrentTime:         c.CurrentTime,
-		DefaultTimezone:     c.DefaultTimezone,
-		PreferredDayOfMonth: setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
-		PreferredDateSource: setting.PreferredDateSource(c.PreferredDateSource),
-		StrictParsing:       c.StrictParsing,
-		RequiredParts:       append([]string{}, c.RequiredParts...),
-		SkipTokens:          append([]string{}, c.SkipTokens...),
-		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
-		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
+		CurrentTime:          c.CurrentTime,
+		DefaultTimezone:      c.DefaultTimezone,
+		PreferredDayOfMonth:  setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
+		PreferredMonthOfYear: setting.PreferredMonthOfYear(c.PreferredMonthOfYear),
+		PreferredDateSource:  setting.PreferredDateSource(c.PreferredDateSource),
+		StrictParsing:        c.StrictParsing,
+		RequiredParts:        append([]string{}, c.RequiredParts...),
+		SkipTokens:           append([]string{}, c.SkipTokens...),
+		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
 	}
 }
 
 func configFromInternal(c *setting.Configuration) *Configuration {
 	return &Configuration{
-		CurrentTime:         c.CurrentTime,
-		DefaultTimezone:     c.DefaultTimezone,
-		PreferredDayOfMonth: PreferredDayOfMonth(c.PreferredDayOfMonth),
-		PreferredDateSource: PreferredDateSource(c.PreferredDateSource),
-		StrictParsing:       c.StrictParsing,
-		RequiredParts:       append([]string{}, c.RequiredParts...),
-		SkipTokens:          append([]string{}, c.SkipTokens...),
-		DefaultLanguages:    append([]string{}, c.DefaultLanguages...),
-		ReturnTimeAsPeriod:  c.ReturnTimeAsPeriod,
+		CurrentTime:          c.CurrentTime,
+		DefaultTimezone:      c.DefaultTimezone,
+		PreferredDayOfMonth:  PreferredDayOfMonth(c.PreferredDayOfMonth),
+		PreferredMonthOfYear: PreferredMonthOfYear(c.PreferredMonthOfYear),
+		PreferredDateSource:  PreferredDateSource(c.PreferredDateSource),
+		StrictParsing:        c.StrictParsing,
+		RequiredParts:        append([]string{}, c.RequiredParts...),
+		SkipTokens:           append([]string{}, c.SkipTokens...),
+		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
+		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
 	}
 }

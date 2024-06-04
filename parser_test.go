@@ -770,6 +770,50 @@ func TestParser_Parse_preferDatesFromWithTimezone(t *testing.T) {
 	}
 }
 
+func TestParser_Parse_datesWithNoDayOrMonth(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text        string
+		PreferDay   dps.PreferredDayOfMonth
+		PreferMonth dps.PreferredMonthOfYear
+		Today       time.Time
+		Expected    time.Time
+	}
+
+	tests := []testScenario{
+		{"2015", dps.Current, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 10)},
+		{"2015", dps.Last, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 28)},
+		{"2015", dps.First, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 1)},
+
+		{"2015", dps.Current, dps.LastMonth, tt(2010, 2, 10), tt(2015, 12, 10)},
+		{"2015", dps.Last, dps.LastMonth, tt(2010, 2, 10), tt(2015, 12, 31)},
+		{"2020", dps.Last, dps.CurrentMonth, tt(2010, 2, 10), tt(2020, 2, 29)}, // leap year
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("No day or month \"%s\" => \"%s\"", test.Text,
+			test.Expected.Format("2006-01-02"))
+
+		// Parse text
+		dt, _ := dps.Parse(&dps.Configuration{
+			CurrentTime:          test.Today,
+			PreferredDayOfMonth:  test.PreferDay,
+			PreferredMonthOfYear: test.PreferMonth,
+		}, test.Text)
+		if passed := assertParseResult(t, dt, test.Expected, date.Year, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
 func TestParser_Parse_dateStepBack(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {
