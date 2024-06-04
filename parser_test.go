@@ -741,8 +741,12 @@ func TestParser_Parse_preferDatesFromWithTimezone(t *testing.T) {
 
 	tests := []testScenario{
 		{"4pm EDT", tt(2021, 10, 19, 20, 0), dps.Future, nil},
+		{"10pm EDT", tt(2021, 10, 20, 2, 0), dps.Future, nil},
+		{"8am AEDT", tt(2021, 10, 18, 21, 0), dps.Past, nil},
 		{"11pm AEDT", tt(2021, 10, 19, 12, 0), dps.Past, nil},
 		{"4pm", tt(2021, 10, 19, 20, 0), dps.Future, tzEDT},
+		{"10pm", tt(2021, 10, 20, 2, 0), dps.Future, tzEDT},
+		{"8am", tt(2021, 10, 18, 21, 0), dps.Past, tzAEDT},
 		{"11pm", tt(2021, 10, 19, 12, 0), dps.Past, tzAEDT},
 	}
 
