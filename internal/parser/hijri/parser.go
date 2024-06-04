@@ -101,6 +101,14 @@ func getDatePartValue(p *absolute.Parser, component, token, directive string) (i
 		}
 	}
 
+	if component == "year" && tokenLength == 2 && tokenIsDigit {
+		year, _ := strconv.Atoi(token)
+		year = handleTwoDigitYear(year)
+		if year >= 0 {
+			return year, true
+		}
+	}
+
 	if component == "month" && tokenLength <= 2 && tokenIsDigit {
 		month, _ := strconv.Atoi(token)
 		if month >= 1 && month <= 12 {
@@ -200,5 +208,13 @@ func getLastDayOfHijriMonth(year, month int) int {
 		return 29
 	default:
 		return 30
+	}
+}
+
+func handleTwoDigitYear(year int) int {
+	if year >= 90 {
+		return year + 1300
+	} else {
+		return year + 1400
 	}
 }
