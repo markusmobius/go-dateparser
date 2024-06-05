@@ -240,12 +240,17 @@ dt, _ = dps.Parse(cfg, "miy 02-03-2016") // philippines, keep using MDY date ord
 By default, **dateparser** uses the timezone that is present in the date string. If the timezone is not present, then it will use timezone from the `CurrentTime`:
 
 ```go
-// Current time is 2015-06-01 12:00:00 WIB
-wib := time.FixedZone("WIB", 7*60*60)
+// Use case: I'm from Jakarta, parsing London's news article.
+// So, my current time use GMT+7, however the parser's default timezone is GMT.
+london, _ := time.LoadLocation("Europe/London")
+jakarta, _ := time.LoadLocation("Asia/Jakarta")
+
 cfg := &dps.Configuration{
-	CurrentTime: time.Date(2015, 6, 1, 12, 0, 0, 0, wib),
+	DefaultTimezone: london,
+	CurrentTime:     time.Date(2015, 6, 1, 12, 0, 0, 0, jakarta),
 }
 
+// Here the timezone is explicitly mentioned in string
 dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM EST")
 // time: 2012-01-12 22:00:00 EST, confidence: Day
 
@@ -258,10 +263,21 @@ dt, _ = dps.Parse(cfg, "2 hours ago EST")
 dt, _ = dps.Parse(cfg, "2 hours ago -0500")
 // time: 2015-05-31 22:00:00 UTC-05:00, confidence: Day
 
-dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM") // use tz from current time
+// Now timezone is not specified, so parser will use `DefaultTimezone`
+dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM")
+// time: 2012-01-12 22:00:00 GMT, confidence: Day
+
+dt, _ = dps.Parse(cfg, "2 hours ago")
+// time: 2015-06-01 04:00:00 BST, confidence: Day
+// notice the timezone become BST, because we move back to Daylight Saving Time.
+
+// Now we remove the default timezone, so it use timezone from `CurrentTime`
+cfg.DefaultTimezone = nil
+
+dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM")
 // time: 2012-01-12 22:00:00 WIB, confidence: Day
 
-dt, _ = dps.Parse(cfg, "2 hours ago") // use tz from current time
+dt, _ = dps.Parse(cfg, "2 hours ago")
 // time: 2015-06-01 10:00:00 WIB, confidence: Day
 ```
 
@@ -291,7 +307,7 @@ dt, _ = dps.Parse(cfg, "Sunday")
 // time: 2015-07-26 00:00:00 UTC (the closest Sunday from current time)
 ```
 
-You can change the behavior by using `PreferredDayOfMonth` and `PreferredDateSource` in `Configuration`:
+You can change the behavior by using `PreferredMonthOfYear`, `PreferredDayOfMonth` and `PreferredDateSource` in `Configuration`:
 
 ```go
 // Current time is 2015-07-10 12:00:00 UTC
@@ -307,6 +323,25 @@ dt, _ = dps.Parse(cfg, "December 2015")
 cfg.PreferredDayOfMonth = dps.Last
 dt, _ = dps.Parse(cfg, "December 2015")
 // time: 2015-12-31 00:00:00 UTC
+```
+
+```go
+// Current time is 2015-10-10 12:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.Current
+cfg.PreferredMonthOfYear = dps.CurrentMonth
+dt, _ = dps.Parse(cfg, "2020")
+// time: 2020-10-10 00:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.Last
+cfg.PreferredMonthOfYear = dps.FirstMonth
+dt, _ = dps.Parse(cfg, "2020")
+// time: 2020-01-31 00:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.First
+cfg.PreferredMonthOfYear = dps.LastMonth
+dt, _ = dps.Parse(cfg, "2015")
+// time: 2015-12-01 00:00:00 UTC
 ```
 
 ```go
