@@ -80,7 +80,8 @@ const (
 // Configuration is object to control and configure parsing behavior of date parser.
 type Configuration struct {
 	// Locales is a list of locale codes, e.g. ['fr-PF', 'qu-EC', 'af-NA'].
-	// The parser uses only these locales to translate date string.
+	// The parser uses only these locales to translate date string. When specified,
+	// Languages and Region will be ignored.
 	Locales []string
 
 	// Languages is a list of language codes, e.g. ['en', 'es', 'zh-Hant']. If

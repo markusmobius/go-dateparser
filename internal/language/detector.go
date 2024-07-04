@@ -10,25 +10,8 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
-func DetectLanguage(cfg *setting.Configuration, str string, languages []string,
-	uniqueCharsets map[string][]rune, detectLanguagesFunction func(string) []string) (string, error) {
-	// If custom detect function defined and there are no languages specified,
-	// use the custom detect function
-	if detectLanguagesFunction != nil && len(languages) == 0 {
-		detectedLanguages := detectLanguagesFunction(str)
-		if len(detectedLanguages) == 0 && cfg != nil {
-			detectedLanguages = append(detectedLanguages, cfg.DefaultLanguages...)
-		}
-
-		if len(detectedLanguages) > 0 {
-			lang := detectedLanguages[0]
-			if _, exist := data.LanguageMap[lang]; !exist {
-				return "", fmt.Errorf("detected language is not known by dateparser: %s", lang)
-			}
-			return lang, nil
-		}
-	}
-
+func DetectFullTextLanguage(cfg *setting.Configuration, str string,
+	languages []string, uniqueCharsets map[string][]rune) (string, error) {
 	// Fetch language candidates for the string
 	candidates := getLanguageCandidates(str, languages, uniqueCharsets)
 	if len(candidates) == 1 {
@@ -61,6 +44,11 @@ func DetectLanguage(cfg *setting.Configuration, str string, languages []string,
 	}
 
 	if len(finalCandidates) == 0 {
+		// Fallback to default language
+		if len(cfg.DefaultLanguages) > 0 {
+			return cfg.DefaultLanguages[0], nil
+		}
+
 		return "", fmt.Errorf("detector failed to find the suitable language")
 	}
 

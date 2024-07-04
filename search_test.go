@@ -669,3 +669,50 @@ func TestParser_Search(t *testing.T) {
 		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
 	}
 }
+
+func TestParser_SearchWithConfig(t *testing.T) {
+	// Initial search for Arabic arabicText with zero config
+	arabicText := `في 29 يوليو 1938 غزت القوات اليابانية الاتحاد`
+	lang, result, _ := dps.Search(nil, arabicText)
+	assert.Equal(t, "ar", lang)
+	assert.Equal(t, 1, len(result))
+	assert.Equal(t, tt(1938, 7, 29), result[0].Date.Time)
+
+	// Now we explicitly specify its locale to English, so the search failed.
+	cfg := &dps.Configuration{Locales: []string{"en-UK"}}
+	_, result, _ = dps.Search(cfg, arabicText)
+	assert.Empty(t, result)
+
+	// Here we explicitly specify its language to English so the search still failed.
+	cfg = &dps.Configuration{Languages: []string{"en"}}
+	_, result, _ = dps.Search(cfg, arabicText)
+	assert.Empty(t, result)
+
+	// When both locale and language specified, language is ignored
+	cfg = &dps.Configuration{Locales: []string{"ar"}, Languages: []string{"en"}}
+	_, result, _ = dps.Search(cfg, arabicText)
+	assert.Equal(t, "ar", lang)
+	assert.Equal(t, tt(1938, 7, 29), result[0].Date.Time)
+
+	cfg = &dps.Configuration{Locales: []string{"en"}, Languages: []string{"ar"}}
+	_, result, _ = dps.Search(cfg, arabicText)
+	assert.Empty(t, result)
+
+	// Now we use custom detect language function that always return "en".
+	// Since our text is Arabic, now the search will be failed.
+	p := dps.Parser{
+		DetectLanguagesFunction: func(string) []string {
+			return []string{"en"}
+		},
+	}
+
+	_, result, _ = p.Search(cfg, arabicText)
+	assert.Empty(t, result)
+
+	// When both language and language function detector specified,
+	// the external function is ignored.
+	cfg = &dps.Configuration{Languages: []string{"ar"}}
+	_, result, _ = dps.Search(cfg, arabicText)
+	assert.Equal(t, "ar", lang)
+	assert.Equal(t, tt(1938, 7, 29), result[0].Date.Time)
+}

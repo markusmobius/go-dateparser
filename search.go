@@ -52,7 +52,12 @@ func (p *Parser) Search(cfg *Configuration, text string) (string, []SearchResult
 	}
 
 	// Get list of used languages
-	languages, err := language.GetLanguages(cfg.Locales, cfg.Languages, cfg.UseGivenOrder)
+	cfgLanguages := cfg.Languages
+	if len(cfgLanguages) == 0 && p.DetectLanguagesFunction != nil {
+		cfgLanguages = p.DetectLanguagesFunction(text)
+	}
+
+	languages, err := language.GetLanguages(cfg.Locales, cfgLanguages, cfg.UseGivenOrder)
 	if err != nil {
 		return "", nil, err
 	}
@@ -62,8 +67,7 @@ func (p *Parser) Search(cfg *Configuration, text string) (string, []SearchResult
 
 	// Detect language of the text
 	iCfg := cfg.toInternalConfig()
-	lang, err := language.DetectLanguage(iCfg, text, languages,
-		p.uniqueCharsets, p.DetectLanguagesFunction)
+	lang, err := language.DetectFullTextLanguage(iCfg, text, languages, p.uniqueCharsets)
 	if err != nil {
 		return "", nil, err
 	}

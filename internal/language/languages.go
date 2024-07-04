@@ -3,56 +3,83 @@ package language
 import (
 	"fmt"
 	"sort"
+	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
-func GetLanguages(locales []string, languages []string, useGivenOrder bool) ([]string, error) {
-	// If locales specified, languages is ignored and replaced
-	// with languages from locales
+func GetLanguages(locales, languages []string, useGivenOrder bool) ([]string, error) {
+	var result []string
+	languageTracker := strutil.NewDict()
+
+	// The search order is:
+	// - Locales
+	// - Languages
+	// - External detector
 	if len(locales) > 0 {
-		languages = []string{}
-		tracker := strutil.NewDict()
+		var invalidLocales []string
 
 		for _, locale := range locales {
-			language := strutil.RemoveRegion(locale)
-			if !tracker.Contain(language) {
-				tracker.Add(language)
-				languages = append(languages, language)
+			// Check if the locale valid
+			if _, exist := data.GetLocaleData(locale); !exist {
+				invalidLocales = append(invalidLocales, locale)
+				continue
 			}
-		}
-	}
 
-	// If list of languages defined, validate it
-	// If not, take from the known language order
-	if len(languages) > 0 {
-		for _, lang := range languages {
-			if _, exist := data.LanguageMap[lang]; !exist {
-				return nil, fmt.Errorf("unknown language: %s", lang)
+			// Save locale's language to tracker
+			language := strutil.RemoveRegion(locale)
+			if !languageTracker.Contain(language) {
+				languageTracker.Add(language)
+				result = append(result, language)
 			}
 		}
-	} else if !useGivenOrder {
-		languages = make([]string, len(data.LanguageOrder))
-		for lang, order := range data.LanguageOrder {
-			languages[order] = lang
+
+		// If there are invalid locales, stop
+		if len(invalidLocales) > 0 {
+			return nil, fmt.Errorf("unknown locale(s): %s", strings.Join(invalidLocales, ", "))
+		}
+	} else {
+		// Fetch languages from params
+		if len(languages) > 0 {
+			result = append([]string{}, languages...)
+		}
+
+		// Check for unknown languages
+		var unknownLanguages []string
+		for _, lang := range languages {
+			if _, exist := data.LanguageOrder[lang]; !exist {
+				unknownLanguages = append(unknownLanguages, lang)
+			}
+		}
+
+		if len(unknownLanguages) > 0 {
+			return nil, fmt.Errorf("unknown language(s): %s", strings.Join(unknownLanguages, ", "))
 		}
 	}
 
 	// If required, sort the languages
 	if !useGivenOrder {
-		sort.Slice(languages, func(a, b int) bool {
-			orderA := data.LanguageOrder[languages[a]]
-			orderB := data.LanguageOrder[languages[b]]
+		sort.Slice(result, func(a, b int) bool {
+			orderA := data.LanguageOrder[result[a]]
+			orderB := data.LanguageOrder[result[b]]
 			if orderA != orderB {
 				return orderA < orderB
 			}
 
-			return languages[a] < languages[b]
+			return result[a] < result[b]
 		})
 	}
 
-	return languages, nil
+	// At this point, if there are still no languages just generate it from language order
+	if len(result) == 0 {
+		result = make([]string, len(data.LanguageOrder))
+		for lang, order := range data.LanguageOrder {
+			result[order] = lang
+		}
+	}
+
+	return result, nil
 }
 
 func GetUniqueCharsets(languages []string) map[string][]rune {
