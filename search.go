@@ -183,7 +183,7 @@ func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, trans
 			continue
 		}
 
-		parsedEntry, isRelative := p.parseEntry(iCfg, languages, entry, translation[i], parsedList, needRelativeBase)
+		parsedEntry, isRelative := p.parseEntry(iCfg, entry, translation[i], parsedList, needRelativeBase)
 		if !parsedEntry.IsZero() {
 			parsedList = append(parsedList, parsedSearch{parsedEntry, isRelative})
 			subStrings = append(subStrings, strutil.TrimChars(original[i], ` .,:()[]-'`))
@@ -207,7 +207,7 @@ func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, trans
 						continue
 					}
 
-					parsedJEntry, jIsRelative := p.parseEntry(iCfg, languages, jEntry,
+					parsedJEntry, jIsRelative := p.parseEntry(iCfg, jEntry,
 						split.EntryParts[j], currentParseResult, needRelativeBase)
 
 					jSubString := strutil.TrimChars(split.OriginalParts[j], ` .,:()[]-`)
@@ -233,7 +233,7 @@ func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, trans
 	return parsedList, subStrings
 }
 
-func (p *Parser) parseEntry(iCfg *setting.Configuration, languages []string, entry, translation string, parsedList []parsedSearch, needRelativeBase bool) (date.Date, bool) {
+func (p *Parser) parseEntry(iCfg *setting.Configuration, entry, translation string, parsedList []parsedSearch, needRelativeBase bool) (date.Date, bool) {
 	// Normalize entry
 	entry = strings.ReplaceAll(entry, "ngày", "")
 	entry = strings.ReplaceAll(entry, "am", "")
@@ -245,7 +245,7 @@ func (p *Parser) parseEntry(iCfg *setting.Configuration, languages []string, ent
 	// If needed, generate relative base and parse the entry
 	var relativeBase time.Time
 	if needRelativeBase {
-		relativeBase = getRelativeBase(entry, parsedList)
+		relativeBase = getRelativeBase(parsedList)
 	}
 
 	if !relativeBase.IsZero() {
@@ -266,7 +266,7 @@ func (p *Parser) parseEntry(iCfg *setting.Configuration, languages []string, ent
 	return parsedEntry, isRelative
 }
 
-func getRelativeBase(subString string, parsedList []parsedSearch) time.Time {
+func getRelativeBase(parsedList []parsedSearch) time.Time {
 	if len(parsedList) == 0 {
 		return time.Time{}
 	}

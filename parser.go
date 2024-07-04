@@ -153,7 +153,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 
 			if !dt.IsZero() {
 				if cfg.TryPreviousLocales {
-					p.saveUsedLocale(cfg, locale)
+					p.saveUsedLocale(locale)
 				}
 
 				dt.Locale = locale.Name
@@ -290,7 +290,7 @@ func (p *Parser) checkPreviousLocales(iCfg *setting.Configuration, dateStrings [
 	return nil
 }
 
-func (p *Parser) saveUsedLocale(cfg *Configuration, ld *data.LocaleData) {
+func (p *Parser) saveUsedLocale(ld *data.LocaleData) {
 	if p.usedLocalesTracker == nil {
 		p.usedLocalesTracker = strutil.NewDict()
 	}
