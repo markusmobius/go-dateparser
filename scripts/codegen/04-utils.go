@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 	"sort"
 	"strings"
@@ -39,7 +38,7 @@ func renderJSON(v interface{}, dstPath string) error {
 		return err
 	}
 
-	return ioutil.WriteFile(dstPath, bt, os.ModePerm)
+	return os.WriteFile(dstPath, bt, os.ModePerm)
 }
 
 func normalizeUnicode(str string) string {

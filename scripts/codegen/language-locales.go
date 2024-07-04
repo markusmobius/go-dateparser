@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -12,7 +12,7 @@ func createLanguageLocales() (map[string][]string, error) {
 	cldrDatesFullDir := filepath.Join(RAW_DIR, "cldr-dates-full", "main")
 
 	// Fetch all CLDR languages and their locales
-	dirItems, err := ioutil.ReadDir(cldrDatesFullDir)
+	dirItems, err := os.ReadDir(cldrDatesFullDir)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func createLanguageLocales() (map[string][]string, error) {
 }
 
 func getSupplementaryLanguages() ([]string, error) {
-	dirItems, err := ioutil.ReadDir(SUPPLEMENTARY_DIR)
+	dirItems, err := os.ReadDir(SUPPLEMENTARY_DIR)
 	if err != nil {
 		return nil, err
 	}

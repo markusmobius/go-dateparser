@@ -52,7 +52,7 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 		}
 	}
 
-	addRelativeTypes := func(data *LocaleData, mapStrings map[string][]string, isRegex bool) {
+	addRelativeTypes := func(data *LocaleData, mapStrings map[string][]string) {
 		for translation, entries := range mapStrings {
 			for _, entry := range entries {
 				data.AddRelativeType(entry, translation, false)
@@ -103,8 +103,8 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	addTranslations(&data, "am", yamlData.AM)
 	addTranslations(&data, "pm", yamlData.PM)
 
-	addRelativeTypes(&data, yamlData.RelativeType, false)
-	addRelativeTypes(&data, yamlData.RelativeTypeRegex, true)
+	addRelativeTypes(&data, yamlData.RelativeType)
+	addRelativeTypes(&data, yamlData.RelativeTypeRegex)
 
 	for _, simplification := range yamlData.Simplifications {
 		for pattern, replacement := range simplification {

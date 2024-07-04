@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"path"
@@ -67,7 +67,7 @@ func downloadW3ContentLanguage() error {
 	defer resp.Body.Close()
 
 	// Save to file
-	bt, err := ioutil.ReadAll(resp.Body)
+	bt, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}

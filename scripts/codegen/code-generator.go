@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"go/format"
-	"io/ioutil"
 	"os"
 )
 
@@ -22,7 +21,7 @@ func generateCode(tplName string, data interface{}, dstPath string) error {
 	}
 
 	// Save to file
-	return ioutil.WriteFile(dstPath, code, os.ModePerm)
+	return os.WriteFile(dstPath, code, os.ModePerm)
 }
 
 func generateLocaleDataCode(dstPath string, listData []LocaleData) error {
@@ -58,5 +57,5 @@ func generateLocaleDataCode(dstPath string, listData []LocaleData) error {
 	}
 
 	// Save to file
-	return ioutil.WriteFile(dstPath, code, os.ModePerm)
+	return os.WriteFile(dstPath, code, os.ModePerm)
 }

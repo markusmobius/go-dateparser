@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"go/format"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -88,12 +88,12 @@ func downloadRawData() error {
 	defer resp.Body.Close()
 
 	// Save to storage
-	bt, err := ioutil.ReadAll(resp.Body)
+	bt, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
 
-	return ioutil.WriteFile(RAW_PATH, bt, os.ModePerm)
+	return os.WriteFile(RAW_PATH, bt, os.ModePerm)
 }
 
 func parseUnicodeScripts() ([]DigitRange, error) {
@@ -149,13 +149,13 @@ func generateCode(data []DigitRange) error {
 
 	// Format code
 	code := b.Bytes()
-	code, err = format.Source(b.Bytes())
+	code, err = format.Source(code)
 	if err != nil {
 		return err
 	}
 
 	// Save to file
-	return ioutil.WriteFile(GO_CODE_PATH, code, os.ModePerm)
+	return os.WriteFile(GO_CODE_PATH, code, os.ModePerm)
 }
 
 func padZero(str string) string {
