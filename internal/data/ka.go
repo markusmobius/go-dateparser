@@ -15,7 +15,7 @@ func init() {
 		Charset:               []rune(`cgtuzაბგდევზთიკლმნოპრსტუქღშწხ`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ერთ(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])ერთ(\z|[^\pL\pM\d_])`), "${1}1${2}"},
 		},
 		Translations: map[string][]string{
 			"შუადღ შემდეგ": {"pm"},

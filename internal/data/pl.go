@@ -16,12 +16,12 @@ func init() {
 		Abbreviations:         []string{"r"},
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)dzis(\z|[^\pL\pM\d]|_)`), "${1}0 dnia${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)dzisiaj(\z|[^\pL\pM\d]|_)`), "${1}0 dnia${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)onegdaj(\z|[^\pL\pM\d]|_)`), "${1}2 dnia${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)przedwczoraj(\z|[^\pL\pM\d]|_)`), "${1}2 dnia temu${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)jutro(\z|[^\pL\pM\d]|_)`), "${1}za 1 dnia${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)pojutrze(\z|[^\pL\pM\d]|_)`), "${1}za 2 dnia${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])dzis(\z|[^\pL\pM\d_])`), "${1}0 dnia${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])dzisiaj(\z|[^\pL\pM\d_])`), "${1}0 dnia${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])onegdaj(\z|[^\pL\pM\d_])`), "${1}2 dnia${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])przedwczoraj(\z|[^\pL\pM\d_])`), "${1}2 dnia temu${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])jutro(\z|[^\pL\pM\d_])`), "${1}za 1 dnia${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])pojutrze(\z|[^\pL\pM\d_])`), "${1}za 2 dnia${2}"},
 		},
 		Translations: map[string][]string{
 			"pazdziernika": {"october"},

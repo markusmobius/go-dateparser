@@ -15,7 +15,7 @@ func init() {
 		Charset:               []rune(`cdeghijklnorstuvyzä`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d*) (sekunnin|sekuntin|minuutin|tunnin|paivan|viikon|kuukauden|vuoden) (paasta|kuluttua)(\z|[^\pL\pM\d]|_)`), "${1}${4} ${2} ${3}${5}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*) (sekunnin|sekuntin|minuutin|tunnin|paivan|viikon|kuukauden|vuoden) (paasta|kuluttua)(\z|[^\pL\pM\d_])`), "${1}${4} ${2} ${3}${5}"},
 		},
 		Translations: map[string][]string{
 			"keskiviikkona": {"wednesday"},

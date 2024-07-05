@@ -1,17 +1,13 @@
 package formatted
 
 import (
+	"strings"
 	"time"
 
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
-	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
-)
-
-var (
-	rxDayNumber = regexp.MustCompile(`2.{0,3}`)
 )
 
 // Parse the specified string using one of the specified formats.
@@ -22,7 +18,11 @@ func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date 
 	// Check if string contain timezone
 	var timeLoc *time.Location
 	if _, tzData := timezone.PopTzOffset(str); tzData.IsZero() {
-		timeLoc = time.UTC
+		if cfg.DefaultTimezone != nil {
+			timeLoc = cfg.DefaultTimezone
+		} else {
+			timeLoc = time.UTC
+		}
 	} else {
 		timeLoc = time.FixedZone(tzData.Name, tzData.Offset)
 	}
@@ -34,6 +34,8 @@ func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date 
 	}
 
 	// Try each format
+	checker := time.Date(12, 3, 4, 5, 6, 7, 8, time.UTC)
+
 	for _, format := range formats {
 		// Parse time
 		t, err := time.ParseInLocation(format, str, timeLoc)
@@ -41,16 +43,19 @@ func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date 
 			continue
 		}
 
-		// Check if format has day
-		var formatHasDay bool
-		for _, match := range rxDayNumber.FindAllString(format, -1) {
-			if match != "2006" {
-				formatHasDay = true
-				break
-			}
-		}
+		// Check if format has day or month
+		checkerText := checker.Format(format)
+		formatHasDay := strings.Contains(checkerText, "4")
+		formatHasMonth := strings.Contains(checkerText, "3") || strings.Contains(checkerText, "Mar")
 
-		if !formatHasDay {
+		if !formatHasMonth && !formatHasDay {
+			period = date.Year
+			t = common.ApplyMonthFromConfig(cfg, t)
+			t = common.ApplyDayFromConfig(cfg, t)
+		} else if !formatHasMonth {
+			period = date.Year
+			t = common.ApplyMonthFromConfig(cfg, t)
+		} else if !formatHasDay {
 			period = date.Month
 			t = common.ApplyDayFromConfig(cfg, t)
 		}

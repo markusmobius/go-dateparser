@@ -18,7 +18,7 @@ func init() {
 		Charset:               []rune(`bcdefghilnorstuvzì`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d*)\s+ora(\z|[^\pL\pM\d]|_)`), "${1}${2} ore${3}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*)\s+ora(\z|[^\pL\pM\d_])`), "${1}${2} ore${3}"},
 		},
 		Translations: map[string][]string{
 			"mercoledi": {"wednesday"},

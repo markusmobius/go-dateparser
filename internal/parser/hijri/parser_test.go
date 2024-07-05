@@ -24,8 +24,11 @@ func TestParse(t *testing.T) {
 		{" 17-01-1437 هـ 08:30 مساءً", tt(2015, 10, 30, 20, 30)},
 		{"29-02-1433 هـ, 06:22 صباحاً", tt(2012, 1, 23, 6, 22)},
 		{"04-03-1433 هـ, 10:08 مساءً", tt(2012, 1, 27, 22, 8)},
-		// Rabiul Awwal is only up to 29, so here parser should limit the day to 29.
+		// Safar is only up to 29, so here parser should limit the day to 29.
 		{"30-02-1433", tt(2012, 1, 23)},
+		// Handle two digit year
+		{"30-02-33", tt(2012, 1, 23)},
+		{"10-03-90", tt(1970, 5, 16)},
 	}
 
 	// Prepare config

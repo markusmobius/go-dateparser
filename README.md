@@ -10,7 +10,6 @@ go get -u -v github.com/markusmobius/go-dateparser
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [ 1. Features ▲](#-1-features-)
 - [ 2. Status ▲](#-2-status-)
 - [ 3. Common Use Cases ▲](#-3-common-use-cases-)
@@ -28,6 +27,8 @@ go get -u -v github.com/markusmobius/go-dateparser
 - [ 11. Custom Language Detector ▲](#-11-custom-language-detector-)
 - [ 12. Handling False Positives ▲](#-12-handling-false-positives-)
 - [ 13. Performance ▲](#-13-performance-)
+  - [Compiling with cgo under Linux](#compiling-with-cgo-under-linux)
+  - [Compiling with cgo under Windows](#compiling-with-cgo-under-windows)
 - [ 14. License ▲](#-14-license-)
 
 ## <a name="features"></a> 1. Features [▲](#table-of-contents)
@@ -41,7 +42,7 @@ go get -u -v github.com/markusmobius/go-dateparser
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-This package is up to date with the original dateparser until commit [b368edd][original-commit] ([v1.1.7][original-tag]). There are several behavior and implementation differences between this port and the original:
+This package is up to date with the original dateparser until commit [748e48a][original-commit] (several commits after [v1.2.0][original-tag]). There are several behavior and implementation differences between this port and the original:
 
 - In Python, timezone data is not included in date and time objects. Meanwhile in Go timezone data is required.
 - Regex in Go is pretty slow, so in this port whenever possible we use basic strings or runes operations instead of regex to improve the performance.
@@ -181,7 +182,7 @@ Persian Jalali calendar is also often called Solar Hijri calendar and commonly u
 
 Hijri calendar is a Lunar calendar which commonly used in Islamic countries. Some only use it for religious purposes (e.g. calculating when Ramadhan or Hajj started) while some also use it for both administrative purposes.
 
-There are several variations of Hijri calendar, e.g. [Tabular][tabular-hijri] and [Umm al-Qura][umm-al-qura]. In **dateparser** we use Umm al-Qura calendar since it's the one that apparently mpstly used by Islamic world.
+There are several variations of Hijri calendar, e.g. [Tabular][tabular-hijri] and [Umm al-Qura][umm-al-qura]. In **dateparser** we use Umm al-Qura calendar since it's the one that apparently mostly used by Islamic world.
 
 ```go
 dt, _ = dps.ParseJalali(nil, "جمعه سی ام اسفند ۱۳۸۷")
@@ -239,12 +240,17 @@ dt, _ = dps.Parse(cfg, "miy 02-03-2016") // philippines, keep using MDY date ord
 By default, **dateparser** uses the timezone that is present in the date string. If the timezone is not present, then it will use timezone from the `CurrentTime`:
 
 ```go
-// Current time is 2015-06-01 12:00:00 WIB
-wib := time.FixedZone("WIB", 7*60*60)
+// Use case: I'm from Jakarta, parsing London's news article.
+// So, my current time use GMT+7, however the parser's default timezone is GMT.
+london, _ := time.LoadLocation("Europe/London")
+jakarta, _ := time.LoadLocation("Asia/Jakarta")
+
 cfg := &dps.Configuration{
-	CurrentTime: time.Date(2015, 6, 1, 12, 0, 0, 0, wib),
+	DefaultTimezone: london,
+	CurrentTime:     time.Date(2015, 6, 1, 12, 0, 0, 0, jakarta),
 }
 
+// Here the timezone is explicitly mentioned in string
 dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM EST")
 // time: 2012-01-12 22:00:00 EST, confidence: Day
 
@@ -257,10 +263,21 @@ dt, _ = dps.Parse(cfg, "2 hours ago EST")
 dt, _ = dps.Parse(cfg, "2 hours ago -0500")
 // time: 2015-05-31 22:00:00 UTC-05:00, confidence: Day
 
-dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM") // use tz from current time
+// Now timezone is not specified, so parser will use `DefaultTimezone`
+dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM")
+// time: 2012-01-12 22:00:00 GMT, confidence: Day
+
+dt, _ = dps.Parse(cfg, "2 hours ago")
+// time: 2015-06-01 04:00:00 BST, confidence: Day
+// notice the timezone become BST, because we move back to Daylight Saving Time.
+
+// Now we remove the default timezone, so it use timezone from `CurrentTime`
+cfg.DefaultTimezone = nil
+
+dt, _ = dps.Parse(cfg, "January 12, 2012 10:00 PM")
 // time: 2012-01-12 22:00:00 WIB, confidence: Day
 
-dt, _ = dps.Parse(cfg, "2 hours ago") // use tz from current time
+dt, _ = dps.Parse(cfg, "2 hours ago")
 // time: 2015-06-01 10:00:00 WIB, confidence: Day
 ```
 
@@ -290,7 +307,7 @@ dt, _ = dps.Parse(cfg, "Sunday")
 // time: 2015-07-26 00:00:00 UTC (the closest Sunday from current time)
 ```
 
-You can change the behavior by using `PreferredDayOfMonth` and `PreferredDateSource` in `Configuration`:
+You can change the behavior by using `PreferredMonthOfYear`, `PreferredDayOfMonth` and `PreferredDateSource` in `Configuration`:
 
 ```go
 // Current time is 2015-07-10 12:00:00 UTC
@@ -306,6 +323,25 @@ dt, _ = dps.Parse(cfg, "December 2015")
 cfg.PreferredDayOfMonth = dps.Last
 dt, _ = dps.Parse(cfg, "December 2015")
 // time: 2015-12-31 00:00:00 UTC
+```
+
+```go
+// Current time is 2015-10-10 12:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.Current
+cfg.PreferredMonthOfYear = dps.CurrentMonth
+dt, _ = dps.Parse(cfg, "2020")
+// time: 2020-10-10 00:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.Last
+cfg.PreferredMonthOfYear = dps.FirstMonth
+dt, _ = dps.Parse(cfg, "2020")
+// time: 2020-01-31 00:00:00 UTC
+
+cfg.PreferredDayOfMonth = dps.First
+cfg.PreferredMonthOfYear = dps.LastMonth
+dt, _ = dps.Parse(cfg, "2015")
+// time: 2015-12-01 00:00:00 UTC
 ```
 
 ```go
@@ -420,6 +456,7 @@ If you want to parse a huge amount of data, it would be preferrable to have a be
 ```
 go build -tags re2_cgo .
 ```
+
 More detailed instructions in how to prepare your system for compiling with cgo are provided below.
 
 When using `re2_wasm` tag, it will make your app uses `re2` that packaged as WebAssembly module so it should be runnable even without cgo. However, if your input is too small, it might be even slower than using Go's standard regex engine.
@@ -440,12 +477,14 @@ sudo apt-get install -y libre2-dev
 ```
 
 ### Compiling with cgo under Windows
+
 On Windows start by installing [MSYS2][msys2]. Then open the MINGW64 terminal and install the gcc toolchain and re2 via pacman:
 
 ```bash
 pacman -S mingw-w64-x86_64-gcc
 pacman -S mingw-w64-x86_64-re2
 ```
+
 If you want to run the resulting exe program outside the MINGW64 terminal you need to add a path to the MinGW-w64 libraries to the PATH environmental variable (adjust as needed for your system):
 
 ```cmd
@@ -459,8 +498,8 @@ Just like the original, this package is licensed under [BSD-3 License][bsd3].
 [go-ref-icon]: https://pkg.go.dev/badge/github.com/markusmobius/go-dateparser.svg
 [go-ref]: https://pkg.go.dev/github.com/markusmobius/go-dateparser
 [original]: https://github.com/scrapinghub/dateparser
-[original-commit]: https://github.com/scrapinghub/dateparser/tree/b368edd
-[original-tag]: https://github.com/scrapinghub/dateparser/tree/v1.1.7
+[original-commit]: https://github.com/scrapinghub/dateparser/tree/748e48a
+[original-tag]: https://github.com/scrapinghub/dateparser/releases/tag/v1.2.0
 [dps-parse]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#Parse
 [dps-jalali]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseJalali
 [dps-hijri]: https://pkg.go.dev/github.com/markusmobius/go-dateparser#ParseHijri

@@ -153,7 +153,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 
 			if !dt.IsZero() {
 				if cfg.TryPreviousLocales {
-					p.saveUsedLocale(cfg, locale)
+					p.saveUsedLocale(locale)
 				}
 
 				dt.Locale = locale.Name
@@ -189,7 +189,7 @@ func (p *Parser) tryAbsoluteTime(iCfg *setting.Configuration, translations []str
 	for _, translation := range translations {
 		if t, tz := p.stripBracesAndTimezones(translation); t != "" {
 			dt, _ := absolute.Parse(iCfg, t, tz)
-			dt = p.applyTimezone(dt, tz)
+			dt = p.applyTimezone(iCfg, dt, tz)
 			if !dt.IsZero() {
 				return dt
 			}
@@ -202,7 +202,7 @@ func (p *Parser) tryNoSpacesTime(iCfg *setting.Configuration, translations []str
 	for _, translation := range translations {
 		if t, tz := p.stripBracesAndTimezones(translation); t != "" {
 			dt, _ := nospace.Parse(iCfg, t)
-			dt = p.applyTimezone(dt, tz)
+			dt = p.applyTimezone(iCfg, dt, tz)
 			if !dt.IsZero() {
 				return dt
 			}
@@ -290,7 +290,7 @@ func (p *Parser) checkPreviousLocales(iCfg *setting.Configuration, dateStrings [
 	return nil
 }
 
-func (p *Parser) saveUsedLocale(cfg *Configuration, ld *data.LocaleData) {
+func (p *Parser) saveUsedLocale(ld *data.LocaleData) {
 	if p.usedLocalesTracker == nil {
 		p.usedLocalesTracker = strutil.NewDict()
 	}
@@ -310,14 +310,23 @@ func (p *Parser) stripBracesAndTimezones(s string) (string, timezone.OffsetData)
 	return timezone.PopTzOffset(s)
 }
 
-func (p *Parser) applyTimezone(dt date.Date, tz timezone.OffsetData) date.Date {
-	if dt.IsZero() || tz.IsZero() {
+func (p *Parser) applyTimezone(iCfg *setting.Configuration, dt date.Date, tz timezone.OffsetData) date.Date {
+	if dt.IsZero() || (tz.IsZero() && iCfg.DefaultTimezone == nil) {
 		return dt
+	}
+
+	var tzName string
+	var tzOffset int
+
+	if !tz.IsZero() {
+		tzName, tzOffset = tz.Name, tz.Offset
+	} else {
+		tzName, tzOffset = dt.Time.In(iCfg.DefaultTimezone).Zone()
 	}
 
 	dt.Time = time.Date(dt.Time.Year(), dt.Time.Month(), dt.Time.Day(),
 		dt.Time.Hour(), dt.Time.Minute(), dt.Time.Second(), dt.Time.Nanosecond(),
-		time.FixedZone(tz.Name, tz.Offset))
+		time.FixedZone(tzName, tzOffset))
 
 	return dt
 }

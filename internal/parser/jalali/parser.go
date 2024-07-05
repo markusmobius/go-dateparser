@@ -97,6 +97,14 @@ func getDatePartValue(p *absolute.Parser, component, token, directive string) (i
 		}
 	}
 
+	if component == "year" && tokenLength == 2 && tokenIsDigit {
+		year, _ := strconv.Atoi(token)
+		year = handleTwoDigitYear(year)
+		if year >= 0 {
+			return year, true
+		}
+	}
+
 	if component == "month" {
 		monthValue, monthValueExist := monthNameValues[token]
 		if directive == "January" && monthValueExist {
@@ -199,5 +207,13 @@ func getCorrectLeapYear(cfg *setting.Configuration, currentYear int) int {
 		} else {
 			return prevLeapYear
 		}
+	}
+}
+
+func handleTwoDigitYear(year int) int {
+	if year > 60 {
+		return year + 1300
+	} else {
+		return year + 1400
 	}
 }

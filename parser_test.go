@@ -51,6 +51,7 @@ func TestParser_Parse(t *testing.T) {
 		{"Monday 7:15 AM", tt(2012, 11, 12, 7, 15)},
 		// French dates
 		{"11 Mai 2014", tt(2014, 5, 11)},
+		{"11 sept. 2014", tt(2014, 9, 11)},
 		{"dimanche, 11 Mai 2014", tt(2014, 5, 11)},
 		{"22 janvier 2015 à 14h40", tt(2015, 1, 22, 14, 40)},
 		{"Dimanche 1er Février à 21:24", tt(2012, 2, 1, 21, 24)},
@@ -599,13 +600,25 @@ func TestParser_Parse_checkPeriod(t *testing.T) {
 		{"Monday", tt(2015, 2, 9), date.Day},
 		{"10:00PM", tt(2015, 2, 15, 22, 00), date.Day},
 		{"16:10", tt(2015, 2, 15, 16, 10), date.Day},
-		{"2014", tt(2014, 2, 15), date.Year},
+		{"1000", tt(1000, 2, 15), date.Year},
 		{"2008", tt(2008, 2, 15), date.Year},
+		{"2014", tt(2014, 2, 15), date.Year},
 		// Subscript and superscript dates
 		{"²⁰¹⁵", tt(2015, 2, 15), date.Year},
 		{"²⁹/⁰⁵/²⁰¹⁵", tt(2015, 5, 29), date.Day},
 		{"₁₅/₀₂/₂₀₂₀", tt(2020, 2, 15), date.Day},
 		{"₃₁ December", tt(2015, 12, 31), date.Day},
+		// Russian
+		{"1000 год", tt(1000, 2, 15), date.Year},
+		{"1001 год", tt(1001, 2, 15), date.Year},
+		{"2000 год", tt(2000, 2, 15), date.Year},
+		{"2000год", tt(2000, 2, 15), date.Year},
+		{"год2000", tt(2000, 2, 15), date.Year},
+		{"год 2000", tt(2000, 2, 15), date.Year},
+		{"2000г.", tt(2000, 2, 15), date.Year},
+		{"2000 г.", tt(2000, 2, 15), date.Year},
+		{"2001 год", tt(2001, 2, 15), date.Year},
+		{"2001год", tt(2001, 2, 15), date.Year},
 	}
 
 	// Prepare config
@@ -713,21 +726,28 @@ func TestParser_Parse_onlySeparatorTokens(t *testing.T) {
 	}
 }
 
-func TestParser_Parse_dateSkipAhead(t *testing.T) {
+func TestParser_Parse_preferDatesFromWithTimezone(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {
 		Text         string
 		ExpectedTime time.Time
+		Source       dps.PreferredDateSource
+		DefaultTz    *time.Location
 	}
+
+	currentTime := tt(2021, 10, 19, 18, 0)
+	tzEDT, _ := time.LoadLocation("America/New_York")
+	tzAEDT, _ := time.LoadLocation("Australia/Sydney")
 
 	tests := []testScenario{
-		{"4pm EDT", tt(2021, 10, 19, 20, 0)},
-	}
-
-	// Prepare config
-	cfg := dps.Configuration{
-		PreferredDateSource: dps.Future,
-		CurrentTime:         tt(2021, 10, 19, 18, 0),
+		{"4pm EDT", tt(2021, 10, 19, 20, 0), dps.Future, nil},
+		{"10pm EDT", tt(2021, 10, 20, 2, 0), dps.Future, nil},
+		{"8am AEDT", tt(2021, 10, 18, 21, 0), dps.Past, nil},
+		{"11pm AEDT", tt(2021, 10, 19, 12, 0), dps.Past, nil},
+		{"4pm", tt(2021, 10, 19, 20, 0), dps.Future, tzEDT},
+		{"10pm", tt(2021, 10, 20, 2, 0), dps.Future, tzEDT},
+		{"8am", tt(2021, 10, 18, 21, 0), dps.Past, tzAEDT},
+		{"11pm", tt(2021, 10, 19, 12, 0), dps.Past, tzAEDT},
 	}
 
 	// Start tests
@@ -738,8 +758,56 @@ func TestParser_Parse_dateSkipAhead(t *testing.T) {
 			test.ExpectedTime.Format("2006-01-02 15:04:05.999999"))
 
 		// Parse text
-		dt, _ := dps.Parse(&cfg, test.Text)
+		dt, _ := dps.Parse(&dps.Configuration{
+			CurrentTime:         currentTime,
+			DefaultTimezone:     test.DefaultTz,
+			PreferredDateSource: test.Source,
+		}, test.Text)
 		if passed := assertParseResult(t, dt, test.ExpectedTime, date.Day, message); !passed {
+			fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestParser_Parse_datesWithNoDayOrMonth(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text        string
+		PreferDay   dps.PreferredDayOfMonth
+		PreferMonth dps.PreferredMonthOfYear
+		Today       time.Time
+		Expected    time.Time
+	}
+
+	tests := []testScenario{
+		{"2015", dps.Current, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 10)},
+		{"2015", dps.Last, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 28)},
+		{"2015", dps.First, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 1)},
+
+		{"2015", dps.Current, dps.LastMonth, tt(2010, 2, 10), tt(2015, 12, 10)},
+		{"2015", dps.Last, dps.LastMonth, tt(2010, 2, 10), tt(2015, 12, 31)},
+		{"2020", dps.Last, dps.CurrentMonth, tt(2010, 2, 10), tt(2020, 2, 29)}, // leap year
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		// Prepare log message
+		message := fmt.Sprintf("No day or month \"%s\" => \"%s\"", test.Text,
+			test.Expected.Format("2006-01-02"))
+
+		// Parse text
+		dt, _ := dps.Parse(&dps.Configuration{
+			CurrentTime:          test.Today,
+			PreferredDayOfMonth:  test.PreferDay,
+			PreferredMonthOfYear: test.PreferMonth,
+		}, test.Text)
+		if passed := assertParseResult(t, dt, test.Expected, date.Year, message); !passed {
 			fmt.Println("\t\t\tGOT:", dt)
 			nFailed++
 		}

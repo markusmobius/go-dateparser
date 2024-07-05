@@ -15,7 +15,7 @@ func init() {
 		Charset:               []rune(`bceghilnorstuyzàáâêìíôúăđưạảầậểồổộớờủứ`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(?:ngay|nam)\s(\d+[.,]?\d*)(\z|[^\pL\pM\d]|_)`), "${1}${2}${3}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(?:ngay|nam)\s(\d+[.,]?\d*)(\z|[^\pL\pM\d_])`), "${1}${2}${3}"},
 		},
 		Translations: map[string][]string{
 			"thang muoi hai": {"december"},

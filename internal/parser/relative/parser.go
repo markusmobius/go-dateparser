@@ -39,9 +39,12 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 		now = cfg.CurrentTime
 	}
 
+	// Apply timezone
 	if !tzData.IsZero() {
 		loc := time.FixedZone(tzData.Name, tzData.Offset)
 		now = now.In(loc)
+	} else if cfg != nil && cfg.DefaultTimezone != nil {
+		now = now.In(cfg.DefaultTimezone)
 	}
 
 	// Get relative date

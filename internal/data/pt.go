@@ -26,9 +26,9 @@ func init() {
 		Charset:               []rune(`-bcdefghijlnorstuvxzáãçêó`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)uma(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)um(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)alguns segundos(\z|[^\pL\pM\d]|_)`), "${1}44 segundos${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])uma(\z|[^\pL\pM\d_])`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])um(\z|[^\pL\pM\d_])`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])alguns segundos(\z|[^\pL\pM\d_])`), "${1}44 segundos${2}"},
 		},
 		Translations: map[string][]string{
 			"segunda-feira": {"monday"},

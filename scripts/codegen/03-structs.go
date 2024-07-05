@@ -67,8 +67,11 @@ func (ld *LocaleData) AddSimplification(pattern string, replacement string) {
 	// Sanitize pattern
 	pattern = normalizeString(pattern)
 	pattern = strings.ReplaceAll(pattern, `{0}`, `(\d+)`)
+	pattern = strings.ReplaceAll(pattern, `\w`, `[\pL\pM\d_]`)
+	pattern = strings.ReplaceAll(pattern, `\W`, `[^\pL\pM\d_]`)
+	pattern = strings.ReplaceAll(pattern, `\b`, `(?:\z|[^\pL\pM\d_])`)
 	if !ld.NoWordSpacing {
-		pattern = `(\A|[^\pL\pM\d]|_)` + pattern + `(\z|[^\pL\pM\d]|_)`
+		pattern = `(\A|[^\pL\pM\d_])` + pattern + `(\z|[^\pL\pM\d_])`
 	}
 
 	// Sanitize replacement

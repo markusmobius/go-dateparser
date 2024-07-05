@@ -114,7 +114,7 @@ func TestDetectLanguage(t *testing.T) {
 	// Start test
 	var nFailed int
 	for _, test := range tests {
-		bestLanguage, _ := DetectLanguage(&cfg, test.Text, languages, uniqueCharsets, nil)
+		bestLanguage, _ := DetectFullTextLanguage(&cfg, test.Text, languages, uniqueCharsets)
 		if passed := assert.Equal(t, test.Language, bestLanguage); !passed {
 			nFailed++
 		}

@@ -3,6 +3,7 @@ package dateparser
 import (
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/data"
+	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
 var defaultParser = &Parser{}
@@ -25,4 +26,12 @@ func Search(cfg *Configuration, text string) (string, []SearchResult, error) {
 func IsKnownLocale(code string) bool {
 	_, exist := data.GetLocaleData(code)
 	return exist
+}
+
+// PopTzOffset is helper function to extracts timezone data from str then return the
+// str with the timezone code removed.
+func PopTzOffset(str string) (cleanStr string, tzName string, tzOffset int) {
+	cleanStr, data := timezone.PopTzOffset(str)
+	tzName, tzOffset = data.Name, data.Offset
+	return
 }

@@ -15,9 +15,9 @@ func init() {
 		Charset:               []rune(`bcdeghiklnorstuwyz`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)kahapon(\z|[^\pL\pM\d]|_)`), "${1}1 araw nakaraan${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)ngayon(\z|[^\pL\pM\d]|_)`), "${1}0 segundo nakalipas${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)isang araw(\z|[^\pL\pM\d]|_)`), "${1}2 araw${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])kahapon(\z|[^\pL\pM\d_])`), "${1}1 araw nakaraan${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])ngayon(\z|[^\pL\pM\d_])`), "${1}0 segundo nakalipas${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])isang araw(\z|[^\pL\pM\d_])`), "${1}2 araw${2}"},
 		},
 		Translations: map[string][]string{
 			"miyerkules": {"wednesday"},

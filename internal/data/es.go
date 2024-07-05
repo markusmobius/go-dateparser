@@ -42,8 +42,8 @@ func init() {
 		Charset:               []rune(`bcdefghijlnorstuvxyzáéíñó`),
 		SentenceSplitterGroup: 2,
 		Simplifications: []ReplacementData{
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)una(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)un(\z|[^\pL\pM\d]|_)`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])una(\z|[^\pL\pM\d_])`), "${1}1${2}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])un(\z|[^\pL\pM\d_])`), "${1}1${2}"},
 		},
 		Translations: map[string][]string{
 			"septiembre": {"september"},

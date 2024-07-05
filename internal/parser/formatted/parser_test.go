@@ -44,6 +44,9 @@ func TestParse(t *testing.T) {
 
 	// Should use day from config for dates without day
 	str, format := "August 2014", "January 2006"
+	cfg = setting.Configuration{
+		CurrentTime: time.Date(2014, 8, 12, 0, 0, 0, 0, time.UTC),
+	}
 
 	cfg.PreferredDayOfMonth = setting.First
 	dt = Parse(&cfg, str, format)
@@ -55,5 +58,23 @@ func TestParse(t *testing.T) {
 
 	cfg.PreferredDayOfMonth = setting.Current
 	dt = Parse(&cfg, str, format)
-	dateAsExpected(dt, "2014-08-04")
+	dateAsExpected(dt, "2014-08-12")
+
+	// Should use month from config for dates without month
+	str, format = "2014", "2006"
+	cfg = setting.Configuration{
+		CurrentTime: time.Date(2014, 7, 1, 0, 0, 0, 0, time.UTC),
+	}
+
+	cfg.PreferredMonthOfYear = setting.FirstMonth
+	dt = Parse(&cfg, str, format)
+	dateAsExpected(dt, "2014-01-01")
+
+	cfg.PreferredMonthOfYear = setting.LastMonth
+	dt = Parse(&cfg, str, format)
+	dateAsExpected(dt, "2014-12-01")
+
+	cfg.PreferredMonthOfYear = setting.CurrentMonth
+	dt = Parse(&cfg, str, format)
+	dateAsExpected(dt, "2014-07-01")
 }

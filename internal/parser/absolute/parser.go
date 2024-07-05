@@ -304,6 +304,10 @@ func (p *Parser) Parse(tz timezone.OffsetData) (date.Date, error) {
 	// Apply correction for past and future
 	dt = p.correctForTimeFrame(dt, tz)
 
+	// Apply correction for preference of month: beginning, current, end.
+	// Must be done before day so that day is derived from the correct month.
+	dt = p.correctForMonth(dt)
+
 	// Apply correction for preference of day: beginning, current, end
 	dt = p.correctForDay(dt)
 
@@ -516,7 +520,12 @@ func (p *Parser) correctForTimeFrame(t time.Time, tz timezone.OffsetData) time.T
 	}
 
 	if tokenTimeExist && !tokenYearExist && !tokenMonthExist && !tokenDayExist && !tokenWeekdayExist {
-		tmp := t.Add(-time.Duration(tz.Offset) * time.Second)
+		tzOffset := tz.Offset
+		if tz.IsZero() && p.Config.DefaultTimezone != nil {
+			_, tzOffset = t.In(p.Config.DefaultTimezone).Zone()
+		}
+
+		tmp := t.Add(-time.Duration(tzOffset) * time.Second)
 
 		if dateSource == setting.Past && p.Now.Before(tmp) {
 			t = t.AddDate(0, 0, -1)
@@ -539,6 +548,16 @@ func (p *Parser) correctForDay(t time.Time) time.Time {
 	}
 
 	t = common.ApplyDayFromConfig(p.Config, t, p.Now.Day())
+	return t
+}
+
+func (p *Parser) correctForMonth(t time.Time) time.Time {
+	_, tokenMonthExist := p.ComponentTokens["month"]
+	if tokenMonthExist {
+		return t
+	}
+
+	t = common.ApplyMonthFromConfig(p.Config, t, p.Now.Month())
 	return t
 }
 
