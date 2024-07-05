@@ -54,9 +54,13 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 		dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
 			t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 			dt.Location())
-		if cfg != nil && cfg.ReturnTimeAsPeriod {
-			period = date.Time
+		if period > date.Hour {
+			period = date.Hour
 		}
+	}
+
+	if cfg != nil && !cfg.ReturnTimeAsPeriod && period.IsTime() {
+		period = date.Day
 	}
 
 	// Create date data

@@ -526,7 +526,7 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		if len(bTime) > 0 {
 			baseTime = bTime[0]
 		}
-		return testScenario{text, baseTime, eTime, date.Time}
+		return testScenario{text, baseTime, eTime, date.Hour}
 	}
 
 	tsd := func(text string, eTime time.Time, bTime ...time.Time) testScenario {

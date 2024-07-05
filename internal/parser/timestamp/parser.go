@@ -18,7 +18,7 @@ var (
 func Parse(cfg *setting.Configuration, str string, negative bool) date.Date {
 	period := date.Day
 	if cfg != nil && cfg.ReturnTimeAsPeriod {
-		period = date.Time
+		period = date.Hour
 	}
 
 	var rx *regexp.Regexp

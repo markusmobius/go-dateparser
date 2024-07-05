@@ -41,7 +41,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 	}
 
 	// Prepare scenarios
-	Day, Month, Year, Time, Hour, Minute, Second := date.Day, date.Month, date.Year, date.Time, date.Hour, date.Minute, date.Second
+	Day, Month, Year, Hour, Minute, Second := date.Day, date.Month, date.Year, date.Hour, date.Minute, date.Second
 	pastTimes := []testScenario{
 		// Mixed temporal nouns
 		{"today", pfpDiff{"day": -0}, date.Day},
@@ -63,7 +63,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 
 		// English dates
 		{"yesterday", pfpDiff{"day": -1}, Day},
-		{"yesterday at 11:30", pfpDiff{"hour": -23}, Time},
+		{"yesterday at 11:30", pfpDiff{"hour": -23}, Hour},
 		{"1 decade", pfpDiff{"year": -10}, Year},
 		{"1 decade 2 years", pfpDiff{"year": -12}, Year},
 		{"1 decade 12 months", pfpDiff{"year": -10, "month": -12}, Month},

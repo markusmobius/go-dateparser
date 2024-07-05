@@ -12,34 +12,29 @@ type Period uint8
 
 const (
 	None Period = iota
-	Time
+	Second
+	Minute
+	Hour
 	Day
 	Month
 	Year
-	Hour
-	Minute
-	Second
 )
 
+var periodString = map[Period]string{
+	Second: "Second",
+	Minute: "Minute",
+	Hour:   "Hour",
+	Day:    "Day",
+	Month:  "Month",
+	Year:   "Year",
+}
+
 func (p Period) String() string {
-	switch p {
-	case Time:
-		return "Time"
-	case Second:
-		return "Second"
-	case Minute:
-		return "Minute"
-	case Hour:
-		return "Hour"
-	case Day:
-		return "Day"
-	case Month:
-		return "Month"
-	case Year:
-		return "Year"
-	default:
-		return ""
-	}
+	return periodString[p]
+}
+
+func (p Period) IsTime() bool {
+	return p == Second || p == Minute || p == Hour
 }
 
 // Date is object that represents the parsed date with useful information.
