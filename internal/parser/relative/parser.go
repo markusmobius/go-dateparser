@@ -79,25 +79,27 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	}
 
 	// Retrieve relative durations
-	relDurations, foundDurations := getRelativeDurations(str)
+	relDurations := getRelativeDurations(str)
 	if len(relDurations) == 0 {
 		return time.Time{}, 0
 	}
 
 	// Extract period from relative durations
 	period := date.Day
-	if foundDurations["second"] {
+
+	switch {
+	case keyExist(relDurations, "second"):
 		period = date.Second
-	} else if foundDurations["minute"] {
+	case keyExist(relDurations, "minute"):
 		period = date.Minute
-	} else if foundDurations["hour"] {
+	case keyExist(relDurations, "hour"):
 		period = date.Hour
-	} else if !foundDurations["day"] {
-		if foundDurations["month"] {
-			period = date.Month
-		} else if foundDurations["year"] {
-			period = date.Year
-		}
+	case keyExist(relDurations, "day"):
+		period = date.Day
+	case keyExist(relDurations, "month"):
+		period = date.Month
+	case keyExist(relDurations, "year"):
+		period = date.Year
 	}
 
 	// Convert relative durations (which in float64) to usable format
@@ -141,7 +143,7 @@ func allWordsAreUnits(s string) bool {
 	return wordCount == 0
 }
 
-func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
+func getRelativeDurations(s string) map[string]float64 {
 	// Extract durations using regex
 	floatDurations := map[string]float64{}
 	for _, parts := range rxRelativePattern.FindAllStringSubmatch(s, -1) {
@@ -163,12 +165,7 @@ func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 		delete(floatDurations, "week")
 	}
 
-	foundDurations := map[string]bool{}
-	for duration, _ := range floatDurations {
-		foundDurations[duration] = true
-	}
-
-	// Convert fractional year, month and day to lower unit
+	// Convert fractional values to lower unit
 	for _, unit := range strings.Split(relativeUnits, "|") {
 		// Make sure duration exist
 		value, exist := floatDurations[unit]
@@ -198,11 +195,11 @@ func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 			}
 
 			floatDurations["year"] = year
-			floatDurations["month"] += month
-			floatDurations["day"] += day
-			floatDurations["hour"] += hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "month", month)
+			addMapValue(floatDurations, "day", day)
+			addMapValue(floatDurations, "hour", hour)
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "month":
 			month := value
@@ -217,10 +214,10 @@ func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 			}
 
 			floatDurations["month"] = month
-			floatDurations["day"] += day
-			floatDurations["hour"] += hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "day", day)
+			addMapValue(floatDurations, "hour", hour)
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "day":
 			day := value
@@ -234,9 +231,9 @@ func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 			}
 
 			floatDurations["day"] = day
-			floatDurations["hour"] += hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "hour", hour)
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "hour":
 			hour := value
@@ -248,8 +245,8 @@ func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 			}
 
 			floatDurations["hour"] = hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "minute":
 			minute := value
@@ -260,10 +257,11 @@ func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 			}
 
 			floatDurations["minute"] = minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "second", second)
 
 		case "second":
-			second, _, _ := splitFraction(fraction * 60)
+			second := math.Round(value + fraction)
+
 			if isNegative {
 				second = -second
 			}
@@ -272,7 +270,7 @@ func getRelativeDurations(s string) (map[string]float64, map[string]bool) {
 		}
 	}
 
-	return floatDurations, foundDurations
+	return floatDurations
 }
 
 func splitFraction(fl float64) (intPart, fractionPart float64, hasFraction bool) {
@@ -283,4 +281,15 @@ func splitFraction(fl float64) (intPart, fractionPart float64, hasFraction bool)
 	value := math.Abs(fl)
 	floorValue := math.Floor(value)
 	return floorValue, value - floorValue, value != floorValue
+}
+
+func addMapValue(m map[string]float64, key string, value float64) {
+	if value != 0 {
+		m[key] += value
+	}
+}
+
+func keyExist(m map[string]float64, key string) bool {
+	_, exist := m[key]
+	return exist
 }

@@ -41,7 +41,8 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 	}
 
 	// Prepare scenarios
-	Day, Month, Year, Hour, Minute, Second := date.Day, date.Month, date.Year, date.Hour, date.Minute, date.Second
+	Day, Month, Year := date.Day, date.Month, date.Year
+	Hour, Minute, Second := date.Hour, date.Minute, date.Second
 	pastTimes := []testScenario{
 		// Mixed temporal nouns
 		{"today", pfpDiff{"day": -0}, date.Day},
@@ -108,9 +109,11 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"2y ago", pfpDiff{"year": -2}, Year},
 
 		// Fractional English units
-		{"2.5 hours", pfpDiff{"hour": -2, "minute": -30}, Hour},
-		{"10.75 minutes", pfpDiff{"minute": -10, "second": -45}, Minute},
-		{"1.5 days", pfpDiff{"day": -1, "hour": -12}, Day},
+		{"2.5 hours", pfpDiff{"hour": -2, "minute": -30}, Minute},
+		{"10.75 minutes", pfpDiff{"minute": -10, "second": -45}, Second},
+		{"1.5 days", pfpDiff{"day": -1, "hour": -12}, Hour},
+		{"0.4 seconds", pfpDiff{"second": 0}, Second},
+		{"0.9 seconds", pfpDiff{"second": -1}, Second},
 
 		// French dates
 		{"Aujourd'hui", nil, Day},
@@ -269,7 +272,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"2 tuần 3 ngày", pfpDiff{"week": -2, "day": -3}, Day},
 		// Following test unsupported, refer to discussion at:
 		// http://github.com/scrapinghub/dateparser/issues/33
-		// {"1 năm 1 tháng 1 tuần 1 ngày 1 giờ 1 chút", pfpDiff{"year": -1, "month": -1, "week": -1, "day": -1, "hour": -1, "minute": -1}, Day},
+		// {"1 năm 1 tháng 1 tuần 1 ngày 1 giờ 1 chút", pfpDiff{"year": -1, "month": -1, "week": -1, "day": -1, "hour": -1, "minute": -1}, Minute},
 
 		// Belarusian dates
 		{"сёння", nil, Day},
@@ -598,12 +601,14 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"5 seconds later", pfpDiff{"second": 5}, Second},
 
 		// Fractional units
-		{"in 2.5 hours", pfpDiff{"hour": 2, "minute": 30}, Hour},
-		{"in 10.75 minutes", pfpDiff{"minute": 10, "second": 45}, Minute},
-		{"in 1.5 days", pfpDiff{"day": 1, "hour": 12}, Day},
-		{"in 0,5 hours", pfpDiff{"minute": 30}, Hour},
-		{"1.5 days later", pfpDiff{"day": 1, "hour": 12}, Day},
-		{"0,5 hours later", pfpDiff{"minute": 30}, Hour},
+		{"in 2.5 hours", pfpDiff{"hour": 2, "minute": 30}, Minute},
+		{"in 10.75 minutes", pfpDiff{"minute": 10, "second": 45}, Second},
+		{"in 1.5 days", pfpDiff{"day": 1, "hour": 12}, Hour},
+		{"in 0,5 hours", pfpDiff{"minute": 30}, Minute},
+		{"1.5 days later", pfpDiff{"day": 1, "hour": 12}, Hour},
+		{"0,5 hours later", pfpDiff{"minute": 30}, Minute},
+		{"in 0.3 seconds", pfpDiff{"second": 0}, Second},
+		{"in 0.8 seconds", pfpDiff{"second": 1}, Second},
 
 		// French dates
 		{"Aujourd'hui", pfpDiff{"day": 0}, Day},
