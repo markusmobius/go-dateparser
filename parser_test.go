@@ -1036,4 +1036,21 @@ func TestParser_Parse_customConfig(t *testing.T) {
 
 	dt, _ = parser.Parse(&cfg, "Понедельник")
 	assert.Equal(t, "ru", dt.Locale)
+
+	// Check returning period as time
+	cfg = dps.Configuration{
+		CurrentTime:        tt(2024, 1, 1, 12, 0, 0),
+		ReturnTimeAsPeriod: true,
+	}
+
+	dt, _ = parser.Parse(&cfg, "in 10 minutes")
+	assert.Equal(t, tt(2024, 1, 1, 12, 10, 0), dt.Time)
+	assert.Equal(t, date.Minute, dt.Period)
+	assert.Equal(t, true, dt.Period.IsTime())
+
+	cfg.ReturnTimeAsPeriod = false
+	dt, _ = parser.Parse(&cfg, "in 10 minutes")
+	assert.Equal(t, tt(2024, 1, 1, 12, 10, 0), dt.Time)
+	assert.Equal(t, date.Day, dt.Period)
+	assert.Equal(t, false, dt.Period.IsTime())
 }
