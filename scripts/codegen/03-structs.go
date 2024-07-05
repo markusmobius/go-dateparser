@@ -456,6 +456,7 @@ type CldrDateFieldsRelTimePattern struct {
 	CountOther string `json:"relativeTimePattern-count-other"`
 }
 
+// SupplementaryData is struct that contains YAML data for `data-supplementary/date-translation`.
 type SupplementaryData struct {
 	SkipWords             []string            `json:"skip,omitempty"                    yaml:"skip,omitempty"`
 	PertainWords          []string            `json:"pertain,omitempty"                 yaml:"pertain,omitempty"`
