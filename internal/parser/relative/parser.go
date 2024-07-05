@@ -54,9 +54,13 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 		dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
 			t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 			dt.Location())
-		if cfg != nil && cfg.ReturnTimeAsPeriod {
-			period = date.Time
+		if period > date.Hour {
+			period = date.Hour
 		}
+	}
+
+	if cfg != nil && !cfg.ReturnTimeAsPeriod && period.IsTime() {
+		period = date.Day
 	}
 
 	// Create date data
@@ -82,12 +86,20 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 
 	// Extract period from relative durations
 	period := date.Day
-	if _, dayExist := relDurations["day"]; !dayExist {
-		if _, monthExist := relDurations["month"]; monthExist {
-			period = date.Month
-		} else if _, yearExist := relDurations["year"]; yearExist {
-			period = date.Year
-		}
+
+	switch {
+	case keyExist(relDurations, "second"):
+		period = date.Second
+	case keyExist(relDurations, "minute"):
+		period = date.Minute
+	case keyExist(relDurations, "hour"):
+		period = date.Hour
+	case keyExist(relDurations, "day"):
+		period = date.Day
+	case keyExist(relDurations, "month"):
+		period = date.Month
+	case keyExist(relDurations, "year"):
+		period = date.Year
 	}
 
 	// Convert relative durations (which in float64) to usable format
@@ -153,7 +165,7 @@ func getRelativeDurations(s string) map[string]float64 {
 		delete(floatDurations, "week")
 	}
 
-	// Convert fractional year, month and day to lower unit
+	// Convert fractional values to lower unit
 	for _, unit := range strings.Split(relativeUnits, "|") {
 		// Make sure duration exist
 		value, exist := floatDurations[unit]
@@ -183,11 +195,11 @@ func getRelativeDurations(s string) map[string]float64 {
 			}
 
 			floatDurations["year"] = year
-			floatDurations["month"] += month
-			floatDurations["day"] += day
-			floatDurations["hour"] += hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "month", month)
+			addMapValue(floatDurations, "day", day)
+			addMapValue(floatDurations, "hour", hour)
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "month":
 			month := value
@@ -202,10 +214,10 @@ func getRelativeDurations(s string) map[string]float64 {
 			}
 
 			floatDurations["month"] = month
-			floatDurations["day"] += day
-			floatDurations["hour"] += hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "day", day)
+			addMapValue(floatDurations, "hour", hour)
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "day":
 			day := value
@@ -219,9 +231,9 @@ func getRelativeDurations(s string) map[string]float64 {
 			}
 
 			floatDurations["day"] = day
-			floatDurations["hour"] += hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "hour", hour)
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "hour":
 			hour := value
@@ -233,8 +245,8 @@ func getRelativeDurations(s string) map[string]float64 {
 			}
 
 			floatDurations["hour"] = hour
-			floatDurations["minute"] += minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "minute", minute)
+			addMapValue(floatDurations, "second", second)
 
 		case "minute":
 			minute := value
@@ -245,10 +257,11 @@ func getRelativeDurations(s string) map[string]float64 {
 			}
 
 			floatDurations["minute"] = minute
-			floatDurations["second"] += second
+			addMapValue(floatDurations, "second", second)
 
 		case "second":
-			second, _, _ := splitFraction(fraction * 60)
+			second := math.Round(value + fraction)
+
 			if isNegative {
 				second = -second
 			}
@@ -268,4 +281,15 @@ func splitFraction(fl float64) (intPart, fractionPart float64, hasFraction bool)
 	value := math.Abs(fl)
 	floorValue := math.Floor(value)
 	return floorValue, value - floorValue, value != floorValue
+}
+
+func addMapValue(m map[string]float64, key string, value float64) {
+	if value != 0 {
+		m[key] += value
+	}
+}
+
+func keyExist(m map[string]float64, key string) bool {
+	_, exist := m[key]
+	return exist
 }

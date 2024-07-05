@@ -570,7 +570,7 @@ func (p *Parser) getPeriod() date.Period {
 
 	switch {
 	case returnTimeAsPeriod && timeExist:
-		return date.Time
+		return date.Hour
 	case timeExist || dayExist:
 		return date.Day
 	case monthExist:
