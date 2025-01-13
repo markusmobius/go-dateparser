@@ -5,11 +5,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+
 	dps "github.com/markusmobius/go-dateparser"
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
-	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -17,6 +18,7 @@ var (
 	relativeTestConfig = dps.Configuration{
 		CurrentTime:        relativeTestNow,
 		ReturnTimeAsPeriod: true,
+		PreserveEndOfMonth: true,
 	}
 	relativeTestParser = dps.Parser{
 		ParserTypes: []dps.ParserType{dps.RelativeTime},
@@ -1111,6 +1113,10 @@ func TestParser_Parse_relative_hasSpecificTime(t *testing.T) {
 		ctTs(fmt.Sprintf("%d months ago", 2008*12+8), ct, tt(1, 10, 4, 13, 15)),
 		ctTs("1 year, 1 month, 1 week, 1 day, 1 hour and 1 minute ago", ct, tt(2009, 4, 26, 12, 14)),
 		ctTs("just now", ct, tt(2010, 6, 4, 13, 15)),
+		ctTs("1 month ago", tt(2024, 10, 31, 14, 0), tt(2024, 9, 30, 14, 0)),
+		ctTs("1 year ago", tt(2024, 2, 29, 14, 0), tt(2023, 2, 28, 14, 0)),
+		ctTs("in 1 year and 1 month", tt(2024, 1, 31, 14, 0), tt(2025, 2, 28, 14, 0)),
+		ctTs("1 month and 5 days ago", tt(2024, 10, 31, 14, 0), tt(2024, 9, 25, 14, 0)),
 
 		// Fractional units
 		ctTs("2.5 hours ago", ct, tt(2010, 6, 4, 10, 45)),

@@ -45,6 +45,7 @@ type Configuration struct {
 
 	// Others
 	ReturnTimeAsPeriod bool
+	PreserveEndOfMonth bool
 }
 
 func (c Configuration) Clone() *Configuration {
@@ -60,5 +61,6 @@ func (c Configuration) Clone() *Configuration {
 		SkipTokens:           append([]string{}, c.SkipTokens...),
 		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
+		PreserveEndOfMonth:   c.PreserveEndOfMonth,
 	}
 }

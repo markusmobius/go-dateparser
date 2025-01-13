@@ -143,6 +143,10 @@ type Configuration struct {
 	// ReturnTimeAsPeriod returns `Time` as period in date object, if time component is present
 	// in date string. Defaults to false.
 	ReturnTimeAsPeriod bool
+
+	// PreserveEndOfMonth calculates relative month and year dates while preserving the end of
+	// the target month. Ex: "1 month ago" on Oct 31 is Sep 30 instead of Oct 1. Defaults to false.
+	PreserveEndOfMonth bool
 }
 
 // Clone clones the config to a new, separate one.
@@ -164,6 +168,7 @@ func (c Configuration) Clone() *Configuration {
 		RequiredParts:        append([]string{}, c.RequiredParts...),
 		SkipTokens:           append([]string{}, c.SkipTokens...),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
+		PreserveEndOfMonth:   c.PreserveEndOfMonth,
 	}
 }
 
@@ -222,6 +227,7 @@ func (c Configuration) toInternalConfig() *setting.Configuration {
 		SkipTokens:           append([]string{}, c.SkipTokens...),
 		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
+		PreserveEndOfMonth:   c.PreserveEndOfMonth,
 	}
 }
 
@@ -237,5 +243,6 @@ func configFromInternal(c *setting.Configuration) *Configuration {
 		SkipTokens:           append([]string{}, c.SkipTokens...),
 		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
+		PreserveEndOfMonth:   c.PreserveEndOfMonth,
 	}
 }
