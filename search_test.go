@@ -188,7 +188,7 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 				`vom 13. April 1941 gegenüber Japan vorerst neutral.`,
 			CurrentTime:   tt(2000, 1, 1),
 			ExtractedText: []string{"Die", "13. April 1941"},
-			ExtractedTime: []time.Time{tt(1999, 1, 28), tt(1941, 4, 13)},
+			ExtractedTime: []time.Time{tt(1999, 12, 28), tt(1941, 4, 13)},
 		}, { // Indonesian
 			Language: "id",
 			Text: `Kekaisaran Jepang menyerah pada tanggal 15 Agustus 1945, sehingga mengakhiri perang ` +
