@@ -557,7 +557,12 @@ func (p *Parser) correctForMonth(t time.Time) time.Time {
 		return t
 	}
 
-	t = common.ApplyMonthFromConfig(p.Config, t, p.Now.Month())
+	_, tokenDayExist := p.ComponentTokens["day"]
+	_, tokenYearExist := p.ComponentTokens["year"]
+	_, tokenWeekdayExist := p.ComponentTokens["weekday"]
+	if !(tokenWeekdayExist && !tokenYearExist && !tokenMonthExist && !tokenDayExist) {
+		t = common.ApplyMonthFromConfig(p.Config, t, p.Now.Month())
+	}
 	return t
 }
 
