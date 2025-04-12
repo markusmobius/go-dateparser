@@ -166,7 +166,7 @@ func getRelativeDurations(s string) map[string]float64 {
 	}
 
 	// Convert fractional values to lower unit
-	for _, unit := range strings.Split(relativeUnits, "|") {
+	for unit := range strings.SplitSeq(relativeUnits, "|") {
 		// Make sure duration exist
 		value, exist := floatDurations[unit]
 		if !exist {

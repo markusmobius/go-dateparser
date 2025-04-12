@@ -7,6 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"slices"
+
 	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
@@ -79,7 +81,7 @@ var (
 )
 
 func createSortedFormats(prefix string) []string {
-	list := append([]string{}, allFormats...)
+	list := slices.Clone(allFormats)
 	sort.SliceStable(list, func(i, j int) bool {
 		itemI := strings.ToLower(list[i])
 		itemJ := strings.ToLower(list[j])
@@ -100,7 +102,7 @@ func createSortedFormats(prefix string) []string {
 func createParseCandidates(str string, format string) ([]string, string) {
 	// Split format by its part
 	var formatParts []string
-	for _, part := range strings.Split(format, "") {
+	for part := range strings.SplitSeq(format, "") {
 		if _, exist := partSizeMap[part]; exist {
 			formatParts = append(formatParts, part)
 		}
@@ -125,7 +127,7 @@ func createParseCandidates(str string, format string) ([]string, string) {
 	// Create limit permutations
 	limitSums := make([]int, permutationCount)
 	limitPermutations := make([][]int, permutationCount)
-	for i := 0; i < permutationCount; i++ {
+	for i := range permutationCount {
 		var limits []int
 		var limitSum int
 

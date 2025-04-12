@@ -7,6 +7,8 @@ import (
 	"text/template"
 	"unicode/utf8"
 
+	"slices"
+
 	"github.com/elliotchance/pie/v2"
 )
 
@@ -45,9 +47,7 @@ func charset(charset map[rune]struct{}) string {
 	}
 
 	chars := pie.Keys(charset)
-	sort.Slice(chars, func(i, j int) bool {
-		return chars[i] < chars[j]
-	})
+	slices.Sort(chars)
 
 	var strRunes []string
 	for _, r := range chars {

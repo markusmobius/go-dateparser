@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"maps"
 	"regexp"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -248,9 +250,7 @@ func (ld *LocaleData) GenerateAbbreviations() {
 
 	// Sort the abbreviations
 	abbreviations = pie.Unique(abbreviations)
-	sort.Slice(abbreviations, func(i, j int) bool {
-		return abbreviations[i] < abbreviations[j]
-	})
+	slices.Sort(abbreviations)
 
 	ld.Abbreviations = abbreviations
 }
@@ -261,17 +261,17 @@ func (ld LocaleData) Clone() LocaleData {
 		DateOrder:                 ld.DateOrder,
 		NoWordSpacing:             ld.NoWordSpacing,
 		SentenceSplitterGroup:     ld.SentenceSplitterGroup,
-		Charset:                   cloneMap(ld.Charset),
-		SkipWords:                 cloneSlice(ld.SkipWords),
-		PertainWords:              cloneSlice(ld.PertainWords),
-		Abbreviations:             cloneSlice(ld.Abbreviations),
-		Simplifications:           cloneSlice(ld.Simplifications),
+		Charset:                   maps.Clone(ld.Charset),
+		SkipWords:                 slices.Clone(ld.SkipWords),
+		PertainWords:              slices.Clone(ld.PertainWords),
+		Abbreviations:             slices.Clone(ld.Abbreviations),
+		Simplifications:           slices.Clone(ld.Simplifications),
 		Translations:              cloneMapSlice(ld.Translations),
-		RelativeType:              cloneMap(ld.RelativeType),
-		RelativeTypeRegexes:       cloneMap(ld.RelativeTypeRegexes),
+		RelativeType:              maps.Clone(ld.RelativeType),
+		RelativeTypeRegexes:       maps.Clone(ld.RelativeTypeRegexes),
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
 		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
-		KnownWords:                cloneSlice(ld.KnownWords),
+		KnownWords:                slices.Clone(ld.KnownWords),
 	}
 
 	return clone
@@ -306,13 +306,8 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 		clone.Translations[word] = merged
 	}
 
-	for pattern, translation := range input.RelativeType {
-		clone.RelativeType[pattern] = translation
-	}
-
-	for pattern, translation := range input.RelativeTypeRegexes {
-		clone.RelativeTypeRegexes[pattern] = translation
-	}
+	maps.Copy(clone.RelativeType, input.RelativeType)
+	maps.Copy(clone.RelativeTypeRegexes, input.RelativeTypeRegexes)
 
 	for r := range input.Charset {
 		clone.Charset[r] = struct{}{}
@@ -414,8 +409,8 @@ type CldrGregorianData struct {
 					Days        CldrGregorianDataPart `json:"days"`
 					DayPeriods  CldrGregorianDataPart `json:"dayPeriods"`
 					DateFormats struct {
-						ShortItf interface{} `json:"short"`
-						Short    string      `json:"-"`
+						ShortItf any    `json:"short"`
+						Short    string `json:"-"`
 					} `json:"dateFormats"`
 				} `json:"gregorian"`
 			} `json:"calendars"`

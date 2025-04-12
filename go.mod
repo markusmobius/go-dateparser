@@ -1,6 +1,6 @@
 module github.com/markusmobius/go-dateparser
 
-go 1.20
+go 1.24.1
 
 require (
 	github.com/elliotchance/pie/v2 v2.7.0
@@ -13,6 +13,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/wasilibs/go-re2 v1.3.0
 	github.com/zyedidia/generic v1.2.1
+	golang.org/x/exp v0.0.0-20220321173239-a90fa8a75705
 	golang.org/x/text v0.14.0
 	gopkg.in/yaml.v2 v2.4.0
 )
@@ -45,7 +46,6 @@ require (
 	github.com/tetratelabs/wazero v1.2.1 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
-	golang.org/x/exp v0.0.0-20220321173239-a90fa8a75705 // indirect
 	golang.org/x/mod v0.12.0 // indirect
 	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect

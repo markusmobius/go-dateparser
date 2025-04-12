@@ -2,6 +2,7 @@ package dateparser
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 	"time"
 
@@ -148,12 +149,12 @@ type Configuration struct {
 // Clone clones the config to a new, separate one.
 func (c Configuration) Clone() *Configuration {
 	return &Configuration{
-		Locales:              append([]string{}, c.Locales...),
-		Languages:            append([]string{}, c.Languages...),
+		Locales:              slices.Clone(c.Locales),
+		Languages:            slices.Clone(c.Languages),
 		Region:               c.Region,
 		TryPreviousLocales:   c.TryPreviousLocales,
 		UseGivenOrder:        c.UseGivenOrder,
-		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
+		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
 		DateOrder:            c.DateOrder,
 		CurrentTime:          c.CurrentTime,
 		DefaultTimezone:      c.DefaultTimezone,
@@ -161,8 +162,8 @@ func (c Configuration) Clone() *Configuration {
 		PreferredMonthOfYear: c.PreferredMonthOfYear,
 		PreferredDateSource:  c.PreferredDateSource,
 		StrictParsing:        c.StrictParsing,
-		RequiredParts:        append([]string{}, c.RequiredParts...),
-		SkipTokens:           append([]string{}, c.SkipTokens...),
+		RequiredParts:        slices.Clone(c.RequiredParts),
+		SkipTokens:           slices.Clone(c.SkipTokens),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
 	}
 }
@@ -218,9 +219,9 @@ func (c Configuration) toInternalConfig() *setting.Configuration {
 		PreferredMonthOfYear: setting.PreferredMonthOfYear(c.PreferredMonthOfYear),
 		PreferredDateSource:  setting.PreferredDateSource(c.PreferredDateSource),
 		StrictParsing:        c.StrictParsing,
-		RequiredParts:        append([]string{}, c.RequiredParts...),
-		SkipTokens:           append([]string{}, c.SkipTokens...),
-		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
+		RequiredParts:        slices.Clone(c.RequiredParts),
+		SkipTokens:           slices.Clone(c.SkipTokens),
+		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
 	}
 }
@@ -233,9 +234,9 @@ func configFromInternal(c *setting.Configuration) *Configuration {
 		PreferredMonthOfYear: PreferredMonthOfYear(c.PreferredMonthOfYear),
 		PreferredDateSource:  PreferredDateSource(c.PreferredDateSource),
 		StrictParsing:        c.StrictParsing,
-		RequiredParts:        append([]string{}, c.RequiredParts...),
-		SkipTokens:           append([]string{}, c.SkipTokens...),
-		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
+		RequiredParts:        slices.Clone(c.RequiredParts),
+		SkipTokens:           slices.Clone(c.SkipTokens),
+		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
 	}
 }

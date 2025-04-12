@@ -3,6 +3,8 @@ package language
 import (
 	"strings"
 
+	"slices"
+
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
@@ -73,8 +75,8 @@ func TranslateSearch(cfg *setting.Configuration, ld *data.LocaleData, str string
 				originalChunk = append(originalChunk, originalTokens[i])
 			} else if len(translatedChunk) > 0 {
 				translatedChunkPermutations := createPermutation(translatedChunk)
-				translated = append(translated, translatedChunkPermutations...)
-				for i := 0; i < len(translatedChunkPermutations); i++ {
+				for _, permutation := range translatedChunkPermutations {
+					translated = append(translated, permutation)
 					original = append(original, originalChunk)
 				}
 
@@ -84,8 +86,8 @@ func TranslateSearch(cfg *setting.Configuration, ld *data.LocaleData, str string
 
 		if len(translatedChunk) > 0 {
 			translatedChunkPermutations := createPermutation(translatedChunk)
-			translated = append(translated, translatedChunkPermutations...)
-			for i := 0; i < len(translatedChunkPermutations); i++ {
+			for _, permutation := range translatedChunkPermutations {
+				translated = append(translated, permutation)
 				original = append(original, originalChunk)
 			}
 		}
@@ -240,6 +242,6 @@ func removeEmptySliceItem(list []string) ([]string, bool) {
 		return list, false
 	}
 
-	list = append(list[:emptyIdx], list[emptyIdx+1:]...)
+	list = slices.Delete(list, emptyIdx, emptyIdx+1)
 	return list, true
 }

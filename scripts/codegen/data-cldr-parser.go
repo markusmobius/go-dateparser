@@ -190,7 +190,7 @@ func parseCldrGregorianData(locale string) (*CldrGregorianData, error) {
 	switch v := shortItfValue.(type) {
 	case string:
 		mainData.Dates.Calendars.Gregorian.DateFormats.Short = strings.ToUpper(v)
-	case map[string]interface{}:
+	case map[string]any:
 		if value, ok := v["_value"].(string); ok {
 			mainData.Dates.Calendars.Gregorian.DateFormats.Short = strings.ToUpper(value)
 		}

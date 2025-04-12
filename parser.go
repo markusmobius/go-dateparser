@@ -6,6 +6,8 @@ import (
 	"sync"
 	"time"
 
+	"slices"
+
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/language"
@@ -233,7 +235,7 @@ func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configur
 	}
 
 	// If specified, use external detector to fetch languages
-	languages := append([]string{}, cfg.Languages...)
+	languages := slices.Clone(cfg.Languages)
 	if p.DetectLanguagesFunction != nil && len(cfg.Locales) == 0 && len(languages) == 0 {
 		detectionResults := p.DetectLanguagesFunction(str)
 		languages = append(languages, detectionResults...)

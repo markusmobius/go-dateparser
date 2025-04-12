@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func generateCode(tplName string, data interface{}, dstPath string) error {
+func generateCode(tplName string, data any, dstPath string) error {
 	// Generate code
 	b := bytes.NewBuffer(nil)
 	err := templates[tplName].Execute(b, data)

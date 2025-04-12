@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 
 	"github.com/elliotchance/pie/v2"
+	"golang.org/x/exp/slices"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -124,8 +125,8 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	data.SkipWords = checkedSkipWords
 
 	// Save the skipped and pertained words to dictionary
-	skipWords := cloneSlice(data.SkipWords)
-	pertainWords := cloneSlice(data.PertainWords)
+	skipWords := slices.Clone(data.SkipWords)
+	pertainWords := slices.Clone(data.PertainWords)
 	addTranslations(&data, "", skipWords)
 	addTranslations(&data, "", pertainWords)
 

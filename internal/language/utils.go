@@ -1,6 +1,7 @@
 package language
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
@@ -48,8 +49,7 @@ func translateWord(ld *data.LocaleData, word string) ([]string, bool) {
 	}
 
 	if translations, exist := ld.Translations[word]; exist {
-		clone := append([]string{}, translations...)
-		return clone, true
+		return slices.Clone(translations), true
 	}
 
 	return nil, false
@@ -81,7 +81,7 @@ func createPermutation[T comparable](input [][]T) [][]T {
 		maxEntrySubmission := currentTotal / nEntry
 
 		var entryIdx, nEntrySubmitted int
-		for permutationIdx := 0; permutationIdx < nPermutation; permutationIdx++ {
+		for permutationIdx := range nPermutation {
 			if nEntrySubmitted >= maxEntrySubmission {
 				entryIdx++
 				nEntrySubmitted = 0
