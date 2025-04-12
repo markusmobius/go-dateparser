@@ -3,7 +3,6 @@
 package data
 
 import (
-	"maps"
 	"sort"
 
 	"github.com/elliotchance/pie/v2"
@@ -57,14 +56,16 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	}
 
 	// Merge maps
-	maps.Copy(child.RelativeType,parent.RelativeType)
-
 	for word, translations := range parent.Translations {
 		merged := append(child.Translations[word], translations...)
 		merged = pie.Unique(merged)
 		sort.Strings(merged)
 
 		child.Translations[word] = merged
+	}
+
+	for pattern, translation := range parent.RelativeType {
+		child.RelativeType[pattern] = translation
 	}
 
 	// Replace regexes

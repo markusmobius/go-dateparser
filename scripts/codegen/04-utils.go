@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"maps"
 	"os"
 	"slices"
 	"sort"
@@ -12,6 +13,12 @@ import (
 	"golang.org/x/text/transform"
 	"gopkg.in/yaml.v2"
 )
+
+func cloneMap[K comparable, V any](source map[K]V) map[K]V {
+	clone := make(map[K]V)
+	maps.Copy(clone, source)
+	return clone
+}
 
 func parseJsonFile(dst any, fPath string) error {
 	f, err := os.Open(fPath)
