@@ -3,9 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
-
-	"github.com/elliotchance/pie/v2"
-	"golang.org/x/exp/slices"
+	"slices"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -117,7 +115,7 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	var checkedSkipWords []string
 	for _, w := range data.SkipWords {
 		_, transExist := data.Translations[w]
-		isPertained := pie.Contains(data.PertainWords, w)
+		isPertained := slices.Contains(data.PertainWords, w)
 		if !isPertained && !transExist {
 			checkedSkipWords = append(checkedSkipWords, w)
 		}

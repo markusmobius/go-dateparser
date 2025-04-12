@@ -5,10 +5,8 @@ import (
 	"maps"
 	"os"
 	"slices"
-	"sort"
 	"strings"
 
-	"github.com/elliotchance/pie/v2"
 	"github.com/zyedidia/generic/mapset"
 	"golang.org/x/text/transform"
 	"gopkg.in/yaml.v2"
@@ -115,9 +113,8 @@ func cleanList(useStringCleaner bool, items ...string) []string {
 		cleanedList = append(cleanedList, item)
 	}
 
-	cleanedList = pie.Unique(cleanedList)
-	sort.Strings(cleanedList)
-	return cleanedList
+	slices.Sort(cleanedList)
+	return slices.Compact(cleanedList)
 }
 
 func cleanSimplifications(items ...SimplificationData) []SimplificationData {
