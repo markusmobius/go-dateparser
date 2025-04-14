@@ -3,7 +3,6 @@ package main
 import (
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -29,7 +28,7 @@ func parseAllCldrData(languageLocalesMap map[string][]string) (map[string]Locale
 }
 
 func parseCldrData(locale string) (*LocaleData, error) {
-	// Parse data
+	// 1. Parse data
 	cldrGregorian, err := parseCldrGregorianData(locale)
 	if err != nil {
 		return nil, err
@@ -40,53 +39,78 @@ func parseCldrData(locale string) (*LocaleData, error) {
 		return nil, err
 	}
 
-	// Fetch main data
-	gregorianData := cldrGregorian.Main[locale].Dates.Calendars.Gregorian
+	// 2. Extract main data
+	gregorianData := cldrGregorian.Dates.Calendars.Gregorian
 	dateFieldsData := cldrDateFields.Main[locale].Dates.Fields
 
-	// Prepare helper function
-	addMonthTranslations := func(data *LocaleData, monthNumber int) {
-		strMonthNumber := strconv.Itoa(monthNumber)
-		localNames := filterList(localeMonthFilter,
-			gregorianData.Months.Format.Wide[strMonthNumber],
-			gregorianData.Months.Format.Abbreviated[strMonthNumber],
-			gregorianData.Months.StandAlone.Wide[strMonthNumber],
-			gregorianData.Months.StandAlone.Abbreviated[strMonthNumber])
+	// 3. Prepare initial locale data
+	dateOrder := strings.ToUpper(gregorianData.DateFormats.Short.Value)
 
-		enMonthName := enMonthNames[monthNumber]
-		for _, localName := range localNames {
-			data.AddTranslation(localName, enMonthName, true)
+	data := LocaleData{
+		Name:      locale,
+		DateOrder: rxDateOrderPattern.ReplaceAllString(dateOrder, "$1$2$3"),
+	}
+
+	// 4. Save all local month names to locale data
+	allMonthNames := [][]string{
+		gregorianData.Months.Format.Wide.List(),
+		gregorianData.Months.Format.Abbreviated.List(),
+		gregorianData.Months.StandAlone.Wide.List(),
+		gregorianData.Months.StandAlone.Abbreviated.List(),
+	}
+
+	for _, monthNames := range allMonthNames {
+		for idx, monthName := range monthNames {
+			// Skip if the month name is a placeholder pattern, e.g
+			// "M01" for January,
+			// "M02" for February,
+			// and so on.
+			if !rxDefaultMonthPattern.MatchString(monthName) {
+				data.AddTranslation(monthName, enMonthNames[idx], true)
+			}
 		}
 	}
 
-	addWeekDayTranslations := func(data *LocaleData, weekDayNumber int) {
-		enDayName := enDayNames[weekDayNumber]
-		enShortDayName := enDayName[:3]
-		localNames := []string{
-			gregorianData.Days.Format.Wide[enShortDayName],
-			gregorianData.Days.Format.Abbreviated[enShortDayName],
-			gregorianData.Days.StandAlone.Wide[enShortDayName],
-			gregorianData.Days.StandAlone.Abbreviated[enShortDayName]}
+	// 5. Save all local weekday names to locale data
+	allWeekdayNames := [][]string{
+		gregorianData.Days.Format.Wide.List(),
+		gregorianData.Days.Format.Abbreviated.List(),
+		gregorianData.Days.StandAlone.Wide.List(),
+		gregorianData.Days.StandAlone.Abbreviated.List(),
+	}
 
-		for _, localName := range localNames {
-			data.AddTranslation(localName, enDayName, true)
+	for _, weekdayNames := range allWeekdayNames {
+		for idx, weekdayName := range weekdayNames {
+			data.AddTranslation(weekdayName, enDayNames[idx], true)
 		}
 	}
 
-	addDayPeriodTranslations := func(data *LocaleData, period string) {
-		localNames := []string{
-			gregorianData.DayPeriods.Format.Wide[period],
-			gregorianData.DayPeriods.Format.Abbreviated[period],
-			gregorianData.DayPeriods.StandAlone.Wide[period],
-			gregorianData.DayPeriods.StandAlone.Abbreviated[period],
-		}
-
-		for _, localName := range localNames {
-			localName = rxAmPmPattern.ReplaceAllString(localName, period)
-			data.AddTranslation(localName, period, true)
-		}
+	// 6. Save all day period names to locale data
+	amPeriodNames := []string{
+		gregorianData.DayPeriods.Format.Wide.Am,
+		gregorianData.DayPeriods.Format.Abbreviated.Am,
+		gregorianData.DayPeriods.StandAlone.Wide.Am,
+		gregorianData.DayPeriods.StandAlone.Abbreviated.Am,
 	}
 
+	pmPeriodNames := []string{
+		gregorianData.DayPeriods.Format.Wide.Pm,
+		gregorianData.DayPeriods.Format.Abbreviated.Pm,
+		gregorianData.DayPeriods.StandAlone.Wide.Pm,
+		gregorianData.DayPeriods.StandAlone.Abbreviated.Pm,
+	}
+
+	for _, amName := range amPeriodNames {
+		amName = rxAmPmPattern.ReplaceAllString(amName, "am")
+		data.AddTranslation(amName, "am", true)
+	}
+
+	for _, pmName := range pmPeriodNames {
+		pmName = rxAmPmPattern.ReplaceAllString(pmName, "pm")
+		data.AddTranslation(pmName, "pm", true)
+	}
+
+	// 7. Add data from CLDR Date Fields
 	addDateFieldTranslations := func(data *LocaleData, fieldName string) {
 		// Create dateField keys
 		cleanFieldName := rxSanitizeDateField.ReplaceAllString(fieldName, "")
@@ -148,56 +172,24 @@ func parseCldrData(locale string) (*LocaleData, error) {
 		}
 	}
 
-	// Generate locale data
-	data := LocaleData{
-		Name:      locale,
-		DateOrder: rxDateOrderPattern.ReplaceAllString(gregorianData.DateFormats.Short, "$1$2$3"),
-	}
-
-	for day := 1; day <= 7; day++ {
-		addWeekDayTranslations(&data, day)
-	}
-
-	for month := 1; month <= 12; month++ {
-		addMonthTranslations(&data, month)
-	}
-
 	for _, dateField := range enDateFields {
 		addDateFieldTranslations(&data, dateField)
-	}
-
-	for _, period := range enDayPeriods {
-		addDayPeriodTranslations(&data, period)
 	}
 
 	return &data, nil
 }
 
-func parseCldrGregorianData(locale string) (*CldrGregorianData, error) {
-	// Parse JSON
+func parseCldrGregorianData(locale string) (*CldrGregorian, error) {
 	cldrDatesFullDir := filepath.Join(RAW_DIR, "cldr-dates-full", "main")
 	fPath := filepath.Join(cldrDatesFullDir, locale, "ca-gregorian.json")
 
-	var data CldrGregorianData
-	err := parseJsonFile(&data, fPath)
+	var container CldrGregorianContainer
+	err := parseJsonFile(&container, fPath)
 	if err != nil {
 		return nil, err
 	}
 
-	// Check for dateFormats.short value
-	mainData := data.Main[locale]
-	shortItfValue := mainData.Dates.Calendars.Gregorian.DateFormats.ShortItf
-	switch v := shortItfValue.(type) {
-	case string:
-		mainData.Dates.Calendars.Gregorian.DateFormats.Short = strings.ToUpper(v)
-	case map[string]any:
-		if value, ok := v["_value"].(string); ok {
-			mainData.Dates.Calendars.Gregorian.DateFormats.Short = strings.ToUpper(value)
-		}
-	}
-	data.Main[locale] = mainData
-
-	return &data, nil
+	return &container.Data, nil
 }
 
 func parseCldrDateFieldsData(locale string) (*CldrDateFieldsData, error) {
@@ -211,10 +203,6 @@ func parseCldrDateFieldsData(locale string) (*CldrDateFieldsData, error) {
 	}
 
 	return &data, nil
-}
-
-func localeMonthFilter(str string) bool {
-	return !rxDefaultMonthPattern.MatchString(str)
 }
 
 func regexFilter(str string) bool {

@@ -388,49 +388,6 @@ func (ld *LocaleData) Validate() error {
 	return nil
 }
 
-type CldrTerritoryData struct {
-	Supplemental struct {
-		TerritoryInfo map[string]struct {
-			Gdp                string `json:"_gdp"`
-			LiteracyPercent    string `json:"_literacyPercent"`
-			Population         string `json:"_population"`
-			LanguagePopulation map[string]struct {
-				PopulationPercent string `json:"_populationPercent"`
-				OfficialStatus    string `json:"_officialStatus"`
-			} `json:"languagePopulation"`
-		} `json:"territoryInfo"`
-	} `json:"supplemental"`
-}
-
-type CldrGregorianData struct {
-	Main map[string]struct {
-		Dates struct {
-			Calendars struct {
-				Gregorian struct {
-					Months      CldrGregorianDataPart `json:"months"`
-					Days        CldrGregorianDataPart `json:"days"`
-					DayPeriods  CldrGregorianDataPart `json:"dayPeriods"`
-					DateFormats struct {
-						ShortItf any    `json:"short"`
-						Short    string `json:"-"`
-					} `json:"dateFormats"`
-				} `json:"gregorian"`
-			} `json:"calendars"`
-		} `json:"dates"`
-	} `json:"main"`
-}
-
-type CldrGregorianDataPart struct {
-	Format struct {
-		Abbreviated map[string]string `json:"abbreviated"`
-		Wide        map[string]string `json:"wide"`
-	} `json:"format"`
-	StandAlone struct {
-		Abbreviated map[string]string `json:"abbreviated"`
-		Wide        map[string]string `json:"wide"`
-	} `json:"stand-alone"`
-}
-
 type CldrDateFieldsData struct {
 	Main map[string]struct {
 		Dates struct {
