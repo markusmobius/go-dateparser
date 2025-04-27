@@ -1054,3 +1054,71 @@ func TestParser_Parse_customConfig(t *testing.T) {
 	assert.Equal(t, date.Day, dt.Period)
 	assert.Equal(t, false, dt.Period.IsTime())
 }
+
+func TestParser_Parse_OnlyWeekdays(t *testing.T) {
+	// Prepare scenarios
+	type testScenario struct {
+		Text             string
+		PreferDateSource dps.PreferredDateSource
+		Today            time.Time
+		Expected         time.Time
+	}
+
+	past := dps.Past
+	future := dps.Future
+	current := dps.CurrentPeriod
+	som := tt(2025, 2, 1)
+	mom := tt(2025, 2, 10)
+	eom := tt(2025, 2, 28)
+
+	tests := []testScenario{
+		{"Monday", past, som, tt(2025, 1, 27)},
+		{"Monday", current, som, tt(2025, 1, 27)},
+		{"Monday", future, som, tt(2025, 2, 3)},
+		{"Monday", past, mom, tt(2025, 2, 3)},
+		{"Monday", current, mom, tt(2025, 2, 10)},
+		{"Monday", future, mom, tt(2025, 2, 17)},
+		{"Monday", past, eom, tt(2025, 2, 24)},
+		{"Monday", current, eom, tt(2025, 2, 24)},
+		{"Monday", future, eom, tt(2025, 3, 3)},
+		{"Friday", past, som, tt(2025, 1, 31)},
+		{"Friday", current, som, tt(2025, 1, 31)},
+		{"Friday", future, som, tt(2025, 2, 7)},
+		{"Friday", past, mom, tt(2025, 2, 7)},
+		{"Friday", current, mom, tt(2025, 2, 7)},
+		{"Friday", future, mom, tt(2025, 2, 14)},
+		{"Friday", past, eom, tt(2025, 2, 21)},
+		{"Friday", current, eom, tt(2025, 2, 28)},
+		{"Friday", future, eom, tt(2025, 3, 7)},
+	}
+
+	// Start tests
+	nFailed := 0
+	for _, test := range tests {
+		var source string
+		if test.PreferDateSource == dps.Past {
+			source = "past"
+		} else if test.PreferDateSource == dps.CurrentPeriod {
+			source = "current"
+		} else if test.PreferDateSource == dps.Future {
+			source = "future"
+		}
+
+		// Parse text
+		dt, _ := dps.Parse(&dps.Configuration{
+			CurrentTime:         test.Today,
+			PreferredDateSource: test.PreferDateSource,
+		}, test.Text)
+		// Prepare log message
+		message := fmt.Sprintf("\"%s\" (%s from %s) => \"%s\", got %s", test.Text, source, test.Today.Format("01-02"),
+			test.Expected.Format("Monday 01-02"), dt.Time.Format("Monday 01-02"))
+		if passed := assertParseResult(t, dt, test.Expected, date.Day, message); !passed {
+			// fmt.Println("\t\t\tGOT:", dt)
+			nFailed++
+		}
+	}
+
+	if nFailed > 0 {
+		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
