@@ -7,11 +7,11 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
 
-	"github.com/elliotchance/pie/v2"
 	"github.com/go-shiori/dom"
 )
 
@@ -73,12 +73,17 @@ func createLanguageOrder(languageLocales map[string][]string) ([]string, error) 
 
 	for _, unusedLanguage := range unusedLanguages {
 		parentLanguage := rxLocaleCleaner.ReplaceAllString(unusedLanguage, "")
-		parentIdx := pie.FindFirstUsing(languages, func(v string) bool {
-			return v == parentLanguage
-		})
+
+		parentIdx := -1
+		for i, lang := range languages {
+			if lang == parentLanguage {
+				parentIdx = i
+				break
+			}
+		}
 
 		if parentIdx >= 0 {
-			languages = pie.Insert(languages, parentIdx+1, unusedLanguage)
+			languages = slices.Insert(languages, parentIdx+1, unusedLanguage)
 		} else {
 			languages = append(languages, unusedLanguage)
 		}

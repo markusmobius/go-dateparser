@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"maps"
+	"slices"
 	"sort"
 	"strings"
 	"text/template"
 	"unicode/utf8"
-
-	"github.com/elliotchance/pie/v2"
 )
 
 var (
@@ -44,10 +44,8 @@ func charset(charset map[rune]struct{}) string {
 		return "nil"
 	}
 
-	chars := pie.Keys(charset)
-	sort.Slice(chars, func(i, j int) bool {
-		return chars[i] < chars[j]
-	})
+	chars := slices.Collect(maps.Keys(charset))
+	slices.Sort(chars)
 
 	var strRunes []string
 	for _, r := range chars {
@@ -193,9 +191,8 @@ const localeDataMapTemplate = `
 package data
 
 import (
-	"sort"
+	"slices"
 
-	"github.com/elliotchance/pie/v2"
 	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
 
@@ -248,9 +245,9 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	// Merge maps
 	for word, translations := range parent.Translations {
 		merged := append(child.Translations[word], translations...)
-		merged = pie.Unique(merged)
-		sort.Strings(merged)
 
+		slices.Sort(merged)
+		merged = slices.Compact(merged)
 		child.Translations[word] = merged
 	}
 

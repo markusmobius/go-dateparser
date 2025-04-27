@@ -6,6 +6,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+	"slices"
+
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
@@ -21,7 +23,7 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 
 	// Check if each token can be split further
 	var tokens []string
-	for _, token := range strings.Split(str, splitSeparator) {
+	for token := range strings.SplitSeq(str, splitSeparator) {
 		if ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(token) {
 			tokens = append(tokens, token)
 		} else {
@@ -48,12 +50,7 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 func SplitSentence(ld *data.LocaleData, str string) []string {
 	// Prepare helper function
 	isAbbreviation := func(s string) bool {
-		for i := range ld.Abbreviations {
-			if s == ld.Abbreviations[i] {
-				return true
-			}
-		}
-		return false
+		return slices.Contains(ld.Abbreviations, s)
 	}
 
 	// Get splitter

@@ -8,6 +8,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+	"slices"
+
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/language"
@@ -168,9 +170,9 @@ func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, trans
 	// Specify entries to parse
 	var parserEntries []string
 	if languages[0] == "en" {
-		parserEntries = append([]string{}, translation...)
+		parserEntries = slices.Clone(translation)
 	} else {
-		parserEntries = append([]string{}, original...)
+		parserEntries = slices.Clone(original)
 	}
 
 	// Parse each entries
@@ -314,11 +316,7 @@ func splitBy(entry, original, splitter string) []splitResult {
 		var originalPartialParts []string
 
 		for j := 0; j < nEntryParts; j += i {
-			end := j + i
-			if end > nEntryParts {
-				end = nEntryParts
-			}
-
+			end := min(j+i, nEntryParts)
 			entryJoin := strings.Join(entryParts[j:end], splitter)
 			originalJoin := strings.Join(originalParts[j:end], splitter)
 			entryPartialParts = append(entryPartialParts, entryJoin)

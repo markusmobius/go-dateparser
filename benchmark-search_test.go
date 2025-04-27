@@ -9,7 +9,7 @@ import (
 
 func BenchmarkParser_Search(b *testing.B) {
 	p := dps.Parser{}
-	for n := 0; n < b.N; n++ {
+	for b.Loop() {
 		for _, text := range benchmarkSearchTexts {
 			_, _, err := p.Search(nil, text)
 			if err != nil {

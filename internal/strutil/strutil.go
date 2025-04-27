@@ -155,7 +155,7 @@ func IsNumberOnly(s string) bool {
 }
 
 // Jsonify is used to get a JSON rpresentation of specified data.
-func Jsonify(data interface{}) string {
+func Jsonify(data any) string {
 	bt, _ := json.Marshal(data)
 	return string(bt)
 }

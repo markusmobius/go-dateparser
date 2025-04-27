@@ -8,7 +8,7 @@ import (
 )
 
 func BenchmarkParser_Parse(b *testing.B) {
-	for n := 0; n < b.N; n++ {
+	for b.Loop() {
 		for _, text := range benchmarkParserTexts {
 			_, err := dps.Parse(nil, text)
 			if err != nil {

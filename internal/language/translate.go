@@ -1,7 +1,8 @@
 package language
 
 import (
-	"github.com/elliotchance/pie/v2"
+	"slices"
+
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/setting"
@@ -71,13 +72,13 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 	var translations []string
 	for _, tokens := range tokenPermutations {
 		// Handle future words
-		if pie.Contains(tokens, "in") {
+		if slices.Contains(tokens, "in") {
 			tokens = clearFutureWords(tokens)
 		}
 
-		// Exclude empty tokens
-		tokens = pie.Filter(tokens, func(t string) bool {
-			return t != ""
+		// Remove empty tokens
+		tokens = slices.DeleteFunc(tokens, func(t string) bool {
+			return t == ""
 		})
 
 		// Join the tokens to get final translations

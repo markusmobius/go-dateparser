@@ -1,9 +1,8 @@
 module github.com/markusmobius/go-dateparser
 
-go 1.20
+go 1.24.1
 
 require (
-	github.com/elliotchance/pie/v2 v2.7.0
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/go-shiori/dom v0.0.0-20230515143342-73569d674e1c
 	github.com/hablullah/go-hijri v1.0.2

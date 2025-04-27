@@ -3,9 +3,8 @@
 package data
 
 import (
-	"sort"
+	"slices"
 
-	"github.com/elliotchance/pie/v2"
 	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
 
@@ -58,9 +57,9 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	// Merge maps
 	for word, translations := range parent.Translations {
 		merged := append(child.Translations[word], translations...)
-		merged = pie.Unique(merged)
-		sort.Strings(merged)
 
+		slices.Sort(merged)
+		merged = slices.Compact(merged)
 		child.Translations[word] = merged
 	}
 

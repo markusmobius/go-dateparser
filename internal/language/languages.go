@@ -2,6 +2,7 @@ package language
 
 import (
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
 
@@ -42,7 +43,7 @@ func GetLanguages(locales, languages []string, useGivenOrder bool) ([]string, er
 	} else {
 		// Fetch languages from params
 		if len(languages) > 0 {
-			result = append([]string{}, languages...)
+			result = slices.Clone(languages)
 		}
 
 		// Check for unknown languages

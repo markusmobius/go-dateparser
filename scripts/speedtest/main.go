@@ -14,7 +14,7 @@ func main() {
 
 	start := time.Now()
 	for _, text := range benchmarkParserTexts {
-		for i := 0; i < multiplier; i++ {
+		for range multiplier {
 			_, err := dps.Parse(nil, text)
 			if err != nil {
 				log.Fatal(err)

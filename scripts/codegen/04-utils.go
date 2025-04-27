@@ -2,17 +2,23 @@ package main
 
 import (
 	"encoding/json"
+	"maps"
 	"os"
-	"sort"
+	"slices"
 	"strings"
 
-	"github.com/elliotchance/pie/v2"
 	"github.com/zyedidia/generic/mapset"
 	"golang.org/x/text/transform"
 	"gopkg.in/yaml.v2"
 )
 
-func parseJsonFile(dst interface{}, fPath string) error {
+func cloneMap[K comparable, V any](source map[K]V) map[K]V {
+	clone := make(map[K]V)
+	maps.Copy(clone, source)
+	return clone
+}
+
+func parseJsonFile(dst any, fPath string) error {
 	f, err := os.Open(fPath)
 	if err != nil {
 		return err
@@ -22,7 +28,7 @@ func parseJsonFile(dst interface{}, fPath string) error {
 	return json.NewDecoder(f).Decode(dst)
 }
 
-func parseYamlFile(dst interface{}, fPath string) error {
+func parseYamlFile(dst any, fPath string) error {
 	f, err := os.Open(fPath)
 	if err != nil {
 		return err
@@ -32,7 +38,7 @@ func parseYamlFile(dst interface{}, fPath string) error {
 	return yaml.NewDecoder(f).Decode(dst)
 }
 
-func renderJSON(v interface{}, dstPath string) error {
+func renderJSON(v any, dstPath string) error {
 	bt, err := json.MarshalIndent(v, "", "\t")
 	if err != nil {
 		return err
@@ -107,9 +113,8 @@ func cleanList(useStringCleaner bool, items ...string) []string {
 		cleanedList = append(cleanedList, item)
 	}
 
-	cleanedList = pie.Unique(cleanedList)
-	sort.Strings(cleanedList)
-	return cleanedList
+	slices.Sort(cleanedList)
+	return slices.Compact(cleanedList)
 }
 
 func cleanSimplifications(items ...SimplificationData) []SimplificationData {
@@ -127,22 +132,10 @@ func cleanSimplifications(items ...SimplificationData) []SimplificationData {
 	return cleanedSimplifications
 }
 
-func cloneSlice[T any](source []T) []T {
-	return append([]T{}, source...)
-}
-
-func cloneMap[K comparable, V any](source map[K]V) map[K]V {
-	clone := make(map[K]V)
-	for k, v := range source {
-		clone[k] = v
-	}
-	return clone
-}
-
 func cloneMapSlice[K comparable, V any](source map[K][]V) map[K][]V {
 	clone := make(map[K][]V)
 	for k, v := range source {
-		clone[k] = cloneSlice(v)
+		clone[k] = slices.Clone(v)
 	}
 	return clone
 }
@@ -181,7 +174,7 @@ func reduceMapSlice[K comparable, V comparable](current, input map[K][]V) map[K]
 	for ck, cv := range current {
 		// If not exist in input, we can use as it is
 		if iv, exist := input[ck]; !exist {
-			result[ck] = append([]V{}, cv...)
+			result[ck] = slices.Clone(cv)
 		} else {
 			// If already exist, we need to reduce the slice
 			reduced := reduceSlice(cv, iv)

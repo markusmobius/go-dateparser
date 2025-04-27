@@ -3,8 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
-
-	"github.com/elliotchance/pie/v2"
+	"slices"
 )
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
@@ -116,7 +115,7 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	var checkedSkipWords []string
 	for _, w := range data.SkipWords {
 		_, transExist := data.Translations[w]
-		isPertained := pie.Contains(data.PertainWords, w)
+		isPertained := slices.Contains(data.PertainWords, w)
 		if !isPertained && !transExist {
 			checkedSkipWords = append(checkedSkipWords, w)
 		}
@@ -124,8 +123,8 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	data.SkipWords = checkedSkipWords
 
 	// Save the skipped and pertained words to dictionary
-	skipWords := cloneSlice(data.SkipWords)
-	pertainWords := cloneSlice(data.PertainWords)
+	skipWords := slices.Clone(data.SkipWords)
+	pertainWords := slices.Clone(data.PertainWords)
 	addTranslations(&data, "", skipWords)
 	addTranslations(&data, "", pertainWords)
 

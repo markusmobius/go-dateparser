@@ -1,6 +1,9 @@
 package setting
 
-import "time"
+import (
+	"slices"
+	"time"
+)
 
 type PreferredDateSource uint8
 
@@ -57,9 +60,9 @@ func (c Configuration) Clone() *Configuration {
 		PreferredMonthOfYear: c.PreferredMonthOfYear,
 		PreferredDateSource:  c.PreferredDateSource,
 		StrictParsing:        c.StrictParsing,
-		RequiredParts:        append([]string{}, c.RequiredParts...),
-		SkipTokens:           append([]string{}, c.SkipTokens...),
-		DefaultLanguages:     append([]string{}, c.DefaultLanguages...),
+		RequiredParts:        slices.Clone(c.RequiredParts),
+		SkipTokens:           slices.Clone(c.SkipTokens),
+		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
 		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
 		PreserveEndOfMonth:   c.PreserveEndOfMonth,
 	}

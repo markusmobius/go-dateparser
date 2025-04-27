@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"unicode/utf8"
 
-	"github.com/elliotchance/pie/v2"
 	"github.com/spf13/cobra"
 	"github.com/zyedidia/generic/mapset"
 )
@@ -207,9 +207,10 @@ func finalizeData(ld LocaleData) (LocaleData, error) {
 		if skipWords.Has(word) {
 			translations = []string{""}
 		} else {
-			// If there are non empty translations, remove the empty ones
-			nonEmptyTranslations := pie.Filter(translations, func(t string) bool {
-				return t != ""
+			// Remove empty translations
+			nonEmptyTranslations := slices.Clone(translations)
+			nonEmptyTranslations = slices.DeleteFunc(nonEmptyTranslations, func(t string) bool {
+				return t == ""
 			})
 
 			if len(nonEmptyTranslations) > 0 {

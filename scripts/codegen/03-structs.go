@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"maps"
 	"regexp"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
 	"unicode"
 	"unicode/utf8"
-
-	"github.com/elliotchance/pie/v2"
 )
 
 type LocaleData struct {
@@ -121,7 +121,7 @@ func (ld *LocaleData) AddTranslation(word string, translation string, cleanWord 
 	// Save translation if word not empty
 	if word != "" {
 		translation := normalizeString(translation)
-		if !pie.Contains(ld.Translations[word], translation) {
+		if !slices.Contains(ld.Translations[word], translation) {
 			ld.Translations[word] = append(ld.Translations[word], translation)
 		}
 	}
@@ -206,13 +206,16 @@ func (ld *LocaleData) CombineRegexPatterns() {
 
 func (ld *LocaleData) GenerateKnownWords() {
 	// Fetch all words
-	translationWords := pie.Keys(ld.Translations)
-	relativeWords := pie.Keys(ld.RelativeType)
+	translationWords := slices.Collect(maps.Keys(ld.Translations))
+	relativeWords := slices.Collect(maps.Keys(ld.RelativeType))
 
 	var words []string
 	words = append(words, translationWords...)
 	words = append(words, relativeWords...)
-	words = pie.Unique(words)
+
+	// Make words unique
+	slices.Sort(words)
+	words = slices.Compact(words)
 
 	// Sort words by the longest
 	sort.Slice(words, func(a, b int) bool {
@@ -230,8 +233,8 @@ func (ld *LocaleData) GenerateKnownWords() {
 
 func (ld *LocaleData) GenerateAbbreviations() {
 	// Extract words
-	translationWords := pie.Keys(ld.Translations)
-	relativeWords := pie.Keys(ld.RelativeType)
+	translationWords := slices.Collect(maps.Keys(ld.Translations))
+	relativeWords := slices.Collect(maps.Keys(ld.RelativeType))
 
 	var words []string
 	words = append(words, translationWords...)
@@ -247,10 +250,8 @@ func (ld *LocaleData) GenerateAbbreviations() {
 	}
 
 	// Sort the abbreviations
-	abbreviations = pie.Unique(abbreviations)
-	sort.Slice(abbreviations, func(i, j int) bool {
-		return abbreviations[i] < abbreviations[j]
-	})
+	slices.Sort(abbreviations)
+	words = slices.Compact(abbreviations)
 
 	ld.Abbreviations = abbreviations
 }
@@ -262,16 +263,16 @@ func (ld LocaleData) Clone() LocaleData {
 		NoWordSpacing:             ld.NoWordSpacing,
 		SentenceSplitterGroup:     ld.SentenceSplitterGroup,
 		Charset:                   cloneMap(ld.Charset),
-		SkipWords:                 cloneSlice(ld.SkipWords),
-		PertainWords:              cloneSlice(ld.PertainWords),
-		Abbreviations:             cloneSlice(ld.Abbreviations),
-		Simplifications:           cloneSlice(ld.Simplifications),
+		SkipWords:                 slices.Clone(ld.SkipWords),
+		PertainWords:              slices.Clone(ld.PertainWords),
+		Abbreviations:             slices.Clone(ld.Abbreviations),
+		Simplifications:           slices.Clone(ld.Simplifications),
 		Translations:              cloneMapSlice(ld.Translations),
 		RelativeType:              cloneMap(ld.RelativeType),
 		RelativeTypeRegexes:       cloneMap(ld.RelativeTypeRegexes),
 		CombinedRegexPattern:      ld.CombinedRegexPattern,
 		ExactCombinedRegexPattern: ld.ExactCombinedRegexPattern,
-		KnownWords:                cloneSlice(ld.KnownWords),
+		KnownWords:                slices.Clone(ld.KnownWords),
 	}
 
 	return clone
@@ -300,19 +301,15 @@ func (ld LocaleData) Merge(input LocaleData) LocaleData {
 
 	for word, translations := range input.Translations {
 		merged := append(clone.Translations[word], translations...)
-		merged = pie.Unique(merged)
-		sort.Strings(merged)
+
+		slices.Sort(merged)
+		merged = slices.Compact(merged)
 
 		clone.Translations[word] = merged
 	}
 
-	for pattern, translation := range input.RelativeType {
-		clone.RelativeType[pattern] = translation
-	}
-
-	for pattern, translation := range input.RelativeTypeRegexes {
-		clone.RelativeTypeRegexes[pattern] = translation
-	}
+	maps.Copy(clone.RelativeType, input.RelativeType)
+	maps.Copy(clone.RelativeTypeRegexes, input.RelativeTypeRegexes)
 
 	for r := range input.Charset {
 		clone.Charset[r] = struct{}{}
@@ -389,49 +386,6 @@ func (ld *LocaleData) Validate() error {
 	}
 
 	return nil
-}
-
-type CldrTerritoryData struct {
-	Supplemental struct {
-		TerritoryInfo map[string]struct {
-			Gdp                string `json:"_gdp"`
-			LiteracyPercent    string `json:"_literacyPercent"`
-			Population         string `json:"_population"`
-			LanguagePopulation map[string]struct {
-				PopulationPercent string `json:"_populationPercent"`
-				OfficialStatus    string `json:"_officialStatus"`
-			} `json:"languagePopulation"`
-		} `json:"territoryInfo"`
-	} `json:"supplemental"`
-}
-
-type CldrGregorianData struct {
-	Main map[string]struct {
-		Dates struct {
-			Calendars struct {
-				Gregorian struct {
-					Months      CldrGregorianDataPart `json:"months"`
-					Days        CldrGregorianDataPart `json:"days"`
-					DayPeriods  CldrGregorianDataPart `json:"dayPeriods"`
-					DateFormats struct {
-						ShortItf interface{} `json:"short"`
-						Short    string      `json:"-"`
-					} `json:"dateFormats"`
-				} `json:"gregorian"`
-			} `json:"calendars"`
-		} `json:"dates"`
-	} `json:"main"`
-}
-
-type CldrGregorianDataPart struct {
-	Format struct {
-		Abbreviated map[string]string `json:"abbreviated"`
-		Wide        map[string]string `json:"wide"`
-	} `json:"format"`
-	StandAlone struct {
-		Abbreviated map[string]string `json:"abbreviated"`
-		Wide        map[string]string `json:"wide"`
-	} `json:"stand-alone"`
 }
 
 type CldrDateFieldsData struct {
