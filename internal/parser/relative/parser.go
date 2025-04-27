@@ -112,18 +112,37 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 
 	date := now
 	if (rxIn.MatchString(str) || cfg.PreferredDateSource == setting.Future) && !rxAgo.MatchString(str) {
-		date = date.AddDate(year, month, day)
+		date = addDate(cfg, date, year, month, day)
 		date = date.Add(hour)
 		date = date.Add(minute)
 		date = date.Add(second)
 	} else {
-		date = date.AddDate(-year, -month, -day)
+		date = addDate(cfg, date, -year, -month, -day)
 		date = date.Add(-hour)
 		date = date.Add(-minute)
 		date = date.Add(-second)
 	}
 
 	return date, period
+}
+
+func addDate(cfg *setting.Configuration, date time.Time, years, months, days int) time.Time {
+	if !cfg.PreserveEndOfMonth {
+		return date.AddDate(years, months, days)
+	}
+
+	y, m, d := date.Date()
+	m += time.Month(months)
+	y += years
+
+	lastDay := time.Date(y, m+1, 0, 0, 0, 0, 0, time.UTC).Day()
+	if d > lastDay {
+		d = lastDay
+	}
+
+	date = time.Date(y, m, d, date.Hour(), date.Minute(), date.Second(), date.Nanosecond(), date.Location())
+
+	return date.AddDate(0, 0, days)
 }
 
 func allWordsAreUnits(s string) bool {
