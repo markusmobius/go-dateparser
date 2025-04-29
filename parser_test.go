@@ -521,40 +521,34 @@ func TestParser_Parse_returnTimeAsPeriod(t *testing.T) {
 		ExpectedPeriod date.Period
 	}
 
-	ts := func(text string, eTime time.Time, bTime ...time.Time) testScenario {
+	ts := func(text string, ePeriod date.Period, eTime time.Time, bTime ...time.Time) testScenario {
 		var baseTime time.Time
 		if len(bTime) > 0 {
 			baseTime = bTime[0]
 		}
-		return testScenario{text, baseTime, eTime, date.Hour}
-	}
-
-	tsd := func(text string, eTime time.Time, bTime ...time.Time) testScenario {
-		test := ts(text, eTime, bTime...)
-		test.ExpectedPeriod = date.Day
-		return test
+		return testScenario{text, baseTime, eTime, ePeriod}
 	}
 
 	tests := []testScenario{
 		// Timestamp
-		ts("1484823450", tt(2017, 1, 19, 10, 57, 30)),
-		ts("1436745600000", tt(2015, 7, 13, 0, 0)),
-		ts("1015673450", tt(2002, 3, 9, 11, 30, 50)),
-		ts("2016-09-23T02:54:32.845Z", tt(2016, 9, 23, 2, 54, 32, 845000)),
+		ts("1484823450", date.Second, tt(2017, 1, 19, 10, 57, 30)),
+		ts("1436745600000", date.Second, tt(2015, 7, 13, 0, 0)),
+		ts("1015673450", date.Second, tt(2002, 3, 9, 11, 30, 50)),
+		ts("2016-09-23T02:54:32.845Z", date.Second, tt(2016, 9, 23, 2, 54, 32, 845000)),
 
 		// Basic text
-		ts("12th December 2019 19:00", tt(2019, 12, 12, 19, 0)),
-		ts("9 Jan 11 0:00", tt(2011, 1, 9, 0, 0)),
+		ts("12th December 2019 19:00", date.Minute, tt(2019, 12, 12, 19, 0)),
+		ts("9 Jan 11 0:00", date.Minute, tt(2011, 1, 9, 0, 0)),
 
 		// Basic text with base time
-		ts("10:04am EDT", tt(2020, 7, 19, 14, 4), tt(2020, 7, 19)),
-		ts("16:00", tt(2018, 12, 13, 16, 0), tt(2018, 12, 13, 15, 15)),
-		ts("Monday 7:15 AM", tt(2018, 12, 10, 7, 15), tt(2018, 12, 13, 15, 15)),
-		ts("Mon 19:43", tt(2018, 12, 10, 19, 43), tt(2018, 12, 13, 15, 15)),
+		ts("10:04am EDT", date.Minute, tt(2020, 7, 19, 14, 4), tt(2020, 7, 19)),
+		ts("16:00", date.Minute, tt(2018, 12, 13, 16, 0), tt(2018, 12, 13, 15, 15)),
+		ts("Monday 7:15 AM", date.Minute, tt(2018, 12, 10, 7, 15), tt(2018, 12, 13, 15, 15)),
+		ts("Mon 19:43", date.Minute, tt(2018, 12, 10, 19, 43), tt(2018, 12, 13, 15, 15)),
 
 		// Period is day when time is not present
-		tsd("12th March 2010", tt(2010, 3, 12, 0, 0)),
-		tsd("21-12-19", tt(2019, 12, 21, 0, 0)),
+		ts("12th March 2010", date.Day, tt(2010, 3, 12, 0, 0)),
+		ts("21-12-19", date.Day, tt(2019, 12, 21, 0, 0)),
 	}
 
 	// Prepare config

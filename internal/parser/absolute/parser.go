@@ -278,8 +278,9 @@ func (p *Parser) Parse(tz timezone.OffsetData) (date.Date, error) {
 	}
 
 	// Parse time
+	var parsedTimePeriod date.Period
 	if timeToken, exist := p.ComponentTokens["time"]; exist {
-		p.ParsedTime, err = common.ParseTime(timeToken.Text)
+		p.ParsedTime, parsedTimePeriod, err = common.ParseTime(timeToken.Text)
 		if err != nil {
 			return date.Date{}, err
 		}
@@ -311,9 +312,17 @@ func (p *Parser) Parse(tz timezone.OffsetData) (date.Date, error) {
 	// Apply correction for preference of day: beginning, current, end
 	dt = p.correctForDay(dt)
 
+	// Get the period of this date
+	returnTimeAsPeriod := p.Config != nil && p.Config.ReturnTimeAsPeriod
+
+	datePeriod := p.getPeriod()
+	if !p.ParsedTime.IsZero() && returnTimeAsPeriod {
+		datePeriod = min(datePeriod, parsedTimePeriod)
+	}
+
 	return date.Date{
 		Time:   dt,
-		Period: p.getPeriod(),
+		Period: datePeriod,
 	}, nil
 }
 
@@ -571,16 +580,12 @@ func (p *Parser) correctForMonth(t time.Time) time.Time {
 }
 
 func (p *Parser) getPeriod() date.Period {
-	timeExist := !p.ParsedTime.IsZero()
 	_, dayExist := p.ComponentValues["day"]
 	_, monthExist := p.ComponentValues["month"]
 	_, yearExist := p.ComponentValues["year"]
-	returnTimeAsPeriod := p.Config != nil && p.Config.ReturnTimeAsPeriod
 
 	switch {
-	case returnTimeAsPeriod && timeExist:
-		return date.Hour
-	case timeExist || dayExist:
+	case dayExist:
 		return date.Day
 	case monthExist:
 		return date.Month

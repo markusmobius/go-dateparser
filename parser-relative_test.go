@@ -66,7 +66,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 
 		// English dates
 		{"yesterday", pfpDiff{"day": -1}, Day},
-		{"yesterday at 11:30", pfpDiff{"hour": -23}, Hour},
+		{"yesterday at 11:30", pfpDiff{"hour": -23}, Minute},
 		{"1 decade", pfpDiff{"year": -10}, Year},
 		{"1 decade 2 years", pfpDiff{"year": -12}, Year},
 		{"1 decade 12 months", pfpDiff{"year": -10, "month": -12}, Month},

@@ -31,7 +31,7 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 	str, tzData := timezone.PopTzOffset(str)
 
 	// Parse time
-	t, _ := parseTime(str)
+	t, tPeriod, _ := parseTime(str)
 
 	// Find current time
 	now := time.Now().UTC()
@@ -54,9 +54,7 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 		dt = time.Date(dt.Year(), dt.Month(), dt.Day(),
 			t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 			dt.Location())
-		if period > date.Hour {
-			period = date.Hour
-		}
+		period = min(period, tPeriod)
 	}
 
 	if cfg != nil && !cfg.ReturnTimeAsPeriod && period.IsTime() {
@@ -67,7 +65,7 @@ func Parse(cfg *setting.Configuration, str string) date.Date {
 	return date.Date{Time: dt, Period: period}
 }
 
-func parseTime(s string) (time.Time, error) {
+func parseTime(s string) (time.Time, date.Period, error) {
 	s = rxRelativePattern.ReplaceAllString(s, "")
 	s = rxInAgo.ReplaceAllString(s, "")
 	return common.ParseTime(s)
