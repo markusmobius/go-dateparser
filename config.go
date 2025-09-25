@@ -194,6 +194,7 @@ func (c Configuration) validate() error {
 	for _, part := range c.RequiredParts {
 		switch strings.ToLower(part) {
 		case "day", "month", "year":
+		default:
 			return fmt.Errorf("invalid component in required parts: %s", part)
 		}
 	}
