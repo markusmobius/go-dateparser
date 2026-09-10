@@ -6,6 +6,7 @@ import "github.com/markusmobius/go-dateparser/internal/regexp"
 
 var (
 	ko_Locale    LocaleData
+	ko_CN_Locale LocaleData
 	ko_KP_Locale LocaleData
 )
 
@@ -13,7 +14,7 @@ func init() {
 	ko_Locale = merge(nil, LocaleData{
 		Name:      "ko",
 		DateOrder: "YMD.",
-		Charset:   []rune(`cgtuz간금난내년늘다달목번분수시어오올요월음이일작재전제주지초토해현화후`),
+		Charset:   []rune(`cgtuz간금난내년늘다달명목번분수시어오올요월음이일작재전제주지초토해현화후`),
 		Translations: map[string][]string{
 			"10월": {"october"},
 			"11월": {"november"},
@@ -38,6 +39,7 @@ func init() {
 			"9월":  {"september"},
 			"am":  {"am"},
 			"pm":  {"pm"},
+			"시간":  {"hour"},
 			"오전":  {"am"},
 			"오후":  {"pm"},
 			" ":   {" "},
@@ -76,12 +78,15 @@ func init() {
 			"현재 분":  "0 minute ago",
 			"지난달":   "1 month ago",
 			"지난주":   "1 week ago",
+			"금일":    "0 day ago",
 			"내년":    "in 1 year",
 			"내일":    "in 1 day",
+			"명일":    "in 1 day",
 			"어제":    "1 day ago",
 			"오늘":    "0 day ago",
 			"올해":    "0 year ago",
 			"작년":    "1 year ago",
+			"작일":    "1 day ago",
 			"지금":    "0 second ago",
 		},
 		RelativeTypeRegexes: []ReplacementData{
@@ -91,6 +96,8 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)시간 후`), "in $1 hour"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)년 전`), "$1 year ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)년 후`), "in $1 year"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)달 전`), "${1} month ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)달 후`), "in ${1} month"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)분 전`), "$1 minute ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)분 후`), "in $1 minute"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)일 전`), "$1 day ago"},
@@ -100,9 +107,15 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)초 전`), "$1 second ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)초 후`), "in $1 second"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d*개월 전|\d+[.,]?\d*개월 후|\d+[.,]?\d*시간 전|\d+[.,]?\d*시간 후|\d+[.,]?\d*년 전|\d+[.,]?\d*년 후|\d+[.,]?\d*분 전|\d+[.,]?\d*분 후|\d+[.,]?\d*일 전|\d+[.,]?\d*일 후|\d+[.,]?\d*주 전|\d+[.,]?\d*주 후|\d+[.,]?\d*초 전|\d+[.,]?\d*초 후)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d*개월 전|\d+[.,]?\d*개월 후|\d+[.,]?\d*시간 전|\d+[.,]?\d*시간 후|\d+[.,]?\d*년 전|\d+[.,]?\d*년 후|\d+[.,]?\d*분 전|\d+[.,]?\d*분 후|\d+[.,]?\d*일 전|\d+[.,]?\d*일 후|\d+[.,]?\d*주 전|\d+[.,]?\d*주 후|\d+[.,]?\d*초 전|\d+[.,]?\d*초 후)$`),
-		KnownWords:      []string{"현재 시간", "다음 달", "다음 주", "이번 달", "이번 주", "현재 분", "10월", "11월", "12월", "gmt", "utc", "금요일", "목요일", "수요일", "월요일", "일요일", "지난달", "지난주", "토요일", "화요일", "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "am", "pm", "내년", "내일", "어제", "오늘", "오전", "오후", "올해", "작년", "지금", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "금", "년", "목", "분", "수", "시", "월", "일", "주", "초", "토", "화"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d*개월 전|\d+[.,]?\d*개월 후|\d+[.,]?\d*시간 전|\d+[.,]?\d*시간 후|\d+[.,]?\d*년 전|\d+[.,]?\d*년 후|\d+[.,]?\d*달 전|\d+[.,]?\d*달 후|\d+[.,]?\d*분 전|\d+[.,]?\d*분 후|\d+[.,]?\d*일 전|\d+[.,]?\d*일 후|\d+[.,]?\d*주 전|\d+[.,]?\d*주 후|\d+[.,]?\d*초 전|\d+[.,]?\d*초 후)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(\d+[.,]?\d*개월 전|\d+[.,]?\d*개월 후|\d+[.,]?\d*시간 전|\d+[.,]?\d*시간 후|\d+[.,]?\d*년 전|\d+[.,]?\d*년 후|\d+[.,]?\d*달 전|\d+[.,]?\d*달 후|\d+[.,]?\d*분 전|\d+[.,]?\d*분 후|\d+[.,]?\d*일 전|\d+[.,]?\d*일 후|\d+[.,]?\d*주 전|\d+[.,]?\d*주 후|\d+[.,]?\d*초 전|\d+[.,]?\d*초 후)$`),
+		ExactCombinedMatcher: matchExactbbd11f844efef49640fb8e53ab4b0b2241969675f2ddc1b087052e0dc5cc14cc,
+		KnownWords:           []string{"현재 시간", "다음 달", "다음 주", "이번 달", "이번 주", "현재 분", "10월", "11월", "12월", "gmt", "utc", "금요일", "목요일", "수요일", "월요일", "일요일", "지난달", "지난주", "토요일", "화요일", "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "am", "pm", "금일", "내년", "내일", "명일", "시간", "어제", "오늘", "오전", "오후", "올해", "작년", "작일", "지금", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "금", "년", "목", "분", "수", "시", "월", "일", "주", "초", "토", "화"},
+	})
+
+	ko_CN_Locale = merge(&ko_Locale, LocaleData{
+		Name:      "ko-CN",
+		DateOrder: "YMD.",
 	})
 
 	ko_KP_Locale = merge(&ko_Locale, LocaleData{

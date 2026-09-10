@@ -1,0 +1,6 @@
+monday:
+  - سوموار
+
+relative-type-regex:
+  in \1 hour:
+    - (\d+[.,]?\d*) گھنٹہ میں

@@ -2,10 +2,84 @@ package timezone
 
 import (
 	"fmt"
+	"strings"
 	"testing"
+	"time"
 
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestTimezoneCandidateFilter(t *testing.T) {
+	for _, input := range []string{"", "15 May 2004", "August", "yesterday", "3 hours ago", "XEST", "ESTsuffix", "EST_", "EST5"} {
+		assert.False(t, couldContainTimezone(input), input)
+	}
+	for _, input := range []string{"UTC+1", "-0330", "10:00est", "ABC123PST", "3EST", "\u017fst", "SE\u010c", "\xff", "aVeryLongUnknownTimezoneWord"} {
+		assert.True(t, couldContainTimezone(input), input)
+	}
+	for _, info := range timezoneInfoList {
+		for _, pattern := range info.RegexPatterns {
+			for name := range info.Timezones {
+				matcher := regexp.MustCompile("(?i)" + fmt.Sprintf(pattern, regexp.QuoteMeta(name)))
+				for _, prefix := range []string{"", " ", "0", "_", "x", "abc123", "\x00", "\n", "\u00e9"} {
+					for _, suffix := range []string{"", " ", "x", "0", "_", "\x00", "\n", "\u00e9"} {
+						for _, word := range []string{name, strings.ToLower(name)} {
+							input := prefix + word + suffix
+							if matcher.MatchString(input) && !couldContainTimezone(input) {
+								t.Fatalf("candidate filter rejected %q matched by %s", input, matcher.String())
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+func TestIsTimezoneToken(t *testing.T) {
+	for _, token := range []string{"EST", " est ", "PST", "JST", "GMT", "UTC+05:30", "GMT-0930"} {
+		assert.True(t, IsTimezoneToken(token), token)
+	}
+	for _, token := range []string{"", "ACTUALISÉ", "actualise", "EST reportedly", "unknown", "(PST)"} {
+		assert.False(t, IsTimezoneToken(token), token)
+	}
+}
+
+func TestTimezoneUpstreamOffsets(t *testing.T) {
+	tests := []struct {
+		Name   string
+		Offset int
+		IANA   string
+	}{
+		{"BST", 3600, "Europe/London"},
+		{"HDT", -32400, "America/Adak"},
+		{"CST", -21600, ""},
+		{"CDT", -18000, ""},
+		{"IST", 7200, ""},
+		{"PST", -28800, ""},
+	}
+	for _, test := range tests {
+		t.Run(test.Name, func(t *testing.T) {
+			_, offsetData := PopTzOffset("13 August 2026 10:00 " + test.Name)
+			assert.Equal(t, test.Name, offsetData.Name)
+			assert.Equal(t, test.Offset, offsetData.Offset)
+			location, err := Load(test.Name)
+			if assert.NoError(t, err) {
+				name, offset := time.Date(2026, 8, 13, 10, 0, 0, 0, location).Zone()
+				assert.Equal(t, test.Name, name)
+				assert.Equal(t, test.Offset, offset)
+			}
+			if test.IANA != "" {
+				location, err := time.LoadLocation(test.IANA)
+				if assert.NoError(t, err) {
+					name, offset := time.Date(2025, 8, 13, 10, 0, 0, 0, location).Zone()
+					assert.Equal(t, test.Name, name)
+					assert.Equal(t, test.Offset, offset)
+				}
+			}
+		})
+	}
+}
 
 func TestPopTzOffset_nothingExtracted(t *testing.T) {
 	// Helper function

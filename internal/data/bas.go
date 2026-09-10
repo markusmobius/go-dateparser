@@ -62,6 +62,7 @@ func init() {
 			"uum":            {"tuesday"},
 			"ŋge":            {"wednesday"},
 			"am":             {"am"},
+			"hr":             {"hour"},
 			"pm":             {"pm"},
 			" ":              {" "},
 			"'":              {""},
@@ -95,6 +96,6 @@ func init() {
 			"lɛn":         "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"ŋgwa njaŋgumba", "libuy li nyee", "this minute", "last month", "next month", "this month", "hiŋgeŋget", "i bikɛgla", "i ɓugajɔp", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "ŋgwa mbɔk", "ŋgwa jon", "ŋgwa kɔɔ", "ŋgwa nɔy", "ŋgwa ŋge", "hilondɛ", "mayɛsep", "ŋgwa um", "kɔndɔŋ", "matumb", "bioom", "dipɔs", "hikaŋ", "macɛl", "matop", "mpuyɛ", "njeba", "sɔndɛ", "yaani", "yani", "ŋget", "ŋgɛŋ", "ŋwii", "bio", "dip", "gmt", "hik", "hil", "jon", "kɔn", "kɔɔ", "kɛl", "liɓ", "lɛn", "mac", "mat", "may", "mbɔ", "mpu", "mto", "nja", "nje", "now", "nɔy", "soŋ", "utc", "uum", "ŋge", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"ŋgwa njaŋgumba", "libuy li nyee", "this minute", "last month", "next month", "this month", "hiŋgeŋget", "i bikɛgla", "i ɓugajɔp", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "ŋgwa mbɔk", "ŋgwa jon", "ŋgwa kɔɔ", "ŋgwa nɔy", "ŋgwa ŋge", "hilondɛ", "mayɛsep", "ŋgwa um", "kɔndɔŋ", "matumb", "bioom", "dipɔs", "hikaŋ", "macɛl", "matop", "mpuyɛ", "njeba", "sɔndɛ", "yaani", "yani", "ŋget", "ŋgɛŋ", "ŋwii", "bio", "dip", "gmt", "hik", "hil", "jon", "kɔn", "kɔɔ", "kɛl", "liɓ", "lɛn", "mac", "mat", "may", "mbɔ", "mpu", "mto", "nja", "nje", "now", "nɔy", "soŋ", "utc", "uum", "ŋge", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

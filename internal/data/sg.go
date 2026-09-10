@@ -58,6 +58,7 @@ func init() {
 			"nze":           {"month"},
 			"utc":           {"utc"},
 			"am":            {"am"},
+			"hr":            {"hour"},
 			"la":            {"day"},
 			"lk":            {"pm"},
 			"nd":            {"am"},
@@ -94,6 +95,6 @@ func init() {
 			"laso":        "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"nduru ngbonga", "nzina ngbonga", "this minute", "bikua-usio", "last month", "next month", "this month", "bikua-oko", "bikua-oku", "bikua-pta", "bikua-use", "fulundigi", "last week", "last year", "nabanduru", "next week", "next year", "this hour", "this week", "this year", "kekereke", "ngberere", "kakauka", "layenga", "ngbonga", "belawu", "dimasi", "kukuru", "laposo", "lengua", "mbangu", "ngubue", "nyenye", "fondo", "mvuka", "biri", "laso", "bel", "bk1", "bk2", "bk3", "bk4", "bk5", "fon", "ful", "gmt", "kak", "kuk", "lap", "lay", "len", "mba", "mvu", "nab", "ngb", "ngu", "now", "nye", "nze", "utc", "am", "la", "lk", "nd", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"nduru ngbonga", "nzina ngbonga", "this minute", "bikua-usio", "last month", "next month", "this month", "bikua-oko", "bikua-oku", "bikua-pta", "bikua-use", "fulundigi", "last week", "last year", "nabanduru", "next week", "next year", "this hour", "this week", "this year", "kekereke", "ngberere", "kakauka", "layenga", "ngbonga", "belawu", "dimasi", "kukuru", "laposo", "lengua", "mbangu", "ngubue", "nyenye", "fondo", "mvuka", "biri", "laso", "bel", "bk1", "bk2", "bk3", "bk4", "bk5", "fon", "ful", "gmt", "kak", "kuk", "lap", "lay", "len", "mba", "mvu", "nab", "ngb", "ngu", "now", "nye", "nze", "utc", "am", "hr", "la", "lk", "nd", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

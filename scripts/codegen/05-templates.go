@@ -13,6 +13,7 @@ import (
 var (
 	fnMap = template.FuncMap{
 		"regex":        regex,
+		"exactMatcher": exactMatcherName,
 		"charset":      charset,
 		"localeName":   localeName,
 		"parentLocale": parentLocale,
@@ -192,6 +193,7 @@ package data
 
 import (
 	"slices"
+	"unicode/utf8"
 
 	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
@@ -209,7 +211,15 @@ type LocaleData struct {
 	RelativeTypeRegexes   []ReplacementData
 	RxCombined            *regexp.Regexp
 	RxExactCombined       *regexp.Regexp
+	ExactCombinedMatcher  func(string) bool
 	KnownWords            []string
+}
+
+func (ld *LocaleData) MatchExactCombined(input string) bool {
+	if ld.ExactCombinedMatcher != nil && utf8.ValidString(input) {
+		return ld.ExactCombinedMatcher(input)
+	}
+	return ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(input)
 }
 
 type ReplacementData struct {
@@ -262,6 +272,10 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 
 	if child.RxExactCombined == nil {
 		child.RxExactCombined = parent.RxExactCombined
+		child.ExactCombinedMatcher = parent.ExactCombinedMatcher
+	}
+	if len(child.KnownWords) == 0 {
+		child.KnownWords = parent.KnownWords
 	}
 
 	return child
@@ -316,6 +330,7 @@ func init() {
 		},
 		RxCombined: {{regex $loc.CombinedRegexPattern}},
 		RxExactCombined: {{regex $loc.ExactCombinedRegexPattern}},
+		ExactCombinedMatcher: {{exactMatcher $loc.ExactCombinedRegexPattern}},
 		KnownWords:   []string{ {{range $v := $loc.KnownWords}}"{{$v}}", {{end}} },
 	})
 {{end -}}

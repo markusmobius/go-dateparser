@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	CLDR_VERSION            = "31.0.1"
+	CLDR_VERSION            = "44.1.0"
 	RAW_DIR                 = "./raw-data"
 	SUPPLEMENTARY_DIR       = "./data-supplementary/date-translation"
 	SUPPLEMENTARY_BASE_PATH = "./data-supplementary/base_data.yaml"
@@ -52,7 +52,7 @@ var (
 	rxAmPmPattern         = regexp.MustCompile(`^\s*[AaPp]\s*\.?\s*[Mm]\s*\.?\s*$`)
 	rxParenthesisPattern  = regexp.MustCompile(`[\(\)]`)
 	rxGoEmptyField        = regexp.MustCompile(`(?m)^.*\{\s*\},?$\n*`)
-	rxGoZeroField         = regexp.MustCompile(`(?m)^.*(false|0|nil),?$\n*`)
+	rxGoZeroField         = regexp.MustCompile(`(?m)^[\t ]*\w+:[\t ]*(false|0|nil),?$\n*`)
 	rxGoRegexImport       = regexp.MustCompile(`(?m)^\s*import "github.com/markusmobius/go-dateparser/internal/regexp"\s*$`)
 	rxPythonCaptureGroup  = regexp.MustCompile(`\\(\d+)`)
 	rxGoCaptureGroup      = regexp.MustCompile(`\$\{?(\d+)\}?`)

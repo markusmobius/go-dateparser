@@ -59,6 +59,7 @@ func init() {
 			"seb":        {"september"},
 			"utc":        {"utc"},
 			"am":         {"am"},
+			"hr":         {"hour"},
 			"pm":         {"pm"},
 			" ":          {" "},
 			"'":          {""},
@@ -92,6 +93,6 @@ func init() {
 			"nkya":        "in 1 day",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "lwakutaano", "lwamukaaga", "next month", "sebuttemba", "this month", "febwaliyo", "janwaliyo", "kasikonda", "last week", "last year", "lwakubiri", "lwakusatu", "next week", "next year", "this hour", "this week", "this year", "lwaleero", "okitobba", "sabbiiti", "agusito", "dakiika", "desemba", "julaayi", "lwakuna", "novemba", "balaza", "lunaku", "marisi", "apuli", "ggulo", "juuni", "maayi", "mwaka", "mwezi", "saawa", "nkya", "agu", "apu", "bal", "des", "feb", "gmt", "jan", "jul", "juu", "lw2", "lw3", "lw4", "lw5", "lw6", "maa", "mar", "nov", "now", "oki", "sab", "seb", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "lwakutaano", "lwamukaaga", "next month", "sebuttemba", "this month", "febwaliyo", "janwaliyo", "kasikonda", "last week", "last year", "lwakubiri", "lwakusatu", "next week", "next year", "this hour", "this week", "this year", "lwaleero", "okitobba", "sabbiiti", "agusito", "dakiika", "desemba", "julaayi", "lwakuna", "novemba", "balaza", "lunaku", "marisi", "apuli", "ggulo", "juuni", "maayi", "mwaka", "mwezi", "saawa", "nkya", "agu", "apu", "bal", "des", "feb", "gmt", "jan", "jul", "juu", "lw2", "lw3", "lw4", "lw5", "lw6", "maa", "mar", "nov", "now", "oki", "sab", "seb", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

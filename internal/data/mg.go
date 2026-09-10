@@ -59,6 +59,7 @@ func init() {
 			"utc":         {"utc"},
 			"zom":         {"friday"},
 			"am":          {"am"},
+			"hr":          {"hour"},
 			"pm":          {"pm"},
 			" ":           {" "},
 			"'":           {""},
@@ -92,6 +93,6 @@ func init() {
 			"anio":        "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"alatsinainy", "this minute", "herinandro", "last month", "next month", "rahampitso", "this month", "alakamisy", "aogositra", "last week", "last year", "next week", "next year", "septambra", "this hour", "this week", "this year", "alarobia", "asabotsy", "desambra", "febroary", "novambra", "segondra", "alahady", "janoary", "minitra", "oktobra", "aprily", "martsa", "talata", "volana", "alats", "andro", "jolay", "omaly", "taona", "alah", "alak", "alar", "anio", "asab", "jona", "zoma", "aog", "apr", "des", "feb", "gmt", "jan", "jol", "jon", "mar", "mey", "nov", "now", "okt", "ora", "sep", "tal", "utc", "zom", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"alatsinainy", "this minute", "herinandro", "last month", "next month", "rahampitso", "this month", "alakamisy", "aogositra", "last week", "last year", "next week", "next year", "septambra", "this hour", "this week", "this year", "alarobia", "asabotsy", "desambra", "febroary", "novambra", "segondra", "alahady", "janoary", "minitra", "oktobra", "aprily", "martsa", "talata", "volana", "alats", "andro", "jolay", "omaly", "taona", "alah", "alak", "alar", "anio", "asab", "jona", "zoma", "aog", "apr", "des", "feb", "gmt", "jan", "jol", "jon", "mar", "mey", "nov", "now", "okt", "ora", "sep", "tal", "utc", "zom", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

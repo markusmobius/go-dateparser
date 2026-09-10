@@ -7,8 +7,8 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/parser/hijri"
 )
 
-// ParseHijri parses a Hijri date string using Umm al-Qura Calendar
-// which commonly used in Islamic country.
+// ParseHijri converts an absolute Hijri date in the Umm al-Qura calendar to a
+// Gregorian date. It defaults to DMY order and does not parse relative dates.
 func ParseHijri(cfg *Configuration, str string) (date.Date, error) {
 	// Prepare config
 	if cfg == nil {

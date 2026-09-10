@@ -2,26 +2,35 @@ package language
 
 import (
 	"slices"
+	"strconv"
+	"strings"
+	"unicode"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/digit"
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
+var rxRussianNumberPair = regexp.MustCompile(`\b(\d+)[\s\p{Z}]+(\d+)\b`)
+
 // Translate the date string `str` to its English equivalent using information from the locale data.
 // If `keepFormatting` is set to true, retain formatting of the date string after translation.
-func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keepFormatting bool) []string {
+func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keepFormatting bool, ignoreSurroundingText ...bool) []string {
 	// Parse config
 	skippedTokens := mapSkippedTokens(cfg, ld)
 
 	// Normalize and simplify the string
-	str = strutil.NormalizeString(str)
+	str = strings.ToLower(strutil.NormalizeUnicode(str))
 	str = digit.NormalizeString(str)
 	str = Simplify(ld, str)
 
 	// Split string to tokens
 	tokens := Split(ld, str, keepFormatting, skippedTokens)
+	if len(ignoreSurroundingText) > 0 && ignoreSurroundingText[0] {
+		tokens = stripUnknownEdgeTokens(ld, tokens)
+	}
 
 	// Translate each token
 	translatedTokens := make([][]string, len(tokens))
@@ -49,7 +58,9 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 				// If keep formatting, empty translation is replaced
 				// with current token
 				for j, t := range translations {
-					if t == "" && keepFormatting {
+					if t == "" && keepFormatting && strings.IndexFunc(token, func(character rune) bool {
+						return !unicode.IsLetter(character)
+					}) >= 0 {
 						translations[j] = token
 					}
 				}
@@ -77,9 +88,7 @@ func Translate(cfg *setting.Configuration, ld *data.LocaleData, str string, keep
 		}
 
 		// Remove empty tokens
-		tokens = slices.DeleteFunc(tokens, func(t string) bool {
-			return t == ""
-		})
+		tokens = removeEmptyTokens(tokens)
 
 		// Join the tokens to get final translations
 		joinSeparator := ""
@@ -101,24 +110,41 @@ func Simplify(ld *data.LocaleData, str string) string {
 		}
 	}
 
+	if ld.Name == "ru" {
+		var translated strings.Builder
+		var last int
+		for _, position := range rxRussianNumberPair.FindAllStringIndex(str, -1) {
+			pair := str[position[0]:position[1]]
+			numbers := strings.Fields(pair)
+			first, _ := strconv.Atoi(numbers[0])
+			second, _ := strconv.Atoi(numbers[1])
+			translated.WriteString(str[last:position[0]])
+			if (first == 20 || first == 30) && second >= 1 && second <= 9 && first+second <= 31 {
+				translated.WriteString(strconv.Itoa(first + second))
+			} else {
+				translated.WriteString(pair)
+			}
+			last = position[1]
+		}
+		translated.WriteString(str[last:])
+		str = translated.String()
+	}
+
 	return str
 }
 
 func clearFutureWords(words []string) []string {
 	// Check if words has freshness word
 	var hasFreshness bool
-	var wordsWithoutIn []string
 	for _, word := range words {
 		isFreshWord := freshnessWords.Contain(word)
 		hasFreshness = hasFreshness || isFreshWord
-
-		if word != "in" {
-			wordsWithoutIn = append(wordsWithoutIn, word)
-		}
 	}
 
 	if !hasFreshness {
-		return wordsWithoutIn
+		if index := slices.Index(words, "in"); index >= 0 {
+			words[index] = ""
+		}
 	}
 
 	return words

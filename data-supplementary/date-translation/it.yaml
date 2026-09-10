@@ -1,4 +1,4 @@
-skip: ['circa', 'e']
+skip: ['circa', 'e', 'alle']
 
 sentence_splitter_group: 1
 
@@ -14,8 +14,11 @@ hour:
   - ore
 minute:
   - minuti
+  - m
+
 second:
   - secondi
+  - sec
 
 ago:
   - fa
@@ -28,3 +31,4 @@ relative-type:
 
 simplifications:
   - (\d+[.,]?\d*)\s+ora: \1 ore
+  - un[' ]ora: 1 ore

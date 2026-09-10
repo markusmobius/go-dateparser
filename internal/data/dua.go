@@ -62,6 +62,7 @@ func init() {
 			"am":         {"am"},
 			"di":         {"january"},
 			"et":         {"sunday"},
+			"hr":         {"hour"},
 			"pm":         {"pm"},
 			" ":          {" "},
 			"'":          {""},
@@ -95,6 +96,6 @@ func init() {
 			"wɛŋgɛ":         "0 day ago",
 			"now":           "0 second ago",
 		},
-		KnownWords: []string{"kiɛlɛ nitombi", "this minute", "last month", "madiɓɛdiɓɛ", "next month", "this month", "esɔpɛsɔpɛ", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "diŋgindi", "emiasele", "esaɓasu", "nyɛtɛki", "dimɔdi", "disama", "diɓaɓa", "ebyamu", "elaŋgɛ", "mayesɛ", "mukɔsu", "tinini", "ŋgandɛ", "ŋgɔndɛ", "ɗonɛsu", "bunya", "idiɓa", "kiɛlɛ", "kwasu", "ndɔkɔ", "pindi", "wɛŋgɛ", "ŋgisu", "mɔdi", "mɔsu", "nyɛt", "sɔŋɛ", "ŋgɔn", "diŋ", "diɓ", "ela", "emi", "esa", "esɔ", "eti", "gmt", "kwa", "mad", "may", "mbu", "muk", "mɔs", "now", "sɔŋ", "tin", "utc", "ŋgi", "ɗon", "am", "di", "et", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"kiɛlɛ nitombi", "this minute", "last month", "madiɓɛdiɓɛ", "next month", "this month", "esɔpɛsɔpɛ", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "diŋgindi", "emiasele", "esaɓasu", "nyɛtɛki", "dimɔdi", "disama", "diɓaɓa", "ebyamu", "elaŋgɛ", "mayesɛ", "mukɔsu", "tinini", "ŋgandɛ", "ŋgɔndɛ", "ɗonɛsu", "bunya", "idiɓa", "kiɛlɛ", "kwasu", "ndɔkɔ", "pindi", "wɛŋgɛ", "ŋgisu", "mɔdi", "mɔsu", "nyɛt", "sɔŋɛ", "ŋgɔn", "diŋ", "diɓ", "ela", "emi", "esa", "esɔ", "eti", "gmt", "kwa", "mad", "may", "mbu", "muk", "mɔs", "now", "sɔŋ", "tin", "utc", "ŋgi", "ɗon", "am", "di", "et", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

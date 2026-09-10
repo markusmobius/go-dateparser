@@ -58,6 +58,7 @@ func init() {
 			"d'abr":       {"april"},
 			"d'oct":       {"october"},
 			"gener":       {"january"},
+			"hores":       {"hour"},
 			"minut":       {"minute"},
 			"segon":       {"second"},
 			"d'ag":        {"august"},
@@ -67,6 +68,7 @@ func init() {
 			"maig":        {"may"},
 			"marc":        {"march"},
 			"setm":        {"week"},
+			"a m":         {"am"},
 			"abr":         {"april"},
 			"any":         {"year"},
 			"del":         {""},
@@ -79,6 +81,7 @@ func init() {
 			"min":         {"minute"},
 			"nov":         {"november"},
 			"oct":         {"october"},
+			"p m":         {"pm"},
 			"set":         {"september"},
 			"utc":         {"utc"},
 			"ag":          {"august"},
@@ -188,9 +191,10 @@ func init() {
 			{regexp.MustCompile(`(?i)fa (\d+[.,]?\d*) h`), "$1 hour ago"},
 			{regexp.MustCompile(`(?i)fa (\d+[.,]?\d*) s`), "$1 second ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(d'aqui a \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* setmana|d'aqui a \d+[.,]?\d* minuts|d'aqui a \d+[.,]?\d* segons|d'aqui a \d+[.,]?\d* hores|d'aqui a \d+[.,]?\d* mesos|d'aqui a \d+[.,]?\d* minut|d'aqui a \d+[.,]?\d* segon|d'aqui a \d+[.,]?\d* anys|d'aqui a \d+[.,]?\d* dies|d'aqui a \d+[.,]?\d* hora|d'aqui a \d+[.,]?\d* setm|d'aqui a \d+[.,]?\d* any|d'aqui a \d+[.,]?\d* dia|d'aqui a \d+[.,]?\d* mes|d'aqui a \d+[.,]?\d* min|fa \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* h|d'aqui a \d+[.,]?\d* s|d‘aqui a \d+[.,]?\d* h|fa \d+[.,]?\d* setmana|fa \d+[.,]?\d* minuts|fa \d+[.,]?\d* segons|fa \d+[.,]?\d* hores|fa \d+[.,]?\d* mesos|fa \d+[.,]?\d* minut|fa \d+[.,]?\d* segon|fa \d+[.,]?\d* anys|fa \d+[.,]?\d* dies|fa \d+[.,]?\d* hora|fa \d+[.,]?\d* setm|fa \d+[.,]?\d* any|fa \d+[.,]?\d* dia|fa \d+[.,]?\d* mes|fa \d+[.,]?\d* min|fa \d+[.,]?\d* h|fa \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(d'aqui a \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* setmana|d'aqui a \d+[.,]?\d* minuts|d'aqui a \d+[.,]?\d* segons|d'aqui a \d+[.,]?\d* hores|d'aqui a \d+[.,]?\d* mesos|d'aqui a \d+[.,]?\d* minut|d'aqui a \d+[.,]?\d* segon|d'aqui a \d+[.,]?\d* anys|d'aqui a \d+[.,]?\d* dies|d'aqui a \d+[.,]?\d* hora|d'aqui a \d+[.,]?\d* setm|d'aqui a \d+[.,]?\d* any|d'aqui a \d+[.,]?\d* dia|d'aqui a \d+[.,]?\d* mes|d'aqui a \d+[.,]?\d* min|fa \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* h|d'aqui a \d+[.,]?\d* s|d‘aqui a \d+[.,]?\d* h|fa \d+[.,]?\d* setmana|fa \d+[.,]?\d* minuts|fa \d+[.,]?\d* segons|fa \d+[.,]?\d* hores|fa \d+[.,]?\d* mesos|fa \d+[.,]?\d* minut|fa \d+[.,]?\d* segon|fa \d+[.,]?\d* anys|fa \d+[.,]?\d* dies|fa \d+[.,]?\d* hora|fa \d+[.,]?\d* setm|fa \d+[.,]?\d* any|fa \d+[.,]?\d* dia|fa \d+[.,]?\d* mes|fa \d+[.,]?\d* min|fa \d+[.,]?\d* h|fa \d+[.,]?\d* s)$`),
-		KnownWords:      []string{"la propera setmana", "la proxima setmana", "la setmana passada", "la setmana que ve", "la setmana vinent", "aquesta setmana", "la setm passada", "la setm que ve", "el mes passat", "el mes que ve", "endema passat", "abans-d’ahir", "aquest minut", "aquesta hora", "aquesta setm", "l'any passat", "l'any que ve", "setm passada", "de desembre", "de novembre", "de setembre", "dema passat", "despus-ahir", "despus-dema", "passat dema", "setm vinent", "aquest mes", "della-ahir", "mes passat", "mes vinent", "d'octubre", "de febrer", "de juliol", "divendres", "de gener", "desembre", "dimecres", "dissabte", "diumenge", "novembre", "setembre", "d'abril", "d'agost", "de febr", "de juny", "de maig", "de marc", "dilluns", "dimarts", "enguany", "octubre", "sendema", "setmana", "de des", "de gen", "de jul", "de nov", "de set", "dijous", "endema", "febrer", "juliol", "abril", "agost", "d'abr", "d'oct", "gener", "minut", "segon", "ahir", "avui", "d'ag", "dema", "febr", "hora", "juny", "maig", "marc", "setm", "abr", "any", "ara", "del", "des", "dia", "gen", "gmt", "hui", "jul", "mes", "min", "nov", "oct", "set", "utc", "ag", "am", "dc", "de", "dg", "dj", "dl", "ds", "dt", "dv", "en", "l'", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "i", "s", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(d'aqui a \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* setmana|d'aqui a \d+[.,]?\d* minuts|d'aqui a \d+[.,]?\d* segons|d'aqui a \d+[.,]?\d* hores|d'aqui a \d+[.,]?\d* mesos|d'aqui a \d+[.,]?\d* minut|d'aqui a \d+[.,]?\d* segon|d'aqui a \d+[.,]?\d* anys|d'aqui a \d+[.,]?\d* dies|d'aqui a \d+[.,]?\d* hora|d'aqui a \d+[.,]?\d* setm|d'aqui a \d+[.,]?\d* any|d'aqui a \d+[.,]?\d* dia|d'aqui a \d+[.,]?\d* mes|d'aqui a \d+[.,]?\d* min|fa \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* h|d'aqui a \d+[.,]?\d* s|d‘aqui a \d+[.,]?\d* h|fa \d+[.,]?\d* setmana|fa \d+[.,]?\d* minuts|fa \d+[.,]?\d* segons|fa \d+[.,]?\d* hores|fa \d+[.,]?\d* mesos|fa \d+[.,]?\d* minut|fa \d+[.,]?\d* segon|fa \d+[.,]?\d* anys|fa \d+[.,]?\d* dies|fa \d+[.,]?\d* hora|fa \d+[.,]?\d* setm|fa \d+[.,]?\d* any|fa \d+[.,]?\d* dia|fa \d+[.,]?\d* mes|fa \d+[.,]?\d* min|fa \d+[.,]?\d* h|fa \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(d'aqui a \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* setmana|d'aqui a \d+[.,]?\d* minuts|d'aqui a \d+[.,]?\d* segons|d'aqui a \d+[.,]?\d* hores|d'aqui a \d+[.,]?\d* mesos|d'aqui a \d+[.,]?\d* minut|d'aqui a \d+[.,]?\d* segon|d'aqui a \d+[.,]?\d* anys|d'aqui a \d+[.,]?\d* dies|d'aqui a \d+[.,]?\d* hora|d'aqui a \d+[.,]?\d* setm|d'aqui a \d+[.,]?\d* any|d'aqui a \d+[.,]?\d* dia|d'aqui a \d+[.,]?\d* mes|d'aqui a \d+[.,]?\d* min|fa \d+[.,]?\d* setmanes|d'aqui a \d+[.,]?\d* h|d'aqui a \d+[.,]?\d* s|d‘aqui a \d+[.,]?\d* h|fa \d+[.,]?\d* setmana|fa \d+[.,]?\d* minuts|fa \d+[.,]?\d* segons|fa \d+[.,]?\d* hores|fa \d+[.,]?\d* mesos|fa \d+[.,]?\d* minut|fa \d+[.,]?\d* segon|fa \d+[.,]?\d* anys|fa \d+[.,]?\d* dies|fa \d+[.,]?\d* hora|fa \d+[.,]?\d* setm|fa \d+[.,]?\d* any|fa \d+[.,]?\d* dia|fa \d+[.,]?\d* mes|fa \d+[.,]?\d* min|fa \d+[.,]?\d* h|fa \d+[.,]?\d* s)$`),
+		ExactCombinedMatcher: matchExact7b6c4429115c3313307719c5d8740ec8c7b44e7d807ac2d1b6dae13e6d62f3e8,
+		KnownWords:           []string{"la propera setmana", "la proxima setmana", "la setmana passada", "la setmana que ve", "la setmana vinent", "aquesta setmana", "la setm passada", "la setm que ve", "el mes passat", "el mes que ve", "endema passat", "abans-d’ahir", "aquest minut", "aquesta hora", "aquesta setm", "l'any passat", "l'any que ve", "setm passada", "de desembre", "de novembre", "de setembre", "dema passat", "despus-ahir", "despus-dema", "passat dema", "setm vinent", "aquest mes", "della-ahir", "mes passat", "mes vinent", "d'octubre", "de febrer", "de juliol", "divendres", "de gener", "desembre", "dimecres", "dissabte", "diumenge", "novembre", "setembre", "d'abril", "d'agost", "de febr", "de juny", "de maig", "de marc", "dilluns", "dimarts", "enguany", "octubre", "sendema", "setmana", "de des", "de gen", "de jul", "de nov", "de set", "dijous", "endema", "febrer", "juliol", "abril", "agost", "d'abr", "d'oct", "gener", "hores", "minut", "segon", "ahir", "avui", "d'ag", "dema", "febr", "hora", "juny", "maig", "marc", "setm", "a m", "abr", "any", "ara", "del", "des", "dia", "gen", "gmt", "hui", "jul", "mes", "min", "nov", "oct", "p m", "set", "utc", "ag", "am", "dc", "de", "dg", "dj", "dl", "ds", "dt", "dv", "en", "l'", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "i", "s", "z", "|"},
 	})
 
 	ca_AD_Locale = merge(&ca_Locale, LocaleData{

@@ -86,6 +86,7 @@ func init() {
 		RelativeType: map[string]string{
 			"prosimu simana": "in 1 week",
 			"simana pasadu":  "1 week ago",
+			"es minutu li":   "0 minute ago",
 			"es simana li":   "0 week ago",
 			"prosimu anu":    "in 1 year",
 			"prosimu mes":    "in 1 month",
@@ -94,7 +95,10 @@ func init() {
 			"mes pasadu":     "1 month ago",
 			"es anu li":      "0 year ago",
 			"es mes li":      "0 month ago",
+			"es ora li":      "0 hour ago",
 			"this hour":      "0 hour ago",
+			"manhan":         "in 1 day",
+			"agora":          "0 second ago",
 			"manha":          "in 1 day",
 			"onti":           "1 day ago",
 			"now":            "0 second ago",
@@ -126,8 +130,9 @@ func init() {
 			{regexp.MustCompile(`(?i)di li (\d+[.,]?\d*) m`), "in $1 minute"},
 			{regexp.MustCompile(`(?i)di li (\d+[.,]?\d*) s`), "in $1 second"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(a ten \d+[.,]?\d* sigundu|di li \d+[.,]?\d* sigundu|a ten \d+[.,]?\d* minutu|a ten \d+[.,]?\d* simana|di li \d+[.,]?\d* minutu|di li \d+[.,]?\d* simana|a ten \d+[.,]?\d* anu|a ten \d+[.,]?\d* dia|a ten \d+[.,]?\d* mes|a ten \d+[.,]?\d* min|a ten \d+[.,]?\d* ora|a ten \d+[.,]?\d* sig|a ten \d+[.,]?\d* sim|di li \d+[.,]?\d* anu|di li \d+[.,]?\d* dia|di li \d+[.,]?\d* mes|di li \d+[.,]?\d* min|di li \d+[.,]?\d* ora|di li \d+[.,]?\d* sig|di li \d+[.,]?\d* sim|a ten \d+[.,]?\d* m|a ten \d+[.,]?\d* s|di li \d+[.,]?\d* m|di li \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(a ten \d+[.,]?\d* sigundu|di li \d+[.,]?\d* sigundu|a ten \d+[.,]?\d* minutu|a ten \d+[.,]?\d* simana|di li \d+[.,]?\d* minutu|di li \d+[.,]?\d* simana|a ten \d+[.,]?\d* anu|a ten \d+[.,]?\d* dia|a ten \d+[.,]?\d* mes|a ten \d+[.,]?\d* min|a ten \d+[.,]?\d* ora|a ten \d+[.,]?\d* sig|a ten \d+[.,]?\d* sim|di li \d+[.,]?\d* anu|di li \d+[.,]?\d* dia|di li \d+[.,]?\d* mes|di li \d+[.,]?\d* min|di li \d+[.,]?\d* ora|di li \d+[.,]?\d* sig|di li \d+[.,]?\d* sim|a ten \d+[.,]?\d* m|a ten \d+[.,]?\d* s|di li \d+[.,]?\d* m|di li \d+[.,]?\d* s)$`),
-		KnownWords:      []string{"prosimu simana", "simana pasadu", "es simana li", "sigunda-fera", "kuarta-fera", "prosimu anu", "prosimu mes", "this minute", "anu pasadu", "kinta-fera", "mes pasadu", "sesta-fera", "tersa-fera", "es anu li", "es mes li", "this hour", "dizenbru", "nuvenbru", "setenbru", "dumingu", "febreru", "sigundu", "agostu", "janeru", "minutu", "otubru", "sabadu", "simana", "abril", "julhu", "junhu", "manha", "marsu", "maiu", "onti", "abr", "ago", "anu", "dia", "diz", "dum", "feb", "gmt", "jan", "jul", "jun", "kin", "kua", "mai", "mar", "mes", "min", "now", "nuv", "oji", "ora", "otu", "sab", "ses", "set", "sig", "sim", "ter", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "m", "s", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(a ten \d+[.,]?\d* sigundu|di li \d+[.,]?\d* sigundu|a ten \d+[.,]?\d* minutu|a ten \d+[.,]?\d* simana|di li \d+[.,]?\d* minutu|di li \d+[.,]?\d* simana|a ten \d+[.,]?\d* anu|a ten \d+[.,]?\d* dia|a ten \d+[.,]?\d* mes|a ten \d+[.,]?\d* min|a ten \d+[.,]?\d* ora|a ten \d+[.,]?\d* sig|a ten \d+[.,]?\d* sim|di li \d+[.,]?\d* anu|di li \d+[.,]?\d* dia|di li \d+[.,]?\d* mes|di li \d+[.,]?\d* min|di li \d+[.,]?\d* ora|di li \d+[.,]?\d* sig|di li \d+[.,]?\d* sim|a ten \d+[.,]?\d* m|a ten \d+[.,]?\d* s|di li \d+[.,]?\d* m|di li \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(a ten \d+[.,]?\d* sigundu|di li \d+[.,]?\d* sigundu|a ten \d+[.,]?\d* minutu|a ten \d+[.,]?\d* simana|di li \d+[.,]?\d* minutu|di li \d+[.,]?\d* simana|a ten \d+[.,]?\d* anu|a ten \d+[.,]?\d* dia|a ten \d+[.,]?\d* mes|a ten \d+[.,]?\d* min|a ten \d+[.,]?\d* ora|a ten \d+[.,]?\d* sig|a ten \d+[.,]?\d* sim|di li \d+[.,]?\d* anu|di li \d+[.,]?\d* dia|di li \d+[.,]?\d* mes|di li \d+[.,]?\d* min|di li \d+[.,]?\d* ora|di li \d+[.,]?\d* sig|di li \d+[.,]?\d* sim|a ten \d+[.,]?\d* m|a ten \d+[.,]?\d* s|di li \d+[.,]?\d* m|di li \d+[.,]?\d* s)$`),
+		ExactCombinedMatcher: matchExact1b76b11fc71ac68d5d22d72591ffcda2be150182da3e65469df13b5a596d524d,
+		KnownWords:           []string{"prosimu simana", "simana pasadu", "es minutu li", "es simana li", "sigunda-fera", "kuarta-fera", "prosimu anu", "prosimu mes", "this minute", "anu pasadu", "kinta-fera", "mes pasadu", "sesta-fera", "tersa-fera", "es anu li", "es mes li", "es ora li", "this hour", "dizenbru", "nuvenbru", "setenbru", "dumingu", "febreru", "sigundu", "agostu", "janeru", "manhan", "minutu", "otubru", "sabadu", "simana", "abril", "agora", "julhu", "junhu", "manha", "marsu", "maiu", "onti", "abr", "ago", "anu", "dia", "diz", "dum", "feb", "gmt", "jan", "jul", "jun", "kin", "kua", "mai", "mar", "mes", "min", "now", "nuv", "oji", "ora", "otu", "sab", "ses", "set", "sig", "sim", "ter", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "m", "s", "z", "|"},
 	})
 }

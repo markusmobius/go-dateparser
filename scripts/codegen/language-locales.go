@@ -3,8 +3,10 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
+	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/zyedidia/generic/mapset"
 )
 
@@ -44,9 +46,21 @@ func createLanguageLocales() (map[string][]string, error) {
 	for language := range languageLocales {
 		isValid := languageNames.Has(language)
 		_, isExcluded := excludedLanguages[language]
-		if !isValid || isExcluded || language == "root" {
+		_, isSupported := data.LanguageOrder[language]
+		if !isValid || isExcluded || !isSupported || language == "root" {
 			delete(languageLocales, language)
 		}
+	}
+	for language, locales := range data.LanguageLocalesMap {
+		if _, exists := languageLocales[language]; !exists {
+			languageLocales[language] = []string{}
+		}
+		for _, locale := range locales {
+			if !slices.Contains(languageLocales[language], locale) {
+				languageLocales[language] = append(languageLocales[language], locale)
+			}
+		}
+		slices.Sort(languageLocales[language])
 	}
 
 	// Add supplementary languages to the map

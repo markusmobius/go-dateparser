@@ -48,17 +48,26 @@ in:
     - från nu
 
 relative-type:
-    1 year ago:
-        - förra året
-    2 day ago:
-        - förrgår
-    1 day ago:
-        - igår
-    0 day ago:
-        - idag
-    in 1 day:
-        - imorgon
+  1 year ago:
+    - förra året
+  2 day ago:
+    - förrgår
+  1 day ago:
+    - igår
+  0 day ago:
+    - idag
+  in 1 day:
+    - imorgon
+  0 month ago:
+    - denna månad
 
 simplifications:
     - en: '1'
     - två: '2'
+relative-type-regex:
+  \1 minute ago:
+    - för (\d+[.,]?\d*) min sedan
+  \1 month ago:
+    - för (\d+[.,]?\d*) mån sedan
+  \1 second ago:
+    - för (\d+[.,]?\d*) sek sedan

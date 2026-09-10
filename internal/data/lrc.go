@@ -41,6 +41,7 @@ func init() {
 			"سال":     {"year"},
 			"ميی":     {"may"},
 			"am":      {"am"},
+			"hr":      {"hour"},
 			"pm":      {"pm"},
 			"ما":      {"month"},
 			" ":       {" "},
@@ -75,7 +76,7 @@ func init() {
 			"شوصو":        "in 1 day",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "سيپتامر", "يوکتوڤر", "جانڤیە", "ديسامر", "فيڤریە", "نوڤامر", "اڤریل", "اگوست", "ثانیە", "ديیقە", "دیروز", "ھافتە", "امرو", "جوان", "جولا", "ساات", "شوصو", "مارس", "fri", "gmt", "mon", "now", "sat", "sun", "thu", "tue", "utc", "wed", "روز", "سال", "ميی", "am", "pm", "ما", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "سيپتامر", "يوکتوڤر", "جانڤیە", "ديسامر", "فيڤریە", "نوڤامر", "اڤریل", "اگوست", "ثانیە", "ديیقە", "دیروز", "ھافتە", "امرو", "جوان", "جولا", "ساات", "شوصو", "مارس", "fri", "gmt", "mon", "now", "sat", "sun", "thu", "tue", "utc", "wed", "روز", "سال", "ميی", "am", "hr", "pm", "ما", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 
 	lrc_IQ_Locale = merge(&lrc_Locale, LocaleData{

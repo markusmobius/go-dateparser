@@ -58,6 +58,7 @@ func init() {
 			"wet":       {"wednesday"},
 			"wtn":       {"friday"},
 			"am":        {"am"},
+			"hr":        {"hour"},
 			"pm":        {"pm"},
 			"ru":        {"am"},
 			"ug":        {"pm"},
@@ -93,6 +94,6 @@ func init() {
 			"ruju":        "in 1 day",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "feburuari", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "jumamosi", "muramuko", "septemba", "dicemba", "januari", "ndagika", "novemba", "sekondi", "wethatu", "agasti", "kiumia", "njurai", "oktuba", "wetano", "igoro", "ipuru", "ithaa", "machi", "mwaka", "mweri", "narua", "njuni", "ntuku", "wairi", "ruju", "wena", "aga", "dec", "feb", "gmt", "ipu", "jan", "jum", "kiu", "mac", "mii", "mra", "njr", "nju", "nov", "now", "okt", "spt", "utc", "wai", "wen", "wet", "wtn", "am", "pm", "ru", "ug", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "feburuari", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "jumamosi", "muramuko", "septemba", "dicemba", "januari", "ndagika", "novemba", "sekondi", "wethatu", "agasti", "kiumia", "njurai", "oktuba", "wetano", "igoro", "ipuru", "ithaa", "machi", "mwaka", "mweri", "narua", "njuni", "ntuku", "wairi", "ruju", "wena", "aga", "dec", "feb", "gmt", "ipu", "jan", "jum", "kiu", "mac", "mii", "mra", "njr", "nju", "nov", "now", "okt", "spt", "utc", "wai", "wen", "wet", "wtn", "am", "hr", "pm", "ru", "ug", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

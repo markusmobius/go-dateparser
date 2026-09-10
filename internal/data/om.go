@@ -61,6 +61,7 @@ func init() {
 			"wax":          {"june"},
 			"wix":          {"monday"},
 			"am":           {"am"},
+			"hr":           {"hour"},
 			"pm":           {"pm"},
 			"wb":           {"pm"},
 			"wd":           {"am"},
@@ -96,7 +97,7 @@ func init() {
 			"today":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"onkololeessa", "bitooteessa", "guraandhala", "this minute", "adooleessa", "last month", "next month", "this month", "waxabajjii", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "fuulbana", "tomorrow", "amajjii", "dilbata", "hagayya", "jimaata", "kamiisa", "qibxata", "sadaasa", "sanbata", "wiixata", "caamsa", "minute", "muddee", "roobii", "second", "month", "today", "elba", "hour", "week", "year", "ado", "ama", "bit", "cam", "day", "dil", "elb", "ful", "gmt", "gur", "hag", "jim", "kam", "mud", "now", "onk", "qib", "rob", "sad", "san", "utc", "wax", "wix", "am", "pm", "wb", "wd", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"onkololeessa", "bitooteessa", "guraandhala", "this minute", "adooleessa", "last month", "next month", "this month", "waxabajjii", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "fuulbana", "tomorrow", "amajjii", "dilbata", "hagayya", "jimaata", "kamiisa", "qibxata", "sadaasa", "sanbata", "wiixata", "caamsa", "minute", "muddee", "roobii", "second", "month", "today", "elba", "hour", "week", "year", "ado", "ama", "bit", "cam", "day", "dil", "elb", "ful", "gmt", "gur", "hag", "jim", "kam", "mud", "now", "onk", "qib", "rob", "sad", "san", "utc", "wax", "wix", "am", "hr", "pm", "wb", "wd", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 
 	om_KE_Locale = merge(&om_Locale, LocaleData{

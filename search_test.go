@@ -2,12 +2,231 @@ package dateparser_test
 
 import (
 	"fmt"
+	"strings"
+	"sync"
 	"testing"
 	"time"
 
 	dps "github.com/markusmobius/go-dateparser"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestParser_ConcurrentParseAndSearch(t *testing.T) {
+	cases := []struct {
+		Language, Text, DateText string
+		Expected                 time.Time
+	}{
+		{"ru", "Договор подписан 19 марта 2001 года в Москве", "19 марта 2001", tt(2001, 3, 19)},
+		{"en", "The satellite was launched on 4 October 1957 from Baikonur", "4 October 1957", tt(1957, 10, 4)},
+		{"fr", "Publié le 11 juillet 2016", "11 juillet 2016", tt(2016, 7, 11)},
+		{"en", "posted 3 hours ago", "3 hours ago", tt(2025, 9, 14, 21)},
+	}
+	shared := &dps.Parser{}
+	var workers sync.WaitGroup
+	start := make(chan struct{})
+	for _, test := range cases {
+		cfg := &dps.Configuration{Languages: []string{test.Language}, CurrentTime: tt(2025, 9, 15), TryPreviousLocales: true}
+		baseline := cfg.Clone()
+		expectedLanguage, expectedResults, err := shared.Search(cfg, test.Text)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, expectedResults)
+		for range 4 {
+			workers.Add(1)
+			go func() {
+				defer workers.Done()
+				independent := &dps.Parser{}
+				<-start
+				for range 12 {
+					lang, results, err := shared.Search(cfg, test.Text)
+					assert.NoError(t, err)
+					assert.Equal(t, expectedLanguage, lang)
+					assert.Equal(t, expectedResults, results)
+					parsed, err := independent.Parse(cfg, test.DateText)
+					assert.NoError(t, err)
+					assert.Equal(t, test.Expected, parsed.Time)
+					parsed, err = shared.Parse(cfg, test.DateText)
+					assert.NoError(t, err)
+					assert.Equal(t, test.Expected, parsed.Time)
+					assert.Equal(t, baseline, cfg)
+				}
+			}()
+		}
+	}
+	close(start)
+	workers.Wait()
+}
+
+func TestParser_SearchNgram(t *testing.T) {
+	tests := []struct {
+		Language, Text string
+		Texts          []string
+		Dates          []time.Time
+	}{
+		{"en", "The first artificial Earth satellite was launched on 4 October 1957.", []string{"4 October 1957"}, []time.Time{tt(1957, 10, 4)}},
+		{"en", "The client arrived to the office for the first time in March 3rd, 2004 and got serviced, after a couple of months, on May 6th 2004, the customer returned indicating a defect on the part", []string{"in March 3rd, 2004 and", "May 6th 2004, the"}, []time.Time{tt(2004, 3, 3), tt(2004, 5, 6)}},
+		{"en", "Chapter 12, page 3", nil, nil},
+		{"fr", "Publié le 11 juillet 2016", []string{"le 11 juillet 2016"}, []time.Time{tt(2016, 7, 11)}},
+		{"fr", "Le premier satellite artificiel, lancé le 4 octobre 1957, pesait 83 kg", []string{"le 4 octobre 1957"}, []time.Time{tt(1957, 10, 4)}},
+		{"ru", "веб-страница обновлена 11 июля 2016 года", []string{"11 июля 2016 года"}, []time.Time{tt(2016, 7, 11)}},
+		{"en", "posted 10 minutes ago", []string{"10 minutes ago"}, []time.Time{tt(2020, 1, 1, 11, 50)}},
+		{"en", "Hello world nothing here at all", nil, nil},
+	}
+	for _, test := range tests {
+		t.Run(test.Text, func(t *testing.T) {
+			cfg := &dps.Configuration{Languages: []string{test.Language}, SearchStrategy: "ngram", CurrentTime: tt(2020, 1, 1, 12)}
+			lang, results, err := dps.Search(cfg, test.Text)
+			assert.NoError(t, err)
+			assert.Equal(t, test.Language, lang)
+			if assert.Len(t, results, len(test.Texts)) {
+				for index, result := range results {
+					assert.Equal(t, test.Texts[index], result.Text)
+					assert.Equal(t, test.Dates[index], result.Date.Time.UTC())
+					assert.Equal(t, test.Language, result.Date.Locale)
+				}
+			}
+			assert.Equal(t, []string{test.Language}, cfg.Languages)
+		})
+	}
+	cfg := &dps.Configuration{Languages: []string{"en"}, SearchStrategy: "ngram", ReturnTimeSpan: true, CurrentTime: tt(2025, 2, 15, 12)}
+	parser := &dps.Parser{}
+	results, err := parser.SearchWithLanguage(cfg, "en", "messages received for the past week")
+	assert.NoError(t, err)
+	if assert.Len(t, results, 2) {
+		assert.Equal(t, "for the past week (start)", results[0].Text)
+		assert.Equal(t, tt(2025, 2, 3, 12), results[0].Date.Time)
+		assert.Equal(t, "for the past week (end)", results[1].Text)
+		assert.Equal(t, tt(2025, 2, 9, 12), results[1].Date.Time)
+	}
+	_, _, err = dps.Search(&dps.Configuration{SearchStrategy: "unknown"}, "4 October 1957")
+	assert.Error(t, err)
+}
+
+func TestParser_SearchLanguageFallback(t *testing.T) {
+	cfg := &dps.Configuration{
+		Languages:     []string{"en", "fr", "es", "pt", "de", "it", "ar"},
+		CurrentTime:   tt(2025, 9, 15),
+		StrictParsing: true,
+	}
+	lang, results, err := dps.Search(cfg, "Date de facture 23 juillet 2020 Condition Redevable livraison FR")
+	assert.NoError(t, err)
+	assert.Equal(t, "fr", lang)
+	if assert.Len(t, results, 1) {
+		assert.Equal(t, "23 juillet 2020", results[0].Text)
+		assert.Equal(t, tt(2020, 7, 23), results[0].Date.Time)
+	}
+}
+
+func TestParser_SearchRussianPrepositions(t *testing.T) {
+	cfg := &dps.Configuration{
+		Languages:   []string{"ru"},
+		CurrentTime: tt(2025, 3, 1),
+	}
+	lang, results, err := dps.Search(cfg, "Сервис будет недоступен с 12 января по 30 апреля.")
+	assert.NoError(t, err)
+	assert.Equal(t, "ru", lang)
+	if !assert.Len(t, results, 2) {
+		return
+	}
+	assert.Equal(t, "12 января", results[0].Text)
+	assert.Equal(t, tt(2025, 1, 12), results[0].Date.Time)
+	assert.Equal(t, "30 апреля", results[1].Text)
+	assert.Equal(t, tt(2025, 4, 30), results[1].Date.Time)
+}
+
+func TestParser_SearchRussianCompoundOrdinals(t *testing.T) {
+	tests := []struct {
+		Text  string
+		Month int
+		Day   int
+	}{
+		{"Двадцатое февраля", 2, 20},
+		{"Двадцать первое февраля", 2, 21},
+		{"Двадцать второе февраля", 2, 22},
+		{"Двадцать третье февраля", 2, 23},
+		{"Двадцать четвёртое февраля", 2, 24},
+		{"Двадцать четвертое февраля", 2, 24},
+		{"Двадцать пятое марта", 3, 25},
+		{"Двадцать шестое марта", 3, 26},
+		{"Двадцать седьмое марта", 3, 27},
+		{"Двадцать восьмое марта", 3, 28},
+		{"Двадцать девятое марта", 3, 29},
+		{"Тридцатое марта", 3, 30},
+		{"Тридцать первое марта", 3, 31},
+	}
+	for _, test := range tests {
+		t.Run(test.Text, func(t *testing.T) {
+			_, results, err := dps.Search(&dps.Configuration{
+				Languages:   []string{"ru"},
+				CurrentTime: tt(2025, 8, 1),
+			}, "Ужасное событие произошло в тот день. "+test.Text+". Вспоминаю тот день с ужасом.")
+			assert.NoError(t, err)
+			if assert.Len(t, results, 1) {
+				assert.Equal(t, test.Text, results[0].Text)
+				assert.Equal(t, tt(2025, test.Month, test.Day), results[0].Date.Time)
+			}
+		})
+	}
+}
+
+func TestParser_SearchTimeSpan(t *testing.T) {
+	tests := []struct {
+		Text        string
+		Base        time.Time
+		StartOfWeek string
+		DaysInMonth int
+		Start       time.Time
+		End         time.Time
+	}{
+		{"for the past month", tt(2025, 2, 15, 12), "", 0, tt(2025, 1, 16, 12), tt(2025, 2, 15, 12)},
+		{"for the past month", tt(2025, 2, 15, 12), "", 28, tt(2025, 1, 18, 12), tt(2025, 2, 15, 12)},
+		{"last week", tt(2025, 2, 18, 12), "monday", 0, tt(2025, 2, 10, 12), tt(2025, 2, 16, 12)},
+		{"last week", tt(2025, 2, 18, 12), "sunday", 0, tt(2025, 2, 9, 12), tt(2025, 2, 15, 12)},
+		{"next week", tt(2025, 2, 18, 12), "monday", 0, tt(2025, 2, 24, 12), tt(2025, 3, 2, 12)},
+		{"next week", tt(2025, 2, 18, 12), "sunday", 0, tt(2025, 2, 23, 12), tt(2025, 3, 1, 12)},
+		{"next month", tt(2025, 2, 15, 12), "", 0, tt(2025, 2, 15, 12), tt(2025, 3, 17, 12)},
+		{"past 2 days", tt(2025, 2, 18, 12), "", 0, tt(2025, 2, 16, 12), tt(2025, 2, 18, 12)},
+		{"next 2 days", tt(2025, 2, 18, 12), "", 0, tt(2025, 2, 18, 12), tt(2025, 2, 20, 12)},
+		{"past 2 weeks", tt(2025, 2, 18, 12), "", 0, tt(2025, 2, 4, 12), tt(2025, 2, 18, 12)},
+		{"next 2 weeks", tt(2025, 2, 18, 12), "", 0, tt(2025, 2, 18, 12), tt(2025, 3, 4, 12)},
+		{"past 1 months", tt(2025, 3, 31, 12), "", 0, tt(2025, 2, 28, 12), tt(2025, 3, 31, 12)},
+		{"next 1 months", tt(2025, 1, 31, 12), "", 0, tt(2025, 1, 31, 12), tt(2025, 2, 28, 12)},
+	}
+	for _, test := range tests {
+		t.Run(test.Text+"/"+test.StartOfWeek, func(t *testing.T) {
+			cfg := &dps.Configuration{
+				Languages:          []string{"en"},
+				CurrentTime:        test.Base,
+				ReturnTimeSpan:     true,
+				DefaultStartOfWeek: test.StartOfWeek,
+				DefaultDaysInMonth: test.DaysInMonth,
+			}
+			_, results, err := dps.Search(cfg, "Messages received "+test.Text)
+			assert.NoError(t, err)
+			var spans []dps.SearchResult
+			for _, result := range results {
+				if strings.HasSuffix(result.Text, " (start)") || strings.HasSuffix(result.Text, " (end)") {
+					spans = append(spans, result)
+				}
+			}
+			if assert.Len(t, spans, 2) {
+				assert.Equal(t, test.Text+" (start)", spans[0].Text)
+				assert.Equal(t, test.Text+" (end)", spans[1].Text)
+				assert.Equal(t, test.Start, spans[0].Date.Time)
+				assert.Equal(t, test.End, spans[1].Date.Time)
+			}
+			assert.Equal(t, test.StartOfWeek, cfg.DefaultStartOfWeek)
+		})
+	}
+
+	_, results, err := dps.Search(&dps.Configuration{Languages: []string{"en"}}, "Messages received for the past month")
+	assert.NoError(t, err)
+	for _, result := range results {
+		assert.NotContains(t, result.Text, " (start)")
+		assert.NotContains(t, result.Text, " (end)")
+	}
+	_, _, err = dps.Search(&dps.Configuration{DefaultStartOfWeek: "friday"}, "last week")
+	assert.Error(t, err)
+}
 
 func TestParser_SearchWithLanguage(t *testing.T) {
 	// Prepare scenarios
@@ -75,7 +294,7 @@ func TestParser_SearchWithLanguage(t *testing.T) {
 			Text: `Krigen i Europa begyndte den 1. september 1939, da Nazi-Tyskland invaderede Polen, ` +
 				`og endte med Nazi-Tysklands betingelsesløse overgivelse den 8. maj 1945.`,
 			CurrentTime:   tt(2000, 1, 1),
-			ExtractedText: []string{"1. september 1939", "8. maj 1945"},
+			ExtractedText: []string{"den 1. september 1939", "den 8. maj 1945"},
 			ExtractedTime: []time.Time{tt(1939, 9, 1), tt(1945, 5, 8)},
 		}, { // Dutch
 			Language: "nl",

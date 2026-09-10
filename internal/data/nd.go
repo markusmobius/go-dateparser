@@ -60,6 +60,7 @@ func init() {
 			"utc":         {"utc"},
 			"zib":         {"january"},
 			"am":          {"am"},
+			"hr":          {"hour"},
 			"pm":          {"pm"},
 			" ":           {" "},
 			"'":           {""},
@@ -93,6 +94,6 @@ func init() {
 			"izolo":       "1 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"inyangacale", "this minute", "last month", "ncwabakazi", "next month", "nkwenkwezi", "this month", "zibandlela", "last week", "last year", "mbimbitho", "mpalakazi", "next week", "next year", "nhlangula", "nhlolanja", "ntulikazi", "this hour", "this week", "this year", "isekendi", "mgqibelo", "mpandula", "sithathu", "lamuhla", "sihlanu", "umnyaka", "umuzuzu", "ilanga", "kusasa", "mabasa", "mfumfu", "sibili", "ihola", "iviki", "izolo", "lwezi", "mvulo", "sonto", "mpal", "mpan", "nhla", "nhlo", "sine", "gmt", "lwe", "mab", "mbi", "mfu", "mgq", "mvu", "ncw", "nkw", "now", "ntu", "sib", "sih", "sin", "sit", "son", "utc", "zib", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"inyangacale", "this minute", "last month", "ncwabakazi", "next month", "nkwenkwezi", "this month", "zibandlela", "last week", "last year", "mbimbitho", "mpalakazi", "next week", "next year", "nhlangula", "nhlolanja", "ntulikazi", "this hour", "this week", "this year", "isekendi", "mgqibelo", "mpandula", "sithathu", "lamuhla", "sihlanu", "umnyaka", "umuzuzu", "ilanga", "kusasa", "mabasa", "mfumfu", "sibili", "ihola", "iviki", "izolo", "lwezi", "mvulo", "sonto", "mpal", "mpan", "nhla", "nhlo", "sine", "gmt", "lwe", "mab", "mbi", "mfu", "mgq", "mvu", "ncw", "nkw", "now", "ntu", "sib", "sih", "sin", "sit", "son", "utc", "zib", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

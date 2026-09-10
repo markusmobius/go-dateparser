@@ -62,6 +62,7 @@ func init() {
 			"am":           {"am"},
 			"du":           {"thursday"},
 			"fr":           {"friday"},
+			"hr":           {"hour"},
 			"ma":           {"monday"},
 			"mi":           {"wednesday"},
 			"pm":           {"pm"},
@@ -100,7 +101,7 @@ func init() {
 			"hut":         "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"am vormittag", "am namittag", "this minute", "last month", "next month", "this month", "dunschtig", "last week", "last year", "next week", "next year", "samschtig", "septamber", "this hour", "this week", "this year", "vormittag", "ziischtig", "auguscht", "dezamber", "geschter", "mittwuch", "namittag", "novamber", "oktoober", "februar", "friitig", "maantig", "minuute", "schtund", "sekunde", "sunntig", "januar", "april", "monet", "moorn", "wuche", "jaar", "juli", "juni", "marz", "vorm", "apr", "aug", "dez", "feb", "gmt", "hut", "jan", "jul", "jun", "mai", "mar", "nam", "nov", "now", "okt", "sep", "tag", "utc", "am", "du", "fr", "ma", "mi", "pm", "sa", "su", "zi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"am vormittag", "am namittag", "this minute", "last month", "next month", "this month", "dunschtig", "last week", "last year", "next week", "next year", "samschtig", "septamber", "this hour", "this week", "this year", "vormittag", "ziischtig", "auguscht", "dezamber", "geschter", "mittwuch", "namittag", "novamber", "oktoober", "februar", "friitig", "maantig", "minuute", "schtund", "sekunde", "sunntig", "januar", "april", "monet", "moorn", "wuche", "jaar", "juli", "juni", "marz", "vorm", "apr", "aug", "dez", "feb", "gmt", "hut", "jan", "jul", "jun", "mai", "mar", "nam", "nov", "now", "okt", "sep", "tag", "utc", "am", "du", "fr", "hr", "ma", "mi", "pm", "sa", "su", "zi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 
 	gsw_FR_Locale = merge(&gsw_Locale, LocaleData{

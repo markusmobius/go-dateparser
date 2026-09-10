@@ -163,3 +163,6 @@ simplifications:
     - przedwczoraj: 2 dnia temu
     - jutro: za 1 dnia
     - pojutrze: za 2 dnia
+relative-type-regex:
+  \1 month ago:
+    - –(\d+[.,]?\d*) mies

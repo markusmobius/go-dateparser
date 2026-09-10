@@ -29,3 +29,9 @@ relative-type:
 simplifications:
     - মধ্যাহ্ন: '12:00'
     - মধ্যরাত: '00:00'
+thursday:
+  - বৃহষ্পতিবার
+
+relative-type-regex:
+  \1 minute ago:
+    - (\d+[.,]?\d*) মিনিট পূর্বে

@@ -13,15 +13,18 @@ import (
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/language"
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
 
 var (
-	splitters     = []string{",", "،", "——", "—", "–", ".", " "}
-	relativeWords = []string{"ago", "in", "from now", "tomorrow", "today", "yesterday"}
+	splitters           = []string{",", "،", "——", "—", "–", ".", " "}
+	relativeWords       = []string{"ago", "in", "from now", "tomorrow", "today", "yesterday"}
+	rxRussianSearchFrom = regexp.MustCompile(`(^|[^\p{L}\p{N}_])с[\s\p{Z}]+(\p{Nd})`)
 )
 
+// SearchResult pairs a parsed date with matching text or a time-span boundary label.
 type SearchResult struct {
 	Date date.Date
 	Text string
@@ -44,13 +47,17 @@ type splitRating struct {
 	WithoutDigitRatio float64
 }
 
-// Search detect the suitable language of the text, then find all substrings of the given string
-// which represent date and/or time and parse them using the detected language.
+// Search detects a language and extracts dates using the configured search strategy.
+// It returns the selected language code, matches, and any error.
 func (p *Parser) Search(cfg *Configuration, text string) (string, []SearchResult, error) {
 	// Prepare config
 	cfg, err := p.initSearchConfig(cfg)
 	if err != nil {
 		return "", nil, err
+	}
+
+	if slices.Contains(cfg.Languages, "ru") {
+		text = rxRussianSearchFrom.ReplaceAllString(text, "${1}[FROM] ${2}")
 	}
 
 	// Get list of used languages
@@ -65,21 +72,43 @@ func (p *Parser) Search(cfg *Configuration, text string) (string, []SearchResult
 	}
 
 	// Generate charsets
-	p.initUniqueCharsets(languages)
+	uniqueCharsets := p.initUniqueCharsets(languages)
 
 	// Detect language of the text
 	iCfg := cfg.toInternalConfig()
-	lang, err := language.DetectFullTextLanguage(iCfg, text, languages, p.uniqueCharsets)
-	if err != nil {
-		return "", nil, err
+	lang, detectionErr := language.DetectFullTextLanguage(iCfg, text, languages, uniqueCharsets)
+	var candidates []string
+	if lang != "" {
+		candidates = append(candidates, lang)
 	}
 
-	result, err := p.SearchWithLanguage(cfg, lang, text)
-	return lang, result, err
+	if len(cfg.Languages) > 1 || len(cfg.Locales) > 1 {
+		fallbacks, err := language.GetLanguages(cfg.Locales, cfg.Languages, true)
+		if err != nil {
+			return "", nil, err
+		}
+		for _, fallback := range fallbacks {
+			if !slices.Contains(candidates, fallback) {
+				candidates = append(candidates, fallback)
+			}
+		}
+	}
+
+	if cfg.SearchStrategy == "ngram" && len(candidates) > 0 {
+		return lang, p.searchNgrams(cfg, candidates, lang, text), nil
+	}
+
+	for _, candidate := range candidates {
+		result, err := p.SearchWithLanguage(cfg, candidate, text)
+		if err != nil || len(result) > 0 {
+			return candidate, result, err
+		}
+	}
+	return lang, nil, detectionErr
 }
 
-// SearchWithLanguage find all substrings of the given string which represent date and/or time
-// and parse them using the specified language.
+// SearchWithLanguage extracts dates using the specified language or locale
+// and the configured search strategy.
 func (p *Parser) SearchWithLanguage(cfg *Configuration, lang string, text string) ([]SearchResult, error) {
 	// Initiate config
 	cfg, err := p.initSearchConfig(cfg)
@@ -92,6 +121,9 @@ func (p *Parser) SearchWithLanguage(cfg *Configuration, lang string, text string
 	ld, exist := data.GetLocaleData(lang)
 	if ld == nil || !exist {
 		return nil, fmt.Errorf("unknown language: %s", lang)
+	}
+	if cfg.SearchStrategy == "ngram" {
+		return p.searchNgrams(cfg, []string{lang}, lang, text), nil
 	}
 
 	// Translate the text
@@ -118,6 +150,10 @@ func (p *Parser) SearchWithLanguage(cfg *Configuration, lang string, text string
 		}
 	}
 
+	if cfg.ReturnTimeSpan {
+		result = append(result, searchTimeSpan(cfg, lang, text)...)
+	}
+
 	return result, nil
 }
 
@@ -140,7 +176,7 @@ func (p *Parser) initSearchConfig(cfg *Configuration) (*Configuration, error) {
 	return cfg, nil
 }
 
-func (p *Parser) initUniqueCharsets(languages []string) {
+func (p *Parser) initUniqueCharsets(languages []string) map[string][]rune {
 	// Lock parser
 	p.Lock()
 	defer p.Unlock()
@@ -164,6 +200,7 @@ func (p *Parser) initUniqueCharsets(languages []string) {
 	if mustGenerate {
 		p.uniqueCharsets = language.GetUniqueCharsets(languages)
 	}
+	return p.uniqueCharsets
 }
 
 func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, translation, original []string) ([]parsedSearch, []string) {

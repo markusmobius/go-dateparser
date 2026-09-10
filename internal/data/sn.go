@@ -60,6 +60,7 @@ func init() {
 			"utc":         {"utc"},
 			"zvi":         {"december"},
 			"am":          {"am"},
+			"hr":          {"hour"},
 			"pm":          {"pm"},
 			" ":           {" "},
 			"'":           {""},
@@ -93,6 +94,6 @@ func init() {
 			"nhasi":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"nyamavhuvhu", "this minute", "chikunguru", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "chishanu", "chivabvu", "gumiguru", "kubvumbi", "mangwana", "mugovera", "chikumi", "chipiri", "chitatu", "gunyana", "kukadzi", "muvhuro", "sekondi", "kurume", "mbudzi", "mineti", "mwedzi", "nezuro", "svondo", "china", "ndira", "nhasi", "vhiki", "zvita", "gore", "zuva", "awa", "chg", "chk", "chn", "chp", "chs", "cht", "chv", "gmt", "gum", "gun", "kub", "kuk", "kur", "mbu", "mug", "muv", "ndi", "now", "nya", "svo", "utc", "zvi", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"nyamavhuvhu", "this minute", "chikunguru", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "chishanu", "chivabvu", "gumiguru", "kubvumbi", "mangwana", "mugovera", "chikumi", "chipiri", "chitatu", "gunyana", "kukadzi", "muvhuro", "sekondi", "kurume", "mbudzi", "mineti", "mwedzi", "nezuro", "svondo", "china", "ndira", "nhasi", "vhiki", "zvita", "gore", "zuva", "awa", "chg", "chk", "chn", "chp", "chs", "cht", "chv", "gmt", "gum", "gun", "kub", "kuk", "kur", "mbu", "mug", "muv", "ndi", "now", "nya", "svo", "utc", "zvi", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

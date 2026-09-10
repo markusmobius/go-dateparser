@@ -8,6 +8,38 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestTranslateWhitespace(t *testing.T) {
+	tests := []struct{ Locale, String, Expected string }{
+		{"ca", "2 hores", "2 hour"},
+		{"fi", "28 maalis klo 9:37", "28 march 9:37"},
+		{"fi", "28  maalis  klo  9:37", "28  march  9:37"},
+		{"fi", "28   maalis   klo   9:37", "28   march   9:37"},
+		{"fi", "28  maalis klo  9:37", "28  march  9:37"},
+		{"fi", "tiistaina  27.  lokakuuta  2015", "tuesday  27.  october  2015"},
+		{"cs", "22. prosinec 2014 v 2:38", "22. december 2014 2:38"},
+		{"cs", "22.  prosinec  2014  v  2:38", "22.  december  2014  2:38"},
+		{"pl", "4 stycznia o 13:50", "4 january 13:50"},
+		{"pl", "29 listopada 2014 o 08:40", "29 november 2014 08:40"},
+		{"ru", "5 августа 2014 г. в 12:00", "5 august 2014 year. 12:00"},
+		{"uk", "30 листопада 2013 о 04:27", "30 november 2013 04:27"},
+		{"hr", "13. svibanj 2022. u 14:34", "13. may 2022. 14:34"},
+	}
+	for _, test := range tests {
+		for _, keepFormatting := range []bool{false, true} {
+			t.Run(fmt.Sprintf("%s/%s/%t", test.Locale, test.String, keepFormatting), func(t *testing.T) {
+				locale, err := GetLocale(test.Locale)
+				if !assert.NoError(t, err) {
+					return
+				}
+				translations := Translate(&setting.Configuration{}, locale, test.String, keepFormatting)
+				if assert.NotEmpty(t, translations) {
+					assert.Equal(t, test.Expected, translations[0])
+				}
+			})
+		}
+	}
+}
+
 func TestTranslate(t *testing.T) {
 	type testScenario struct {
 		Locale   string
@@ -39,7 +71,7 @@ func TestTranslate(t *testing.T) {
 		// French
 		{"fr", "20 Février 2012", "20 february 2012"},
 		{"fr", "Mercredi 19 Novembre 2013", "wednesday 19 november 2013"},
-		{"fr", "18 octobre 2012 à 19 h 21 min", "18 october 2012  19:21"},
+		{"fr", "18 octobre 2012 à 19 h 21 min", "18 october 2012 19:21"},
 		// German
 		{"de", "29. Juni 2007", "29. june 2007"},
 		{"de", "Montag 5 Januar, 2015", "monday 5 january 2015"},
@@ -62,37 +94,37 @@ func TestTranslate(t *testing.T) {
 		{"it", "Giovedi Maggio 29 2013", "thursday may 29 2013"},
 		{"it", "19 Luglio 2013", "19 july 2013"},
 		// Portuguese
-		{"pt", "22 de dezembro de 2014 às 02:38", "22  december  2014  02:38"},
+		{"pt", "22 de dezembro de 2014 às 02:38", "22 december 2014 02:38"},
 		// Russian
-		{"ru", "5 августа 2014 г. в 12:00", "5 august 2014 year.  12:00"},
+		{"ru", "5 августа 2014 г. в 12:00", "5 august 2014 year. 12:00"},
 		// Turkish
 		{"tr", "2 Ocak 2015 Cuma, 16:49", "2 january 2015 friday 16:49"},
 		// Czech
-		{"cs", "22. prosinec 2014 v 2:38", "22. december 2014  2:38"},
+		{"cs", "22. prosinec 2014 v 2:38", "22. december 2014 2:38"},
 		// Dutch
-		{"nl", "maandag 22 december 2014 om 2:38", "monday 22 december 2014  2:38"},
+		{"nl", "maandag 22 december 2014 om 2:38", "monday 22 december 2014 2:38"},
 		// Romanian
-		{"ro", "22 Decembrie 2014 la 02:38", "22 december 2014  02:38"},
+		{"ro", "22 Decembrie 2014 la 02:38", "22 december 2014 02:38"},
 		// Polish
-		{"pl", "4 stycznia o 13:50", "4 january  13:50"},
-		{"pl", "29 listopada 2014 o 08:40", "29 november 2014  08:40"},
+		{"pl", "4 stycznia o 13:50", "4 january 13:50"},
+		{"pl", "29 listopada 2014 o 08:40", "29 november 2014 08:40"},
 		// Ukrainian
-		{"uk", "30 листопада 2013 о 04:27", "30 november 2013  04:27"},
-		{"uk", "22 верес 2021 о 07:37", "22 september 2021  07:37"},
-		{"uk", "28 лютого 2020 року об 11:57", "28 february 2020 year  11:57"},
-		{"uk", "середу, 28 лютого 2020 року об 11:57", "wednesday 28 february 2020 year  11:57"},
-		{"uk", "понед, 12 вересня 2022 року об 09:22", "monday 12 september 2022 year  09:22"},
+		{"uk", "30 листопада 2013 о 04:27", "30 november 2013 04:27"},
+		{"uk", "22 верес 2021 о 07:37", "22 september 2021 07:37"},
+		{"uk", "28 лютого 2020 року об 11:57", "28 february 2020 year 11:57"},
+		{"uk", "середу, 28 лютого 2020 року об 11:57", "wednesday 28 february 2020 year 11:57"},
+		{"uk", "понед, 12 вересня 2022 року об 09:22", "monday 12 september 2022 year 09:22"},
 		// Belarusian
-		{"be", "5 снежня 2015 г. у 12:00", "5 december 2015 year.  12:00"},
-		{"be", "11 верасня 2015 г. у 12:11", "11 september 2015 year.  12:11"},
-		{"be", "3 стд 2015 г. у 10:33", "3 january 2015 year.  10:33"},
+		{"be", "5 снежня 2015 г. у 12:00", "5 december 2015 year. 12:00"},
+		{"be", "11 верасня 2015 г. у 12:11", "11 september 2015 year. 12:11"},
+		{"be", "3 стд 2015 г. у 10:33", "3 january 2015 year. 10:33"},
 		// Arabic
 		{"ar", "6 يناير، 2015، الساعة 05:16 مساءً", "6 january 2015 05:16 pm"},
 		{"ar", "7 يناير، 2015، الساعة 11:00 صباحاً", "7 january 2015 11:00 am"},
 		// Vietnamese
 		{"vi", "Thứ Năm, ngày 8 tháng 1 năm 2015", "thursday 8 january 2015"},
 		{"vi", "Thứ Tư, 07/01/2015 | 22:34", "wednesday 07/01/2015  22:34"},
-		{"vi", "9 Tháng 1 2015 lúc 15:08", "9 january 2015  15:08"},
+		{"vi", "9 Tháng 1 2015 lúc 15:08", "9 january 2015 15:08"},
 		// Thai
 		{"th", "เมื่อ กุมภาพันธ์ 09, 2015, 09:27:57 AM", "february 09 2015 09:27:57 am"},
 		{"th", "เมื่อ กรกฎาคม 05, 2012, 01:18:06 AM", "july 05 2012 01:18:06 am"},
@@ -111,11 +143,11 @@ func TestTranslate(t *testing.T) {
 		{"en", "2014-12-12T12:33:39-08:00", "2014-12-12 12:33:39-08:00"},
 		{"en", "2014-10-15T16:12:20+00:00", "2014-10-15 16:12:20+00:00"},
 		{"en", "28 Oct 2014 16:39:01 +0000", "28 october 2014 16:39:01 +0000"},
-		{"es", "13 Febrero 2015 a las 23:00", "13 february 2015  23:00"},
+		{"es", "13 Febrero 2015 a las 23:00", "13 february 2015 23:00"},
 		// Danish
 		{"da", "Sep 03 2014", "september 03 2014"},
 		{"da", "fredag, 03 september 2014", "friday 03 september 2014"},
-		{"da", "fredag d. 3 september 2014", "friday  3 september 2014"},
+		{"da", "fredag d. 3 september 2014", "friday 3 september 2014"},
 		// Finnish
 		{"fi", "maanantai tammikuu 16, 2015", "monday january 16 2015"},
 		{"fi", "ma tammi 16, 2015", "monday january 16 2015"},
@@ -165,7 +197,7 @@ func TestTranslate(t *testing.T) {
 		// Hebrew
 		{"he", "20 לאפריל 2012", "20 april 2012"},
 		{"he", "יום רביעי ה-19 בנובמבר 2013", "wednesday 19 november 2013"},
-		{"he", "18 לאוקטובר 2012 בשעה 19:21", "18 october 2012  19:21"},
+		{"he", "18 לאוקטובר 2012 בשעה 19:21", "18 october 2012 19:21"},
 		{"he", "יום ה' 6/10/2016", "thursday 6/10/2016"},
 		{"he", "חצות", "12 am"},
 		{"he", "1 אחר חצות", "1 am"},
@@ -348,7 +380,7 @@ func TestTranslate(t *testing.T) {
 		{"hr", "2 ožujak 1980 pet", "2 march 1980 friday"},
 		{"hr", "nedjelja 3 lis 1879", "sunday 3 october 1879"},
 		{"hr", "06. travnja 2021.", "06. april 2021."},
-		{"hr", "13. svibanj 2022. u 14:34", "13. may 2022.  14:34"},
+		{"hr", "13. svibanj 2022. u 14:34", "13. may 2022. 14:34"},
 		{"hr", "20. studenoga 2010. @ 07:28", "20. november 2010.  07:28"},
 		{"hr", "13. studenog 1989.", "13. november 1989."},
 		{"hr", "u listopadu 2056.", "october 2056."},
@@ -817,7 +849,7 @@ func TestTranslate_relative(t *testing.T) {
 		{"ar", "اليوم", "0 day ago"},
 		// Polish
 		{"pl", "2 godz.", "2 hour."},
-		{"pl", "Wczoraj o 07:40", "1 day ago  07:40"},
+		{"pl", "Wczoraj o 07:40", "1 day ago 07:40"},
 		// Vietnamese
 		{"vi", "2 tuần 3 ngày", "2 week 3 day"},
 		{"vi", "21 giờ trước", "21 hour ago"},
@@ -856,10 +888,10 @@ func TestTranslate_relative(t *testing.T) {
 		{"id", "hari ini", "0 day ago"},
 		{"id", "kemarin", "1 day ago"},
 		{"id", "kemarin lusa", "2 day ago"},
-		{"id", "sehari yang lalu", "1 day  ago"},
-		{"id", "seminggu yang lalu", "1 week  ago"},
-		{"id", "sebulan yang lalu", "1 month  ago"},
-		{"id", "setahun yang lalu", "1 year  ago"},
+		{"id", "sehari yang lalu", "1 day ago"},
+		{"id", "seminggu yang lalu", "1 week ago"},
+		{"id", "sebulan yang lalu", "1 month ago"},
+		{"id", "setahun yang lalu", "1 year ago"},
 		// Finnish
 		{"fi", "1 vuosi sitten", "1 year ago"},
 		{"fi", "2 vuotta sitten", "2 year ago"},
@@ -927,7 +959,7 @@ func TestTranslate_relative(t *testing.T) {
 		{"ja", "明後日", "in 2 day"},
 		// Hebrew
 		{"he", "אתמול", "1 day ago"},
-		{"he", "אתמול בשעה 3", "1 day ago  3"},
+		{"he", "אתמול בשעה 3", "1 day ago 3"},
 		{"he", "היום", "0 day ago"},
 		{"he", "לפני יומיים", "2 day ago"},
 		{"he", "לפני שבועיים", "2 week ago"},

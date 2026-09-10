@@ -13,7 +13,7 @@ import (
 // IsApplicable checks the specified locale data is applicable to translate the date string `str`.
 // The `str` parameter is a string representing date and/or time in a recognizably valid format.
 // If `stripTimezone` set to true, timezone will be stripped and ignored.
-func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, stripTimezone bool) bool {
+func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, stripTimezone bool, ignoreSurroundingText ...bool) bool {
 	// Parse config
 	skippedTokens := mapSkippedTokens(cfg, ld)
 
@@ -29,6 +29,9 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 
 	// Generate tokens
 	tokens := Split(ld, str, false, skippedTokens)
+	if len(ignoreSurroundingText) > 0 && ignoreSurroundingText[0] {
+		tokens = stripUnknownEdgeTokens(ld, tokens)
+	}
 
 	// Check if tokens valid
 	// First check if tokens only consist of tokens that must be kept
@@ -49,10 +52,7 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 		isNumberOnly := strutil.IsNumberOnly(token)
 		inDictionary := isInDictionary(ld, token)
 
-		var exactCombinedMatch bool
-		if ld.RxExactCombined != nil {
-			exactCombinedMatch = ld.RxExactCombined.MatchString(token)
-		}
+		exactCombinedMatch := ld.MatchExactCombined(token)
 
 		if isNumberOnly || inDictionary || isSkipped || exactCombinedMatch {
 			continue

@@ -121,3 +121,8 @@ simplifications:
   - אחה"צ: pm
   - לפנות ערב: pm
   - בערב: pm
+relative-type-regex:
+  \1 day ago:
+    - לפני (\d+[.,]?\d*) ימ׳
+  in \1 day:
+    - בעוד (\d+[.,]?\d*) ימ׳

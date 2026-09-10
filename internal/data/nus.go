@@ -55,6 +55,7 @@ func init() {
 			"tɛɛ":           {"september"},
 			"utc":           {"utc"},
 			"am":            {"am"},
+			"hr":            {"hour"},
 			"pm":            {"pm"},
 			"rw":            {"am"},
 			"tŋ":            {"pm"},
@@ -90,6 +91,6 @@ func init() {
 			"now":         "0 second ago",
 			"pan":         "1 day ago",
 		},
-		KnownWords: []string{"tiop thar pɛt", "dhieec latni", "tiop in diit", "bakɛl latni", "this minute", "ŋuaan latni", "diɔk latni", "last month", "next month", "pay yietni", "this month", "caŋ kuɔth", "last week", "last year", "next week", "next year", "rɛw latni", "this hour", "this week", "this year", "jiec lat", "kornyoot", "thɛkɛni", "dhieec", "bakɛl", "duɔɔŋ", "laath", "minit", "thaak", "thoor", "ŋuaan", "diɔk", "duat", "duɔɔ", "guak", "jiec", "jiɔk", "ruun", "ruɔn", "thoo", "tiop", "tɛɛr", "walɛ", "caŋ", "dua", "gmt", "kor", "kur", "laa", "now", "pan", "pay", "pɛt", "rɛw", "tid", "tɛɛ", "utc", "am", "pm", "rw", "tŋ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"tiop thar pɛt", "dhieec latni", "tiop in diit", "bakɛl latni", "this minute", "ŋuaan latni", "diɔk latni", "last month", "next month", "pay yietni", "this month", "caŋ kuɔth", "last week", "last year", "next week", "next year", "rɛw latni", "this hour", "this week", "this year", "jiec lat", "kornyoot", "thɛkɛni", "dhieec", "bakɛl", "duɔɔŋ", "laath", "minit", "thaak", "thoor", "ŋuaan", "diɔk", "duat", "duɔɔ", "guak", "jiec", "jiɔk", "ruun", "ruɔn", "thoo", "tiop", "tɛɛr", "walɛ", "caŋ", "dua", "gmt", "kor", "kur", "laa", "now", "pan", "pay", "pɛt", "rɛw", "tid", "tɛɛ", "utc", "am", "hr", "pm", "rw", "tŋ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

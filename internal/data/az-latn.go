@@ -12,7 +12,7 @@ func init() {
 	az_Latn_Locale = merge(nil, LocaleData{
 		Name:      "az-Latn",
 		DateOrder: "DMY",
-		Charset:   []rune(`bcdefghiklnorstuvxyzçüışə`),
+		Charset:   []rune(`bcdefghiklnorstuvxyzçüışə̇`),
 		Translations: map[string][]string{
 			"cərsənbə axsamı": {"tuesday"},
 			"bazar ertəsi":    {"monday"},
@@ -110,8 +110,9 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) ay oncə`), "$1 month ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) il oncə`), "$1 year ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* dəqiqə ərzində|\d+[.,]?\d* saniyə ərzində|\d+[.,]?\d* həftə ərzində|\d+[.,]?\d* saat ərzində|\d+[.,]?\d* dəqiqə oncə|\d+[.,]?\d* gun ərzində|\d+[.,]?\d* saniyə oncə|\d+[.,]?\d* ay ərzində|\d+[.,]?\d* həftə oncə|\d+[.,]?\d* il ərzində|\d+[.,]?\d* saat oncə|\d+[.,]?\d* gun oncə|\d+[.,]?\d* ay oncə|\d+[.,]?\d* il oncə)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* dəqiqə ərzində|\d+[.,]?\d* saniyə ərzində|\d+[.,]?\d* həftə ərzində|\d+[.,]?\d* saat ərzində|\d+[.,]?\d* dəqiqə oncə|\d+[.,]?\d* gun ərzində|\d+[.,]?\d* saniyə oncə|\d+[.,]?\d* ay ərzində|\d+[.,]?\d* həftə oncə|\d+[.,]?\d* il ərzində|\d+[.,]?\d* saat oncə|\d+[.,]?\d* gun oncə|\d+[.,]?\d* ay oncə|\d+[.,]?\d* il oncə)$`),
-		KnownWords:      []string{"cərsənbə axsamı", "bazar ertəsi", "cumə axsamı", "gələn həftə", "kecən həftə", "bu dəqiqə", "bu həftə", "cərsənbə", "gələn ay", "gələn il", "kecən ay", "kecən il", "sentyabr", "bu saat", "oktyabr", "avqust", "bu gun", "dekabr", "dəqiqə", "fevral", "noyabr", "saniyə", "yanvar", "aprel", "bazar", "bu ay", "bu il", "dunən", "həftə", "sabah", "sənbə", "cumə", "indi", "iyul", "iyun", "mart", "saat", "apr", "avq", "dek", "dəq", "fev", "gmt", "gun", "iyl", "iyn", "mar", "may", "noy", "okt", "san", "sen", "utc", "yan", "am", "ay", "be", "ca", "il", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "b", "c", "s", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* dəqiqə ərzində|\d+[.,]?\d* saniyə ərzində|\d+[.,]?\d* həftə ərzində|\d+[.,]?\d* saat ərzində|\d+[.,]?\d* dəqiqə oncə|\d+[.,]?\d* gun ərzində|\d+[.,]?\d* saniyə oncə|\d+[.,]?\d* ay ərzində|\d+[.,]?\d* həftə oncə|\d+[.,]?\d* il ərzində|\d+[.,]?\d* saat oncə|\d+[.,]?\d* gun oncə|\d+[.,]?\d* ay oncə|\d+[.,]?\d* il oncə)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(\d+[.,]?\d* dəqiqə ərzində|\d+[.,]?\d* saniyə ərzində|\d+[.,]?\d* həftə ərzində|\d+[.,]?\d* saat ərzində|\d+[.,]?\d* dəqiqə oncə|\d+[.,]?\d* gun ərzində|\d+[.,]?\d* saniyə oncə|\d+[.,]?\d* ay ərzində|\d+[.,]?\d* həftə oncə|\d+[.,]?\d* il ərzində|\d+[.,]?\d* saat oncə|\d+[.,]?\d* gun oncə|\d+[.,]?\d* ay oncə|\d+[.,]?\d* il oncə)$`),
+		ExactCombinedMatcher: matchExact01e23a88231b335987b510069f473ad330df76147396e3eb87c62ed4d47e1827,
+		KnownWords:           []string{"cərsənbə axsamı", "bazar ertəsi", "cumə axsamı", "gələn həftə", "kecən həftə", "bu dəqiqə", "bu həftə", "cərsənbə", "gələn ay", "gələn il", "kecən ay", "kecən il", "sentyabr", "bu saat", "oktyabr", "avqust", "bu gun", "dekabr", "dəqiqə", "fevral", "noyabr", "saniyə", "yanvar", "aprel", "bazar", "bu ay", "bu il", "dunən", "həftə", "sabah", "sənbə", "cumə", "indi", "iyul", "iyun", "mart", "saat", "apr", "avq", "dek", "dəq", "fev", "gmt", "gun", "iyl", "iyn", "mar", "may", "noy", "okt", "san", "sen", "utc", "yan", "am", "ay", "be", "ca", "il", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "b", "c", "s", "z", "|"},
 	})
 }

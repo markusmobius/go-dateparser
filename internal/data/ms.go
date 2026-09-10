@@ -7,6 +7,7 @@ import "github.com/markusmobius/go-dateparser/internal/regexp"
 var (
 	ms_Locale    LocaleData
 	ms_BN_Locale LocaleData
+	ms_ID_Locale LocaleData
 	ms_SG_Locale LocaleData
 )
 
@@ -94,6 +95,8 @@ func init() {
 			"tahun lalu":     "1 year ago",
 			"bln depan":      "in 1 month",
 			"bulan ini":      "0 month ago",
+			"mgu depan":      "in 1 week",
+			"mgu lepas":      "1 week ago",
 			"mng depan":      "in 1 week",
 			"mng lepas":      "1 week ago",
 			"tahun ini":      "0 year ago",
@@ -104,6 +107,7 @@ func init() {
 			"sekarang":       "0 second ago",
 			"bln ini":        "0 month ago",
 			"jam ini":        "0 hour ago",
+			"mgu ini":        "0 week ago",
 			"mng ini":        "0 week ago",
 			"semalam":        "1 day ago",
 			"thn ini":        "0 year ago",
@@ -115,11 +119,12 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) minggu lalu`), "$1 week ago"},
 			{regexp.MustCompile(`(?i)dalam (\d+[.,]?\d*) bulan`), "in $1 month"},
 			{regexp.MustCompile(`(?i)dalam (\d+[.,]?\d*) minit`), "in $1 minute"},
+			{regexp.MustCompile(`(?i)dalam (\d+[.,]?\d*) tahun`), "in $1 year"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) bulan lalu`), "$1 month ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) minit lalu`), "$1 minute ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) tahun lalu`), "$1 year ago"},
 			{regexp.MustCompile(`(?i)dalam (\d+[.,]?\d*) hari`), "in $1 day"},
-			{regexp.MustCompile(`(?i)dalam (\d+[.,]?\d*) saat`), "in $1 year"},
+			{regexp.MustCompile(`(?i)dalam (\d+[.,]?\d*) saat`), "in $1 second"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) hari lalu`), "$1 day ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) saat lalu`), "$1 second ago"},
 			{regexp.MustCompile(`(?i)dalam (\d+[.,]?\d*) jam`), "in $1 hour"},
@@ -136,13 +141,19 @@ func init() {
 			{regexp.MustCompile(`(?i)dlm (\d+[.,]?\d*) mgu`), "in $1 week"},
 			{regexp.MustCompile(`(?i)dlm (\d+[.,]?\d*) min`), "in $1 minute"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dalam \d+[.,]?\d* minggu|\d+[.,]?\d* minggu lalu|dalam \d+[.,]?\d* bulan|dalam \d+[.,]?\d* minit|\d+[.,]?\d* bulan lalu|\d+[.,]?\d* minit lalu|\d+[.,]?\d* tahun lalu|dalam \d+[.,]?\d* hari|dalam \d+[.,]?\d* saat|\d+[.,]?\d* hari lalu|\d+[.,]?\d* saat lalu|dalam \d+[.,]?\d* jam|dalam \d+[.,]?\d* thn|\d+[.,]?\d* bln lalu|\d+[.,]?\d* jam lalu|\d+[.,]?\d* mgu lalu|\d+[.,]?\d* min lalu|\d+[.,]?\d* thn lalu|dlm \d+[.,]?\d* hari|dlm \d+[.,]?\d* saat|dlm \d+[.,]?\d* bln|dlm \d+[.,]?\d* jam|dlm \d+[.,]?\d* mgu|dlm \d+[.,]?\d* min)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(dalam \d+[.,]?\d* minggu|\d+[.,]?\d* minggu lalu|dalam \d+[.,]?\d* bulan|dalam \d+[.,]?\d* minit|\d+[.,]?\d* bulan lalu|\d+[.,]?\d* minit lalu|\d+[.,]?\d* tahun lalu|dalam \d+[.,]?\d* hari|dalam \d+[.,]?\d* saat|\d+[.,]?\d* hari lalu|\d+[.,]?\d* saat lalu|dalam \d+[.,]?\d* jam|dalam \d+[.,]?\d* thn|\d+[.,]?\d* bln lalu|\d+[.,]?\d* jam lalu|\d+[.,]?\d* mgu lalu|\d+[.,]?\d* min lalu|\d+[.,]?\d* thn lalu|dlm \d+[.,]?\d* hari|dlm \d+[.,]?\d* saat|dlm \d+[.,]?\d* bln|dlm \d+[.,]?\d* jam|dlm \d+[.,]?\d* mgu|dlm \d+[.,]?\d* min)$`),
-		KnownWords:      []string{"pada minit ini", "minggu depan", "bulan depan", "minggu lalu", "tahun depan", "bulan lalu", "minggu ini", "tahun lalu", "bln depan", "bulan ini", "mng depan", "mng lepas", "september", "tahun ini", "thn depan", "thn lepas", "bln lalu", "disember", "februari", "hari ini", "november", "sekarang", "bln ini", "jam ini", "januari", "mng ini", "oktober", "semalam", "thn ini", "jumaat", "khamis", "minggu", "selasa", "april", "bulan", "isnin", "julai", "minit", "sabtu", "semlm", "tahun", "ahad", "esok", "hari", "ogos", "rabu", "saat", "ahd", "apr", "bln", "dis", "feb", "gmt", "isn", "jam", "jan", "jul", "jum", "jun", "kha", "mac", "mei", "mgu", "min", "nov", "ogo", "okt", "ptg", "rab", "sab", "sel", "sep", "thn", "utc", "am", "pg", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dalam \d+[.,]?\d* minggu|\d+[.,]?\d* minggu lalu|dalam \d+[.,]?\d* bulan|dalam \d+[.,]?\d* minit|dalam \d+[.,]?\d* tahun|\d+[.,]?\d* bulan lalu|\d+[.,]?\d* minit lalu|\d+[.,]?\d* tahun lalu|dalam \d+[.,]?\d* hari|dalam \d+[.,]?\d* saat|\d+[.,]?\d* hari lalu|\d+[.,]?\d* saat lalu|dalam \d+[.,]?\d* jam|dalam \d+[.,]?\d* thn|\d+[.,]?\d* bln lalu|\d+[.,]?\d* jam lalu|\d+[.,]?\d* mgu lalu|\d+[.,]?\d* min lalu|\d+[.,]?\d* thn lalu|dlm \d+[.,]?\d* hari|dlm \d+[.,]?\d* saat|dlm \d+[.,]?\d* bln|dlm \d+[.,]?\d* jam|dlm \d+[.,]?\d* mgu|dlm \d+[.,]?\d* min)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(dalam \d+[.,]?\d* minggu|\d+[.,]?\d* minggu lalu|dalam \d+[.,]?\d* bulan|dalam \d+[.,]?\d* minit|dalam \d+[.,]?\d* tahun|\d+[.,]?\d* bulan lalu|\d+[.,]?\d* minit lalu|\d+[.,]?\d* tahun lalu|dalam \d+[.,]?\d* hari|dalam \d+[.,]?\d* saat|\d+[.,]?\d* hari lalu|\d+[.,]?\d* saat lalu|dalam \d+[.,]?\d* jam|dalam \d+[.,]?\d* thn|\d+[.,]?\d* bln lalu|\d+[.,]?\d* jam lalu|\d+[.,]?\d* mgu lalu|\d+[.,]?\d* min lalu|\d+[.,]?\d* thn lalu|dlm \d+[.,]?\d* hari|dlm \d+[.,]?\d* saat|dlm \d+[.,]?\d* bln|dlm \d+[.,]?\d* jam|dlm \d+[.,]?\d* mgu|dlm \d+[.,]?\d* min)$`),
+		ExactCombinedMatcher: matchExact1fea920efbaf01f00ea52cb7b5ce8c514983bf9f3f6fb97745af6cf0c19dda15,
+		KnownWords:           []string{"pada minit ini", "minggu depan", "bulan depan", "minggu lalu", "tahun depan", "bulan lalu", "minggu ini", "tahun lalu", "bln depan", "bulan ini", "mgu depan", "mgu lepas", "mng depan", "mng lepas", "september", "tahun ini", "thn depan", "thn lepas", "bln lalu", "disember", "februari", "hari ini", "november", "sekarang", "bln ini", "jam ini", "januari", "mgu ini", "mng ini", "oktober", "semalam", "thn ini", "jumaat", "khamis", "minggu", "selasa", "april", "bulan", "isnin", "julai", "minit", "sabtu", "semlm", "tahun", "ahad", "esok", "hari", "ogos", "rabu", "saat", "ahd", "apr", "bln", "dis", "feb", "gmt", "isn", "jam", "jan", "jul", "jum", "jun", "kha", "mac", "mei", "mgu", "min", "nov", "ogo", "okt", "ptg", "rab", "sab", "sel", "sep", "thn", "utc", "am", "pg", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 
 	ms_BN_Locale = merge(&ms_Locale, LocaleData{
 		Name:      "ms-BN",
+		DateOrder: "DMY",
+	})
+
+	ms_ID_Locale = merge(&ms_Locale, LocaleData{
+		Name:      "ms-ID",
 		DateOrder: "DMY",
 	})
 

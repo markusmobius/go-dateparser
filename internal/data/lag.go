@@ -62,6 +62,7 @@ func init() {
 			"too":          {"am"},
 			"utc":          {"utc"},
 			"am":           {"am"},
+			"hr":           {"hour"},
 			"pm":           {"pm"},
 			" ":            {" "},
 			"'":            {""},
@@ -95,6 +96,6 @@ func init() {
 			"niijo":       "1 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"kwiinyambala", "this minute", "kwiidwaata", "lamʉtoondo", "last month", "next month", "this month", "inyambala", "jumamoosi", "jumapiiri", "jumataano", "kʉfungatɨ", "kʉmʉʉnchɨ", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alamiisi", "jumatatu", "kwiikumi", "kʉkeenda", "kʉsasatʉ", "sekuunde", "fungatɨ", "idwaata", "jumaine", "kwiinyi", "kʉnaanɨ", "kʉsaano", "kʉsaatʉ", "kʉvɨɨrɨ", "mʉʉnchɨ", "dakika", "ijumaa", "keenda", "mwaaka", "mweeri", "sasatʉ", "ikumi", "isikʉ", "moosi", "naanɨ", "niijo", "piili", "saano", "saatʉ", "taano", "taatu", "vɨɨrɨ", "wiiki", "inyi", "sikʉ", "alh", "gmt", "ijm", "ine", "muu", "now", "saa", "too", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"kwiinyambala", "this minute", "kwiidwaata", "lamʉtoondo", "last month", "next month", "this month", "inyambala", "jumamoosi", "jumapiiri", "jumataano", "kʉfungatɨ", "kʉmʉʉnchɨ", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alamiisi", "jumatatu", "kwiikumi", "kʉkeenda", "kʉsasatʉ", "sekuunde", "fungatɨ", "idwaata", "jumaine", "kwiinyi", "kʉnaanɨ", "kʉsaano", "kʉsaatʉ", "kʉvɨɨrɨ", "mʉʉnchɨ", "dakika", "ijumaa", "keenda", "mwaaka", "mweeri", "sasatʉ", "ikumi", "isikʉ", "moosi", "naanɨ", "niijo", "piili", "saano", "saatʉ", "taano", "taatu", "vɨɨrɨ", "wiiki", "inyi", "sikʉ", "alh", "gmt", "ijm", "ine", "muu", "now", "saa", "too", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

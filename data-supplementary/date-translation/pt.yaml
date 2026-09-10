@@ -30,9 +30,12 @@ day:
 hour:
     - horas
 minute:
-    - minutos
+  - minutos
+  - m
+
 second:
-    - segundos
+  - segundos
+  - s
 
 ago:
     - atrás
@@ -48,3 +51,10 @@ simplifications:
     - uma: '1'
     - um: '1'
     - alguns segundos: 44 segundos
+relative-type-regex:
+  \1 minute ago:
+    - há (\d+[.,]?\d*) mins
+  in \1 minute:
+    - em (\d+[.,]?\d*) mins
+  in \1 second:
+    - em (\d+[.,]?\d*) segs

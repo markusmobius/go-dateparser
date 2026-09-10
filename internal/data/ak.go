@@ -62,6 +62,7 @@ func init() {
 			"an":                         {"am"},
 			"da":                         {"day"},
 			"ew":                         {"pm"},
+			"hr":                         {"hour"},
 			"pm":                         {"pm"},
 			" ":                          {" "},
 			"'":                          {""},
@@ -95,6 +96,6 @@ func init() {
 			"ndɛ":         "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"esusow aketseaba-kɔtɔnimba", "obirade-ayɛwohomumu", "ayɛwoho-kitawonsa", "ebɔbira-oforisuo", "kwakwar-ɔgyefuo", "ɔberɛfɛw-obubuo", "difuu-ɔsandaa", "mumu-ɔpɛnimba", "ɔbɛsɛ-ahinime", "sanda-ɔpɛpɔn", "ebɔw-ɔbenem", "this minute", "fankwa-ɛbɔ", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "memeneda", "dɔnhwer", "kwesida", "benada", "bosome", "dwowda", "sɛkɛnd", "wukuda", "ɔkyena", "dapɛn", "ndeda", "yawda", "fida", "sema", "a-k", "afe", "ben", "d-ɔ", "dwo", "e-k", "e-o", "e-ɔ", "f-ɛ", "fia", "gmt", "k-ɔ", "kwe", "m-ɔ", "mem", "ndɛ", "now", "o-a", "s-ɔ", "utc", "wuk", "yaw", "ɔ-a", "ɔ-o", "am", "an", "da", "ew", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"esusow aketseaba-kɔtɔnimba", "obirade-ayɛwohomumu", "ayɛwoho-kitawonsa", "ebɔbira-oforisuo", "kwakwar-ɔgyefuo", "ɔberɛfɛw-obubuo", "difuu-ɔsandaa", "mumu-ɔpɛnimba", "ɔbɛsɛ-ahinime", "sanda-ɔpɛpɔn", "ebɔw-ɔbenem", "this minute", "fankwa-ɛbɔ", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "memeneda", "dɔnhwer", "kwesida", "benada", "bosome", "dwowda", "sɛkɛnd", "wukuda", "ɔkyena", "dapɛn", "ndeda", "yawda", "fida", "sema", "a-k", "afe", "ben", "d-ɔ", "dwo", "e-k", "e-o", "e-ɔ", "f-ɛ", "fia", "gmt", "k-ɔ", "kwe", "m-ɔ", "mem", "ndɛ", "now", "o-a", "s-ɔ", "utc", "wuk", "yaw", "ɔ-a", "ɔ-o", "am", "an", "da", "ew", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

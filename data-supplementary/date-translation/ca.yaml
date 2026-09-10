@@ -5,24 +5,31 @@ in:
     - en
 
 relative-type:
-    0 day ago:
-        - hui
-    2 day ago:
-        - despús-ahir
-        - abans-d’ahir
-        - dellà-ahir
-    in 2 day:
-        - endemà
-        - sendemà
-        - despús-demà
-        - demà passat
-        - passat demà
-    in 3 day:
-        - endemà passat
-    in 1 week:
-        - la setmana vinent
-        - la pròxima setmana
-        - la propera setmana
+  0 day ago:
+    - hui
+  2 day ago:
+    - despús-ahir
+    - abans-d’ahir
+    - dellà-ahir
+  in 2 day:
+    - endemà
+    - sendemà
+    - despús-demà
+    - demà passat
+    - passat demà
+  in 3 day:
+    - endemà passat
+  in 1 week:
+    - la setmana vinent
+    - la pròxima setmana
+    - la propera setmana
+    - setm vinent
+  1 month ago:
+    - mes passat
+  1 week ago:
+    - setm passada
+  in 1 month:
+    - mes vinent
 
 simplifications:
     - una: '1'

@@ -10,8 +10,8 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/setting"
 )
 
-// DateOrder is function that returns date order string for specified language and/or locale.
-// The returned date order MUST only uses characters M, D or Y which represents month, day and year.
+// DateOrder returns the component order for a language or locale.
+// The result must contain M, D, and Y exactly once, representing month, day, and year.
 type DateOrder func(locale string) string
 
 var (
@@ -31,150 +31,165 @@ var (
 	}
 )
 
-// PreferredDateSource is the variable to set date source to fill incomplete dates value.
+// PreferredDateSource selects how incomplete dates are interpreted relative to CurrentTime.
 type PreferredDateSource uint8
 
 const (
-	// CurrentPeriod means parser will use current period to fill the incomplete dates value.
-	// So, for current year 2021 and date string "10 December", parser will return 2021-12-10.
+	// CurrentPeriod fills missing components from the current calendar period.
 	CurrentPeriod PreferredDateSource = iota
-	// Past means parser will use past period to fill the incomplete dates value. So, for current
-	// year 2021 and date string "10 December", parser will return 2020-12-10.
+	// Past prefers an interpretation before CurrentTime.
 	Past
-	// Future means parser will use future period to fill the incomplete dates value. So, for
-	// current year 2021 and date string "10 December", parser will return 2022-12-10.
+	// Future prefers an interpretation after CurrentTime.
 	Future
 )
 
-// PreferredDayOfMonth is the variable to set day value for date that has month and year, but
-// missing the day value. For example, date like "2021-12" or "February 2000".
+// PreferredDayOfMonth selects the day for a date with no explicit day,
+// such as "2021-12" or "February 2000".
 type PreferredDayOfMonth uint8
 
 const (
-	// Current means parser will use current day to fill the day value. So, if today is
-	// 2022-01-20 and date string is "February 2020", parser will return 2020-02-20.
+	// Current uses the day from CurrentTime, clamped to the target month's last day.
 	Current PreferredDayOfMonth = iota
-	// First means parser will use first day of the month to fill the day value. So, if
-	// date string is "February 2020", parser will return 2020-02-01.
+	// First uses the first day of the target month.
 	First
-	// Last means parser will use last day of the month to fill the day value. So, if
-	// date string is "February 2020", parser will return 2020-02-29.
+	// Last uses the last day of the target month.
 	Last
 )
 
-// PreferredMonthOfYear is the variable to set month value for date that has year, but
-// missing the month value. For example, date like "2021".
+// PreferredMonthOfYear selects the month for a date with no explicit month,
+// such as "2021".
 type PreferredMonthOfYear uint8
 
 const (
-	// CurrentMonth means parser will use current month to fill the month value. So,
-	// if today is 2022-05-20 and date string is "2020", parser will return 2020-05-20.
+	// CurrentMonth uses the month from CurrentTime.
 	CurrentMonth PreferredMonthOfYear = iota
-	// FirstMonth means parser will use January to fill the month value. So, if date
-	// string is "2020", parser will return 2020-01-20.
+	// FirstMonth uses January.
 	FirstMonth
-	// LastMonth means parser will use December to fill the month value. So, if date
-	// string is "2020", parser will return 2020-12-20.
+	// LastMonth uses December.
 	LastMonth
 )
 
-// Configuration is object to control and configure parsing behavior of date parser.
+// Configuration controls date parsing and search behavior.
+// Calls clone the configuration; callers must not mutate it or its slices during a call.
 type Configuration struct {
-	// Locales is a list of locale codes, e.g. ['fr-PF', 'qu-EC', 'af-NA'].
-	// The parser uses only these locales to translate date string. When specified,
-	// Languages and Region will be ignored.
+	// Locales restricts translation to locale codes such as "fr-PF", "qu-EC", or "af-NA".
+	// When specified, Languages and Region are ignored.
 	Locales []string
 
-	// Languages is a list of language codes, e.g. ['en', 'es', 'zh-Hant']. If
-	// locales are not given, languages and region are used to construct locales
-	// for translation.
+	// Languages restricts translation to language codes such as "en", "es", or "zh-Hant".
+	// When Locales is empty, Languages and Region select the translation locales.
 	Languages []string
 
-	// Region is a region code, e.g. 'IN', '001', 'NE'. If locales are not given,
-	// languages and region are used to construct locales for translation.
+	// Region is a region code such as "IN", "001", or "NE" used with Languages
+	// when Locales is empty.
 	Region string
 
-	// If true, locales previously used to translate date are tried first.
+	// TryPreviousLocales tries previously successful translation locales first.
 	TryPreviousLocales bool
 
-	// If true, locales are tried for translation of date string in the order in
-	// which they are given.
+	// UseGivenOrder tries locales in the supplied order.
 	UseGivenOrder bool
 
-	// Default languages is a list of language codes in ISO 639 (e.g. "en", "fr") that will be
-	// used as default languages for parsing when language detection fails. When using this
-	// setting, these languages will be tried after trying with the detected languages with no
-	// success. It is especially useful when using the `DetectLanguagesFunction`.
+	// DefaultLanguages supplies fallback language codes, such as "en" or "fr", when
+	// parsing with detected languages fails. It is useful with DetectLanguagesFunction.
 	DefaultLanguages []string
 
-	// DateOrder is function that specifies the order in which date components year, month
-	// and day are expected while parsing ambiguous dates. If empty, parser will use each
-	// language specific date order.
+	// DateOrder specifies the order of year, month, and day in ambiguous dates.
+	// If nil, each locale's date order is used.
 	DateOrder DateOrder
 
 	// CurrentTime is the base datetime to use for interpreting partial or relative date
 	// strings. Defaults to the current date and time in UTC.
 	CurrentTime time.Time
 
-	// DefaultTimezone is the default timezone to use when string doesn't contains any timezone.
+	// DefaultTimezone is used when the input contains no timezone.
+	// If nil, the location of CurrentTime is used. Unix timestamps retain time.Local.
 	DefaultTimezone *time.Location
 
-	// PreferredDayOfMonth specify the day for string with missing day. Defaults to `Current`.
+	// PreferredDayOfMonth selects a missing day. Defaults to Current.
 	PreferredDayOfMonth PreferredDayOfMonth
 
-	// PreferredMonthOfYear specify the month for string with missing month. Defaults to `CurrentMonth`.
+	// PreferredMonthOfYear selects a missing month. Defaults to CurrentMonth.
 	PreferredMonthOfYear PreferredMonthOfYear
 
-	// PreferredDateSource specify the date source to fill incomplete date values. Defaults
-	// to `CurrentPeriod`.
+	// PreferredDateSource selects the interpretation of incomplete dates.
+	// Defaults to CurrentPeriod.
 	PreferredDateSource PreferredDateSource
 
-	// StrictParsing when set to true will make the parser returns a date only if the date
-	// is complete, i.e. has day, month and year value. Defaults to false.
+	// StrictParsing requires an explicit day, month, and year. Defaults to false.
 	StrictParsing bool
 
-	// RequiredParts is list of date components that required by the parser. Defaults to
-	// `nil` and can accept "day", "month" and "year".
+	// IgnoreSurroundingText retries failed parses without unknown leading or trailing tokens.
+	IgnoreSurroundingText bool
+
+	// RequiredParts lists required date components: "day", "month", and/or "year".
+	// Defaults to nil.
 	RequiredParts []string
 
-	// SkipTokens is a list of tokens to discard while detecting language. Defaults to
-	// []string{"t"} which skips T in iso format datetime string e.g. 2015-05-02T10:20:19+0000.
+	// SkipTokens lists tokens to discard during translation and language detection.
+	// An empty list defaults to []string{"t"}, skipping the T in ISO date-time strings.
 	SkipTokens []string
 
-	// ReturnTimeAsPeriod returns `Time` as period in date object, if time component is present
-	// in date string. Defaults to false.
+	// ReturnTimeAsPeriod permits Second, Minute, or Hour precision in Date.Period
+	// when the input specifies a time. Otherwise time precision is reported as Day.
+	// Defaults to false.
 	ReturnTimeAsPeriod bool
+
+	// SearchStrategy selects "split" (default) or longest-token "ngram" search.
+	SearchStrategy string
+
+	// ReturnTimeSpan appends the first matching English time span's start and end
+	// to search results. Boundaries retain the reference time of day.
+	ReturnTimeSpan bool
+
+	// DefaultStartOfWeek is "monday" (default) or "sunday" for time-span searches.
+	DefaultStartOfWeek string
+
+	// DefaultDaysInMonth is the length of an unnumbered month span; zero defaults to 30.
+	DefaultDaysInMonth int
 
 	// PreserveEndOfMonth calculates relative month and year dates while preserving the end of
 	// the target month. Ex: "1 month ago" on Oct 31 is Sep 30 instead of Oct 1. Defaults to false.
 	PreserveEndOfMonth bool
 }
 
-// Clone clones the config to a new, separate one.
+// Clone copies the configuration and its slices.
 func (c Configuration) Clone() *Configuration {
 	return &Configuration{
-		Locales:              slices.Clone(c.Locales),
-		Languages:            slices.Clone(c.Languages),
-		Region:               c.Region,
-		TryPreviousLocales:   c.TryPreviousLocales,
-		UseGivenOrder:        c.UseGivenOrder,
-		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
-		DateOrder:            c.DateOrder,
-		CurrentTime:          c.CurrentTime,
-		DefaultTimezone:      c.DefaultTimezone,
-		PreferredDayOfMonth:  c.PreferredDayOfMonth,
-		PreferredMonthOfYear: c.PreferredMonthOfYear,
-		PreferredDateSource:  c.PreferredDateSource,
-		StrictParsing:        c.StrictParsing,
-		RequiredParts:        slices.Clone(c.RequiredParts),
-		SkipTokens:           slices.Clone(c.SkipTokens),
-		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
-		PreserveEndOfMonth:   c.PreserveEndOfMonth,
+		Locales:               slices.Clone(c.Locales),
+		Languages:             slices.Clone(c.Languages),
+		Region:                c.Region,
+		TryPreviousLocales:    c.TryPreviousLocales,
+		UseGivenOrder:         c.UseGivenOrder,
+		DefaultLanguages:      slices.Clone(c.DefaultLanguages),
+		DateOrder:             c.DateOrder,
+		CurrentTime:           c.CurrentTime,
+		DefaultTimezone:       c.DefaultTimezone,
+		PreferredDayOfMonth:   c.PreferredDayOfMonth,
+		PreferredMonthOfYear:  c.PreferredMonthOfYear,
+		PreferredDateSource:   c.PreferredDateSource,
+		StrictParsing:         c.StrictParsing,
+		IgnoreSurroundingText: c.IgnoreSurroundingText,
+		RequiredParts:         slices.Clone(c.RequiredParts),
+		SkipTokens:            slices.Clone(c.SkipTokens),
+		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+		SearchStrategy:        c.SearchStrategy,
+		ReturnTimeSpan:        c.ReturnTimeSpan,
+		DefaultStartOfWeek:    c.DefaultStartOfWeek,
+		DefaultDaysInMonth:    c.DefaultDaysInMonth,
+		PreserveEndOfMonth:    c.PreserveEndOfMonth,
 	}
 }
 
 // validate validates the configuration and return error if it's not valid.
 func (c Configuration) validate() error {
+	if c.SearchStrategy != "" && c.SearchStrategy != "split" && c.SearchStrategy != "ngram" {
+		return fmt.Errorf("invalid search strategy: %s", c.SearchStrategy)
+	}
+	if c.DefaultStartOfWeek != "" && c.DefaultStartOfWeek != "monday" && c.DefaultStartOfWeek != "sunday" {
+		return fmt.Errorf("invalid default start of week: %s", c.DefaultStartOfWeek)
+	}
+
 	// Validate preferred day of month
 	if dom := c.PreferredDayOfMonth; dom > Last {
 		return fmt.Errorf("invalid preferred day of month: %d", dom)
@@ -194,6 +209,7 @@ func (c Configuration) validate() error {
 	for _, part := range c.RequiredParts {
 		switch strings.ToLower(part) {
 		case "day", "month", "year":
+		default:
 			return fmt.Errorf("invalid component in required parts: %s", part)
 		}
 	}
@@ -213,37 +229,47 @@ func (c *Configuration) initiate() *Configuration {
 		c.SkipTokens = []string{"t"}
 	}
 
+	if c.DefaultStartOfWeek == "" {
+		c.DefaultStartOfWeek = "monday"
+	}
+	if c.DefaultDaysInMonth == 0 {
+		c.DefaultDaysInMonth = 30
+	}
+
 	return c
 }
 
 func (c Configuration) toInternalConfig() *setting.Configuration {
 	return &setting.Configuration{
-		CurrentTime:          c.CurrentTime,
-		DefaultTimezone:      c.DefaultTimezone,
-		PreferredDayOfMonth:  setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
-		PreferredMonthOfYear: setting.PreferredMonthOfYear(c.PreferredMonthOfYear),
-		PreferredDateSource:  setting.PreferredDateSource(c.PreferredDateSource),
-		StrictParsing:        c.StrictParsing,
-		RequiredParts:        slices.Clone(c.RequiredParts),
-		SkipTokens:           slices.Clone(c.SkipTokens),
-		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
-		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
-		PreserveEndOfMonth:   c.PreserveEndOfMonth,
+		DateOrderIsExplicit:   c.DateOrder != nil,
+		CurrentTime:           c.CurrentTime,
+		DefaultTimezone:       c.DefaultTimezone,
+		PreferredDayOfMonth:   setting.PreferredDayOfMonth(c.PreferredDayOfMonth),
+		PreferredMonthOfYear:  setting.PreferredMonthOfYear(c.PreferredMonthOfYear),
+		PreferredDateSource:   setting.PreferredDateSource(c.PreferredDateSource),
+		StrictParsing:         c.StrictParsing,
+		IgnoreSurroundingText: c.IgnoreSurroundingText,
+		RequiredParts:         slices.Clone(c.RequiredParts),
+		SkipTokens:            slices.Clone(c.SkipTokens),
+		DefaultLanguages:      slices.Clone(c.DefaultLanguages),
+		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+		PreserveEndOfMonth:    c.PreserveEndOfMonth,
 	}
 }
 
 func configFromInternal(c *setting.Configuration) *Configuration {
 	return &Configuration{
-		CurrentTime:          c.CurrentTime,
-		DefaultTimezone:      c.DefaultTimezone,
-		PreferredDayOfMonth:  PreferredDayOfMonth(c.PreferredDayOfMonth),
-		PreferredMonthOfYear: PreferredMonthOfYear(c.PreferredMonthOfYear),
-		PreferredDateSource:  PreferredDateSource(c.PreferredDateSource),
-		StrictParsing:        c.StrictParsing,
-		RequiredParts:        slices.Clone(c.RequiredParts),
-		SkipTokens:           slices.Clone(c.SkipTokens),
-		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
-		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
-		PreserveEndOfMonth:   c.PreserveEndOfMonth,
+		CurrentTime:           c.CurrentTime,
+		DefaultTimezone:       c.DefaultTimezone,
+		PreferredDayOfMonth:   PreferredDayOfMonth(c.PreferredDayOfMonth),
+		PreferredMonthOfYear:  PreferredMonthOfYear(c.PreferredMonthOfYear),
+		PreferredDateSource:   PreferredDateSource(c.PreferredDateSource),
+		StrictParsing:         c.StrictParsing,
+		IgnoreSurroundingText: c.IgnoreSurroundingText,
+		RequiredParts:         slices.Clone(c.RequiredParts),
+		SkipTokens:            slices.Clone(c.SkipTokens),
+		DefaultLanguages:      slices.Clone(c.DefaultLanguages),
+		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+		PreserveEndOfMonth:    c.PreserveEndOfMonth,
 	}
 }

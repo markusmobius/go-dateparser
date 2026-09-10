@@ -2,12 +2,43 @@ package language
 
 import (
 	"fmt"
+	"math/rand/v2"
 	"testing"
+	"unicode/utf8"
 
 	"github.com/markusmobius/go-dateparser/internal/digit"
+	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestTokenShouldBeCapturedRegexParity(t *testing.T) {
+	wordPattern := regexp.MustCompile(`^.*[^\W_].*$`)
+	letterPattern := regexp.MustCompile(`^.*[^\P{L}\d_].*$`)
+	inputs := []string{
+		"", " ", "   ", "\t", "\r", "\n", "\r\n", "\u00a0", "_", "!", "+", ":", ".", "-", "/",
+		"0", "a", "Z", "a\n", "\na", "a\nb", "a\r", "\x00a", "a\xff", "\xff", "\xc3",
+		"\u00e9", "\u0301", "\u0661", "\uff11", "\u00b2", "\u2160", "\u4e00", "\U00010400", "\U0001f600",
+	}
+	for value := 0; value < 256; value++ {
+		inputs = append(inputs, string([]byte{byte(value)}))
+	}
+	random := rand.New(rand.NewPCG(11, 17))
+	for sample := 0; sample < 4096; sample++ {
+		inputs = append(inputs, string(rune(random.IntN(utf8.MaxRune+1))))
+	}
+	for _, input := range inputs {
+		for _, token := range []string{input, "_" + input + "!", input + "\n", "\n" + input} {
+			for _, keepFormatting := range []bool{false, true} {
+				want := keepFormatting || isSpaceToken(token) || alwaysKeptTokens.Contain(token) ||
+					wordPattern.MatchString(token) || letterPattern.MatchString(token)
+				if got := tokenShouldBeCaptured(token, keepFormatting); got != want {
+					t.Fatalf("token=%q keepFormatting=%t: got %t, want %t", token, keepFormatting, got, want)
+				}
+			}
+		}
+	}
+}
 
 func TestSplit(t *testing.T) {
 	// Helper function

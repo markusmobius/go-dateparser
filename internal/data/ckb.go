@@ -42,6 +42,7 @@ func init() {
 			"utc":           {"utc"},
 			"ياب":           {"august"},
 			"am":            {"am"},
+			"hr":            {"hour"},
 			"pm":            {"pm"},
 			"بن":            {"am"},
 			"دن":            {"pm"},
@@ -77,7 +78,7 @@ func init() {
 			"today":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"کانوونی دووەم", "تشرینی دووەم", "تشرینی یەکەم", "کانونی یەکەم", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "پێنجشەممە", "چوارشەممە", "tomorrow", "حوزەیران", "دووشەممە", "یەکشەممە", "سێشەممە", "يەیلوول", "minute", "second", "تەمووز", "month", "today", "شوبات", "شەممە", "نیسان", "يازار", "يایار", "ھەینی", "hour", "week", "year", "day", "gmt", "now", "utc", "ياب", "am", "pm", "بن", "دن", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"کانوونی دووەم", "تشرینی دووەم", "تشرینی یەکەم", "کانونی یەکەم", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "پێنجشەممە", "چوارشەممە", "tomorrow", "حوزەیران", "دووشەممە", "یەکشەممە", "سێشەممە", "يەیلوول", "minute", "second", "تەمووز", "month", "today", "شوبات", "شەممە", "نیسان", "يازار", "يایار", "ھەینی", "hour", "week", "year", "day", "gmt", "now", "utc", "ياب", "am", "hr", "pm", "بن", "دن", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 
 	ckb_IR_Locale = merge(&ckb_Locale, LocaleData{

@@ -8,6 +8,7 @@ var (
 	en_Locale     LocaleData
 	en_001_Locale LocaleData
 	en_150_Locale LocaleData
+	en_AE_Locale  LocaleData
 	en_AG_Locale  LocaleData
 	en_AI_Locale  LocaleData
 	en_AS_Locale  LocaleData
@@ -45,6 +46,7 @@ var (
 	en_GU_Locale  LocaleData
 	en_GY_Locale  LocaleData
 	en_HK_Locale  LocaleData
+	en_ID_Locale  LocaleData
 	en_IE_Locale  LocaleData
 	en_IL_Locale  LocaleData
 	en_IM_Locale  LocaleData
@@ -66,6 +68,7 @@ var (
 	en_MS_Locale  LocaleData
 	en_MT_Locale  LocaleData
 	en_MU_Locale  LocaleData
+	en_MV_Locale  LocaleData
 	en_MW_Locale  LocaleData
 	en_MY_Locale  LocaleData
 	en_NA_Locale  LocaleData
@@ -101,6 +104,7 @@ var (
 	en_TZ_Locale  LocaleData
 	en_UG_Locale  LocaleData
 	en_UM_Locale  LocaleData
+	en_US_Locale  LocaleData
 	en_VC_Locale  LocaleData
 	en_VG_Locale  LocaleData
 	en_VI_Locale  LocaleData
@@ -118,14 +122,15 @@ func init() {
 		Charset:               []rune(`bcdefghijklnorstuvwxyz`),
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*)\s*mons?(\z|[^\pL\pM\d_])`), "${1}${2} month${3}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])an(\z|[^\pL\pM\d_])`), "${1}1${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])a(\z|[^\pL\pM\d_])`), "${1}1${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(?:12\s+)?noon(\z|[^\pL\pM\d_])`), "${1}12:00${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(?:12\s+)?midnight(\z|[^\pL\pM\d_])`), "${1}00:00${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*)h(\d+[.,]?\d*)(\z|[^\pL\pM\d_])`), "${1}${2}:${3}${4}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(from\s+)now(\z|[^\pL\pM\d_])`), "${1}${2}in${3}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])from\s+now(\z|[^\pL\pM\d_])`), "${1}in${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])less than 1 minute ago(\z|[^\pL\pM\d_])`), "${1}45 second ago${2}"},
-			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*) (decade|year|month|week|day|hour|minute|second)s? later(\z|[^\pL\pM\d_])`), "${1}in ${2} ${3}${4}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve) (decade|year|month|week|day|hour|minute|second)s? later(\z|[^\pL\pM\d_])`), "${1}in ${2} ${3}${4}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])one(\z|[^\pL\pM\d_])`), "${1}1${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])two(\z|[^\pL\pM\d_])`), "${1}2${2}"},
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])three(\z|[^\pL\pM\d_])`), "${1}3${2}"},
@@ -172,6 +177,7 @@ func init() {
 			"weeks":     {"week"},
 			"years":     {"year"},
 			"days":      {"day"},
+			"from":      {""},
 			"hour":      {"hour"},
 			"july":      {"july"},
 			"june":      {"june"},
@@ -214,16 +220,21 @@ func init() {
 			"am":        {"am"},
 			"at":        {""},
 			"by":        {""},
+			"fr":        {"friday"},
 			"hr":        {"hour"},
 			"in":        {"in"},
-			"mo":        {"month"},
+			"mo":        {"month", "monday"},
 			"nd":        {""},
 			"of":        {""},
 			"on":        {""},
 			"pm":        {"pm"},
 			"rd":        {""},
+			"sa":        {"saturday"},
 			"st":        {""},
-			"th":        {""},
+			"su":        {"sunday"},
+			"th":        {"thursday"},
+			"tu":        {"tuesday"},
+			"we":        {"wednesday"},
 			"wk":        {"week"},
 			"yr":        {"year"},
 			" ":         {" "},
@@ -279,6 +290,9 @@ func init() {
 			"now":                  "0 second ago",
 		},
 		RelativeTypeRegexes: []ReplacementData{
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) weeks'? time`), "in ${1} week"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) weeks' time`), "in ${1} week"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) weeks time`), "in ${1} week"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) decades? ago`), "${1} decade ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) minutes ago`), "$1 minute ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) seconds ago`), "$1 second ago"},
@@ -317,14 +331,29 @@ func init() {
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) day`), "in $1 day"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) min`), "in $1 minute"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) sec`), "in $1 second"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)mo ago`), "$1 month ago"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) hr`), "in $1 hour"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) mo`), "in $1 month"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) wk`), "in $1 week"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) yr`), "in $1 year"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)d ago`), "$1 day ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)h ago`), "$1 hour ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)m ago`), "$1 minute ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)s ago`), "$1 second ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)w ago`), "$1 week ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*)y ago`), "$1 year ago"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*)mo`), "in $1 month"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*)d`), "in $1 day"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*)h`), "in $1 hour"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*)m`), "in $1 minute"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*)s`), "in $1 second"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*)w`), "in $1 week"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*)y`), "in $1 year"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* sec|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* sec|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr)$`),
-		KnownWords:      []string{"day before yesterday", "day after tomorrow", "last decade", "next decade", "this decade", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "september", "this hour", "this week", "this year", "till date", "wednesday", "yesterday", "december", "february", "from now", "november", "saturday", "thursday", "tomorrow", "decades", "january", "last mo", "last wk", "last yr", "minutes", "next mo", "next wk", "next yr", "october", "seconds", "this mo", "this wk", "this yr", "tuesday", "august", "before", "decade", "friday", "minute", "monday", "months", "second", "sunday", "about", "after", "april", "hours", "march", "month", "today", "weeks", "years", "days", "hour", "july", "june", "just", "mins", "secs", "sept", "tues", "week", "year", "ago", "and", "apr", "aug", "day", "dec", "feb", "fri", "gmt", "hrs", "jan", "jul", "jun", "mar", "may", "min", "mon", "nov", "now", "oct", "sat", "sec", "sep", "sun", "the", "thu", "tue", "utc", "wed", "ad", "am", "at", "by", "hr", "in", "mo", "nd", "of", "on", "pm", "rd", "st", "th", "wk", "yr", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "m", "s", "y", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* sec|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* sec|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)$`),
+		ExactCombinedMatcher: matchExactfc573548ed1ff4ab1ef276efaf99098c19568d0ea0822fcbce089af369456fa1,
+		KnownWords:           []string{"day before yesterday", "day after tomorrow", "last decade", "next decade", "this decade", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "september", "this hour", "this week", "this year", "till date", "wednesday", "yesterday", "december", "february", "from now", "november", "saturday", "thursday", "tomorrow", "decades", "january", "last mo", "last wk", "last yr", "minutes", "next mo", "next wk", "next yr", "october", "seconds", "this mo", "this wk", "this yr", "tuesday", "august", "before", "decade", "friday", "minute", "monday", "months", "second", "sunday", "about", "after", "april", "hours", "march", "month", "today", "weeks", "years", "days", "from", "hour", "july", "june", "just", "mins", "secs", "sept", "tues", "week", "year", "ago", "and", "apr", "aug", "day", "dec", "feb", "fri", "gmt", "hrs", "jan", "jul", "jun", "mar", "may", "min", "mon", "nov", "now", "oct", "sat", "sec", "sep", "sun", "the", "thu", "tue", "utc", "wed", "ad", "am", "at", "by", "fr", "hr", "in", "mo", "nd", "of", "on", "pm", "rd", "sa", "st", "su", "th", "tu", "we", "wk", "yr", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	en_001_Locale = merge(&en_Locale, LocaleData{
@@ -334,6 +363,11 @@ func init() {
 
 	en_150_Locale = merge(&en_Locale, LocaleData{
 		Name:      "en-150",
+		DateOrder: "DMY",
+	})
+
+	en_AE_Locale = merge(&en_Locale, LocaleData{
+		Name:      "en-AE",
 		DateOrder: "DMY",
 	})
 
@@ -360,6 +394,21 @@ func init() {
 	en_AU_Locale = merge(&en_Locale, LocaleData{
 		Name:      "en-AU",
 		DateOrder: "DMY",
+		RelativeTypeRegexes: []ReplacementData{
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) mins ago`), "$1 minute ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) secs ago`), "$1 second ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) hrs ago`), "$1 hour ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) wks ago`), "$1 week ago"},
+			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) yrs ago`), "$1 year ago"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) mins`), "in $1 minute"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) secs`), "in $1 second"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) hrs`), "in $1 hour"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) wks`), "in $1 week"},
+			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) yrs`), "in $1 year"},
+		},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* mins ago|\d+[.,]?\d* secs ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* hrs ago|\d+[.,]?\d* min ago|\d+[.,]?\d* sec ago|\d+[.,]?\d* wks ago|\d+[.,]?\d* yrs ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* mins|in \d+[.,]?\d* secs|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* hrs|in \d+[.,]?\d* min|in \d+[.,]?\d* sec|in \d+[.,]?\d* wks|in \d+[.,]?\d* yrs|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* mins ago|\d+[.,]?\d* secs ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* hrs ago|\d+[.,]?\d* min ago|\d+[.,]?\d* sec ago|\d+[.,]?\d* wks ago|\d+[.,]?\d* yrs ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* mins|in \d+[.,]?\d* secs|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* hrs|in \d+[.,]?\d* min|in \d+[.,]?\d* sec|in \d+[.,]?\d* wks|in \d+[.,]?\d* yrs|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)$`),
+		ExactCombinedMatcher: matchExactd84832e29040a75b18722475f48cf369f62039624c0b42e324c2775bf7dd9cde,
 	})
 
 	en_BB_Locale = merge(&en_Locale, LocaleData{
@@ -414,8 +463,9 @@ func init() {
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) wks`), "in $1 week"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) yrs`), "in $1 year"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* mins ago|\d+[.,]?\d* secs ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* hrs ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mos ago|\d+[.,]?\d* sec ago|\d+[.,]?\d* wks ago|\d+[.,]?\d* yrs ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* mins|in \d+[.,]?\d* secs|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* hrs|in \d+[.,]?\d* min|in \d+[.,]?\d* mos|in \d+[.,]?\d* sec|in \d+[.,]?\d* wks|in \d+[.,]?\d* yrs|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* mins ago|\d+[.,]?\d* secs ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* hrs ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mos ago|\d+[.,]?\d* sec ago|\d+[.,]?\d* wks ago|\d+[.,]?\d* yrs ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* mins|in \d+[.,]?\d* secs|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* hrs|in \d+[.,]?\d* min|in \d+[.,]?\d* mos|in \d+[.,]?\d* sec|in \d+[.,]?\d* wks|in \d+[.,]?\d* yrs|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr)$`),
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* mins ago|\d+[.,]?\d* secs ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* hrs ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mos ago|\d+[.,]?\d* sec ago|\d+[.,]?\d* wks ago|\d+[.,]?\d* yrs ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* mins|in \d+[.,]?\d* secs|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* hrs|in \d+[.,]?\d* min|in \d+[.,]?\d* mos|in \d+[.,]?\d* sec|in \d+[.,]?\d* wks|in \d+[.,]?\d* yrs|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* mins ago|\d+[.,]?\d* secs ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* hrs ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mos ago|\d+[.,]?\d* sec ago|\d+[.,]?\d* wks ago|\d+[.,]?\d* yrs ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* mins|in \d+[.,]?\d* secs|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* hrs|in \d+[.,]?\d* min|in \d+[.,]?\d* mos|in \d+[.,]?\d* sec|in \d+[.,]?\d* wks|in \d+[.,]?\d* yrs|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)$`),
+		ExactCombinedMatcher: matchExacte81963dc7daadb94f254eb9eaa4cb568796ad79fade9e81c9b75c9ce85021ab1,
 	})
 
 	en_CC_Locale = merge(&en_Locale, LocaleData{
@@ -538,6 +588,11 @@ func init() {
 		DateOrder: "DMY",
 	})
 
+	en_ID_Locale = merge(&en_Locale, LocaleData{
+		Name:      "en-ID",
+		DateOrder: "DMY",
+	})
+
 	en_IE_Locale = merge(&en_Locale, LocaleData{
 		Name:      "en-IE",
 		DateOrder: "DMY",
@@ -643,6 +698,11 @@ func init() {
 		DateOrder: "DMY",
 	})
 
+	en_MV_Locale = merge(&en_Locale, LocaleData{
+		Name:      "en-MV",
+		DateOrder: "DMY",
+	})
+
 	en_MW_Locale = merge(&en_Locale, LocaleData{
 		Name:      "en-MW",
 		DateOrder: "DMY",
@@ -695,7 +755,7 @@ func init() {
 
 	en_PH_Locale = merge(&en_Locale, LocaleData{
 		Name:      "en-PH",
-		DateOrder: "DMY",
+		DateOrder: "MDY",
 	})
 
 	en_PK_Locale = merge(&en_Locale, LocaleData{
@@ -758,9 +818,10 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) mth ago`), "$1 month ago"},
 			{regexp.MustCompile(`(?i)in (\d+[.,]?\d*) mth`), "in $1 month"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mth ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* mth|in \d+[.,]?\d* sec|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mth ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* mth|in \d+[.,]?\d* sec|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr)$`),
-		KnownWords:      []string{"day before yesterday", "day after tomorrow", "last decade", "next decade", "this decade", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "september", "this hour", "this week", "this year", "till date", "wednesday", "yesterday", "december", "february", "from now", "last mth", "next mth", "november", "saturday", "this mth", "thursday", "tomorrow", "decades", "january", "last mo", "last wk", "last yr", "minutes", "next mo", "next wk", "next yr", "october", "seconds", "this mo", "this wk", "this yr", "tuesday", "august", "before", "decade", "friday", "minute", "monday", "months", "second", "sunday", "about", "after", "april", "hours", "march", "month", "today", "weeks", "years", "days", "hour", "july", "june", "just", "mins", "secs", "sept", "tues", "week", "year", "ago", "and", "apr", "aug", "day", "dec", "feb", "fri", "gmt", "hrs", "jan", "jul", "jun", "mar", "may", "min", "mon", "mth", "nov", "now", "oct", "sat", "sec", "sep", "sun", "the", "thu", "tue", "utc", "wed", "ad", "am", "at", "by", "hr", "in", "mo", "nd", "of", "on", "pm", "rd", "st", "th", "wk", "yr", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "m", "s", "y", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mth ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* mth|in \d+[.,]?\d* sec|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(in \d+[.,]?\d* weeks'? time|in \d+[.,]?\d* weeks' time|in \d+[.,]?\d* weeks time|\d+[.,]?\d* decades? ago|\d+[.,]?\d* minutes ago|\d+[.,]?\d* seconds ago|in \d+[.,]?\d* decades?|\d+[.,]?\d* minute ago|\d+[.,]?\d* months ago|\d+[.,]?\d* second ago|in \d+[.,]?\d* minutes|in \d+[.,]?\d* seconds|\d+[.,]?\d* hours ago|\d+[.,]?\d* month ago|\d+[.,]?\d* weeks ago|\d+[.,]?\d* years ago|in \d+[.,]?\d* minute|in \d+[.,]?\d* months|in \d+[.,]?\d* second|\d+[.,]?\d* days ago|\d+[.,]?\d* hour ago|\d+[.,]?\d* week ago|\d+[.,]?\d* year ago|in \d+[.,]?\d* hours|in \d+[.,]?\d* month|in \d+[.,]?\d* weeks|in \d+[.,]?\d* years|\d+[.,]?\d* day ago|\d+[.,]?\d* min ago|\d+[.,]?\d* mth ago|\d+[.,]?\d* sec ago|in \d+[.,]?\d* days|in \d+[.,]?\d* hour|in \d+[.,]?\d* week|in \d+[.,]?\d* year|\d+[.,]?\d* hr ago|\d+[.,]?\d* mo ago|\d+[.,]?\d* wk ago|\d+[.,]?\d* yr ago|in \d+[.,]?\d* day|in \d+[.,]?\d* min|in \d+[.,]?\d* mth|in \d+[.,]?\d* sec|\d+[.,]?\d*mo ago|in \d+[.,]?\d* hr|in \d+[.,]?\d* mo|in \d+[.,]?\d* wk|in \d+[.,]?\d* yr|\d+[.,]?\d*d ago|\d+[.,]?\d*h ago|\d+[.,]?\d*m ago|\d+[.,]?\d*s ago|\d+[.,]?\d*w ago|\d+[.,]?\d*y ago|in \d+[.,]?\d*mo|in \d+[.,]?\d*d|in \d+[.,]?\d*h|in \d+[.,]?\d*m|in \d+[.,]?\d*s|in \d+[.,]?\d*w|in \d+[.,]?\d*y)$`),
+		ExactCombinedMatcher: matchExact8181fee66d20c1c15d7ab8536a10f1757c02d0aa81b2e543855601092b165e31,
+		KnownWords:           []string{"day before yesterday", "day after tomorrow", "last decade", "next decade", "this decade", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "september", "this hour", "this week", "this year", "till date", "wednesday", "yesterday", "december", "february", "from now", "last mth", "next mth", "november", "saturday", "this mth", "thursday", "tomorrow", "decades", "january", "last mo", "last wk", "last yr", "minutes", "next mo", "next wk", "next yr", "october", "seconds", "this mo", "this wk", "this yr", "tuesday", "august", "before", "decade", "friday", "minute", "monday", "months", "second", "sunday", "about", "after", "april", "hours", "march", "month", "today", "weeks", "years", "days", "from", "hour", "july", "june", "just", "mins", "secs", "sept", "tues", "week", "year", "ago", "and", "apr", "aug", "day", "dec", "feb", "fri", "gmt", "hrs", "jan", "jul", "jun", "mar", "may", "min", "mon", "mth", "nov", "now", "oct", "sat", "sec", "sep", "sun", "the", "thu", "tue", "utc", "wed", "ad", "am", "at", "by", "fr", "hr", "in", "mo", "nd", "of", "on", "pm", "rd", "sa", "st", "su", "th", "tu", "we", "wk", "yr", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	en_SH_Locale = merge(&en_Locale, LocaleData{
@@ -830,6 +891,11 @@ func init() {
 
 	en_UM_Locale = merge(&en_Locale, LocaleData{
 		Name:      "en-UM",
+		DateOrder: "MDY",
+	})
+
+	en_US_Locale = merge(&en_Locale, LocaleData{
+		Name:      "en-US",
 		DateOrder: "MDY",
 	})
 

@@ -26,6 +26,7 @@ func init() {
 			"iminithi":     {"minute"},
 			"januwari":     {"january"},
 			"ulwesine":     {"thursday"},
+			"amahora":      {"hour"},
 			"disemba":      {"december"},
 			"ephreli":      {"april"},
 			"inyanga":      {"month"},
@@ -110,8 +111,9 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) inyanga edlule`), "$1 month ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) unyaka odlule`), "$1 year ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* amasekhondi edlule|\d+[.,]?\d* isekhondi eledlule|\d+[.,]?\d* izinyanga ezedlule|\d+[.,]?\d* amaminithi edlule|\d+[.,]?\d* iminithi eledlule|\d+[.,]?\d* izinsuku ezedlule|\d+[.,]?\d* iminyaka edlule|\d+[.,]?\d* usuku olwedlule|\d+[.,]?\d* amahora edlule|\d+[.,]?\d* ihora eledlule|\d+[.,]?\d* inyanga edlule|\d+[.,]?\d* unyaka odlule)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(\d+[.,]?\d* amasekhondi edlule|\d+[.,]?\d* isekhondi eledlule|\d+[.,]?\d* izinyanga ezedlule|\d+[.,]?\d* amaminithi edlule|\d+[.,]?\d* iminithi eledlule|\d+[.,]?\d* izinsuku ezedlule|\d+[.,]?\d* iminyaka edlule|\d+[.,]?\d* usuku olwedlule|\d+[.,]?\d* amahora edlule|\d+[.,]?\d* ihora eledlule|\d+[.,]?\d* inyanga edlule|\d+[.,]?\d* unyaka odlule)$`),
-		KnownWords:      []string{"onyakeni odlule", "inyanga edlule", "iviki eledlule", "inyanga ezayo", "iviki elizayo", "leli minithi", "ulwesithathu", "unyaka ozayo", "ulwesihlanu", "umsombuluko", "kulo nyaka", "ulwesibili", "umasingana", "februwari", "isekhondi", "le nyanga", "leli hora", "leli viki", "namhlanje", "septhemba", "umgqibelo", "iminithi", "januwari", "ulwesine", "disemba", "ephreli", "inyanga", "novemba", "okthoba", "agasti", "isonto", "julayi", "kusasa", "unyaka", "ihora", "iviki", "izolo", "manje", "mashi", "usuku", "juni", "meyi", "aga", "bil", "dis", "eph", "feb", "gmt", "hla", "jan", "jul", "jun", "mas", "mey", "mgq", "mso", "nov", "okt", "sep", "sin", "son", "tha", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(\d+[.,]?\d* amasekhondi edlule|\d+[.,]?\d* isekhondi eledlule|\d+[.,]?\d* izinyanga ezedlule|\d+[.,]?\d* amaminithi edlule|\d+[.,]?\d* iminithi eledlule|\d+[.,]?\d* izinsuku ezedlule|\d+[.,]?\d* iminyaka edlule|\d+[.,]?\d* usuku olwedlule|\d+[.,]?\d* amahora edlule|\d+[.,]?\d* ihora eledlule|\d+[.,]?\d* inyanga edlule|\d+[.,]?\d* unyaka odlule)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(\d+[.,]?\d* amasekhondi edlule|\d+[.,]?\d* isekhondi eledlule|\d+[.,]?\d* izinyanga ezedlule|\d+[.,]?\d* amaminithi edlule|\d+[.,]?\d* iminithi eledlule|\d+[.,]?\d* izinsuku ezedlule|\d+[.,]?\d* iminyaka edlule|\d+[.,]?\d* usuku olwedlule|\d+[.,]?\d* amahora edlule|\d+[.,]?\d* ihora eledlule|\d+[.,]?\d* inyanga edlule|\d+[.,]?\d* unyaka odlule)$`),
+		ExactCombinedMatcher: matchExact1b0c79582070f32997e248db74d26d5447ce587ac3a243c959d2182ae6539c69,
+		KnownWords:           []string{"onyakeni odlule", "inyanga edlule", "iviki eledlule", "inyanga ezayo", "iviki elizayo", "leli minithi", "ulwesithathu", "unyaka ozayo", "ulwesihlanu", "umsombuluko", "kulo nyaka", "ulwesibili", "umasingana", "februwari", "isekhondi", "le nyanga", "leli hora", "leli viki", "namhlanje", "septhemba", "umgqibelo", "iminithi", "januwari", "ulwesine", "amahora", "disemba", "ephreli", "inyanga", "novemba", "okthoba", "agasti", "isonto", "julayi", "kusasa", "unyaka", "ihora", "iviki", "izolo", "manje", "mashi", "usuku", "juni", "meyi", "aga", "bil", "dis", "eph", "feb", "gmt", "hla", "jan", "jul", "jun", "mas", "mey", "mgq", "mso", "nov", "okt", "sep", "sin", "son", "tha", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

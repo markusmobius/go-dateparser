@@ -42,3 +42,7 @@ relative-type:
     - ساعتين
   1 hour ago:
     - ساعة واحدة
+locale-specific:
+  ar-IQ:
+    october:
+      - تشرین الأول

@@ -8,7 +8,7 @@ import (
 
 func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[string]LocaleData, error) {
 	// Parse base data
-	baseData, err := parseSupplementaryFile(SUPPLEMENTARY_BASE_PATH)
+	baseData, _, err := parseSupplementaryFile(SUPPLEMENTARY_BASE_PATH)
 	if err != nil {
 		return nil, err
 	}
@@ -21,7 +21,7 @@ func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[stri
 		baseClone.Name = language
 
 		fPath := filepath.Join(SUPPLEMENTARY_DIR, language+".yaml")
-		localeData, err := parseSupplementaryFile(fPath)
+		localeData, overrides, err := parseSupplementaryFile(fPath)
 		if os.IsNotExist(err) {
 			result[language] = baseClone
 			continue
@@ -31,19 +31,29 @@ func parseAllSupplementaryData(languageLocalesMap map[string][]string) (map[stri
 
 		log.Info().Msgf("parsed supplementary %s", language)
 		result[language] = baseClone.Merge(*localeData)
+		for locale, override := range overrides {
+			result[locale] = override
+			if !slices.Contains(languageLocalesMap[language], locale) {
+				languageLocalesMap[language] = append(languageLocalesMap[language], locale)
+			}
+		}
 	}
 
 	return result, nil
 }
 
-func parseSupplementaryFile(fPath string) (*LocaleData, error) {
+func parseSupplementaryFile(fPath string) (*LocaleData, map[string]LocaleData, error) {
 	// Parse YAML
 	var yamlData SupplementaryData
 	err := parseYamlFile(&yamlData, fPath)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
+	data, overrides := parseSupplementaryData(yamlData)
+	return data, overrides, nil
+}
 
+func parseSupplementaryData(yamlData SupplementaryData) (*LocaleData, map[string]LocaleData) {
 	// Prepare helper function
 	addTranslations := func(data *LocaleData, translation string, entries []string) {
 		for _, entry := range entries {
@@ -61,6 +71,7 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 
 	// Generate locale data
 	data := LocaleData{
+		DateOrder:             yamlData.DateOrder,
 		SkipWords:             cleanList(false, yamlData.SkipWords...),
 		PertainWords:          cleanList(false, yamlData.PertainWords...),
 		NoWordSpacing:         yamlData.NoWordSpacing,
@@ -128,5 +139,11 @@ func parseSupplementaryFile(fPath string) (*LocaleData, error) {
 	addTranslations(&data, "", skipWords)
 	addTranslations(&data, "", pertainWords)
 
-	return &data, nil
+	overrides := map[string]LocaleData{}
+	for locale, override := range yamlData.LocaleSpecific {
+		localeData, _ := parseSupplementaryData(override)
+		localeData.Name = locale
+		overrides[locale] = *localeData
+	}
+	return &data, overrides
 }

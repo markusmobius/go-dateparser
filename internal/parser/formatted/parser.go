@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/markusmobius/go-dateparser/date"
+	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/parser/common"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
@@ -45,8 +46,9 @@ func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date 
 
 		// Check if format has day or month
 		checkerText := checker.Format(format)
-		formatHasDay := strings.Contains(checkerText, "4")
-		formatHasMonth := strings.Contains(checkerText, "3") || strings.Contains(checkerText, "Mar")
+		formatHasYearDay := strings.Contains(format, "002") || strings.Contains(format, "__2")
+		formatHasDay := formatHasYearDay || strings.Contains(checkerText, "4")
+		formatHasMonth := formatHasYearDay || strings.Contains(checkerText, "3") || strings.Contains(checkerText, "Mar")
 
 		if !formatHasMonth && !formatHasDay {
 			period = date.Year
@@ -65,6 +67,19 @@ func Parse(cfg *setting.Configuration, str string, formats ...string) date.Date 
 			t = time.Date(currentTime.Year(), t.Month(), t.Day(),
 				t.Hour(), t.Minute(), t.Second(), t.Nanosecond(),
 				t.Location())
+		} else if strings.Contains(format, "06") && !strings.Contains(format, "2006") {
+			now := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(),
+				currentTime.Hour(), currentTime.Minute(), currentTime.Second(), currentTime.Nanosecond(), t.Location())
+			year := t.Year()
+			if cfg.PreferredDateSource == setting.Past && now.Before(t) {
+				year -= 100
+			} else if cfg.PreferredDateSource == setting.Future && !now.Before(t) {
+				year += 100
+			}
+			if t.Month() == time.February && t.Day() == 29 && !dateutil.IsLeapYear(year) {
+				year = dateutil.GetLeapYear(year, cfg.PreferredDateSource == setting.Future)
+			}
+			t = time.Date(year, t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), t.Location())
 		}
 
 		return date.Date{Time: t, Period: period}

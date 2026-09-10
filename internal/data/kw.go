@@ -59,6 +59,7 @@ func init() {
 			"yow":           {"thursday"},
 			"am":            {"am"},
 			"du":            {"november"},
+			"hr":            {"hour"},
 			"me":            {"may"},
 			"pm":            {"pm"},
 			" ":             {" "},
@@ -93,6 +94,6 @@ func init() {
 			"today":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"mis gortheren", "mis gwynngala", "mis kevardhu", "mis metheven", "mis hwevrer", "this minute", "last month", "mis genver", "mis meurth", "next month", "this month", "dy gwener", "dy merher", "dy meurth", "dy sadorn", "last week", "last year", "mis ebrel", "mis hedra", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "mis est", "dy lun", "dy sul", "dy yow", "minute", "mis du", "mis me", "second", "month", "today", "hour", "week", "year", "day", "ebr", "est", "gen", "gmt", "gor", "gwe", "gwn", "hed", "hwe", "kev", "lun", "met", "meu", "mhr", "mth", "now", "sad", "sul", "utc", "yow", "am", "du", "me", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"mis gortheren", "mis gwynngala", "mis kevardhu", "mis metheven", "mis hwevrer", "this minute", "last month", "mis genver", "mis meurth", "next month", "this month", "dy gwener", "dy merher", "dy meurth", "dy sadorn", "last week", "last year", "mis ebrel", "mis hedra", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "mis est", "dy lun", "dy sul", "dy yow", "minute", "mis du", "mis me", "second", "month", "today", "hour", "week", "year", "day", "ebr", "est", "gen", "gmt", "gor", "gwe", "gwn", "hed", "hwe", "kev", "lun", "met", "meu", "mhr", "mth", "now", "sad", "sul", "utc", "yow", "am", "du", "hr", "me", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

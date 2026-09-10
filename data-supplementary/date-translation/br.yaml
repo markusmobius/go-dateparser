@@ -1,0 +1,8 @@
+december:
+  - ker
+
+relative-type:
+  0 hour ago:
+    - this hour
+  0 minute ago:
+    - this minute

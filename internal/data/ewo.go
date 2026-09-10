@@ -61,6 +61,7 @@ func init() {
 			"sɔn":               {"sunday"},
 			"utc":               {"utc"},
 			"am":                {"am"},
+			"hr":                {"hour"},
 			"pm":                {"pm"},
 			" ":                 {" "},
 			"'":                 {""},
@@ -94,6 +95,6 @@ func init() {
 			"ana":         "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"ngɔn awom ai dzia", "sɔndɔ məlu mənyi", "ngɔn awom ai bɛ", "sɔndɔ məlu məbɛ", "sɔndɔ məlu məlɛ", "ngɔn zamgbala", "ngɔn saməna", "this minute", "last month", "next month", "ngɔn ebulu", "ngɔn nyina", "this month", "last week", "last year", "next week", "next year", "ngɔn awom", "ngɔn lala", "ngɔn mwom", "ngɔn tana", "ngəgogəle", "this hour", "this week", "this year", "ngɔn osu", "akabəga", "kikirig", "ngɔn bɛ", "angoge", "enutɛn", "fulade", "serade", "awola", "mɔndi", "okiri", "sɔndɔ", "amos", "ngab", "ngad", "ngɔn", "ana", "ful", "gmt", "mbu", "mɔn", "nga", "ngb", "nge", "ngl", "ngm", "ngn", "ngo", "ngs", "ngt", "ngz", "now", "ser", "smb", "sml", "smn", "sɔn", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"ngɔn awom ai dzia", "sɔndɔ məlu mənyi", "ngɔn awom ai bɛ", "sɔndɔ məlu məbɛ", "sɔndɔ məlu məlɛ", "ngɔn zamgbala", "ngɔn saməna", "this minute", "last month", "next month", "ngɔn ebulu", "ngɔn nyina", "this month", "last week", "last year", "next week", "next year", "ngɔn awom", "ngɔn lala", "ngɔn mwom", "ngɔn tana", "ngəgogəle", "this hour", "this week", "this year", "ngɔn osu", "akabəga", "kikirig", "ngɔn bɛ", "angoge", "enutɛn", "fulade", "serade", "awola", "mɔndi", "okiri", "sɔndɔ", "amos", "ngab", "ngad", "ngɔn", "ana", "ful", "gmt", "mbu", "mɔn", "nga", "ngb", "nge", "ngl", "ngm", "ngn", "ngo", "ngs", "ngt", "ngz", "now", "ser", "smb", "sml", "smn", "sɔn", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

@@ -38,6 +38,18 @@ func parseCldrData(locale string) (*LocaleData, error) {
 	if err != nil {
 		return nil, err
 	}
+	var units struct {
+		Main map[string]struct {
+			Units struct {
+				Long map[string]struct {
+					DisplayName string `json:"displayName"`
+				} `json:"long"`
+			} `json:"units"`
+		} `json:"main"`
+	}
+	if err := parseJsonFile(&units, filepath.Join(RAW_DIR, "cldr-units-full", "main", locale, "units.json")); err != nil {
+		return nil, err
+	}
 
 	// 2. Extract main data
 	gregorianData := cldrGregorian.Dates.Calendars.Gregorian
@@ -175,6 +187,7 @@ func parseCldrData(locale string) (*LocaleData, error) {
 	for _, dateField := range enDateFields {
 		addDateFieldTranslations(&data, dateField)
 	}
+	data.AddTranslation(units.Main[locale].Units.Long["duration-hour"].DisplayName, "hour", true)
 
 	return &data, nil
 }

@@ -19,6 +19,7 @@ func init() {
 		SentenceSplitterGroup: 1,
 		Simplifications: []ReplacementData{
 			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])(\d+[.,]?\d*)\s+ora(\z|[^\pL\pM\d_])`), "${1}${2} ore${3}"},
+			{regexp.MustCompile(`(?i)(\A|[^\pL\pM\d_])un[' ]ora(\z|[^\pL\pM\d_])`), "${1}1 ore${2}"},
 		},
 		Translations: map[string][]string{
 			"mercoledi": {"wednesday"},
@@ -49,6 +50,7 @@ func init() {
 			"sabato":    {"saturday"},
 			"circa":     {""},
 			"marzo":     {"march"},
+			"alle":      {""},
 			"anni":      {"year"},
 			"anno":      {"year"},
 			"mese":      {"month"},
@@ -109,9 +111,12 @@ func init() {
 			"anno prossimo":      "in 1 year",
 			"mese prossimo":      "in 1 month",
 			"questo minuto":      "0 minute ago",
+			"sett prossima":      "in 1 week",
 			"anno scorso":        "1 year ago",
 			"mese scorso":        "1 month ago",
+			"questa sett":        "0 week ago",
 			"questo mese":        "0 month ago",
+			"sett scorsa":        "1 week ago",
 			"altro ieri":         "2 day ago",
 			"quest'anno":         "0 year ago",
 			"quest'ora":          "0 hour ago",
@@ -164,9 +169,10 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) h fa`), "$1 hour ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) s fa`), "$1 second ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(tra \d+[.,]?\d* settimana|tra \d+[.,]?\d* settimane|\d+[.,]?\d* settimana fa|\d+[.,]?\d* settimane fa|tra \d+[.,]?\d* secondi|tra \d+[.,]?\d* secondo|\d+[.,]?\d* secondi fa|\d+[.,]?\d* secondo fa|tra \d+[.,]?\d* giorni|tra \d+[.,]?\d* giorno|tra \d+[.,]?\d* minuti|tra \d+[.,]?\d* minuto|\d+[.,]?\d* giorni fa|\d+[.,]?\d* giorno fa|\d+[.,]?\d* minuti fa|\d+[.,]?\d* minuto fa|tra \d+[.,]?\d* anni|tra \d+[.,]?\d* anno|tra \d+[.,]?\d* mese|tra \d+[.,]?\d* mesi|tra \d+[.,]?\d* sett|\d+[.,]?\d* anni fa|\d+[.,]?\d* anno fa|\d+[.,]?\d* mese fa|\d+[.,]?\d* mesi fa|\d+[.,]?\d* sett fa|tra \d+[.,]?\d* min|tra \d+[.,]?\d* ora|tra \d+[.,]?\d* ore|tra \d+[.,]?\d* sec|\d+[.,]?\d* min fa|\d+[.,]?\d* ora fa|\d+[.,]?\d* ore fa|\d+[.,]?\d* sec fa|tra \d+[.,]?\d* gg|\d+[.,]?\d* gg fa|tra \d+[.,]?\d* g|tra \d+[.,]?\d* h|tra \d+[.,]?\d* s|\d+[.,]?\d* g fa|\d+[.,]?\d* h fa|\d+[.,]?\d* s fa)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(tra \d+[.,]?\d* settimana|tra \d+[.,]?\d* settimane|\d+[.,]?\d* settimana fa|\d+[.,]?\d* settimane fa|tra \d+[.,]?\d* secondi|tra \d+[.,]?\d* secondo|\d+[.,]?\d* secondi fa|\d+[.,]?\d* secondo fa|tra \d+[.,]?\d* giorni|tra \d+[.,]?\d* giorno|tra \d+[.,]?\d* minuti|tra \d+[.,]?\d* minuto|\d+[.,]?\d* giorni fa|\d+[.,]?\d* giorno fa|\d+[.,]?\d* minuti fa|\d+[.,]?\d* minuto fa|tra \d+[.,]?\d* anni|tra \d+[.,]?\d* anno|tra \d+[.,]?\d* mese|tra \d+[.,]?\d* mesi|tra \d+[.,]?\d* sett|\d+[.,]?\d* anni fa|\d+[.,]?\d* anno fa|\d+[.,]?\d* mese fa|\d+[.,]?\d* mesi fa|\d+[.,]?\d* sett fa|tra \d+[.,]?\d* min|tra \d+[.,]?\d* ora|tra \d+[.,]?\d* ore|tra \d+[.,]?\d* sec|\d+[.,]?\d* min fa|\d+[.,]?\d* ora fa|\d+[.,]?\d* ore fa|\d+[.,]?\d* sec fa|tra \d+[.,]?\d* gg|\d+[.,]?\d* gg fa|tra \d+[.,]?\d* g|tra \d+[.,]?\d* h|tra \d+[.,]?\d* s|\d+[.,]?\d* g fa|\d+[.,]?\d* h fa|\d+[.,]?\d* s fa)$`),
-		KnownWords:      []string{"settimana prossima", "questa settimana", "settimana scorsa", "anno prossimo", "mese prossimo", "questo minuto", "anno scorso", "mese scorso", "questo mese", "altro ieri", "quest'anno", "mercoledi", "quest'ora", "settembre", "settimana", "settimane", "dicembre", "domenica", "febbraio", "novembre", "gennaio", "giovedi", "martedi", "ottobre", "secondi", "secondo", "venerdi", "agosto", "aprile", "domani", "giorni", "giorno", "giugno", "luglio", "lunedi", "maggio", "minuti", "minuto", "sabato", "circa", "marzo", "anni", "anno", "ieri", "mese", "mesi", "oggi", "sett", "ago", "apr", "dic", "dom", "feb", "gen", "gio", "giu", "gmt", "lug", "lun", "mag", "mar", "mer", "min", "nov", "ora", "ore", "ott", "sab", "sec", "set", "utc", "ven", "am", "fa", "in", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "g", "h", "m", "s", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(tra \d+[.,]?\d* settimana|tra \d+[.,]?\d* settimane|\d+[.,]?\d* settimana fa|\d+[.,]?\d* settimane fa|tra \d+[.,]?\d* secondi|tra \d+[.,]?\d* secondo|\d+[.,]?\d* secondi fa|\d+[.,]?\d* secondo fa|tra \d+[.,]?\d* giorni|tra \d+[.,]?\d* giorno|tra \d+[.,]?\d* minuti|tra \d+[.,]?\d* minuto|\d+[.,]?\d* giorni fa|\d+[.,]?\d* giorno fa|\d+[.,]?\d* minuti fa|\d+[.,]?\d* minuto fa|tra \d+[.,]?\d* anni|tra \d+[.,]?\d* anno|tra \d+[.,]?\d* mese|tra \d+[.,]?\d* mesi|tra \d+[.,]?\d* sett|\d+[.,]?\d* anni fa|\d+[.,]?\d* anno fa|\d+[.,]?\d* mese fa|\d+[.,]?\d* mesi fa|\d+[.,]?\d* sett fa|tra \d+[.,]?\d* min|tra \d+[.,]?\d* ora|tra \d+[.,]?\d* ore|tra \d+[.,]?\d* sec|\d+[.,]?\d* min fa|\d+[.,]?\d* ora fa|\d+[.,]?\d* ore fa|\d+[.,]?\d* sec fa|tra \d+[.,]?\d* gg|\d+[.,]?\d* gg fa|tra \d+[.,]?\d* g|tra \d+[.,]?\d* h|tra \d+[.,]?\d* s|\d+[.,]?\d* g fa|\d+[.,]?\d* h fa|\d+[.,]?\d* s fa)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(tra \d+[.,]?\d* settimana|tra \d+[.,]?\d* settimane|\d+[.,]?\d* settimana fa|\d+[.,]?\d* settimane fa|tra \d+[.,]?\d* secondi|tra \d+[.,]?\d* secondo|\d+[.,]?\d* secondi fa|\d+[.,]?\d* secondo fa|tra \d+[.,]?\d* giorni|tra \d+[.,]?\d* giorno|tra \d+[.,]?\d* minuti|tra \d+[.,]?\d* minuto|\d+[.,]?\d* giorni fa|\d+[.,]?\d* giorno fa|\d+[.,]?\d* minuti fa|\d+[.,]?\d* minuto fa|tra \d+[.,]?\d* anni|tra \d+[.,]?\d* anno|tra \d+[.,]?\d* mese|tra \d+[.,]?\d* mesi|tra \d+[.,]?\d* sett|\d+[.,]?\d* anni fa|\d+[.,]?\d* anno fa|\d+[.,]?\d* mese fa|\d+[.,]?\d* mesi fa|\d+[.,]?\d* sett fa|tra \d+[.,]?\d* min|tra \d+[.,]?\d* ora|tra \d+[.,]?\d* ore|tra \d+[.,]?\d* sec|\d+[.,]?\d* min fa|\d+[.,]?\d* ora fa|\d+[.,]?\d* ore fa|\d+[.,]?\d* sec fa|tra \d+[.,]?\d* gg|\d+[.,]?\d* gg fa|tra \d+[.,]?\d* g|tra \d+[.,]?\d* h|tra \d+[.,]?\d* s|\d+[.,]?\d* g fa|\d+[.,]?\d* h fa|\d+[.,]?\d* s fa)$`),
+		ExactCombinedMatcher: matchExacte4e9727b0769d9ade8e6607aea0211882fa7edae73005f89f2b280e1f4a95439,
+		KnownWords:           []string{"settimana prossima", "questa settimana", "settimana scorsa", "anno prossimo", "mese prossimo", "questo minuto", "sett prossima", "anno scorso", "mese scorso", "questa sett", "questo mese", "sett scorsa", "altro ieri", "quest'anno", "mercoledi", "quest'ora", "settembre", "settimana", "settimane", "dicembre", "domenica", "febbraio", "novembre", "gennaio", "giovedi", "martedi", "ottobre", "secondi", "secondo", "venerdi", "agosto", "aprile", "domani", "giorni", "giorno", "giugno", "luglio", "lunedi", "maggio", "minuti", "minuto", "sabato", "circa", "marzo", "alle", "anni", "anno", "ieri", "mese", "mesi", "oggi", "sett", "ago", "apr", "dic", "dom", "feb", "gen", "gio", "giu", "gmt", "lug", "lun", "mag", "mar", "mer", "min", "nov", "ora", "ore", "ott", "sab", "sec", "set", "utc", "ven", "am", "fa", "in", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "e", "g", "h", "m", "s", "z", "|"},
 	})
 
 	it_CH_Locale = merge(&it_Locale, LocaleData{

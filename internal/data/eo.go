@@ -56,6 +56,7 @@ func init() {
 			"utc":       {"utc"},
 			"am":        {"am"},
 			"di":        {"sunday"},
+			"hr":        {"hour"},
 			"ja":        {"thursday"},
 			"lu":        {"monday"},
 			"ma":        {"tuesday"},
@@ -95,6 +96,6 @@ func init() {
 			"today":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "septembro", "this hour", "this week", "this year", "yesterday", "decembro", "februaro", "merkredo", "novembro", "tomorrow", "vendredo", "augusto", "dimanco", "januaro", "oktobro", "aprilo", "minute", "sabato", "second", "jaudo", "julio", "junio", "lundo", "mardo", "marto", "month", "today", "hour", "majo", "week", "year", "apr", "atm", "aug", "day", "dec", "feb", "gmt", "jan", "jul", "jun", "maj", "mar", "nov", "now", "okt", "ptm", "sep", "utc", "am", "di", "ja", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "septembro", "this hour", "this week", "this year", "yesterday", "decembro", "februaro", "merkredo", "novembro", "tomorrow", "vendredo", "augusto", "dimanco", "januaro", "oktobro", "aprilo", "minute", "sabato", "second", "jaudo", "julio", "junio", "lundo", "mardo", "marto", "month", "today", "hour", "majo", "week", "year", "apr", "atm", "aug", "day", "dec", "feb", "gmt", "jan", "jul", "jun", "maj", "mar", "nov", "now", "okt", "ptm", "sep", "utc", "am", "di", "hr", "ja", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

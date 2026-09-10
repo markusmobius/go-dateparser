@@ -101,6 +101,7 @@ var LanguageLocalesMap = map[string][]string{
 	"en": {
 		"en-001",
 		"en-150",
+		"en-AE",
 		"en-AG",
 		"en-AI",
 		"en-AS",
@@ -138,6 +139,7 @@ var LanguageLocalesMap = map[string][]string{
 		"en-GU",
 		"en-GY",
 		"en-HK",
+		"en-ID",
 		"en-IE",
 		"en-IL",
 		"en-IM",
@@ -159,6 +161,7 @@ var LanguageLocalesMap = map[string][]string{
 		"en-MS",
 		"en-MT",
 		"en-MU",
+		"en-MV",
 		"en-MW",
 		"en-MY",
 		"en-NA",
@@ -194,6 +197,7 @@ var LanguageLocalesMap = map[string][]string{
 		"en-TZ",
 		"en-UG",
 		"en-UM",
+		"en-US",
 		"en-VC",
 		"en-VG",
 		"en-VI",
@@ -298,9 +302,11 @@ var LanguageLocalesMap = map[string][]string{
 	},
 	"fur": {},
 	"fy":  {},
-	"ga":  {},
-	"gd":  {},
-	"gl":  {},
+	"ga": {
+		"ga-GB",
+	},
+	"gd": {},
+	"gl": {},
 	"gsw": {
 		"gsw-FR",
 		"gsw-LI",
@@ -346,6 +352,7 @@ var LanguageLocalesMap = map[string][]string{
 	"km":  {},
 	"kn":  {},
 	"ko": {
+		"ko-CN",
 		"ko-KP",
 	},
 	"kok": {},
@@ -387,6 +394,7 @@ var LanguageLocalesMap = map[string][]string{
 	"mr":  {},
 	"ms": {
 		"ms-BN",
+		"ms-ID",
 		"ms-SG",
 	},
 	"mt":  {},
@@ -425,7 +433,9 @@ var LanguageLocalesMap = map[string][]string{
 	"pa-Arab": {},
 	"pa-Guru": {},
 	"pl":      {},
-	"ps":      {},
+	"ps": {
+		"ps-PK",
+	},
 	"pt": {
 		"pt-AO",
 		"pt-CH",

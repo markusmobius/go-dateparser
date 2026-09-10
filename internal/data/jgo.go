@@ -45,6 +45,7 @@ func init() {
 			"gmt":             {"gmt"},
 			"utc":             {"utc"},
 			"am":              {"am"},
+			"hr":              {"hour"},
 			"pm":              {"pm"},
 			" ":               {" "},
 			"'":               {""},
@@ -92,8 +93,9 @@ func init() {
 			{regexp.MustCompile(`(?i)nuu (\d+[.,]?\d*) saŋ`), "in $1 month"},
 			{regexp.MustCompile(`(?i)nuu lɛꞌ (\d+[.,]?\d*)`), "in $1 day"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(ɛ gɛ mɔ \d+[.,]?\d* ŋgap-mbi|ɛ gɛ mɔ minut \d+[.,]?\d*|ɛ gɛ mɔ pɛsaŋ \d+[.,]?\d*|nuu ŋgap-mbi \d+[.,]?\d*|ɛ gɛ mɔ \d+[.,]?\d* hawa|ɛ gɛ mɔ lɛꞌ \d+[.,]?\d*|ɛgɛ mɔ ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* minut|nuu hawa \d+[.,]?\d*|nuu ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* saŋ|nuu lɛꞌ \d+[.,]?\d*)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(ɛ gɛ mɔ \d+[.,]?\d* ŋgap-mbi|ɛ gɛ mɔ minut \d+[.,]?\d*|ɛ gɛ mɔ pɛsaŋ \d+[.,]?\d*|nuu ŋgap-mbi \d+[.,]?\d*|ɛ gɛ mɔ \d+[.,]?\d* hawa|ɛ gɛ mɔ lɛꞌ \d+[.,]?\d*|ɛgɛ mɔ ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* minut|nuu hawa \d+[.,]?\d*|nuu ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* saŋ|nuu lɛꞌ \d+[.,]?\d*)$`),
-		KnownWords:      []string{"pɛsaŋ pɛnɛntuku", "pɛsaŋ pɛnɛpfuꞌu", "pɛsaŋ ntsɔpmɔ", "pɛsaŋ ntsɔppa", "pɛsaŋ pɛnɛfɔm", "pɛsaŋ pɛnɛkwa", "pɛsaŋ saamba", "ŋka mbɔt nji", "nduŋmbi saŋ", "pɛsaŋ nɛgɛm", "pɛsaŋ pataa", "pɛsaŋ pɛtat", "this minute", "apta mɔndi", "last month", "next month", "pɛsaŋ pɛpa", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "fɛlayɛdɛ", "mba'mba'", "tomorrow", "wɛnɛsɛdɛ", "minute", "sasidɛ", "second", "tɔsɛdɛ", "month", "mɔndi", "sɔndi", "hour", "lɔꞌɔ", "week", "year", "day", "gmt", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(ɛ gɛ mɔ \d+[.,]?\d* ŋgap-mbi|ɛ gɛ mɔ minut \d+[.,]?\d*|ɛ gɛ mɔ pɛsaŋ \d+[.,]?\d*|nuu ŋgap-mbi \d+[.,]?\d*|ɛ gɛ mɔ \d+[.,]?\d* hawa|ɛ gɛ mɔ lɛꞌ \d+[.,]?\d*|ɛgɛ mɔ ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* minut|nuu hawa \d+[.,]?\d*|nuu ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* saŋ|nuu lɛꞌ \d+[.,]?\d*)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(ɛ gɛ mɔ \d+[.,]?\d* ŋgap-mbi|ɛ gɛ mɔ minut \d+[.,]?\d*|ɛ gɛ mɔ pɛsaŋ \d+[.,]?\d*|nuu ŋgap-mbi \d+[.,]?\d*|ɛ gɛ mɔ \d+[.,]?\d* hawa|ɛ gɛ mɔ lɛꞌ \d+[.,]?\d*|ɛgɛ mɔ ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* minut|nuu hawa \d+[.,]?\d*|nuu ŋguꞌ \d+[.,]?\d*|nuu \d+[.,]?\d* saŋ|nuu lɛꞌ \d+[.,]?\d*)$`),
+		ExactCombinedMatcher: matchExact198c90242decb34fe743c8ff87e515e84571fe2d28f603d2f4a9dd0baadb571c,
+		KnownWords:           []string{"pɛsaŋ pɛnɛntuku", "pɛsaŋ pɛnɛpfuꞌu", "pɛsaŋ ntsɔpmɔ", "pɛsaŋ ntsɔppa", "pɛsaŋ pɛnɛfɔm", "pɛsaŋ pɛnɛkwa", "pɛsaŋ saamba", "ŋka mbɔt nji", "nduŋmbi saŋ", "pɛsaŋ nɛgɛm", "pɛsaŋ pataa", "pɛsaŋ pɛtat", "this minute", "apta mɔndi", "last month", "next month", "pɛsaŋ pɛpa", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "fɛlayɛdɛ", "mba'mba'", "tomorrow", "wɛnɛsɛdɛ", "minute", "sasidɛ", "second", "tɔsɛdɛ", "month", "mɔndi", "sɔndi", "hour", "lɔꞌɔ", "week", "year", "day", "gmt", "now", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

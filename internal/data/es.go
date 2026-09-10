@@ -81,6 +81,7 @@ func init() {
 			"hora":       {"hour"},
 			"mayo":       {"may"},
 			"sept":       {"september"},
+			"a m":        {"am"},
 			"abr":        {"april"},
 			"ago":        {"august"},
 			"ano":        {"year"},
@@ -102,6 +103,7 @@ func init() {
 			"min":        {"minute"},
 			"nov":        {"november"},
 			"oct":        {"october"},
+			"p m":        {"pm"},
 			"sab":        {"saturday"},
 			"sem":        {"week"},
 			"sep":        {"september"},
@@ -150,8 +152,11 @@ func init() {
 			"este minuto":       "0 minute ago",
 			"esta hora":         "0 hour ago",
 			"anteayer":          "2 day ago",
+			"esta sem":          "0 week ago",
 			"este ano":          "0 year ago",
 			"este mes":          "0 month ago",
+			"prox sem":          "in 1 week",
+			"sem ant":           "1 week ago",
 			"manana":            "in 1 day",
 			"ahora":             "0 second ago",
 			"ayer":              "1 day ago",
@@ -179,6 +184,7 @@ func init() {
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) segundo`), "$1 second ago"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) semanas`), "$1 week ago"},
 			{regexp.MustCompile(`(?i)dentro de (\d+[.,]?\d*) a`), "in $1 year"},
+			{regexp.MustCompile(`(?i)dentro de (\d+[.,]?\d*) d`), "in $1 day"},
 			{regexp.MustCompile(`(?i)dentro de (\d+[.,]?\d*) h`), "in $1 hour"},
 			{regexp.MustCompile(`(?i)dentro de (\d+[.,]?\d*) m`), "in $1 month"},
 			{regexp.MustCompile(`(?i)dentro de (\d+[.,]?\d*) s`), "in $1 second"},
@@ -195,18 +201,24 @@ func init() {
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) min`), "$1 minute ago"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) sem`), "$1 week ago"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) a`), "$1 year ago"},
+			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) d`), "$1 day ago"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) h`), "$1 hour ago"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) m`), "$1 month ago"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) s`), "$1 second ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)$`),
-		KnownWords:      []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "este ano", "este mes", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)$`),
+		ExactCombinedMatcher: matchExactf31b5666087ac7d1cb2fdaf86d2dcbffc8fb79637067fc0b25fde099bd72b921,
+		KnownWords:           []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_419_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-419",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_AR_Locale = merge(&es_Locale, LocaleData{
@@ -214,54 +226,91 @@ func init() {
 		DateOrder: "DMY",
 		Translations: map[string][]string{
 			"seg": {"second"},
+			"hs":  {"hour"},
+		},
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
 		},
 		RelativeTypeRegexes: []ReplacementData{
 			{regexp.MustCompile(`(?i)dentro de (\d+[.,]?\d*) seg`), "in $1 second"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) seg`), "$1 second ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)$`),
-		KnownWords:      []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "este ano", "este mes", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "sab", "seg", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)$`),
+		ExactCombinedMatcher: matchExacta9fe5491346ac773733686f5841f161a728c947ba0ef1ff84946361255909060,
+		KnownWords:           []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "seg", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "hs", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_BO_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-BO",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_BR_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-BR",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_BZ_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-BZ",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_CL_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-CL",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_CO_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-CO",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_CR_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-CR",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_CU_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-CU",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_DO_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-DO",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_EA_Locale = merge(&es_Locale, LocaleData{
@@ -272,6 +321,10 @@ func init() {
 	es_EC_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-EC",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_GQ_Locale = merge(&es_Locale, LocaleData{
@@ -282,11 +335,19 @@ func init() {
 	es_GT_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-GT",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_HN_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-HN",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_IC_Locale = merge(&es_Locale, LocaleData{
@@ -301,13 +362,14 @@ func init() {
 			"la semana proxima": "in 1 week",
 			"el ano proximo":    "in 1 year",
 			"el mes proximo":    "in 1 month",
+			"sem pas":           "1 week ago",
 		},
 		RelativeTypeRegexes: []ReplacementData{
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) meses`), "in $1 month"},
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) dias`), "in $1 day"},
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) dia`), "in $1 day"},
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) mes`), "in $1 month"},
-			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) min`), "in $1 minute"},
+			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) min`), "in ${1} minute"},
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) sem`), "in $1 week"},
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) a`), "in $1 year"},
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) h`), "in $1 hour"},
@@ -315,24 +377,37 @@ func init() {
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) n`), "in $1 hour"},
 			{regexp.MustCompile(`(?i)en (\d+[.,]?\d*) s`), "in $1 second"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|en \d+[.,]?\d* meses|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|en \d+[.,]?\d* dias|en \d+[.,]?\d* dia|en \d+[.,]?\d* mes|en \d+[.,]?\d* min|en \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s|en \d+[.,]?\d* a|en \d+[.,]?\d* h|en \d+[.,]?\d* m|en \d+[.,]?\d* n|en \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|en \d+[.,]?\d* meses|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|en \d+[.,]?\d* dias|en \d+[.,]?\d* dia|en \d+[.,]?\d* mes|en \d+[.,]?\d* min|en \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s|en \d+[.,]?\d* a|en \d+[.,]?\d* h|en \d+[.,]?\d* m|en \d+[.,]?\d* n|en \d+[.,]?\d* s)$`),
-		KnownWords:      []string{"la proxima semana", "la semana proxima", "la semana pasada", "el ano proximo", "el mes proximo", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "este ano", "este mes", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|en \d+[.,]?\d* meses|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|en \d+[.,]?\d* dias|en \d+[.,]?\d* dia|en \d+[.,]?\d* mes|en \d+[.,]?\d* min|en \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s|en \d+[.,]?\d* a|en \d+[.,]?\d* h|en \d+[.,]?\d* m|en \d+[.,]?\d* n|en \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|en \d+[.,]?\d* meses|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* sem|en \d+[.,]?\d* dias|en \d+[.,]?\d* dia|en \d+[.,]?\d* mes|en \d+[.,]?\d* min|en \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s|en \d+[.,]?\d* a|en \d+[.,]?\d* h|en \d+[.,]?\d* m|en \d+[.,]?\d* n|en \d+[.,]?\d* s)$`),
+		ExactCombinedMatcher: matchExact6c29f12e08ce005911dd1278ab11784cc6f0a9fc4ac631fb62db1185cea8921d,
+		KnownWords:           []string{"la proxima semana", "la semana proxima", "la semana pasada", "el ano proximo", "el mes proximo", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_NI_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-NI",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_PA_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-PA",
 		DateOrder: "MDY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_PE_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-PE",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_PH_Locale = merge(&es_Locale, LocaleData{
@@ -343,6 +418,10 @@ func init() {
 	es_PR_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-PR",
 		DateOrder: "MDY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_PY_Locale = merge(&es_Locale, LocaleData{
@@ -351,32 +430,53 @@ func init() {
 		Translations: map[string][]string{
 			"seg": {"second"},
 		},
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
 		RelativeTypeRegexes: []ReplacementData{
 			{regexp.MustCompile(`(?i)dentro de (\d+[.,]?\d*) seg`), "in $1 second"},
 			{regexp.MustCompile(`(?i)hace (\d+[.,]?\d*) seg`), "$1 second ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)$`),
-		KnownWords:      []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "este ano", "este mes", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "sab", "seg", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(dentro de \d+[.,]?\d* segundos|dentro de \d+[.,]?\d* minutos|dentro de \d+[.,]?\d* segundo|dentro de \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* minuto|dentro de \d+[.,]?\d* semana|dentro de \d+[.,]?\d* horas|dentro de \d+[.,]?\d* meses|dentro de \d+[.,]?\d* anos|dentro de \d+[.,]?\d* dias|dentro de \d+[.,]?\d* hora|dentro de \d+[.,]?\d* ano|dentro de \d+[.,]?\d* dia|dentro de \d+[.,]?\d* mes|dentro de \d+[.,]?\d* min|dentro de \d+[.,]?\d* seg|dentro de \d+[.,]?\d* sem|hace \d+[.,]?\d* segundos|hace \d+[.,]?\d* minutos|hace \d+[.,]?\d* segundo|hace \d+[.,]?\d* semanas|dentro de \d+[.,]?\d* a|dentro de \d+[.,]?\d* d|dentro de \d+[.,]?\d* h|dentro de \d+[.,]?\d* m|dentro de \d+[.,]?\d* s|hace \d+[.,]?\d* minuto|hace \d+[.,]?\d* semana|hace \d+[.,]?\d* horas|hace \d+[.,]?\d* meses|hace \d+[.,]?\d* anos|hace \d+[.,]?\d* dias|hace \d+[.,]?\d* hora|hace \d+[.,]?\d* ano|hace \d+[.,]?\d* dia|hace \d+[.,]?\d* mes|hace \d+[.,]?\d* min|hace \d+[.,]?\d* seg|hace \d+[.,]?\d* sem|hace \d+[.,]?\d* a|hace \d+[.,]?\d* d|hace \d+[.,]?\d* h|hace \d+[.,]?\d* m|hace \d+[.,]?\d* s)$`),
+		ExactCombinedMatcher: matchExacta9fe5491346ac773733686f5841f161a728c947ba0ef1ff84946361255909060,
+		KnownWords:           []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "seg", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_SV_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-SV",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_US_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-US",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"proxima sem": "in 1 week",
+			"sem pasada":  "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "proxima sem", "sem pasada", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_UY_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-UY",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 
 	es_VE_Locale = merge(&es_Locale, LocaleData{
 		Name:      "es-VE",
 		DateOrder: "DMY",
+		RelativeType: map[string]string{
+			"sem pas": "1 week ago",
+		},
+		KnownWords: []string{"la proxima semana", "la semana pasada", "el proximo ano", "el proximo mes", "el ano pasado", "el mes pasado", "esta semana", "este minuto", "septiembre", "diciembre", "esta hora", "miercoles", "noviembre", "setiembre", "anteayer", "esta sem", "este ano", "este mes", "prox sem", "segundos", "domingo", "febrero", "minutos", "octubre", "segundo", "sem ant", "sem pas", "semanas", "viernes", "agosto", "jueves", "manana", "martes", "minuto", "sabado", "semana", "a las", "abril", "ahora", "cerca", "enero", "horas", "julio", "junio", "lunes", "marzo", "meses", "anos", "ayer", "dias", "hace", "hora", "mayo", "sept", "a m", "abr", "ago", "ano", "del", "dia", "dic", "dom", "ene", "feb", "gmt", "hoy", "jue", "jul", "jun", "lun", "mar", "may", "mes", "mie", "min", "nov", "oct", "p m", "sab", "sem", "sep", "set", "utc", "vie", "am", "de", "do", "en", "ju", "lu", "mi", "pm", "sa", "vi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "y", "z", "|"},
 	})
 }

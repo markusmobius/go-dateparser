@@ -80,3 +80,10 @@ simplifications:
   - dix: '10'
   - onze: '11'
   - douze: '12'
+relative-type-regex:
+  \1 hour ago:
+    - il y a (\d+[.,]?\d*)h
+  \1 minute ago:
+    - il y a (\d+[.,]?\d*)min
+  in \1 hour:
+    - dans (\d+[.,]?\d*)h

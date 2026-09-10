@@ -779,6 +779,7 @@ func TestParser_Parse_datesWithNoDayOrMonth(t *testing.T) {
 	}
 
 	tests := []testScenario{
+		{"2014", dps.Current, dps.CurrentMonth, tt(2026, 5, 31, 12), tt(2014, 5, 31)},
 		{"2015", dps.Current, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 10)},
 		{"2015", dps.Last, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 28)},
 		{"2015", dps.First, dps.CurrentMonth, tt(2010, 2, 10), tt(2015, 2, 1)},
@@ -900,6 +901,247 @@ func TestParser_Parse_format(t *testing.T) {
 	if nFailed > 0 {
 		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
 	}
+}
+
+func TestParser_Parse_requiredParts(t *testing.T) {
+	tests := []struct {
+		Text     string
+		Parts    []string
+		Order    dps.DateOrder
+		Expected time.Time
+	}{
+		{"September 15", []string{"month", "year"}, nil, tt(2015, 9, 10)},
+		{"15 September", []string{"month", "year"}, nil, tt(2015, 9, 10)},
+		{"September 15", []string{"month", "year"}, dps.MDY, time.Time{}},
+		{"September 15", []string{"day", "month", "year"}, nil, time.Time{}},
+		{"September 2015", []string{"month", "year"}, nil, tt(2015, 9, 10)},
+		{"15 September 2015", []string{"day", "month", "year"}, nil, tt(2015, 9, 15)},
+		{"15 September 2015", []string{"minute"}, nil, time.Time{}},
+	}
+	for _, test := range tests {
+		t.Run(fmt.Sprintf("%s/%v/%v", test.Text, test.Parts, test.Order != nil), func(t *testing.T) {
+			parsed, err := dps.Parse(&dps.Configuration{
+				Languages:     []string{"en"},
+				CurrentTime:   tt(2025, 9, 10),
+				RequiredParts: test.Parts,
+				DateOrder:     test.Order,
+			}, test.Text)
+			if test.Expected.IsZero() {
+				assert.Error(t, err)
+				assert.True(t, parsed.IsZero())
+			} else {
+				assert.NoError(t, err)
+				assert.Equal(t, test.Expected, parsed.Time)
+			}
+		})
+	}
+}
+
+func TestParser_Parse_formatMissingYear(t *testing.T) {
+	parser := dps.Parser{ParserTypes: []dps.ParserType{dps.CustomFormat}}
+	cfg := &dps.Configuration{Languages: []string{"en"}, CurrentTime: tt(2025, 9, 15)}
+	tests := []struct {
+		Text     string
+		Format   string
+		Expected time.Time
+	}{
+		{"07/12", "02/01", tt(2025, 12, 7)},
+		{"12:30", "15:04", tt(2025, 9, 15, 12, 30)},
+	}
+	for _, test := range tests {
+		parsed, err := parser.Parse(cfg, test.Text, test.Format)
+		assert.NoError(t, err, test.Text)
+		assert.Equal(t, test.Expected, parsed.Time, test.Text)
+	}
+}
+
+func TestParser_Parse_ignoreSurroundingText(t *testing.T) {
+	tests := []struct {
+		Text      string
+		Languages []string
+		Expected  time.Time
+	}{
+		{"Actualisé le 17 avril 2019", []string{"fr"}, tt(2019, 4, 17)},
+		{"Publié le 16 avril 2019", []string{"fr"}, tt(2019, 4, 16)},
+		{"Published on 16 April 2019", []string{"en"}, tt(2019, 4, 16)},
+		{"published 2019-04-16 ok", []string{"en"}, tt(2019, 4, 16)},
+		{"xx 16/04/2019 yy", []string{"en"}, tt(2019, 4, 16)},
+		{"Actualisé le 17 avril 2019", nil, tt(2019, 4, 17)},
+		{"le 17 avril 2019", []string{"fr"}, tt(2019, 4, 17)},
+		{"17 avril 2019", []string{"fr"}, tt(2019, 4, 17)},
+		{"asdf 3 hours ago asdf", []string{"en"}, tt(2019, 4, 17, 9)},
+		{"Chapter 12 March of the Penguins", []string{"en"}, tt(2019, 3, 12)},
+		{"17 foobar avril 2019", []string{"fr"}, time.Time{}},
+		{"Mis a jour le 17 avril 2019", []string{"fr"}, time.Time{}},
+		{"hello world", []string{"en"}, time.Time{}},
+		{"invoice 12345 paid on 3 March 2019", []string{"en"}, time.Time{}},
+	}
+	for _, test := range tests {
+		t.Run(test.Text, func(t *testing.T) {
+			cfg := &dps.Configuration{Languages: test.Languages, IgnoreSurroundingText: true, CurrentTime: tt(2019, 4, 17, 12)}
+			parsed, err := dps.Parse(cfg, test.Text)
+			if test.Expected.IsZero() {
+				assert.Error(t, err)
+				assert.True(t, parsed.IsZero())
+			} else {
+				assert.NoError(t, err)
+				assert.Equal(t, test.Expected, parsed.Time)
+			}
+		})
+	}
+	for _, test := range tests[:3] {
+		_, err := dps.Parse(&dps.Configuration{Languages: test.Languages}, test.Text)
+		assert.Error(t, err)
+	}
+	for _, cfg := range []*dps.Configuration{
+		{Locales: []string{"fr-CA"}},
+		{Languages: []string{"fr"}, Region: "CA"},
+		{DefaultLanguages: []string{"fr"}},
+	} {
+		cfg.IgnoreSurroundingText = true
+		parsed, err := dps.Parse(cfg, "Actualisé le 17 avril 2019")
+		assert.NoError(t, err)
+		assert.Equal(t, tt(2019, 4, 17), parsed.Time)
+	}
+	t.Run("detector and previous locales", func(t *testing.T) {
+		detections := 0
+		parser := &dps.Parser{DetectLanguagesFunction: func(string) []string {
+			detections++
+			return []string{"fr"}
+		}}
+		cfg := &dps.Configuration{IgnoreSurroundingText: true, TryPreviousLocales: true, CurrentTime: tt(2019, 4, 17)}
+		original := cfg.Clone()
+		for _, text := range []string{"Actualise le 17 avril 2019", "17 avril 2019", "Publie le 17 avril 2019"} {
+			parsed, err := parser.Parse(cfg, text)
+			assert.NoError(t, err)
+			assert.Equal(t, tt(2019, 4, 17), parsed.Time)
+			assert.Equal(t, "fr", parsed.Locale)
+		}
+		assert.Positive(t, detections)
+		assert.Equal(t, original, cfg)
+	})
+	parser := &dps.Parser{ParserTypes: []dps.ParserType{dps.CustomFormat}}
+	parsed, err := parser.Parse(&dps.Configuration{Languages: []string{"en"}, IgnoreSurroundingText: true}, "Published on 16/04/2019", "02/01/2006")
+	assert.NoError(t, err)
+	assert.Equal(t, tt(2019, 4, 16), parsed.Time)
+	_, err = dps.Parse(&dps.Configuration{Languages: []string{"en"}, IgnoreSurroundingText: true, StrictParsing: true}, "Page 3")
+	assert.Error(t, err)
+}
+
+func TestParser_Parse_correctedTimezoneOffsets(t *testing.T) {
+	for _, test := range []struct {
+		Name   string
+		Offset int
+	}{{"BST", 3600}, {"HDT", -32400}} {
+		parsed, err := dps.Parse(&dps.Configuration{Languages: []string{"en"}}, "13 August 2026 10:00 "+test.Name)
+		assert.NoError(t, err)
+		name, offset := parsed.Time.Zone()
+		assert.Equal(t, test.Name, name)
+		assert.Equal(t, test.Offset, offset)
+		assert.Equal(t, "2026-08-13 10:00", parsed.Time.Format("2006-01-02 15:04"))
+	}
+}
+
+func TestParser_Parse_surroundingTimezones(t *testing.T) {
+	for _, zone := range []string{"EST", "PST", "JST"} {
+		t.Run(zone, func(t *testing.T) {
+			cfg := &dps.Configuration{Languages: []string{"en"}, IgnoreSurroundingText: true}
+			bare, err := dps.Parse(cfg, "23 March 2000 1:21 PM "+zone)
+			assert.NoError(t, err)
+			wrapped, err := dps.Parse(cfg, "Updated 23 March 2000 1:21 PM "+zone)
+			assert.NoError(t, err)
+			assert.Equal(t, bare.Time, wrapped.Time)
+			name, _ := wrapped.Time.Zone()
+			assert.Equal(t, zone, name)
+		})
+	}
+	cfg := &dps.Configuration{Languages: []string{"en"}, IgnoreSurroundingText: true}
+	for _, text := range []string{"EST 23 March 2000 1:21 PM", "Updated 23 March 2000 1:21 PM EST reportedly"} {
+		parsed, err := dps.Parse(cfg, text)
+		assert.NoError(t, err)
+		assert.Equal(t, tt(2000, 3, 23, 13, 21), parsed.Time)
+	}
+	parsed, err := dps.Parse(cfg, "Last updated: 12 March 2019 at 10:30 (GMT)")
+	assert.NoError(t, err)
+	assert.True(t, parsed.Time.Equal(tt(2019, 3, 12, 10, 30)))
+	name, _ := parsed.Time.Zone()
+	assert.Equal(t, "GMT", name)
+}
+
+func TestParser_Parse_yearFirstComponents(t *testing.T) {
+	tests := []struct {
+		Text      string
+		Languages []string
+		Order     dps.DateOrder
+		Expected  time.Time
+	}{
+		{"2017-06-22", []string{"it"}, nil, tt(2017, 6, 22)},
+		{"2017-06-10", []string{"it"}, nil, tt(2017, 6, 10)},
+		{"2017-06-22", []string{"fr"}, nil, tt(2017, 6, 22)},
+		{"2015-05-02T10:20:19+0000", []string{"fr"}, nil, tt(2015, 5, 2, 10, 20, 19)},
+		{"2017-06-10", []string{"fr"}, dps.YDM, tt(2017, 10, 6)},
+		{"4月20日 18:10", []string{"ja"}, nil, tt(2019, 4, 20, 18, 10)},
+		{"3月8日", []string{"ja"}, nil, tt(2019, 3, 8)},
+		{"4-20 18:10", nil, dps.YMD, tt(2019, 4, 20, 18, 10)},
+		{"4-99", nil, dps.YMD, tt(1999, 4, 27)},
+		{"2020年4月20日 18:10", []string{"ja"}, nil, tt(2020, 4, 20, 18, 10)},
+		{"19年4月20日", []string{"ja"}, nil, tt(2019, 4, 20)},
+	}
+	for _, test := range tests {
+		t.Run(test.Text, func(t *testing.T) {
+			parsed, err := dps.Parse(&dps.Configuration{
+				Languages:   test.Languages,
+				DateOrder:   test.Order,
+				CurrentTime: tt(2019, 6, 27),
+			}, test.Text)
+			assert.NoError(t, err)
+			assert.Equal(t, test.Expected, parsed.Time.UTC())
+		})
+	}
+}
+
+func TestParser_Parse_givenLanguageOrder(t *testing.T) {
+	tests := []struct {
+		Config   dps.Configuration
+		Expected time.Time
+	}{
+		{dps.Configuration{Languages: []string{"es", "en"}, UseGivenOrder: true}, tt(2020, 12, 11)},
+		{dps.Configuration{Languages: []string{"en", "es"}, UseGivenOrder: true}, tt(2020, 11, 12)},
+		{dps.Configuration{Locales: []string{"es", "en"}, UseGivenOrder: true}, tt(2020, 12, 11)},
+		{dps.Configuration{Locales: []string{"en", "es"}, UseGivenOrder: true}, tt(2020, 11, 12)},
+		{dps.Configuration{Languages: []string{"es", "en"}}, tt(2020, 11, 12)},
+		{dps.Configuration{Locales: []string{"es", "en"}}, tt(2020, 11, 12)},
+		{dps.Configuration{Languages: []string{}, UseGivenOrder: true}, tt(2020, 11, 12)},
+		{dps.Configuration{UseGivenOrder: true}, tt(2020, 11, 12)},
+	}
+	for _, test := range tests {
+		test.Config.CurrentTime = tt(2025, 9, 15)
+		parsed, err := dps.Parse(&test.Config, "11/12/2020")
+		assert.NoError(t, err)
+		assert.Equal(t, test.Expected, parsed.Time, "%+v", test.Config)
+	}
+}
+
+func TestParser_Parse_retainedCLDRLocales(t *testing.T) {
+	for _, locale := range []string{"ff-CM", "ff-GN", "ff-MR"} {
+		parsed, err := dps.Parse(&dps.Configuration{Locales: []string{locale}}, "6 yar 2019")
+		assert.NoError(t, err)
+		assert.Equal(t, tt(2019, 10, 6), parsed.Time)
+		assert.Equal(t, locale, parsed.Locale)
+	}
+}
+
+func TestParser_Parse_USLocale(t *testing.T) {
+	for _, cfg := range []*dps.Configuration{
+		{Locales: []string{"en-US"}},
+		{Languages: []string{"en"}, Region: "US"},
+	} {
+		parsed, err := dps.Parse(cfg, "04/05/2025")
+		assert.NoError(t, err)
+		assert.Equal(t, tt(2025, 4, 5), parsed.Time)
+		assert.Equal(t, "en-US", parsed.Locale)
+	}
+	assert.Equal(t, "MDY", dps.DefaultDateOrder("en-US"))
 }
 
 func TestParser_Parse_detectLocale(t *testing.T) {
@@ -1049,6 +1291,75 @@ func TestParser_Parse_customConfig(t *testing.T) {
 	assert.Equal(t, false, dt.Period.IsTime())
 }
 
+func TestParser_Parse_UpstreamTranslations(t *testing.T) {
+	tests := []struct {
+		Language string
+		Text     string
+		Expected time.Time
+	}{
+		{"en", "in three weeks", tt(2025, 8, 22)},
+		{"en", "in three weeks time", tt(2025, 8, 22)},
+		{"en", "in three weeks' time", tt(2025, 8, 22)},
+		{"en", "two days later", tt(2025, 8, 3)},
+		{"en", "two days from now", tt(2025, 8, 3)},
+		{"en", "1mon ago", tt(2025, 7, 1)},
+		{"en", "3mons ago", tt(2025, 5, 1)},
+		{"en", "Tu", tt(2025, 7, 29)},
+		{"en", "We", tt(2025, 7, 30)},
+		{"en", "Th", tt(2025, 7, 31)},
+		{"en", "Fr", tt(2025, 8, 1)},
+		{"en", "Sa", tt(2025, 7, 26)},
+		{"en", "Su", tt(2025, 7, 27)},
+		{"en", "August 15th", tt(2025, 8, 15)},
+		{"fi", "28 maalis klo 9:37", tt(2025, 3, 28, 9, 37)},
+		{"fi", "28 maalis 9:37", tt(2025, 3, 28, 9, 37)},
+		{"fi", "15 tammi klo 14:30", tt(2025, 1, 15, 14, 30)},
+		{"fi", "5 kesä klo 18:00", tt(2025, 6, 5, 18)},
+		{"fi", "12.5.2020 klo 16:45", tt(2020, 5, 12, 16, 45)},
+		{"cs", "v lednu 2023", tt(2023, 1, 1)},
+		{"cs", "za týden", tt(2025, 8, 8)},
+		{"cs", "za měsíc", tt(2025, 9, 1)},
+		{"cs", "za rok", tt(2026, 8, 1)},
+		{"cs", "čtvrt na tři", tt(2025, 8, 1, 2, 15)},
+		{"cs", "před půl hodinou", tt(2025, 7, 31, 23, 30)},
+		{"nb", "3 måneder siden", tt(2025, 5, 1)},
+		{"nb", "om 2 måneder", tt(2025, 10, 1)},
+		{"nb", "for to dager siden", tt(2025, 7, 30)},
+		{"ko", "금일", tt(2025, 8, 1)},
+		{"ko", "작일", tt(2025, 7, 31)},
+		{"ko", "명일", tt(2025, 8, 2)},
+		{"ko", "3달 전", tt(2025, 5, 1)},
+		{"ko", "3달 후", tt(2025, 11, 1)},
+		{"bs-Cyrl", "прије 2 дана", tt(2025, 7, 30)},
+		{"bs-Cyrl", "за 3 мјесеца", tt(2025, 11, 1)},
+		{"it", "un ora fa", tt(2025, 7, 31, 23)},
+		{"it", "un'ora fa", tt(2025, 7, 31, 23)},
+		{"it", "oggi alle 11:00", tt(2025, 8, 1, 11)},
+	}
+	for _, test := range tests {
+		t.Run(test.Language+"/"+test.Text, func(t *testing.T) {
+			parsed, err := dps.Parse(&dps.Configuration{
+				Languages:   []string{test.Language},
+				CurrentTime: tt(2025, 8, 1),
+			}, test.Text)
+			assert.NoError(t, err)
+			assert.Equal(t, test.Expected, parsed.Time)
+		})
+	}
+}
+
+func TestParser_Parse_UpstreamTranslationBoundaries(t *testing.T) {
+	for _, test := range []struct{ Language, Text string }{
+		{"it", "un orario"},
+		{"it", "ciascun orario"},
+		{"en", "1monster ago"},
+	} {
+		parsed, err := dps.Parse(&dps.Configuration{Languages: []string{test.Language}}, test.Text)
+		assert.Error(t, err, test.Text)
+		assert.True(t, parsed.IsZero(), test.Text)
+	}
+}
+
 func TestParser_Parse_OnlyWeekdays(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {
@@ -1066,6 +1377,7 @@ func TestParser_Parse_OnlyWeekdays(t *testing.T) {
 	eom := tt(2025, 2, 28)
 
 	tests := []testScenario{
+		{"Monday", future, tt(2015, 2, 24, 15, 30), tt(2015, 3, 2)},
 		{"Monday", past, som, tt(2025, 1, 27)},
 		{"Monday", current, som, tt(2025, 1, 27)},
 		{"Monday", future, som, tt(2025, 2, 3)},

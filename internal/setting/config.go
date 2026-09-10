@@ -31,16 +31,18 @@ const (
 
 type Configuration struct {
 	// Date order
-	DateOrder string
+	DateOrder           string
+	DateOrderIsExplicit bool
 
 	// Incomplete dates
-	CurrentTime          time.Time
-	DefaultTimezone      *time.Location
-	PreferredDayOfMonth  PreferredDayOfMonth
-	PreferredMonthOfYear PreferredMonthOfYear
-	PreferredDateSource  PreferredDateSource
-	StrictParsing        bool
-	RequiredParts        []string
+	CurrentTime           time.Time
+	DefaultTimezone       *time.Location
+	PreferredDayOfMonth   PreferredDayOfMonth
+	PreferredMonthOfYear  PreferredMonthOfYear
+	PreferredDateSource   PreferredDateSource
+	StrictParsing         bool
+	IgnoreSurroundingText bool
+	RequiredParts         []string
 
 	// Language detection
 	SkipTokens       []string
@@ -53,17 +55,19 @@ type Configuration struct {
 
 func (c Configuration) Clone() *Configuration {
 	return &Configuration{
-		DateOrder:            c.DateOrder,
-		CurrentTime:          c.CurrentTime,
-		DefaultTimezone:      c.DefaultTimezone,
-		PreferredDayOfMonth:  c.PreferredDayOfMonth,
-		PreferredMonthOfYear: c.PreferredMonthOfYear,
-		PreferredDateSource:  c.PreferredDateSource,
-		StrictParsing:        c.StrictParsing,
-		RequiredParts:        slices.Clone(c.RequiredParts),
-		SkipTokens:           slices.Clone(c.SkipTokens),
-		DefaultLanguages:     slices.Clone(c.DefaultLanguages),
-		ReturnTimeAsPeriod:   c.ReturnTimeAsPeriod,
-		PreserveEndOfMonth:   c.PreserveEndOfMonth,
+		DateOrder:             c.DateOrder,
+		DateOrderIsExplicit:   c.DateOrderIsExplicit,
+		CurrentTime:           c.CurrentTime,
+		DefaultTimezone:       c.DefaultTimezone,
+		PreferredDayOfMonth:   c.PreferredDayOfMonth,
+		PreferredMonthOfYear:  c.PreferredMonthOfYear,
+		PreferredDateSource:   c.PreferredDateSource,
+		StrictParsing:         c.StrictParsing,
+		IgnoreSurroundingText: c.IgnoreSurroundingText,
+		RequiredParts:         slices.Clone(c.RequiredParts),
+		SkipTokens:            slices.Clone(c.SkipTokens),
+		DefaultLanguages:      slices.Clone(c.DefaultLanguages),
+		ReturnTimeAsPeriod:    c.ReturnTimeAsPeriod,
+		PreserveEndOfMonth:    c.PreserveEndOfMonth,
 	}
 }

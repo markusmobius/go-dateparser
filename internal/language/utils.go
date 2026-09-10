@@ -22,6 +22,39 @@ func mapSkippedTokens(cfg *setting.Configuration, ld *data.LocaleData) strutil.D
 	return skippedTokens
 }
 
+func isSpaceToken(token string) bool {
+	return token != "" && strings.Trim(token, " ") == ""
+}
+
+func removeEmptyTokens(tokens []string) []string {
+	filtered := make([]string, 0, len(tokens))
+	for index := 0; index < len(tokens); index++ {
+		if tokens[index] != "" {
+			filtered = append(filtered, tokens[index])
+			continue
+		}
+
+		previousStart := len(filtered)
+		previousSpaces := 0
+		for previousStart > 0 && isSpaceToken(filtered[previousStart-1]) {
+			previousStart--
+			previousSpaces += len(filtered[previousStart])
+		}
+		next := index + 1
+		nextSpaces := 0
+		for next < len(tokens) && isSpaceToken(tokens[next]) {
+			nextSpaces += len(tokens[next])
+			next++
+		}
+		if previousSpaces > 0 && nextSpaces > 0 {
+			filtered = filtered[:previousStart]
+			filtered = append(filtered, strings.Repeat(" ", max(previousSpaces, nextSpaces)))
+			index = next - 1
+		}
+	}
+	return filtered
+}
+
 func join(tokens []string, separator string) string {
 	if len(tokens) == 0 {
 		return ""
@@ -30,8 +63,8 @@ func join(tokens []string, separator string) string {
 	joined := tokens[0]
 	for i := 1; i < len(tokens); i++ {
 		left, right := tokens[i-1], tokens[i]
-		leftAlwaysKept := alwaysKeptTokens.Contain(left)
-		rightAlwaysKept := alwaysKeptTokens.Contain(right)
+		leftAlwaysKept := alwaysKeptTokens.Contain(left) || isSpaceToken(left)
+		rightAlwaysKept := alwaysKeptTokens.Contain(right) || isSpaceToken(right)
 		if !leftAlwaysKept && !rightAlwaysKept {
 			joined += separator
 		}

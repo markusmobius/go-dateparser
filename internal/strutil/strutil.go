@@ -3,6 +3,7 @@ package strutil
 import (
 	"encoding/json"
 	"strings"
+	"sync"
 	"unicode"
 
 	"github.com/markusmobius/go-dateparser/internal/regexp"
@@ -13,8 +14,12 @@ import (
 )
 
 var (
-	nfkcTransformer    = transform.Chain(norm.NFKD, norm.NFKC)
-	unicodeTransformer = transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
+	nfkcTransformers = sync.Pool{New: func() any {
+		return transform.Chain(norm.NFKD, norm.NFKC)
+	}}
+	unicodeTransformers = sync.Pool{New: func() any {
+		return transform.Chain(norm.NFKD, runes.Remove(runes.In(unicode.Mn)), norm.NFKC)
+	}}
 
 	aposthropeTransformer = runes.Map(func(r rune) rune {
 		switch r {
@@ -58,7 +63,9 @@ func SanitizeSpaces(s string) string {
 // NormalizeUnicode removes Nonspacing Mark (Mn) characters then
 // use NFKC as the normal forms.
 func NormalizeUnicode(str string) string {
-	normalized, _, err := transform.String(unicodeTransformer, str)
+	transformer := unicodeTransformers.Get().(transform.Transformer)
+	normalized, _, err := transform.String(transformer, str)
+	unicodeTransformers.Put(transformer)
 	if err != nil {
 		return str
 	}
@@ -74,7 +81,9 @@ func NormalizeAposthrope(s string) string {
 // NormalizeCharset is used to normalize charset in a string. Used before
 // detecting language of a string.
 func NormalizeCharset(str string) string {
-	normalized, _, err := transform.String(nfkcTransformer, str)
+	transformer := nfkcTransformers.Get().(transform.Transformer)
+	normalized, _, err := transform.String(transformer, str)
+	nfkcTransformers.Put(transformer)
 	if err == nil {
 		str = normalized
 	}

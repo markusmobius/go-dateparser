@@ -19,7 +19,7 @@ var (
 	rxIn               = regexp.MustCompile(`(?i)\bin\b`)
 	rxAgo              = regexp.MustCompile(`(?i)\bago\b`)
 	rxInAgo            = regexp.MustCompile(`(?i)\b(?:ago|in)\b`)
-	rxRelativePattern  = regexp.MustCompile(`(?i)(\d+[.,]?\d*)\s*(` + relativeUnits + `)\b`)
+	rxRelativePattern  = regexp.MustCompile(`(?i)([+-]?\s*\d+[.,]?\d*)\s*(` + relativeUnits + `)\b`)
 	rxRelativeSkipWord = regexp.MustCompile(`(?i)^(?:` + relativeUnits + `|ago|in|\d+|:|[ap]m)`)
 	relativeUnits      = `decade|year|month|week|day|hour|minute|second`
 )
@@ -77,7 +77,8 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	}
 
 	// Retrieve relative durations
-	relDurations := getRelativeDurations(str)
+	goingForward := rxIn.MatchString(str) || (cfg.PreferredDateSource == setting.Future && !rxAgo.MatchString(str))
+	relDurations := getRelativeDurations(str, goingForward)
 	if len(relDurations) == 0 {
 		return time.Time{}, 0
 	}
@@ -108,18 +109,10 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	minute := time.Duration(relDurations["minute"]) * time.Minute
 	second := time.Duration(relDurations["second"]) * time.Second
 
-	date := now
-	if (rxIn.MatchString(str) || cfg.PreferredDateSource == setting.Future) && !rxAgo.MatchString(str) {
-		date = addDate(cfg, date, year, month, day)
-		date = date.Add(hour)
-		date = date.Add(minute)
-		date = date.Add(second)
-	} else {
-		date = addDate(cfg, date, -year, -month, -day)
-		date = date.Add(-hour)
-		date = date.Add(-minute)
-		date = date.Add(-second)
-	}
+	date := addDate(cfg, now, year, month, day)
+	date = date.Add(hour)
+	date = date.Add(minute)
+	date = date.Add(second)
 
 	return date, period
 }
@@ -160,13 +153,19 @@ func allWordsAreUnits(s string) bool {
 	return wordCount == 0
 }
 
-func getRelativeDurations(s string) map[string]float64 {
+func getRelativeDurations(s string, goingForward bool) map[string]float64 {
 	// Extract durations using regex
 	floatDurations := map[string]float64{}
 	for _, parts := range rxRelativePattern.FindAllStringSubmatch(s, -1) {
 		period := parts[2]
-		strValue := strings.Replace(parts[1], ",", ".", -1)
-		value, _ := strconv.ParseFloat(strValue, 64)
+		strValue := strings.ReplaceAll(strings.Join(strings.Fields(parts[1]), ""), ",", ".")
+		value, err := strconv.ParseFloat(strValue, 64)
+		if err != nil || math.IsInf(value, 0) || math.IsNaN(value) {
+			return nil
+		}
+		if !goingForward && strValue[0] != '+' && strValue[0] != '-' {
+			value = -value
+		}
 		floatDurations[period] = value
 	}
 

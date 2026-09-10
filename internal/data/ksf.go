@@ -52,6 +52,7 @@ func init() {
 			"ŋ11":                  {"november"},
 			"ŋ12":                  {"december"},
 			"am":                   {"am"},
+			"hr":                   {"hour"},
 			"pm":                   {"pm"},
 			"ŋ1":                   {"january"},
 			"ŋ2":                   {"february"},
@@ -94,6 +95,6 @@ func init() {
 			"gɛɛnǝ":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"ŋwii akǝ ntɛk di bɔk", "ŋwii akǝ ntɛk di bɛɛ", "ŋwii akǝ taabɛɛ", "ŋwii akǝ taafɔk", "ŋwii akǝ taanin", "ŋwii akǝ taaraa", "ŋwii a ntɔntɔ", "ŋwii akǝ ntɛk", "ŋwii akǝ taan", "ŋwii akǝ bɛɛ", "ŋwii akǝ nin", "ŋwii akǝ raa", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "mɛkrɛdi", "camɛɛn", "cɛɛnko", "ridurǝ", "rinkɔɔ", "saruwa", "gɛɛnǝ", "jumba", "jǝǝdi", "lǝndi", "maadi", "mǝnit", "samdi", "sɔndǝ", "ŋwii", "ŋwos", "bǝk", "gmt", "hau", "jum", "jǝǝ", "lǝn", "maa", "mɛk", "now", "sam", "sɔn", "utc", "ŋ10", "ŋ11", "ŋ12", "am", "pm", "ŋ1", "ŋ2", "ŋ3", "ŋ4", "ŋ5", "ŋ6", "ŋ7", "ŋ8", "ŋ9", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"ŋwii akǝ ntɛk di bɔk", "ŋwii akǝ ntɛk di bɛɛ", "ŋwii akǝ taabɛɛ", "ŋwii akǝ taafɔk", "ŋwii akǝ taanin", "ŋwii akǝ taaraa", "ŋwii a ntɔntɔ", "ŋwii akǝ ntɛk", "ŋwii akǝ taan", "ŋwii akǝ bɛɛ", "ŋwii akǝ nin", "ŋwii akǝ raa", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "mɛkrɛdi", "camɛɛn", "cɛɛnko", "ridurǝ", "rinkɔɔ", "saruwa", "gɛɛnǝ", "jumba", "jǝǝdi", "lǝndi", "maadi", "mǝnit", "samdi", "sɔndǝ", "ŋwii", "ŋwos", "bǝk", "gmt", "hau", "jum", "jǝǝ", "lǝn", "maa", "mɛk", "now", "sam", "sɔn", "utc", "ŋ10", "ŋ11", "ŋ12", "am", "hr", "pm", "ŋ1", "ŋ2", "ŋ3", "ŋ4", "ŋ5", "ŋ6", "ŋ7", "ŋ8", "ŋ9", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

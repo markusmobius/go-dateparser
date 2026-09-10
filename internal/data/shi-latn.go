@@ -62,6 +62,7 @@ func init() {
 			"yun":      {"june"},
 			"ɣuc":      {"august"},
 			"am":       {"am"},
+			"hr":       {"hour"},
 			"pm":       {"pm"},
 			" ":        {" "},
 			"'":        {""},
@@ -95,6 +96,6 @@ func init() {
 			"assa":        "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "cutanbir", "dujanbir", "nuwanbir", "tadggwat", "asggwas", "asidyas", "asimwas", "imalass", "tasragt", "tusdidt", "asamas", "asinas", "innayr", "tasint", "tifawt", "yulyuz", "akras", "akwas", "askka", "aynas", "ayyur", "brayr", "ibrir", "idlli", "ktubr", "mayyu", "yunyu", "asid", "asim", "assa", "mars", "ɣuct", "akr", "akw", "asa", "asi", "ass", "ayn", "bra", "cut", "duj", "gmt", "ibr", "inn", "ktu", "mar", "may", "now", "nuw", "utc", "yul", "yun", "ɣuc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "cutanbir", "dujanbir", "nuwanbir", "tadggwat", "asggwas", "asidyas", "asimwas", "imalass", "tasragt", "tusdidt", "asamas", "asinas", "innayr", "tasint", "tifawt", "yulyuz", "akras", "akwas", "askka", "aynas", "ayyur", "brayr", "ibrir", "idlli", "ktubr", "mayyu", "yunyu", "asid", "asim", "assa", "mars", "ɣuct", "akr", "akw", "asa", "asi", "ass", "ayn", "bra", "cut", "duj", "gmt", "ibr", "inn", "ktu", "mar", "may", "now", "nuw", "utc", "yul", "yun", "ɣuc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

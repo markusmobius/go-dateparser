@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"slices"
 	"sort"
 	"strings"
 	"unicode/utf8"
 
+	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/spf13/cobra"
 	"github.com/zyedidia/generic/mapset"
 )
@@ -21,16 +23,23 @@ func main() {
 	}
 
 	rootCmd.Flags().Bool("skip-raw", false, "skip downloading raw data")
+	rootCmd.Flags().Bool("keep-language-order", false, "retain the existing language detection order")
+	rootCmd.Flags().String("re2go", "re2go", "path to the re2go lexer generator")
 
 	err := rootCmd.Execute()
 	if err != nil {
-		log.Panic().Err(err)
+		os.Exit(1)
 	}
 }
 
 func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	// Parse flags
 	skipRawDownload, _ := cmd.Flags().GetBool("skip-raw")
+	re2go, _ := cmd.Flags().GetString("re2go")
+	re2go, err := exec.LookPath(re2go)
+	if err != nil {
+		return fmt.Errorf("locale generation requires re2go; add it to PATH or set --re2go: %w", err)
+	}
 
 	// Download raw data if required
 	if !skipRawDownload {
@@ -51,12 +60,20 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	keepLanguageOrder, _ := cmd.Flags().GetBool("keep-language-order")
+	if keepLanguageOrder {
+		sort.SliceStable(languageOrder, func(first, second int) bool {
+			firstOrder, firstKnown := data.LanguageOrder[languageOrder[first]]
+			secondOrder, secondKnown := data.LanguageOrder[languageOrder[second]]
+			if firstKnown != secondKnown {
+				return firstKnown
+			}
+			return firstKnown && firstOrder < secondOrder
+		})
+	}
 
 	// Generate map between a language and its descendant (if any)
 	languageMap := createLanguageMap(languageOrder)
-
-	// Generate map of locale order
-	localeOrder := createLocaleOrder(languageLocalesMap, languageOrder)
 
 	// Parse CLDR data
 	cldrLocaleData, err := parseAllCldrData(languageLocalesMap)
@@ -69,6 +86,9 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+
+	// Generate map of locale order
+	localeOrder := createLocaleOrder(languageLocalesMap, languageOrder)
 
 	// Merge locale data
 	finalLocaleData := map[string]LocaleData{}
@@ -98,6 +118,12 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 			if !localeExist && !supplementalExist {
 				continue
 			}
+			if !localeExist {
+				localeData.Name = locale
+			}
+			if override, exists := supplementalLocaleData[locale]; exists {
+				localeData = override.Merge(localeData)
+			}
 
 			localeData = localeData.Merge(supplementalData)
 			localeData = localeData.Merge(languageData)
@@ -114,9 +140,17 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 		}
 	}
 
+	exactMatchers, err := generateExactMatchers(finalLocaleData, re2go)
+	if err != nil {
+		return err
+	}
+
 	// Generate code
 	os.RemoveAll(GO_CODE_DIR)
 	os.MkdirAll(GO_CODE_DIR, os.ModePerm)
+	if err := os.WriteFile(filepath.Join(GO_CODE_DIR, "05-exact-matchers.go"), exactMatchers, 0644); err != nil {
+		return err
+	}
 
 	path := filepath.Join(GO_CODE_DIR, "00-locale-data.go")
 	err = generateCode("locale-map", &finalLocaleData, path)

@@ -53,6 +53,7 @@ func init() {
 			"m12":                     {"december"},
 			"utc":                     {"utc"},
 			"am":                      {"am"},
+			"hr":                      {"hour"},
 			"m1":                      {"january"},
 			"m2":                      {"february"},
 			"m3":                      {"march"},
@@ -95,6 +96,6 @@ func init() {
 			"linu":        "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"mweri wa ikumi na mbili", "mweri wa ikumi na moja", "mweri wa katatu", "mweri wa kwanza", "mweri wa ikumi", "mweri wa kaana", "mweri wa kaili", "mweri wa nane", "mweri wa saba", "mweri wa sita", "mweri wa tanu", "mweri wa tisa", "this minute", "last month", "next month", "this month", "ijumamosi", "ijumapili", "ijumatano", "ijumatatu", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "ijumanne", "kang'ama", "kingoto", "sekunde", "dakika", "ijumaa", "ng'ama", "iwiki", "mfiri", "muaka", "mweri", "hiyo", "ijtn", "isaa", "linu", "alh", "gmt", "ijm", "ijn", "ijp", "ijt", "iju", "m10", "m11", "m12", "now", "utc", "am", "m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"mweri wa ikumi na mbili", "mweri wa ikumi na moja", "mweri wa katatu", "mweri wa kwanza", "mweri wa ikumi", "mweri wa kaana", "mweri wa kaili", "mweri wa nane", "mweri wa saba", "mweri wa sita", "mweri wa tanu", "mweri wa tisa", "this minute", "last month", "next month", "this month", "ijumamosi", "ijumapili", "ijumatano", "ijumatatu", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "ijumanne", "kang'ama", "kingoto", "sekunde", "dakika", "ijumaa", "ng'ama", "iwiki", "mfiri", "muaka", "mweri", "hiyo", "ijtn", "isaa", "linu", "alh", "gmt", "ijm", "ijn", "ijp", "ijt", "iju", "m10", "m11", "m12", "now", "utc", "am", "hr", "m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

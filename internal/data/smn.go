@@ -39,6 +39,7 @@ func init() {
 			"lavurduv":     {"saturday"},
 			"koskoho":      {"wednesday"},
 			"roovvad":      {"october"},
+			"tiijmeh":      {"hour"},
 			"cuaŋui":       {"april"},
 			"juovla":       {"december"},
 			"minute":       {"minute"},
@@ -102,6 +103,6 @@ func init() {
 			"today":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"roovvadmaanu", "uđđaivemaanu", "vastuppeeivi", "cuaŋuimaanu", "juovlamaanu", "njuhcamaanu", "skammamaanu", "syeinimaanu", "this minute", "vastuppeivi", "cohcamaanu", "kuovamaanu", "last month", "majebaarga", "next month", "pasepeeivi", "porgemaanu", "this month", "vuossaarga", "vyesimaanu", "kesimaanu", "last week", "last year", "majebarga", "next week", "next year", "pasepeivi", "this hour", "this week", "this year", "tuorastah", "tuorastuv", "vuossarga", "yesterday", "koskokko", "lavurdah", "lavurduv", "tomorrow", "koskoho", "roovvad", "cuaŋui", "juovla", "minute", "njuhca", "second", "skamma", "syeini", "cohca", "kuova", "month", "porge", "today", "vyesi", "hour", "kesi", "uđiv", "week", "year", "day", "gmt", "kos", "lav", "maj", "now", "pas", "tuo", "utc", "vas", "vuo", "am", "ep", "ip", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"roovvadmaanu", "uđđaivemaanu", "vastuppeeivi", "cuaŋuimaanu", "juovlamaanu", "njuhcamaanu", "skammamaanu", "syeinimaanu", "this minute", "vastuppeivi", "cohcamaanu", "kuovamaanu", "last month", "majebaarga", "next month", "pasepeeivi", "porgemaanu", "this month", "vuossaarga", "vyesimaanu", "kesimaanu", "last week", "last year", "majebarga", "next week", "next year", "pasepeivi", "this hour", "this week", "this year", "tuorastah", "tuorastuv", "vuossarga", "yesterday", "koskokko", "lavurdah", "lavurduv", "tomorrow", "koskoho", "roovvad", "tiijmeh", "cuaŋui", "juovla", "minute", "njuhca", "second", "skamma", "syeini", "cohca", "kuova", "month", "porge", "today", "vyesi", "hour", "kesi", "uđiv", "week", "year", "day", "gmt", "kos", "lav", "maj", "now", "pas", "tuo", "utc", "vas", "vuo", "am", "ep", "ip", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

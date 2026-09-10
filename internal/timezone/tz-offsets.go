@@ -18,7 +18,7 @@ func (tod OffsetData) IsZero() bool {
 	return tod.Name == "" && tod.Regex == nil && tod.Offset == 0
 }
 
-var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]OffsetData, *regexp.Regexp, *regexp.Regexp) {
+var timezoneOffsets, rxSearch, rxSearchIgnoreCase, rxTimezoneToken = func() ([]OffsetData, *regexp.Regexp, *regexp.Regexp, *regexp.Regexp) {
 	// Process timezone info list
 	offsets := []OffsetData{}
 	regexPatterns := map[string]struct{}{}
@@ -74,5 +74,5 @@ var timezoneOffsets, rxSearch, rxSearchIgnoreCase = func() ([]OffsetData, *regex
 
 	rxSearch := regexp.MustCompile(strSearchPatterns)
 	rxSearchIgnoreCase := regexp.MustCompile("(?i)" + strSearchPatterns)
-	return offsets, rxSearch, rxSearchIgnoreCase
+	return offsets, rxSearch, rxSearchIgnoreCase, regexp.MustCompile("(?i)^(?:" + strSearchPatterns + ")$")
 }()

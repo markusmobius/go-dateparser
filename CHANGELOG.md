@@ -1,3 +1,19 @@
+### v1.4.3 - 2026-09-10
+
+- Require Go 1.26.0 (recommended toolchain 1.27.1) and refresh runtime, test, and code-generator dependencies.
+- Refresh README examples, public API documentation, and performance comparisons after the dependency update; clarify that generated matchers are enabled with or without cgo.
+- Catch up with Python dateparser v1.4.3, accounting for all 66 commits after v1.2.1 in [UPSTREAM.md](UPSTREAM.md).
+- Refresh generated locale data to CLDR 44.1.0, retain older accepted vocabulary and locale codes, and support supplementary regional overrides including en-US.
+- Enable checked-in re2go-generated exact locale matchers by default, with no cgo requirement or build flags. Regenerate them alongside locale data and retain regex fallback behavior for malformed UTF-8.
+- Add ASCII fast paths for timezone candidate rejection and split-token classification, preserving timezone extraction and backend-specific Unicode and malformed-UTF-8 behavior.
+- Add the optional n-gram search strategy and time-span results, including configurable week starts and rolling month lengths.
+- Add opt-in parsing of dates surrounded by unknown edge text, preserving strict and required-parts checks.
+- Port signed relative offsets, Russian search and compound-number fixes, whitespace handling, explicit-language ISO dates, year-first/Japanese component fixes, and the upstream language additions.
+- Correct required-parts validation and ambiguous-year retries. Support ordinal-day custom layouts and preferred centuries for two-digit years.
+- Correct BST to UTC+01:00 and HDT to UTC-09:00 without changing other ambiguous timezone abbreviations.
+- Isolate shared normalization and search state for concurrent parsing and searching; add race regressions and a Linux multi-timezone CI matrix.
+- Preserve Go time layouts, period types, existing language ordering, and the optional end-of-month behavior. See the compatibility ledger for known differences and verification limitations.
+
 ### 2021-12-10
 
 - Implement locale data loader and its unit tests.

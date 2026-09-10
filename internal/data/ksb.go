@@ -61,6 +61,7 @@ func init() {
 			"sep":       {"september"},
 			"utc":       {"utc"},
 			"am":        {"am"},
+			"hr":        {"hour"},
 			"pm":        {"pm"},
 			" ":         {" "},
 			"'":         {""},
@@ -94,6 +95,6 @@ func init() {
 			"ghuo":        "1 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "jumaamosi", "jumaatano", "jumaatatu", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "febluali", "jumaapii", "nyiaghuo", "septemba", "desemba", "januali", "jumaane", "ng'waka", "novemba", "sekunde", "agosti", "aplili", "dakika", "evi eo", "ijumaa", "ng'ezi", "oktoba", "julai", "keloi", "machi", "makeo", "ghuo", "juni", "niki", "siku", "ago", "alh", "apr", "des", "feb", "gmt", "iju", "jan", "jmn", "jmo", "jpi", "jtn", "jtt", "jul", "jun", "mac", "mei", "nov", "now", "okt", "saa", "sep", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "jumaamosi", "jumaatano", "jumaatatu", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "febluali", "jumaapii", "nyiaghuo", "septemba", "desemba", "januali", "jumaane", "ng'waka", "novemba", "sekunde", "agosti", "aplili", "dakika", "evi eo", "ijumaa", "ng'ezi", "oktoba", "julai", "keloi", "machi", "makeo", "ghuo", "juni", "niki", "siku", "ago", "alh", "apr", "des", "feb", "gmt", "iju", "jan", "jmn", "jmo", "jpi", "jtn", "jtt", "jul", "jun", "mac", "mei", "nov", "now", "okt", "saa", "sep", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

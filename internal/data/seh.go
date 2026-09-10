@@ -60,6 +60,7 @@ func init() {
 			"tat":      {"wednesday"},
 			"utc":      {"utc"},
 			"am":       {"am"},
+			"hr":       {"hour"},
 			"pm":       {"pm"},
 			" ":        {" "},
 			"'":        {""},
@@ -93,6 +94,6 @@ func init() {
 			"zuro":        "1 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "chishanu", "decembro", "fevreiro", "manguana", "novembro", "setembro", "augusto", "chipiri", "chiposi", "chitatu", "dimingu", "janeiro", "segundo", "chinai", "minuto", "ntsiku", "otubro", "sabudu", "abril", "chaka", "julho", "junho", "marco", "mwezi", "hora", "lero", "maio", "week", "zuro", "abr", "aug", "dec", "dim", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "nai", "nov", "now", "otu", "pir", "pos", "sab", "set", "sha", "tat", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "chishanu", "decembro", "fevreiro", "manguana", "novembro", "setembro", "augusto", "chipiri", "chiposi", "chitatu", "dimingu", "janeiro", "segundo", "chinai", "minuto", "ntsiku", "otubro", "sabudu", "abril", "chaka", "julho", "junho", "marco", "mwezi", "hora", "lero", "maio", "week", "zuro", "abr", "aug", "dec", "dim", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "nai", "nov", "now", "otu", "pir", "pos", "sab", "set", "sha", "tat", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

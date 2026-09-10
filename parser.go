@@ -21,20 +21,20 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
-// Parser is object that handles language detection, translation and subsequent
-// generic parsing of string representing date and/or time.
+// Parser detects languages, translates date strings, and parses dates and times.
+// It supports concurrent Parse and Search calls. Configure its exported fields
+// before use, provide concurrency-safe callbacks, and do not copy it after use.
 type Parser struct {
 	sync.Mutex
 
-	// DetectLanguagesFunction is a function for language detection that takes
-	// as input a `text` and returns a list of detected language codes. Note:
-	// this function is only used if `languages` and `locales` are not provided.
+	// DetectLanguagesFunction returns candidate language codes for input text.
+	// Parse uses it when Languages and Locales are empty. Search uses it when
+	// Languages is empty; explicit Locales still restrict the candidate locales.
 	DetectLanguagesFunction func(string) []string
 
-	// ParserTypes is a list of types of parsers to try, allowing to customize which parsers are tried
-	// against the input date string, and in which order they are tried. By default it will use
-	// all parser in following order: `Timestamp`, `RelativeTime`, `CustomFormat`, `AbsoluteTime`,
-	// and finally `NoSpacesTime`.
+	// ParserTypes selects the parsers and their order. The default order is Timestamp,
+	// NegativeTimestamp, RelativeTime, CustomFormat, AbsoluteTime, and NoSpacesTime.
+	// Explicit Go layouts are also tried before locale detection.
 	ParserTypes []ParserType
 
 	usedLocales        []*data.LocaleData
@@ -42,29 +42,28 @@ type Parser struct {
 	uniqueCharsets     map[string][]rune
 }
 
-// ParserType is the variable to specify which type of parser that will be used.
+// ParserType identifies a parsing strategy.
 type ParserType uint8
 
 const (
-	// Timestamp is parser to parse Unix timestamp.
+	// Timestamp parses nonnegative Unix timestamps.
 	Timestamp ParserType = iota
-	// NegativeTimestamp is parser to parse Unix timestamp in negative value.
+	// NegativeTimestamp parses negative Unix timestamps.
 	NegativeTimestamp
-	// RelativeTime is parser to parse date string with relative value like
+	// RelativeTime parses relative dates such as
 	// "1 year, 2 months ago" and "3 hours, 50 minutes ago".
 	RelativeTime
-	// CustomFormat is parser to parse a date string with custom formats.
+	// CustomFormat parses translated dates using caller-supplied Go layouts.
 	CustomFormat
-	// AbsoluteTime is parser to parse date string with absolute value like
+	// AbsoluteTime parses absolute dates such as
 	// "12 August 2021" and "23 January, 15:10:01".
 	AbsoluteTime
-	// NoSpacesTime is parser to parse date string that written without spaces,
-	// for example 2021-10-11 that written as 20211011.
+	// NoSpacesTime parses compact dates, such as 20211011 for 2021-10-11.
 	NoSpacesTime
 )
 
-// Parse parses string representing date and/or time in recognizable localized formats.
-// Supports parsing multiple languages.
+// Parse parses a localized date or time. A nil configuration uses the defaults.
+// Optional formats are Go time layouts, tried before locale-based parsing.
 func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.Date, error) {
 	// Lock mutex
 	p.Lock()
@@ -112,8 +111,23 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 	originalStr := str
 	str = strutil.SanitizeDate(str)
 
+	dt, err = p.parseUsingLocales(cfg, iCfg, str, false, formats...)
+	if err == nil && dt.IsZero() && cfg.IgnoreSurroundingText {
+		dt, err = p.parseUsingLocales(cfg, iCfg, str, true, formats...)
+	}
+	if err != nil {
+		return date.Date{}, err
+	}
+	if !dt.IsZero() {
+		return dt, nil
+	}
+	return date.Date{}, fmt.Errorf("failed to parse \"%s\": unknown format", originalStr)
+}
+
+func (p *Parser) parseUsingLocales(cfg *Configuration, iCfg *setting.Configuration, str string, ignoreSurroundingText bool, formats ...string) (date.Date, error) {
+	var dt date.Date
 	// Find the suitable locales for this string
-	locales, err := p.getApplicableLocales(cfg, iCfg, str)
+	locales, err := p.getApplicableLocales(cfg, iCfg, str, ignoreSurroundingText)
 	if err != nil {
 		return date.Date{}, err
 	}
@@ -132,10 +146,18 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 		// Create locale specific config
 		lCfg := iCfg.Clone()
 		lCfg.DateOrder = dateOrder
+		dateOrders := []string{dateOrder}
+		if cfg.DateOrder == nil && slices.Contains(cfg.RequiredParts, "year") && !slices.Contains(cfg.RequiredParts, "day") {
+			for _, order := range []string{"MYD", "YMD"} {
+				if !slices.Contains(dateOrders, order) {
+					dateOrders = append(dateOrders, order)
+				}
+			}
+		}
 
 		// Translate string
-		translations := language.Translate(lCfg, locale, str, false)
-		translationsWithFormat := language.Translate(lCfg, locale, str, true)
+		translations := language.Translate(lCfg, locale, str, false, ignoreSurroundingText)
+		translationsWithFormat := language.Translate(lCfg, locale, str, true, ignoreSurroundingText)
 
 		for _, parserType := range p.ParserTypes {
 			switch parserType {
@@ -147,10 +169,19 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 				dt = p.tryRelativeTime(lCfg, translations)
 			case CustomFormat:
 				dt = p.tryCustomFormat(lCfg, translationsWithFormat, formats...)
-			case AbsoluteTime:
-				dt = p.tryAbsoluteTime(lCfg, translations)
-			case NoSpacesTime:
-				dt = p.tryNoSpacesTime(lCfg, translations)
+			case AbsoluteTime, NoSpacesTime:
+				for _, order := range dateOrders {
+					lCfg.DateOrder = order
+					if parserType == AbsoluteTime {
+						dt = p.tryAbsoluteTime(lCfg, translations)
+					} else {
+						dt = p.tryNoSpacesTime(lCfg, translations)
+					}
+					if !dt.IsZero() {
+						break
+					}
+				}
+				lCfg.DateOrder = dateOrder
 			}
 
 			if !dt.IsZero() {
@@ -164,7 +195,7 @@ func (p *Parser) Parse(cfg *Configuration, str string, formats ...string) (date.
 		}
 	}
 
-	return date.Date{}, fmt.Errorf("failed to parse \"%s\": unknown format", originalStr)
+	return date.Date{}, nil
 }
 
 func (p *Parser) tryRelativeTime(iCfg *setting.Configuration, translations []string) date.Date {
@@ -213,7 +244,7 @@ func (p *Parser) tryNoSpacesTime(iCfg *setting.Configuration, translations []str
 	return date.Date{}
 }
 
-func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configuration, str string) ([]*data.LocaleData, error) {
+func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configuration, str string, ignoreSurroundingText bool) ([]*data.LocaleData, error) {
 	// Prepare results
 	var results []*data.LocaleData
 	resultTracker := strutil.NewDict()
@@ -227,7 +258,7 @@ func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configur
 
 	// Fetch previously used locales first
 	if cfg.TryPreviousLocales {
-		ld := p.checkPreviousLocales(iCfg, dateStrings)
+		ld := p.checkPreviousLocales(iCfg, dateStrings, ignoreSurroundingText)
 		if ld != nil {
 			results = append(results, ld)
 			resultTracker.Add(ld.Name)
@@ -255,7 +286,7 @@ func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configur
 		// Check if locale is applicable
 		var isApplicable bool
 		for _, ds := range dateStrings {
-			if p.localeIsApplicable(iCfg, locale, ds) {
+			if p.localeIsApplicable(iCfg, locale, ds, ignoreSurroundingText) {
 				isApplicable = true
 				break
 			}
@@ -280,10 +311,10 @@ func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configur
 	return results, nil
 }
 
-func (p *Parser) checkPreviousLocales(iCfg *setting.Configuration, dateStrings []string) *data.LocaleData {
+func (p *Parser) checkPreviousLocales(iCfg *setting.Configuration, dateStrings []string, ignoreSurroundingText bool) *data.LocaleData {
 	for _, usedLocale := range p.usedLocales {
 		for _, ds := range dateStrings {
-			if p.localeIsApplicable(iCfg, usedLocale, ds) {
+			if p.localeIsApplicable(iCfg, usedLocale, ds, ignoreSurroundingText) {
 				return usedLocale
 			}
 		}
@@ -303,8 +334,8 @@ func (p *Parser) saveUsedLocale(ld *data.LocaleData) {
 	}
 }
 
-func (p *Parser) localeIsApplicable(iCfg *setting.Configuration, ld *data.LocaleData, s string) bool {
-	return language.IsApplicable(iCfg, ld, s, false)
+func (p *Parser) localeIsApplicable(iCfg *setting.Configuration, ld *data.LocaleData, s string, ignoreSurroundingText bool) bool {
+	return language.IsApplicable(iCfg, ld, s, false, ignoreSurroundingText)
 }
 
 func (p *Parser) stripBracesAndTimezones(s string) (string, timezone.OffsetData) {

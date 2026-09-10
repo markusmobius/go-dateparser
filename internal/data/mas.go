@@ -63,6 +63,7 @@ func init() {
 			"utc":                  {"utc"},
 			"ɔɛn":                  {"march"},
 			"am":                   {"am"},
+			"hr":                   {"hour"},
 			"pm":                   {"pm"},
 			" ":                    {" "},
 			"'":                    {""},
@@ -96,7 +97,7 @@ func init() {
 			"ŋole":        "1 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"oloilepunyie inkokua", "olodoyiorie inkokua", "this minute", "last month", "next month", "this month", "ɔlɔɨbɔrarɛ", "last week", "last year", "morusasin", "next week", "next year", "oldakikae", "this hour", "this week", "this year", "ɔɛnɨɔɨŋɔk", "ɛnkakɛnya", "alaamisi", "jumamosi", "jumapili", "jumatanɔ", "jumatatu", "kujuɔrɔk", "taaisere", "oladalʉ", "olgisan", "pʉshʉka", "sekunde", "ɛnkɔlɔŋ", "jumane", "kushin", "ntʉŋʉs", "ɛndama", "ewiki", "jumaa", "taata", "ɔlapa", "ɔlari", "arat", "ŋole", "ɛsaa", "alh", "ara", "bɔr", "dal", "doy", "gis", "gmt", "iju", "jmo", "jnn", "jpi", "jtn", "jtt", "kus", "lep", "now", "ntʉ", "rok", "sas", "shʉ", "utc", "ɔɛn", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"oloilepunyie inkokua", "olodoyiorie inkokua", "this minute", "last month", "next month", "this month", "ɔlɔɨbɔrarɛ", "last week", "last year", "morusasin", "next week", "next year", "oldakikae", "this hour", "this week", "this year", "ɔɛnɨɔɨŋɔk", "ɛnkakɛnya", "alaamisi", "jumamosi", "jumapili", "jumatanɔ", "jumatatu", "kujuɔrɔk", "taaisere", "oladalʉ", "olgisan", "pʉshʉka", "sekunde", "ɛnkɔlɔŋ", "jumane", "kushin", "ntʉŋʉs", "ɛndama", "ewiki", "jumaa", "taata", "ɔlapa", "ɔlari", "arat", "ŋole", "ɛsaa", "alh", "ara", "bɔr", "dal", "doy", "gis", "gmt", "iju", "jmo", "jnn", "jpi", "jtn", "jtt", "kus", "lep", "now", "ntʉ", "rok", "sas", "shʉ", "utc", "ɔɛn", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 
 	mas_TZ_Locale = merge(&mas_Locale, LocaleData{

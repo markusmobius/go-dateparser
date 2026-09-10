@@ -43,6 +43,7 @@ func init() {
 			"gmt":                  {"gmt"},
 			"utc":                  {"utc"},
 			"am":                   {"am"},
+			"hr":                   {"hour"},
 			"pm":                   {"pm"},
 			" ":                    {" "},
 			"'":                    {""},
@@ -76,6 +77,6 @@ func init() {
 			"lyɛ'ɔɔn":            "0 day ago",
 			"now":                "0 second ago",
 		},
-		KnownWords: []string{"mbɔɔnte tsetsɛɛ lyɛ'", "juɔ gwie a ne ntoo", "saŋ tyɛb tyɛb mbʉŋ", "juɔ gwie a ka tɔg", "mbɔɔnte mvfo lyɛ'", "saŋ taŋa tsetsa'", "saŋ tsetsɛɛ lum", "mvfo maga lyɛ'", "saŋ lepye shum", "saŋ ngwɔ' mbyɛ", "saŋ kag ngwoŋ", "lyɛ'ɛ swiŋte", "saŋ tsɛɛ cyo", "tsetsɛɛ lyɛ'", "saŋ mejwoŋo", "saŋ njyola'", "this minute", "last month", "next month", "this month", "last week", "last year", "maga lyɛ'", "mba'amba'", "mvfo lyɛ'", "next week", "next year", "this hour", "this week", "this year", "ncwonzem", "saŋ mbʉŋ", "fʉ' nem", "lyɛ'ɔɔn", "saŋ cyo", "saŋ lum", "minute", "second", "month", "lyɛ'", "ngu'", "week", "gmt", "now", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"mbɔɔnte tsetsɛɛ lyɛ'", "juɔ gwie a ne ntoo", "saŋ tyɛb tyɛb mbʉŋ", "juɔ gwie a ka tɔg", "mbɔɔnte mvfo lyɛ'", "saŋ taŋa tsetsa'", "saŋ tsetsɛɛ lum", "mvfo maga lyɛ'", "saŋ lepye shum", "saŋ ngwɔ' mbyɛ", "saŋ kag ngwoŋ", "lyɛ'ɛ swiŋte", "saŋ tsɛɛ cyo", "tsetsɛɛ lyɛ'", "saŋ mejwoŋo", "saŋ njyola'", "this minute", "last month", "next month", "this month", "last week", "last year", "maga lyɛ'", "mba'amba'", "mvfo lyɛ'", "next week", "next year", "this hour", "this week", "this year", "ncwonzem", "saŋ mbʉŋ", "fʉ' nem", "lyɛ'ɔɔn", "saŋ cyo", "saŋ lum", "minute", "second", "month", "lyɛ'", "ngu'", "week", "gmt", "now", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

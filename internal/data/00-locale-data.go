@@ -4,6 +4,7 @@ package data
 
 import (
 	"slices"
+	"unicode/utf8"
 
 	"github.com/markusmobius/go-dateparser/internal/regexp"
 )
@@ -21,7 +22,15 @@ type LocaleData struct {
 	RelativeTypeRegexes   []ReplacementData
 	RxCombined            *regexp.Regexp
 	RxExactCombined       *regexp.Regexp
+	ExactCombinedMatcher  func(string) bool
 	KnownWords            []string
+}
+
+func (ld *LocaleData) MatchExactCombined(input string) bool {
+	if ld.ExactCombinedMatcher != nil && utf8.ValidString(input) {
+		return ld.ExactCombinedMatcher(input)
+	}
+	return ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(input)
 }
 
 type ReplacementData struct {
@@ -74,6 +83,10 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 
 	if child.RxExactCombined == nil {
 		child.RxExactCombined = parent.RxExactCombined
+		child.ExactCombinedMatcher = parent.ExactCombinedMatcher
+	}
+	if len(child.KnownWords) == 0 {
+		child.KnownWords = parent.KnownWords
 	}
 
 	return child
@@ -257,6 +270,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &en_001_Locale, true
 	case "en-150":
 		return &en_150_Locale, true
+	case "en-AE":
+		return &en_AE_Locale, true
 	case "en-AG":
 		return &en_AG_Locale, true
 	case "en-AI":
@@ -331,6 +346,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &en_GY_Locale, true
 	case "en-HK":
 		return &en_HK_Locale, true
+	case "en-ID":
+		return &en_ID_Locale, true
 	case "en-IE":
 		return &en_IE_Locale, true
 	case "en-IL":
@@ -373,6 +390,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &en_MT_Locale, true
 	case "en-MU":
 		return &en_MU_Locale, true
+	case "en-MV":
+		return &en_MV_Locale, true
 	case "en-MW":
 		return &en_MW_Locale, true
 	case "en-MY":
@@ -443,6 +462,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &en_UG_Locale, true
 	case "en-UM":
 		return &en_UM_Locale, true
+	case "en-US":
+		return &en_US_Locale, true
 	case "en-VC":
 		return &en_VC_Locale, true
 	case "en-VG":
@@ -641,6 +662,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &fy_Locale, true
 	case "ga":
 		return &ga_Locale, true
+	case "ga-GB":
+		return &ga_GB_Locale, true
 	case "gd":
 		return &gd_Locale, true
 	case "gl":
@@ -727,6 +750,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &kn_Locale, true
 	case "ko":
 		return &ko_Locale, true
+	case "ko-CN":
+		return &ko_CN_Locale, true
 	case "ko-KP":
 		return &ko_KP_Locale, true
 	case "kok":
@@ -801,6 +826,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &ms_Locale, true
 	case "ms-BN":
 		return &ms_BN_Locale, true
+	case "ms-ID":
+		return &ms_ID_Locale, true
 	case "ms-SG":
 		return &ms_SG_Locale, true
 	case "mt":
@@ -867,6 +894,8 @@ func GetLocaleData(locale string) (*LocaleData, bool) {
 		return &pl_Locale, true
 	case "ps":
 		return &ps_Locale, true
+	case "ps-PK":
+		return &ps_PK_Locale, true
 	case "pt":
 		return &pt_Locale, true
 	case "pt-AO":

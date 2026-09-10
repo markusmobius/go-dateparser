@@ -1,3 +1,23 @@
 no_word_spacing: true
 
 sentence_splitter_group : 4
+monday:
+  - 週一
+
+tuesday:
+  - 週二
+
+wednesday:
+  - 週三
+
+thursday:
+  - 週四
+
+friday:
+  - 週五
+
+saturday:
+  - 週六
+
+sunday:
+  - 週日

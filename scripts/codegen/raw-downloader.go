@@ -4,9 +4,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"path"
 	"path/filepath"
-	"strings"
 
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
@@ -25,29 +23,24 @@ func downloadRawData() error {
 }
 
 func downloadCldrData() error {
-	// Fetch data from CLDR repository
-	repos := []string{
-		"https://github.com/unicode-cldr/cldr-dates-full.git",
-		"https://github.com/unicode-cldr/cldr-core.git",
-		"https://github.com/unicode-cldr/cldr-rbnf.git",
+	repo := "https://github.com/unicode-org/cldr-json.git"
+	cloneDir := filepath.Join(RAW_DIR, "cldr-json")
+	log.Info().Msgf("cloning CLDR %s from %s", CLDR_VERSION, repo)
+	_, err := git.PlainClone(cloneDir, false, &git.CloneOptions{
+		URL:           repo,
+		Depth:         1,
+		SingleBranch:  true,
+		ReferenceName: plumbing.NewTagReferenceName(CLDR_VERSION),
+	})
+	if err != nil {
+		return err
 	}
-
-	for _, repo := range repos {
-		dirName := strings.TrimSuffix(path.Base(repo), ".git")
-		dstDir := filepath.Join(RAW_DIR, dirName)
-
-		log.Info().Msgf("cloning %s from %s", dirName, repo)
-		_, err := git.PlainClone(dstDir, false, &git.CloneOptions{
-			URL:           repo,
-			Depth:         1,
-			SingleBranch:  true,
-			ReferenceName: plumbing.NewTagReferenceName(CLDR_VERSION)})
-		if err != nil {
+	for _, module := range []string{"cldr-dates-full", "cldr-core", "cldr-units-full"} {
+		if err := os.Rename(filepath.Join(cloneDir, "cldr-json", module), filepath.Join(RAW_DIR, module)); err != nil {
 			return err
 		}
 	}
-
-	return nil
+	return os.RemoveAll(cloneDir)
 }
 
 func downloadW3ContentLanguage() error {

@@ -11,6 +11,7 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/regexp"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
+	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
 
 // Split splits the date string `str` using translations in locale data. If `keepFormatting` is
@@ -24,7 +25,7 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 	// Check if each token can be split further
 	var tokens []string
 	for token := range strings.SplitSeq(str, splitSeparator) {
-		if ld.RxExactCombined != nil && ld.RxExactCombined.MatchString(token) {
+		if ld.MatchExactCombined(token) {
 			tokens = append(tokens, token)
 		} else {
 			tokens = append(tokens, splitByKnownWords(ld, token, keepFormatting)...)
@@ -39,12 +40,34 @@ func Split(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens s
 		}
 
 		trimmedToken := strings.TrimSpace(token)
+		if len(finalTokens) > 0 && strutil.IsNumberOnly(finalTokens[len(finalTokens)-1]) &&
+			(token == "st" || token == "nd" || token == "rd" || token == "th") {
+			continue
+		}
 		if !skippedTokens.Contain(trimmedToken) {
 			finalTokens = append(finalTokens, token)
 		}
 	}
 
 	return finalTokens
+}
+
+func stripUnknownEdgeTokens(ld *data.LocaleData, tokens []string) []string {
+	isExtra := func(token string) bool {
+		if strings.TrimSpace(token) == "" {
+			return true
+		}
+		return !strutil.IsNumberOnly(token) && !isInDictionary(ld, token) &&
+			!ld.MatchExactCombined(token)
+	}
+	start, end := 0, len(tokens)
+	for start < end && isExtra(tokens[start]) {
+		start++
+	}
+	for end > start && isExtra(tokens[end-1]) && !timezone.IsTimezoneToken(tokens[end-1]) {
+		end--
+	}
+	return tokens[start:end]
 }
 
 func SplitSentence(ld *data.LocaleData, str string) []string {
@@ -251,10 +274,23 @@ func splitByNumerals(str string, keepFormatting bool) []string {
 }
 
 func tokenShouldBeCaptured(token string, keepFormatting bool) bool {
-	return keepFormatting ||
-		alwaysKeptTokens.Contain(token) ||
-		rxKeepToken1.MatchString(token) ||
-		rxKeepToken2.MatchString(token)
+	if keepFormatting || isSpaceToken(token) || alwaysKeptTokens.Contain(token) {
+		return true
+	}
+	capture := false
+	for index := 0; index < len(token); index++ {
+		character := token[index]
+		if character >= utf8.RuneSelf {
+			return rxKeepToken1.MatchString(token) || rxKeepToken2.MatchString(token)
+		}
+		if character == '\n' {
+			return false
+		}
+		if character >= '0' && character <= '9' || character >= 'A' && character <= 'Z' || character >= 'a' && character <= 'z' {
+			capture = true
+		}
+	}
+	return capture
 }
 
 func simpleSplit(ld *data.LocaleData, str string, keepFormatting bool, skippedTokens strutil.Dict) []string {

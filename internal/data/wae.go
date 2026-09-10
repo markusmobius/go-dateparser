@@ -33,6 +33,7 @@ func init() {
 			"jenner":      {"january"},
 			"mantag":      {"monday"},
 			"oigste":      {"august"},
+			"stunde":      {"hour"},
 			"zistag":      {"tuesday"},
 			"manet":       {"month"},
 			"marze":       {"march"},
@@ -119,8 +120,9 @@ func init() {
 			{regexp.MustCompile(`(?i)i (\d+[.,]?\d*) jar`), "in $1 year"},
 			{regexp.MustCompile(`(?i)i (\d+[.,]?\d*) tag`), "in $1 day"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(vor \d+[.,]?\d* sekunde|vor \d+[.,]?\d* minuta|vor \d+[.,]?\d* minute|vor \d+[.,]?\d* sekund|vor \d+[.,]?\d* stunde|i \d+[.,]?\d* sekunde|vor \d+[.,]?\d* manet|vor \d+[.,]?\d* stund|cor \d+[.,]?\d* wuca|i \d+[.,]?\d* minuta|i \d+[.,]?\d* minute|i \d+[.,]?\d* sekund|i \d+[.,]?\d* stunde|vor \d+[.,]?\d* wuca|cor \d+[.,]?\d* jar|i \d+[.,]?\d* manet|i \d+[.,]?\d* stund|vor \d+[.,]?\d* jar|vor \d+[.,]?\d* tag|i \d+[.,]?\d* wuca|i \d+[.,]?\d* jar|i \d+[.,]?\d* tag)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(vor \d+[.,]?\d* sekunde|vor \d+[.,]?\d* minuta|vor \d+[.,]?\d* minute|vor \d+[.,]?\d* sekund|vor \d+[.,]?\d* stunde|i \d+[.,]?\d* sekunde|vor \d+[.,]?\d* manet|vor \d+[.,]?\d* stund|cor \d+[.,]?\d* wuca|i \d+[.,]?\d* minuta|i \d+[.,]?\d* minute|i \d+[.,]?\d* sekund|i \d+[.,]?\d* stunde|vor \d+[.,]?\d* wuca|cor \d+[.,]?\d* jar|i \d+[.,]?\d* manet|i \d+[.,]?\d* stund|vor \d+[.,]?\d* jar|vor \d+[.,]?\d* tag|i \d+[.,]?\d* wuca|i \d+[.,]?\d* jar|i \d+[.,]?\d* tag)$`),
-		KnownWords:      []string{"christmanet", "herbstmanet", "this minute", "wintermanet", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "abrille", "frontag", "minutta", "mittwuc", "samstag", "schtund", "sekunda", "sunntag", "wimanet", "bracet", "fritag", "gester", "heiwet", "hornig", "jenner", "mantag", "oigste", "zistag", "hitte", "manet", "marze", "meije", "more", "wuca", "abr", "bra", "chr", "fri", "fro", "gmt", "hei", "her", "hor", "jar", "jen", "man", "mar", "mei", "mit", "now", "oig", "sam", "sun", "tag", "utc", "wim", "win", "zis", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(vor \d+[.,]?\d* sekunde|vor \d+[.,]?\d* minuta|vor \d+[.,]?\d* minute|vor \d+[.,]?\d* sekund|vor \d+[.,]?\d* stunde|i \d+[.,]?\d* sekunde|vor \d+[.,]?\d* manet|vor \d+[.,]?\d* stund|cor \d+[.,]?\d* wuca|i \d+[.,]?\d* minuta|i \d+[.,]?\d* minute|i \d+[.,]?\d* sekund|i \d+[.,]?\d* stunde|vor \d+[.,]?\d* wuca|cor \d+[.,]?\d* jar|i \d+[.,]?\d* manet|i \d+[.,]?\d* stund|vor \d+[.,]?\d* jar|vor \d+[.,]?\d* tag|i \d+[.,]?\d* wuca|i \d+[.,]?\d* jar|i \d+[.,]?\d* tag)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(vor \d+[.,]?\d* sekunde|vor \d+[.,]?\d* minuta|vor \d+[.,]?\d* minute|vor \d+[.,]?\d* sekund|vor \d+[.,]?\d* stunde|i \d+[.,]?\d* sekunde|vor \d+[.,]?\d* manet|vor \d+[.,]?\d* stund|cor \d+[.,]?\d* wuca|i \d+[.,]?\d* minuta|i \d+[.,]?\d* minute|i \d+[.,]?\d* sekund|i \d+[.,]?\d* stunde|vor \d+[.,]?\d* wuca|cor \d+[.,]?\d* jar|i \d+[.,]?\d* manet|i \d+[.,]?\d* stund|vor \d+[.,]?\d* jar|vor \d+[.,]?\d* tag|i \d+[.,]?\d* wuca|i \d+[.,]?\d* jar|i \d+[.,]?\d* tag)$`),
+		ExactCombinedMatcher: matchExact7b3abdc7c471f0b8c28688bfeb4225f47305e0c5f1003fbe08825bc5ecb1373a,
+		KnownWords:           []string{"christmanet", "herbstmanet", "this minute", "wintermanet", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "abrille", "frontag", "minutta", "mittwuc", "samstag", "schtund", "sekunda", "sunntag", "wimanet", "bracet", "fritag", "gester", "heiwet", "hornig", "jenner", "mantag", "oigste", "stunde", "zistag", "hitte", "manet", "marze", "meije", "more", "wuca", "abr", "bra", "chr", "fri", "fro", "gmt", "hei", "her", "hor", "jar", "jen", "man", "mar", "mei", "mit", "now", "oig", "sam", "sun", "tag", "utc", "wim", "win", "zis", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

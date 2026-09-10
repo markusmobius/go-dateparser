@@ -4,10 +4,9 @@ import (
 	"time"
 )
 
-// Period is representation of confidence level for the parsed date.
-// For example, if the parsed date has period level `Month`, then
-// the parser is only confident up to the month, while the day and
-// time is taken from the current time.
+// Period describes the precision of a parsed date, not a probability of correctness.
+// For example, Month means the input identifies a month; finer components may
+// be filled from the parser's configuration or defaults.
 type Period uint8
 
 const (
@@ -37,7 +36,7 @@ func (p Period) IsTime() bool {
 	return p == Second || p == Minute || p == Hour
 }
 
-// Date is object that represents the parsed date with useful information.
+// Date contains a parsed time, its precision, and the translation locale when available.
 type Date struct {
 	Locale string
 	Period Period

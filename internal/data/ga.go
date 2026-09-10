@@ -5,7 +5,8 @@ package data
 import "github.com/markusmobius/go-dateparser/internal/regexp"
 
 var (
-	ga_Locale LocaleData
+	ga_Locale    LocaleData
+	ga_GB_Locale LocaleData
 )
 
 func init() {
@@ -62,9 +63,11 @@ func init() {
 			"utc":              {"utc"},
 			"am":               {"am"},
 			"bl":               {"year"},
+			"in":               {"pm"},
 			"la":               {"day"},
 			"mi":               {"month"},
 			"pm":               {"pm"},
+			"rn":               {"am"},
 			" ":                {" "},
 			"'":                {""},
 			"+":                {"+"},
@@ -99,24 +102,29 @@ func init() {
 			"an uair seo":                "0 hour ago",
 			"an bhl seo":                 "0 year ago",
 			"an mhi seo":                 "0 month ago",
+			"i mbliana":                  "0 year ago",
 			"anuraidh":                   "1 year ago",
 			"amarach":                    "in 1 day",
 			"anois":                      "0 second ago",
+			"i mbl":                      "0 year ago",
 			"inniu":                      "0 day ago",
 			"inne":                       "1 day ago",
 		},
 		RelativeTypeRegexes: []ReplacementData{
 			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) uair an chloig`), "in $1 hour"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) uair an chloig o shin`), "$1 hour ago"},
+			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) seachtaine`), "in $1 week"},
 			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) seachtain`), "in $1 week"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) seachtain o shin`), "$1 week ago"},
-			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) bhliain`), "in $1 year"},
+			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) bhliain`), "in ${1} year"},
 			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) noimead`), "in $1 minute"},
 			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) soicind`), "in $1 second"},
 			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) bliain`), "in $1 year"},
+			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) bliana`), "in $1 year"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) bhliain o shin`), "$1 year ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) noimead o shin`), "$1 minute ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) soicind o shin`), "$1 second ago"},
+			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) miosa`), "in $1 month"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) bliain o shin`), "$1 year ago"},
 			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) noim`), "in $1 minute"},
 			{regexp.MustCompile(`(?i)i gceann (\d+[.,]?\d*) scht`), "in $1 week"},
@@ -136,8 +144,14 @@ func init() {
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) la o shin`), "$1 day ago"},
 			{regexp.MustCompile(`(?i)(\d+[.,]?\d*) mi o shin`), "$1 month ago"},
 		},
-		RxCombined:      regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(i gceann \d+[.,]?\d* uair an chloig|\d+[.,]?\d* uair an chloig o shin|i gceann \d+[.,]?\d* seachtain|\d+[.,]?\d* seachtain o shin|i gceann \d+[.,]?\d* bhliain|i gceann \d+[.,]?\d* noimead|i gceann \d+[.,]?\d* soicind|i gceann \d+[.,]?\d* bliain|\d+[.,]?\d* bhliain o shin|\d+[.,]?\d* noimead o shin|\d+[.,]?\d* soicind o shin|\d+[.,]?\d* bliain o shin|i gceann \d+[.,]?\d* noim|i gceann \d+[.,]?\d* scht|i gceann \d+[.,]?\d* soic|i gceann \d+[.,]?\d* uair|i gceann \d+[.,]?\d* mhi|\d+[.,]?\d* noim o shin|\d+[.,]?\d* scht o shin|\d+[.,]?\d* soic o shin|\d+[.,]?\d* uair o shin|i gceann \d+[.,]?\d* bl|i gceann \d+[.,]?\d* la|i gceann \d+[.,]?\d* mi|\d+[.,]?\d* bhl o shin|\d+[.,]?\d* mhi o shin|\d+[.,]?\d* bl o shin|\d+[.,]?\d* la o shin|\d+[.,]?\d* mi o shin)(\z|[^\pL\pM\d]|_)`),
-		RxExactCombined: regexp.MustCompile(`(?i)^(i gceann \d+[.,]?\d* uair an chloig|\d+[.,]?\d* uair an chloig o shin|i gceann \d+[.,]?\d* seachtain|\d+[.,]?\d* seachtain o shin|i gceann \d+[.,]?\d* bhliain|i gceann \d+[.,]?\d* noimead|i gceann \d+[.,]?\d* soicind|i gceann \d+[.,]?\d* bliain|\d+[.,]?\d* bhliain o shin|\d+[.,]?\d* noimead o shin|\d+[.,]?\d* soicind o shin|\d+[.,]?\d* bliain o shin|i gceann \d+[.,]?\d* noim|i gceann \d+[.,]?\d* scht|i gceann \d+[.,]?\d* soic|i gceann \d+[.,]?\d* uair|i gceann \d+[.,]?\d* mhi|\d+[.,]?\d* noim o shin|\d+[.,]?\d* scht o shin|\d+[.,]?\d* soic o shin|\d+[.,]?\d* uair o shin|i gceann \d+[.,]?\d* bl|i gceann \d+[.,]?\d* la|i gceann \d+[.,]?\d* mi|\d+[.,]?\d* bhl o shin|\d+[.,]?\d* mhi o shin|\d+[.,]?\d* bl o shin|\d+[.,]?\d* la o shin|\d+[.,]?\d* mi o shin)$`),
-		KnownWords:      []string{"an tseachtain seo chugainn", "an bhliain seo chugainn", "an tseachtain seo caite", "an tscht seo chugainn", "an bhl seo chugainn", "an mhi seo chugainn", "an tscht seo caite", "an tseachtain seo", "an mhi seo caite", "deireadh fomhair", "an bhliain seo", "an noimead seo", "an tscht seo", "de domhnaigh", "mean fomhair", "an uair seo", "de ceadaoin", "de sathairn", "an bhl seo", "an mhi seo", "bealtaine", "de haoine", "deardaoin", "meitheamh", "seachtain", "anuraidh", "de luain", "de mairt", "aibrean", "amarach", "feabhra", "noimead", "nollaig", "samhain", "soicind", "bliain", "eanair", "lunasa", "anois", "aoine", "dfomh", "feabh", "inniu", "mairt", "marta", "meith", "mfomh", "beal", "cead", "dear", "domh", "inne", "iuil", "luan", "noim", "noll", "samh", "sath", "scht", "soic", "uair", "aib", "ean", "gmt", "lun", "utc", "am", "bl", "la", "mi", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "n", "s", "u", "z", "|"},
+		RxCombined:           regexp.MustCompile(`(?i)(\A|[^\pL\pM\d]|_)(i gceann \d+[.,]?\d* uair an chloig|\d+[.,]?\d* uair an chloig o shin|i gceann \d+[.,]?\d* seachtaine|i gceann \d+[.,]?\d* seachtain|\d+[.,]?\d* seachtain o shin|i gceann \d+[.,]?\d* bhliain|i gceann \d+[.,]?\d* noimead|i gceann \d+[.,]?\d* soicind|i gceann \d+[.,]?\d* bliain|i gceann \d+[.,]?\d* bliana|\d+[.,]?\d* bhliain o shin|\d+[.,]?\d* noimead o shin|\d+[.,]?\d* soicind o shin|i gceann \d+[.,]?\d* miosa|\d+[.,]?\d* bliain o shin|i gceann \d+[.,]?\d* noim|i gceann \d+[.,]?\d* scht|i gceann \d+[.,]?\d* soic|i gceann \d+[.,]?\d* uair|i gceann \d+[.,]?\d* mhi|\d+[.,]?\d* noim o shin|\d+[.,]?\d* scht o shin|\d+[.,]?\d* soic o shin|\d+[.,]?\d* uair o shin|i gceann \d+[.,]?\d* bl|i gceann \d+[.,]?\d* la|i gceann \d+[.,]?\d* mi|\d+[.,]?\d* bhl o shin|\d+[.,]?\d* mhi o shin|\d+[.,]?\d* bl o shin|\d+[.,]?\d* la o shin|\d+[.,]?\d* mi o shin)(\z|[^\pL\pM\d]|_)`),
+		RxExactCombined:      regexp.MustCompile(`(?i)^(i gceann \d+[.,]?\d* uair an chloig|\d+[.,]?\d* uair an chloig o shin|i gceann \d+[.,]?\d* seachtaine|i gceann \d+[.,]?\d* seachtain|\d+[.,]?\d* seachtain o shin|i gceann \d+[.,]?\d* bhliain|i gceann \d+[.,]?\d* noimead|i gceann \d+[.,]?\d* soicind|i gceann \d+[.,]?\d* bliain|i gceann \d+[.,]?\d* bliana|\d+[.,]?\d* bhliain o shin|\d+[.,]?\d* noimead o shin|\d+[.,]?\d* soicind o shin|i gceann \d+[.,]?\d* miosa|\d+[.,]?\d* bliain o shin|i gceann \d+[.,]?\d* noim|i gceann \d+[.,]?\d* scht|i gceann \d+[.,]?\d* soic|i gceann \d+[.,]?\d* uair|i gceann \d+[.,]?\d* mhi|\d+[.,]?\d* noim o shin|\d+[.,]?\d* scht o shin|\d+[.,]?\d* soic o shin|\d+[.,]?\d* uair o shin|i gceann \d+[.,]?\d* bl|i gceann \d+[.,]?\d* la|i gceann \d+[.,]?\d* mi|\d+[.,]?\d* bhl o shin|\d+[.,]?\d* mhi o shin|\d+[.,]?\d* bl o shin|\d+[.,]?\d* la o shin|\d+[.,]?\d* mi o shin)$`),
+		ExactCombinedMatcher: matchExactce23fda97acdef4e56151e0bb08a2731986c4046198618099c46d8143a2e1313,
+		KnownWords:           []string{"an tseachtain seo chugainn", "an bhliain seo chugainn", "an tseachtain seo caite", "an tscht seo chugainn", "an bhl seo chugainn", "an mhi seo chugainn", "an tscht seo caite", "an tseachtain seo", "an mhi seo caite", "deireadh fomhair", "an bhliain seo", "an noimead seo", "an tscht seo", "de domhnaigh", "mean fomhair", "an uair seo", "de ceadaoin", "de sathairn", "an bhl seo", "an mhi seo", "bealtaine", "de haoine", "deardaoin", "i mbliana", "meitheamh", "seachtain", "anuraidh", "de luain", "de mairt", "aibrean", "amarach", "feabhra", "noimead", "nollaig", "samhain", "soicind", "bliain", "eanair", "lunasa", "anois", "aoine", "dfomh", "feabh", "i mbl", "inniu", "mairt", "marta", "meith", "mfomh", "beal", "cead", "dear", "domh", "inne", "iuil", "luan", "noim", "noll", "samh", "sath", "scht", "soic", "uair", "aib", "ean", "gmt", "lun", "utc", "am", "bl", "in", "la", "mi", "pm", "rn", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "n", "s", "u", "z", "|"},
+	})
+
+	ga_GB_Locale = merge(&ga_Locale, LocaleData{
+		Name:      "ga-GB",
+		DateOrder: "DMY",
 	})
 }

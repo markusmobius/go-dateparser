@@ -2,6 +2,7 @@ package dateparser_test
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -24,6 +25,53 @@ var (
 		ParserTypes: []dps.ParserType{dps.RelativeTime},
 	}
 )
+
+func TestParser_Parse_relative_longDigits(t *testing.T) {
+	cfg := &dps.Configuration{Languages: []string{"en"}, CurrentTime: tt(2025, 9, 15)}
+	for _, length := range []int{3200, 6400} {
+		for _, suffix := range []string{"", " days ago"} {
+			parsed, err := relativeTestParser.Parse(cfg, strings.Repeat("9", length)+suffix)
+			assert.Error(t, err)
+			assert.True(t, parsed.IsZero())
+		}
+	}
+}
+
+func TestParser_Parse_relative_signedOffsets(t *testing.T) {
+	tests := []struct {
+		Text     string
+		Source   dps.PreferredDateSource
+		Expected time.Time
+	}{
+		{"yesterday +1h", dps.CurrentPeriod, tt(2025, 9, 14, 13)},
+		{"yesterday -1h", dps.CurrentPeriod, tt(2025, 9, 14, 11)},
+		{"today +2h", dps.CurrentPeriod, tt(2025, 9, 15, 14)},
+		{"tomorrow -3h", dps.CurrentPeriod, tt(2025, 9, 16, 9)},
+		{"now +1d", dps.CurrentPeriod, tt(2025, 9, 16, 12)},
+		{"now - 2 hours", dps.CurrentPeriod, tt(2025, 9, 15, 10)},
+		{"now + 1 day", dps.CurrentPeriod, tt(2025, 9, 16, 12)},
+		{"+2.5 hours", dps.CurrentPeriod, tt(2025, 9, 15, 14, 30)},
+		{"-2.5 hours", dps.Future, tt(2025, 9, 15, 9, 30)},
+		{"1 decade +2 years", dps.CurrentPeriod, tt(2017, 9, 15, 12)},
+		{"-1 decade +2 years", dps.CurrentPeriod, tt(2017, 9, 15, 12)},
+		{"+1 decade -2 years", dps.CurrentPeriod, tt(2033, 9, 15, 12)},
+		{"1 decade +2 years", dps.Future, tt(2037, 9, 15, 12)},
+		{"-1 decade 2 years", dps.Future, tt(2017, 9, 15, 12)},
+		{"-1 decade 2 years", dps.Past, tt(2013, 9, 15, 12)},
+		{"-1 week +2 days", dps.CurrentPeriod, tt(2025, 9, 10, 12)},
+	}
+	for _, test := range tests {
+		t.Run(fmt.Sprintf("%s/%d", test.Text, test.Source), func(t *testing.T) {
+			parsed, err := relativeTestParser.Parse(&dps.Configuration{
+				Languages:           []string{"en"},
+				CurrentTime:         tt(2025, 9, 15, 12),
+				PreferredDateSource: test.Source,
+			}, test.Text)
+			assert.NoError(t, err)
+			assert.Equal(t, test.Expected, parsed.Time)
+		})
+	}
+}
 
 func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 	// Prepare structs
@@ -109,6 +157,7 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"six days ago", pfpDiff{"day": -6}, Day},
 		{"five years ago", pfpDiff{"year": -5}, Year},
 		{"2y ago", pfpDiff{"year": -2}, Year},
+		{"1mon ago", pfpDiff{"month": -1}, Month},
 
 		// Fractional English units
 		{"2.5 hours", pfpDiff{"hour": -2, "minute": -30}, Minute},
@@ -1214,11 +1263,4 @@ func TestParser_Parse_relative_hasPreferredTimes(t *testing.T) {
 	if nFailed > 0 {
 		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
 	}
-}
-
-func TestParser_Parse_relative_knownIssues(t *testing.T) {
-	str := "1mon ago" // issue #1116 in original library
-	dt, err := relativeTestParser.Parse(&relativeTestConfig, str)
-	assert.Error(t, err)
-	assert.True(t, dt.IsZero())
 }

@@ -7,6 +7,8 @@ sunday:
 
 august:
   - Agu
+  - agt
+
 september:
   - Sept
 
@@ -28,6 +30,8 @@ relative-type:
     - sehari
   0 second ago:
     - baru saja
+  in 1 month:
+    - bulan berikutnya
 
 relative-type-regex:
   \1 week ago:

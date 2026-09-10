@@ -58,6 +58,7 @@ func init() {
 			"zuw":       {"june"},
 			"zuy":       {"july"},
 			"am":        {"am"},
+			"hr":        {"hour"},
 			"me":        {"may"},
 			"pm":        {"pm"},
 			"ut":        {"august"},
@@ -93,6 +94,6 @@ func init() {
 			"now":         "0 second ago",
 			"bi":          "1 day ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "alhamiisa", "deesanbur", "feewiriye", "last week", "last year", "next week", "next year", "noowanbur", "sektanbur", "this hour", "this week", "this year", "atalaata", "oktoobur", "zanwiye", "adduha", "alarba", "alhadi", "aluula", "alzuma", "asibti", "atinni", "awiril", "miniti", "guuru", "handu", "jiiri", "marsi", "zaari", "zuweŋ", "zuyye", "hebu", "miti", "suba", "ala", "alh", "alm", "alz", "asi", "ata", "ati", "awi", "dee", "fee", "gmt", "hoo", "mar", "noo", "now", "okt", "sek", "utc", "zan", "zuw", "zuy", "am", "bi", "me", "pm", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "alhamiisa", "deesanbur", "feewiriye", "last week", "last year", "next week", "next year", "noowanbur", "sektanbur", "this hour", "this week", "this year", "atalaata", "oktoobur", "zanwiye", "adduha", "alarba", "alhadi", "aluula", "alzuma", "asibti", "atinni", "awiril", "miniti", "guuru", "handu", "jiiri", "marsi", "zaari", "zuweŋ", "zuyye", "hebu", "miti", "suba", "ala", "alh", "alm", "alz", "asi", "ata", "ati", "awi", "dee", "fee", "gmt", "hoo", "mar", "noo", "now", "okt", "sek", "utc", "zan", "zuw", "zuy", "am", "bi", "hr", "me", "pm", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

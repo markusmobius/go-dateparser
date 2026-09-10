@@ -50,6 +50,7 @@ func init() {
 			"مار":      {"march"},
 			"نوم":      {"november"},
 			"am":       {"am"},
+			"hr":       {"hour"},
 			"pm":       {"pm"},
 			"می":       {"may"},
 			" ":        {" "},
@@ -91,6 +92,6 @@ func init() {
 			"today":       "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "چهارشنبه", "سه‌شنبه", "پنجشنبه", "minute", "second", "اکتوبر", "دوشنبه", "سپتمبر", "فبروری", "یکشنبه", "month", "today", "اپریل", "جنوری", "جولای", "دسمبر", "نومبر", "hour", "week", "year", "اگست", "جمعه", "شنبه", "مارچ", "day", "gmt", "now", "utc", "اپر", "اکت", "اگس", "جنو", "جول", "جون", "دسم", "سپت", "فبر", "مار", "نوم", "am", "pm", "می", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ج", "د", "س", "ش", "پ", "چ", "ی"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "چهارشنبه", "سه‌شنبه", "پنجشنبه", "minute", "second", "اکتوبر", "دوشنبه", "سپتمبر", "فبروری", "یکشنبه", "month", "today", "اپریل", "جنوری", "جولای", "دسمبر", "نومبر", "hour", "week", "year", "اگست", "جمعه", "شنبه", "مارچ", "day", "gmt", "now", "utc", "اپر", "اکت", "اگس", "جنو", "جول", "جون", "دسم", "سپت", "فبر", "مار", "نوم", "am", "hr", "pm", "می", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ج", "د", "س", "ش", "پ", "چ", "ی"},
 	})
 }

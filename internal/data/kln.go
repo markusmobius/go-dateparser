@@ -64,6 +64,7 @@ func init() {
 			"taa":                  {"march"},
 			"utc":                  {"utc"},
 			"am":                   {"am"},
+			"hr":                   {"hour"},
 			"pm":                   {"pm"},
 			" ":                    {" "},
 			"'":                    {""},
@@ -97,6 +98,6 @@ func init() {
 			"amut":        "1 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"kipsuunde nebo aeng'", "kipsuunde ne taai", "this minute", "kooskoliny", "last month", "next month", "ng'atyaato", "this month", "iwootkuut", "koang'wan", "last week", "last year", "next week", "next year", "ng'eiyeet", "this hour", "this week", "this year", "kiptaamo", "sekondit", "koaeng'", "kosomok", "kotisap", "minitit", "rooptui", "arawet", "bureet", "epeeso", "karoon", "kenyit", "komuut", "kotaai", "mamuut", "mulgul", "betut", "koosk", "mutai", "paagi", "raini", "wikit", "amut", "kolo", "ngat", "sait", "bur", "epe", "gmt", "iwo", "koa", "kol", "kom", "koo", "kos", "kot", "kpa", "kpt", "krn", "kts", "mam", "mul", "nge", "now", "paa", "roo", "taa", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"kipsuunde nebo aeng'", "kipsuunde ne taai", "this minute", "kooskoliny", "last month", "next month", "ng'atyaato", "this month", "iwootkuut", "koang'wan", "last week", "last year", "next week", "next year", "ng'eiyeet", "this hour", "this week", "this year", "kiptaamo", "sekondit", "koaeng'", "kosomok", "kotisap", "minitit", "rooptui", "arawet", "bureet", "epeeso", "karoon", "kenyit", "komuut", "kotaai", "mamuut", "mulgul", "betut", "koosk", "mutai", "paagi", "raini", "wikit", "amut", "kolo", "ngat", "sait", "bur", "epe", "gmt", "iwo", "koa", "kol", "kom", "koo", "kos", "kot", "kpa", "kpt", "krn", "kts", "mam", "mul", "nge", "now", "paa", "roo", "taa", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }

@@ -50,6 +50,7 @@ func init() {
 			"am":        {"am"},
 			"de":        {"december"},
 			"fe":        {"february"},
+			"hr":        {"hour"},
 			"ma":        {"march"},
 			"me":        {"may"},
 			"no":        {"november"},
@@ -91,6 +92,6 @@ func init() {
 			"jaat":        "0 day ago",
 			"now":         "0 second ago",
 		},
-		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "settembar", "this hour", "this week", "this year", "aramisay", "disambar", "novembar", "alarbay", "febirie", "oktobar", "aburil", "arjuma", "fuleeŋ", "lookuŋ", "minute", "sanvie", "second", "sibiti", "suuyee", "talata", "dimas", "fucen", "funak", "kajom", "teneŋ", "emit", "hour", "jaat", "mars", "sueŋ", "ala", "ara", "arj", "dim", "gmt", "mee", "now", "sib", "tal", "ten", "utc", "ab", "am", "de", "fe", "ma", "me", "no", "ok", "pm", "sa", "se", "su", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
+		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "settembar", "this hour", "this week", "this year", "aramisay", "disambar", "novembar", "alarbay", "febirie", "oktobar", "aburil", "arjuma", "fuleeŋ", "lookuŋ", "minute", "sanvie", "second", "sibiti", "suuyee", "talata", "dimas", "fucen", "funak", "kajom", "teneŋ", "emit", "hour", "jaat", "mars", "sueŋ", "ala", "ara", "arj", "dim", "gmt", "mee", "now", "sib", "tal", "ten", "utc", "ab", "am", "de", "fe", "hr", "ma", "me", "no", "ok", "pm", "sa", "se", "su", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
 }
