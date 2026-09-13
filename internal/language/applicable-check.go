@@ -1,6 +1,9 @@
 package language
 
 import (
+	"slices"
+	"strings"
+	"sync"
 	"unicode/utf8"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
@@ -9,6 +12,32 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 )
+
+var applicabilityDictionaries sync.Map
+
+func applicabilityDictionary(ld *data.LocaleData) map[string]bool {
+	if dictionary, exists := applicabilityDictionaries.Load(ld); exists {
+		return dictionary.(map[string]bool)
+	}
+	dictionary := map[string]bool{}
+	addWords := func(phrase string, meaningful bool) {
+		words := []string{phrase}
+		if strings.Contains(phrase, " ") {
+			words = strings.Fields(phrase)
+		}
+		for _, word := range words {
+			dictionary[word] = dictionary[word] || meaningful
+		}
+	}
+	for phrase, translations := range ld.Translations {
+		addWords(phrase, slices.ContainsFunc(translations, func(translation string) bool { return translation != "" }))
+	}
+	for phrase, translation := range ld.RelativeType {
+		addWords(phrase, translation != "")
+	}
+	stored, _ := applicabilityDictionaries.LoadOrStore(ld, dictionary)
+	return stored.(map[string]bool)
+}
 
 // IsApplicable checks the specified locale data is applicable to translate the date string `str`.
 // The `str` parameter is a string representing date and/or time in a recognizably valid format.
@@ -91,10 +120,11 @@ func CountApplicability(cfg *setting.Configuration, ld *data.LocaleData, str str
 
 	// Count token that exist in dictionary
 	var nExist, nSkipped int
+	dictionary := applicabilityDictionary(ld)
 	for token := range tokens {
-		translations, exist := ld.Translations[token]
+		meaningful, exist := dictionary[token]
 		if exist && utf8.RuneCountInString(token) >= 2 {
-			if len(translations) > 0 {
+			if meaningful {
 				nExist++
 			} else {
 				nSkipped++

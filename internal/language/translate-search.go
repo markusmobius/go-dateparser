@@ -20,7 +20,8 @@ func TranslateSearch(cfg *setting.Configuration, ld *data.LocaleData, str string
 	var original [][]string
 	var translated [][]string
 	sentences := SplitSentence(ld, str)
-	joinUnusable := ld.Name == "zh" || ld.Name == "ja"
+	baseLanguage, _, _ := strings.Cut(ld.Name, "-")
+	joinUnusable := baseLanguage == "zh" || baseLanguage == "ja"
 
 	for _, sentence := range sentences {
 		var originalChunk []string
@@ -47,7 +48,7 @@ func TranslateSearch(cfg *setting.Configuration, ld *data.LocaleData, str string
 			if word == "" || word == " " {
 				translatedChunk = append(translatedChunk, []string{word})
 				originalChunk = append(originalChunk, originalTokens[i])
-			} else if isInDictionary(ld, currentAndNextJoined) && !dashes.Contain(word) && !joinUnusable {
+			} else if i < lastTokenIndex && i+1 < len(originalTokens) && isInDictionary(ld, currentAndNextJoined) && !dashes.Contain(word) && !joinUnusable {
 				translations, _ := translateWord(ld, currentAndNextJoined)
 				joinedOriginalToken := joinChunk(ld, originalTokens[i], originalTokens[i+1])
 

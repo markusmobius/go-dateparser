@@ -6,10 +6,10 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/hablullah/go-hijri"
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/parser/absolute"
+	"github.com/markusmobius/go-dateparser/internal/parser/calendars"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
@@ -33,7 +33,6 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 	// Sanitize the string
 	str = strutil.SanitizeDate(str)
 	str = strutil.StripBraces(str)
-	str, tz := timezone.PopTzOffset(str)
 
 	// Create parser
 	parser := &absolute.Parser{
@@ -48,46 +47,37 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 	}
 
 	// Parse the string
-	dt, err := parser.Parse(tz)
-	if err != nil {
-		return date.Date{}, err
-	}
-
-	// Apply the popped timezone
-	if !dt.IsZero() && !tz.IsZero() {
-		dt.Time = time.Date(dt.Time.Year(), dt.Time.Month(), dt.Time.Day(),
-			dt.Time.Hour(), dt.Time.Minute(), dt.Time.Second(), dt.Time.Nanosecond(),
-			time.FixedZone(tz.Name, tz.Offset))
-	}
-
-	return dt, nil
+	return parser.Parse(timezone.OffsetData{})
 }
 
-func getDateTimeParams(p *absolute.Parser) map[string]int {
+func getDateTimeParams(p *absolute.Parser) (map[string]int, error) {
 	// Get current time in Hijri
-	hd, _ := hijri.CreateUmmAlQuraDate(p.Now)
+	current, err := calendars.HijriFromGregorian(p.Now)
+	if err != nil {
+		return nil, err
+	}
 
 	// Get component values
 	day, dayExist := p.ComponentValues["day"]
 	if !dayExist || day == 0 {
-		day = int(hd.Day)
+		day = current[2]
 	}
 
 	month, monthExist := p.ComponentValues["month"]
 	if !monthExist || month == 0 {
-		month = int(hd.Month)
+		month = current[1]
 	}
 
 	year, yearExist := p.ComponentValues["year"]
 	if !yearExist || year == 0 {
-		year = int(hd.Year)
+		year = current[0]
 	}
 
 	return map[string]int{
 		"year":  year,
 		"month": month,
 		"day":   day,
-	}
+	}, nil
 }
 
 func getDatePartValue(p *absolute.Parser, component, token, directive string) (int, bool) {
@@ -130,20 +120,22 @@ func createDateTime(p *absolute.Parser, pms map[string]int, loc *time.Location) 
 	Y, M, D := pms["year"], pms["month"], pms["day"]
 	H, m, s, ns := pms["hour"], pms["minute"], pms["second"], pms["nanosecond"]
 
-	// Fix leap year
-	if D == 30 && M == 12 && !isHijriLeapYear(Y) {
-		Y = getCorrectHijriLeapYear(p.Config, Y)
+	lastDayOfMonth, err := calendars.HijriMonthLength(Y, M)
+	if err != nil {
+		return time.Time{}, err
 	}
-
-	// Fix max day
-	lastDayOfMonth := getLastDayOfHijriMonth(Y, M)
-	if D > lastDayOfMonth {
+	_, explicitDay := p.ComponentTokens["day"]
+	_, explicitWeekday := p.ComponentTokens["weekday"]
+	if !explicitDay && !explicitWeekday && (D < 1 || D > lastDayOfMonth) {
 		D = lastDayOfMonth
 	}
 
 	// Convert Hijri to Gregorian
-	gd := hijri.UmmAlQuraDate{Year: int64(Y), Month: int64(M), Day: int64(D)}.ToGregorian()
-	return time.Date(gd.Year(), gd.Month(), gd.Day(), H, m, s, ns, loc), nil
+	converted, err := calendars.HijriToGregorian(Y, M, D)
+	if err != nil {
+		return time.Time{}, err
+	}
+	return time.Date(converted[0], time.Month(converted[1]), converted[2], H, m, s, ns, loc), nil
 }
 
 func isDigit(s string) bool {
@@ -154,61 +146,6 @@ func isDigit(s string) bool {
 	}
 
 	return true
-}
-
-func isHijriLeapYear(year int) bool {
-	hd := hijri.UmmAlQuraDate{Year: int64(year), Month: 12, Day: 30}
-	gd := hd.ToGregorian()
-	rhd, _ := hijri.CreateUmmAlQuraDate(gd)
-	return rhd.Day == 30
-}
-
-func getHijriLeapYear(year int, toFuture bool) int {
-	step := 1
-	if !toFuture {
-		step = -1
-	}
-
-	for {
-		year += step
-		if isHijriLeapYear(year) {
-			return year
-		}
-	}
-}
-
-func getCorrectHijriLeapYear(cfg *setting.Configuration, currentYear int) int {
-	var dateSource setting.PreferredDateSource
-	if cfg != nil {
-		dateSource = cfg.PreferredDateSource
-	}
-
-	switch dateSource {
-	case setting.Future:
-		return getHijriLeapYear(currentYear, true)
-	case setting.Past:
-		return getHijriLeapYear(currentYear, false)
-	default:
-		nextLeapYear := getHijriLeapYear(currentYear, true)
-		prevLeapYear := getHijriLeapYear(currentYear, false)
-		nextLeapYearIsCloser := nextLeapYear-currentYear < currentYear-prevLeapYear
-		if nextLeapYearIsCloser {
-			return nextLeapYear
-		} else {
-			return prevLeapYear
-		}
-	}
-}
-
-func getLastDayOfHijriMonth(year, month int) int {
-	switch {
-	case month == 12 && isHijriLeapYear(year):
-		return 30
-	case month%2 == 0:
-		return 29
-	default:
-		return 30
-	}
 }
 
 func handleTwoDigitYear(year int) int {

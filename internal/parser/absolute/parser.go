@@ -42,7 +42,7 @@ type TokenParseResult struct {
 type Parser struct {
 	Now                 time.Time
 	Config              *setting.Configuration
-	FnGetDateTimeParams func(p *Parser) map[string]int
+	FnGetDateTimeParams func(p *Parser) (map[string]int, error)
 	FnCreateDateTime    func(p *Parser, params map[string]int, loc *time.Location) (time.Time, error)
 	FnGetDatePartValue  func(p *Parser, component, token, directive string) (int, bool)
 
@@ -288,7 +288,10 @@ func (p *Parser) Parse(tz timezone.OffsetData) (date.Date, error) {
 
 	// Fetch datetime parameters
 	dtLocation := p.Now.Location()
-	dtParams := p.FnGetDateTimeParams(p)
+	dtParams, err := p.FnGetDateTimeParams(p)
+	if err != nil {
+		return date.Date{}, err
+	}
 	if !p.ParsedTime.IsZero() {
 		dtParams["hour"] = p.ParsedTime.Hour()
 		dtParams["minute"] = p.ParsedTime.Minute()

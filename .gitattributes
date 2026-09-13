@@ -1,0 +1,4 @@
+/go.mod text eol=lf
+/go.sum text eol=lf
+/internal/parser/calendars/data.json -text
+/testdata/python-features.json -text

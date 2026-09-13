@@ -60,23 +60,32 @@ func (p *Parser) Search(cfg *Configuration, text string) (string, []SearchResult
 		text = rxRussianSearchFrom.ReplaceAllString(text, "${1}[FROM] ${2}")
 	}
 
-	// Get list of used languages
-	cfgLanguages := cfg.Languages
-	if len(cfgLanguages) == 0 && p.DetectLanguagesFunction != nil {
-		cfgLanguages = p.DetectLanguagesFunction(text)
-	}
-
-	languages, err := language.GetLanguages(cfg.Locales, cfgLanguages, cfg.UseGivenOrder)
-	if err != nil {
-		return "", nil, err
-	}
-
-	// Generate charsets
-	uniqueCharsets := p.initUniqueCharsets(languages)
-
 	// Detect language of the text
 	iCfg := cfg.toInternalConfig()
-	lang, detectionErr := language.DetectFullTextLanguage(iCfg, text, languages, uniqueCharsets)
+	var lang string
+	var detectionErr error
+	if len(cfg.Languages) == 0 && len(cfg.Locales) == 0 && p.DetectLanguagesFunction != nil {
+		detected := p.DetectLanguagesFunction(text)
+		if len(detected) == 0 {
+			detected = cfg.DefaultLanguages
+		}
+		if len(detected) > 0 {
+			languages, err := language.GetLanguages(nil, detected, true)
+			if err != nil {
+				return "", nil, err
+			}
+			lang = languages[0]
+		} else {
+			detectionErr = fmt.Errorf("detector failed to find the suitable language")
+		}
+	} else {
+		languages, err := language.GetLanguages(cfg.Locales, cfg.Languages, cfg.UseGivenOrder)
+		if err != nil {
+			return "", nil, err
+		}
+		uniqueCharsets := p.initUniqueCharsets(languages)
+		lang, detectionErr = language.DetectFullTextLanguage(iCfg, text, languages, uniqueCharsets)
+	}
 	var candidates []string
 	if lang != "" {
 		candidates = append(candidates, lang)
@@ -216,13 +225,15 @@ func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, trans
 	var parsedList []parsedSearch
 	var subStrings []string
 	needRelativeBase := iCfg.CurrentTime.IsZero()
+	cfg := configFromInternal(iCfg)
+	cfg.Languages = slices.Clone(languages)
 
 	for i, entry := range parserEntries {
 		if utf8.RuneCountInString(entry) <= 2 {
 			continue
 		}
 
-		parsedEntry, isRelative := p.parseEntry(iCfg, entry, translation[i], parsedList, needRelativeBase)
+		parsedEntry, isRelative := p.parseEntry(cfg, entry, translation[i], parsedList, needRelativeBase)
 		if !parsedEntry.IsZero() {
 			parsedList = append(parsedList, parsedSearch{parsedEntry, isRelative})
 			subStrings = append(subStrings, strutil.TrimChars(original[i], ` .,:()[]-'`))
@@ -246,7 +257,7 @@ func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, trans
 						continue
 					}
 
-					parsedJEntry, jIsRelative := p.parseEntry(iCfg, jEntry,
+					parsedJEntry, jIsRelative := p.parseEntry(cfg, jEntry,
 						split.EntryParts[j], currentParseResult, needRelativeBase)
 
 					jSubString := strutil.TrimChars(split.OriginalParts[j], ` .,:()[]-`)
@@ -272,13 +283,12 @@ func (p *Parser) parseFoundObjects(iCfg *setting.Configuration, languages, trans
 	return parsedList, subStrings
 }
 
-func (p *Parser) parseEntry(iCfg *setting.Configuration, entry, translation string, parsedList []parsedSearch, needRelativeBase bool) (date.Date, bool) {
+func (p *Parser) parseEntry(cfg *Configuration, entry, translation string, parsedList []parsedSearch, needRelativeBase bool) (date.Date, bool) {
 	// Normalize entry
 	entry = strings.ReplaceAll(entry, "ngày", "")
 	entry = strings.ReplaceAll(entry, "am", "")
 
 	// Parse entry
-	cfg := configFromInternal(iCfg)
 	parsedEntry, _ := p.Parse(cfg, entry)
 
 	// If needed, generate relative base and parse the entry
@@ -289,7 +299,6 @@ func (p *Parser) parseEntry(iCfg *setting.Configuration, entry, translation stri
 
 	if !relativeBase.IsZero() {
 		cfg.CurrentTime = relativeBase
-		iCfg.CurrentTime = relativeBase
 		parsedEntry, _ = p.Parse(cfg, entry)
 	}
 

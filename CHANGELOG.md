@@ -1,3 +1,14 @@
+### v1.4.5 - 2026-09-13
+
+- Roll up v1.4.4's single-thread improvements: lazy locale applicability, shared normalization/digit conversion, and cached default locale ordering. No internal worker goroutines or new build flags.
+- Correct Jalali and Hijri parsing against Python dateparser 1.4.3: MDY public defaults, calendar-local missing fields, actual month lengths, omitted-day clamping, explicit-day rollover, two-digit years, and reference-date bounds. Callers relying on the previous DMY default should set `Configuration.DateOrder` explicitly.
+- Replace the Go Jalali/Hijri conversion dependencies with immutable native tables generated from pinned Python `convertdate` and `hijridate` packages. Remove the now-unused `go-jalaali`, `go-hijri`, and `go-juliandays` dependencies; Python is not required at runtime.
+- Correct search language evidence and detector handling. Explicit languages/locales bypass the callback, returned detector languages retain their order, and translated fragments do not invoke it again. Fix Chinese/Japanese timestamp joining and Cantonese splitter bounds.
+- Reject relative dates and time spans outside Python's supported datetime range instead of overflowing; preserve valid large whole-second offsets without overflowing `time.Duration`.
+- Add a reproducible independent Python fixture: 7,504 calendar cases, 178 exact search cases, and 10 exception inputs checked for safe handling. Record dependency versions and imported source hashes; retain known compatibility exceptions in `UPSTREAM.md`.
+- Add a Go-repository benchmark entry point comparing a feature-capable Rust checkout with verified published Go v1.4.5 across search, n-grams, time spans, Jalali, and Hijri. Explicit pre-release runs are labelled worktree. Historical v1.4.3/v1.4.4 samples are retained unchanged, not relabelled as v1.4.5.
+- Preserve both root license files, generated locale/matcher data, and the Go 1.26 minimum. Python dateparser remains pinned to v1.4.3.
+
 ### v1.4.4 - 2026-09-12
 
 - Check locale applicability lazily in the existing priority order, stopping after a successful parse while preserving eager configuration validation and callback behavior.

@@ -82,6 +82,16 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	if len(relDurations) == 0 {
 		return time.Time{}, 0
 	}
+	for unit, maximum := range map[string]float64{
+		"year": 10000, "month": 12 * 10000, "day": 366 * 10000,
+		"hour": 24 * 366 * 10000, "minute": 60 * 24 * 366 * 10000,
+		"second": 60 * 60 * 24 * 366 * 10000,
+	} {
+		value := relDurations[unit]
+		if math.IsInf(value, 0) || math.IsNaN(value) || math.Abs(value) > maximum {
+			return time.Time{}, 0
+		}
+	}
 
 	// Extract period from relative durations
 	period := date.Day
@@ -105,14 +115,13 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	year := int(relDurations["year"])
 	month := int(relDurations["month"])
 	day := int(relDurations["day"])
-	hour := time.Duration(relDurations["hour"]) * time.Hour
-	minute := time.Duration(relDurations["minute"]) * time.Minute
-	second := time.Duration(relDurations["second"]) * time.Second
+	seconds := int64(relDurations["hour"]*3600 + relDurations["minute"]*60 + relDurations["second"])
 
 	date := addDate(cfg, now, year, month, day)
-	date = date.Add(hour)
-	date = date.Add(minute)
-	date = date.Add(second)
+	date = time.Unix(date.Unix()+seconds, int64(date.Nanosecond())).In(date.Location())
+	if date.Year() < 1 || date.Year() > 9999 {
+		return time.Time{}, 0
+	}
 
 	return date, period
 }

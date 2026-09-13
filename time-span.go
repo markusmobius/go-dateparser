@@ -43,6 +43,9 @@ func searchTimeSpan(cfg *Configuration, lang, text string) []SearchResult {
 				return nil
 			}
 		}
+		if number > 366*10000 || pattern.Unit == "month" && cfg.DefaultDaysInMonth > 366*10000 {
+			return nil
+		}
 
 		base := cfg.CurrentTime
 		if base.IsZero() {
@@ -84,6 +87,9 @@ func searchTimeSpan(cfg *Configuration, lang, text string) []SearchResult {
 			} else {
 				start = boundary
 			}
+		}
+		if start.Year() < 1 || start.Year() > 9999 || end.Year() < 1 || end.Year() > 9999 {
+			return nil
 		}
 
 		return []SearchResult{

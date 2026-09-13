@@ -24,10 +24,9 @@ func TestParse(t *testing.T) {
 		{" 17-01-1437 هـ 08:30 مساءً", tt(2015, 10, 30, 20, 30)},
 		{"29-02-1433 هـ, 06:22 صباحاً", tt(2012, 1, 23, 6, 22)},
 		{"04-03-1433 هـ, 10:08 مساءً", tt(2012, 1, 27, 22, 8)},
-		// Safar is only up to 29, so here parser should limit the day to 29.
-		{"30-02-1433", tt(2012, 1, 23)},
+		{"30-02-1433", tt(2012, 1, 24)},
 		// Handle two digit year
-		{"30-02-33", tt(2012, 1, 23)},
+		{"30-02-33", tt(2012, 1, 24)},
 		{"10-03-90", tt(1970, 5, 16)},
 	}
 
@@ -53,6 +52,39 @@ func TestParse(t *testing.T) {
 
 	if nFailed > 0 {
 		fmt.Printf("Failed %d from %d tests\n", nFailed, len(tests))
+	}
+}
+
+func TestParsePythonCalendarRules(t *testing.T) {
+	cfg := &setting.Configuration{
+		DateOrder:   "DMY",
+		CurrentTime: tt(2024, 3, 20, 12, 0),
+	}
+	for _, test := range []struct {
+		input string
+		want  time.Time
+	}{
+		{"1/1/1343", tt(1924, 8, 1)},
+		{"1/1/1355", tt(1936, 3, 24)},
+		{"30/12/1356", tt(1938, 3, 2)},
+		{"01/02", tt(2023, 8, 17)},
+		{"23:30", tt(2024, 3, 20, 23, 30)},
+	} {
+		t.Run(test.input, func(t *testing.T) {
+			parsed, err := Parse(cfg, test.input)
+			if assert.NoError(t, err) {
+				assert.True(t, parsed.Time.Equal(test.want), "got %s, want %s", parsed.Time, test.want)
+			}
+		})
+	}
+	for _, input := range []string{"1/1/1342", "1/1/1501", "30/12/9999"} {
+		_, err := Parse(cfg, input)
+		assert.Error(t, err, input)
+	}
+	for _, reference := range []time.Time{tt(1924, 7, 31), tt(2077, 11, 17)} {
+		cfg.CurrentTime = reference
+		_, err := Parse(cfg, "1/1/1444")
+		assert.Error(t, err, reference)
 	}
 }
 

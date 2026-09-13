@@ -5,10 +5,10 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/jalaali/go-jalaali"
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/parser/absolute"
+	"github.com/markusmobius/go-dateparser/internal/parser/calendars"
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
@@ -16,7 +16,7 @@ import (
 
 func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 	// Normalize the string
-	str = strutil.NormalizeString(str)
+	str = strutil.NormalizeUnicode(str)
 	str = digit.NormalizeString(str)
 
 	// Translate the foreign texts
@@ -29,7 +29,6 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 	str = removeWeekdayTranslations(str)
 	str = strutil.SanitizeDate(str)
 	str = strutil.StripBraces(str)
-	str, tz := timezone.PopTzOffset(str)
 
 	// Create parser
 	parser := &absolute.Parser{
@@ -44,46 +43,37 @@ func Parse(cfg *setting.Configuration, str string) (date.Date, error) {
 	}
 
 	// Parse the string
-	dt, err := parser.Parse(tz)
-	if err != nil {
-		return date.Date{}, err
-	}
-
-	// Apply the popped timezone
-	if !dt.IsZero() && !tz.IsZero() {
-		dt.Time = time.Date(dt.Time.Year(), dt.Time.Month(), dt.Time.Day(),
-			dt.Time.Hour(), dt.Time.Minute(), dt.Time.Second(), dt.Time.Nanosecond(),
-			time.FixedZone(tz.Name, tz.Offset))
-	}
-
-	return dt, nil
+	return parser.Parse(timezone.OffsetData{})
 }
 
-func getDateTimeParams(p *absolute.Parser) map[string]int {
+func getDateTimeParams(p *absolute.Parser) (map[string]int, error) {
 	// Get current time in Jalali
-	jd := jalaali.From(p.Now)
+	current, err := calendars.JalaliFromGregorian(p.Now)
+	if err != nil {
+		return nil, err
+	}
 
 	// Get component values
 	day, dayExist := p.ComponentValues["day"]
 	if !dayExist || day == 0 {
-		day = jd.Day()
+		day = current[2]
 	}
 
 	month, monthExist := p.ComponentValues["month"]
 	if !monthExist || month == 0 {
-		month = int(jd.Month())
+		month = current[1]
 	}
 
 	year, yearExist := p.ComponentValues["year"]
 	if !yearExist || year == 0 {
-		year = jd.Year()
+		year = current[0]
 	}
 
 	return map[string]int{
 		"year":  year,
 		"month": month,
 		"day":   day,
-	}
+	}, nil
 }
 
 func getDatePartValue(p *absolute.Parser, component, token, directive string) (int, bool) {
@@ -121,7 +111,7 @@ func getDatePartValue(p *absolute.Parser, component, token, directive string) (i
 
 	if component == "day" && tokenLength <= 2 && tokenIsDigit {
 		day, _ := strconv.Atoi(token)
-		if day >= 1 && day <= 30 {
+		if day >= 1 && day <= 31 {
 			return day, true
 		}
 	}
@@ -133,29 +123,23 @@ func createDateTime(p *absolute.Parser, pms map[string]int, loc *time.Location) 
 	Y, M, D := pms["year"], pms["month"], pms["day"]
 	H, m, s, ns := pms["hour"], pms["minute"], pms["second"], pms["nanosecond"]
 
-	// Fix leap year
-	isLeapYear, err := jalaali.IsLeapYear(Y)
+	lastDayOfMonth, err := calendars.JalaliMonthLength(Y, M)
 	if err != nil {
 		return time.Time{}, err
 	}
-
-	if D == 30 && M == 12 && !isLeapYear {
-		Y = getCorrectLeapYear(p.Config, Y)
-	}
-
-	// Fix max day
-	lastDayOfMonth, err := jalaali.MonthLength(Y, M)
-	if err == nil && D > lastDayOfMonth {
+	_, explicitDay := p.ComponentTokens["day"]
+	_, explicitWeekday := p.ComponentTokens["weekday"]
+	if !explicitDay && !explicitWeekday && (D < 1 || D > lastDayOfMonth) {
 		D = lastDayOfMonth
 	}
 
 	// Convert Jalali to Gregorian
-	gY, gM, gD, err := jalaali.ToGregorian(Y, jalaali.Month(M), D)
+	converted, err := calendars.JalaliToGregorian(Y, M, D)
 	if err != nil {
 		return time.Time{}, err
 	}
 
-	return time.Date(gY, gM, gD, H, m, s, ns, loc), nil
+	return time.Date(converted[0], time.Month(converted[1]), converted[2], H, m, s, ns, loc), nil
 }
 
 func isDigit(s string) bool {
@@ -166,48 +150,6 @@ func isDigit(s string) bool {
 	}
 
 	return true
-}
-
-func getLeapYear(year int, toFuture bool) int {
-	step := 1
-	if !toFuture {
-		step = -1
-	}
-
-	originalYear := year
-
-	for {
-		year += step
-		isLeap, err := jalaali.IsLeapYear(year)
-		if isLeap {
-			return year
-		} else if err != nil {
-			return originalYear
-		}
-	}
-}
-
-func getCorrectLeapYear(cfg *setting.Configuration, currentYear int) int {
-	var dateSource setting.PreferredDateSource
-	if cfg != nil {
-		dateSource = cfg.PreferredDateSource
-	}
-
-	switch dateSource {
-	case setting.Future:
-		return getLeapYear(currentYear, true)
-	case setting.Past:
-		return getLeapYear(currentYear, false)
-	default:
-		nextLeapYear := getLeapYear(currentYear, true)
-		prevLeapYear := getLeapYear(currentYear, false)
-		nextLeapYearIsCloser := nextLeapYear-currentYear < currentYear-prevLeapYear
-		if nextLeapYearIsCloser {
-			return nextLeapYear
-		} else {
-			return prevLeapYear
-		}
-	}
 }
 
 func handleTwoDigitYear(year int) int {

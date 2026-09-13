@@ -8,16 +8,14 @@ import (
 )
 
 // ParseHijri converts an absolute Hijri date in the Umm al-Qura calendar to a
-// Gregorian date. It defaults to DMY order and does not parse relative dates.
+// Gregorian date. It defaults to MDY order and does not parse relative dates.
 func ParseHijri(cfg *Configuration, str string) (date.Date, error) {
 	// Prepare config
 	if cfg == nil {
 		cfg = &Configuration{}
 	}
 
-	// Hijri usually used in Eastern country which uses DMY,
-	// so here it used as default.
-	dateOrder := "DMY"
+	dateOrder := "MDY"
 	if cfg.DateOrder != nil {
 		do := cfg.DateOrder("")
 		if do, valid := validateDateOrder(do); valid {

@@ -8,16 +8,14 @@ import (
 )
 
 // ParseJalali converts an absolute Jalali (Persian or Solar Hijri) date to a
-// Gregorian date. It defaults to DMY order and does not parse relative dates.
+// Gregorian date. It defaults to MDY order and does not parse relative dates.
 func ParseJalali(cfg *Configuration, str string) (date.Date, error) {
 	// Prepare config
 	if cfg == nil {
 		cfg = &Configuration{}
 	}
 
-	// Iran and Afghanistan mostly uses DMY format,
-	// so here it used as default.
-	dateOrder := "DMY"
+	dateOrder := "MDY"
 	if cfg.DateOrder != nil {
 		do := cfg.DateOrder("")
 		if do, valid := validateDateOrder(do); valid {

@@ -22,6 +22,56 @@ behavior, and Go retains its supported language set and detection ranking.
 
 ## Verification
 
+### v1.4.5 Python Reference
+
+Python dateparser **1.4.3** remains the behavioral authority. The independent
+generator in [scripts/python-reference/export.py](scripts/python-reference/export.py)
+uses pinned packages from
+[scripts/python-reference/requirements.txt](scripts/python-reference/requirements.txt).
+It checks calendar dependency versions and records SHA-256 hashes of the
+imported Python sources. Those installed wheel sources have not all been
+independently compared byte-for-byte with the target Git commit.
+
+[testdata/python-features.json](testdata/python-features.json) contains
+7,504 calendar cases and 188 search cases. Of the search cases, 178 compare
+exact text, detected language, datetimes, offsets and callback inputs; ten
+Python exception inputs check safe handling instead of reproducing Python's
+splitter `IndexError` or arithmetic `OverflowError`. Calendar errors compare
+success/failure, not exception wording. Go's finer time periods are normalized
+when compared with Python. Tests explicitly select `PreserveEndOfMonth` where
+needed without changing its optional Go default.
+
+The corrections cover MDY calendar defaults, reference-date conversion using
+local date components, missing fields, actual month lengths, explicit-day
+rollover and supported ranges; search word evidence and detector behavior;
+Chinese/Japanese joining and Cantonese bounds; and relative/time-span overflow.
+The existing Hindi/Lao exceptions below remain. This fixture is substantial
+regression coverage, not a claim of universal Python parity.
+
+The corrected runtime passed the complete Go 1.27.1 cgo-disabled suite, the
+Go 1.26.0 cgo-disabled suite, the Go 1.27.1 race suite in UTC,
+America/New_York and Asia/Kolkata, the native Windows Go 1.27.1 cgo-disabled
+suite, `go vet`, and `go mod verify`. The actual `re2_wasm` backend also passed
+the full suite on Go 1.26.0 with `CGO_ENABLED=1`. Native `re2_cgo` remains
+unqualified because its separate RE2 library is not installed. Python fixture
+and conversion-data regeneration passed `--check` byte-for-byte. These are
+local worktree checks, not hosted CI results for a published tag.
+
+Reproduce the reference data in an isolated Python environment with the pinned
+requirements installed:
+
+```sh
+python scripts/python-reference/export.py --features-output testdata/python-features.json --check
+go test -mod=readonly ./... -run TestPython -count=1
+```
+
+Fixture SHA-256:
+`b138df4fe7beb7dd40c51f01267f78856031a2de4ddbf5e958c95b33a9d5e418`.
+Calendar conversion-data SHA-256:
+`ad31d61fb903d5f2f5d22a38df22e6cba6c3dcf7322d6f325a27df417ebfc2e2`.
+
+### Historical v1.4.4 Verification
+
 The Go-only v1.4.4 optimization keeps the Python v1.4.3 baseline and the
 compatibility ledger below unchanged. On 2026-09-12, the final runtime passed
 the complete Go 1.27.1 race suite in UTC, America/New_York and Asia/Kolkata,
@@ -61,16 +111,22 @@ Two further optimizations are enabled alongside the generated matchers. A conser
 
 Permanent regressions compare timezone candidate rejection against every configured timezone name across boundary combinations and compare token classification against the original regexes on ASCII, Unicode, newline, and malformed-UTF-8 cases. The temporary comparison switches and workload instrumentation remain outside the repository.
 
-## Current Performance
+## Performance
 
-The current **v1.4.3 versus v1.4.4** comparison and reproduction commands are in
-[README.md](README.md#current-measurements). The standardized fixture and runner
+The historical **v1.4.3 versus v1.4.4** comparison and reproduction commands are in
+[README.md](README.md#historical-go-measurements). The standardized fixture and runner
 are shared with RustDateParser. Six balanced launches per version and eight
 warmed passes per launch on one CPU measured 3.85x for automatic locale detection
 and 2.78x for HtmlDate strict/past. The explicit-locale ratio was 0.92x, with
 widely overlapping ranges; it establishes neither a reliable gain nor a
-regression. All raw samples and provenance are published with the v1.4.4 release.
+regression. All raw samples and provenance are retained unchanged as a historical
+asset on the v1.4.5 release; these are not v1.4.5 measurements.
 The earlier 762-input comparison is superseded for current reporting.
+
+The [Rust feature comparison](README.md#rust-feature-comparison) compares
+published Go v1.4.5 with an explicit Rust checkout using the independent Python
+fixture. Pre-release runs select and identify the Go worktree explicitly.
+The newer Rust search optimizations have not been backported to Go.
 
 Locale selection, normalization and ordering are optimized without changing
 word matching or adding a dependency. The Aho-Corasick experiment was not retained
@@ -113,6 +169,48 @@ including at the original baseline. These pre-existing Go results are retained;
 the CLDR refresh does not attempt to reproduce every ambiguous dictionary or
 normalization collision in Python. Custom-layout parsing can also leave Go's
 Locale empty when no translation was needed, unlike Python's locale reporting.
+
+## Calendar Data Provenance
+
+[internal/parser/calendars/data.json](internal/parser/calendars/data.json)
+contains integer epoch-day boundaries generated with `convertdate` 2.4.1
+and `hijridate` 2.6.0. Jalali year starts are calculated through `convertdate`
+using PyMeeus 0.5.12; Umm al-Qura month starts are converted from `hijridate`'s
+table. The generator verifies round trips and month/year lengths. Go embeds
+only the resulting numeric data and implements lookup and boundary arithmetic
+natively; none of these Python packages is linked or bundled at runtime.
+
+PyMeeus's source declares LGPL-3.0-or-later and is an external generation-time
+dependency. Its source and license are available from
+[PyMeeus](https://github.com/architest/pymeeus). Reproducing the data requires
+installing the pinned packages with their own accompanying licenses.
+
+The MIT notices for the calendar-data sources are retained here. The two
+existing project license files remain unchanged.
+
+### MIT Calendar Source Notices
+
+`convertdate` 2.4.1: Copyright (c) 2014-2022 Neil Freeman.
+
+`hijridate` 2.6.0: Copyright (c) Mohammed Alshehri.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
 ## Commit Ledger
 

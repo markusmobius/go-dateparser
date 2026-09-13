@@ -72,6 +72,30 @@ func TestParse(t *testing.T) {
 	}
 }
 
+func TestParsePythonCalendarDefaults(t *testing.T) {
+	cfg := &setting.Configuration{
+		DateOrder:   "DMY",
+		CurrentTime: tt(2024, 3, 20, 12, 0),
+	}
+	for _, test := range []struct {
+		input string
+		want  time.Time
+	}{
+		{"01/02", tt(2024, 4, 20)},
+		{"23:30", tt(2024, 3, 20, 23, 30)},
+		{"31/1/1403", tt(2024, 4, 19)},
+		{"30/12/1356", tt(1978, 3, 21)},
+		{"30/02/1433", tt(2054, 5, 20)},
+	} {
+		t.Run(test.input, func(t *testing.T) {
+			parsed, err := Parse(cfg, test.input)
+			if assert.NoError(t, err) {
+				assert.True(t, parsed.Time.Equal(test.want), "got %s, want %s", parsed.Time, test.want)
+			}
+		})
+	}
+}
+
 func tt(Y, M, D int, times ...int) time.Time {
 	nTimes := len(times)
 	var H, m, s, ms int

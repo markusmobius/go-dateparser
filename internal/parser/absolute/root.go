@@ -25,7 +25,7 @@ func Parse(cfg *setting.Configuration, str string, tz timezone.OffsetData) (date
 	return parser.Parse(tz)
 }
 
-func getDateTimeParams(p *Parser) map[string]int {
+func getDateTimeParams(p *Parser) (map[string]int, error) {
 	// Get component values
 	day, dayExist := p.ComponentValues["day"]
 	if !dayExist || day == 0 {
@@ -46,7 +46,7 @@ func getDateTimeParams(p *Parser) map[string]int {
 		"year":  year,
 		"month": month,
 		"day":   day,
-	}
+	}, nil
 }
 
 func createDateTime(p *Parser, pms map[string]int, loc *time.Location) (time.Time, error) {

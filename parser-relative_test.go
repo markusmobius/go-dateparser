@@ -993,15 +993,9 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"4 週後", pfpDiff{"week": 4}, Day},
 	}
 
-	crazyTimes := []testScenario{
-		{"5000 years ago", pfpDiff{"year": -5000}, Year},
-		{"2014 years ago", pfpDiff{"year": -2014}, Year},
-		{"123456789 hour", pfpDiff{"hour": -123456789}, Hour},
-		{"123456789123 hour", pfpDiff{"hour": -123456789123}, Hour},
-		{"1234567 days", pfpDiff{"day": -1234567}, Day},
-		{"1234567891 days", pfpDiff{"day": -1234567891}, Day},
-		{"12345678912 days", pfpDiff{"day": -12345678912}, Day},
-		{"123455678976543 month", pfpDiff{"month": -123455678976543}, Month},
+	outOfRange := []string{
+		"5000 years ago", "2014 years ago", "123456789 hour", "123456789123 hour",
+		"1234567 days", "1234567891 days", "12345678912 days", "123455678976543 month",
 	}
 
 	pastSeconds := []testScenario{
@@ -1013,7 +1007,6 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 	tests := []testScenario{}
 	tests = append(tests, pastTimes...)
 	tests = append(tests, futureTimes...)
-	tests = append(tests, crazyTimes...)
 	tests = append(tests, pastSeconds...)
 
 	nFailed := 0
@@ -1033,6 +1026,12 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 
 		// Track failure
 		if !passed {
+			nFailed++
+		}
+	}
+	for _, input := range outOfRange {
+		parsed, err := relativeTestParser.Parse(&relativeTestConfig, input)
+		if !assert.Error(t, err, input) || !assert.True(t, parsed.IsZero(), input) {
 			nFailed++
 		}
 	}
