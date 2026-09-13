@@ -19,6 +19,21 @@ string operations, not Python regex syntax or Python serialization caches.
 The existing UseGivenOrder setting supplies upstream's given-language-order
 behavior, and Go retains its supported language set and detection ranking.
 
+## v1.4.7 Dependency Refresh
+
+Go-DateParser v1.4.7 uses published Go-Dateutil **v2.9.1**, source commit
+`1a29d3cc92f3491373cbfddb3059a00b0fa0a1d6`, with module checksum
+`h1:5g4V8s1vg/EAmhu/g14VQcHgocNf8H8VD4IzOfZg+1Y=`. Ordinary module resolution
+is used without replacements or a Go workspace. The shared dependency's added
+CPython ISO/timestamp and explicit parser-context APIs support HtmlDate; this
+consumer continues to use its unchanged relative-arithmetic API.
+
+No DateParser runtime algorithms, locale/conversion data, existing fixture
+expectations, or license files change in v1.4.7. Python dateparser **1.4.3** and
+python-dateutil **2.9.0.post0** remain the behavioral references. The v1.4.6
+integration below and all historical benchmark observations retain their
+original version identities; no v1.4.7 timings have been collected.
+
 ## v1.4.6 Dateutil Integration
 
 Relative parsing and the month-span operations now use

@@ -4,10 +4,10 @@ This package parses localized dates in string formats commonly found on web page
 
 Requires **Go 1.26.0 or newer**. The module recommends Go 1.27.1 for development; normal builds do not require cgo or re2go.
 
-Install **Go-DateParser v1.4.6** inside your project:
+Install **Go-DateParser v1.4.7** inside your project:
 
 ```sh
-go get github.com/markusmobius/go-dateparser@v1.4.6
+go get github.com/markusmobius/go-dateparser@v1.4.7
 ```
 
 ## Table of Contents
@@ -52,7 +52,7 @@ go get github.com/markusmobius/go-dateparser@v1.4.6
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-Go-DateParser v1.4.6 adds Python-compatible Dateutil arithmetic and explicit Gregorian calendar validation to the existing single-thread parsing, search, and calendar implementation. See [CHANGELOG.md](CHANGELOG.md) for behavior changes and [UPSTREAM.md](UPSTREAM.md) for reference data and verification limits.
+Go-DateParser v1.4.7 updates the shared Dateutil dependency to v2.9.1, retaining v1.4.6's Python-compatible arithmetic, explicit Gregorian validation, and single-thread parsing, search, and calendar implementation. No DateParser runtime algorithms change in v1.4.7. See [CHANGELOG.md](CHANGELOG.md) for changes and [UPSTREAM.md](UPSTREAM.md) for verification limits. The performance tables retain their actual v1.4.3, v1.4.5, and v1.4.6 measurements; they are not relabeled as v1.4.7 results.
 
 This package tracks the applicable changes through Python dateparser [v1.4.3][original-tag], commit [9ce60b1][original-commit]. The previous baseline, `02bd2e5`, was the v1.2.1 release commit. [UPSTREAM.md](UPSTREAM.md) accounts for all 66 intervening commits, including Python-specific changes that do not apply to Go, verification results, and known compatibility exceptions.
 
@@ -61,7 +61,7 @@ The existing Go APIs and intentional differences are preserved:
 - Custom formats use Go time layouts, not Python strptime directives.
 - Python can return naive datetimes; Go `time.Time` always has a location. `CurrentTime` defaults to UTC.
 - Go provides finer hour/minute/second periods and represents relative weeks with the `Day` period.
-- Relative month/year arithmetic uses [Go-Dateutil v2.9.0](https://github.com/markusmobius/go-dateutil/releases/tag/v2.9.0), matching Python's month-end clamping. `PreserveEndOfMonth` is deprecated and has no effect.
+- Relative month/year arithmetic uses [Go-Dateutil v2.9.1](https://github.com/markusmobius/go-dateutil/releases/tag/v2.9.1), matching Python's month-end clamping. `PreserveEndOfMonth` is deprecated and has no effect.
 - `UseGivenOrder` provides the equivalent of Python's `USE_GIVEN_LANGUAGE_ORDER` setting.
 - Translation uses RE2-compatible expressions and Go string operations, with generated locale data from CLDR 44.1.0.
 

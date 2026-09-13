@@ -1,3 +1,9 @@
+### v1.4.7 - 2026-09-13
+
+- Update the published shared dependency to Go-Dateutil v2.9.1, with normal checksum-verified module resolution and no local replacement.
+- Retain DateParser's runtime algorithms, relative-arithmetic behavior, public APIs, locale/conversion data, licenses, and caller-owned concurrency. Python dateparser 1.4.3 remains the reference.
+- Keep historical v1.4.3/v1.4.5/v1.4.6 performance measurements under their original versions; no new benchmark results are claimed for this dependency-only release.
+
 ### v1.4.6 - 2026-09-13
 
 - Use published Go-Dateutil v2.9.0 for relative parsing and month-based time spans, following Python dateparser 1.4.3 and python-dateutil 2.9.0.post0. No local dependency replacement or Python runtime is required.
