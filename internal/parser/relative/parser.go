@@ -12,6 +12,7 @@ import (
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
+	"github.com/markusmobius/go-dateutil/v2/relativedelta"
 )
 
 var (
@@ -110,39 +111,30 @@ func parseDate(cfg *setting.Configuration, str string, now time.Time) (time.Time
 	case keyExist(relDurations, "year"):
 		period = date.Year
 	}
+	if cfg.ReturnTimeAsPeriod {
+		fractionalHours := math.Mod(relDurations["day"], 1) * 24
+		if math.Trunc(fractionalHours) != 0 {
+			period = min(period, date.Hour)
+		}
+		fractionalMinutes := math.Mod(relDurations["hour"]+fractionalHours, 1) * 60
+		if math.Trunc(fractionalMinutes) != 0 {
+			period = min(period, date.Minute)
+		}
+		fractionalSeconds := math.Mod(relDurations["minute"]+fractionalMinutes, 1) * 60
+		if math.Trunc(fractionalSeconds) != 0 {
+			period = min(period, date.Second)
+		}
+	}
 
-	// Convert relative durations (which in float64) to usable format
-	year := int(relDurations["year"])
-	month := int(relDurations["month"])
-	day := int(relDurations["day"])
-	seconds := int64(relDurations["hour"]*3600 + relDurations["minute"]*60 + relDurations["second"])
-
-	date := addDate(cfg, now, year, month, day)
-	date = time.Unix(date.Unix()+seconds, int64(date.Nanosecond())).In(date.Location())
-	if date.Year() < 1 || date.Year() > 9999 {
+	date, err := (relativedelta.Delta{
+		Years: relDurations["year"], Months: relDurations["month"], Days: relDurations["day"],
+		Hours: relDurations["hour"], Minutes: relDurations["minute"], Seconds: relDurations["second"],
+	}).Apply(now)
+	if err != nil {
 		return time.Time{}, 0
 	}
 
 	return date, period
-}
-
-func addDate(cfg *setting.Configuration, date time.Time, years, months, days int) time.Time {
-	if !cfg.PreserveEndOfMonth {
-		return date.AddDate(years, months, days)
-	}
-
-	y, m, d := date.Date()
-	m += time.Month(months)
-	y += years
-
-	lastDay := time.Date(y, m+1, 0, 0, 0, 0, 0, time.UTC).Day()
-	if d > lastDay {
-		d = lastDay
-	}
-
-	date = time.Date(y, m, d, date.Hour(), date.Minute(), date.Second(), date.Nanosecond(), date.Location())
-
-	return date.AddDate(0, 0, days)
 }
 
 func allWordsAreUnits(s string) bool {
@@ -190,128 +182,7 @@ func getRelativeDurations(s string, goingForward bool) map[string]float64 {
 		delete(floatDurations, "week")
 	}
 
-	// Convert fractional values to lower unit
-	for unit := range strings.SplitSeq(relativeUnits, "|") {
-		// Make sure duration exist
-		value, exist := floatDurations[unit]
-		if !exist {
-			continue
-		}
-
-		// If value doesn't have fractional unit, don't change anything
-		isNegative := value < 0
-		value, fraction, hasFraction := splitFraction(value)
-		if !hasFraction {
-			continue
-		}
-
-		switch unit {
-		case "year":
-			year := value
-			month, fraction, _ := splitFraction(fraction * 12)
-			day, fraction, _ := splitFraction(fraction * 30)
-			hour, fraction, _ := splitFraction(fraction * 24)
-			minute, fraction, _ := splitFraction(fraction * 60)
-			second, _, _ := splitFraction(fraction * 60)
-
-			if isNegative {
-				year, month, day = -year, -month, -day
-				hour, minute, second = -hour, -minute, -second
-			}
-
-			floatDurations["year"] = year
-			addMapValue(floatDurations, "month", month)
-			addMapValue(floatDurations, "day", day)
-			addMapValue(floatDurations, "hour", hour)
-			addMapValue(floatDurations, "minute", minute)
-			addMapValue(floatDurations, "second", second)
-
-		case "month":
-			month := value
-			day, fraction, _ := splitFraction(fraction * 30)
-			hour, fraction, _ := splitFraction(fraction * 24)
-			minute, fraction, _ := splitFraction(fraction * 60)
-			second, _, _ := splitFraction(fraction * 60)
-
-			if isNegative {
-				month, day = -month, -day
-				hour, minute, second = -hour, -minute, -second
-			}
-
-			floatDurations["month"] = month
-			addMapValue(floatDurations, "day", day)
-			addMapValue(floatDurations, "hour", hour)
-			addMapValue(floatDurations, "minute", minute)
-			addMapValue(floatDurations, "second", second)
-
-		case "day":
-			day := value
-			hour, fraction, _ := splitFraction(fraction * 24)
-			minute, fraction, _ := splitFraction(fraction * 60)
-			second, _, _ := splitFraction(fraction * 60)
-
-			if isNegative {
-				day = -day
-				hour, minute, second = -hour, -minute, -second
-			}
-
-			floatDurations["day"] = day
-			addMapValue(floatDurations, "hour", hour)
-			addMapValue(floatDurations, "minute", minute)
-			addMapValue(floatDurations, "second", second)
-
-		case "hour":
-			hour := value
-			minute, fraction, _ := splitFraction(fraction * 60)
-			second, _, _ := splitFraction(fraction * 60)
-
-			if isNegative {
-				hour, minute, second = -hour, -minute, -second
-			}
-
-			floatDurations["hour"] = hour
-			addMapValue(floatDurations, "minute", minute)
-			addMapValue(floatDurations, "second", second)
-
-		case "minute":
-			minute := value
-			second, _, _ := splitFraction(fraction * 60)
-
-			if isNegative {
-				minute, second = -minute, -second
-			}
-
-			floatDurations["minute"] = minute
-			addMapValue(floatDurations, "second", second)
-
-		case "second":
-			second := math.Round(value + fraction)
-
-			if isNegative {
-				second = -second
-			}
-
-			floatDurations["second"] = second
-		}
-	}
-
 	return floatDurations
-}
-
-func splitFraction(fl float64) (intPart, fractionPart float64, hasFraction bool) {
-	if fl == 0 {
-		return 0, 0, false
-	}
-
-	value := math.Abs(fl)
-	floorValue := math.Floor(value)
-	return floorValue, value - floorValue, value != floorValue
-}
-
-func addMapValue(m map[string]float64, key string, value float64) {
-	if value != 0 {
-		m[key] += value
-	}
 }
 
 func keyExist(m map[string]float64, key string) bool {

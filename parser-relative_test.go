@@ -87,7 +87,8 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		return relativeTestNow.AddDate(d["year"], d["month"], d["day"]+d["week"]*7).
 			Add(time.Duration(d["hour"]) * time.Hour).
 			Add(time.Duration(d["minute"]) * time.Minute).
-			Add(time.Duration(d["second"]) * time.Second)
+			Add(time.Duration(d["second"]) * time.Second).
+			Add(time.Duration(d["microsecond"]) * time.Microsecond)
 	}
 
 	// Prepare scenarios
@@ -163,8 +164,8 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"2.5 hours", pfpDiff{"hour": -2, "minute": -30}, Minute},
 		{"10.75 minutes", pfpDiff{"minute": -10, "second": -45}, Second},
 		{"1.5 days", pfpDiff{"day": -1, "hour": -12}, Hour},
-		{"0.4 seconds", pfpDiff{"second": 0}, Second},
-		{"0.9 seconds", pfpDiff{"second": -1}, Second},
+		{"0.4 seconds", pfpDiff{"microsecond": -400000}, Second},
+		{"0.9 seconds", pfpDiff{"microsecond": -900000}, Second},
 
 		// French dates
 		{"Aujourd'hui", nil, Day},
@@ -658,8 +659,8 @@ func TestParser_Parse_relative_pastAndFutureDates(t *testing.T) {
 		{"in 0,5 hours", pfpDiff{"minute": 30}, Minute},
 		{"1.5 days later", pfpDiff{"day": 1, "hour": 12}, Hour},
 		{"0,5 hours later", pfpDiff{"minute": 30}, Minute},
-		{"in 0.3 seconds", pfpDiff{"second": 0}, Second},
-		{"in 0.8 seconds", pfpDiff{"second": 1}, Second},
+		{"in 0.3 seconds", pfpDiff{"microsecond": 300000}, Second},
+		{"in 0.8 seconds", pfpDiff{"microsecond": 800000}, Second},
 
 		// French dates
 		{"Aujourd'hui", pfpDiff{"day": 0}, Day},

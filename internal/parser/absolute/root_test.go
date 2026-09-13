@@ -3,11 +3,34 @@ package absolute
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/markusmobius/go-dateparser/internal/setting"
 	"github.com/markusmobius/go-dateparser/internal/timezone"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestPythonInvalidCalendarDates(t *testing.T) {
+	cfg := &setting.Configuration{
+		DateOrder:     "DMY",
+		StrictParsing: true,
+		CurrentTime:   time.Date(2026, 9, 13, 12, 0, 0, 0, time.UTC),
+	}
+	for _, input := range []string{"33 december 2008", "33.20.2004", "36/14/2016", "february 30 2008", "january 36 1998", "29 february 2015", "31 april 2015", "13-1998"} {
+		parsed, err := Parse(cfg, input, timezone.OffsetData{})
+		assert.Error(t, err, input)
+		assert.True(t, parsed.IsZero(), input)
+	}
+	parsed, err := Parse(cfg, "29 february 2020", timezone.OffsetData{})
+	assert.NoError(t, err)
+	assert.Equal(t, "2020-02-29", parsed.Time.Format("2006-01-02"))
+	partial := *cfg
+	partial.StrictParsing = false
+	partial.CurrentTime = time.Date(2026, 1, 31, 12, 0, 0, 0, time.UTC)
+	parsed, err = Parse(&partial, "february 2020", timezone.OffsetData{})
+	assert.NoError(t, err)
+	assert.Equal(t, "2020-02-29", parsed.Time.Format("2006-01-02"))
+}
 
 func TestParse_error(t *testing.T) {
 	// Prepare scenarios

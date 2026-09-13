@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/markusmobius/go-dateparser/date"
-	"github.com/markusmobius/go-dateparser/internal/dateutil"
 	"github.com/markusmobius/go-dateparser/internal/regexp"
+	"github.com/markusmobius/go-dateutil/v2/relativedelta"
 )
 
 const timeSpanPrefix = `(?i)\b(?:for\s+the\s+|during\s+the\s+|in\s+the\s+)?`
@@ -58,9 +58,10 @@ func searchTimeSpan(cfg *Configuration, lang, text string) []SearchResult {
 		}
 
 		boundary := base
+		var arithmeticError error
 		switch pattern.Unit {
 		case "month":
-			boundary = base.AddDate(0, 0, direction*cfg.DefaultDaysInMonth)
+			boundary, arithmeticError = (relativedelta.Delta{Days: float64(direction * cfg.DefaultDaysInMonth)}).Apply(base)
 		case "week":
 			daysBack := (int(base.Weekday()) + 6) % 7
 			if cfg.DefaultStartOfWeek == "sunday" {
@@ -77,9 +78,10 @@ func searchTimeSpan(cfg *Configuration, lang, text string) []SearchResult {
 			}
 			boundary = base.AddDate(0, 0, direction*number*7)
 		case "months":
-			boundary = base.AddDate(0, direction*number, 1-base.Day())
-			day := min(base.Day(), dateutil.GetLastDayOfMonth(boundary.Year(), int(boundary.Month())))
-			boundary = boundary.AddDate(0, 0, day-1)
+			boundary, arithmeticError = (relativedelta.Delta{Months: float64(direction * number)}).Apply(base)
+		}
+		if arithmeticError != nil {
+			return nil
 		}
 		if pattern.Unit != "week" {
 			if pattern.Future {

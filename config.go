@@ -148,8 +148,8 @@ type Configuration struct {
 	// DefaultDaysInMonth is the length of an unnumbered month span; zero defaults to 30.
 	DefaultDaysInMonth int
 
-	// PreserveEndOfMonth calculates relative month and year dates while preserving the end of
-	// the target month. Ex: "1 month ago" on Oct 31 is Sep 30 instead of Oct 1. Defaults to false.
+	// PreserveEndOfMonth is retained for source compatibility.
+	// Deprecated: month-end clamping now always follows Python dateutil.
 	PreserveEndOfMonth bool
 }
 

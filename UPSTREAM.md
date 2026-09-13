@@ -13,12 +13,51 @@ Source: https://github.com/scrapinghub/dateparser
 
 Intentional Go differences remain: Go time layouts instead of strptime directives,
 time values always have a location, finer hour/minute/second periods, relative
-weeks represented by the Day period, and the
-optional PreserveEndOfMonth behavior. Tests use a fixed CurrentTime where the
+weeks represented by the Day period. Tests use a fixed CurrentTime where the
 upstream test depends on today's date. Go uses RE2-compatible expressions and
 string operations, not Python regex syntax or Python serialization caches.
 The existing UseGivenOrder setting supplies upstream's given-language-order
 behavior, and Go retains its supported language set and detection ranking.
+
+## v1.4.6 Review Candidate
+
+Relative parsing and the month-span operations now use
+`github.com/markusmobius/go-dateutil/v2` **v2.9.0**, a subset implementation of
+Python **python-dateutil 2.9.0.post0**. Python DateParser **1.4.3** remains the
+consumer-level reference. [Go-Dateutil v2.9.0](https://github.com/markusmobius/go-dateutil/releases/tag/v2.9.0)
+is published; these DateParser integration changes are awaiting review before
+the separate v1.4.6 release.
+
+Month-end clamping is now unconditional, matching `relativedelta`.
+`PreserveEndOfMonth` remains a deprecated source-compatible field with no effect.
+Fractional years/months are rejected instead of approximated, and fractional
+seconds are retained to Python's microsecond precision. Go's opt-in finer
+period classification is preserved separately from the arithmetic.
+
+Gregorian date construction also rejects explicit invalid calendar fields,
+including a supplied non-leap year with February 29. An omitted day can clamp
+to month end, and an omitted year can select a valid leap year. These cases
+are covered by the Python-grounded absolute-parser regression test.
+
+The four fractional-second test updates were verified using Python's
+`DateDataParser` at `RELATIVE_BASE=2014-09-01T10:30:00`: subtracting 0.4 and
+0.9 seconds produces `10:29:59.600000` and `10:29:59.100000`; adding 0.3 and
+0.8 seconds produces `10:30:00.300000` and `10:30:00.800000`.
+The other 641 cases in that test retain their existing expectations.
+
+The module file references the published version without a local replacement.
+Builds and qualification use ordinary module resolution with checksum
+verification enabled; no Dateutil source checkout or Go workspace is required.
+The dependency's release commit is
+`3b89c9d93f415475684a5d477a0664750c3c4dc7`. Its packaged Python-reference tests
+also pass directly from the downloaded Go module.
+
+With that published dependency and `GOWORK=off`, the complete Go-DateParser
+suite passed on Linux with Go 1.26.0 and 1.27.1 and natively on Windows with
+Go 1.27.1. The Go 1.27.1 race suite passed in UTC, America/New_York, and
+Asia/Kolkata; vet, module tidiness, and module verification passed as well.
+These are local integration checks, not a new DateParser release or a claim
+of exhaustive Python parity. Publication of v1.4.6 is pending review.
 
 ## Verification
 
@@ -38,8 +77,9 @@ exact text, detected language, datetimes, offsets and callback inputs; ten
 Python exception inputs check safe handling instead of reproducing Python's
 splitter `IndexError` or arithmetic `OverflowError`. Calendar errors compare
 success/failure, not exception wording. Go's finer time periods are normalized
-when compared with Python. Tests explicitly select `PreserveEndOfMonth` where
-needed without changing its optional Go default.
+when compared with Python. At the v1.4.5 release, tests explicitly selected
+`PreserveEndOfMonth` where needed. The unreleased integration above now applies
+Python's month-end behavior by default.
 
 The corrections cover MDY calendar defaults, reference-date conversion using
 local date components, missing fields, actual month lengths, explicit-day
@@ -113,10 +153,11 @@ Permanent regressions compare timezone candidate rejection against every configu
 
 ## Performance
 
-The current **Go v1.4.3 versus v1.4.5** comparison is displayed directly in
+The historical **Go v1.4.3 versus v1.4.5** comparison is displayed directly in
 [README.md](README.md#current-measurements) and the v1.4.5 release notes.
 It covers the three parsing cohorts and six search, time-span and calendar
-cohorts with the same inputs and settings for both published modules.
+cohorts with the same inputs and settings for both published modules. These
+measurements predate v1.4.6 and are retained without relabelling the results.
 
 The runner uses one caller on one CPU, six balanced launches per version and
 eight warm passes per launch. Feature passes repeat their corpus 16 times;
