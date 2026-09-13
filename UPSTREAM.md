@@ -31,10 +31,11 @@ the optional `re2_wasm` suite passed under Linux with Go 1.26.0 and cgo enabled.
 The native `re2_cgo` backend was not requalified because its separate RE2
 library is not installed.
 Generated locale/matcher files, dependencies and both license files are unchanged.
-The old/new runner compares exact results across all 762 inputs in each of three
-configurations; accepted counts are 762 for automatic and explicit locales,
-and 139 for HtmlDate strict/past. This is additional regression coverage, not
-a new independent Python comparison.
+The shared benchmark additionally compares exact results for 2,951 stateless
+parsing cases in both published Go releases. Automatic, explicit and HtmlDate
+cohorts contain 226, 2,530 and 195 cases, with 222, 2,388 and 167 accepted.
+The inputs, settings and v1.4.4 samples are also used by the Rust comparison.
+This is additional regression coverage, not a new independent Python comparison.
 
 Dependencies were refreshed on 2026-09-10, with a new minimum Go version of 1.26.0 and recommended toolchain 1.27.1. The current performance measurements below use the refreshed dependencies.
 
@@ -44,7 +45,7 @@ Dependencies were refreshed on 2026-09-10, with a new minimum Go version of 1.26
 - `go mod verify` passed. `govulncheck` v1.8.0 found no reachable vulnerabilities or vulnerable imported packages in the default build on Go 1.27.1. It reported module-only advisory [GO-2026-5932](https://pkg.go.dev/vuln/GO-2026-5932) for the unimported, unmaintained `golang.org/x/crypto/openpgp` package; no fixed version is listed.
 - Before the dependency refresh, regeneration with `go run ./scripts/codegen --skip-raw --keep-language-order` and re2go 4.4 reproduced all 211 generated locale/matcher source files byte-for-byte. Use `--re2go` to select an executable outside PATH. A missing generator returned a nonzero exit status and left existing output unchanged.
 - Before the dependency refresh, a temporary differential driver compared 575 fixed-reference cases with Python dateparser 1.4.3: upstream regression scenarios plus month and relative phrases sampled across the refreshed locale files. It compared parse success, wall-clock values, normalized periods, locales, and search result text/order. 573 matched; the two inherited exceptions below were confirmed against the original Go HEAD. This sample is not exhaustive parity proof.
-- The Linux CI matrix is configured for Go 1.26.x/stable in UTC, America/New_York, and Asia/Kolkata, with `GOTOOLCHAIN=local` to prevent automatic toolchain switching. It has not been executed remotely as part of this local verification; Windows TZ environment changes are not a substitute for those runs.
+- The Linux CI matrix uses Go 1.26.x/stable in UTC, America/New_York, and Asia/Kolkata, with `GOTOOLCHAIN=local` to prevent automatic toolchain switching. Both the [branch run](https://github.com/markusmobius/go-dateparser/actions/runs/34727618390) and [tag run](https://github.com/markusmobius/go-dateparser/actions/runs/34727618210) passed for the published v1.4.4 source commit.
 - With current dependencies and no build tags, `TestExactCombinedMatchers` and its fallback regression passed separately with `CGO_ENABLED=0` and `CGO_ENABLED=1`, performing 241,049 comparisons in each build. Both selected the Go standard backend for remaining regex operations.
 - The README's Go examples were compiled and executed in a temporary Markdown/Go AST harness, including the complete quick-start and lingua-go v1.4.0 examples. Timestamp output is explicitly converted to UTC; the parser itself preserves `time.Local` for Unix timestamps.
 
@@ -63,13 +64,18 @@ Permanent regressions compare timezone candidate rejection against every configu
 ## Current Performance
 
 The current **v1.4.3 versus v1.4.4** comparison and reproduction commands are in
-[README.md](README.md#current-measurements). Six alternating launches per version
-and eight warmed passes per launch on one CPU measured 3.29x for automatic
-locale detection and 1.60x for HtmlDate strict/past; explicit-locale ranges
-overlapped. Retained heap was about 31.1 MiB in both versions. Locale selection,
-normalization and ordering are optimized without changing word matching or
-adding a dependency. The Aho-Corasick experiment was not retained because its
-Go speed/memory tradeoff did not justify it.
+[README.md](README.md#current-measurements). The standardized fixture and runner
+are shared with RustDateParser. Six balanced launches per version and eight
+warmed passes per launch on one CPU measured 3.85x for automatic locale detection
+and 2.78x for HtmlDate strict/past. The explicit-locale ratio was 0.92x, with
+widely overlapping ranges; it establishes neither a reliable gain nor a
+regression. All raw samples and provenance are published with the v1.4.4 release.
+The earlier 762-input comparison is superseded for current reporting.
+
+Locale selection, normalization and ordering are optimized without changing
+word matching or adding a dependency. The Aho-Corasick experiment was not retained
+because its Go speed/memory tradeoff did not justify it. The post-release shared
+benchmark tooling and documentation do not change the v1.4.4 tag or module.
 
 ### Historical v1.4.3 Measurements
 

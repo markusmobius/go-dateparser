@@ -556,81 +556,66 @@ generated-data changes, or new build flags.
 
 Measured on 2026-09-12 with **Go 1.27.1**, Linux x86_64/WSL2 on an AMD Ryzen AI 7
 PRO 350, `CGO_ENABLED=0`, `GOAMD64=v1`, `GOMAXPROCS=1`, default garbage collection,
-and no optional regex tags. Both versions were pinned to CPU 2 with one parsing
-caller. The same runner was compiled against the published v1.4.3 module and
-the v1.4.4 source, using the existing 762-input speed-test corpus in place.
+and no optional regex tags. Both published versions were pinned to CPU 2 with
+one parsing caller.
 
-Each cohort used six fresh launches per version, alternating which version ran
-first, with separate discarded preflights and eight warmed passes per launch.
-`CurrentTime` was fixed at `2026-09-12T12:00:00Z`. Independent per-input parsers and
-settings were prepared outside the timers. Exact first-pass outputs matched
-between versions, including dates, nanoseconds, periods, locales, timezone
-identity/offsets and errors. The explicit cohort selects the automatically
-detected locale outside the timers and verifies identical choices between
-versions. HtmlDate uses `CustomFormat` and `AbsoluteTime`, strict parsing, and
-past preference; it deliberately rejects most relative-date inputs in this
-general-purpose corpus.
+The comparison uses the same **2,951 stateless parsing cases** and runner as
+[RustDateParser](https://github.com/markusmobius/rust-dateparser), with identical
+Go v1.4.4 samples in both repositories' tables. Inputs retain their original
+settings, formats and frozen reference times. The 16 detector/history cases are
+excluded. Dates, nanoseconds, periods, locales, timezone identity/offsets and
+errors match exactly before timing. Parsed counts are not accuracy scores.
 
 | Configuration | Inputs (Parsed) | v1.4.3 Warm Pass | v1.4.4 Warm Pass | Old/New Time |
 | --- | --- | --- | --- | --- |
-| Automatic locale detection | 762 (762) | 1,546.69 ms | 469.55 ms | 3.29x |
-| Explicit locale per input | 762 (762) | 163.82 ms | 159.31 ms | 1.03x |
-| HtmlDate strict/past | 762 (139) | 1,395.42 ms | 873.06 ms | 1.60x |
+| Automatic locale detection | 226 (222) | 717.43 ms | 186.44 ms | 3.85x |
+| Explicit locales/languages | 2,530 (2,388) | 846.20 ms | 915.56 ms | 0.92x |
+| HtmlDate strict/past | 195 (167) | 732.02 ms | 263.22 ms | 2.78x |
 
-Values are medians of the six per-process pass medians. Their min/max ranges,
-v1.4.3/v1.4.4, were **1,411.31-1,752.54 / 449.57-685.36 ms** for automatic
-detection, **158.24-176.14 / 149.19-188.44 ms** for explicit locales, and
-**1,377.09-1,458.30 / 828.20-898.68 ms** for HtmlDate. The explicit-locale ranges
-overlap and do not establish a meaningful speed change. Retained Go heap after
-the measured passes and a forced collection stayed about **31.1 MiB** in both
-versions; this includes the runner and corpus, not only the library.
+Times are complete warmed passes, summarized as the median of six per-process
+pass medians. Each process performs eight measured passes after a validated
+first pass; engine execution order is balanced and separate preflights are
+discarded. Settings and independent per-case parsers are prepared outside the
+timers. Warm timing includes public parsing and result consumption, not setup,
+initial regex construction or output validation.
 
-Warm timing includes parsing and result consumption, not setup or output
-comparison. Median launch-to-first-result-pass latency was **1,847.06/937.07 ms**
-for automatic detection, **2,145.35/973.51 ms** for explicit locales, and
-**1,726.85/1,163.69 ms** for HtmlDate (old/new). This endpoint includes process and
-library initialization, runner setup, explicit-locale discovery where used,
-and a complete first pass. It is not isolated startup or cold-disk latency.
-These are corpus-specific measurements, not a production throughput guarantee.
+Go's explicit-locale median is higher in v1.4.4 in this run, but the per-process
+ranges overlap widely: **723.10-1,147.53 ms** versus **723.33-1,133.65 ms**.
+These samples establish neither a reliable gain nor a regression there. The
+automatic and HtmlDate ranges separate. Compare versions within a row, not
+different cohorts; these are regression-corpus results, not a production
+throughput guarantee or an isolated startup measurement.
 
-Reproduce under Linux/WSL with Python 3.9+ and Go:
+The [raw report](https://github.com/markusmobius/go-dateparser/releases/download/v1.4.4/shared-dateparser-2026-09-12.json)
+retains every measured sample, range, first-pass latency, execution order,
+binary hash and module pin. The Go comparison uses 36 processes and 288 warm
+passes from this shared report. Its SHA-256 is
+`3aa6e8f3439418229d9825570377127df191565a1c406a419713b9cf4be85592`.
+
+Reproduce from the current `main` checkout under Linux/WSL with Python 3.9+,
+Git and Go; **no Rust toolchain is required**:
 
 ```sh
-python3 scripts/speedtest/compare.py --baseline v1.4.3 --candidate-version v1.4.4 --runs 6 --passes 8 --cpu 2
+python3 scripts/speedtest/compare.py --runs 6 --passes 8 --cpu 2
 ```
 
-Omit `--candidate-version` to benchmark the current checkout. Published source
-archives are checksum-verified by Go; the runner uses temporary source
-extractions and build overlays without modifying the module cache. Optional
-`--cohort auto`, `--cohort explicit`, or `--cohort htmldate` selects one cohort.
-The JSON report retains exact reference outputs, every sample, toolchain and
-binary hashes, and retained heap. Local reports are under ignored
-`.benchmarks/`; the reported comparison retains all 36 measured processes and
-288 warm passes. Corpus SHA-256:
-`4b9d823edf9e0217bcd0c2fe395c3ad943beec205b735ccc157d2da5fa4dfcad`.
+The wrapper fetches the shared fixture and runner at
+[revision 37b447f](https://github.com/markusmobius/rust-dateparser/tree/37b447f048d2dc9cd5f251191d76959b582c4f04)
+into ignored `.benchmarks/`, verifies the fixture checksum, and selects only
+the published Go v1.4.3 and v1.4.4 modules. Temporary module files leave the
+repository locks and module cache unchanged. It does not benchmark the current
+Go checkout. Use `--cohort auto`, `--cohort explicit` or `--cohort htmldate` for
+one cohort, and `--output` to choose a report path.
+
+Fixture SHA-256:
+`c07b2bb77d75a959b86364a5c2f1fbd6a24b9c6b3619b70099141ab75cb2f24f`.
+This shared-suite comparison replaces the earlier 762-input performance table.
+The v1.4.4 tag and module contents are unchanged; its source archive retains
+the original speed-test harness.
 
 A cached Aho-Corasick word matcher was also evaluated, but not retained: it
 increased retained memory and did not improve the already-optimized Go workload
 consistently. The existing substring search remains unchanged.
-
-### Earlier Matcher Measurements
-
-The following corpus timings were measured on 2026-09-10 after the dependency refresh, using Go 1.27.1 on Windows/AMD Ryzen AI 7 PRO 350, `CGO_ENABLED=1`, and no build tags. Each configuration used the same inputs and fixed reference time, with randomized per-input execution order, one discarded warmup, and six measured rounds:
-
-These are historical v1.4.3 measurements of the generated-matcher and ASCII
-fast-path changes, using a different environment and protocol from the version
-comparison above. "Current Defaults" in this older table means v1.4.3 defaults.
-
-| Workload | Retained Regexes | re2go Only | Current Defaults | Total Time Reduction |
-| --- | --- | --- | --- | --- |
-| Parse, 762 inputs | 7.684 s | 6.677 s | 5.278 s | 31.3% |
-| Search, 62 texts | 3.157 s | 3.251 s | 1.995 s | 36.8% |
-
-Values are median time per complete corpus, not per-date latency. The baseline uses the current parser and dependencies with these optimizations disabled, not an older release or Python dateparser. All outputs matched across configurations. The additional fast paths reduced time by 20.9% for parse and 38.7% for search relative to re2go alone in this run.
-
-Machine load varied substantially. In particular, the isolated re2go search result was noisy and 3.0% slower by these medians, so it does not establish a search speedup by itself. The complete current defaults were faster in every measured round. These figures are workload-specific, not guarantees.
-
-The generated source is 1.89 MB. With the current dependencies, enabling generated matchers increased the root test executable from 14.75 MB to 16.81 MB, approximately 14%. See [UPSTREAM.md](UPSTREAM.md#current-performance) for the full breakdown, measurement scope, and exact sizes.
 
 ### Build Modes
 

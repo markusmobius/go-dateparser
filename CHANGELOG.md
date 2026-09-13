@@ -4,7 +4,7 @@
 - Share locale-independent normalization and digit conversion across candidate locales, retaining the detector's original normalized input.
 - Cache both unrestricted default locale orderings and return independent slices to callers. Explicit locale/language/region validation is unchanged.
 - Add focused regressions for cached ordering and slice ownership, detector inputs, and invalid configuration after previous-locale success.
-- Add a reproducible single-core version comparison to the existing speed-test runner. On the recorded 762-input corpus, warmed automatic detection improved 3.29x and HtmlDate strict/past parsing improved 1.60x versus v1.4.3; explicit-locale timing was effectively unchanged. See the README for ranges, exact-output checks, memory, and first-use limits.
+- Add a reproducible single-core version comparison. Post-release documentation and tooling now use the same 2,951-case suite as RustDateParser: warmed automatic detection measured 3.85x and HtmlDate strict/past 2.78x versus v1.4.3; explicit-locale ranges overlap. See the README and published raw report for exact-output checks and measurement limits. The v1.4.4 tag and module contents are unchanged.
 - Preserve dependencies, generated locale/regex data, public APIs, licensing, and Python dateparser v1.4.3 compatibility. No internal worker goroutines or new build flags are introduced.
 
 ### v1.4.3 - 2026-09-10
