@@ -34,8 +34,7 @@ go get github.com/markusmobius/go-dateparser@v1.4.5
 	- [Ignoring Surrounding Text](#ignoring-surrounding-text)
 - [13. Performance](#performance)
 	- [Current Measurements](#current-measurements)
-	- [Historical Go Measurements](#historical-go-measurements)
-	- [Rust Feature Comparison](#rust-feature-comparison)
+	- [Reproduce Measurements](#reproduce-measurements)
 	- [Build Modes](#build-modes)
   - [Compiling with cgo under Linux](#compiling-with-cgo-under-linux)
   - [Compiling with cgo under Windows](#compiling-with-cgo-under-windows)
@@ -53,7 +52,7 @@ go get github.com/markusmobius/go-dateparser@v1.4.5
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-This README describes Go-DateParser v1.4.5. It combines the single-thread performance improvements introduced in v1.4.4 with Python-verified calendar, search, and overflow corrections. See [CHANGELOG.md](CHANGELOG.md) for behavior changes and [UPSTREAM.md](UPSTREAM.md) for reference data and verification limits.
+This README describes Go-DateParser v1.4.5. It combines single-thread parsing improvements with Python-verified calendar, search, and overflow corrections. See [CHANGELOG.md](CHANGELOG.md) for behavior changes and [UPSTREAM.md](UPSTREAM.md) for reference data and verification limits.
 
 This package tracks the applicable changes through Python dateparser [v1.4.3][original-tag], commit [9ce60b1][original-commit]. The previous baseline, `02bd2e5`, was the v1.2.1 release commit. [UPSTREAM.md](UPSTREAM.md) accounts for all 66 intervening commits, including Python-specific changes that do not apply to Go, verification results, and known compatibility exceptions.
 
@@ -562,163 +561,62 @@ Generated matching covers the boolean whole-token matchers, including Unicode in
 
 ### Current Measurements
 
-Measured on **2026-09-13** with published **Go-DateParser v1.4.5** and the
-optimized RustDateParser checkout, using **Go 1.27.1** and **Rust 1.98.1** on
-Linux x86_64/WSL2, AMD Ryzen AI 7 PRO 350. Both engines use one caller pinned
-to CPU 2, portable build settings, and no internal worker threads. Go uses
+Published **Go-DateParser v1.4.3 versus v1.4.5**, measured on **2026-09-13**
+with Go 1.27.1 on an AMD Ryzen AI 7 PRO 350, Linux x86_64/WSL2. Both versions
+use one caller pinned to CPU 2, portable build settings,
 `CGO_ENABLED=0`, `GOAMD64=v1`, `GOMAXPROCS=1`, default garbage collection and
 no optional regex tags.
 
-| Workload | Inputs (Parsed) | Go v1.4.5 (us/input) | Rust (us/input) | Go/Rust Time |
+| Workload | Inputs | v1.4.3 Warm Pass | v1.4.5 Warm Pass | Old/New Time |
 | --- | --- | --- | --- | --- |
-| Automatic search | 3 (3) | 3,572.68 | 424.18 | 8.42x |
-| Split search | 34 (29) | 698.84 | 27.23 | 25.66x |
-| N-gram search | 39 (36) | 1,747.54 | 95.97 | 18.21x |
-| Time-span search | 96 (96) | 214.48 | 24.92 | 8.61x |
-| Jalali parsing | 1,311 (1,087) | 8.62 | 5.27 | 1.64x |
-| Hijri parsing | 6,193 (5,994) | 7.21 | 1.20 | 6.03x |
+| Automatic locale detection | 226 | 633.36 ms | 150.67 ms | 4.20x |
+| Explicit locales/languages | 2,530 | 935.42 ms | 1,017.53 ms | 0.92x |
+| HtmlDate strict/past | 195 | 742.00 ms | 264.97 ms | 2.80x |
+| Automatic search | 3 | 13.90 ms | 9.82 ms | 1.42x |
+| Split search | 34 | 251.06 ms | 23.05 ms | 10.89x |
+| N-gram search | 39 | 67.79 ms | 65.79 ms | 1.03x |
+| Time-span search | 96 | 58.74 ms | 21.88 ms | 2.68x |
+| Jalali parsing | 1,311 | 21.58 ms | 12.47 ms | 1.73x |
+| Hijri parsing | 6,193 | 57.98 ms | 44.65 ms | 1.30x |
 
-`us/input` means microseconds per input; lower is better. Times are derived
-from the median of six per-process warm-pass medians. Each process measures
-eight passes, each repeating its complete cohort 64 times. Engine order is
-balanced, separate preflights are discarded, and every process checks exact
-Python dateparser 1.4.3 expectations before timing. The run retains all 72
-measured processes and 576 timed passes. Ratios use unrounded timings.
+Times are per complete corpus traversal, summarized as the median of six
+per-process medians, with eight timed passes per process and balanced execution
+order. Feature passes repeat the corpus 16 times and are divided by 16 here.
+Setup, first-use initialization and output checks are outside the warm timers.
+An Old/New ratio above 1 means v1.4.5 took less time. These are regression-corpus
+measurements, not production throughput or isolated startup timings.
 
-Both columns come from this same run: these are the Go v1.4.5 samples for the
-Rust comparison, not values combined from separate benchmarks. Go is the
-published module at commit `e02a0cfd80decdd47412d773b4799a89af078409`; Rust is
-the optimized local checkout, not a newly published Rust release. Parsed
-counts are not accuracy scores: expected calendar rejections remain timed,
-while detector callbacks and Python exception inputs are excluded.
+The same inputs and settings are used for both versions. Go v1.4.5 matches all
+7,676 expected Python feature outcomes, including expected rejections. Go v1.4.3
+differs on 1,900 of those inputs, including 490 recovered Hijri panics; no inputs
+are dropped, and both versions use the same recovery wrapper. Historical Jalali
+outcomes can also vary between processes. These rows therefore compare runtime
+costs on the same inputs, not equally correct implementations.
 
-These are regression-corpus measurements, not a production throughput
-guarantee. Automatic search contains only three texts. Machine load varied
-between launches; all samples are retained. Warm timings exclude setup,
-initialization and validation and do not describe first-use latency.
-The same six-row table is included directly in the v1.4.5 release notes.
-Reproduction commands are in [Rust Feature Comparison](#rust-feature-comparison).
+Automatic search has only three texts. Explicit parsing and n-gram timing ranges
+overlap, so those ratios do not establish a clear performance change. The
+[raw report](https://github.com/markusmobius/go-dateparser/releases/download/v1.4.5/dateparser-nine-cohorts-2026-09-13.json)
+retains every sample, outcome audit, execution order and build identity.
 
-### Historical Go Measurements
+### Reproduce Measurements
 
-Version **v1.4.4** checks locale applicability lazily in the existing priority
-order and stops after parsing succeeds. Locale-independent normalization and
-digit conversion are shared across candidates, and both default locale orderings
-are cached. Explicit configuration validation remains eager; detector input,
-date-order callbacks, previous-locale handling and fallback ordering retain their
-existing behavior. There are no new dependencies, internal worker goroutines,
-generated-data changes, or new build flags.
-
-Measured on 2026-09-12 with **Go 1.27.1**, Linux x86_64/WSL2 on an AMD Ryzen AI 7
-PRO 350, `CGO_ENABLED=0`, `GOAMD64=v1`, `GOMAXPROCS=1`, default garbage collection,
-and no optional regex tags. Both published versions were pinned to CPU 2 with
-one parsing caller.
-
-The comparison uses the same **2,951 stateless parsing cases** and runner as
-[RustDateParser](https://github.com/markusmobius/rust-dateparser), with identical
-Go v1.4.4 samples in both repositories' tables. Inputs retain their original
-settings, formats and frozen reference times. The 16 detector/history cases are
-excluded. Dates, nanoseconds, periods, locales, timezone identity/offsets and
-errors match exactly before timing. Parsed counts are not accuracy scores.
-
-| Configuration | Inputs (Parsed) | v1.4.3 Warm Pass | v1.4.4 Warm Pass | Old/New Time |
-| --- | --- | --- | --- | --- |
-| Automatic locale detection | 226 (222) | 717.43 ms | 186.44 ms | 3.85x |
-| Explicit locales/languages | 2,530 (2,388) | 846.20 ms | 915.56 ms | 0.92x |
-| HtmlDate strict/past | 195 (167) | 732.02 ms | 263.22 ms | 2.78x |
-
-Times are complete warmed passes, summarized as the median of six per-process
-pass medians. Each process performs eight measured passes after a validated
-first pass; engine execution order is balanced and separate preflights are
-discarded. Settings and independent per-case parsers are prepared outside the
-timers. Warm timing includes public parsing and result consumption, not setup,
-initial regex construction or output validation.
-
-Go's explicit-locale median is higher in v1.4.4 in this run, but the per-process
-ranges overlap widely: **723.10-1,147.53 ms** versus **723.33-1,133.65 ms**.
-These samples establish neither a reliable gain nor a regression there. The
-automatic and HtmlDate ranges separate. Compare versions within a row, not
-different cohorts; these are regression-corpus results, not a production
-throughput guarantee or an isolated startup measurement.
-
-The [historical raw report](https://github.com/markusmobius/go-dateparser/releases/download/v1.4.5/shared-dateparser-2026-09-12.json)
-retains every measured sample, range, first-pass latency, execution order,
-binary hash and module pin. The Go comparison uses 36 processes and 288 warm
-passes from this shared report. The unchanged v1.4.4 measurements are retained
-as an asset on the v1.4.5 release; they are not v1.4.5 measurements. Its SHA-256 is
-`3aa6e8f3439418229d9825570377127df191565a1c406a419713b9cf4be85592`.
-
-Reproduce from the current `main` checkout under Linux/WSL with Python 3.9+,
-Git and Go; **no Rust toolchain is required**:
+Under Linux/WSL with Python 3.9+, Git and Go 1.27.1, download and extract the
+[benchmark suite snapshot](https://github.com/markusmobius/go-dateparser/releases/download/v1.4.5/dateparser-benchmark-suite-2026-09-13.zip).
+Pass its directory containing `tools/` and `testdata/` using `--suite-source`.
+No other compiler is needed. The default command measures the three parsing
+cohorts; `--features` measures the six search and calendar cohorts:
 
 ```sh
-python3 scripts/speedtest/compare.py --runs 6 --passes 8 --cpu 2
+python3 scripts/speedtest/compare.py --suite-source /path/to/shared-suite --runs 6 --passes 8 --cpu 2
+python3 scripts/speedtest/compare.py --suite-source /path/to/shared-suite --features --runs 6 --passes 8 --iterations 16 --cpu 2
 ```
 
-The wrapper fetches the shared fixture and runner at
-[revision 37b447f](https://github.com/markusmobius/rust-dateparser/tree/37b447f048d2dc9cd5f251191d76959b582c4f04)
-into ignored `.benchmarks/`, verifies the fixture checksum, and selects only
-the published Go v1.4.3 and v1.4.4 modules. Temporary module files leave the
-repository locks and module cache unchanged. It does not benchmark the current
-Go checkout. Use `--cohort auto`, `--cohort explicit` or `--cohort htmldate` for
-one cohort, and `--output` to choose a report path.
-
-Fixture SHA-256:
-`c07b2bb77d75a959b86364a5c2f1fbd6a24b9c6b3619b70099141ab75cb2f24f`.
-This shared-suite comparison replaces the earlier 762-input performance table.
-The v1.4.4 tag and module contents are unchanged; its source archive retains
-the original speed-test harness.
-
-A cached Aho-Corasick word matcher was also evaluated, but not retained: it
-increased retained memory and did not improve the already-optimized Go workload
-consistently. The existing substring search remains unchanged.
-
-### Rust Feature Comparison
-
-The same entry point can compare an explicit, feature-capable
-[RustDateParser](https://github.com/markusmobius/rust-dateparser) checkout with
-the published **Go v1.4.5** module. This mode needs Linux/WSL, Python 3.9+, Git,
-Go 1.27.1 and Rust 1.98.1. From this Go repository, run:
-
-```sh
-python3 scripts/speedtest/compare.py --features --rust-source ../rust-dateparser \
-	--candidate-version v1.4.5 --runs 6 --passes 8 --iterations 64 --cpu 2
-```
-
-Set `--rust-source` to the actual Rust checkout path. Uncommitted Rust changes
-are allowed; the runner builds that checkout and records the executable hash.
-Go is downloaded as a released module, not built from this Go checkout. The
-runner verifies its Git tag, module source commit and checksum and rejects a
-module replacement. An unavailable release tag fails before the runner
-requests that version from the module proxy.
-
-To check changes before release, explicitly select this Go worktree instead:
-
-```sh
-python3 scripts/speedtest/compare.py --features --rust-source ../rust-dateparser \
-	--worktree --runs 6 --passes 8 --iterations 64 --cpu 2
-```
-
-Worktree results are labelled `go-worktree`, with the source commit and a
-source-content hash; they are never labelled v1.4.5. Both checkouts must contain
-byte-identical [testdata/python-features.json](testdata/python-features.json).
-The Python dateparser 1.4.3 fixture supplies the expected results independently
-of either implementation. Its six cohorts are `search-auto` (3 cases),
-`search-split` (34), `search-ngram` (39), `time-span` (96), `jalali` (1,311), and
-`hijri` (6,193). Detector callbacks and Python exception inputs are excluded
-from timing; expected calendar rejections remain included.
-
-All cohorts run by default; repeat `--cohort` to select a subset. Each engine
-uses one caller on the selected CPU, with `GOMAXPROCS=1` for Go. Every process
-checks exact expected outputs before timing, separate preflights are discarded,
-and engine order is balanced. A pass repeats the cohort 64 times by default.
-The report at `.benchmarks/shared-features.json` records all raw passes,
-per-input timings, first-use latency, toolchains, fixture/runner/binary hashes
-and Go source identity. Use `--output` to preserve separate reports.
-
-These are regression workloads, not a production throughput guarantee; the
-automatic-search cohort contains only three texts. This comparison is separate
-from the historical v1.4.3/v1.4.4 measurements above.
+Both commands select only the published Go v1.4.3 and v1.4.5 modules and verify
+their source identities and checksums. They do not benchmark the local Go
+checkout unless `--features --worktree` is explicitly selected. Reports retain
+all samples, output differences, fixture/binary hashes and module identities
+under `.benchmarks/`; use `--cohort` to select workloads and `--output` to choose
+a report path.
 
 ### Build Modes
 

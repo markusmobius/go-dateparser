@@ -6,7 +6,7 @@
 - Correct search language evidence and detector handling. Explicit languages/locales bypass the callback, returned detector languages retain their order, and translated fragments do not invoke it again. Fix Chinese/Japanese timestamp joining and Cantonese splitter bounds.
 - Reject relative dates and time spans outside Python's supported datetime range instead of overflowing; preserve valid large whole-second offsets without overflowing `time.Duration`.
 - Add a reproducible independent Python fixture: 7,504 calendar cases, 178 exact search cases, and 10 exception inputs checked for safe handling. Record dependency versions and imported source hashes; retain known compatibility exceptions in `UPSTREAM.md`.
-- Add a Go-repository benchmark entry point comparing a feature-capable Rust checkout with verified published Go v1.4.5 across search, n-grams, time spans, Jalali, and Hijri. Explicit pre-release runs are labelled worktree. Historical v1.4.3/v1.4.4 samples are retained unchanged, not relabelled as v1.4.5.
+- Add a Go-repository benchmark entry point comparing published Go v1.4.3 with v1.4.5 across nine workloads: three parsing cohorts plus search, n-grams, time spans, Jalali, and Hijri. Both versions use identical inputs; historical output differences and panics are recorded. Explicit pre-release runs are labelled worktree.
 - Preserve both root license files, generated locale/matcher data, and the Go 1.26 minimum. Python dateparser remains pinned to v1.4.3.
 
 ### v1.4.4 - 2026-09-12

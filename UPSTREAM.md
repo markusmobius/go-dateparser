@@ -113,25 +113,22 @@ Permanent regressions compare timezone candidate rejection against every configu
 
 ## Performance
 
-The historical **v1.4.3 versus v1.4.4** comparison and reproduction commands are in
-[README.md](README.md#historical-go-measurements). The standardized fixture and runner
-are shared with RustDateParser. Six balanced launches per version and eight
-warmed passes per launch on one CPU measured 3.85x for automatic locale detection
-and 2.78x for HtmlDate strict/past. The explicit-locale ratio was 0.92x, with
-widely overlapping ranges; it establishes neither a reliable gain nor a
-regression. All raw samples and provenance are retained unchanged as a historical
-asset on the v1.4.5 release; these are not v1.4.5 measurements.
-The earlier 762-input comparison is superseded for current reporting.
+The current **Go v1.4.3 versus v1.4.5** comparison is displayed directly in
+[README.md](README.md#current-measurements) and the v1.4.5 release notes.
+It covers the three parsing cohorts and six search, time-span and calendar
+cohorts with the same inputs and settings for both published modules.
 
-The [Rust feature comparison](README.md#rust-feature-comparison) compares
-published Go v1.4.5 with an explicit Rust checkout using the independent Python
-fixture. Pre-release runs select and identify the Go worktree explicitly.
-The newer Rust search optimizations have not been backported to Go.
+The runner uses one caller on one CPU, six balanced launches per version and
+eight warm passes per launch. Feature passes repeat their corpus 16 times;
+the table reports time per complete corpus traversal. Initial output checks
+are outside the timers. Current feature results must match the independent
+Python reference; historical result differences and recovered panics are
+recorded rather than silently dropping inputs or claiming output equivalence.
 
-Locale selection, normalization and ordering are optimized without changing
-word matching or adding a dependency. The Aho-Corasick experiment was not retained
-because its Go speed/memory tradeoff did not justify it. The post-release shared
-benchmark tooling and documentation do not change the v1.4.4 tag or module.
+The [reproduction commands](README.md#reproduce-measurements) select only the
+two published Go versions. An explicitly selected worktree is labelled as
+such and is never presented as a release. No published tag or module is moved
+by these documentation and benchmark-tool updates.
 
 ### Historical v1.4.3 Measurements
 

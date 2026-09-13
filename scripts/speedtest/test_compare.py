@@ -27,9 +27,8 @@ class CompareTests(unittest.TestCase):
 
     def invoke(self, *arguments):
         with (
-            mock.patch.object(sys, "argv", ["compare.py", *arguments]),
+            mock.patch.object(sys, "argv", ["compare.py", "--suite-source", str(self.rust_root), *arguments]),
             mock.patch.object(compare.os, "sched_getaffinity", return_value={2}, create=True),
-            mock.patch.object(compare, "shared_reference", return_value=self.rust_root),
             mock.patch.object(compare, "local_reference", return_value=self.rust_root),
             mock.patch.object(compare.subprocess, "run") as run,
             contextlib.redirect_stdout(io.StringIO()),
@@ -52,36 +51,39 @@ class CompareTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "no shared benchmark runner"):
             compare.local_reference(self.go_root, self.rust_root)
 
-    def test_historical_comparison_is_preserved(self):
+    def test_core_comparison_selects_two_published_go_versions(self):
         command = self.invoke()
         self.assertIn("go-v1.4.3", command)
-        self.assertIn("go-v1.4.4", command)
+        self.assertIn("go-v1.4.5", command)
+        self.assertNotIn("rust", command)
+        self.assertNotIn("go-v1.4.4", command)
         self.assertNotIn("--features", command)
         self.assertNotIn("--iterations", command)
 
-    def test_feature_comparison_selects_released_go_and_rust(self):
-        command = self.invoke("--features", "--rust-source", str(self.rust_root), "--cohort", "search-ngram")
-        self.assertIn("rust", command)
+    def test_feature_comparison_selects_only_published_go_versions(self):
+        command = self.invoke("--features", "--cohort", "search-ngram")
+        self.assertIn("go-v1.4.3", command)
         self.assertIn("go-v1.4.5", command)
+        self.assertNotIn("rust", command)
+        self.assertNotIn("go-v1.4.4", command)
         self.assertIn("search-ngram", command)
         self.assertIn("--features", command)
-        self.assertEqual(command[command.index("--iterations") + 1], "64")
+        self.assertEqual(command[command.index("--iterations") + 1], "16")
         self.assertNotIn("--go-source", command)
 
     def test_worktree_mode_is_not_labelled_as_release(self):
-        command = self.invoke("--features", "--rust-source", str(self.rust_root), "--worktree")
+        command = self.invoke("--features", "--worktree")
         self.assertIn("go-worktree", command)
         self.assertIn("--go-source", command)
         self.assertNotIn("go-v1.4.5", command)
 
     def test_invalid_combinations_fail_before_launching(self):
-        source = ["--features", "--rust-source", str(self.rust_root)]
+        source = ["--features"]
         for arguments in (
-            ["--features"],
             ["--worktree"],
             [*source, "--candidate-version", "v1.4.4"],
             [*source, "--worktree", "--candidate-version", "v1.4.5"],
-            [*source, "--baseline", "v1.4.3"],
+            [*source, "--baseline", "v1.4.4"],
             [*source, "--cohort", "auto"],
             [*source, "--cohort", "jalali", "--cohort", "jalali"],
             [*source, "--iterations", "0"],
@@ -165,10 +167,30 @@ class SharedRunnerTests(unittest.TestCase):
                 "launch_to_ready_ms": 1,
                 "metadata": {"cases": 3, "parsed": 3, "iterations": 1},
             }
-            for engine, duration in (("rust", 1), ("go-v1.4.4", 6), ("go-v1.4.5", 3))
+            for engine, duration in (("rust", 1), ("go-v1.4.3", 6), ("go-v1.4.5", 3))
         ]
         summary = self.runner.summarize(records)
         self.assertEqual(summary["search-auto"]["go_over_rust_time"], 3)
+        self.assertEqual(summary["search-auto"]["go_old_over_new_time"], 2)
+
+    def test_historical_outcome_variability_is_reported(self):
+        records = [
+            {
+                "cohort": "jalali", "engine": "go-v1.4.3", "pass_ms": [1],
+                "launch_to_ready_ms": 1,
+                "metadata": {
+                    "cases": 1311, "parsed": parsed, "matched_dates": parsed,
+                    "iterations": 1, "python_matches": matched,
+                    "python_mismatches": 1311 - matched, "panics": 0,
+                    "outcome_sha256": str(parsed),
+                },
+            }
+            for parsed, matched in ((952, 797), (940, 809))
+        ]
+        summary = self.runner.summarize(records)["jalali"]["go-v1.4.3"]
+        self.assertEqual(summary["parsed_range"], [940, 952])
+        self.assertEqual(summary["python_mismatches_range"], [502, 514])
+        self.assertEqual(summary["outcome_variants"], 2)
 
 
 if __name__ == "__main__":
