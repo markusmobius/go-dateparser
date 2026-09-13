@@ -1,4 +1,4 @@
-### Unreleased - v1.4.6
+### v1.4.6 - 2026-09-13
 
 - Use published Go-Dateutil v2.9.0 for relative parsing and month-based time spans, following Python dateparser 1.4.3 and python-dateutil 2.9.0.post0. No local dependency replacement or Python runtime is required.
 - Clamp month/year offsets to the target month's last valid day, preserve fractional seconds at Python microsecond precision, and reject fractional years/months instead of approximating them.

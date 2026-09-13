@@ -4,14 +4,11 @@ This package parses localized dates in string formats commonly found on web page
 
 Requires **Go 1.26.0 or newer**. The module recommends Go 1.27.1 for development; normal builds do not require cgo or re2go.
 
-The current branch is the **v1.4.6 review candidate**, not yet a tagged release.
-To try this candidate inside your project:
+Install **Go-DateParser v1.4.6** inside your project:
 
 ```sh
-go get github.com/markusmobius/go-dateparser@main
+go get github.com/markusmobius/go-dateparser@v1.4.6
 ```
-
-The latest tagged release remains v1.4.5.
 
 ## Table of Contents
 
@@ -55,7 +52,7 @@ The latest tagged release remains v1.4.5.
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-This README describes the unreleased Go-DateParser v1.4.6 candidate. It adds Python-compatible Dateutil arithmetic and explicit Gregorian calendar validation to the existing single-thread parsing, search, and calendar implementation. See [CHANGELOG.md](CHANGELOG.md) for behavior changes and [UPSTREAM.md](UPSTREAM.md) for reference data and verification limits.
+Go-DateParser v1.4.6 adds Python-compatible Dateutil arithmetic and explicit Gregorian calendar validation to the existing single-thread parsing, search, and calendar implementation. See [CHANGELOG.md](CHANGELOG.md) for behavior changes and [UPSTREAM.md](UPSTREAM.md) for reference data and verification limits.
 
 This package tracks the applicable changes through Python dateparser [v1.4.3][original-tag], commit [9ce60b1][original-commit]. The previous baseline, `02bd2e5`, was the v1.2.1 release commit. [UPSTREAM.md](UPSTREAM.md) accounts for all 66 intervening commits, including Python-specific changes that do not apply to Go, verification results, and known compatibility exceptions.
 
@@ -564,15 +561,16 @@ Generated matching covers the boolean whole-token matchers, including Unicode in
 
 ### Current Measurements
 
-**Go-DateParser v1.4.3, v1.4.5 and the v1.4.6 review candidate**, measured on
+**Go-DateParser v1.4.3, v1.4.5 and v1.4.6**, measured on
 **2026-09-13**. The v1.4.3/v1.4.5 columns retain their original paired measurements.
-The v1.4.6 column comes from a separate review run of Go commit `7837629`, not
-the same paired run. All measurements used Go 1.27.1 on an AMD Ryzen AI 7 PRO 350,
+The v1.4.6 column comes from a separate pre-release review run of Go commit
+`7837629`, not the same paired run. The release retains that runtime unchanged.
+All measurements used Go 1.27.1 on an AMD Ryzen AI 7 PRO 350,
 Linux x86_64/WSL2, with one caller pinned to CPU 2, portable build settings,
 `CGO_ENABLED=0`, `GOAMD64=v1`, `GOMAXPROCS=1`, default garbage collection and
 no optional regex tags.
 
-| Workload | Inputs | v1.4.3 Warm Pass | v1.4.5 Warm Pass | v1.4.6 Candidate Warm Pass | v1.4.3/v1.4.5 Time |
+| Workload | Inputs | v1.4.3 Warm Pass | v1.4.5 Warm Pass | v1.4.6 Warm Pass | v1.4.3/v1.4.5 Time |
 | --- | --- | --- | --- | --- | --- |
 | Automatic locale detection | 226 | 633.36 ms | 150.67 ms | 175.03 ms | 4.20x |
 | Explicit locales/languages | 2,530 | 935.42 ms | 1,017.53 ms | 836.73 ms | 0.92x |

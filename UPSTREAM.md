@@ -19,14 +19,13 @@ string operations, not Python regex syntax or Python serialization caches.
 The existing UseGivenOrder setting supplies upstream's given-language-order
 behavior, and Go retains its supported language set and detection ranking.
 
-## v1.4.6 Review Candidate
+## v1.4.6 Dateutil Integration
 
 Relative parsing and the month-span operations now use
 `github.com/markusmobius/go-dateutil/v2` **v2.9.0**, a subset implementation of
 Python **python-dateutil 2.9.0.post0**. Python DateParser **1.4.3** remains the
 consumer-level reference. [Go-Dateutil v2.9.0](https://github.com/markusmobius/go-dateutil/releases/tag/v2.9.0)
-is published; these DateParser integration changes are awaiting review before
-the separate v1.4.6 release.
+is the published dependency used by Go-DateParser v1.4.6.
 
 Month-end clamping is now unconditional, matching `relativedelta`.
 `PreserveEndOfMonth` remains a deprecated source-compatible field with no effect.
@@ -56,8 +55,8 @@ With that published dependency and `GOWORK=off`, the complete Go-DateParser
 suite passed on Linux with Go 1.26.0 and 1.27.1 and natively on Windows with
 Go 1.27.1. The Go 1.27.1 race suite passed in UTC, America/New_York, and
 Asia/Kolkata; vet, module tidiness, and module verification passed as well.
-These are local integration checks, not a new DateParser release or a claim
-of exhaustive Python parity. Publication of v1.4.6 is pending review.
+These are integration checks for v1.4.6, not a claim of exhaustive Python parity.
+Hosted Linux and Windows checks also passed for the reviewed runtime.
 
 ## Verification
 
@@ -78,7 +77,7 @@ Python exception inputs check safe handling instead of reproducing Python's
 splitter `IndexError` or arithmetic `OverflowError`. Calendar errors compare
 success/failure, not exception wording. Go's finer time periods are normalized
 when compared with Python. At the v1.4.5 release, tests explicitly selected
-`PreserveEndOfMonth` where needed. The unreleased integration above now applies
+`PreserveEndOfMonth` where needed. The v1.4.6 integration above now applies
 Python's month-end behavior by default.
 
 The corrections cover MDY calendar defaults, reference-date conversion using
