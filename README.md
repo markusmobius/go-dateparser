@@ -564,32 +564,33 @@ Generated matching covers the boolean whole-token matchers, including Unicode in
 
 ### Current Measurements
 
-Historical **Go-DateParser v1.4.3 versus v1.4.5**, measured on **2026-09-13**.
-These unchanged measurements predate the v1.4.6 candidate and do not measure
-its Dateutil integration. The comparison used Go 1.27.1 on an AMD Ryzen AI 7
-PRO 350, Linux x86_64/WSL2. Both versions
-use one caller pinned to CPU 2, portable build settings,
+**Go-DateParser v1.4.3, v1.4.5 and the v1.4.6 review candidate**, measured on
+**2026-09-13**. The v1.4.3/v1.4.5 columns retain their original paired measurements.
+The v1.4.6 column comes from a separate review run of Go commit `7837629`, not
+the same paired run. All measurements used Go 1.27.1 on an AMD Ryzen AI 7 PRO 350,
+Linux x86_64/WSL2, with one caller pinned to CPU 2, portable build settings,
 `CGO_ENABLED=0`, `GOAMD64=v1`, `GOMAXPROCS=1`, default garbage collection and
 no optional regex tags.
 
-| Workload | Inputs | v1.4.3 Warm Pass | v1.4.5 Warm Pass | Old/New Time |
-| --- | --- | --- | --- | --- |
-| Automatic locale detection | 226 | 633.36 ms | 150.67 ms | 4.20x |
-| Explicit locales/languages | 2,530 | 935.42 ms | 1,017.53 ms | 0.92x |
-| HtmlDate strict/past | 195 | 742.00 ms | 264.97 ms | 2.80x |
-| Automatic search | 3 | 13.90 ms | 9.82 ms | 1.42x |
-| Split search | 34 | 251.06 ms | 23.05 ms | 10.89x |
-| N-gram search | 39 | 67.79 ms | 65.79 ms | 1.03x |
-| Time-span search | 96 | 58.74 ms | 21.88 ms | 2.68x |
-| Jalali parsing | 1,311 | 21.58 ms | 12.47 ms | 1.73x |
-| Hijri parsing | 6,193 | 57.98 ms | 44.65 ms | 1.30x |
+| Workload | Inputs | v1.4.3 Warm Pass | v1.4.5 Warm Pass | v1.4.6 Candidate Warm Pass | v1.4.3/v1.4.5 Time |
+| --- | --- | --- | --- | --- | --- |
+| Automatic locale detection | 226 | 633.36 ms | 150.67 ms | 175.03 ms | 4.20x |
+| Explicit locales/languages | 2,530 | 935.42 ms | 1,017.53 ms | 836.73 ms | 0.92x |
+| HtmlDate strict/past | 195 | 742.00 ms | 264.97 ms | 255.27 ms | 2.80x |
+| Automatic search | 3 | 13.90 ms | 9.82 ms | 10.10 ms | 1.42x |
+| Split search | 34 | 251.06 ms | 23.05 ms | 24.24 ms | 10.89x |
+| N-gram search | 39 | 67.79 ms | 65.79 ms | 68.65 ms | 1.03x |
+| Time-span search | 96 | 58.74 ms | 21.88 ms | 22.48 ms | 2.68x |
+| Jalali parsing | 1,311 | 21.58 ms | 12.47 ms | 13.26 ms | 1.73x |
+| Hijri parsing | 6,193 | 57.98 ms | 44.65 ms | 48.85 ms | 1.30x |
 
 Times are per complete corpus traversal, summarized as the median of six
 per-process medians, with eight timed passes per process and balanced execution
 order. Feature passes repeat the corpus 16 times and are divided by 16 here.
 Setup, first-use initialization and output checks are outside the warm timers.
-An Old/New ratio above 1 means v1.4.5 took less time. These are regression-corpus
-measurements, not production throughput or isolated startup timings.
+A v1.4.3/v1.4.5 ratio above 1 means v1.4.5 took less time; the ratio does not
+include v1.4.6. These are regression-corpus measurements, not production
+throughput or isolated startup timings.
 
 The same inputs and settings are used for both versions. Go v1.4.5 matches all
 7,676 expected Python feature outcomes, including expected rejections. Go v1.4.3
@@ -598,14 +599,18 @@ are dropped, and both versions use the same recovery wrapper. Historical Jalali
 outcomes can also vary between processes. These rows therefore compare runtime
 costs on the same inputs, not equally correct implementations.
 
-Automatic search has only three texts. Explicit parsing and n-gram timing ranges
-overlap, so those ratios do not establish a clear performance change. The
+Automatic search has only three texts. In the original paired comparison,
+explicit parsing and n-gram timing ranges overlap, so those ratios do not
+establish a clear performance change. The
 [raw report](https://github.com/markusmobius/go-dateparser/releases/download/v1.4.5/dateparser-nine-cohorts-2026-09-13.json)
 retains every sample, outcome audit, execution order and build identity.
+The v1.4.6 samples and source provenance are in the
+[review report](https://github.com/markusmobius/rust-dateparser/blob/84e09faf5f0ff7a039c8445e03c3539a4cb0366f/benchmarks/v1.4.6-review.json).
 
 ### Reproduce Measurements
 
-Under Linux/WSL with Python 3.9+, Git and Go 1.27.1, download and extract the
+To reproduce the v1.4.3/v1.4.5 columns under Linux/WSL with Python 3.9+, Git and
+Go 1.27.1, download and extract the
 [benchmark suite snapshot](https://github.com/markusmobius/go-dateparser/releases/download/v1.4.5/dateparser-benchmark-suite-2026-09-13.zip).
 Pass its directory containing `tools/` and `testdata/` using `--suite-source`.
 No other compiler is needed. The default command measures the three parsing
