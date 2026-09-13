@@ -2,12 +2,23 @@ package language
 
 import (
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
+	"sync"
 
 	"github.com/markusmobius/go-dateparser/internal/data"
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 )
+
+var defaultLocaleLoaders = [...]func() ([]*data.LocaleData, error){
+	sync.OnceValues(func() ([]*data.LocaleData, error) {
+		return getLocalesUncached(nil, nil, "", false, false)
+	}),
+	sync.OnceValues(func() ([]*data.LocaleData, error) {
+		return getLocalesUncached(nil, nil, "", true, false)
+	}),
+}
 
 // GetLocales returns list of locale data based on the specified `locales`, `languages` and `region`.
 //
@@ -22,6 +33,18 @@ import (
 // If `allowConflictingLocales` is set to true, locales with same language and different region
 // can be loaded.
 func GetLocales(locales []string, languages []string, region string, useGivenOrder bool, allowConflictingLocales bool) ([]*data.LocaleData, error) {
+	if len(locales) == 0 && len(languages) == 0 && strings.TrimSpace(region) == "" {
+		var orderIndex int
+		if useGivenOrder {
+			orderIndex = 1
+		}
+		loaded, err := defaultLocaleLoaders[orderIndex]()
+		return slices.Clone(loaded), err
+	}
+	return getLocalesUncached(locales, languages, region, useGivenOrder, allowConflictingLocales)
+}
+
+func getLocalesUncached(locales []string, languages []string, region string, useGivenOrder bool, allowConflictingLocales bool) ([]*data.LocaleData, error) {
 	var validLocales []string
 	localeTracker := strutil.NewDict()
 	languageTracker := strutil.NewDict()

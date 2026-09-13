@@ -1,3 +1,12 @@
+### v1.4.4 - 2026-09-12
+
+- Check locale applicability lazily in the existing priority order, stopping after a successful parse while preserving eager configuration validation and callback behavior.
+- Share locale-independent normalization and digit conversion across candidate locales, retaining the detector's original normalized input.
+- Cache both unrestricted default locale orderings and return independent slices to callers. Explicit locale/language/region validation is unchanged.
+- Add focused regressions for cached ordering and slice ownership, detector inputs, and invalid configuration after previous-locale success.
+- Add a reproducible single-core version comparison to the existing speed-test runner. On the recorded 762-input corpus, warmed automatic detection improved 3.29x and HtmlDate strict/past parsing improved 1.60x versus v1.4.3; explicit-locale timing was effectively unchanged. See the README for ranges, exact-output checks, memory, and first-use limits.
+- Preserve dependencies, generated locale/regex data, public APIs, licensing, and Python dateparser v1.4.3 compatibility. No internal worker goroutines or new build flags are introduced.
+
 ### v1.4.3 - 2026-09-10
 
 - Require Go 1.26.0 (recommended toolchain 1.27.1) and refresh runtime, test, and code-generator dependencies.

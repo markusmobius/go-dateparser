@@ -10,6 +10,42 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestParser_LocalePreparationKeepsDetectorInput(t *testing.T) {
+	var observed []string
+	parser := &dps.Parser{DetectLanguagesFunction: func(input string) []string {
+		observed = append(observed, input)
+		return []string{"en"}
+	}}
+	const input = "\u0662\u0660\u0661\u0662-\u0661\u0662-\u0661\u0664"
+	parsed, err := parser.Parse(nil, input)
+	assert.NoError(t, err)
+	assert.Equal(t, "2012-12-14", parsed.Time.Format("2006-01-02"))
+	assert.Equal(t, []string{input}, observed)
+}
+
+func TestParser_LazyLocalesValidateBeforeParsing(t *testing.T) {
+	parser := new(dps.Parser)
+	parsed, err := parser.Parse(&dps.Configuration{TryPreviousLocales: true}, "12 August 2021")
+	assert.NoError(t, err)
+	assert.Equal(t, "en", parsed.Locale)
+
+	for _, configuration := range []dps.Configuration{
+		{Locales: []string{"unknown"}},
+		{Languages: []string{"unknown"}},
+		{Locales: []string{"en", "en-GB"}},
+	} {
+		var callbacks []string
+		configuration.TryPreviousLocales = true
+		configuration.DateOrder = func(locale string) string {
+			callbacks = append(callbacks, locale)
+			return "DMY"
+		}
+		_, err := parser.Parse(&configuration, "12 August 2021")
+		assert.Error(t, err)
+		assert.Empty(t, callbacks)
+	}
+}
+
 func TestParser_Parse(t *testing.T) {
 	// Prepare scenarios
 	type testScenario struct {

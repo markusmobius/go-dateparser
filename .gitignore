@@ -2,3 +2,4 @@ data-json/
 raw-data/
 .vscode/
 .idea
+.benchmarks/

@@ -22,6 +22,20 @@ behavior, and Go retains its supported language set and detection ranking.
 
 ## Verification
 
+The Go-only v1.4.4 optimization keeps the Python v1.4.3 baseline and the
+compatibility ledger below unchanged. On 2026-09-12, the final runtime passed
+the complete Go 1.27.1 race suite in UTC, America/New_York and Asia/Kolkata,
+the complete Go 1.26.0 suite with cgo disabled, `go vet`, and `go mod verify`.
+The complete native Windows/amd64 suite passed with Go 1.27.1 and cgo disabled;
+the optional `re2_wasm` suite passed under Linux with Go 1.26.0 and cgo enabled.
+The native `re2_cgo` backend was not requalified because its separate RE2
+library is not installed.
+Generated locale/matcher files, dependencies and both license files are unchanged.
+The old/new runner compares exact results across all 762 inputs in each of three
+configurations; accepted counts are 762 for automatic and explicit locales,
+and 139 for HtmlDate strict/past. This is additional regression coverage, not
+a new independent Python comparison.
+
 Dependencies were refreshed on 2026-09-10, with a new minimum Go version of 1.26.0 and recommended toolchain 1.27.1. The current performance measurements below use the refreshed dependencies.
 
 - Full `go test ./... -count=1` passed on Windows with the declared minimum Go 1.26.0 and cgo disabled, including the default generated exact matchers.
@@ -47,6 +61,17 @@ Two further optimizations are enabled alongside the generated matchers. A conser
 Permanent regressions compare timezone candidate rejection against every configured timezone name across boundary combinations and compare token classification against the original regexes on ASCII, Unicode, newline, and malformed-UTF-8 cases. The temporary comparison switches and workload instrumentation remain outside the repository.
 
 ## Current Performance
+
+The current **v1.4.3 versus v1.4.4** comparison and reproduction commands are in
+[README.md](README.md#current-measurements). Six alternating launches per version
+and eight warmed passes per launch on one CPU measured 3.29x for automatic
+locale detection and 1.60x for HtmlDate strict/past; explicit-locale ranges
+overlapped. Retained heap was about 31.1 MiB in both versions. Locale selection,
+normalization and ordering are optimized without changing word matching or
+adding a dependency. The Aho-Corasick experiment was not retained because its
+Go speed/memory tradeoff did not justify it.
+
+### Historical v1.4.3 Measurements
 
 These measurements replace the earlier pre-refresh comparisons. On 2026-09-10, a four-way comparison used the current dependency graph, Go 1.27.1, Windows/amd64 on an AMD Ryzen AI 7 PRO 350, `CGO_ENABLED=1`, and no optional regex tags. All four configurations used Go's standard engine for remaining regex operations:
 

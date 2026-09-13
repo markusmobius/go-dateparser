@@ -1,14 +1,31 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
+	"os"
+	"runtime"
 	"time"
 
 	dps "github.com/markusmobius/go-dateparser"
 )
 
 func main() {
+	jsonOutput := flag.Bool("json", false, "emit reproducible benchmark records")
+	passes := flag.Int("passes", 8, "number of warmed corpus passes")
+	cohort := flag.String("cohort", "auto", "auto, explicit, or htmldate")
+	includeResults := flag.Bool("results", false, "include exact first-pass results")
+	flag.Parse()
+	if *jsonOutput {
+		if err := runBenchmark(*cohort, *passes, *includeResults); err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
+
 	multiplier := 100
 	fmt.Printf("Processing %d text\n", len(benchmarkParserTexts)*multiplier)
 
@@ -23,6 +40,124 @@ func main() {
 	}
 
 	fmt.Printf("Finished in %f seconds\n", time.Since(start).Seconds())
+}
+
+type benchmarkOutcome struct {
+	Input           string `json:"input"`
+	RequestedLocale string `json:"requested_locale"`
+	Error           string `json:"error"`
+	Seconds         int64  `json:"seconds"`
+	Nanoseconds     int    `json:"nanoseconds"`
+	Period          string `json:"period"`
+	Locale          string `json:"locale"`
+	Location        string `json:"location"`
+	Zone            string `json:"zone"`
+	Offset          int    `json:"offset"`
+}
+
+func runBenchmark(cohort string, passes int, includeResults bool) error {
+	if passes < 1 || cohort != "auto" && cohort != "explicit" && cohort != "htmldate" {
+		return fmt.Errorf("use positive passes and cohort auto, explicit, or htmldate")
+	}
+	if runtime.GOMAXPROCS(0) != 1 {
+		return fmt.Errorf("benchmark requires GOMAXPROCS=1")
+	}
+	currentTime := time.Date(2026, 9, 12, 12, 0, 0, 0, time.UTC)
+	parsers := make([]*dps.Parser, len(benchmarkParserTexts))
+	configurations := make([]dps.Configuration, len(benchmarkParserTexts))
+	for index, text := range benchmarkParserTexts {
+		parsers[index] = new(dps.Parser)
+		configuration := &configurations[index]
+		configuration.CurrentTime = currentTime
+		if cohort == "explicit" {
+			parsed, err := dps.Parse(configuration, text)
+			locale := "en"
+			if err == nil && parsed.Locale != "" {
+				locale = parsed.Locale
+			}
+			configuration.Locales = []string{locale}
+		} else if cohort == "htmldate" {
+			configuration.StrictParsing = true
+			configuration.PreferredDateSource = dps.Past
+			parsers[index].ParserTypes = []dps.ParserType{dps.CustomFormat, dps.AbsoluteTime}
+		}
+	}
+
+	started := time.Now()
+	parsedCount := 0
+	outcomes := make([]benchmarkOutcome, len(benchmarkParserTexts))
+	for index, text := range benchmarkParserTexts {
+		outcome := &outcomes[index]
+		outcome.Input = text
+		if len(configurations[index].Locales) > 0 {
+			outcome.RequestedLocale = configurations[index].Locales[0]
+		}
+		parsed, err := parsers[index].Parse(&configurations[index], text)
+		if err != nil {
+			outcome.Error = err.Error()
+			continue
+		}
+		parsedCount++
+		outcome.Seconds, outcome.Nanoseconds = parsed.Time.Unix(), parsed.Time.Nanosecond()
+		outcome.Period, outcome.Locale = fmt.Sprint(parsed.Period), parsed.Locale
+		outcome.Location = parsed.Time.Location().String()
+		outcome.Zone, outcome.Offset = parsed.Time.Zone()
+	}
+	firstPassMS := float64(time.Since(started)) / float64(time.Millisecond)
+	corpus, err := json.Marshal(benchmarkParserTexts)
+	if err != nil {
+		return err
+	}
+	encodedOutcomes, err := json.Marshal(outcomes)
+	if err != nil {
+		return err
+	}
+	metadata := struct {
+		Cohort        string  `json:"cohort"`
+		Cases         int     `json:"cases"`
+		Parsed        int     `json:"parsed"`
+		CurrentTime   string  `json:"current_time"`
+		CorpusSHA256  string  `json:"corpus_sha256"`
+		ResultsSHA256 string  `json:"results_sha256"`
+		FirstPassMS   float64 `json:"first_pass_ms"`
+	}{cohort, len(benchmarkParserTexts), parsedCount, currentTime.Format(time.RFC3339),
+		fmt.Sprintf("%x", sha256.Sum256(corpus)), fmt.Sprintf("%x", sha256.Sum256(encodedOutcomes)), firstPassMS}
+	fmt.Print("BENCHMARK_READY ")
+	if err := json.NewEncoder(os.Stdout).Encode(metadata); err != nil {
+		return err
+	}
+	if !includeResults {
+		outcomes = nil
+	}
+
+	passMS := make([]float64, passes)
+	for pass := range passMS {
+		started := time.Now()
+		successes := 0
+		for index, text := range benchmarkParserTexts {
+			parsed, err := parsers[index].Parse(&configurations[index], text)
+			if err == nil {
+				successes++
+			}
+			runtime.KeepAlive(parsed)
+		}
+		passMS[pass] = float64(time.Since(started)) / float64(time.Millisecond)
+		if successes != parsedCount {
+			return fmt.Errorf("successful-parse count changed during pass %d", pass+1)
+		}
+	}
+	runtime.GC()
+	var memory runtime.MemStats
+	runtime.ReadMemStats(&memory)
+	runtime.KeepAlive(parsers)
+	runtime.KeepAlive(configurations)
+	fmt.Print("BENCHMARK_RESULT ")
+	return json.NewEncoder(os.Stdout).Encode(struct {
+		Metadata  any                `json:"metadata"`
+		PassMS    []float64          `json:"pass_ms"`
+		HeapBytes uint64             `json:"retained_heap_bytes"`
+		Results   []benchmarkOutcome `json:"results,omitempty"`
+	}{metadata, passMS, memory.HeapAlloc, outcomes})
 }
 
 var benchmarkParserTexts = []string{

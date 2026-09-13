@@ -14,9 +14,6 @@ import (
 // The `str` parameter is a string representing date and/or time in a recognizably valid format.
 // If `stripTimezone` set to true, timezone will be stripped and ignored.
 func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, stripTimezone bool, ignoreSurroundingText ...bool) bool {
-	// Parse config
-	skippedTokens := mapSkippedTokens(cfg, ld)
-
 	// Strip timezone if needed
 	if stripTimezone {
 		str, _ = timezone.PopTzOffset(str)
@@ -25,6 +22,11 @@ func IsApplicable(cfg *setting.Configuration, ld *data.LocaleData, str string, s
 	// Normalize string
 	str = strutil.NormalizeString(str)
 	str = digit.NormalizeString(str)
+	return IsApplicablePrepared(cfg, ld, str, ignoreSurroundingText...)
+}
+
+func IsApplicablePrepared(cfg *setting.Configuration, ld *data.LocaleData, str string, ignoreSurroundingText ...bool) bool {
+	skippedTokens := mapSkippedTokens(cfg, ld)
 	str = Simplify(ld, str)
 
 	// Generate tokens

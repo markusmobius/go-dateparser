@@ -2,6 +2,7 @@ package dateparser
 
 import (
 	"fmt"
+	"iter"
 	"strings"
 	"sync"
 	"time"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/markusmobius/go-dateparser/date"
 	"github.com/markusmobius/go-dateparser/internal/data"
+	"github.com/markusmobius/go-dateparser/internal/digit"
 	"github.com/markusmobius/go-dateparser/internal/language"
 	"github.com/markusmobius/go-dateparser/internal/parser/absolute"
 	"github.com/markusmobius/go-dateparser/internal/parser/formatted"
@@ -133,7 +135,7 @@ func (p *Parser) parseUsingLocales(cfg *Configuration, iCfg *setting.Configurati
 	}
 
 	// Process each locale
-	for _, locale := range locales {
+	for locale := range locales {
 		// Create date order for this locale
 		dateOrder := locale.DateOrder
 		if cfg.DateOrder != nil {
@@ -244,25 +246,18 @@ func (p *Parser) tryNoSpacesTime(iCfg *setting.Configuration, translations []str
 	return date.Date{}
 }
 
-func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configuration, str string, ignoreSurroundingText bool) ([]*data.LocaleData, error) {
-	// Prepare results
-	var results []*data.LocaleData
-	resultTracker := strutil.NewDict()
-
+func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configuration, str string, ignoreSurroundingText bool) (iter.Seq[*data.LocaleData], error) {
 	// Normalize and prepare date strings
 	str = strutil.NormalizeString(str)
-	dateStrings := []string{str}
+	dateStrings := []string{digit.NormalizeString(strutil.NormalizeString(str))}
 	if poppedTz, _ := timezone.PopTzOffset(str); poppedTz != str {
-		dateStrings = append(dateStrings, poppedTz)
+		dateStrings = append(dateStrings, digit.NormalizeString(strutil.NormalizeString(poppedTz)))
 	}
 
 	// Fetch previously used locales first
+	var previous *data.LocaleData
 	if cfg.TryPreviousLocales {
-		ld := p.checkPreviousLocales(iCfg, dateStrings, ignoreSurroundingText)
-		if ld != nil {
-			results = append(results, ld)
-			resultTracker.Add(ld.Name)
-		}
+		previous = p.checkPreviousLocales(iCfg, dateStrings, ignoreSurroundingText)
 	}
 
 	// If specified, use external detector to fetch languages
@@ -278,37 +273,46 @@ func (p *Parser) getApplicableLocales(cfg *Configuration, iCfg *setting.Configur
 		return nil, err
 	}
 
-	for _, locale := range locales {
-		if resultTracker.Contain(locale.Name) {
-			continue
-		}
-
-		// Check if locale is applicable
-		var isApplicable bool
-		for _, ds := range dateStrings {
-			if p.localeIsApplicable(iCfg, locale, ds, ignoreSurroundingText) {
-				isApplicable = true
-				break
-			}
-		}
-
-		if isApplicable {
-			results = append(results, locale)
-			resultTracker.Add(locale.Name)
-		}
-	}
-
-	// Finally, append locales of default languages
+	var defaults []*data.LocaleData
 	if len(iCfg.DefaultLanguages) > 0 {
-		locales, _ := language.GetLocales(nil, cfg.DefaultLanguages, cfg.Region, cfg.UseGivenOrder, false)
-		for _, locale := range locales {
-			if !resultTracker.Contain(locale.Name) {
-				results = append(results, locale)
-			}
-		}
+		defaults, _ = language.GetLocales(nil, cfg.DefaultLanguages, cfg.Region, cfg.UseGivenOrder, false)
 	}
 
-	return results, nil
+	return func(yield func(*data.LocaleData) bool) {
+		resultTracker := strutil.NewDict()
+		if previous != nil {
+			resultTracker.Add(previous.Name)
+			if !yield(previous) {
+				return
+			}
+		}
+
+		for _, locale := range locales {
+			if resultTracker.Contain(locale.Name) {
+				continue
+			}
+
+			var isApplicable bool
+			for _, dateString := range dateStrings {
+				if p.localeIsApplicable(iCfg, locale, dateString, ignoreSurroundingText) {
+					isApplicable = true
+					break
+				}
+			}
+			if isApplicable {
+				resultTracker.Add(locale.Name)
+				if !yield(locale) {
+					return
+				}
+			}
+		}
+
+		for _, locale := range defaults {
+			if !resultTracker.Contain(locale.Name) && !yield(locale) {
+				return
+			}
+		}
+	}, nil
 }
 
 func (p *Parser) checkPreviousLocales(iCfg *setting.Configuration, dateStrings []string, ignoreSurroundingText bool) *data.LocaleData {
@@ -335,7 +339,7 @@ func (p *Parser) saveUsedLocale(ld *data.LocaleData) {
 }
 
 func (p *Parser) localeIsApplicable(iCfg *setting.Configuration, ld *data.LocaleData, s string, ignoreSurroundingText bool) bool {
-	return language.IsApplicable(iCfg, ld, s, false, ignoreSurroundingText)
+	return language.IsApplicablePrepared(iCfg, ld, s, ignoreSurroundingText)
 }
 
 func (p *Parser) stripBracesAndTimezones(s string) (string, timezone.OffsetData) {

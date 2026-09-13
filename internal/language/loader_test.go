@@ -2,12 +2,34 @@ package language
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 	"testing"
 
 	"github.com/markusmobius/go-dateparser/internal/strutil"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestGetLocales_DefaultCachePreservesOrderAndOwnership(t *testing.T) {
+	for _, givenOrder := range []bool{false, true} {
+		for _, allowConflicting := range []bool{false, true} {
+			expected, err := getLocalesUncached(nil, nil, "", givenOrder, allowConflicting)
+			assert.NoError(t, err)
+			for _, region := range []string{"", "   "} {
+				actual, err := GetLocales(nil, nil, region, givenOrder, allowConflicting)
+				assert.NoError(t, err)
+				assert.True(t, slices.Equal(expected, actual))
+				if len(actual) == 0 {
+					t.Fatal("default locales must not be empty")
+				}
+				actual[0] = nil
+				fresh, err := GetLocales(nil, nil, region, givenOrder, allowConflicting)
+				assert.NoError(t, err)
+				assert.True(t, slices.Equal(expected, fresh))
+			}
+		}
+	}
+}
 
 func TestGetLocales(t *testing.T) {
 	// Helper function
