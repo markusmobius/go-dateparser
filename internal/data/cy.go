@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	cy_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_cy = sync.OnceFunc(func() {
 	cy_Locale = merge(nil, LocaleData{
 		Name:      "cy",
 		DateOrder: "DMY",
@@ -132,4 +138,4 @@ func init() {
 		ExactCombinedMatcher: matchExactd7650318404b05d0638f209c5b984125903342eee580c249373889f1dce846b2,
 		KnownWords:           []string{"wythnos ddiwethaf", "blwyddyn nesaf", "yr wythnos hon", "wythnos nesaf", "dydd mercher", "mis diwethaf", "ws ddiwethaf", "dydd gwener", "dydd mawrth", "dydd sadwrn", "y funud hon", "gorffennaf", "yr awr hon", "dydd llun", "mis nesaf", "y mis hwn", "yr ws hon", "bl nesaf", "blwyddyn", "chwefror", "dydd iau", "dydd sul", "tachwedd", "ws nesaf", "diwrnod", "llynedd", "mehefin", "rhagfyr", "wythnos", "ebrill", "eiliad", "heddiw", "hydref", "ionawr", "mawrth", "chwef", "eleni", "gorff", "munud", "oriau", "yfory", "awst", "ddoe", "dydd", "gwen", "llun", "medi", "nawr", "rhag", "tach", "awr", "chw", "ebr", "gmt", "gor", "gwe", "hyd", "iau", "ion", "mai", "maw", "meh", "mer", "mis", "mun", "sad", "sul", "utc", "am", "bl", "pm", "yb", "yh", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

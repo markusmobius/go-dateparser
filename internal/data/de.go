@@ -2,7 +2,11 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	de_Locale    LocaleData
@@ -14,7 +18,9 @@ var (
 	de_LU_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_de = sync.OnceFunc(func() {
 	de_Locale = merge(nil, LocaleData{
 		Name:                  "de",
 		DateOrder:             "DMY",
@@ -235,4 +241,4 @@ func init() {
 		Name:      "de-LU",
 		DateOrder: "DMY",
 	})
-}
+})

@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	vi_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_vi = sync.OnceFunc(func() {
 	vi_Locale = merge(nil, LocaleData{
 		Name:                  "vi",
 		DateOrder:             "DMY",
@@ -155,4 +161,4 @@ func init() {
 		ExactCombinedMatcher: matchExact57d5046f289e985898ecaecfafa6d391bf79825b6858d3e7bffa789ea109e0a1,
 		KnownWords:           []string{"thang muoi hai", "thang muoi mot", "giay đong ho", "thang truoc", "nguyen ban", "thang chin", "thang muoi", "tuan truoc", "nam ngoai", "thang bay", "thang hai", "thang mot", "thang nam", "thang nay", "thang sau", "thang tam", "truoc đay", "ban ngay", "cach đay", "chu nhat", "hang nhi", "ngay mai", "phut nay", "thang 10", "thang 11", "thang 12", "thang ba", "thang tu", "tuan nay", "tuan sau", "bay gio", "gio nay", "hom nay", "hom qua", "nam nay", "nam sau", "thang 1", "thang 2", "thang 3", "thang 4", "thang 5", "thang 6", "thang 7", "thang 8", "thang 9", "thu bay", "thu hai", "thu nam", "thu sau", "tuan le", "thg 10", "thg 11", "thg 12", "thu ba", "thu tu", "thang", "thg 1", "thg 2", "thg 3", "thg 4", "thg 5", "thg 6", "thg 7", "thg 8", "thg 9", "thu 1", "thu 2", "thu 3", "thu 4", "thu 5", "thu 6", "thu 7", "trong", "truoc", "buoi", "chut", "giay", "ngay", "phut", "th 2", "th 3", "th 4", "th 5", "th 6", "th 7", "tuan", "gio", "gmt", "lat", "luc", "nam", "thg", "utc", "am", "ch", "cn", "pm", "sa", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

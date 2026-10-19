@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	mzn_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_mzn = sync.OnceFunc(func() {
 	mzn_Locale = merge(nil, LocaleData{
 		Name:      "mzn",
 		DateOrder: "YMD",
@@ -99,4 +105,4 @@ func init() {
 		ExactCombinedMatcher: matchExact3cbd3a08e78de7fcb525952e1211977e6b4fb1dc52077204e76087b2eba651a1,
 		KnownWords:           []string{"this minute", "this hour", "بعدی هفته", "قبلی هفته", "این هفته", "سال دیگه", "این ماه", "سپتامبر", "ماه بعد", "ماه قبل", "دسامبر", "نوامبر", "پارسال", "ژانویه", "امروز", "امسال", "اوریل", "اکتبر", "ثانیه", "دقیقه", "دیروز", "فوریه", "ژويیه", "ساعت", "فردا", "مارس", "هفته", "ژوين", "fri", "gmt", "mon", "now", "sat", "sun", "thu", "tue", "utc", "wed", "اوت", "دقه", "روز", "سال", "ماه", "am", "pm", "مه", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

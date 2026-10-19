@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	ksh_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ksh = sync.OnceFunc(func() {
 	ksh_Locale = merge(nil, LocaleData{
 		Name:      "ksh",
 		DateOrder: "DMY",
@@ -120,4 +126,4 @@ func init() {
 		ExactCombinedMatcher: matchExacta6e3214eb6142d376c21b6bff4f3ff046bff9f5090fa33a30f3ac3c922354bcc,
 		KnownWords:           []string{"uhr nommendaachs", "uhr vormiddaachs", "nachste mohnd", "nachste woche", "dunnersdaach", "latzde mohnd", "diese mohnd", "nommendaach", "this minute", "vormeddaach", "dinnsdaach", "friidaach", "mohndaach", "samsdaach", "septamber", "sunndaach", "this hour", "dezamber", "diß johr", "laz johr", "laz woch", "nax johr", "novamber", "oktohber", "schtunde", "di woch", "fabrowa", "jannewa", "jestere", "metwoch", "schtund", "aprell", "menutt", "sekond", "daach", "juuli", "juuni", "mohnd", "morje", "oujoß", "huck", "johr", "maaz", "woch", "apr", "dez", "fab", "gmt", "jan", "jul", "jun", "mai", "maz", "min", "nov", "now", "okt", "ouj", "sap", "sek", "std", "utc", "am", "di", "du", "fr", "me", "mo", "nm", "pm", "sa", "su", "vm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "j", "m", "s", "w", "z", "|"},
 	})
-}
+})

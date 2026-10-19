@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	eu_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_eu = sync.OnceFunc(func() {
 	eu_Locale = merge(nil, LocaleData{
 		Name:      "eu",
 		DateOrder: "YMD",
@@ -131,4 +137,4 @@ func init() {
 		ExactCombinedMatcher: matchExactaf747c370200e6fa8aa273ebe8779625f5d513dd13327ebe2161b874bcff563b,
 		KnownWords:           []string{"hurrengo hilabetean", "aurreko hilabetean", "hurrengo hilabetea", "aurreko hilabetea", "hilabete honetan", "hurrengo astean", "hurrengo urtean", "aurreko astean", "hurrengo astea", "hurrengo urtea", "minutu honetan", "aurreko astea", "aurreko urtea", "aste honetan", "hilabete hau", "ordu honetan", "asteazkena", "astelehena", "asteartea", "hilabetea", "larunbata", "urtarrila", "aste hau", "osteguna", "ostirala", "segundoa", "abendua", "abuztua", "apirila", "igandea", "maiatza", "martxoa", "minutua", "otsaila", "uztaila", "aurten", "azaroa", "ekaina", "iraila", "orduak", "astea", "bihar", "eguna", "orain", "ordua", "urria", "urtea", "atzo", "gaur", "abe", "abu", "api", "ast", "aza", "eka", "gmt", "hil", "iaz", "ira", "mai", "mar", "min", "ots", "urr", "urt", "utc", "uzt", "al", "am", "ar", "az", "eg", "ig", "lr", "og", "or", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "s", "z", "|"},
 	})
-}
+})

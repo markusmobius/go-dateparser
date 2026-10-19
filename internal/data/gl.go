@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	gl_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_gl = sync.OnceFunc(func() {
 	gl_Locale = merge(nil, LocaleData{
 		Name:      "gl",
 		DateOrder: "DMY",
@@ -166,4 +172,4 @@ func init() {
 		ExactCombinedMatcher: matchExactb83f8c6fc74ea8ec9edc89105e8a394f5a9a6c32bfb1645fded3a858dfbd7d1a,
 		KnownWords:           []string{"a proxima semana", "a semana pasada", "a proxima sem", "o proximo ano", "o proximo mes", "a sem pasada", "neste minuto", "o ano pasado", "o mes pasado", "seguinte ano", "sem seguinte", "esta semana", "este minuto", "a prox sem", "ano pasado", "m seguinte", "nesta hora", "o prox ano", "o prox mes", "sem pasada", "a sem pas", "esta hora", "o ano pas", "o mes pas", "decembro", "esta sem", "este ano", "este mes", "febreiro", "m pasado", "mercores", "novembro", "setembro", "domingo", "outubro", "segundo", "xaneiro", "agosto", "este m", "martes", "minuto", "sabado", "semana", "venres", "abril", "agora", "horas", "marzo", "xoves", "xullo", "hora", "hoxe", "luns", "maio", "mana", "onte", "xuno", "abr", "ago", "ano", "dec", "dia", "dom", "feb", "gmt", "mar", "mer", "mes", "min", "nov", "out", "sab", "sem", "set", "utc", "ven", "xan", "xov", "xul", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "d", "h", "m", "s", "z", "|"},
 	})
-}
+})

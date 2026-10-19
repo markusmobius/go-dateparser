@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	lt_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_lt = sync.OnceFunc(func() {
 	lt_Locale = merge(nil, LocaleData{
 		Name:      "lt",
 		DateOrder: "YMD",
@@ -169,4 +175,4 @@ func init() {
 		ExactCombinedMatcher: matchExactaa1d8d3c29137722f1f9877f4e61f19af42fc6555e66ba178f1cb4131b4dd827,
 		KnownWords:           []string{"praejusiais metais", "praejusia savaite", "praejusi menesi", "ketvirtadienis", "kitais metais", "kita savaite", "penktadienis", "siais metais", "treciadienis", "antradienis", "kita menesi", "pirmadienis", "sekmadienis", "sestadienis", "sia savaite", "sia valanda", "sia minute", "balandzio", "lapkricio", "lapkritis", "priespiet", "rugpjucio", "rugpjutis", "si menesi", "balandis", "birzelio", "birzelis", "gruodzio", "rugsejis", "siandien", "valandos", "geguzes", "gruodis", "rugsejo", "savaite", "sekunde", "valanda", "vasario", "vasaris", "geguze", "liepos", "minute", "popiet", "sausio", "sausis", "spalio", "spalis", "dabar", "diena", "gruod", "kovas", "lapkr", "liepa", "menuo", "metai", "rytoj", "vakar", "birz", "kovo", "liep", "rugp", "rugs", "saus", "spal", "bal", "geg", "gmt", "kov", "men", "min", "sav", "sek", "utc", "val", "vas", "am", "an", "kt", "pm", "pn", "pr", "sk", "st", "tr", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "m", "s", "z", "|"},
 	})
-}
+})

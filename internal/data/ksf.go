@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	ksf_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ksf = sync.OnceFunc(func() {
 	ksf_Locale = merge(nil, LocaleData{
 		Name:      "ksf",
 		DateOrder: "DMY",
@@ -97,4 +103,4 @@ func init() {
 		},
 		KnownWords: []string{"ŋwii akǝ ntɛk di bɔk", "ŋwii akǝ ntɛk di bɛɛ", "ŋwii akǝ taabɛɛ", "ŋwii akǝ taafɔk", "ŋwii akǝ taanin", "ŋwii akǝ taaraa", "ŋwii a ntɔntɔ", "ŋwii akǝ ntɛk", "ŋwii akǝ taan", "ŋwii akǝ bɛɛ", "ŋwii akǝ nin", "ŋwii akǝ raa", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "mɛkrɛdi", "camɛɛn", "cɛɛnko", "ridurǝ", "rinkɔɔ", "saruwa", "gɛɛnǝ", "jumba", "jǝǝdi", "lǝndi", "maadi", "mǝnit", "samdi", "sɔndǝ", "ŋwii", "ŋwos", "bǝk", "gmt", "hau", "jum", "jǝǝ", "lǝn", "maa", "mɛk", "now", "sam", "sɔn", "utc", "ŋ10", "ŋ11", "ŋ12", "am", "hr", "pm", "ŋ1", "ŋ2", "ŋ3", "ŋ4", "ŋ5", "ŋ6", "ŋ7", "ŋ8", "ŋ9", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

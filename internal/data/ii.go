@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	ii_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ii = sync.OnceFunc(func() {
 	ii_Locale = merge(nil, LocaleData{
 		Name:      "ii",
 		DateOrder: "YMD",
@@ -85,4 +91,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "gmt", "now", "utc", "ꀋꅔꉈ", "ꃆꏂꑍ", "ꆏꊂꃘ", "ꆏꊂꇖ", "ꆏꊂꉬ", "ꆏꊂꋍ", "ꆏꊂꌕ", "ꆏꊂꑍ", "ꊰꊪꆪ", "ꊰꑋꆪ", "ꑭꆏꑍ", "am", "hr", "pm", "ꀃꑍ", "ꁯꋒ", "ꃘꆪ", "ꄮꈉ", "ꆏꃘ", "ꆏꇖ", "ꆏꉬ", "ꆏꋍ", "ꆏꌕ", "ꆏꑍ", "ꇖꆪ", "ꈬꆪ", "ꉆꆪ", "ꉬꆪ", "ꊰꆪ", "ꋍꆪ", "ꌕꆪ", "ꎸꄑ", "ꏃꆪ", "ꑍꆪ", "ꑭꆏ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ꃏ", "ꆪ", "ꇙ", "ꈎ", "ꑍ"},
 	})
-}
+})

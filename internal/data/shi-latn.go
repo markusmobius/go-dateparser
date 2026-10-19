@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	shi_Latn_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_shi_Latn = sync.OnceFunc(func() {
 	shi_Latn_Locale = merge(nil, LocaleData{
 		Name:      "shi-Latn",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "cutanbir", "dujanbir", "nuwanbir", "tadggwat", "asggwas", "asidyas", "asimwas", "imalass", "tasragt", "tusdidt", "asamas", "asinas", "innayr", "tasint", "tifawt", "yulyuz", "akras", "akwas", "askka", "aynas", "ayyur", "brayr", "ibrir", "idlli", "ktubr", "mayyu", "yunyu", "asid", "asim", "assa", "mars", "ɣuct", "akr", "akw", "asa", "asi", "ass", "ayn", "bra", "cut", "duj", "gmt", "ibr", "inn", "ktu", "mar", "may", "now", "nuw", "utc", "yul", "yun", "ɣuc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

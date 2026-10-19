@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	khq_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_khq = sync.OnceFunc(func() {
 	khq_Locale = merge(nil, LocaleData{
 		Name:      "khq",
 		DateOrder: "DMY",
@@ -96,4 +102,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "alhamiisa", "deesanbur", "feewiriye", "last week", "last year", "next week", "next year", "noowanbur", "sektanbur", "this hour", "this week", "this year", "oktoobur", "assabdu", "atalata", "zanwiye", "adduha", "alarba", "alhadi", "aljuma", "aluula", "awiril", "miniti", "atini", "guuru", "handu", "jaari", "jiiri", "marsi", "zuweŋ", "zuyye", "hebu", "miti", "suba", "ala", "alh", "alj", "alm", "ass", "ata", "ati", "awi", "dee", "fee", "gmt", "hoo", "mar", "noo", "now", "okt", "sek", "utc", "zan", "zuw", "zuy", "am", "bi", "hr", "me", "pm", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	ka_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ka = sync.OnceFunc(func() {
 	ka_Locale = merge(nil, LocaleData{
 		Name:                  "ka",
 		DateOrder:             "DMY",
@@ -137,4 +143,4 @@ func init() {
 		ExactCombinedMatcher: matchExact61f23800ea96504fbcf5c66f7551a46b37bcc554a800a011a5dcd9ff806ae135,
 		KnownWords:           []string{"მომავალ კვირაში", "გასულ კვირაში", "მომავალ თვეს", "მომავალ წელს", "შუადღ შემდეგ", "ამ კვირაში", "გასულ თვეს", "გასულ წელს", "დაახლოებით", "სექტემბერი", "ამ საათში", "დეკემბერი", "თებერვალი", "ოთხშაბათი", "ოქტომბერი", "პარასკევი", "სამშაბათი", "ხუთშაბათი", "ამ თვეში", "ამ წუთში", "ნოემბერი", "ორშაბათი", "აგვისტო", "ამ წელს", "დღეიდან", "იანვარი", "აპრილი", "ივლისი", "ივნისი", "შაბათი", "გუშინ", "კვირა", "მაისი", "მარტი", "საათი", "ახლა", "დღეს", "წამი", "წელი", "წლის", "წუთი", "ხვალ", "gmt", "utc", "აგვ", "აპრ", "დეკ", "დღე", "თებ", "თვე", "იან", "ივლ", "ივნ", "კვი", "მაი", "მარ", "ნოე", "ოთხ", "ორშ", "ოქტ", "პარ", "სამ", "სექ", "შაბ", "წინ", "ხუთ", "am", "pm", "და", "ზე", "ის", "კვ", "სთ", "წთ", "წმ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "წ"},
 	})
-}
+})

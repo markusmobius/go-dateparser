@@ -2,12 +2,18 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	teo_Locale    LocaleData
 	teo_KE_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_teo = sync.OnceFunc(func() {
 	teo_Locale = merge(nil, LocaleData{
 		Name:      "teo",
 		DateOrder: "DMY",
@@ -104,4 +110,4 @@ func init() {
 		Name:      "teo-KE",
 		DateOrder: "DMY",
 	})
-}
+})

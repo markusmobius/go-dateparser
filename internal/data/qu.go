@@ -2,13 +2,19 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	qu_Locale    LocaleData
 	qu_BO_Locale LocaleData
 	qu_EC_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_qu = sync.OnceFunc(func() {
 	qu_Locale = merge(nil, LocaleData{
 		Name:      "qu",
 		DateOrder: "DMY",
@@ -145,4 +151,4 @@ func init() {
 		Name:      "qu-EC",
 		DateOrder: "DMY",
 	})
-}
+})

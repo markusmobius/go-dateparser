@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	bs_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_bs = sync.OnceFunc(func() {
 	bs_Locale = merge(nil, LocaleData{
 		Name:      "bs",
 		DateOrder: "DMY.",
@@ -156,4 +162,4 @@ func init() {
 		ExactCombinedMatcher: matchExact4719250f7b646ff4247743f96e0ca18275ae0dc9d69ec40f610d5d22efdaf539,
 		KnownWords:           []string{"sljedece sedmice", "sljedece godine", "sljedeci mjesec", "prosle sedmice", "prosle godine", "prosli mjesec", "ovaj mjesec", "ove sedmice", "ponedjeljak", "ova minuta", "ove godine", "prijepodne", "septembar", "cetvrtak", "decembar", "nedjelja", "novembar", "ovaj sat", "februar", "oktobar", "popodne", "sedmica", "sekunda", "srijeda", "august", "avgust", "godina", "januar", "minuta", "mjesec", "subota", "utorak", "april", "danas", "jucer", "petak", "sutra", "juli", "juni", "mart", "sada", "sati", "apr", "aug", "avg", "cet", "dan", "dec", "feb", "gmt", "god", "jan", "jul", "jun", "maj", "mar", "min", "ned", "nov", "okt", "pet", "pon", "sat", "sed", "sek", "sep", "sri", "sub", "utc", "uto", "am", "mj", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "g", "h", "s", "z", "|"},
 	})
-}
+})

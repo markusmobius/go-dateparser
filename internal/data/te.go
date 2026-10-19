@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	te_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_te = sync.OnceFunc(func() {
 	te_Locale = merge(nil, LocaleData{
 		Name:      "te",
 		DateOrder: "DMY",
@@ -151,4 +157,4 @@ func init() {
 		ExactCombinedMatcher: matchExact7f5829ee6aa593bebfdaa87be3fc5af5c8dcca525b9a6afef53c967e756d8d17,
 		KnownWords:           []string{"తదుపర సంవతసరం", "గత సంవతసరం", "ఈ సంవతసరం", "తదుపర వరం", "తదుపర సంవ", "తదుపర నల", "తదుపర సం", "గురువరం", "పరసతుతం", "మంగళవరం", "శుకరవరం", "సంవతసరం", "ఈ నమషం", "గత వరం", "గత సంవ", "బుధవరం", "సపటంబర", "అకటబర", "ఆగసటు", "ఆదవరం", "ఈ గంట", "ఈ రజు", "ఈ వరం", "ఈ సంవ", "గంటలు", "గత నల", "గత సం", "డసంబర", "నమషము", "నవంబర", "ఫబరవర", "శనవరం", "సమవరం", "ఈ నల", "ఈ సం", "ఏపరల", "గురు", "జనవర", "మంగళ", "వరము", "శుకర", "సకను", "సపటం", "gmt", "utc", "అకట", "ఏపర", "గంట", "జుల", "జూన", "డసం", "దనం", "ననన", "నవం", "ఫబర", "బుధ", "మరచ", "రజు", "రపు", "am", "pm", "ఆగ", "ఆద", "గం", "జన", "నమ", "నల", "శన", "సం", "సక", "సమ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ద", "న", "మ", "వ"},
 	})
-}
+})

@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	kk_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_kk = sync.OnceFunc(func() {
 	kk_Locale = merge(nil, LocaleData{
 		Name:      "kk",
 		DateOrder: "DMY",
@@ -131,4 +137,4 @@ func init() {
 		ExactCombinedMatcher: matchExact713465cb4cca9ea8fa011839ad9a75c07f2efce7d4dfee72918d9adc73b44918,
 		KnownWords:           []string{"былтырғы жыл", "келесі апта", "биылғы жыл", "келесі жыл", "өткен апта", "желтоқсан", "келесі аи", "осы минут", "осы сағат", "беисенбі", "дүисенбі", "жексенбі", "осы апта", "сеисенбі", "сәрсенбі", "қыркүиек", "өткен аи", "маусым", "наурыз", "осы аи", "секунд", "қараша", "қаңтар", "ақпан", "бүгін", "ертең", "мамыр", "минут", "сағат", "сенбі", "сәуір", "тамыз", "шілде", "қазан", "қазір", "апта", "жұма", "кеше", "gmt", "utc", "ақп", "жел", "жыл", "күн", "мам", "мау", "мин", "нау", "сағ", "сәу", "там", "шіл", "қаз", "қар", "қаң", "қыр", "am", "pm", "аи", "ап", "бс", "дс", "жм", "жс", "сб", "ср", "сс", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ж", "с"},
 	})
-}
+})

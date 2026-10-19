@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	am_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_am = sync.OnceFunc(func() {
 	am_Locale = merge(nil, LocaleData{
 		Name:      "am",
 		DateOrder: "DMY",
@@ -132,4 +138,4 @@ func init() {
 		ExactCombinedMatcher: matchExactacd4bf407e867a6e021dc46cbe1143d73c53955d5e77c6ad953f7a1a20392dd3,
 		KnownWords:           []string{"የሚቀጥለው ሳምንት", "የሚቀጥለው ዓመት", "ባለፈው ሳምንት", "የሚቀጥለው ወር", "ያለፈው ሳምንት", "በዚህ ሣምንት", "በዚህ ሳምንት", "ያለፈው ዓመት", "በዚህ ዓመት", "ያለፈው ወር", "ሴፕቴምበር", "በዚህ ወር", "ይህ ሰዓት", "ይህ ደቂቃ", "ትላንትና", "ኖቬምበር", "ኦክቶበር", "ዲሴምበር", "ጃንዩወሪ", "ፌብሩወሪ", "ፌብሩዋሪ", "ማክሰኞ", "ሰከንድ", "ሰዓቶች", "ሳምንት", "ትናንት", "ኤፕሪል", "ኦገስት", "ከሰዓት", "ጃንዋሪ", "gmt", "utc", "ሐሙስ", "ማርች", "ማክሰ", "ረቡዕ", "ሰዓት", "ሴፕቴ", "ቅዳሜ", "ኖቬም", "አሁን", "ኤፕሪ", "እሑድ", "ኦክቶ", "ኦገስ", "ዓመት", "ዓርብ", "ደቂቃ", "ዲሴም", "ጁላይ", "ጃንዩ", "ጥዋት", "ፌብሩ", "am", "pm", "ሜይ", "ሰኞ", "ቀን", "ነገ", "ወር", "ዛሬ", "ጁን", "ጃን", "ፌብ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

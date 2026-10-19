@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	id_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_id = sync.OnceFunc(func() {
 	id_Locale = merge(nil, LocaleData{
 		Name:                  "id",
 		DateOrder:             "DMY",
@@ -169,4 +175,4 @@ func init() {
 		ExactCombinedMatcher: matchExact0ba46f57b289ffcff610e5784841b5e580ae0bc371101a8593f440a196dc4539,
 		KnownWords:           []string{"bulan berikutnya", "bln berikutnya", "kemarin lusa", "minggu depan", "bulan depan", "minggu lalu", "tahun depan", "bulan lalu", "minggu ini", "tahun lalu", "baru saja", "bulan ini", "menit ini", "mgg depan", "september", "tahun ini", "thn depan", "bln lalu", "desember", "februari", "hari ini", "mgg lalu", "november", "sekarang", "seminggu", "thn lalu", "agustus", "bln ini", "jam ini", "januari", "kemarin", "mgg ini", "mnt ini", "oktober", "sebulan", "setahun", "tanggal", "thn ini", "minggu", "sehari", "selasa", "april", "besok", "bulan", "dalam", "detik", "jumat", "kamis", "maret", "menit", "pukul", "sabtu", "senin", "tahun", "ahad", "hari", "juli", "juni", "lalu", "rabu", "sept", "yang", "agt", "agu", "apr", "bln", "des", "dtk", "feb", "gmt", "jam", "jan", "jul", "jum", "jun", "kam", "mar", "mei", "mgg", "min", "mnt", "nov", "okt", "rab", "sab", "sel", "sen", "sep", "thn", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "j", "m", "z", "|"},
 	})
-}
+})

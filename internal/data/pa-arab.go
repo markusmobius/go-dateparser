@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	pa_Arab_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_pa_Arab = sync.OnceFunc(func() {
 	pa_Arab_Locale = merge(nil, LocaleData{
 		Name:      "pa-Arab",
 		DateOrder: "DMY",
@@ -76,4 +82,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "second", "اکتوبر", "جمعرات", "جولايی", "today", "اتوار", "اپریل", "جنوری", "دسمبر", "ستمبر", "فروری", "مہينا", "نومبر", "گھنٹا", "اگست", "جمعہ", "مارچ", "منگل", "ورھا", "ہفتہ", "gmt", "now", "utc", "بدھ", "جون", "دين", "منٹ", "پیر", "am", "hr", "pm", "مي", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

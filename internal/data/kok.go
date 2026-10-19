@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	kok_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_kok = sync.OnceFunc(func() {
 	kok_Locale = merge(nil, LocaleData{
 		Name:      "kok",
 		DateOrder: "DMY",
@@ -151,4 +157,4 @@ func init() {
 		ExactCombinedMatcher: matchExact40623c7587b62ac3c2d79c7ced16efc6333f03042b3d99a7befefa4afa95759f,
 		KnownWords:           []string{"this minute", "निमाणो सपतक", "फाटलो महयनो", "last month", "next month", "this month", "फडलो महयनो", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "फडलो सपतक", "tomorrow", "आदितयवार", "फाटल वरस", "हो महयनो", "जानवारी", "फडल वरस", "फबरवारी", "बिरसतार", "ह मिनीट", "हो सपतक", "minute", "second", "ऑकटोबर", "ओकटोबर", "नोवहबर", "शकरवार", "शनिवार", "सोमवार", "month", "today", "आयतार", "एपरिल", "एपरील", "गरवार", "डिसबर", "फालया", "बधवार", "मगळार", "महयनो", "मिनीट", "शकरार", "शनवार", "सपटबर", "सोमार", "ह वरस", "hour", "week", "year", "एपरी", "ऑकटो", "ऑगसट", "ओगसट", "मारच", "सकाळ", "सपतक", "ह वर", "day", "gmt", "now", "utc", "आता", "आयज", "काल", "जलय", "जान", "डिस", "दीस", "फबर", "मगळ", "रवि", "वरस", "वरा", "शकर", "शनि", "सकद", "सपट", "साज", "सोम", "am", "pm", "ऑग", "गर", "जन", "जल", "नो", "बध", "मन", "मप", "वर", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "म"},
 	})
-}
+})

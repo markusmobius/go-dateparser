@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	lag_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_lag = sync.OnceFunc(func() {
 	lag_Locale = merge(nil, LocaleData{
 		Name:      "lag",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"kwiinyambala", "this minute", "kwiidwaata", "lamʉtoondo", "last month", "next month", "this month", "inyambala", "jumamoosi", "jumapiiri", "jumataano", "kʉfungatɨ", "kʉmʉʉnchɨ", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alamiisi", "jumatatu", "kwiikumi", "kʉkeenda", "kʉsasatʉ", "sekuunde", "fungatɨ", "idwaata", "jumaine", "kwiinyi", "kʉnaanɨ", "kʉsaano", "kʉsaatʉ", "kʉvɨɨrɨ", "mʉʉnchɨ", "dakika", "ijumaa", "keenda", "mwaaka", "mweeri", "sasatʉ", "ikumi", "isikʉ", "moosi", "naanɨ", "niijo", "piili", "saano", "saatʉ", "taano", "taatu", "vɨɨrɨ", "wiiki", "inyi", "sikʉ", "alh", "gmt", "ijm", "ine", "muu", "now", "saa", "too", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

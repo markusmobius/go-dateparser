@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	yue_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_yue = sync.OnceFunc(func() {
 	yue_Locale = merge(nil, LocaleData{
 		Name:                  "yue",
 		DateOrder:             "YMD",
@@ -108,4 +114,4 @@ func init() {
 		ExactCombinedMatcher: matchExact620dffb3298018ed64623de2af928a316850c7af7a92fd8e38000ddcb7f9549d,
 		KnownWords:           []string{"今個星期", "呢個小時", "10月", "11月", "12月", "gmt", "utc", "上個月", "上星期", "下個月", "下星期", "今個月", "呢分鐘", "星期一", "星期三", "星期二", "星期五", "星期六", "星期四", "星期日", "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "am", "pm", "上午", "下午", "下年", "今年", "今日", "分鐘", "宜家", "尋日", "小時", "聽日", "舊年", "週一", "週三", "週二", "週五", "週六", "週四", "週日", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "年", "日", "月", "秒", "週"},
 	})
-}
+})

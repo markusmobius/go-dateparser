@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	jgo_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_jgo = sync.OnceFunc(func() {
 	jgo_Locale = merge(nil, LocaleData{
 		Name:      "jgo",
 		DateOrder: "YMD",
@@ -98,4 +104,4 @@ func init() {
 		ExactCombinedMatcher: matchExact198c90242decb34fe743c8ff87e515e84571fe2d28f603d2f4a9dd0baadb571c,
 		KnownWords:           []string{"pɛsaŋ pɛnɛntuku", "pɛsaŋ pɛnɛpfuꞌu", "pɛsaŋ ntsɔpmɔ", "pɛsaŋ ntsɔppa", "pɛsaŋ pɛnɛfɔm", "pɛsaŋ pɛnɛkwa", "pɛsaŋ saamba", "ŋka mbɔt nji", "nduŋmbi saŋ", "pɛsaŋ nɛgɛm", "pɛsaŋ pataa", "pɛsaŋ pɛtat", "this minute", "apta mɔndi", "last month", "next month", "pɛsaŋ pɛpa", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "fɛlayɛdɛ", "mba'mba'", "tomorrow", "wɛnɛsɛdɛ", "minute", "sasidɛ", "second", "tɔsɛdɛ", "month", "mɔndi", "sɔndi", "hour", "lɔꞌɔ", "week", "year", "day", "gmt", "now", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

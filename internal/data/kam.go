@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	kam_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_kam = sync.OnceFunc(func() {
 	kam_Locale = merge(nil, LocaleData{
 		Name:      "kam",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"mwai wa ikumi na imwe", "mwai wa ikumi na ili", "mwai wa thanthatu", "mwai wa nyaanya", "mwai wa katano", "mwai wa katatu", "mwai wa muonza", "wa kwambililya", "mwai wa ikumi", "mwai wa kenda", "mwai wa kana", "mwai wa keli", "mwai wa mbee", "wa thanthatu", "this minute", "last month", "next month", "this month", "iyakwakya", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "wa katano", "wa katatu", "wa kyumwa", "muthenya", "iyawioo", "ndatika", "sekondi", "umunthi", "wa kana", "wa keli", "kyumwa", "mwaka", "iyoo", "mwai", "gmt", "ikl", "ikm", "iku", "kan", "kel", "knd", "ktn", "ktu", "mbe", "moo", "now", "nya", "saa", "tha", "uni", "utc", "wkl", "wkn", "wkw", "wky", "wth", "wtn", "wtu", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

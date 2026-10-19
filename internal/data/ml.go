@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	ml_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ml = sync.OnceFunc(func() {
 	ml_Locale = merge(nil, LocaleData{
 		Name:      "ml",
 		DateOrder: "DMY",
@@ -120,4 +126,4 @@ func init() {
 		ExactCombinedMatcher: matchExact086c314ca2bfe7a9c13aeaa59757f30bd2942c73e99c93395939f923344d2731,
 		KnownWords:           []string{"ഈ മണികകറിൽ", "ഈ മിനിററിൽ", "കഴിഞഞ ആഴ‌ച", "കഴിഞഞ മാസം", "കഴിഞഞ വർഷം", "വെളളിയാഴ‌ച", "അടതത മാസം", "തിങകളാഴ‌ച", "അടതത ആഴച", "അടതതവർഷം", "ചൊവവാഴ‌ച", "ഞായറാഴ‌ച", "വയാഴാഴ‌ച", "ശനിയാഴ‌ച", "സെപററംബർ", "ഈ വർ‌ഷം", "ഒക‌ടോബർ", "ചൊവവാഴച", "ഫെബരവരി", "ബധനാഴ‌ച", "ഈ മാസം", "ഡിസംബർ", "മണികകർ", "മിനിററ", "സെകകൻഡ", "സെപററം", "ഇനനലെ", "ഇപപോൾ", "ഈ ആഴച", "ഏപരിൽ", "ഓഗസററ", "ജനവരി", "തിങകൾ", "ദിവസം", "നവംബർ", "മാർചച", "വയാഴം", "വെളളി", "ഏപരി", "ഒകടോ", "ചൊവവ", "ഞായർ", "ഡിസം", "നാളെ", "ഫെബര", "മാസം", "വർഷം", "gmt", "utc", "ആഴച", "ഇനന", "ജലൈ", "നവം", "ബധൻ", "മാർ", "മേയ", "ശനി", "am", "pm", "ഓഗ", "ജന", "ജൺ", "മാ", "മി", "സെ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ആ", "മ", "വ"},
 	})
-}
+})

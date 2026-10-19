@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	sk_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_sk = sync.OnceFunc(func() {
 	sk_Locale = merge(nil, LocaleData{
 		Name:                  "sk",
 		DateOrder:             "DMY",
@@ -199,4 +205,4 @@ func init() {
 		ExactCombinedMatcher: matchExactbdb4ca0da63c6c6fb811817355edf12e23f7277fff6b4e77683013429cb948c9,
 		KnownWords:           []string{"v tejto hodine", "v tejto minute", "buduci mesiac", "buduci tyzden", "minuly mesiac", "minuly tyzden", "tento mesiac", "tento tyzden", "buduci mes", "buduci rok", "buduci tyz", "minuly mes", "minuly rok", "minuly tyz", "predvcerom", "september", "septembra", "tento mes", "tento rok", "tento tyz", "december", "decembra", "februara", "november", "novembra", "pondelok", "pozajtra", "augusta", "februar", "januara", "oktober", "oktobra", "sekunda", "stvrtok", "aprila", "august", "hodina", "hodiny", "januar", "mesiac", "minuta", "nedela", "nedelu", "piatok", "sobota", "sobotu", "streda", "stredu", "tyzden", "utorok", "zajtra", "april", "marca", "marec", "teraz", "vcera", "dnes", "jula", "juna", "maja", "pred", "apr", "aug", "dec", "den", "feb", "gmt", "jan", "jul", "jun", "maj", "mar", "mes", "min", "nov", "okt", "rok", "sep", "tyz", "utc", "am", "ne", "pi", "pm", "po", "so", "st", "ut", "vo", "za", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "o", "r", "s", "v", "z", "|"},
 	})
-}
+})

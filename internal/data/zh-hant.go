@@ -2,7 +2,11 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	zh_Hant_Locale    LocaleData
@@ -10,7 +14,9 @@ var (
 	zh_Hant_MO_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_zh_Hant = sync.OnceFunc(func() {
 	zh_Hant_Locale = merge(nil, LocaleData{
 		Name:                  "zh-Hant",
 		DateOrder:             "YMD",
@@ -212,4 +218,4 @@ func init() {
 		ExactCombinedMatcher: matchExact7280f1b463d00c1e7d124d7874d0e12da511c9faca9a374573c6cea62bd50888,
 		KnownWords:           []string{"這一分鐘", "這一小時", "這個小時", "10月", "11月", "12月", "gmt", "utc", "上個月", "上星期", "下個月", "下星期", "星期一", "星期三", "星期二", "星期五", "星期六", "星期四", "星期日", "本星期", "這分鐘", "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "am", "pm", "上午", "上年", "上月", "上週", "下午", "下年", "下月", "下週", "今天", "今年", "今日", "分鐘", "去年", "小時", "明天", "明年", "明日", "星期", "昨天", "昨日", "本月", "本週", "現在", "週一", "週三", "週二", "週五", "週六", "週四", "週日", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "分", "年", "日", "時", "月", "秒", "週"},
 	})
-}
+})

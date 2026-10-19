@@ -2,12 +2,18 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	ckb_Locale    LocaleData
 	ckb_IR_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ckb = sync.OnceFunc(func() {
 	ckb_Locale = merge(nil, LocaleData{
 		Name:      "ckb",
 		DateOrder: "YMD",
@@ -85,4 +91,4 @@ func init() {
 		Name:      "ckb-IR",
 		DateOrder: "YMD",
 	})
-}
+})

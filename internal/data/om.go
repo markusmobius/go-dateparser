@@ -2,12 +2,18 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	om_Locale    LocaleData
 	om_KE_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_om = sync.OnceFunc(func() {
 	om_Locale = merge(nil, LocaleData{
 		Name:      "om",
 		DateOrder: "DMY",
@@ -104,4 +110,4 @@ func init() {
 		Name:      "om-KE",
 		DateOrder: "DMY",
 	})
-}
+})

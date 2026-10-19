@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	et_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_et = sync.OnceFunc(func() {
 	et_Locale = merge(nil, LocaleData{
 		Name:      "et",
 		DateOrder: "DMY",
@@ -152,4 +158,4 @@ func init() {
 		ExactCombinedMatcher: matchExact17b2bad29eefa5dcb87f98a42111fb091bf97c539b43a0c79e172d05402e497b,
 		KnownWords:           []string{"praegusel minutil", "praegusel tunnil", "jargmine aasta", "jargmine nadal", "kaesolev aasta", "kaesolev nadal", "eelmine aasta", "eelmine nadal", "jargmine kuu", "kaesolev kuu", "eelmine kuu", "jargmine a", "kaesolev a", "detsember", "eelmine a", "esmaspaev", "jargm kuu", "jargm nad", "kolmapaev", "neljapaev", "september", "teisipaev", "eelm kuu", "eelm nad", "november", "oktoober", "puhapaev", "veebruar", "jaanuar", "jargm a", "jargm k", "jargm n", "laupaev", "see kuu", "see nad", "aprill", "august", "eelm a", "eelm k", "eelm n", "sekund", "tunnid", "aasta", "homme", "juuli", "juuni", "marts", "minut", "nadal", "reede", "see a", "see k", "see n", "veebr", "dets", "eile", "jaan", "nuud", "paev", "sept", "tana", "tund", "apr", "aug", "gmt", "kuu", "mai", "min", "nad", "nov", "okt", "sek", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "e", "k", "l", "n", "p", "r", "s", "t", "z", "|"},
 	})
-}
+})

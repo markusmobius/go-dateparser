@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	hsb_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_hsb = sync.OnceFunc(func() {
 	hsb_Locale = merge(nil, LocaleData{
 		Name:      "hsb",
 		DateOrder: "DMY",
@@ -205,4 +211,4 @@ func init() {
 		ExactCombinedMatcher: matchExact398c3d37c4253101f8ff145caf2a43d1c269f5967bd7b1923905c5977edf2889,
 		KnownWords:           []string{"w tutej mjensinje", "prichodny tydzen", "w tutej hodzinje", "prichodn tydzen", "prichodny mesac", "prichodn mesac", "prich tydzen", "tuton tydzen", "zasły tydzen", "prich mesac", "this minute", "tuton mesac", "zasł tydzen", "zasły mesac", "tut tydzen", "zas tydzen", "zasł mesac", "dopołdnja", "popołdnju", "september", "septembra", "this hour", "tu tydzen", "tut mesac", "zas mesac", "december", "decembra", "februara", "njedzela", "nowember", "nowembra", "pondzela", "tu mesac", "awgusta", "februar", "hodzina", "hodziny", "januara", "oktober", "oktobra", "sekunda", "stwortk", "apryla", "awgust", "dzensa", "januar", "julija", "junija", "minuta", "sobota", "srjeda", "tydzen", "wutora", "apryl", "dzens", "julij", "junij", "jutre", "kletu", "letsa", "merca", "mesac", "netko", "pjatk", "wcera", "dzen", "hodz", "jutr", "klet", "leto", "lets", "loni", "meja", "meje", "merc", "tydz", "wcer", "apr", "awg", "dec", "dop", "dze", "feb", "gmt", "jan", "jul", "jun", "jut", "kle", "let", "lon", "mej", "mer", "mes", "min", "nje", "now", "okt", "pja", "pon", "pop", "sek", "sep", "sob", "srj", "stw", "utc", "wut", "am", "lo", "pm", "wc", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "h", "l", "m", "s", "z", "|"},
 	})
-}
+})

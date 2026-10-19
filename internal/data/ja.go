@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	ja_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ja = sync.OnceFunc(func() {
 	ja_Locale = merge(nil, LocaleData{
 		Name:                  "ja",
 		DateOrder:             "YMD",
@@ -168,4 +174,4 @@ func init() {
 		ExactCombinedMatcher: matchExacte2784b58c0294bce69ceb77a1a77206f9da7b13866448e33fcc81f98e3969e82,
 		KnownWords:           []string{"1 時間以内", "1 分以内", "(土)", "(日)", "(月)", "(木)", "(水)", "(火)", "(金)", "10月", "11月", "12月", "gmt", "utc", "一昨日", "今から", "先々週", "十一月", "十二月", "土曜日", "日曜日", "明後日", "月曜日", "木曜日", "水曜日", "火曜日", "金曜日", "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "am", "pm", "か月", "カ月", "ヶ月", "一月", "七月", "三月", "九月", "二月", "五月", "今年", "今日", "今月", "今週", "先月", "先週", "八月", "六月", "分間", "十月", "午前", "午後", "去年", "四月", "日間", "明日", "昨年", "昨日", "時間", "来年", "来月", "来週", "現在", "秒間", "翌年", "翌月", "翌週", "週間", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "て", "の", "今", "分", "前", "土", "年", "日", "時", "月", "木", "水", "火", "秒", "約", "週", "金"},
 	})
-}
+})

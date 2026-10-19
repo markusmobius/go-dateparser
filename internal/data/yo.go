@@ -2,12 +2,18 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	yo_Locale    LocaleData
 	yo_BJ_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_yo = sync.OnceFunc(func() {
 	yo_Locale = merge(nil, LocaleData{
 		Name:      "yo",
 		DateOrder: "DMY",
@@ -212,4 +218,4 @@ func init() {
 		},
 		KnownWords: []string{"oshu to n bɔ,", "odun to koja", "oshu to kɔja", "osu to n bo,", "ɔdun to kɔja", "odun to nbo", "ojo abameta", "ose to koja", "ose to n bo", "osu to koja", "this minute", "ɔdun to nbɔ", "ɔjɔ abamɛta", "ɔsɛ to kɔja", "ɔsɛ to n bɔ", "iseju aaya", "isɛju aaya", "last month", "next month", "ojo isegun", "oshu agɛmɔ", "oshu erele", "oshu okudu", "oshu owewe", "oshu shɛrɛ", "oshu ɔwara", "oshu ɛbibi", "oshu ɛrɛna", "this month", "ɔjɔ isɛgun", "last week", "last year", "next week", "next year", "oshu belu", "oshu igbe", "oshu ogun", "osu agemo", "osu ebibi", "osu erele", "osu erena", "osu okudu", "osu owara", "osu owewe", "this hour", "this week", "this year", "odun yii", "ojo aiku", "oshu yii", "oshu ɔpɛ", "osu belu", "osu igbe", "osu ogun", "osu sere", "ɔdun yii", "ɔjɔ aiku", "abameta", "abamɛta", "ojo aje", "ojo eti", "ose yii", "osu ope", "osu yii", "ɔjɔ aje", "ɔjɔ ɛti", "ɔsɛ yii", "amodun", "amɔdun", "isegun", "isɛgun", "odunni", "wakati", "ɔdunni", "agemo", "agɛmɔ", "ebibi", "erele", "erena", "eshin", "iseju", "isɛju", "ojobo", "ojoru", "okudu", "owara", "owewe", "shɛrɛ", "ɔjɔbɔ", "ɔjɔru", "ɔwara", "ɛbibi", "ɛrɛna", "aaro", "aarɔ", "abam", "aiku", "belu", "erel", "eren", "esin", "igbe", "iseg", "isɛg", "odun", "ogun", "ojob", "ojor", "osan", "oshu", "sere", "shɛr", "ɔdun", "ɔjɔb", "ɔjɔr", "ɔsan", "ɛrɛn", "age", "agɛ", "aik", "aje", "ana", "bel", "ebi", "eti", "gmt", "igb", "now", "ogu", "ojo", "oku", "ola", "oni", "ope", "ose", "osu", "owa", "owe", "ser", "shɛ", "utc", "wkt", "ɔjɔ", "ɔla", "ɔpɛ", "ɔse", "ɔsɛ", "ɔwa", "ɛbi", "ɛti", "ag", "aj", "am", "be", "eb", "er", "et", "ig", "og", "ok", "op", "ow", "pm", "se", "ɔp", "ɔw", "ɛb", "ɛr", "ɛt", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

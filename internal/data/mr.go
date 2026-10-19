@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	mr_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_mr = sync.OnceFunc(func() {
 	mr_Locale = merge(nil, LocaleData{
 		Name:      "mr",
 		DateOrder: "DMY",
@@ -129,4 +135,4 @@ func init() {
 		ExactCombinedMatcher: matchExact3efaf59974ba206bdb70fe3ed40557c6df6b3e6882ce1160400b0fdbab067391,
 		KnownWords:           []string{"मागील आठवडा", "मागील महिना", "पढील आठवडा", "पढील महिना", "या मिनिटात", "मागील वरष", "पढील वरष", "हा आठवडा", "हा महिना", "जानवारी", "फबरवारी", "ऑकटोबर", "नोवहबर", "मगळवार", "रविवार", "शकरवार", "शनिवार", "सोमवार", "आठवडा", "एपरिल", "गरवार", "डिसबर", "तासात", "बधवार", "महिना", "मिनिट", "सपटबर", "ह वरष", "आतता", "उदया", "एपरि", "ऑकटो", "ऑगसट", "दिवस", "नोवह", "मारच", "gmt", "utc", "काल", "जान", "डिस", "तास", "फबर", "मगळ", "रवि", "वरष", "शकर", "शनि", "सकद", "सपट", "सोम", "am", "pm", "आज", "आठ", "ऑग", "गर", "जन", "जल", "ता", "दि", "बध", "मउ", "मप", "मि", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "म", "स"},
 	})
-}
+})

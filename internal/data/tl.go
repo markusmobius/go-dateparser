@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	tl_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_tl = sync.OnceFunc(func() {
 	tl_Locale = merge(nil, LocaleData{
 		Name:                  "tl",
 		DateOrder:             "",
@@ -91,4 +97,4 @@ func init() {
 		},
 		KnownWords: []string{"miyerkules", "disyembre", "nakalipas", "nobyembre", "setyembre", "biyernes", "nakaraan", "huwebes", "oktubre", "pebrero", "segundo", "agosto", "linggo", "martes", "minuto", "sabado", "abril", "buwan", "enero", "ganap", "hulyo", "hunyo", "lunes", "marso", "noong", "araw", "mayo", "noon", "oras", "taon", "abr", "ago", "biy", "dis", "ene", "gmt", "hul", "hun", "huw", "lin", "lun", "mar", "may", "miy", "nob", "okt", "peb", "sab", "set", "utc", "am", "na", "pm", "sa", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

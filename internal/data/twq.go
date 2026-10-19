@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	twq_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_twq = sync.OnceFunc(func() {
 	twq_Locale = merge(nil, LocaleData{
 		Name:      "twq",
 		DateOrder: "DMY",
@@ -96,4 +102,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "zaarikay b", "alhamiisa", "deesanbur", "feewiriye", "last week", "last year", "next week", "next year", "noowanbur", "sektanbur", "this hour", "this week", "this year", "atalaata", "oktoobur", "subbaahi", "zanwiye", "alarba", "alhadi", "alzuma", "asibti", "atinni", "awiril", "miniti", "guuru", "handu", "jiiri", "marsi", "zaari", "zuweŋ", "zuyye", "hebu", "miti", "suba", "ala", "alh", "alm", "alz", "asi", "ata", "ati", "awi", "dee", "fee", "gmt", "hoo", "mar", "noo", "now", "okt", "sek", "utc", "zan", "zuw", "zuy", "am", "bi", "hr", "me", "pm", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

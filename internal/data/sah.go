@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	sah_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_sah = sync.OnceFunc(func() {
 	sah_Locale = merge(nil, LocaleData{
 		Name:      "sah",
 		DateOrder: "YMD",
@@ -124,4 +130,4 @@ func init() {
 		ExactCombinedMatcher: matchExactb566d0722e7c9988e662227b4443c535cde577c1c874f4f5a8ca977dea039c5e,
 		KnownWords:           []string{"ааспыт нэдиэлэ", "атырдьых ыиын", "кэлэр нэдиэлэ", "атырдьых ыиа", "балаҕан ыиын", "баскыһыанньа", "бэнидиэнньик", "оптуорунньук", "this minute", "аныгыскы ыи", "балаҕан ыиа", "кулун тутар", "бу нэдиэлэ", "муус устар", "this hour", "ааспыт ыи", "тохсунньу", "алтынньы", "ахсынньы", "былырыын", "бэс ыиын", "бээтиҥсэ", "сэтинньи", "сөкүүндэ", "ыам ыиын", "билигин", "бэс ыиа", "бэҕэһээ", "мүнүүтэ", "нэдиэлэ", "олунньу", "от ыиын", "субуота", "чэппиэр", "ыам ыиа", "от ыиа", "сарсын", "сэрэдэ", "бу ыи", "быиыл", "бүгүн", "эһиил", "олун", "тохс", "чаас", "gmt", "utc", "алт", "атр", "ахс", "блҕ", "бэс", "клн", "күн", "мсу", "оти", "сыл", "сэт", "ыам", "am", "pm", "бн", "бс", "бэ", "оп", "сб", "сэ", "чп", "ыи", "эи", "эк", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

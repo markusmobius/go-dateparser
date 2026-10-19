@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	to_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_to = sync.OnceFunc(func() {
 	to_Locale = merge(nil, LocaleData{
 		Name:      "to",
 		DateOrder: "DMY",
@@ -140,4 +146,4 @@ func init() {
 		ExactCombinedMatcher: matchExacta4c08668f84a31855431fe118551730ceb8aa85af49bd219345bb9dae57ebada,
 		KnownWords:           []string{"ko e miniti 'eni", "ko e houa 'eni", "mahina kuo'osi", "mahina kaha'u", "'apongipongi", "ta'u kuo'osi", "tu'apulelulu", "uike kuo'osi", "ta'u kaha'u", "this minute", "uike kaha'u", "hengihengi", "mahina ni", "this hour", "'epeleli", "'okatopa", "pulelulu", "sepitema", "taimi ni", "tokonaki", "'aho ni", "'aneafi", "'aokosi", "falaite", "fepueli", "sanuali", "ta'u ni", "uike ni", "efiafi", "ma'asi", "mahina", "mh'osi", "mhha'u", "miniti", "monite", "novema", "sapate", "sekoni", "siulai", "tisema", "tusite", "ui'osi", "uiha'u", "t'osi", "tha'u", "'aho", "'ane", "'ani", "'aok", "'apo", "'epe", "'oka", "houa", "ma'a", "mhni", "sune", "ta'u", "tu'a", "uike", "uini", "fal", "fep", "gmt", "mon", "nov", "pul", "san", "sap", "sep", "siu", "sun", "tis", "tni", "tok", "tus", "utc", "'a", "am", "ea", "hh", "me", "mh", "pm", "ui", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "m", "s", "t", "z", "|"},
 	})
-}
+})

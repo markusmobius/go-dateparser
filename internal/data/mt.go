@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	mt_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_mt = sync.OnceFunc(func() {
 	mt_Locale = merge(nil, LocaleData{
 		Name:      "mt",
 		DateOrder: "DMY",
@@ -134,4 +140,4 @@ func init() {
 		ExactCombinedMatcher: matchExactd5333adc173b8bca86c768076c0bfa003956cfa9370530e1c049ecd04220ecbb,
 		KnownWords:           []string{"il-gimgħa li għaddiet", "is-sena li għaddiet", "il-gimgħa d-dieħla", "ix-xahar id-dieħel", "ix-xahar li għadda", "is-sena d-dieħla", "is-sena l-oħra", "din il-gimgħa", "din il-minuta", "din is-siegħa", "dan ix-xahar", "din is-sena", "this minute", "il-gimgħa", "it-tlieta", "settembru", "this hour", "dicembru", "il-ħamis", "ilbieraħ", "it-tnejn", "l-erbgħa", "novembru", "awwissu", "il-ħadd", "is-sibt", "lbieraħ", "ottubru", "sekonda", "gimgħa", "jannar", "minuta", "siegħa", "april", "gunju", "għada", "illum", "lulju", "marzu", "mejju", "xahar", "frar", "issa", "sena", "apr", "aww", "dic", "erb", "fra", "gim", "gmt", "gun", "jan", "jum", "lul", "mar", "mej", "min", "nov", "now", "ott", "sek", "set", "sib", "tli", "tne", "utc", "ħad", "ħam", "am", "gm", "hr", "pm", "sn", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "m", "s", "z", "|"},
 	})
-}
+})

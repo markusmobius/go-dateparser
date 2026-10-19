@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	bas_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_bas = sync.OnceFunc(func() {
 	bas_Locale = merge(nil, LocaleData{
 		Name:      "bas",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"ŋgwa njaŋgumba", "libuy li nyee", "this minute", "last month", "next month", "this month", "hiŋgeŋget", "i bikɛgla", "i ɓugajɔp", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "ŋgwa mbɔk", "ŋgwa jon", "ŋgwa kɔɔ", "ŋgwa nɔy", "ŋgwa ŋge", "hilondɛ", "mayɛsep", "ŋgwa um", "kɔndɔŋ", "matumb", "bioom", "dipɔs", "hikaŋ", "macɛl", "matop", "mpuyɛ", "njeba", "sɔndɛ", "yaani", "yani", "ŋget", "ŋgɛŋ", "ŋwii", "bio", "dip", "gmt", "hik", "hil", "jon", "kɔn", "kɔɔ", "kɛl", "liɓ", "lɛn", "mac", "mat", "may", "mbɔ", "mpu", "mto", "nja", "nje", "now", "nɔy", "soŋ", "utc", "uum", "ŋge", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

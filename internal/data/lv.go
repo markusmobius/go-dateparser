@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	lv_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_lv = sync.OnceFunc(func() {
 	lv_Locale = merge(nil, LocaleData{
 		Name:      "lv",
 		DateOrder: "DMY",
@@ -169,4 +175,4 @@ func init() {
 		ExactCombinedMatcher: matchExactb15ad0c6049e979307daf5f041d163d45f06f4dc8d1f1863d6283a5c6bdb4879,
 		KnownWords:           []string{"pagajusaja menesi", "pagajusaja nedela", "nakamaja menesi", "nakamaja nedela", "pagajusaja gada", "priekspusdiena", "nakamaja gada", "ceturtdiena", "pecpusdiena", "saja menesi", "saja minute", "saja nedela", "saja stunda", "piektdiena", "septembris", "decembris", "februaris", "novembris", "pirmdiena", "saja gada", "sestdiena", "svetdiena", "tresdiena", "janvaris", "nak gada", "oktobris", "otrdiena", "pag gada", "saja men", "saja ned", "sekundes", "aprilis", "augusts", "ceturtd", "menesis", "minutes", "nak men", "nak ned", "pag men", "pag ned", "pecpusd", "prieksp", "stundas", "julijs", "junijs", "nedela", "piektd", "saja g", "sodien", "diena", "maijs", "marts", "pirmd", "sestd", "svetd", "tagad", "tresd", "vakar", "febr", "gads", "janv", "otrd", "pecp", "sept", "apr", "aug", "dec", "gmt", "jul", "jun", "men", "min", "ned", "nov", "okt", "rit", "sek", "utc", "am", "pm", "st", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "g", "h", "s", "z", "|"},
 	})
-}
+})

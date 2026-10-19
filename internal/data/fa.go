@@ -2,14 +2,20 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	fa_Locale    LocaleData
 	fa_AF_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_fa = sync.OnceFunc(func() {
 	fa_Locale = merge(nil, LocaleData{
 		Name:                  "fa",
 		DateOrder:             "YMD",
@@ -137,4 +143,4 @@ func init() {
 		},
 		KnownWords: []string{"هفته اینده", "هفته گذشته", "همین دقیقه", "سال اینده", "سال گذشته", "قبل‌ازظهر", "ماه اینده", "ماه گذشته", "همین ساعت", "چهار شنبه", "این هفته", "بعدازظهر", "روز شنبه", "پنج شنبه", "چهارشنبه", "این ماه", "دو شنبه", "سه‌شنبه", "سپتامبر", "ماه پیش", "پنجشنبه", "اکتوبر", "دسامبر", "دوشنبه", "سهشنبه", "سپتمبر", "فبروری", "نوامبر", "ژانویه", "یکشنبه", "امروز", "امسال", "اوریل", "اپریل", "اکتبر", "اکنون", "ثانیه", "جنوری", "جولای", "دسمبر", "دقیقه", "دیروز", "فوریه", "نومبر", "ژويیه", "اگست", "جمعه", "ساعت", "شنبه", "فردا", "مارس", "مارچ", "هفته", "ژوين", "gmt", "utc", "اوت", "جنو", "جول", "جون", "دسم", "دوم", "روز", "سال", "ماه", "پیش", "am", "pm", "بظ", "در", "قظ", "مه", "می", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "د"},
 	})
-}
+})

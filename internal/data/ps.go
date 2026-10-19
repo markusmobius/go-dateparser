@@ -2,14 +2,20 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	ps_Locale    LocaleData
 	ps_PK_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ps = sync.OnceFunc(func() {
 	ps_Locale = merge(nil, LocaleData{
 		Name:      "ps",
 		DateOrder: "YMD",
@@ -163,4 +169,4 @@ func init() {
 		RxExactCombined:      regexp.MustCompile(`(?i)^(\d+[.,]?\d* ساعتونه مخکې|په \d+[.,]?\d* مياشتو کې|په \d+[.,]?\d* کالونو کې|په \d+[.,]?\d* کالونو کے|\d+[.,]?\d* مياشتې مخکې|په \d+[.,]?\d* اونيو کې|په \d+[.,]?\d* ثانيه کې|په \d+[.,]?\d* ثانيو کې|په \d+[.,]?\d* دقيقه کې|په \d+[.,]?\d* دقيقو کې|په \d+[.,]?\d* ساعتو کې|په \d+[.,]?\d* مياشت کې|\d+[.,]?\d* ثانيه مخکې|\d+[.,]?\d* ثانيې مخکې|\d+[.,]?\d* دقيقه مخکې|\d+[.,]?\d* دقيقې مخکې|\d+[.,]?\d* مياشت مخکې|په \d+[.,]?\d* اونۍ کې|په \d+[.,]?\d* ساعت کې|په \d+[.,]?\d* ورځو کې|\d+[.,]?\d* اونۍ مخکې|\d+[.,]?\d* ساعت مخکې|\d+[.,]?\d* ورځې مخکې|\d+[.,]?\d* کاله مخکې|\d+[.,]?\d* کاله مخکے|په \d+[.,]?\d* ورځ کې|په \d+[.,]?\d* کال کې|په \d+[.,]?\d* کال کے|\d+[.,]?\d* ثانيه کې|\d+[.,]?\d* ورځ مخکې|\d+[.,]?\d* کال مخکې|\d+[.,]?\d* کال مخکے)$`),
 		ExactCombinedMatcher: matchExact518a9065e0ab5742c380fed8cb04a354063d98133ba88c31ad26e2477d7781ec,
 	})
-}
+})

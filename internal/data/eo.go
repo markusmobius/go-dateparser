@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	eo_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_eo = sync.OnceFunc(func() {
 	eo_Locale = merge(nil, LocaleData{
 		Name:      "eo",
 		DateOrder: "YMD",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "septembro", "this hour", "this week", "this year", "yesterday", "decembro", "februaro", "merkredo", "novembro", "tomorrow", "vendredo", "augusto", "dimanco", "januaro", "oktobro", "aprilo", "minute", "sabato", "second", "jaudo", "julio", "junio", "lundo", "mardo", "marto", "month", "today", "hour", "majo", "week", "year", "apr", "atm", "aug", "day", "dec", "feb", "gmt", "jan", "jul", "jun", "maj", "mar", "nov", "now", "okt", "ptm", "sep", "utc", "am", "di", "hr", "ja", "lu", "ma", "me", "pm", "sa", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

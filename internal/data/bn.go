@@ -2,14 +2,20 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	bn_Locale    LocaleData
 	bn_IN_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_bn = sync.OnceFunc(func() {
 	bn_Locale = merge(nil, LocaleData{
 		Name:                  "bn",
 		DateOrder:             "DMY",
@@ -152,4 +158,4 @@ func init() {
 		},
 		KnownWords: []string{"আগামী সপতাহ", "পরের সপতাহ", "আগামী বছর", "আগামী মাস", "বহষপতিবার", "বহসপতিবার", "আগামীকাল", "এই ঘণটায", "এই মিনিট", "এই সপতাহ", "গত সপতাহ", "পরের বছর", "পরের মাস", "ফেবরযারি", "ফেবরযারী", "সেপটেমবর", "জানযারি", "জানযারী", "ডিসেমবর", "মঙগলবার", "অকটোবর", "এই বছর", "এই মাস", "গত পরশ", "গত বছর", "গত মাস", "নভেমবর", "বহসপতি", "রবিবার", "শকরবার", "শনিবার", "সেকেনড", "সেপটেঃ", "সোমবার", "অকটোঃ", "এপরিল", "গতকাল", "ডিসেঃ", "বধবার", "মিনিট", "সপতাহ", "অকটো", "আগসট", "এপরি", "ঘণটা", "ঘনটা", "জলাই", "ডিসে", "নভেঃ", "পরায", "বৎসর", "মঙগল", "মধযে", "মারচ", "gmt", "utc", "আগে", "এখন", "এবং", "জান", "দিন", "নভে", "ফেব", "বছর", "মাস", "রবি", "শকর", "শনি", "সাল", "সেপ", "সোম", "am", "pm", "আগ", "আজ", "জন", "জল", "টা", "বধ", "মে", "লা", "শে", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ই"},
 	})
-}
+})

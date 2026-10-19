@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	jmc_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_jmc = sync.OnceFunc(func() {
 	jmc_Locale = merge(nil, LocaleData{
 		Name:      "jmc",
 		DateOrder: "DMY",
@@ -97,4 +103,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "jumapilyi", "jumatatuu", "kyiukonyi", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "februari", "jumamosi", "jumatanu", "septemba", "aprilyi", "dakyika", "desemba", "januari", "jumanne", "novemba", "sekunde", "agusti", "ijumaa", "julyai", "oktoba", "wiikyi", "junyi", "machi", "mfiri", "ngama", "utuko", "maka", "mori", "ukou", "ago", "alh", "apr", "des", "feb", "gmt", "iju", "inu", "jan", "jmo", "jnn", "jpi", "jtn", "jtt", "jul", "jun", "mac", "mei", "nov", "now", "okt", "saa", "sep", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

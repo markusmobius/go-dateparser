@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	seh_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_seh = sync.OnceFunc(func() {
 	seh_Locale = merge(nil, LocaleData{
 		Name:      "seh",
 		DateOrder: "DMY",
@@ -96,4 +102,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "chishanu", "decembro", "fevreiro", "manguana", "novembro", "setembro", "augusto", "chipiri", "chiposi", "chitatu", "dimingu", "janeiro", "segundo", "chinai", "minuto", "ntsiku", "otubro", "sabudu", "abril", "chaka", "julho", "junho", "marco", "mwezi", "hora", "lero", "maio", "week", "zuro", "abr", "aug", "dec", "dim", "fev", "gmt", "jan", "jul", "jun", "mai", "mar", "nai", "nov", "now", "otu", "pir", "pos", "sab", "set", "sha", "tat", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	zgh_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_zgh = sync.OnceFunc(func() {
 	zgh_Locale = merge(nil, LocaleData{
 		Name:      "zgh",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "ⴷⵓⵊⴰⵏⴱⵉⵔ", "ⵏⵓⵡⴰⵏⴱⵉⵔ", "ⵛⵓⵜⴰⵏⴱⵉⵔ", "ⵜⴰⴷⴳⴳⵡⴰⵜ", "ⴰⵙⴳⴳⵡⴰⵙ", "ⴰⵙⵉⴹⵢⴰⵙ", "ⴰⵙⵉⵎⵡⴰⵙ", "ⵉⵎⴰⵍⴰⵙⵙ", "ⵜⴰⵙⵔⴰⴳⵜ", "ⵜⵓⵙⴷⵉⴷⵜ", "ⴰⵙⴰⵎⴰⵙ", "ⴰⵙⵉⵏⴰⵙ", "ⵉⵏⵏⴰⵢⵔ", "ⵜⴰⵙⵉⵏⵜ", "ⵜⵉⴼⴰⵡⵜ", "ⵢⵓⵍⵢⵓⵣ", "ⴰⴽⵕⴰⵙ", "ⴰⴽⵡⴰⵙ", "ⴰⵙⴽⴽⴰ", "ⴰⵢⵏⴰⵙ", "ⴰⵢⵢⵓⵔ", "ⴱⵕⴰⵢⵕ", "ⴽⵜⵓⴱⵔ", "ⵉⴱⵔⵉⵔ", "ⵉⴹⵍⵍⵉ", "ⵎⴰⵢⵢⵓ", "ⵢⵓⵏⵢⵓ", "ⴰⵙⵉⴹ", "ⴰⵙⵉⵎ", "ⴰⵙⵙⴰ", "ⵎⴰⵕⵚ", "ⵖⵓⵛⵜ", "gmt", "now", "utc", "ⴰⴽⵕ", "ⴰⴽⵡ", "ⴰⵙⴰ", "ⴰⵙⵉ", "ⴰⵙⵙ", "ⴰⵢⵏ", "ⴱⵕⴰ", "ⴷⵓⵊ", "ⴽⵜⵓ", "ⵉⴱⵔ", "ⵉⵏⵏ", "ⵎⴰⵕ", "ⵎⴰⵢ", "ⵏⵓⵡ", "ⵖⵓⵛ", "ⵛⵓⵜ", "ⵢⵓⵍ", "ⵢⵓⵏ", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

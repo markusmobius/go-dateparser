@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	lkt_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_lkt = sync.OnceFunc(func() {
 	lkt_Locale = merge(nil, LocaleData{
 		Name:      "lkt",
 		DateOrder: "MDY",
@@ -98,4 +104,4 @@ func init() {
 		ExactCombinedMatcher: matchExactcdee1922a2b5ae181e446f47c6218f97da42207097ec71bbd625c8ce52377b2b,
 		KnownWords:           []string{"thokata omakha kiŋhaŋ", "thokata oko kiŋhaŋ", "wipazukha-waste wi", "chaŋwape-kasna wi", "istawichayazaŋ wi", "omakha k'uŋ hehaŋ", "thokata wi kiŋhaŋ", "hiŋhaŋni kiŋhaŋ", "owaphe oh'aŋkho", "thiyoheyuŋka wi", "chaŋphasapa wi", "chaŋwapetho wi", "oko k'uŋ hehaŋ", "thahekapsuŋ wi", "chaŋwapegi wi", "le aŋpetu kiŋ", "le omakha kiŋ", "owaŋgyuzazapi", "wi k'uŋ hehaŋ", "wiothehika wi", "aŋpetuwakhaŋ", "aŋpetuzaptaŋ", "aŋpetunuŋpa", "aŋpetuwaŋzi", "aŋpetuyamni", "phezitho wi", "this minute", "waniyetu wi", "wasuthuŋ wi", "aŋpetutopa", "le oko kiŋ", "le wi kiŋ", "this hour", "htalehaŋ", "aŋpetu", "omakha", "owaphe", "okpi", "gmt", "now", "oko", "utc", "am", "hr", "pm", "wi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

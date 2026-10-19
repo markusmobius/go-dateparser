@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	hu_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_hu = sync.OnceFunc(func() {
 	hu_Locale = merge(nil, LocaleData{
 		Name:                  "hu",
 		DateOrder:             "YMD.",
@@ -197,4 +203,4 @@ func init() {
 		ExactCombinedMatcher: matchExact85ea42d7d4132adadff79dbbcbb9079f57528a5c78e7c001205ad0f2f83e5f09,
 		KnownWords:           []string{"ebben a percben", "ebben az oraban", "kovetkezo honap", "kovetkezo het", "kovetkezo ev", "masodperccel", "masodperctol", "elozo honap", "masodpercek", "masodpercig", "tegnapelott", "ez a honap", "masodperce", "szeptember", "augusztus", "csutortok", "elozo het", "masodperc", "december", "elozo ev", "ez a het", "ez az ev", "honappal", "november", "vasarnap", "aprilis", "ezelott", "februar", "honapja", "honapok", "marcius", "oktober", "perccel", "perctol", "szombat", "hettel", "holnap", "januar", "julius", "junius", "nappal", "oratol", "oraval", "pentek", "percek", "percig", "szerda", "tegnap", "-akor", "-atol", "-ekor", "-etol", "evvel", "hetek", "hetfo", "honap", "majus", "mulva", "napja", "napok", "oraig", "oraja", "perce", "szept", "-aig", "-eig", "-jei", "-kor", "-tol", "evek", "febr", "hete", "kedd", "marc", "most", "orak", "perc", "viii", "-ai", "-an", "-ei", "-en", "-es", "-ig", "-je", "-ji", "-os", "apr", "aug", "dec", "eve", "feb", "gmt", "het", "iii", "jan", "jul", "jun", "maj", "mar", "nap", "nov", "okt", "ora", "sze", "szo", "utc", "vas", "vii", "xii", "-a", "-e", "-i", "am", "cs", "de", "du", "ev", "ho", "ii", "iv", "ix", "ma", "mp", "pm", "vi", "xi", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "i", "k", "o", "p", "v", "x", "z", "|"},
 	})
-}
+})
