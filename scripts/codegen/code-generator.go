@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"go/format"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 func generateCode(tplName string, data any, dstPath string) error {
@@ -22,6 +24,23 @@ func generateCode(tplName string, data any, dstPath string) error {
 
 	// Save to file
 	return os.WriteFile(dstPath, code, os.ModePerm)
+}
+
+// removeGeneratedCode deletes the Go files in dir except tests, which aren't generated.
+func removeGeneratedCode(dir string) error {
+	paths, err := filepath.Glob(filepath.Join(dir, "*.go"))
+	if err != nil {
+		return err
+	}
+	for _, path := range paths {
+		if strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+		if err := os.Remove(path); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func generateLocaleDataCode(dstPath string, listData []LocaleData) error {

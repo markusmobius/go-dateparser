@@ -146,7 +146,9 @@ func rootCmdHandler(cmd *cobra.Command, args []string) error {
 	}
 
 	// Generate code
-	os.RemoveAll(GO_CODE_DIR)
+	if err := removeGeneratedCode(GO_CODE_DIR); err != nil {
+		return err
+	}
 	os.MkdirAll(GO_CODE_DIR, os.ModePerm)
 	if err := os.WriteFile(filepath.Join(GO_CODE_DIR, "05-exact-matchers.go"), exactMatchers, 0644); err != nil {
 		return err
