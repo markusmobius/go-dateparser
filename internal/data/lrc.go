@@ -2,12 +2,18 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	lrc_Locale    LocaleData
 	lrc_IQ_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_lrc = sync.OnceFunc(func() {
 	lrc_Locale = merge(nil, LocaleData{
 		Name:      "lrc",
 		DateOrder: "YMD",
@@ -83,4 +89,4 @@ func init() {
 		Name:      "lrc-IQ",
 		DateOrder: "YMD",
 	})
-}
+})

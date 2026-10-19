@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	nn_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_nn = sync.OnceFunc(func() {
 	nn_Locale = merge(nil, LocaleData{
 		Name:      "nn",
 		DateOrder: "DMY",
@@ -193,4 +199,4 @@ func init() {
 		ExactCombinedMatcher: matchExactfc97eac3696c24d7731e1e394332b385873cf52ad9ffefc2c7e6b4aaa6dd5f74,
 		KnownWords:           []string{"dette minuttet", "denne manaden", "denne timen", "ettermiddag", "førre manad", "neste manad", "this minute", "denne veka", "førre veke", "last month", "neste veke", "next month", "this month", "formiddag", "last week", "last year", "next week", "next year", "september", "this hour", "this week", "this year", "denne md", "desember", "førre md", "i morgon", "neste ar", "neste md", "november", "februar", "laurdag", "oktober", "torsdag", "august", "fredag", "i fjor", "januar", "mandag", "minutt", "onsdag", "sekund", "søndag", "tysdag", "april", "i dag", "i gar", "manad", "timar", "i ar", "juli", "juni", "mars", "time", "veke", "apr", "aug", "dag", "des", "feb", "fre", "gmt", "jan", "jul", "jun", "lau", "mai", "man", "mar", "min", "nov", "now", "okt", "ons", "sek", "sep", "søn", "tor", "tys", "utc", "am", "ar", "em", "fm", "fr", "la", "ma", "md", "no", "on", "pm", "sø", "to", "ty", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "m", "s", "t", "v", "z", "|"},
 	})
-}
+})

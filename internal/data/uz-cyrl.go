@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	uz_Cyrl_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_uz_Cyrl = sync.OnceFunc(func() {
 	uz_Cyrl_Locale = merge(nil, LocaleData{
 		Name:      "uz-Cyrl",
 		DateOrder: "DMY",
@@ -116,4 +122,4 @@ func init() {
 		ExactCombinedMatcher: matchExacta80b9e125636b6b8deeb52552542bb709e1a2ac493baec2d2ed176be2d39d984,
 		KnownWords:           []string{"кеиинги ҳафта", "this minute", "кеиинги иил", "утган ҳафта", "кеиинги ои", "this hour", "утган иил", "бу ҳафта", "паишанба", "утган ои", "чоршанба", "душанба", "сентябр", "сешанба", "якшанба", "август", "бу иил", "дақиқа", "декабр", "октябр", "феврал", "эртага", "апрел", "бу ои", "бугун", "ноябр", "сония", "шанба", "январ", "ҳафта", "ҳозир", "жума", "кеча", "март", "соат", "gmt", "utc", "авг", "апр", "дек", "душ", "жум", "иил", "июл", "июн", "кун", "маи", "мар", "ноя", "окт", "паи", "сен", "сеш", "фев", "чор", "шан", "якш", "янв", "am", "hr", "pm", "ои", "тк", "то", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

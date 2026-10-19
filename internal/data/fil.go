@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	fil_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_fil = sync.OnceFunc(func() {
 	fil_Locale = merge(nil, LocaleData{
 		Name:      "fil",
 		DateOrder: "MDY",
@@ -125,4 +131,4 @@ func init() {
 		ExactCombinedMatcher: matchExact53420eac42b22b71574b8901e1dd3a1e32dcc47275efcb5f3a2542dbacedda9a,
 		KnownWords:           []string{"nakalipas na linggo", "susunod na linggo", "nakaraang linggo", "susunod na buwan", "nakaraang buwan", "sa linggong ito", "sa minutong ito", "susunod na taon", "nakaraang taon", "ngayong linggo", "ngayong buwan", "ngayong araw", "ngayong oras", "ngayong taon", "miyerkules", "disyembre", "nobyembre", "setyembre", "biyernes", "mga oras", "huwebes", "kahapon", "oktubre", "pebrero", "segundo", "agosto", "linggo", "martes", "minuto", "ngayon", "sabado", "abril", "bukas", "buwan", "enero", "hulyo", "hunyo", "lunes", "marso", "araw", "mayo", "oras", "taon", "abr", "ago", "biy", "dis", "ene", "gmt", "hul", "hun", "huw", "lin", "lun", "mar", "may", "min", "miy", "nob", "okt", "peb", "sab", "seg", "set", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

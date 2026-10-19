@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	kea_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_kea = sync.OnceFunc(func() {
 	kea_Locale = merge(nil, LocaleData{
 		Name:      "kea",
 		DateOrder: "DMY",
@@ -135,4 +141,4 @@ func init() {
 		ExactCombinedMatcher: matchExact1b76b11fc71ac68d5d22d72591ffcda2be150182da3e65469df13b5a596d524d,
 		KnownWords:           []string{"prosimu simana", "simana pasadu", "es minutu li", "es simana li", "sigunda-fera", "kuarta-fera", "prosimu anu", "prosimu mes", "this minute", "anu pasadu", "kinta-fera", "mes pasadu", "sesta-fera", "tersa-fera", "es anu li", "es mes li", "es ora li", "this hour", "dizenbru", "nuvenbru", "setenbru", "dumingu", "febreru", "sigundu", "agostu", "janeru", "manhan", "minutu", "otubru", "sabadu", "simana", "abril", "agora", "julhu", "junhu", "manha", "marsu", "maiu", "onti", "abr", "ago", "anu", "dia", "diz", "dum", "feb", "gmt", "jan", "jul", "jun", "kin", "kua", "mai", "mar", "mes", "min", "now", "nuv", "oji", "ora", "otu", "sab", "ses", "set", "sig", "sim", "ter", "utc", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "m", "s", "z", "|"},
 	})
-}
+})

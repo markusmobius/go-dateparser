@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	is_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_is = sync.OnceFunc(func() {
 	is_Locale = merge(nil, LocaleData{
 		Name:      "is",
 		DateOrder: "DMY",
@@ -149,4 +155,4 @@ func init() {
 		ExactCombinedMatcher: matchExact1ed9ba1e6ac8f8f094b1c52fbbe574e3251800f857d7ea9afbd8a1aba7b093f2,
 		KnownWords:           []string{"a þessari minutu", "i siðasta manuði", "i þessum manuði", "i næsta manuði", "i siðustu viku", "i þessari viku", "þessa stundina", "a siðasta ari", "i siðasta man", "klukkustundir", "i næstu viku", "i þessum man", "miðvikudagur", "a næsta ari", "a þessu ari", "fimmtudagur", "i næsta man", "klukkustund", "laugardagur", "this minute", "þriðjudagur", "fostudagur", "sunnudagur", "manudagur", "september", "this hour", "a morgun", "desember", "november", "februar", "manuður", "oktober", "sekunda", "januar", "minuta", "agust", "april", "dagur", "i dag", "i gær", "juli", "juni", "klst", "mars", "nuna", "vika", "agu", "apr", "des", "feb", "fim", "fos", "gmt", "jan", "jul", "jun", "lau", "mai", "man", "mar", "min", "mið", "nov", "okt", "sek", "sep", "sun", "utc", "þri", "am", "ar", "eh", "fh", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "v", "z", "|"},
 	})
-}
+})

@@ -1,4 +1,8 @@
-### v1.4.7 - 2026-09-13
+### Unreleased
+
+- Build locale data on first use instead of in package `init` ([#25](https://github.com/markusmobius/go-dateparser/pull/25), by @macintacos). Importing the package no longer compiles ~4,600 regexes for all 211 locale files: `internal/data` init drops from ~0.5–1.2 s, 99 MB and 389k allocations to under 0.1 ms, 47 KB and 418 allocations. Each language file builds once, together with its regional variants, the first time `GetLocaleData` requests one of its locales; loading is goroutine-safe via `sync.OnceFunc`.
+- With no `Locales`, `Languages` or `Region` configured, the first `Parse` or `Search` now pays the full locale build; set `Languages` or `Locales` to build only what is needed. Warm parsing speed and per-call allocations are unchanged.
+- Update the code generator to emit per-file loaders and regenerate `internal/data`; locale contents, public APIs and the Go 1.26 minimum are unchanged. Add tests that locales are not built at init, that sub-locales build with their parent, and that every locale builds.
 
 - Update the published shared dependency to Go-Dateutil v2.9.1, with normal checksum-verified module resolution and no local replacement.
 - Retain DateParser's runtime algorithms, relative-arithmetic behavior, public APIs, locale/conversion data, licenses, and caller-owned concurrency. Python dateparser 1.4.3 remains the reference.

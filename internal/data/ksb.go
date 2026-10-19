@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	ksb_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ksb = sync.OnceFunc(func() {
 	ksb_Locale = merge(nil, LocaleData{
 		Name:      "ksb",
 		DateOrder: "DMY",
@@ -97,4 +103,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "jumaamosi", "jumaatano", "jumaatatu", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "alhamisi", "febluali", "jumaapii", "nyiaghuo", "septemba", "desemba", "januali", "jumaane", "ng'waka", "novemba", "sekunde", "agosti", "aplili", "dakika", "evi eo", "ijumaa", "ng'ezi", "oktoba", "julai", "keloi", "machi", "makeo", "ghuo", "juni", "niki", "siku", "ago", "alh", "apr", "des", "feb", "gmt", "iju", "jan", "jmn", "jmo", "jpi", "jtn", "jtt", "jul", "jun", "mac", "mei", "nov", "now", "okt", "saa", "sep", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	rm_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_rm = sync.OnceFunc(func() {
 	rm_Locale = merge(nil, LocaleData{
 		Name:      "rm",
 		DateOrder: "DMY",
@@ -112,4 +118,4 @@ func init() {
 		},
 		KnownWords: []string{"da settember", "da zercladur", "l'onn proxim", "da december", "da november", "l'onn passa", "this minute", "da fanadur", "da schaner", "last month", "next month", "this month", "d'october", "da favrer", "glindesdi", "last week", "last year", "next week", "next year", "quest onn", "settember", "this hour", "this week", "this year", "zercladur", "d'avrigl", "december", "dumengia", "november", "venderdi", "d'avust", "da mars", "da matg", "fanadur", "gievgia", "mesemna", "october", "schaner", "secunda", "avrigl", "damaun", "favrer", "minuta", "avust", "mardi", "schan", "sonda", "zercl", "emna", "favr", "mais", "mars", "matg", "sett", "uras", "avr", "dec", "fan", "gie", "gli", "gmt", "ier", "min", "nov", "now", "oct", "onn", "tag", "ura", "utc", "am", "di", "du", "ma", "me", "oz", "pm", "so", "ve", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "s", "z", "|"},
 	})
-}
+})

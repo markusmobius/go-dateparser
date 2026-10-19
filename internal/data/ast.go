@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	ast_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ast = sync.OnceFunc(func() {
 	ast_Locale = merge(nil, LocaleData{
 		Name:      "ast",
 		DateOrder: "DMY",
@@ -183,4 +189,4 @@ func init() {
 		ExactCombinedMatcher: matchExact404d9c6c3dbbe6ed6638ed3338f78a331d4a2393e539f47900830c4fe606cedb,
 		KnownWords:           []string{"la selmana viniente", "la selmana pasada", "el mes viniente", "l'anu viniente", "selm viniente", "de la manana", "de setiembre", "el mes pasau", "esta selmana", "de la tarde", "esti minutu", "l'anu pasau", "selm pasada", "de febreru", "de payares", "d'avientu", "d'ochobre", "de xineru", "de xunetu", "esta hora", "esta selm", "l'anu pas", "l'anu vin", "miercoles", "setiembre", "d'agostu", "de marzu", "esti anu", "esti mes", "esti min", "selm pas", "selm vin", "anu pas", "anu vin", "avientu", "d'abril", "de mayu", "de xunu", "domingu", "febreru", "mes pas", "mes vin", "ochobre", "payares", "segundu", "selmana", "vienres", "agostu", "esta h", "llunes", "manana", "martes", "minutu", "sabadu", "xineru", "xueves", "xunetu", "abril", "agora", "ayeri", "hores", "marzu", "tarde", "guei", "hora", "mayu", "xunu", "abr", "ago", "anu", "avi", "dia", "dom", "feb", "gmt", "llu", "man", "mar", "may", "mes", "mie", "min", "och", "pay", "sab", "sel", "set", "utc", "vie", "xin", "xnt", "xue", "xun", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "m", "s", "z", "|"},
 	})
-}
+})

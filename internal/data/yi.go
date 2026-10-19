@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	yi_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_yi = sync.OnceFunc(func() {
 	yi_Locale = merge(nil, LocaleData{
 		Name:      "yi",
 		DateOrder: "DMY",
@@ -102,4 +108,4 @@ func init() {
 		ExactCombinedMatcher: matchExacta8ffcc0ea0cbe5f7328407a2d37e95a38faeae412d72fb086bd0a0f5da6f763a,
 		KnownWords:           []string{"פארגאנגענעם חודש", "קומענדיקן חודש", "איבער אכט טאג", "this minute", "איבער א יאר", "last week", "this hour", "this week", "דאנערשטיק", "נאוועמבער", "סעפטעמבער", "דעם חודש", "דעצעמבער", "נאכמיטאג", "פארמיטאג", "אויגוסט", "אקטאבער", "דינסטיק", "מיטוואך", "סעקונדע", "פאראיאר", "פעברואר", "הײ יאר", "זונטיק", "יאנואר", "מאנטיק", "פרײטיק", "אפריל", "היינט", "מאנאט", "מארגן", "מינוט", "נעכטן", "אויג", "וואך", "יולי", "יוני", "מערץ", "נאוו", "gmt", "now", "utc", "אפר", "אקט", "דעצ", "טאג", "יאנ", "יאר", "מיי", "סעפ", "פעב", "שבת", "שעה", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

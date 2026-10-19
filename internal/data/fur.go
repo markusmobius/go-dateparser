@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	fur_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_fur = sync.OnceFunc(func() {
 	fur_Locale = merge(nil, LocaleData{
 		Name:      "fur",
 		DateOrder: "DMY",
@@ -128,4 +134,4 @@ func init() {
 		ExactCombinedMatcher: matchExact031a418e919cf8779acb6230de49bf811964c9323770d412757febd0f9665d8d,
 		KnownWords:           []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "dicembar", "novembar", "setemane", "setembar", "domenie", "martars", "miercus", "fevrar", "otubar", "sabide", "secont", "vinars", "avost", "avril", "doman", "joibe", "lunis", "minut", "zenar", "jugn", "marc", "oris", "avo", "avr", "dic", "dom", "fev", "gmt", "joi", "jug", "lui", "lun", "mai", "mar", "mes", "mie", "nov", "now", "ore", "otu", "sab", "set", "utc", "vin", "vue", "zen", "am", "an", "di", "ir", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "a", "p", "z", "|"},
 	})
-}
+})

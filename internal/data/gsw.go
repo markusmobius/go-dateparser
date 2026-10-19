@@ -2,13 +2,19 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	gsw_Locale    LocaleData
 	gsw_FR_Locale LocaleData
 	gsw_LI_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_gsw = sync.OnceFunc(func() {
 	gsw_Locale = merge(nil, LocaleData{
 		Name:      "gsw",
 		DateOrder: "DMY",
@@ -113,4 +119,4 @@ func init() {
 		Name:      "gsw-LI",
 		DateOrder: "DMY",
 	})
-}
+})

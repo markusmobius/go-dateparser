@@ -95,1028 +95,1540 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 func GetLocaleData(locale string) (*LocaleData, bool) {
 	switch locale {
 	case "af":
+		load_af()
 		return &af_Locale, true
 	case "af-NA":
+		load_af()
 		return &af_NA_Locale, true
 	case "agq":
+		load_agq()
 		return &agq_Locale, true
 	case "ak":
+		load_ak()
 		return &ak_Locale, true
 	case "am":
+		load_am()
 		return &am_Locale, true
 	case "ar":
+		load_ar()
 		return &ar_Locale, true
 	case "ar-AE":
+		load_ar()
 		return &ar_AE_Locale, true
 	case "ar-BH":
+		load_ar()
 		return &ar_BH_Locale, true
 	case "ar-DJ":
+		load_ar()
 		return &ar_DJ_Locale, true
 	case "ar-DZ":
+		load_ar()
 		return &ar_DZ_Locale, true
 	case "ar-EG":
+		load_ar()
 		return &ar_EG_Locale, true
 	case "ar-EH":
+		load_ar()
 		return &ar_EH_Locale, true
 	case "ar-ER":
+		load_ar()
 		return &ar_ER_Locale, true
 	case "ar-IL":
+		load_ar()
 		return &ar_IL_Locale, true
 	case "ar-IQ":
+		load_ar()
 		return &ar_IQ_Locale, true
 	case "ar-JO":
+		load_ar()
 		return &ar_JO_Locale, true
 	case "ar-KM":
+		load_ar()
 		return &ar_KM_Locale, true
 	case "ar-KW":
+		load_ar()
 		return &ar_KW_Locale, true
 	case "ar-LB":
+		load_ar()
 		return &ar_LB_Locale, true
 	case "ar-LY":
+		load_ar()
 		return &ar_LY_Locale, true
 	case "ar-MA":
+		load_ar()
 		return &ar_MA_Locale, true
 	case "ar-MR":
+		load_ar()
 		return &ar_MR_Locale, true
 	case "ar-OM":
+		load_ar()
 		return &ar_OM_Locale, true
 	case "ar-PS":
+		load_ar()
 		return &ar_PS_Locale, true
 	case "ar-QA":
+		load_ar()
 		return &ar_QA_Locale, true
 	case "ar-SA":
+		load_ar()
 		return &ar_SA_Locale, true
 	case "ar-SD":
+		load_ar()
 		return &ar_SD_Locale, true
 	case "ar-SO":
+		load_ar()
 		return &ar_SO_Locale, true
 	case "ar-SS":
+		load_ar()
 		return &ar_SS_Locale, true
 	case "ar-SY":
+		load_ar()
 		return &ar_SY_Locale, true
 	case "ar-TD":
+		load_ar()
 		return &ar_TD_Locale, true
 	case "ar-TN":
+		load_ar()
 		return &ar_TN_Locale, true
 	case "ar-YE":
+		load_ar()
 		return &ar_YE_Locale, true
 	case "as":
+		load_as()
 		return &as_Locale, true
 	case "asa":
+		load_asa()
 		return &asa_Locale, true
 	case "ast":
+		load_ast()
 		return &ast_Locale, true
 	case "az":
+		load_az()
 		return &az_Locale, true
 	case "az-Cyrl":
+		load_az_Cyrl()
 		return &az_Cyrl_Locale, true
 	case "az-Latn":
+		load_az_Latn()
 		return &az_Latn_Locale, true
 	case "bas":
+		load_bas()
 		return &bas_Locale, true
 	case "be":
+		load_be()
 		return &be_Locale, true
 	case "bem":
+		load_bem()
 		return &bem_Locale, true
 	case "bez":
+		load_bez()
 		return &bez_Locale, true
 	case "bg":
+		load_bg()
 		return &bg_Locale, true
 	case "bm":
+		load_bm()
 		return &bm_Locale, true
 	case "bn":
+		load_bn()
 		return &bn_Locale, true
 	case "bn-IN":
+		load_bn()
 		return &bn_IN_Locale, true
 	case "bo":
+		load_bo()
 		return &bo_Locale, true
 	case "bo-IN":
+		load_bo()
 		return &bo_IN_Locale, true
 	case "br":
+		load_br()
 		return &br_Locale, true
 	case "brx":
+		load_brx()
 		return &brx_Locale, true
 	case "bs":
+		load_bs()
 		return &bs_Locale, true
 	case "bs-Cyrl":
+		load_bs_Cyrl()
 		return &bs_Cyrl_Locale, true
 	case "bs-Latn":
+		load_bs_Latn()
 		return &bs_Latn_Locale, true
 	case "ca":
+		load_ca()
 		return &ca_Locale, true
 	case "ca-AD":
+		load_ca()
 		return &ca_AD_Locale, true
 	case "ca-FR":
+		load_ca()
 		return &ca_FR_Locale, true
 	case "ca-IT":
+		load_ca()
 		return &ca_IT_Locale, true
 	case "ce":
+		load_ce()
 		return &ce_Locale, true
 	case "cgg":
+		load_cgg()
 		return &cgg_Locale, true
 	case "chr":
+		load_chr()
 		return &chr_Locale, true
 	case "ckb":
+		load_ckb()
 		return &ckb_Locale, true
 	case "ckb-IR":
+		load_ckb()
 		return &ckb_IR_Locale, true
 	case "cs":
+		load_cs()
 		return &cs_Locale, true
 	case "cy":
+		load_cy()
 		return &cy_Locale, true
 	case "da":
+		load_da()
 		return &da_Locale, true
 	case "da-GL":
+		load_da()
 		return &da_GL_Locale, true
 	case "dav":
+		load_dav()
 		return &dav_Locale, true
 	case "de":
+		load_de()
 		return &de_Locale, true
 	case "de-AT":
+		load_de()
 		return &de_AT_Locale, true
 	case "de-BE":
+		load_de()
 		return &de_BE_Locale, true
 	case "de-CH":
+		load_de()
 		return &de_CH_Locale, true
 	case "de-IT":
+		load_de()
 		return &de_IT_Locale, true
 	case "de-LI":
+		load_de()
 		return &de_LI_Locale, true
 	case "de-LU":
+		load_de()
 		return &de_LU_Locale, true
 	case "dje":
+		load_dje()
 		return &dje_Locale, true
 	case "dsb":
+		load_dsb()
 		return &dsb_Locale, true
 	case "dua":
+		load_dua()
 		return &dua_Locale, true
 	case "dyo":
+		load_dyo()
 		return &dyo_Locale, true
 	case "dz":
+		load_dz()
 		return &dz_Locale, true
 	case "ebu":
+		load_ebu()
 		return &ebu_Locale, true
 	case "ee":
+		load_ee()
 		return &ee_Locale, true
 	case "ee-TG":
+		load_ee()
 		return &ee_TG_Locale, true
 	case "el":
+		load_el()
 		return &el_Locale, true
 	case "el-CY":
+		load_el()
 		return &el_CY_Locale, true
 	case "en":
+		load_en()
 		return &en_Locale, true
 	case "en-001":
+		load_en()
 		return &en_001_Locale, true
 	case "en-150":
+		load_en()
 		return &en_150_Locale, true
 	case "en-AE":
+		load_en()
 		return &en_AE_Locale, true
 	case "en-AG":
+		load_en()
 		return &en_AG_Locale, true
 	case "en-AI":
+		load_en()
 		return &en_AI_Locale, true
 	case "en-AS":
+		load_en()
 		return &en_AS_Locale, true
 	case "en-AT":
+		load_en()
 		return &en_AT_Locale, true
 	case "en-AU":
+		load_en()
 		return &en_AU_Locale, true
 	case "en-BB":
+		load_en()
 		return &en_BB_Locale, true
 	case "en-BE":
+		load_en()
 		return &en_BE_Locale, true
 	case "en-BI":
+		load_en()
 		return &en_BI_Locale, true
 	case "en-BM":
+		load_en()
 		return &en_BM_Locale, true
 	case "en-BS":
+		load_en()
 		return &en_BS_Locale, true
 	case "en-BW":
+		load_en()
 		return &en_BW_Locale, true
 	case "en-BZ":
+		load_en()
 		return &en_BZ_Locale, true
 	case "en-CA":
+		load_en()
 		return &en_CA_Locale, true
 	case "en-CC":
+		load_en()
 		return &en_CC_Locale, true
 	case "en-CH":
+		load_en()
 		return &en_CH_Locale, true
 	case "en-CK":
+		load_en()
 		return &en_CK_Locale, true
 	case "en-CM":
+		load_en()
 		return &en_CM_Locale, true
 	case "en-CX":
+		load_en()
 		return &en_CX_Locale, true
 	case "en-CY":
+		load_en()
 		return &en_CY_Locale, true
 	case "en-DE":
+		load_en()
 		return &en_DE_Locale, true
 	case "en-DG":
+		load_en()
 		return &en_DG_Locale, true
 	case "en-DK":
+		load_en()
 		return &en_DK_Locale, true
 	case "en-DM":
+		load_en()
 		return &en_DM_Locale, true
 	case "en-ER":
+		load_en()
 		return &en_ER_Locale, true
 	case "en-FI":
+		load_en()
 		return &en_FI_Locale, true
 	case "en-FJ":
+		load_en()
 		return &en_FJ_Locale, true
 	case "en-FK":
+		load_en()
 		return &en_FK_Locale, true
 	case "en-FM":
+		load_en()
 		return &en_FM_Locale, true
 	case "en-GB":
+		load_en()
 		return &en_GB_Locale, true
 	case "en-GD":
+		load_en()
 		return &en_GD_Locale, true
 	case "en-GG":
+		load_en()
 		return &en_GG_Locale, true
 	case "en-GH":
+		load_en()
 		return &en_GH_Locale, true
 	case "en-GI":
+		load_en()
 		return &en_GI_Locale, true
 	case "en-GM":
+		load_en()
 		return &en_GM_Locale, true
 	case "en-GU":
+		load_en()
 		return &en_GU_Locale, true
 	case "en-GY":
+		load_en()
 		return &en_GY_Locale, true
 	case "en-HK":
+		load_en()
 		return &en_HK_Locale, true
 	case "en-ID":
+		load_en()
 		return &en_ID_Locale, true
 	case "en-IE":
+		load_en()
 		return &en_IE_Locale, true
 	case "en-IL":
+		load_en()
 		return &en_IL_Locale, true
 	case "en-IM":
+		load_en()
 		return &en_IM_Locale, true
 	case "en-IN":
+		load_en()
 		return &en_IN_Locale, true
 	case "en-IO":
+		load_en()
 		return &en_IO_Locale, true
 	case "en-JE":
+		load_en()
 		return &en_JE_Locale, true
 	case "en-JM":
+		load_en()
 		return &en_JM_Locale, true
 	case "en-KE":
+		load_en()
 		return &en_KE_Locale, true
 	case "en-KI":
+		load_en()
 		return &en_KI_Locale, true
 	case "en-KN":
+		load_en()
 		return &en_KN_Locale, true
 	case "en-KY":
+		load_en()
 		return &en_KY_Locale, true
 	case "en-LC":
+		load_en()
 		return &en_LC_Locale, true
 	case "en-LR":
+		load_en()
 		return &en_LR_Locale, true
 	case "en-LS":
+		load_en()
 		return &en_LS_Locale, true
 	case "en-MG":
+		load_en()
 		return &en_MG_Locale, true
 	case "en-MH":
+		load_en()
 		return &en_MH_Locale, true
 	case "en-MO":
+		load_en()
 		return &en_MO_Locale, true
 	case "en-MP":
+		load_en()
 		return &en_MP_Locale, true
 	case "en-MS":
+		load_en()
 		return &en_MS_Locale, true
 	case "en-MT":
+		load_en()
 		return &en_MT_Locale, true
 	case "en-MU":
+		load_en()
 		return &en_MU_Locale, true
 	case "en-MV":
+		load_en()
 		return &en_MV_Locale, true
 	case "en-MW":
+		load_en()
 		return &en_MW_Locale, true
 	case "en-MY":
+		load_en()
 		return &en_MY_Locale, true
 	case "en-NA":
+		load_en()
 		return &en_NA_Locale, true
 	case "en-NF":
+		load_en()
 		return &en_NF_Locale, true
 	case "en-NG":
+		load_en()
 		return &en_NG_Locale, true
 	case "en-NL":
+		load_en()
 		return &en_NL_Locale, true
 	case "en-NR":
+		load_en()
 		return &en_NR_Locale, true
 	case "en-NU":
+		load_en()
 		return &en_NU_Locale, true
 	case "en-NZ":
+		load_en()
 		return &en_NZ_Locale, true
 	case "en-PG":
+		load_en()
 		return &en_PG_Locale, true
 	case "en-PH":
+		load_en()
 		return &en_PH_Locale, true
 	case "en-PK":
+		load_en()
 		return &en_PK_Locale, true
 	case "en-PN":
+		load_en()
 		return &en_PN_Locale, true
 	case "en-PR":
+		load_en()
 		return &en_PR_Locale, true
 	case "en-PW":
+		load_en()
 		return &en_PW_Locale, true
 	case "en-RW":
+		load_en()
 		return &en_RW_Locale, true
 	case "en-SB":
+		load_en()
 		return &en_SB_Locale, true
 	case "en-SC":
+		load_en()
 		return &en_SC_Locale, true
 	case "en-SD":
+		load_en()
 		return &en_SD_Locale, true
 	case "en-SE":
+		load_en()
 		return &en_SE_Locale, true
 	case "en-SG":
+		load_en()
 		return &en_SG_Locale, true
 	case "en-SH":
+		load_en()
 		return &en_SH_Locale, true
 	case "en-SI":
+		load_en()
 		return &en_SI_Locale, true
 	case "en-SL":
+		load_en()
 		return &en_SL_Locale, true
 	case "en-SS":
+		load_en()
 		return &en_SS_Locale, true
 	case "en-SX":
+		load_en()
 		return &en_SX_Locale, true
 	case "en-SZ":
+		load_en()
 		return &en_SZ_Locale, true
 	case "en-TC":
+		load_en()
 		return &en_TC_Locale, true
 	case "en-TK":
+		load_en()
 		return &en_TK_Locale, true
 	case "en-TO":
+		load_en()
 		return &en_TO_Locale, true
 	case "en-TT":
+		load_en()
 		return &en_TT_Locale, true
 	case "en-TV":
+		load_en()
 		return &en_TV_Locale, true
 	case "en-TZ":
+		load_en()
 		return &en_TZ_Locale, true
 	case "en-UG":
+		load_en()
 		return &en_UG_Locale, true
 	case "en-UM":
+		load_en()
 		return &en_UM_Locale, true
 	case "en-US":
+		load_en()
 		return &en_US_Locale, true
 	case "en-VC":
+		load_en()
 		return &en_VC_Locale, true
 	case "en-VG":
+		load_en()
 		return &en_VG_Locale, true
 	case "en-VI":
+		load_en()
 		return &en_VI_Locale, true
 	case "en-VU":
+		load_en()
 		return &en_VU_Locale, true
 	case "en-WS":
+		load_en()
 		return &en_WS_Locale, true
 	case "en-ZA":
+		load_en()
 		return &en_ZA_Locale, true
 	case "en-ZM":
+		load_en()
 		return &en_ZM_Locale, true
 	case "en-ZW":
+		load_en()
 		return &en_ZW_Locale, true
 	case "eo":
+		load_eo()
 		return &eo_Locale, true
 	case "es":
+		load_es()
 		return &es_Locale, true
 	case "es-419":
+		load_es()
 		return &es_419_Locale, true
 	case "es-AR":
+		load_es()
 		return &es_AR_Locale, true
 	case "es-BO":
+		load_es()
 		return &es_BO_Locale, true
 	case "es-BR":
+		load_es()
 		return &es_BR_Locale, true
 	case "es-BZ":
+		load_es()
 		return &es_BZ_Locale, true
 	case "es-CL":
+		load_es()
 		return &es_CL_Locale, true
 	case "es-CO":
+		load_es()
 		return &es_CO_Locale, true
 	case "es-CR":
+		load_es()
 		return &es_CR_Locale, true
 	case "es-CU":
+		load_es()
 		return &es_CU_Locale, true
 	case "es-DO":
+		load_es()
 		return &es_DO_Locale, true
 	case "es-EA":
+		load_es()
 		return &es_EA_Locale, true
 	case "es-EC":
+		load_es()
 		return &es_EC_Locale, true
 	case "es-GQ":
+		load_es()
 		return &es_GQ_Locale, true
 	case "es-GT":
+		load_es()
 		return &es_GT_Locale, true
 	case "es-HN":
+		load_es()
 		return &es_HN_Locale, true
 	case "es-IC":
+		load_es()
 		return &es_IC_Locale, true
 	case "es-MX":
+		load_es()
 		return &es_MX_Locale, true
 	case "es-NI":
+		load_es()
 		return &es_NI_Locale, true
 	case "es-PA":
+		load_es()
 		return &es_PA_Locale, true
 	case "es-PE":
+		load_es()
 		return &es_PE_Locale, true
 	case "es-PH":
+		load_es()
 		return &es_PH_Locale, true
 	case "es-PR":
+		load_es()
 		return &es_PR_Locale, true
 	case "es-PY":
+		load_es()
 		return &es_PY_Locale, true
 	case "es-SV":
+		load_es()
 		return &es_SV_Locale, true
 	case "es-US":
+		load_es()
 		return &es_US_Locale, true
 	case "es-UY":
+		load_es()
 		return &es_UY_Locale, true
 	case "es-VE":
+		load_es()
 		return &es_VE_Locale, true
 	case "et":
+		load_et()
 		return &et_Locale, true
 	case "eu":
+		load_eu()
 		return &eu_Locale, true
 	case "ewo":
+		load_ewo()
 		return &ewo_Locale, true
 	case "fa":
+		load_fa()
 		return &fa_Locale, true
 	case "fa-AF":
+		load_fa()
 		return &fa_AF_Locale, true
 	case "ff":
+		load_ff()
 		return &ff_Locale, true
 	case "ff-CM":
+		load_ff()
 		return &ff_CM_Locale, true
 	case "ff-GN":
+		load_ff()
 		return &ff_GN_Locale, true
 	case "ff-MR":
+		load_ff()
 		return &ff_MR_Locale, true
 	case "fi":
+		load_fi()
 		return &fi_Locale, true
 	case "fil":
+		load_fil()
 		return &fil_Locale, true
 	case "fo":
+		load_fo()
 		return &fo_Locale, true
 	case "fo-DK":
+		load_fo()
 		return &fo_DK_Locale, true
 	case "fr":
+		load_fr()
 		return &fr_Locale, true
 	case "fr-BE":
+		load_fr()
 		return &fr_BE_Locale, true
 	case "fr-BF":
+		load_fr()
 		return &fr_BF_Locale, true
 	case "fr-BI":
+		load_fr()
 		return &fr_BI_Locale, true
 	case "fr-BJ":
+		load_fr()
 		return &fr_BJ_Locale, true
 	case "fr-BL":
+		load_fr()
 		return &fr_BL_Locale, true
 	case "fr-CA":
+		load_fr()
 		return &fr_CA_Locale, true
 	case "fr-CD":
+		load_fr()
 		return &fr_CD_Locale, true
 	case "fr-CF":
+		load_fr()
 		return &fr_CF_Locale, true
 	case "fr-CG":
+		load_fr()
 		return &fr_CG_Locale, true
 	case "fr-CH":
+		load_fr()
 		return &fr_CH_Locale, true
 	case "fr-CI":
+		load_fr()
 		return &fr_CI_Locale, true
 	case "fr-CM":
+		load_fr()
 		return &fr_CM_Locale, true
 	case "fr-DJ":
+		load_fr()
 		return &fr_DJ_Locale, true
 	case "fr-DZ":
+		load_fr()
 		return &fr_DZ_Locale, true
 	case "fr-GA":
+		load_fr()
 		return &fr_GA_Locale, true
 	case "fr-GF":
+		load_fr()
 		return &fr_GF_Locale, true
 	case "fr-GN":
+		load_fr()
 		return &fr_GN_Locale, true
 	case "fr-GP":
+		load_fr()
 		return &fr_GP_Locale, true
 	case "fr-GQ":
+		load_fr()
 		return &fr_GQ_Locale, true
 	case "fr-HT":
+		load_fr()
 		return &fr_HT_Locale, true
 	case "fr-KM":
+		load_fr()
 		return &fr_KM_Locale, true
 	case "fr-LU":
+		load_fr()
 		return &fr_LU_Locale, true
 	case "fr-MA":
+		load_fr()
 		return &fr_MA_Locale, true
 	case "fr-MC":
+		load_fr()
 		return &fr_MC_Locale, true
 	case "fr-MF":
+		load_fr()
 		return &fr_MF_Locale, true
 	case "fr-MG":
+		load_fr()
 		return &fr_MG_Locale, true
 	case "fr-ML":
+		load_fr()
 		return &fr_ML_Locale, true
 	case "fr-MQ":
+		load_fr()
 		return &fr_MQ_Locale, true
 	case "fr-MR":
+		load_fr()
 		return &fr_MR_Locale, true
 	case "fr-MU":
+		load_fr()
 		return &fr_MU_Locale, true
 	case "fr-NC":
+		load_fr()
 		return &fr_NC_Locale, true
 	case "fr-NE":
+		load_fr()
 		return &fr_NE_Locale, true
 	case "fr-PF":
+		load_fr()
 		return &fr_PF_Locale, true
 	case "fr-PM":
+		load_fr()
 		return &fr_PM_Locale, true
 	case "fr-RE":
+		load_fr()
 		return &fr_RE_Locale, true
 	case "fr-RW":
+		load_fr()
 		return &fr_RW_Locale, true
 	case "fr-SC":
+		load_fr()
 		return &fr_SC_Locale, true
 	case "fr-SN":
+		load_fr()
 		return &fr_SN_Locale, true
 	case "fr-SY":
+		load_fr()
 		return &fr_SY_Locale, true
 	case "fr-TD":
+		load_fr()
 		return &fr_TD_Locale, true
 	case "fr-TG":
+		load_fr()
 		return &fr_TG_Locale, true
 	case "fr-TN":
+		load_fr()
 		return &fr_TN_Locale, true
 	case "fr-VU":
+		load_fr()
 		return &fr_VU_Locale, true
 	case "fr-WF":
+		load_fr()
 		return &fr_WF_Locale, true
 	case "fr-YT":
+		load_fr()
 		return &fr_YT_Locale, true
 	case "fur":
+		load_fur()
 		return &fur_Locale, true
 	case "fy":
+		load_fy()
 		return &fy_Locale, true
 	case "ga":
+		load_ga()
 		return &ga_Locale, true
 	case "ga-GB":
+		load_ga()
 		return &ga_GB_Locale, true
 	case "gd":
+		load_gd()
 		return &gd_Locale, true
 	case "gl":
+		load_gl()
 		return &gl_Locale, true
 	case "gsw":
+		load_gsw()
 		return &gsw_Locale, true
 	case "gsw-FR":
+		load_gsw()
 		return &gsw_FR_Locale, true
 	case "gsw-LI":
+		load_gsw()
 		return &gsw_LI_Locale, true
 	case "gu":
+		load_gu()
 		return &gu_Locale, true
 	case "guz":
+		load_guz()
 		return &guz_Locale, true
 	case "gv":
+		load_gv()
 		return &gv_Locale, true
 	case "ha":
+		load_ha()
 		return &ha_Locale, true
 	case "ha-GH":
+		load_ha()
 		return &ha_GH_Locale, true
 	case "ha-NE":
+		load_ha()
 		return &ha_NE_Locale, true
 	case "haw":
+		load_haw()
 		return &haw_Locale, true
 	case "he":
+		load_he()
 		return &he_Locale, true
 	case "hi":
+		load_hi()
 		return &hi_Locale, true
 	case "hr":
+		load_hr()
 		return &hr_Locale, true
 	case "hr-BA":
+		load_hr()
 		return &hr_BA_Locale, true
 	case "hsb":
+		load_hsb()
 		return &hsb_Locale, true
 	case "hu":
+		load_hu()
 		return &hu_Locale, true
 	case "hy":
+		load_hy()
 		return &hy_Locale, true
 	case "id":
+		load_id()
 		return &id_Locale, true
 	case "ig":
+		load_ig()
 		return &ig_Locale, true
 	case "ii":
+		load_ii()
 		return &ii_Locale, true
 	case "is":
+		load_is()
 		return &is_Locale, true
 	case "it":
+		load_it()
 		return &it_Locale, true
 	case "it-CH":
+		load_it()
 		return &it_CH_Locale, true
 	case "it-SM":
+		load_it()
 		return &it_SM_Locale, true
 	case "it-VA":
+		load_it()
 		return &it_VA_Locale, true
 	case "ja":
+		load_ja()
 		return &ja_Locale, true
 	case "jgo":
+		load_jgo()
 		return &jgo_Locale, true
 	case "jmc":
+		load_jmc()
 		return &jmc_Locale, true
 	case "ka":
+		load_ka()
 		return &ka_Locale, true
 	case "kab":
+		load_kab()
 		return &kab_Locale, true
 	case "kam":
+		load_kam()
 		return &kam_Locale, true
 	case "kde":
+		load_kde()
 		return &kde_Locale, true
 	case "kea":
+		load_kea()
 		return &kea_Locale, true
 	case "khq":
+		load_khq()
 		return &khq_Locale, true
 	case "ki":
+		load_ki()
 		return &ki_Locale, true
 	case "kk":
+		load_kk()
 		return &kk_Locale, true
 	case "kl":
+		load_kl()
 		return &kl_Locale, true
 	case "kln":
+		load_kln()
 		return &kln_Locale, true
 	case "km":
+		load_km()
 		return &km_Locale, true
 	case "kn":
+		load_kn()
 		return &kn_Locale, true
 	case "ko":
+		load_ko()
 		return &ko_Locale, true
 	case "ko-CN":
+		load_ko()
 		return &ko_CN_Locale, true
 	case "ko-KP":
+		load_ko()
 		return &ko_KP_Locale, true
 	case "kok":
+		load_kok()
 		return &kok_Locale, true
 	case "ks":
+		load_ks()
 		return &ks_Locale, true
 	case "ksb":
+		load_ksb()
 		return &ksb_Locale, true
 	case "ksf":
+		load_ksf()
 		return &ksf_Locale, true
 	case "ksh":
+		load_ksh()
 		return &ksh_Locale, true
 	case "kw":
+		load_kw()
 		return &kw_Locale, true
 	case "ky":
+		load_ky()
 		return &ky_Locale, true
 	case "lag":
+		load_lag()
 		return &lag_Locale, true
 	case "lb":
+		load_lb()
 		return &lb_Locale, true
 	case "lg":
+		load_lg()
 		return &lg_Locale, true
 	case "lkt":
+		load_lkt()
 		return &lkt_Locale, true
 	case "ln":
+		load_ln()
 		return &ln_Locale, true
 	case "ln-AO":
+		load_ln()
 		return &ln_AO_Locale, true
 	case "ln-CF":
+		load_ln()
 		return &ln_CF_Locale, true
 	case "ln-CG":
+		load_ln()
 		return &ln_CG_Locale, true
 	case "lo":
+		load_lo()
 		return &lo_Locale, true
 	case "lrc":
+		load_lrc()
 		return &lrc_Locale, true
 	case "lrc-IQ":
+		load_lrc()
 		return &lrc_IQ_Locale, true
 	case "lt":
+		load_lt()
 		return &lt_Locale, true
 	case "lu":
+		load_lu()
 		return &lu_Locale, true
 	case "luo":
+		load_luo()
 		return &luo_Locale, true
 	case "luy":
+		load_luy()
 		return &luy_Locale, true
 	case "lv":
+		load_lv()
 		return &lv_Locale, true
 	case "mas":
+		load_mas()
 		return &mas_Locale, true
 	case "mas-TZ":
+		load_mas()
 		return &mas_TZ_Locale, true
 	case "mer":
+		load_mer()
 		return &mer_Locale, true
 	case "mfe":
+		load_mfe()
 		return &mfe_Locale, true
 	case "mg":
+		load_mg()
 		return &mg_Locale, true
 	case "mgh":
+		load_mgh()
 		return &mgh_Locale, true
 	case "mgo":
+		load_mgo()
 		return &mgo_Locale, true
 	case "mk":
+		load_mk()
 		return &mk_Locale, true
 	case "ml":
+		load_ml()
 		return &ml_Locale, true
 	case "mn":
+		load_mn()
 		return &mn_Locale, true
 	case "mr":
+		load_mr()
 		return &mr_Locale, true
 	case "ms":
+		load_ms()
 		return &ms_Locale, true
 	case "ms-BN":
+		load_ms()
 		return &ms_BN_Locale, true
 	case "ms-ID":
+		load_ms()
 		return &ms_ID_Locale, true
 	case "ms-SG":
+		load_ms()
 		return &ms_SG_Locale, true
 	case "mt":
+		load_mt()
 		return &mt_Locale, true
 	case "mua":
+		load_mua()
 		return &mua_Locale, true
 	case "my":
+		load_my()
 		return &my_Locale, true
 	case "mzn":
+		load_mzn()
 		return &mzn_Locale, true
 	case "naq":
+		load_naq()
 		return &naq_Locale, true
 	case "nb":
+		load_nb()
 		return &nb_Locale, true
 	case "nb-SJ":
+		load_nb()
 		return &nb_SJ_Locale, true
 	case "nd":
+		load_nd()
 		return &nd_Locale, true
 	case "ne":
+		load_ne()
 		return &ne_Locale, true
 	case "ne-IN":
+		load_ne()
 		return &ne_IN_Locale, true
 	case "nl":
+		load_nl()
 		return &nl_Locale, true
 	case "nl-AW":
+		load_nl()
 		return &nl_AW_Locale, true
 	case "nl-BE":
+		load_nl()
 		return &nl_BE_Locale, true
 	case "nl-BQ":
+		load_nl()
 		return &nl_BQ_Locale, true
 	case "nl-CW":
+		load_nl()
 		return &nl_CW_Locale, true
 	case "nl-SR":
+		load_nl()
 		return &nl_SR_Locale, true
 	case "nl-SX":
+		load_nl()
 		return &nl_SX_Locale, true
 	case "nmg":
+		load_nmg()
 		return &nmg_Locale, true
 	case "nn":
+		load_nn()
 		return &nn_Locale, true
 	case "nnh":
+		load_nnh()
 		return &nnh_Locale, true
 	case "nus":
+		load_nus()
 		return &nus_Locale, true
 	case "nyn":
+		load_nyn()
 		return &nyn_Locale, true
 	case "om":
+		load_om()
 		return &om_Locale, true
 	case "om-KE":
+		load_om()
 		return &om_KE_Locale, true
 	case "or":
+		load_or()
 		return &or_Locale, true
 	case "os":
+		load_os()
 		return &os_Locale, true
 	case "os-RU":
+		load_os()
 		return &os_RU_Locale, true
 	case "pa":
+		load_pa()
 		return &pa_Locale, true
 	case "pa-Arab":
+		load_pa_Arab()
 		return &pa_Arab_Locale, true
 	case "pa-Guru":
+		load_pa_Guru()
 		return &pa_Guru_Locale, true
 	case "pl":
+		load_pl()
 		return &pl_Locale, true
 	case "ps":
+		load_ps()
 		return &ps_Locale, true
 	case "ps-PK":
+		load_ps()
 		return &ps_PK_Locale, true
 	case "pt":
+		load_pt()
 		return &pt_Locale, true
 	case "pt-AO":
+		load_pt()
 		return &pt_AO_Locale, true
 	case "pt-CH":
+		load_pt()
 		return &pt_CH_Locale, true
 	case "pt-CV":
+		load_pt()
 		return &pt_CV_Locale, true
 	case "pt-GQ":
+		load_pt()
 		return &pt_GQ_Locale, true
 	case "pt-GW":
+		load_pt()
 		return &pt_GW_Locale, true
 	case "pt-LU":
+		load_pt()
 		return &pt_LU_Locale, true
 	case "pt-MO":
+		load_pt()
 		return &pt_MO_Locale, true
 	case "pt-MZ":
+		load_pt()
 		return &pt_MZ_Locale, true
 	case "pt-PT":
+		load_pt()
 		return &pt_PT_Locale, true
 	case "pt-ST":
+		load_pt()
 		return &pt_ST_Locale, true
 	case "pt-TL":
+		load_pt()
 		return &pt_TL_Locale, true
 	case "qu":
+		load_qu()
 		return &qu_Locale, true
 	case "qu-BO":
+		load_qu()
 		return &qu_BO_Locale, true
 	case "qu-EC":
+		load_qu()
 		return &qu_EC_Locale, true
 	case "rm":
+		load_rm()
 		return &rm_Locale, true
 	case "rn":
+		load_rn()
 		return &rn_Locale, true
 	case "ro":
+		load_ro()
 		return &ro_Locale, true
 	case "ro-MD":
+		load_ro()
 		return &ro_MD_Locale, true
 	case "rof":
+		load_rof()
 		return &rof_Locale, true
 	case "ru":
+		load_ru()
 		return &ru_Locale, true
 	case "ru-BY":
+		load_ru()
 		return &ru_BY_Locale, true
 	case "ru-KG":
+		load_ru()
 		return &ru_KG_Locale, true
 	case "ru-KZ":
+		load_ru()
 		return &ru_KZ_Locale, true
 	case "ru-MD":
+		load_ru()
 		return &ru_MD_Locale, true
 	case "ru-UA":
+		load_ru()
 		return &ru_UA_Locale, true
 	case "rw":
+		load_rw()
 		return &rw_Locale, true
 	case "rwk":
+		load_rwk()
 		return &rwk_Locale, true
 	case "sah":
+		load_sah()
 		return &sah_Locale, true
 	case "saq":
+		load_saq()
 		return &saq_Locale, true
 	case "sbp":
+		load_sbp()
 		return &sbp_Locale, true
 	case "se":
+		load_se()
 		return &se_Locale, true
 	case "se-FI":
+		load_se()
 		return &se_FI_Locale, true
 	case "se-SE":
+		load_se()
 		return &se_SE_Locale, true
 	case "seh":
+		load_seh()
 		return &seh_Locale, true
 	case "ses":
+		load_ses()
 		return &ses_Locale, true
 	case "sg":
+		load_sg()
 		return &sg_Locale, true
 	case "shi":
+		load_shi()
 		return &shi_Locale, true
 	case "shi-Latn":
+		load_shi_Latn()
 		return &shi_Latn_Locale, true
 	case "shi-Tfng":
+		load_shi_Tfng()
 		return &shi_Tfng_Locale, true
 	case "si":
+		load_si()
 		return &si_Locale, true
 	case "sk":
+		load_sk()
 		return &sk_Locale, true
 	case "sl":
+		load_sl()
 		return &sl_Locale, true
 	case "smn":
+		load_smn()
 		return &smn_Locale, true
 	case "sn":
+		load_sn()
 		return &sn_Locale, true
 	case "so":
+		load_so()
 		return &so_Locale, true
 	case "so-DJ":
+		load_so()
 		return &so_DJ_Locale, true
 	case "so-ET":
+		load_so()
 		return &so_ET_Locale, true
 	case "so-KE":
+		load_so()
 		return &so_KE_Locale, true
 	case "sq":
+		load_sq()
 		return &sq_Locale, true
 	case "sq-MK":
+		load_sq()
 		return &sq_MK_Locale, true
 	case "sq-XK":
+		load_sq()
 		return &sq_XK_Locale, true
 	case "sr":
+		load_sr()
 		return &sr_Locale, true
 	case "sr-Cyrl":
+		load_sr_Cyrl()
 		return &sr_Cyrl_Locale, true
 	case "sr-Cyrl-BA":
+		load_sr_Cyrl()
 		return &sr_Cyrl_BA_Locale, true
 	case "sr-Cyrl-ME":
+		load_sr_Cyrl()
 		return &sr_Cyrl_ME_Locale, true
 	case "sr-Cyrl-XK":
+		load_sr_Cyrl()
 		return &sr_Cyrl_XK_Locale, true
 	case "sr-Latn":
+		load_sr_Latn()
 		return &sr_Latn_Locale, true
 	case "sr-Latn-BA":
+		load_sr_Latn()
 		return &sr_Latn_BA_Locale, true
 	case "sr-Latn-ME":
+		load_sr_Latn()
 		return &sr_Latn_ME_Locale, true
 	case "sr-Latn-XK":
+		load_sr_Latn()
 		return &sr_Latn_XK_Locale, true
 	case "sv":
+		load_sv()
 		return &sv_Locale, true
 	case "sv-AX":
+		load_sv()
 		return &sv_AX_Locale, true
 	case "sv-FI":
+		load_sv()
 		return &sv_FI_Locale, true
 	case "sw":
+		load_sw()
 		return &sw_Locale, true
 	case "sw-CD":
+		load_sw()
 		return &sw_CD_Locale, true
 	case "sw-KE":
+		load_sw()
 		return &sw_KE_Locale, true
 	case "sw-UG":
+		load_sw()
 		return &sw_UG_Locale, true
 	case "ta":
+		load_ta()
 		return &ta_Locale, true
 	case "ta-LK":
+		load_ta()
 		return &ta_LK_Locale, true
 	case "ta-MY":
+		load_ta()
 		return &ta_MY_Locale, true
 	case "ta-SG":
+		load_ta()
 		return &ta_SG_Locale, true
 	case "te":
+		load_te()
 		return &te_Locale, true
 	case "teo":
+		load_teo()
 		return &teo_Locale, true
 	case "teo-KE":
+		load_teo()
 		return &teo_KE_Locale, true
 	case "th":
+		load_th()
 		return &th_Locale, true
 	case "ti":
+		load_ti()
 		return &ti_Locale, true
 	case "ti-ER":
+		load_ti()
 		return &ti_ER_Locale, true
 	case "tl":
+		load_tl()
 		return &tl_Locale, true
 	case "to":
+		load_to()
 		return &to_Locale, true
 	case "tr":
+		load_tr()
 		return &tr_Locale, true
 	case "tr-CY":
+		load_tr()
 		return &tr_CY_Locale, true
 	case "twq":
+		load_twq()
 		return &twq_Locale, true
 	case "tzm":
+		load_tzm()
 		return &tzm_Locale, true
 	case "ug":
+		load_ug()
 		return &ug_Locale, true
 	case "uk":
+		load_uk()
 		return &uk_Locale, true
 	case "ur":
+		load_ur()
 		return &ur_Locale, true
 	case "ur-IN":
+		load_ur()
 		return &ur_IN_Locale, true
 	case "uz":
+		load_uz()
 		return &uz_Locale, true
 	case "uz-Arab":
+		load_uz_Arab()
 		return &uz_Arab_Locale, true
 	case "uz-Cyrl":
+		load_uz_Cyrl()
 		return &uz_Cyrl_Locale, true
 	case "uz-Latn":
+		load_uz_Latn()
 		return &uz_Latn_Locale, true
 	case "vi":
+		load_vi()
 		return &vi_Locale, true
 	case "vun":
+		load_vun()
 		return &vun_Locale, true
 	case "wae":
+		load_wae()
 		return &wae_Locale, true
 	case "xog":
+		load_xog()
 		return &xog_Locale, true
 	case "yav":
+		load_yav()
 		return &yav_Locale, true
 	case "yi":
+		load_yi()
 		return &yi_Locale, true
 	case "yo":
+		load_yo()
 		return &yo_Locale, true
 	case "yo-BJ":
+		load_yo()
 		return &yo_BJ_Locale, true
 	case "yue":
+		load_yue()
 		return &yue_Locale, true
 	case "zgh":
+		load_zgh()
 		return &zgh_Locale, true
 	case "zh":
+		load_zh()
 		return &zh_Locale, true
 	case "zh-Hans":
+		load_zh_Hans()
 		return &zh_Hans_Locale, true
 	case "zh-Hans-HK":
+		load_zh_Hans()
 		return &zh_Hans_HK_Locale, true
 	case "zh-Hans-MO":
+		load_zh_Hans()
 		return &zh_Hans_MO_Locale, true
 	case "zh-Hans-SG":
+		load_zh_Hans()
 		return &zh_Hans_SG_Locale, true
 	case "zh-Hant":
+		load_zh_Hant()
 		return &zh_Hant_Locale, true
 	case "zh-Hant-HK":
+		load_zh_Hant()
 		return &zh_Hant_HK_Locale, true
 	case "zh-Hant-MO":
+		load_zh_Hant()
 		return &zh_Hant_MO_Locale, true
 	case "zu":
+		load_zu()
 		return &zu_Locale, true
 	}
 

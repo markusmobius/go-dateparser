@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	tzm_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_tzm = sync.OnceFunc(func() {
 	tzm_Locale = merge(nil, LocaleData{
 		Name:      "tzm",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "deffir aza", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "zdat azal", "asseggas", "cutanbir", "dujanbir", "yebrayer", "yennayer", "asidyas", "asimwas", "assenat", "imalass", "nwanbir", "tasragt", "asamas", "asekka", "asinas", "ktuber", "tusdat", "tusnat", "yulyuz", "akras", "akwas", "aynas", "ibrir", "mayyu", "yunyu", "assa", "ayur", "mars", "ɣuct", "akr", "akw", "asa", "asd", "asm", "asn", "ass", "ayn", "cut", "duj", "gmt", "ibr", "ktu", "mar", "may", "now", "nwa", "utc", "yeb", "yen", "yul", "yun", "ɣuc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

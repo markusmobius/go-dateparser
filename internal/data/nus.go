@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	nus_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_nus = sync.OnceFunc(func() {
 	nus_Locale = merge(nil, LocaleData{
 		Name:      "nus",
 		DateOrder: "DMY",
@@ -93,4 +99,4 @@ func init() {
 		},
 		KnownWords: []string{"tiop thar pɛt", "dhieec latni", "tiop in diit", "bakɛl latni", "this minute", "ŋuaan latni", "diɔk latni", "last month", "next month", "pay yietni", "this month", "caŋ kuɔth", "last week", "last year", "next week", "next year", "rɛw latni", "this hour", "this week", "this year", "jiec lat", "kornyoot", "thɛkɛni", "dhieec", "bakɛl", "duɔɔŋ", "laath", "minit", "thaak", "thoor", "ŋuaan", "diɔk", "duat", "duɔɔ", "guak", "jiec", "jiɔk", "ruun", "ruɔn", "thoo", "tiop", "tɛɛr", "walɛ", "caŋ", "dua", "gmt", "kor", "kur", "laa", "now", "pan", "pay", "pɛt", "rɛw", "tid", "tɛɛ", "utc", "am", "hr", "pm", "rw", "tŋ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

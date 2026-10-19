@@ -2,6 +2,10 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	ff_Locale    LocaleData
 	ff_CM_Locale LocaleData
@@ -9,7 +13,9 @@ var (
 	ff_MR_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ff = sync.OnceFunc(func() {
 	ff_Locale = merge(nil, LocaleData{
 		Name:      "ff",
 		DateOrder: "DMY",
@@ -116,4 +122,4 @@ func init() {
 		Name:      "ff-MR",
 		DateOrder: "DMY",
 	})
-}
+})

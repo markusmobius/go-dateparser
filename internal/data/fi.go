@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	fi_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_fi = sync.OnceFunc(func() {
 	fi_Locale = merge(nil, LocaleData{
 		Name:                  "fi",
 		DateOrder:             "DMY",
@@ -238,4 +244,4 @@ func init() {
 		ExactCombinedMatcher: matchExact6901a456d6476b25dd21b55f9dfcef79079cc8d7fc15bc1b732090ea8d6f20ef,
 		KnownWords:           []string{"taman minuutin aikana", "taman tunnin aikana", "minuutin sisalla", "toissa viikolla", "talla viikolla", "toissa paivana", "tunnin sisalla", "viime viikolla", "ensi viikolla", "keskiviikkona", "toissa kuussa", "toissa vuonna", "maaliskuussa", "marraskuussa", "tassa kuussa", "viime kuussa", "viime vuonna", "ensi kuussa", "ensi vuonna", "heinakuussa", "helmikuussa", "huhtikuussa", "joulukuussa", "keskiviikko", "maaliskuuta", "maanantaina", "marraskuuta", "perjantaina", "sunnuntaina", "tammikuussa", "tana vuonna", "toukokuussa", "heinakuuta", "helmikuuta", "huhtikuuta", "joulukuuta", "kesakuussa", "lauantaina", "lokakuussa", "syyskuussa", "tammikuuta", "toukokuuta", "elokuussa", "kesakuuta", "kuukauden", "kuukautta", "lokakuuta", "maaliskuu", "maanantai", "marraskuu", "minuuttia", "perjantai", "sekunttia", "sunnuntai", "syyskuuta", "tiistaina", "torstaina", "elokuuta", "heinakuu", "helmikuu", "huhtikuu", "huomenna", "joulukuu", "kuluttua", "kuukausi", "lauantai", "minuutin", "minuutti", "sekunnin", "sekuntia", "sekuntin", "sekuntti", "talla vk", "tammikuu", "tassa kk", "toukokuu", "viime kk", "viime vk", "ensi kk", "ensi vk", "kesakuu", "lokakuu", "maalisk", "marrask", "sekunti", "syyskuu", "tiistai", "torstai", "viikkoa", "viime v", "elokuu", "ensi v", "heinak", "helmik", "huhtik", "jouluk", "maalis", "marras", "paasta", "paivaa", "paivan", "sitten", "tammik", "tana v", "tanaan", "toukok", "tunnin", "tunnit", "tuntia", "viikko", "viikon", "vuoden", "vuonna", "vuotta", "eilen", "heina", "helmi", "huhti", "joulu", "kesak", "lokak", "paiva", "syysk", "tammi", "touko", "tunti", "vuosi", "elok", "huom", "kesa", "loka", "pvaa", "syys", "elo", "gmt", "klo", "min", "nyt", "pva", "utc", "vko", ":n", "am", "ap", "ip", "ke", "kk", "la", "ma", "pe", "pm", "pv", "su", "ti", "to", "vk", "vv", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "p", "s", "t", "v", "z", "|"},
 	})
-}
+})

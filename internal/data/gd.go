@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	gd_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_gd = sync.OnceFunc(func() {
 	gd_Locale = merge(nil, LocaleData{
 		Name:      "gd",
 		DateOrder: "DMY",
@@ -187,4 +193,4 @@ func init() {
 		ExactCombinedMatcher: matchExact01d4c27f750b61ad8e4651a82e2f5d8d4114f9f087eebdf50d884c1cb1b6644d,
 		KnownWords:           []string{"an t-seachdain seo chaidh", "am broinn uair a thide", "am mios seo chaidh", "an t-seachdain seo", "am broinn mionaid", "am mios sa chaidh", "an ath-sheachdain", "an ath-bhliadhna", "dhen fhaoilleach", "seachd sa chaidh", "an t-seachd seo", "am broinn mion", "am broinn uair", "an ath-sheachd", "dhen dubhlachd", "dhen t-samhain", "dhen t-sultain", "am faoilleach", "dhen cheitean", "dhen ghearran", "dhen ghiblean", "dhen lunastal", "an ath-mhios", "an dubhlachd", "an t-ogmhios", "an t-samhain", "an t-sultain", "dhen damhair", "dhen ogmhios", "uair a thide", "am bliadhna", "am mios seo", "an lunastal", "an t-iuchar", "an t-sn seo", "dhen iuchar", "didomhnaich", "disathairne", "this minute", "a-maireach", "an ath-bhl", "an ceitean", "an damhair", "an gearran", "an giblean", "dhen mhart", "am mi seo", "an-drasta", "an-uiridh", "diardaoin", "diciadain", "seachdain", "this hour", "an-diugh", "bliadhna", "dihaoine", "sa mhion", "san uair", "am mart", "ath-mhi", "ath-shn", "diluain", "dimairt", "mionaid", "an-uir", "seachd", "am bl", "an-de", "gearr", "latha", "mi ch", "sn ch", "blia", "ceit", "damh", "diog", "dubh", "faoi", "gibl", "iuch", "luna", "mart", "mion", "mios", "ogmh", "samh", "sult", "uair", "dia", "dic", "did", "dih", "dil", "dim", "dis", "gmt", "utc", "am", "bl", "la", "mi", "pm", "sn", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "f", "m", "u", "z", "|"},
 	})
-}
+})

@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	pl_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_pl = sync.OnceFunc(func() {
 	pl_Locale = merge(nil, LocaleData{
 		Name:                  "pl",
 		DateOrder:             "DMY",
@@ -240,4 +246,4 @@ func init() {
 		ExactCombinedMatcher: matchExactccc87270db70a53140cd781b068afbb6c33c225ed23e83d3cc13c5cf163182ce,
 		KnownWords:           []string{"w przyszłym miesiacu", "w przyszłym tygodniu", "w zeszłym miesiacu", "w zeszłym tygodniu", "w przyszłym mies", "w przyszłym roku", "w przyszłym tyg", "w tym miesiacu", "w tym tygodniu", "w zeszłym mies", "w zeszłym roku", "w zeszłym tyg", "pazdziernika", "pazdzierniku", "poniedzialek", "poniedziałek", "listopadzie", "pazdziernik", "ta godzina", "w tym mies", "w tym roku", "listopada", "niedziela", "niedziele", "ta minuta", "w tym tyg", "czerwiec", "czwartek", "grudzien", "kwiecien", "kwietnia", "kwietniu", "listopad", "miesiaca", "miesiace", "miesiecy", "sierpien", "sierpnia", "sierpniu", "stycznia", "styczniu", "tygodnie", "wrzesien", "wrzesnia", "wrzesniu", "czerwca", "czerwcu", "dzisiaj", "godzina", "godzine", "godziny", "grudnia", "grudniu", "miesiac", "sekunda", "sekunde", "sekundy", "styczen", "tydzien", "tygodni", "wczoraj", "godzin", "lipiec", "lutego", "marzec", "minuta", "minute", "minuty", "piatek", "sekund", "sobota", "sobote", "wtorek", "dzien", "jutro", "lipca", "lipcu", "lutym", "marca", "marcu", "minut", "niedz", "sroda", "srode", "teraz", "dnia", "dniu", "dzis", "godz", "kwie", "lata", "luty", "maja", "maju", "mies", "roku", "temu", "tydz", "cze", "czw", "dni", "gmt", "gru", "kwi", "lat", "lip", "lis", "lut", "maj", "mar", "min", "nie", "paz", "pia", "pon", "rok", "sek", "sie", "sob", "sro", "sty", "utc", "wcz", "wrz", "wto", "am", "cz", "dz", "mc", "nd", "pi", "pm", "pn", "pt", "r.", "sb", "so", "sr", "wt", "za", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "d", "g", "i", "o", "r", "s", "w", "z", "|"},
 	})
-}
+})

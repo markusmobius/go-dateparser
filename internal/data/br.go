@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	br_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_br = sync.OnceFunc(func() {
 	br_Locale = merge(nil, LocaleData{
 		Name:      "br",
 		DateOrder: "DMY",
@@ -143,4 +149,4 @@ func init() {
 		ExactCombinedMatcher: matchExact74146837454ab8075a12a16da9aa3f986c813de7eba5280920163a2c291d0b93,
 		KnownWords:           []string{"ar sizhun diaraok", "ar sizh diaraok", "ar sizhun a zeu", "ar bloaz a zeu", "ar miz diaraok", "ar sizh a zeu", "ar sizhun-man", "ar m diaraok", "ar miz a zeu", "ar munut-man", "d'an eur-man", "ar bl a zeu", "ar sizh-man", "this minute", "ar m a zeu", "ar miz-man", "warc'hoazh", "c'hwevrer", "this hour", "ar m-man", "gwengolo", "merc'her", "mezheven", "hevlene", "warlene", "breman", "eilenn", "euriou", "genver", "gouere", "gwener", "meurzh", "sadorn", "sizhun", "bloaz", "c'hwe", "dec'h", "ebrel", "hiziv", "kerzu", "munut", "brem", "deiz", "eost", "goue", "gwen", "here", "meur", "mezh", "sizh", "yaou", "ebr", "eur", "gen", "gmt", "gwe", "ker", "kzu", "lun", "mae", "mer", "meu", "min", "miz", "sad", "sul", "utc", "am", "bl", "du", "gm", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "b", "d", "e", "m", "s", "z", "|"},
 	})
-}
+})

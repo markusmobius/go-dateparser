@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	cs_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_cs = sync.OnceFunc(func() {
 	cs_Locale = merge(nil, LocaleData{
 		Name:                  "cs",
 		DateOrder:             "DMY",
@@ -361,4 +367,4 @@ func init() {
 		ExactCombinedMatcher: matchExact3bd4bd4e5b17ef3300c4df5dddc8820ea4968a0c1bba7e52d2f6b3f3ff74589e,
 		KnownWords:           []string{"predpredevcirem", "minuly mesic", "minuly tyden", "pristi mesic", "pristi tyden", "predevcirem", "tento mesic", "tento tyden", "tuto hodinu", "tuto minutu", "minuly mes", "minuly rok", "minuly tyd", "pristi mes", "pristi rok", "pristi tyd", "listopadu", "popozitri", "prave ted", "priblizne", "sekundami", "tento mes", "tento rok", "tento tyd", "vterinami", "cervence", "cervenci", "cervenec", "hodinama", "hodinami", "listopad", "mesicema", "mesicemi", "minutama", "minutami", "okamzite", "prosince", "prosinci", "prosinec", "ted hned", "ctvrtek", "hodinou", "mesicem", "pondeli", "pozitri", "sekunda", "sekundy", "vterina", "vteriny", "brezen", "brezna", "breznu", "cerven", "cervna", "cervnu", "hodina", "hodinu", "hodiny", "kveten", "kvetna", "kvetnu", "mesice", "mesicu", "minuta", "minuty", "nedele", "nedeli", "sekund", "sobota", "sobotu", "soboty", "streda", "stredu", "stredy", "tydnem", "vterin", "zhruba", "zitrek", "zitrka", "duben", "dubna", "dubnu", "hodin", "kolem", "leden", "ledna", "lednu", "mesic", "minut", "nekdy", "okolo", "patek", "patku", "rijen", "rijna", "rijnu", "srpen", "srpna", "srpnu", "tyden", "tydnu", "tydny", "unora", "unoru", "utery", "vcera", "zitra", "dnem", "dnes", "leta", "lety", "nyni", "pred", "roku", "roky", "unor", "zari", "asi", "bre", "cca", "cer", "crc", "crv", "ctv", "cvc", "cvn", "den", "dni", "dnu", "dny", "dop", "dub", "gmt", "kve", "led", "let", "lis", "mes", "min", "ned", "odp", "pat", "pon", "pro", "rij", "rok", "sob", "srp", "str", "ted", "tyd", "uno", "unr", "utc", "ute", "zar", "am", "ct", "ne", "pa", "pm", "po", "so", "st", "ut", "ve", "za", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "h", "r", "s", "v", "z", "|"},
 	})
-}
+})

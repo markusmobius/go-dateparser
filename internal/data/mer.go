@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	mer_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_mer = sync.OnceFunc(func() {
 	mer_Locale = merge(nil, LocaleData{
 		Name:      "mer",
 		DateOrder: "DMY",
@@ -96,4 +102,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "feburuari", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "jumamosi", "muramuko", "septemba", "dicemba", "januari", "ndagika", "novemba", "sekondi", "wethatu", "agasti", "kiumia", "njurai", "oktuba", "wetano", "igoro", "ipuru", "ithaa", "machi", "mwaka", "mweri", "narua", "njuni", "ntuku", "wairi", "ruju", "wena", "aga", "dec", "feb", "gmt", "ipu", "jan", "jum", "kiu", "mac", "mii", "mra", "njr", "nju", "nov", "now", "okt", "spt", "utc", "wai", "wen", "wet", "wtn", "am", "hr", "pm", "ru", "ug", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

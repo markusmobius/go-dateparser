@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	kde_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_kde = sync.OnceFunc(func() {
 	kde_Locale = merge(nil, LocaleData{
 		Name:      "kde",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"mwedi wa nnyano na nnyano na m", "mwedi wa nnyano na nnyano na u", "liduva lyannyano na mavili", "mwedi wa nnyano na nchechi", "liduva lyannyano na linji", "mwedi wa nnyano na mitatu", "mwedi wa nnyano na mivili", "mwedi wa nnyano na nnyano", "mwedi wa nnyano na umo", "liduva lyanchechi", "liduva lyannyano", "mwedi wa nchechi", "mwedi wa nnyano", "liduva litandi", "liduva lyapili", "liduva lyatatu", "mwedi wa pili", "mwedi wa tatu", "mwedi ntandi", "this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "sekunde", "dakika", "lihiku", "lijuma", "chilo", "mwaka", "mwedi", "nundu", "lido", "muhi", "nelo", "ago", "apr", "des", "feb", "gmt", "jan", "jul", "jun", "ll1", "ll2", "ll3", "ll4", "ll5", "ll6", "ll7", "mac", "mei", "nov", "now", "okt", "saa", "sep", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

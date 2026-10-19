@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	brx_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_brx = sync.OnceFunc(func() {
 	brx_Locale = merge(nil, LocaleData{
 		Name:      "brx",
 		DateOrder: "DMY",
@@ -142,4 +148,4 @@ func init() {
 		ExactCombinedMatcher: matchExact6ac8bb4dbb4d645787943ffc33236a94edcbbb2d976e3dc903334c905f9d4c24,
 		KnownWords:           []string{"this minute", "थानाय बोसोर", "थानाय सपथाह", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "थानाय दान", "फगौ बोसोर", "फगौ सपथाह", "सबथा/हबथा", "बिसथिबार", "जानवारी", "फगौ दान", "फबरवारी", "ब बोसोर", "ब मिनिट", "ब सपथाह", "अकट'बर", "डिसमबर", "दिसजबर", "ब घनटा", "मगलबार", "रबिबार", "सखरबार", "सनिबार", "सपथमबर", "सबथजबर", "अखथबर", "एपरिल", "एफरिल", "गाबोन", "नबजबर", "नवमबर", "ब दान", "बदबार", "बधबार", "बिसथि", "बोसोर", "मिनित", "मिनिथ", "सपथाह", "समबार", "अकट'", "आगषट", "आगसथ", "एपरि", "घनटा", "जलाइ", "जलाई", "बलास", "मारच", "मारस", "रिगा", "सकणड", "सखनद", "gmt", "now", "utc", "जान", "डिस", "दान", "दिन", "मगल", "मया", "रबि", "सखर", "सनि", "सान", "am", "hr", "pm", "आग", "जन", "जल", "दा", "नव", "फब", "बद", "बध", "सप", "सम", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "फ", "म"},
 	})
-}
+})

@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	uz_Latn_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_uz_Latn = sync.OnceFunc(func() {
 	uz_Latn_Locale = merge(nil, LocaleData{
 		Name:      "uz-Latn",
 		DateOrder: "DMY",
@@ -124,4 +130,4 @@ func init() {
 		ExactCombinedMatcher: matchExact0b79bda0bc48ac45b50074c8f5466b95734a0d635faddf60c886e47de5d5aadf,
 		KnownWords:           []string{"keyingi hafta", "o‘tgan hafta", "shu daqiqada", "keyingi yil", "o‘'tgan yil", "chorshanba", "keyingi oy", "o'tgan yil", "o‘tgan yil", "shu soatda", "o‘tgan oy", "payshanba", "shu hafta", "yakshanba", "bu hafta", "dushanba", "seshanba", "sentabr", "shu yil", "avgust", "bu yil", "daqiqa", "dekabr", "ertaga", "fevral", "noyabr", "oktabr", "shanba", "shu oy", "soniya", "yanvar", "aprel", "bu oy", "bugun", "hafta", "hozir", "kecha", "chor", "dush", "iyul", "iyun", "juma", "mart", "sesh", "shan", "soat", "apr", "avg", "daq", "dek", "fev", "gmt", "iyl", "iyn", "jum", "kun", "mar", "may", "noy", "okt", "pay", "sen", "son", "utc", "yak", "yan", "yil", "am", "oy", "pm", "tk", "to", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

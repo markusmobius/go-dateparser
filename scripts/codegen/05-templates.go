@@ -17,6 +17,7 @@ var (
 		"charset":      charset,
 		"localeName":   localeName,
 		"parentLocale": parentLocale,
+		"loaderName":   loaderName,
 		"sortMap":      sortMap,
 		"sortMapSlice": sortMapSlice,
 		"sortMapOrder": sortMapOrder,
@@ -69,6 +70,16 @@ func parentLocale(data LocaleData) string {
 	}
 
 	return "&" + localeName(data.Parent)
+}
+
+// loaderName names the function that builds the file holding data's locale:
+// a sub-locale lives in its parent language's file.
+func loaderName(data LocaleData) string {
+	base := data.Parent
+	if base == "" {
+		base = data.Name
+	}
+	return "load_" + strings.TrimSuffix(localeName(base), "_Locale")
 }
 
 func sortMap(m map[string]string) []MapEntry {
@@ -284,7 +295,9 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 func GetLocaleData(locale string) (*LocaleData, bool) {
 	switch locale {
 		{{- range $language, $data := .}}
-		case "{{$language}}": return &{{localeName $language}}, true
+		case "{{$language}}":
+			{{loaderName $data}}()
+			return &{{localeName $language}}, true
 		{{- end}}
 	}
 
@@ -299,7 +312,9 @@ var (
 	{{- end}}
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var {{loaderName (index . 0)}} = sync.OnceFunc(func() {
 {{- range $loc := .}}
 	{{localeName $loc.Name}} = merge({{parentLocale $loc}}, LocaleData {
 		Name:                  "{{$loc.Name}}",
@@ -334,5 +349,5 @@ func init() {
 		KnownWords:   []string{ {{range $v := $loc.KnownWords}}"{{$v}}", {{end}} },
 	})
 {{end -}}
-}
+})
 `

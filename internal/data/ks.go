@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	ks_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_ks = sync.OnceFunc(func() {
 	ks_Locale = merge(nil, LocaleData{
 		Name:      "ks",
 		DateOrder: "MDY",
@@ -95,4 +101,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "پتم ریتھۍ", "نو ریتھۍ", "پتم ہفتہ", "ژندرروار", "یہ ریتھۍ", "برؠسوار", "برٮسوار", "نو ہفتہ", "پتم وری", "ژندروار", "یہ ہفتہ", "اتھوار", "اکتوبر", "اے ایم", "بودوار", "بوموار", "بۆموار", "جولایی", "نو وری", "پی ایم", "یہ وری", "اپریل", "بٹوار", "جنوری", "دسمبر", "سؠکنڈ", "ستمبر", "سٮکنڑ", "فروری", "نومبر", "گٲنٹہ", "اگست", "رؠتھ", "راتھ", "رٮتھ", "مارچ", "پگاہ", "ہفتہ", "gmt", "now", "utc", "جلے", "جمہ", "جون", "دۄہ", "منٹ", "ميی", "وری", "am", "hr", "pm", "از", "می", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

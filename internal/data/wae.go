@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	wae_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_wae = sync.OnceFunc(func() {
 	wae_Locale = merge(nil, LocaleData{
 		Name:      "wae",
 		DateOrder: "YMD",
@@ -125,4 +131,4 @@ func init() {
 		ExactCombinedMatcher: matchExact7b3abdc7c471f0b8c28688bfeb4225f47305e0c5f1003fbe08825bc5ecb1373a,
 		KnownWords:           []string{"christmanet", "herbstmanet", "this minute", "wintermanet", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "abrille", "frontag", "minutta", "mittwuc", "samstag", "schtund", "sekunda", "sunntag", "wimanet", "bracet", "fritag", "gester", "heiwet", "hornig", "jenner", "mantag", "oigste", "stunde", "zistag", "hitte", "manet", "marze", "meije", "more", "wuca", "abr", "bra", "chr", "fri", "fro", "gmt", "hei", "her", "hor", "jar", "jen", "man", "mar", "mei", "mit", "now", "oig", "sam", "sun", "tag", "utc", "wim", "win", "zis", "am", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

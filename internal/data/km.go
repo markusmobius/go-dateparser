@@ -2,13 +2,19 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	km_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_km = sync.OnceFunc(func() {
 	km_Locale = merge(nil, LocaleData{
 		Name:      "km",
 		DateOrder: "DMY",
@@ -102,4 +108,4 @@ func init() {
 		ExactCombinedMatcher: matchExact6a843d4dd3bbea47658cf6472d183c55991c8176e8024ae56e0f7e01c7c6317e,
 		KnownWords:           []string{"សបដាហ​ករោយ", "សបដាហ​នេះ", "ឆនា​ករោយ", "ថងៃ​សអែក", "សបដាហ​មន", "ខែ​ករោយ", "ឆនា​នេះ", "ថងៃសអែក", "ថងៃ​នេះ", "ខែ​នេះ", "ឆនា​មន", "នាទនេះ", "ពរហសបត", "មោងនេះ", "កកកដា", "ខែ​មន", "មសលមញ", "វចឆកា", "សបដាហ", "អងគារ", "អាទតយ", "កញញា", "កមភៈ", "មករា", "មថនា", "មេសា", "វនាទ", "ឧសភា", "gmt", "utc", "ចនទ", "ឆនា", "តលា", "ថងៃ", "នាទ", "ពរហ", "មនា", "មោង", "សករ", "សហា", "សៅរ", "ឥឡវ", "am", "pm", "ខែ", "ធន", "ពធ", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

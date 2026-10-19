@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	uz_Arab_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_uz_Arab = sync.OnceFunc(func() {
 	uz_Arab_Locale = merge(nil, LocaleData{
 		Name:      "uz-Arab",
 		DateOrder: "YMD",
@@ -94,4 +100,4 @@ func init() {
 		},
 		KnownWords: []string{"this minute", "last month", "next month", "this month", "last week", "last year", "next week", "next year", "this hour", "this week", "this year", "yesterday", "tomorrow", "چهارشنبه", "سه‌شنبه", "پنجشنبه", "minute", "second", "اکتوبر", "دوشنبه", "سپتمبر", "فبروری", "یکشنبه", "month", "today", "اپریل", "جنوری", "جولای", "دسمبر", "نومبر", "hour", "week", "year", "اگست", "جمعه", "شنبه", "مارچ", "day", "gmt", "now", "utc", "اپر", "اکت", "اگس", "جنو", "جول", "جون", "دسم", "سپت", "فبر", "مار", "نوم", "am", "hr", "pm", "می", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|", "ج", "د", "س", "ش", "پ", "چ", "ی"},
 	})
-}
+})

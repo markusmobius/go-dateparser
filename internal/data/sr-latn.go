@@ -2,7 +2,11 @@
 
 package data
 
-import "github.com/markusmobius/go-dateparser/internal/regexp"
+import (
+	"sync"
+
+	"github.com/markusmobius/go-dateparser/internal/regexp"
+)
 
 var (
 	sr_Latn_Locale    LocaleData
@@ -11,7 +15,9 @@ var (
 	sr_Latn_XK_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_sr_Latn = sync.OnceFunc(func() {
 	sr_Latn_Locale = merge(nil, LocaleData{
 		Name:      "sr-Latn",
 		DateOrder: "DMY.",
@@ -276,4 +282,4 @@ func init() {
 		},
 		KnownWords: []string{"sledece nedelje", "sledeceg meseca", "prosle nedelje", "proslog meseca", "sledece godine", "prosle godine", "sledeceg mes", "ove nedelje", "ovog meseca", "ovog minuta", "proslog mes", "sledece god", "sledece ned", "ove godine", "ponedeljak", "prosle god", "prosle ned", "ovog sata", "pre podne", "septembar", "sledece g", "sledece n", "cetvrtak", "decembar", "novembar", "ovog mes", "po podne", "prosle g", "prosle n", "februar", "nedelja", "oktobar", "ove god", "ove ned", "avgust", "godina", "januar", "sekund", "subota", "utorak", "april", "danas", "mesec", "minut", "ove g", "ove n", "petak", "sreda", "sutra", "juce", "mart", "sada", "sati", "sept", "apr", "avg", "cet", "dan", "dec", "feb", "gmt", "god", "jan", "jul", "jun", "maj", "mar", "mes", "min", "ned", "nov", "okt", "pet", "pon", "sat", "sek", "sep", "sre", "sub", "utc", "uto", "am", "pm", "sr", "ut", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "c", "d", "g", "m", "n", "s", "z", "|"},
 	})
-}
+})

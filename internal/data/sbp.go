@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	sbp_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_sbp = sync.OnceFunc(func() {
 	sbp_Locale = merge(nil, LocaleData{
 		Name:      "sbp",
 		DateOrder: "DMY",
@@ -98,4 +104,4 @@ func init() {
 		},
 		KnownWords: []string{"mushende magali", "musongandembwe", "mupalangulwa", "this minute", "last month", "next month", "this month", "alahamisi", "ineng'uni", "last week", "last year", "lwamilawu", "mushipepo", "next week", "next year", "pamulaawu", "pashamihe", "this hour", "this week", "this year", "isekunde", "jumamosi", "jumatano", "jumatatu", "munyense", "mupuguto", "mushende", "idakika", "ilijuma", "ilisala", "jumanne", "muhaano", "mujimbi", "mulungu", "mwitope", "ijumaa", "lusiku", "mwakha", "imehe", "mokhu", "munyi", "mwesi", "alh", "gmt", "iju", "jmo", "jnn", "jtn", "jtt", "mag", "mok", "mpg", "msh", "msp", "muh", "muj", "mul", "mun", "mup", "mus", "mwi", "mye", "now", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})

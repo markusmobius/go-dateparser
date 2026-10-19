@@ -2,11 +2,17 @@
 
 package data
 
+import (
+	"sync"
+)
+
 var (
 	gv_Locale LocaleData
 )
 
-func init() {
+// Compiling every locale's regexes up front is costly, so each file builds its
+// locales on first use.
+var load_gv = sync.OnceFunc(func() {
 	gv_Locale = merge(nil, LocaleData{
 		Name:      "gv",
 		DateOrder: "YMD",
@@ -93,4 +99,4 @@ func init() {
 		},
 		KnownWords: []string{"toshiaght-arree", "mee ny nollick", "jerrey-fouyir", "jerrey-geuree", "jerrey-souree", "mean-fouyir", "mean-souree", "this minute", "last month", "mee houney", "next month", "this month", "last week", "last year", "luanistyn", "m-nollick", "next week", "next year", "this hour", "this week", "this year", "yesterday", "j-fouyir", "j-souree", "jedoonee", "jeheiney", "m-fouyir", "m-houney", "m-souree", "tomorrow", "boaldyn", "jelhein", "jemayrt", "jercean", "jerdein", "t-arree", "averil", "avrril", "j-guer", "jesarn", "mayrnt", "minute", "second", "month", "today", "hour", "jerc", "jerd", "week", "year", "day", "gmt", "jed", "jeh", "jel", "jem", "jes", "now", "utc", "am", "hr", "pm", " ", "'", "+", ",", "-", ".", "/", ":", ";", "@", "[", "]", "z", "|"},
 	})
-}
+})
