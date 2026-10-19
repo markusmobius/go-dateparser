@@ -292,6 +292,8 @@ func merge(parent *LocaleData, child LocaleData) LocaleData {
 	return child
 }
 
+// GetLocaleData returns the data for locale, building it and the other locales in
+// its file on first use. It is safe for concurrent use.
 func GetLocaleData(locale string) (*LocaleData, bool) {
 	switch locale {
 		{{- range $language, $data := .}}
