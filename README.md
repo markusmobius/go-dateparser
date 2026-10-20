@@ -4,10 +4,10 @@ This package parses localized dates in string formats commonly found on web page
 
 Requires **Go 1.26.0 or newer**. The module recommends Go 1.27.1 for development; normal builds do not require cgo or re2go.
 
-Install **Go-DateParser v1.4.7** inside your project:
+Install **Go-DateParser v1.4.8** inside your project:
 
 ```sh
-go get github.com/markusmobius/go-dateparser@v1.4.7
+go get github.com/markusmobius/go-dateparser@v1.4.8
 ```
 
 ## Table of Contents
@@ -52,7 +52,7 @@ go get github.com/markusmobius/go-dateparser@v1.4.7
 
 ## <a name="status"></a> 2. Status [▲](#table-of-contents)
 
-Go-DateParser v1.4.7 updates the shared Dateutil dependency to v2.9.1, retaining v1.4.6's Python-compatible arithmetic, explicit Gregorian validation, and single-thread parsing, search, and calendar implementation. No DateParser runtime algorithms change in v1.4.7. See [CHANGELOG.md](CHANGELOG.md) for changes and [UPSTREAM.md](UPSTREAM.md) for verification limits. The performance tables retain their actual v1.4.3, v1.4.5, and v1.4.6 measurements; they are not relabeled as v1.4.7 results.
+Go-DateParser v1.4.8 builds locale data on first use instead of at package initialization, so importing the package no longer compiles every locale's regexes; see [Locale Loading](#locale-loading). Parsing results, public APIs, locale data, and v1.4.7's Dateutil v2.9.1 dependency are unchanged. See [CHANGELOG.md](CHANGELOG.md) for changes and [UPSTREAM.md](UPSTREAM.md) for verification limits. The performance tables retain their actual v1.4.3, v1.4.5, and v1.4.6 warm-pass measurements, which exclude first-use initialization; they are not relabeled as v1.4.8 results.
 
 This package tracks the applicable changes through Python dateparser [v1.4.3][original-tag], commit [9ce60b1][original-commit]. The previous baseline, `02bd2e5`, was the v1.2.1 release commit. [UPSTREAM.md](UPSTREAM.md) accounts for all 66 intervening commits, including Python-specific changes that do not apply to Go, verification results, and known compatibility exceptions.
 

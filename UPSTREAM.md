@@ -19,6 +19,16 @@ string operations, not Python regex syntax or Python serialization caches.
 The existing UseGivenOrder setting supplies upstream's given-language-order
 behavior, and Go retains its supported language set and detection ranking.
 
+## v1.4.8 Lazy Locale Loading
+
+Go-DateParser v1.4.8 builds each generated locale file's data on first use
+instead of in package `init`. This is a Go-only loading change with no Python
+dateparser counterpart: the generated locale contents, their CLDR 44.1.0 source,
+detection ranking, and all fixture expectations are unchanged, and
+`go test ./...` passes against the existing Python-derived fixtures. Python
+dateparser **1.4.3** and python-dateutil **2.9.0.post0** remain the behavioral
+references, and Go-Dateutil stays at **v2.9.1**.
+
 ## v1.4.7 Dependency Refresh
 
 Go-DateParser v1.4.7 uses published Go-Dateutil **v2.9.1**, source commit
